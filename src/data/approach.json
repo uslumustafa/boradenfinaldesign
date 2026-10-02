@@ -1,0 +1,15 @@
+{
+  "_note": "«Çalışma biçimimiz» bandı (her hizmet sayfasının sonunda). Metinler yeni olgu içermez: faq.json › «Bir hizmet için süreç nasıl başlar?» ve «Çalışmanın kapsamı nasıl belirlenir?» yanıtlarının özetidir; ilkeler content.json › about.principles'ten gelir. Yayından önce müşteri onayı gerekir. Wagtail: ApproachSettings (site ayarı) — title, steps (StreamField/Orderable: başlık + metin), link.",
+  "eyebrow": "Çalışma biçimimiz",
+  "title": "Her çalışma bir kapsam görüşmesiyle başlar.",
+  "stepsLabel": "Nasıl başlarız?",
+  "steps": [
+    ["İhtiyacınızı iletin", "E-posta, telefon veya WhatsApp üzerinden ihtiyacınızı kısaca iletmeniz yeterlidir."],
+    ["Kapsam görüşmesi", "Kuruluşun faaliyetleri, mevcut süreçleri ve ihtiyaçları birlikte değerlendirilir."],
+    ["Çerçeve netleşir", "Çalışmanın çerçevesi belirlenir; ilgili uzmanlık alanları bu kapsam doğrultusunda birlikte ele alınır."]
+  ],
+  "principlesLabel": "İlkelerimiz",
+  "linkLabel": "Hakkımızda",
+  "linkUrl": "/hakkimizda/",
+  "ctaLabel": "Kapsam görüşmesi talep edin"
+}

@@ -1,0 +1,184 @@
+{
+  "title": "İletişim",
+  "lead": "Hizmetlerimiz, çalışma kapsamı veya kariyer konusundaki sorularınız için bize yazabilir ya da bizi arayabilirsiniz.",
+  "intro": "Mesajınızı konusuna göre ilgili uzmanlık alanına yönlendirebilmemiz için formda bir konu seçmenizi rica ederiz. Bir hizmetin kapsamı, ilgili mevzuat ve meslek kuralları çerçevesinde ayrıca değerlendirilir.",
+  "topics": [
+    {
+      "id": "genel",
+      "label": "Genel bilgi",
+      "description": "Hizmetlerimiz, çalışma biçimimiz veya sitedeki içerikler hakkında genel sorular.",
+      "services": [
+        "raporlama",
+        "yonetim-danismanligi",
+        "mali-danismanlik"
+      ]
+    },
+    {
+      "id": "bagimsiz-denetim",
+      "label": "Bağımsız denetim",
+      "description": "Bağımsız denetim, finansal tablo denetimi, UFRS/TFRS raporlama, iç denetim, iç kontrol ve suistimal incelemeleri konuları.",
+      "groups": [
+        "denetim"
+      ]
+    },
+    {
+      "id": "vergi-ve-mali-musavirlik",
+      "label": "Vergi ve mali müşavirlik",
+      "description": "Muhasebe, vergi, tam tasdik, KDV iadesi, transfer fiyatlandırması ve Ar-Ge danışmanlığı konuları.",
+      "groups": [
+        "vergi"
+      ]
+    },
+    {
+      "id": "sirket-kurulusu",
+      "label": "Şirket kuruluşu",
+      "description": "Şirket kuruluş süreçleri ve ticaret sicil işlemleri.",
+      "groups": [
+        "danismanlik"
+      ],
+      "services": [
+        "sirket-kurulus-danismanligi",
+        "ticaret-sicil-islemleri"
+      ]
+    },
+    {
+      "id": "sirket-degerlemesi",
+      "label": "Şirket değerlemesi",
+      "description": "Şirket değerlemesi hizmeti ve değerleme sürecine ilişkin sorular.",
+      "groups": [
+        "danismanlik"
+      ],
+      "services": [
+        "sirket-degerlemesi"
+      ]
+    },
+    {
+      "id": "insan-kaynaklari-ve-bordro",
+      "label": "İnsan kaynakları ve bordro",
+      "description": "Bordro, özlük ve SGK işlemleri, istihdam teşvikleri, emeklilik ve çalışma izni süreçleri.",
+      "groups": [
+        "insan"
+      ]
+    },
+    {
+      "id": "muhasebe-ve-veri-sistemleri",
+      "label": "Muhasebe ve veri sistemleri",
+      "description": "Muhasebe sistemleri, veri analiz sistemleri, iş zekâsı ve çözüm prosedürleri.",
+      "groups": [
+        "sistem"
+      ]
+    },
+    {
+      "id": "egitim",
+      "label": "Eğitim",
+      "description": "Muhasebe ve vergi, UFRS/TFRS, finansal analiz, iç denetim ve insan kaynakları eğitimleri.",
+      "groups": [
+        "akademi"
+      ]
+    },
+    {
+      "id": "kariyer",
+      "label": "Kariyer",
+      "description": "Kariyer ve başvuru süreci hakkında sorular. Özgeçmişinizi iletmek için Kariyer sayfasındaki formu da kullanabilirsiniz."
+    },
+    {
+      "id": "basin-ve-diger",
+      "label": "Basın ve diğer",
+      "description": "Basın, iş birliği veya yukarıdaki başlıklara girmeyen diğer konular."
+    }
+  ],
+  "form": {
+    "fields": [
+      {
+        "id": "ad",
+        "label": "Ad soyad",
+        "type": "text",
+        "required": true,
+        "autocomplete": "name"
+      },
+      {
+        "id": "eposta",
+        "label": "E-posta",
+        "type": "email",
+        "required": true,
+        "autocomplete": "email"
+      },
+      {
+        "id": "telefon",
+        "label": "Telefon",
+        "type": "tel",
+        "required": false,
+        "autocomplete": "tel",
+        "help": "İsteğe bağlı. Yalnızca size dönüş yapmak için kullanılır."
+      },
+      {
+        "id": "sirket",
+        "label": "Şirket veya kurum",
+        "type": "text",
+        "required": false,
+        "autocomplete": "organization",
+        "help": "İsteğe bağlı."
+      },
+      {
+        "id": "konu",
+        "label": "Konu",
+        "type": "select",
+        "required": true,
+        "optionsFrom": "topics"
+      },
+      {
+        "id": "mesaj",
+        "label": "Mesajınız",
+        "type": "textarea",
+        "required": true,
+        "minLength": 20,
+        "help": "İhtiyacınızı kısaca anlatın (en az 20 karakter). Kimlik numarası, banka veya kart bilgisi, şifre ya da sağlık bilgisi yazmayın."
+      }
+    ],
+    "consent": {
+      "text": "[KVKK Aydınlatma Metni'ni](/yasal/kvkk-aydinlatma-metni/) okudum. Bilgilerimin mesajımı değerlendirmek ve yanıtlamak amacıyla işleneceğini anlıyorum.",
+      "required": true
+    },
+    "submitLabel": "Mesajı hazırla",
+    "successTitle": "Mesajınız hazırlandı",
+    "successText": "Mesajınız info@boraden.com.tr adresine iletilmek üzere hazırlandı. Gönderim tamamlanmadan mesajınız bize ulaşmış olmaz; e-posta uygulamanızda veya gönderim ekranında son adımı tamamlayın. Sorun yaşarsanız aynı bilgileri doğrudan bu adrese yazabilirsiniz.",
+    "errorText": "Mesajınız hazırlanamadı. Lütfen işaretli alanları kontrol edin ya da doğrudan info@boraden.com.tr adresine yazın.",
+    "notice": "Bu forma yazdığınız mesaj, Boraden ile bir denetim, danışmanlık veya başka bir hizmet ilişkisi kurmaz. Bağımsız denetim hizmeti verilen kuruluşlara, bağımsızlık kurallarının izin vermediği hizmetler sunulmaz. Bir hizmetin kapsamı, ilgili mevzuat ve meslek kuralları çerçevesinde görev başında ayrıca değerlendirilir."
+  },
+  "process": [
+    {
+      "title": "Mesajınız okunur",
+      "text": "Mesajınız, seçtiğiniz konuya göre ilgili uzmanlık alanına yönlendirilir."
+    },
+    {
+      "title": "Size dönüş yapılır",
+      "text": "Gerekirse ihtiyacınızı netleştirmek için ek bilgi istenir ve size dönüş yapılır."
+    },
+    {
+      "title": "Kapsam belirlenir",
+      "text": "Çalışmanın kapsamı; kurumun faaliyetleri, mevcut süreçleri ve ihtiyaçları değerlendirilerek belirlenir. Bir hizmet ilişkisi ancak bu değerlendirmeden sonra, ayrıca kurulur."
+    }
+  ],
+  "channels": [
+    {
+      "id": "email",
+      "label": "E-posta",
+      "value": "info@boraden.com.tr",
+      "href": "mailto:info@boraden.com.tr"
+    },
+    {
+      "id": "phone",
+      "label": "Telefon",
+      "value": "+90 (212) 483 26 11",
+      "href": "tel:+902124832611"
+    },
+    {
+      "id": "whatsapp",
+      "label": "WhatsApp",
+      "value": "+90 553 238 03 35",
+      "href": "https://wa.me/905532380335"
+    }
+  ],
+  "addressNote": "Ofisimizde görüşme planlamak istiyorsanız, gelmeden önce e-posta veya telefonla bizimle iletişime geçmenizi rica ederiz.",
+  "privacyNote": "Formda ve diğer kanallarda paylaştığınız bilgiler, talebinizi değerlendirmek ve yanıtlamak amacıyla işlenir. Ayrıntılar için [KVKK Aydınlatma Metni](/yasal/kvkk-aydinlatma-metni/) ve [Gizlilik Politikası](/yasal/gizlilik-politikasi/) sayfalarına bakabilirsiniz. WhatsApp gibi üçüncü taraf uygulamalar üzerinden iletilen mesajlar, ilgili uygulamanın kendi koşullarına ve veri uygulamalarına da tabidir."
+}

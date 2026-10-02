@@ -1,0 +1,120 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+
+{% block head_extra %}
+<script type="application/ld+json">{{ ld | json_script }}</script>
+{% endblock %}
+
+{# Sık sorulan sorular. Wagtail karşılığı: FaqPage + FaqGroup (id, title, intro) / FaqItem (q, a: RichText) — InlinePanel.
+   Arama: listing.js; «Tümünü aç/kapat», aramada eşleşenleri açma, #soru çapası ve grup içindekiler izleme: modules/faq-tools.js.
+   Her soru kalıcı kimlik taşır (<grup-id>-<sıra>) ve arama dizinine ayrı kayıt olarak girer. #}
+{% block main %}
+{{ m.phero(page, "Sık Sorulan Sorular", "Boraden ile çalışmanın çerçevesi, ücret ve kapsam, gizlilik ve bağımsızlık, hesaplayıcılar ve iletişim hakkında genel yanıtlar.", "Bilgi merkezi · SSS", 0, [(faq | length) ~ " başlık", qCount ~ " soru"]) }}
+
+<div class="sheet sec--paper">
+  <div class="container" data-listing="faq" data-module="faq-tools">
+    <div class="toolbar qa-toolbar" style="margin-top:0">
+      <label class="searchbox qa-search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+        <span class="sr-only">Sorularda ara</span>
+        <input type="search" placeholder="Soru veya yanıtlarda ara…" data-search autocomplete="off">
+      </label>
+      <div class="qa-tools">
+        <p class="qa-count mono tnum" data-qa-count role="status" aria-live="polite"></p>
+        <button class="tbtn qa-toggle" type="button" data-qa-toggle aria-expanded="false" hidden>Tümünü aç</button>
+      </div>
+    </div>
+
+    <div class="g12 qa-layout">
+      <aside class="gc qa-side" style="--gc: 1 / span 3">
+        <nav class="toc qa-toc" aria-label="Soru başlıkları">
+          <p class="toc__h mono">Başlıklar</p>
+          <ol>
+            {% for g in faq %}
+            <li><a href="#{{ g.id }}" data-qa-link="{{ g.id }}"><span class="qa-toc__t">{{ g.title }}</span><span class="qa-toc__n mono tnum" aria-hidden="true">{{ g.items | length }}</span></a></li>
+            {% endfor %}
+          </ol>
+        </nav>
+      </aside>
+
+      <div class="gc qa-main" style="--gc: 4 / -1">
+        {% for g in faq %}
+        <section class="qa-grp" id="{{ g.id }}" data-group="{{ g.id }}" aria-labelledby="{{ g.id }}-h">
+          <header class="qa-grp__head" data-reveal>
+            <span class="qa-grp__no mono tnum">{{ g.number }} / {{ faq | length | pad2 }}</span>
+            <h2 id="{{ g.id }}-h">{{ g.title }}</h2>
+            {% if g.intro %}<p>{{ g.intro }}</p>{% endif %}
+          </header>
+          <div class="faq qa-list">
+            {% for it in g.items %}
+            <details id="{{ it.id }}" data-item data-text="{{ (it.q ~ ' ' ~ (it.a | plain)) | lower_tr }}">
+              <summary><span class="qa-q__n mono tnum" aria-hidden="true">{{ loop.index | pad2 }}</span><span class="qa-q__t">{{ it.q }}</span></summary>
+              <div class="faq__a qa-a">{{ it.a | paras_rich }}</div>
+            </details>
+            {% endfor %}
+          </div>
+        </section>
+        {% endfor %}
+
+        <div class="qa-empty" data-empty hidden>
+          <p class="empty">Aramanızla eşleşen soru bulunamadı.</p>
+          <p class="qa-empty__more">Farklı bir kelime deneyebilir ya da sorunuzu <a href="/iletisim/">iletişim sayfasından</a> iletebilirsiniz.</p>
+        </div>
+      </div>
+    </div>
+
+    <section class="qa-help" aria-labelledby="qa-help-h">
+      <div class="qa-help__main">
+        <p class="eyebrow" data-reveal>İletişim</p>
+        <h2 id="qa-help-h" data-reveal data-reveal-delay="1">Yanıtını bulamadınız mı?</h2>
+        <p data-reveal data-reveal-delay="2">Sorunuzu kısa bir notla iletebilirsiniz; konunun kapsamı ilk görüşmede birlikte netleştirilir.</p>
+        <p class="qa-help__btns" data-reveal data-reveal-delay="3">
+          <a class="btn" href="/iletisim/">İletişim sayfası {{ m.arrow() }}</a>
+          <a class="btn btn--ghost" href="tel:{{ contact.phoneHref }}">{{ contact.phone }}</a>
+        </p>
+      </div>
+      <div class="qa-help__side">
+        <p class="qa-help__h mono" data-reveal>Ayrıca bakın</p>
+        <ul class="qa-x">
+          <li data-reveal>
+            <a class="qa-x__a" href="/bilgi-merkezi/sozluk/">
+              <span class="qa-x__n tnum">{{ model.glossary | length }}</span>
+              <span class="qa-x__t">Sözlük<span class="qa-x__d">Denetim, vergi ve bordro terimlerinin açıklamaları</span></span>
+              <span class="qa-x__go" aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li data-reveal data-reveal-delay="1">
+            <a class="qa-x__a" href="/hesaplayicilar/">
+              <span class="qa-x__n tnum">{{ model.calculators | length }}</span>
+              <span class="qa-x__t">Hesaplayıcılar<span class="qa-x__d">Ücret, tazminat ve vergi hesapları; tahmini sonuç</span></span>
+              <span class="qa-x__go" aria-hidden="true">→</span>
+            </a>
+          </li>
+          {% if model.calendar %}
+          <li data-reveal data-reveal-delay="2">
+            <a class="qa-x__a" href="/vergi-takvimi/">
+              <span class="qa-x__n tnum">{{ model.calendar.count }}</span>
+              <span class="qa-x__t">Vergi takvimi<span class="qa-x__d">Beyan, ödeme ve bildirim tarihleri</span></span>
+              <span class="qa-x__go" aria-hidden="true">→</span>
+            </a>
+          </li>
+          {% endif %}
+          <li data-reveal data-reveal-delay="3">
+            <a class="qa-x__a" href="/sektorler/">
+              <span class="qa-x__n tnum">{{ model.sectors | length }}</span>
+              <span class="qa-x__t">Sektörler<span class="qa-x__d">Sektör ve müşteri segmenti gündemleri</span></span>
+              <span class="qa-x__go" aria-hidden="true">→</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="notice qa-notice" data-legal-review="BDY m.22">
+      <p><strong>Genel bilgilendirme.</strong> {{ site.disclaimer }} {{ site.independenceNote }}</p>
+    </div>
+  </div>
+</div>
+
+{% include "partials/cta.njk" %}
+{% endblock %}

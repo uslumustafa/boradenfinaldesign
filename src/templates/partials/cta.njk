@@ -1,0 +1,23 @@
+{# Kapanış çağrı bandı — koyu, dünya görünür; kapı formasyonu sağda, metin solda; iletişim bilgileri alt satırda #}
+<section class="cta sec--dark" data-world="7" data-chapter="İletişim" id="iletisim-cagri">
+  <div class="container">
+    <div class="cta__row">
+      <div class="cta__main">
+        <p class="eyebrow" data-reveal>İletişim</p>
+        <h2 data-reveal data-reveal-delay="1">{{ cta_title | default('Görüşelim.') }}</h2>
+        <p class="lead" style="margin-top:1.6rem;max-width:34ch" data-reveal data-reveal-delay="2">{{ cta_text | default('İhtiyacınızı ve kapsamı birlikte netleştirelim. İlk görüşmede nasıl ilerleyeceğimizi konuşalım.') }}</p>
+        <div class="cta__btns" data-reveal data-reveal-delay="3">
+          <a class="btn" href="{{ cta_href | default('/iletisim/') }}">Mesaj gönderin <span class="arr" aria-hidden="true">→</span></a>
+          <a class="btn btn--ghost" href="tel:{{ contact.phoneHref }}">{{ contact.phone }}</a>
+        </div>
+      </div>
+      <div class="cta__side" data-reveal data-reveal-delay="2">
+        <dl>
+          <div><dt>Adres</dt><dd>{{ contact.street }}, {{ contact.postcode }} {{ contact.district }} / {{ contact.city }}</dd></div>
+          <div><dt>E-posta</dt><dd><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></dd></div>
+          <div><dt>Telefon</dt><dd><a href="tel:{{ contact.phoneHref }}">{{ contact.phone }}</a></dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>

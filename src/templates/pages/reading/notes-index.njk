@@ -1,0 +1,60 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+
+{% block head_extra %}
+<script type="application/ld+json">{{ ld | json_script }}</script>
+{% endblock %}
+
+{# Okuma notları dizini. Wagtail karşılığı: ReadingNoteIndexPage (alt sayfalar: ReadingNotePage; alanlar: topic, title, summary,
+   takeaway, related_service). Süzme: listing.js — ilgili hizmete göre (data-svc). Satırın üzerine gelince "Önemli nokta" açılır. #}
+{% block main %}
+{{ m.phero(page, copy.title, copy.lead, "Bilgi merkezi", 6, [(notes | length) ~ " not", "Her notta kaynak bağlantısı"]) }}
+
+<div class="sheet sec--paper">
+  <div class="container" data-listing="notes">
+    <div class="g12 rn-idx">
+      <aside class="gc rn-idx__side" style="--gc: 1 / span 4">
+        <p class="eyebrow" data-reveal>Dizin</p>
+        <p class="rn-idx__count" data-reveal data-reveal-delay="1"><span class="rn-idx__num tnum" data-count="{{ notes | length }}">{{ notes | length }}</span><span class="rn-idx__unit mono">okuma notu</span></p>
+        <p class="rn-idx__text" data-reveal data-reveal-delay="2">Her not bir kaynak metinden yola çıkar, konuyu işletmeler için bir soruya çevirir ve kaynağın kendisine bağlantı verir.</p>
+        {% if filters.length > 1 %}
+        <p class="rn-idx__fh mono" id="rn-filter-h">İlgili hizmete göre</p>
+        <div class="chips rn-idx__chips" role="group" aria-labelledby="rn-filter-h" data-filter-by="svc">
+          <button class="chip is-on" type="button" data-filter="all" aria-pressed="true">Tümü<span class="rn-chipn tnum">{{ notes | length }}</span></button>
+          {% for f in filters %}<button class="chip" type="button" data-filter="{{ f.id }}" aria-pressed="false">{{ f.label }}<span class="rn-chipn tnum">{{ f.count }}</span></button>{% endfor %}
+        </div>
+        {% endif %}
+        <p class="rn-idx__res mono" data-result-count aria-live="polite"></p>
+      </aside>
+
+      <div class="gc rn-idx__main" style="--gc: 5 / -1">
+        <ol class="rn-list">
+          {% for n in notes %}
+          <li data-item data-svc="{{ n.service }}" data-text="{{ (n.title ~ ' ' ~ n.topic ~ ' ' ~ n.summary ~ ' ' ~ n.sourceTitle) | lower_tr }}" data-reveal>
+            <a class="rn-row" href="{{ n.url }}">
+              <span class="rn-row__n tnum" aria-hidden="true">{{ n.n | pad2 }}</span>
+              <span class="rn-row__body">
+                <span class="rn-row__k mono">{{ n.topic }}</span>
+                <span class="rn-row__t">{{ n.title }}</span>
+                <span class="rn-row__s">{{ n.summary }}</span>
+                <span class="rn-row__x" aria-hidden="true"><span class="rn-row__xin"><span class="rn-row__xk mono">Önemli nokta</span>{{ n.takeaway }}</span></span>
+              </span>
+              <span class="rn-row__go" aria-hidden="true">→</span>
+            </a>
+          </li>
+          {% endfor %}
+        </ol>
+        <p class="empty" data-empty hidden>Bu süzgeçle eşleşen not bulunamadı.</p>
+
+        <div class="notice rn-disc" data-reveal>
+          <p><strong>Okuma notları hakkında.</strong> {{ copy.disclaimer }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% set cta_title = "Sorunuzu konuşalım." %}
+{% set cta_text = "Notlardaki soruların şirketinizdeki karşılığını birlikte netleştirelim." %}
+{% include "partials/cta.njk" %}
+{% endblock %}

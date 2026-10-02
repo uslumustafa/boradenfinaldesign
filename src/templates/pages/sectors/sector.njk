@@ -1,0 +1,210 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+{% import "partials/people.njk" as pp %}
+
+{% block head_extra %}
+<script type="application/ld+json">{{ ld | json_script }}</script>
+{% endblock %}
+
+{# Sektör sayfası. Wagtail karşılığı: SectorPage (name, short, is_segment, lead, overview (RichText paragrafları),
+   topics (StreamField/Orderable: title, text), services (M2M ServicePage), calculators (M2M CalculatorPage),
+   glossary (M2M GlossaryTerm), questions (Orderable: q, a), sources (Orderable: label, url)).
+   Boş ilişkiler (hesaplayıcı, kaynak…) bölümü ve içindekiler satırını gizler. #}
+{% block main %}
+{% set s = sector %}
+{% set unit = "segment" if s.segment else "sektör" %}
+{{ m.phero(page, s.name, s.lead, s.kindLabel ~ " · " ~ s.number, 0, [
+  (s.topics | length) ~ " gündem başlığı",
+  (s.svcList | length) ~ " hizmet başlığı",
+  ((s.calcList | length) ~ " hesaplayıcı") if (s.calcList | length) else "",
+  ((s.termList | length) ~ " terim") if (s.termList | length) else ""
+]) }}
+
+<div class="sheet sec--paper">
+  <div class="container">
+    <div class="svc g12 sx-page">
+
+      <aside class="svc__side gc" style="--gc: 1 / span 3">
+        <nav class="toc" data-toc aria-label="Bu sayfada">
+          <p class="toc__h mono">Bu sayfada</p>
+          <ol>
+            <li><a href="#genel-bakis">Genel bakış</a></li>
+            {% if s.topics | length %}<li><a href="#gundem">Gündem başlıkları</a></li>{% endif %}
+            {% if s.svcList | length %}<li><a href="#hizmetler">İlgili hizmetler</a></li>{% endif %}
+            {% if s.calcList | length %}<li><a href="#hesaplayicilar">Hesaplayıcılar</a></li>{% endif %}
+            {% if s.termList | length %}<li><a href="#terimler">Terimler</a></li>{% endif %}
+            {% if s.questions | length %}<li><a href="#sss">Sık sorulan sorular</a></li>{% endif %}
+            {% if s.sources | length %}<li><a href="#kaynaklar">Kaynaklar</a></li>{% endif %}
+            <li><a href="#diger-sektorler">Diğer sektörler</a></li>
+            {% if s.people | length %}<li><a href="#ekip">İlgili ekip</a></li>{% endif %}
+          </ol>
+          <a class="btn toc__cta" href="/iletisim/?sektor={{ s.slug }}">Bu {{ unit }} için görüşelim {{ m.arrow() }}</a>
+        </nav>
+      </aside>
+
+      <div class="svc__main gc" style="--gc: 4 / -1">
+
+        <section class="svc__sec" id="genel-bakis">
+          <h2 class="svc__label mono" data-reveal>Genel bakış</h2>
+          {% if s.overview | length %}<p class="sx-ov__lead" data-lit>{{ s.overview[0] }}</p>{% endif %}
+          <div class="sx-ov">
+            <div class="sx-ov__text">
+              {% for p in s.overview %}{% if not loop.first %}<p data-reveal>{{ p | rich }}</p>{% endif %}{% endfor %}
+            </div>
+            <dl class="sx-facts" data-reveal data-reveal-delay="1">
+              <div><dt>Kapsam</dt><dd>{{ s.short }}</dd></div>
+              <div><dt>Tür</dt><dd>{{ s.kindLabel }}{% if s.segment %} — endüstri değil, ortak gündemi olan kuruluş grubu{% endif %}</dd></div>
+              <div><dt>Bu sayfada</dt><dd class="tnum">{{ s.topics | length }} gündem başlığı · {{ s.svcList | length }} hizmet başlığı{% if s.calcList | length %} · {{ s.calcList | length }} hesaplayıcı{% endif %}{% if s.questions | length %} · {{ s.questions | length }} soru{% endif %}</dd></div>
+            </dl>
+          </div>
+        </section>
+
+        {% if s.topics | length %}
+        <section class="svc__sec" id="gundem">
+          <h2 class="svc__label mono" data-reveal>Gündem başlıkları</h2>
+          <ol class="sx-topics" data-steps>
+            {% for t in s.topics %}
+            <li class="sx-topic" data-reveal data-reveal-delay="{{ loop.index0 % 2 }}">
+              <span class="sx-topic__n tnum" aria-hidden="true">{{ loop.index | pad2 }}</span>
+              <h3 class="sx-topic__t">{{ t.title }}</h3>
+              <p class="sx-topic__d">{{ t.text | rich }}</p>
+            </li>
+            {% endfor %}
+          </ol>
+        </section>
+        {% endif %}
+
+        {% if s.svcList | length %}
+        <section class="svc__sec" id="hizmetler">
+          <h2 class="svc__label mono" data-reveal>İlgili hizmetler</h2>
+          <ul class="sx-svcs">
+            {% for x in s.svcList %}
+            <li data-reveal data-reveal-delay="{{ loop.index0 % 2 }}">
+              <a class="sx-svc" href="{{ x.url }}">
+                <span class="sx-svc__k mono"><span class="tnum">{{ x.groupNumber }}</span> · {{ x.groupName }}</span>
+                <span class="sx-svc__t">{{ x.title }}</span>
+                <span class="sx-svc__d">{{ x.lead | truncate_words(16) }}</span>
+                <span class="sx-svc__go" aria-hidden="true">→</span>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </section>
+        {% endif %}
+
+        {% if s.calcList | length %}
+        <section class="svc__sec" id="hesaplayicilar">
+          <h2 class="svc__label mono" data-reveal>Hesaplayıcılar</h2>
+          <ul class="sx-calcs">
+            {% for c in s.calcList %}
+            <li data-reveal data-reveal-delay="{{ loop.index0 }}">
+              <a class="sx-calc" href="{{ c.url }}">
+                <span class="sx-calc__k mono">{{ c.groupLabel }}{% if c.paramsYear %} · <span class="tnum">{{ c.paramsYear }}</span>{% endif %}</span>
+                <span class="sx-calc__t">{{ c.title }}</span>
+                <span class="sx-calc__d">{{ c.short }}</span>
+                <span class="sx-calc__go" aria-hidden="true">→</span>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+          <p class="sx-note">Hesaplayıcılar tahmini sonuç verir ve genel bilgilendirme amaçlıdır; tavsiye niteliği taşımaz.</p>
+        </section>
+        {% endif %}
+
+        {% if s.termList | length %}
+        <section class="svc__sec" id="terimler">
+          <h2 class="svc__label mono" data-reveal>Terimler</h2>
+          <dl class="sx-terms">
+            {% for t in s.termList %}
+            <div class="sx-term" data-reveal data-reveal-delay="{{ loop.index0 % 2 }}">
+              <dt><a href="{{ t.url }}">{{ t.term }}<span class="sx-term__go" aria-hidden="true">→</span></a></dt>
+              <dd>{{ t.short }}</dd>
+            </div>
+            {% endfor %}
+          </dl>
+          <p class="sx-more"><a class="textlink" href="/bilgi-merkezi/sozluk/">Sözlükteki tüm terimler {{ m.arrow() }}</a></p>
+        </section>
+        {% endif %}
+
+        {% if s.questions | length %}
+        <section class="svc__sec" id="sss">
+          <h2 class="svc__label mono" data-reveal>Sık sorulan sorular</h2>
+          <div class="faq sx-faq" data-reveal>
+            {% for q in s.questions %}
+            <details>
+              <summary>{{ q[0] }}</summary>
+              <div class="faq__a"><p>{{ q[1] | rich }}</p></div>
+            </details>
+            {% endfor %}
+          </div>
+          <p class="sx-more"><a class="textlink" href="/bilgi-merkezi/sss/">Çalışma biçimine ilişkin genel sorular {{ m.arrow() }}</a></p>
+        </section>
+        {% endif %}
+
+        {% if s.sources | length %}
+        <section class="svc__sec" id="kaynaklar">
+          <h2 class="svc__label mono" data-reveal>Kaynaklar</h2>
+          <ul class="srclist" data-reveal>
+            {% for src in s.sources %}
+            <li><a class="srclink" href="{{ src[1] }}" target="_blank" rel="noopener noreferrer"><span>{{ src[0] }}</span><span class="srclink__go" aria-hidden="true">↗</span><span class="sr-only"> (yeni sekmede açılır)</span></a></li>
+            {% endfor %}
+          </ul>
+          <p class="sx-note">Bağlantılar ilgili kurumların kendi sayfalarına yönlenir; güncel metinler için bu kaynaklar esas alınmalıdır.</p>
+        </section>
+        {% endif %}
+
+        <section class="svc__sec" id="diger-sektorler">
+          <h2 class="svc__label mono" data-reveal>Diğer sektörler</h2>
+          <ol class="sx-mini">
+            {% for o in sectors %}
+            <li>
+              {% if o.slug == s.slug %}
+              <span class="sx-mini__a is-current" aria-current="page"><span class="sx-mini__n mono tnum">{{ o.number }}</span><span class="sx-mini__t">{{ o.name }}</span><span class="sx-mini__tag mono">Bu sayfa</span></span>
+              {% else %}
+              <a class="sx-mini__a" href="{{ o.url }}"><span class="sx-mini__n mono tnum">{{ o.number }}</span><span class="sx-mini__t">{{ o.name }}</span>{% if o.segment %}<span class="sx-mini__tag mono">Segment</span>{% endif %}</a>
+              {% endif %}
+            </li>
+            {% endfor %}
+          </ol>
+        </section>
+
+      </div>
+    </div>
+
+    <nav class="svcnav" aria-label="Komşu sektörler">
+      {% if prev %}
+      <a class="svcnav__a svcnav__a--prev" href="{{ prev.url }}" rel="prev">
+        <span class="svcnav__k mono">← Önceki</span>
+        <span class="svcnav__t">{{ prev.name }}</span>
+      </a>
+      {% else %}<span></span>{% endif %}
+      {% if next %}
+      <a class="svcnav__a svcnav__a--next" href="{{ next.url }}" rel="next">
+        <span class="svcnav__k mono">Sonraki →</span>
+        <span class="svcnav__t">{{ next.name }}</span>
+      </a>
+      {% else %}<span></span>{% endif %}
+    </nav>
+
+    <p class="svcback"><a class="textlink" href="/sektorler/">Tüm sektörler ve müşteri segmentleri {{ m.arrow() }}</a></p>
+
+    <div class="notice" style="margin-top: clamp(3rem, 6vw, 5rem)" data-legal-review="BDY m.22">
+      <p><strong>Bağımsızlık ilkesi.</strong> {{ site.independenceNote }}</p>
+    </div>
+  </div>
+</div>
+
+{# ── Alt bölüm: bu sektörle ilgilenen kişiler (açık atama; yoksa hizmet sahiplerinden türetilir — scripts/team.mjs) #}
+{{ pp.band(s.people, {
+  id: "ekip",
+  title: "Bu " ~ ("segmentte" if s.segment else "sektörde") ~ " sizinle ilgilenecek ekip.",
+  lead: s.name ~ " alanındaki hizmetleri yürüten ekip arkadaşlarımız. Kartlarda hangi hizmetlerde çalıştıklarını görebilir, doğrudan görüşme talep edebilirsiniz.",
+  label: "Bu alandaki hizmetleri",
+  query: "&sektor=" ~ s.slug
+}) }}
+
+{% set cta_href = "/iletisim/?sektor=" ~ s.slug %}
+{% set cta_title = "Gündeminizi birlikte netleştirelim." %}
+{% set cta_text = s.name ~ " alanındaki ihtiyacınızı dinleyelim; ilgili uzmanlık alanlarını ve çalışmanın kapsamını ilk görüşmede birlikte belirleyelim." %}
+{% include "partials/cta.njk" %}
+{% endblock %}

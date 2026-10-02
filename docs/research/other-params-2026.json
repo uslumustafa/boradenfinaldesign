@@ -1,0 +1,1889 @@
+{
+  "meta": {
+    "title": "Boraden - tax parameters (non-payroll), research snapshot",
+    "prepared_for": "Boraden (independent audit and tax consulting, Türkiye) website calculators and tax calendar",
+    "as_of": "2026-10-01",
+    "language": "English notes with Turkish legal terms",
+    "confidence_tags": [
+      "verified-official",
+      "cross-checked",
+      "single-secondary-source",
+      "unverified"
+    ],
+    "source_limits": [
+      "resmigazete.gov.tr and mevzuat.gov.tr could not be read (access blocked); statutes and Resmî Gazete texts are therefore cited through GİB documents and law-firm / Big-4 bulletins.",
+      "gib.gov.tr/vergi-takvimi and the GİB announcement pages are JavaScript apps - only metadata was returned. GİB static PDFs on cdn.gib.gov.tr and ÇSGB pages were readable.",
+      "Official documents were read through summaries rather than raw text; treat 'verified-official' as 'read from the official document through a summary'.",
+      "Verification sweep of 2025-2026 legislation found 7571 sayılı Kanun md.34 (RG 25.12.2025, inflation-adjustment suspension), 7582 sayılı Kanun (RG 04.06.2026), 7590 sayılı Kanun (RG 31.07.2026), the 29% tecil faizi window (Tahsilat Genel Tebliği Seri B Sıra No 20, RG 16.06.2026) and the Hazine ve Maliye genelge reference for the July 2026 kıdem tavanı (via TÜRMOB). Other 2026 laws or Cumhurbaşkanı Kararları in scope could still exist - none was reported by the bulletins that were read.",
+      "Pages known only by title/URL (not read, or blocked): Verginet items (Deloitte WAF), CSGB X post, işletmerotası, mertanilguler, kariyer.net, fisle.co, Gaziemir Haber (TLS error), Cott and Alomaliye KDV-2023 items, Cott/T24/Moore 7571 items, TÜRMOB/Alomaliye/PwC Ba/Bs items."
+    ],
+    "not_researched": [
+      "KDV rates per product/service list",
+      "ÖTV",
+      "damga vergisi tarifesi beyond the 0.759% ücret/tazminat rate",
+      "tecil faizi accrual method",
+      "pişmanlık zammı part-month rule",
+      "KDV-2 No'lu beyanname due date",
+      "KDV GUT list of tevkifat buyers",
+      "GVK md.94/1 full list of withholding agents",
+      "individual tecil instalment dates",
+      "text of 7582 / Tahsilat Genel Tebliği Seri B No 20 from the Resmî Gazete"
+    ]
+  },
+  "parameters": {
+    "kdv": {
+      "rate_general": {
+        "value": 20,
+        "unit": "percent",
+        "effective_from": "2023-07-10",
+        "effective_to": null,
+        "source_url": "https://www.pwc.com.tr/tr/hizmetlerimiz/vergi/dolayli-vergi/bultenler/kdv-otv-bultenleri/2023/kdv-oranlarinda-degisiklik.html",
+        "source_title": "PwC Türkiye - KDV Oranlarında Değişiklik (7346 sayılı Cumhurbaşkanı Kararı, RG 07.07.2023 sayı 32241)",
+        "accessed": "2026-10-01",
+        "confidence": "cross-checked",
+        "notes": "Raised from 18% to 20% by Cumhurbaşkanı Kararı No. 7346 dated and published in Resmî Gazete on 07.07.2023 (sayı 32241), effective 10.07.2023 (3 days after publication) per PwC. Corroborated by the Cott page ('10-07-2023 tarihinden itibaren tüm mal ve hizmet tesliminde KDV oranları artırıldı') and by Alomaliye's 7 July 2023 Resmî Gazete item ('Katma Değer Vergisi Oranları, Karar Sayısı 7346') - both seen only as secondary references. Rates are set by Cumhurbaşkanı Kararı within the authority of 3065 sayılı KDV Kanunu md.28 (md.28 reference = background knowledge, not confirmed in the text read); the goods/services lists are those of 2007/13033 sayılı BKK as amended (KPMG's CK 9126 note confirms the 2007/13033 reference). No general-rate change appears in Law 7566 (RG 19.12.2025) summaries by KPMG, PwC and TÜRMOB, nor in PwC's KDV-ÖTV Bülteni 2026/15 (03.07.2026; ÖTV only). Additional 2026 sweep: KDV Genel Uygulama Tebliği Seri No 56 (RG 31.12.2025 sayı 33124 5. mükerrer) only sets the 2026 KDV iade limit (164,000 TL); Seri No 57 (RG 31.01.2026 sayı 33154) deals with exemptions/refund procedure (no rate change); 7582 sayılı Kanun (RG 04.06.2026 sayı 33270) and 7590 sayılı Kanun (RG 31.07.2026 sayı 33326) contain no KDV rate change (7590 only adds a nuclear-power-plant KDV exemption/refund, Geçici md.47, effective 01.08.2026). 7555 sayılı Kanun (RG 24.07.2025) added only narrow exemptions (no rate change). That no later rate decision exists up to 2026-10-01 is NOT proven from the Resmî Gazete itself (not readable) - it rests on the absence of any report of a change in PwC/KPMG/TÜRMOB/BDTurkey bulletins through 31.07.2026 and in the 2026 KDV guides consulted.",
+        "additional_sources": [
+          "https://www.cottgroup.com/en/component/zoo/item/10-07-2023-tarihinden-i-tibaren-tum-mal-ve-hizmet-teslimlerinde-kdv-oranlari-artirildi?Itemid=101",
+          "https://www.alomaliye.com/2023/07/07/katma-deger-vergisi-oranlari-karar-sayisi-7346/",
+          "https://kpmgvergi.com/yayinlar/mali-bultenler/vergi/7566-sayili-kanun-resmi-gazete-de-yayimlandi/3316",
+          "https://www.pwc.com.tr/tr/Hizmetlerimiz/vergi/dolayli-vergi/bultenler/kdv-ötv-bültenleri/2026/kdv-otv-bülteni-15.pdf",
+          "https://www.alomaliye.com/2025/12/31/katma-deger-vergisi-genel-uygulama-tebligi-seri-no-56/",
+          "https://www.pwc.com.tr/tr/hizmetlerimiz/vergi/dolayli-vergi/bultenler/kdv-otv-bultenleri/2026/kdv-genel-uygulama-tebliginde-degisiklik.html",
+          "https://www.pwc.com.tr/tr/hizmetlerimiz/vergi/dolayli-vergi/bultenler/kdv-otv-bultenleri/2026/7590-sayili-kanunla-kdv-ve-otv-kanunlarinda-yapilan-degisiklikler.html",
+          "https://kpmgvergi.com/yayinlar/mali-bultenler/vergi/7582-sayili-bazi-kanunlarda-degisiklik-yapilmasina-dair-kanun-resmi-gazete-de-yayimlandi/4497",
+          "https://www.pwc.com.tr/tr/hizmetlerimiz/vergi/bultenler/2025/7555-sayili-kanunun-vergi-duzenlemeleri.html"
+        ]
+      },
+      "rate_reduced": {
+        "value": 10,
+        "unit": "percent",
+        "effective_from": "2023-07-10",
+        "effective_to": null,
+        "source_url": "https://www.pwc.com.tr/tr/hizmetlerimiz/vergi/dolayli-vergi/bultenler/kdv-otv-bultenleri/2023/kdv-oranlarinda-degisiklik.html",
+        "source_title": "PwC Türkiye - KDV Oranlarında Değişiklik (CK 7346)",
+        "accessed": "2026-10-01",
+        "confidence": "cross-checked",
+        "notes": "Raised from 8% to 10% by the same CK 7346 (effective 10.07.2023). PwC also notes that soap, shampoo, detergents, disinfectants, wet wipes, toilet paper, paper towels/napkins/tissues moved to the general 20% rate. Item-level list changes continue: CK 9126 (RG 14.11.2024 sayı 32722) per KPMG - special medical foods/pharma inputs at 10%; ÖTV-subject goods and GTİP 85.17 at 20% (single secondary source; effective date not stated in the bulletin).",
+        "additional_sources": [
+          "https://www.cottgroup.com/en/component/zoo/item/10-07-2023-tarihinden-i-tibaren-tum-mal-ve-hizmet-teslimlerinde-kdv-oranlari-artirildi?Itemid=101",
+          "https://kpmgvergi.com/yayinlar/mali-bultenler/vergi/bazi-teslim-ve-hizmetlere-uygulanan-kdv-oranlarinda-degisiklik-yapilmasina-iliskin-cumhurbaskani-karari-yayimlandi/2854"
+        ]
+      },
+      "rate_super_reduced": {
+        "value": 1,
+        "unit": "percent",
+        "effective_from": null,
+        "effective_to": null,
+        "source_url": "https://www.pwc.com.tr/tr/hizmetlerimiz/vergi/dolayli-vergi/bultenler/kdv-otv-bultenleri/2023/kdv-oranlarinda-degisiklik.html",
+        "source_title": "PwC Türkiye - KDV Oranlarında Değişiklik (CK 7346)",
+        "accessed": "2026-10-01",
+        "confidence": "cross-checked",
+        "notes": "1% rate left unchanged by CK 7346 (2007/13033 BKK (I) sayılı liste: temel gıda, gazete/kitap vb.). Start date of the 1% rate is pre-2023 and was not researched. Which goods fall in the 1% / 10% lists was NOT researched - keep the rate user-selectable in calculators."
+      },
+      "formulas": {
+        "value": {
+          "kdv_haric_to_dahil": "KDV = matrah x r ; dahil = matrah x (1 + r)   (r = 0.20 / 0.10 / 0.01)",
+          "kdv_dahil_to_haric": "matrah = dahil / (1 + r) ; KDV = dahil - matrah  (identical to dahil x r / (1 + r))",
+          "kismi_tevkifat": "tevkif edilen KDV = hesaplanan KDV x (pay/10) ; satıcı tarafından tahsil edilen KDV = hesaplanan KDV - tevkif edilen KDV",
+          "rounding_convention": "Round half-up to 2 decimals; derive KDV as (dahil - matrah) so the parts always sum to the total. Recommended convention, NOT taken from a legal source."
+        },
+        "unit": null,
+        "effective_from": null,
+        "effective_to": null,
+        "source_url": null,
+        "source_title": "standard arithmetic (no external source)",
+        "accessed": "2026-10-01",
+        "confidence": "unverified",
+        "notes": "Pure arithmetic; matches every worked KDV example in the secondary sources seen, but no primary text was read."
+      }
+    },
+    "kurumlar_vergisi": {
+      "rate_general": {
+        "value": 25,
+        "unit": "percent",
+        "effective_from": "2025-01-01",
+        "effective_to": null,
+        "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2Fkurumlar-vergisi-oranlari.pdf",
+        "source_title": "GİB - Kurumlar Vergisi Oranları (table by hesap dönemi)",
+        "accessed": "2026-10-01",
+        "confidence": "verified-official",
+        "notes": "GİB table: 25% default rate for 2025-2026 hesap dönemleri (25% also for 2023 and 2024). Same figure in GİB 'Kurumlar Vergisinde Oran Uygulamaları' (Mart 2026, Yayın No 605, Mükellef Hizmetleri Daire Başkanlığı). Legal basis: 5520 sayılı KVK md.32; GİB's table attributes the 2025+ framework to 7524 sayılı Kanun (RG 02.08.2024). Read through a summary of the GİB document.",
+        "additional_sources": [
+          "https://cdn.gib.gov.tr/api/gibportal-file/file/getFile?objectKey=DUYURU%2FUNIVERSAL%2F2026%2F2026_KurumlarVergisiOran.pdf"
+        ]
+      },
+      "rate_finance_group": {
+        "value": 30,
+        "unit": "percent",
+        "effective_from": "2025-01-01",
+        "effective_to": null,
+        "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFile?objectKey=DUYURU%2FUNIVERSAL%2F2026%2F2026_KurumlarVergisiOran.pdf",
+        "source_title": "GİB - Kurumlar Vergisinde Oran Uygulamaları (Mart 2026, Yayın No 605), pp.12-13",
+        "accessed": "2026-10-01",
+        "confidence": "verified-official",
+        "notes": "30% applies to kurum kazançları of: bankalar; 6361 sayılı Kanun kapsamındaki şirketler (finansal kiralama, faktoring, finansman); elektronik ödeme ve para kuruluşları; yetkili döviz müesseseleri; varlık yönetim şirketleri; sermaye piyasası kurumları; sigorta ve reasürans şirketleri; emeklilik şirketleri; AND (2025+ tax periods) companies that are contract parties in yap-işlet-devret projects under 3996 sayılı Kanun and in kamu özel iş birliği projects under 6428 sayılı Kanun. The YİD/KÖİ 30% items are quoted verbatim from GİB p.12-13 (and the BDO/İTO presentation) although GİB's own rate table lists only the finance group.",
+        "additional_sources": [
+          "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2Fkurumlar-vergisi-oranlari.pdf",
+          "https://www.ito.org.tr/documents/sn-erdogan-saglam.pdf"
+        ]
+      },
+      "rate_export_earnings": {
+        "value": 20,
+        "unit": "percent",
+        "effective_from": "2023-01-01",
+        "effective_to": null,
+        "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2Fkurumlar-vergisi-oranlari.pdf",
+        "source_title": "GİB - Kurumlar Vergisi Oranları (export company row) + Oran Uygulamaları p.26",
+        "accessed": "2026-10-01",
+        "confidence": "verified-official",
+        "notes": "İhracat kazançlarına 5 puan indirimli oran (25% -> 20%) for 2023 and following tax periods (GİB p.26: 'Kurumların 2023 yılı ve izleyen vergilendirme dönemlerinde elde edilen kazançlarına ... ihracattan elde edilen kazançlara kurumlar vergisi oranının 5 puan indirimli uygulanması'). The reduction covers only the export-earnings share of the kurum kazancı; the apportionment formula was NOT researched.",
+        "additional_sources": [
+          "https://cdn.gib.gov.tr/api/gibportal-file/file/getFile?objectKey=DUYURU%2FUNIVERSAL%2F2026%2F2026_KurumlarVergisiOran.pdf"
+        ]
+      },
+      "rate_manufacturing": {
+        "value": 24,
+        "unit": "percent",
+        "effective_from": null,
+        "effective_to": null,
+        "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2Fkurumlar-vergisi-oranlari.pdf",
+        "source_title": "GİB - Kurumlar Vergisi Oranları (manufacturing row) + Oran Uygulamaları p.33",
+        "accessed": "2026-10-01",
+        "confidence": "verified-official",
+        "notes": "1 puan indirim (25% -> 24%) for kurumlar with sanayi sicil belgesi and actual manufacturing activity, on earnings arising exclusively from manufacturing (GİB p.33). Shown in the GİB table for 2023-2026; legal start date not researched. VALID FOR FY2026. From the 2027 tax period 7582 sayılı Kanun (RG 04.06.2026) introduces a 12.5% rate for qualifying production earnings - see rate_production_from_2027; how the old 1-puan reduction and the 24% row interact with it after 2026 is NOT verified."
+      },
+      "rate_production_from_2027": {
+        "value": 12.5,
+        "unit": "percent",
+        "effective_from": "2027-01-01",
+        "effective_to": null,
+        "source_url": "https://www.pwc.com.tr/tr/Hizmetlerimiz/vergi/vergi-bultenleri/2026/7582-sayili-kanun-resmi-gazetede-yayimlandi.pdf",
+        "source_title": "7582 sayılı Bazı Kanunlarda Değişiklik Yapılmasına Dair Kanun (RG 04.06.2026 sayı 33270), md.8 - KVK md.32(8) (new) - PwC Vergi Bülteni / KPMG / Grant Thornton / Alomaliye",
+        "accessed": "2026-10-01",
+        "confidence": "cross-checked",
+        "notes": "NOT valid for FY2026 - do not use in a 2026 calculator. Text quoted by PwC: 'Kurumlar vergisi oranı sanayi sicil belgesini haiz ve fiilen üretim faaliyetiyle iştigal eden kurumların münhasıran üretim faaliyetlerinden elde ettikleri kazançları ile zirai üretim faaliyetiyle iştigal eden kurumların münhasıran bu üretim faaliyetlerinden elde ettikleri kazançlarından %12,5 olarak uygulanır.' Effective for the '2027 yılı ve izleyen vergilendirme dönemleri' (special accounting periods: periods beginning in 2027). Grant Thornton adds that the 12.5% cannot be combined with the extra 5-puan export reduction of KVK md.32(7). Confirmed by four independent secondary sources (PwC PDF, KPMG, Grant Thornton, Alomaliye) that all give the same rate and start year; the Resmî Gazete text itself could not be read (access blocked). Open points: treatment in the 2027 geçici vergi periods, interaction with the 24% row, apportionment for mixed earnings, and the exact KVK paragraph number (PwC: 32(8)).",
+        "additional_sources": [
+          "https://kpmgvergi.com/yayinlar/mali-bultenler/vergi/7582-sayili-bazi-kanunlarda-degisiklik-yapilmasina-dair-kanun-resmi-gazete-de-yayimlandi/4497",
+          "https://www.grantthornton.com.tr/vergi-sirkuleri/2025---vergi-sirkuleri/7582-sayili-bazi-kanunlarda-degisiklik-yapilmasina-dair-kanun-ile-vergi-mevzuatnda-yapilan-duzenlemeler-yayimlandi/",
+          "https://www.alomaliye.com/2026/06/04/7582-sayili-kanunla-getirilen-vergisel-yenilikler/",
+          "https://www.pwc.com.tr/tr/hizmetlerimiz/vergi/bultenler/2026/7582-sayili-kanunun-vergi-duzenlemeleri.html"
+        ]
+      },
+      "rate_ipo": {
+        "value": 23,
+        "unit": "percent",
+        "effective_from": null,
+        "effective_to": null,
+        "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2Fkurumlar-vergisi-oranlari.pdf",
+        "source_title": "GİB - Kurumlar Vergisi Oranları (halka arz row)",
+        "accessed": "2026-10-01",
+        "confidence": "verified-official",
+        "notes": "2 puan indirim for 5 accounting periods after a halka arz with >= 20% free float (23%). Combined rows in the GİB table: halka arz + ihracat = 18%; halka arz + üretim = 22%."
+      },
+      "gecici_vergi_rate_kurum": {
+        "value": 25,
+        "unit": "percent",
+        "effective_from": "2025-01-01",
+        "effective_to": null,
+        "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2Fgecici-vergi-oranlari.pdf",
+        "source_title": "GİB - Geçici Vergi Oranları (table) + Oran Uygulamaları p.14",
+        "accessed": "2026-10-01",
+        "confidence": "verified-official",
+        "notes": "GİB table: kurumlar vergisi mükellefleri 25% for 2025 and 2026 (30% for the finance group; reduced rates apply to geçici vergi too: 'kurum geçici vergi oranı da indirimli olarak uygulanacaktır'). GİB p.14 verbatim: 'Kurumlar vergisi mükellefleri, cari dönemin kurumlar vergisi oranında geçici vergi öderler.' and 'Cumhurbaşkanı, geçici vergi oranını 5 puana kadar indirmeye veya tekrar kanunî seviyesine kadar getirmeye yetkilidir.'",
+        "additional_sources": [
+          "https://cdn.gib.gov.tr/api/gibportal-file/file/getFile?objectKey=DUYURU%2FUNIVERSAL%2F2026%2F2026_KurumlarVergisiOran.pdf"
+        ]
+      },
+      "gecici_vergi_rate_gelir_vergisi": {
+        "value": 15,
+        "unit": "percent",
+        "effective_from": "2025-01-01",
+        "effective_to": null,
+        "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2Fgecici-vergi-oranlari.pdf",
+        "source_title": "GİB - Geçici Vergi Oranları (gelir vergisi column)",
+        "accessed": "2026-10-01",
+        "confidence": "verified-official",
+        "notes": "Gelir vergisi mükellefleri: 15% (first bracket of GVK md.103 tarifesi) for 2025 and 2026 per GİB table. Part of the income-tax bracket scope; included here only for the geçici vergi calculator."
+      },
+      "yurt_ici_asgari_kurumlar_vergisi": {
+        "value": {
+          "rate_percent": 10,
+          "rule": "Hesaplanan kurumlar vergisi, indirim ve istisnalar düşülmeden önceki kurum kazancının %10'undan az olamaz.",
+          "legal_basis": "5520 sayılı KVK md.32/C (added by 7524 sayılı Kanun, RG 02.08.2024)",
+          "first_period": "2025 and following tax periods (special accounting periods: the one beginning in 2025)",
+          "exemption": "İlk defa faaliyete başlayan kurumlar: not applied for the first 3 accounting periods (EY); tax-exempt kurumlar also excluded (BDO/İTO) - full exception list NOT verified",
+          "applies_in_gecici_vergi": true,
+          "law_7582_change": "7582 sayılı Kanun (RG 04.06.2026) amends KVK md.32/C(2): the reductions under KVK md.10/1 (g), (h), (i) and (j) - quoted by PwC as '10 uncu maddenin birinci fıkrasının; (g), (h), (i) ve (j) bentleri kapsamındaki indirimler' (transit trade 95%/100%, nitelikli hizmet merkezi 95%/100%, İFM financial-service export) - may be deducted from the minimum-tax base; applies to returns that must be filed from 01.07.2026 for kurum kazançları of tax periods beginning 01.01.2026 or later. Grant Thornton lists only (i) and (j); KPMG says transit trade, qualified service centre and financial-service-export reductions - letters differ between sources (UNRESOLVED, immaterial for a standard calculator).",
+          "base_notes": "Kurum kazancı = ticari bilanço karı + KKEG - the specified exemptions/deductions that stay deductible (participation income, emisyon primi, Ar-Ge, serbest bölge etc. per EY). Gayrimenkul satış istisnası (KVK 5/1-e) is NOT deductible from the minimum-tax base (BDO/İTO). The exact list was not verified."
+        },
+        "unit": "percent of pre-deduction kurum kazancı",
+        "effective_from": "2025-01-01",
+        "effective_to": null,
+        "source_url": "https://www.ey.com/tr_tr/insights/tax/yurt-ici-asgari-kurumlar-vergisi",
+        "source_title": "EY Türkiye - Yurt içi asgari kurumlar vergisi",
+        "accessed": "2026-10-01",
+        "confidence": "cross-checked",
+        "notes": "10% confirmed by EY, PwC (Danıştay bulletin) and the BDO/İTO presentation. GİB's 2026 guides (Yayın 605 and 606) use the term 'Yurt İçi Asgari Kurumlar Vergisi' (Beyan Rehberi §4.3; Oran Uygulamaları pp.120-126) but the percentage was not visible in the excerpts read. WARNING: one summary of GİB's 'Oran Uygulamaları' claimed 'asgari kurumlar vergisi 1.5% of domestic revenues, effective 2020' - it contradicts every other source and is treated as a summary error (do not use). Danıştay 3. Daire (E.2024/5700, 10.02.2025) stayed execution of KVGT (Seri 1) §32.5.4 and §32.5.6 (7th paragraphs and examples 3 and 5), which denied deduction of prior-year losses in the minimum-tax base - final outcome not checked. LATE FINDING: 7582 sayılı Kanun (RG 04.06.2026) widened the deductions allowed from the minimum-tax base (see value.law_7582_change) - this is the only 2026 change to KVK md.32/C found; the 10% rate itself was not changed (no source reports a change).",
+        "additional_sources": [
+          "https://www.pwc.com.tr/tr/hizmetlerimiz/vergi/bultenler/2025/asgari-kurumlar-vergisiyle-ilgili-yurutmenin-durdurulmasi-karari.html",
+          "https://www.ito.org.tr/documents/sn-erdogan-saglam.pdf",
+          "https://cdn.gib.gov.tr/api/gibportal-file/file/getFile?objectKey=DUYURU%2FUNIVERSAL%2F2026%2F2026_KurumlarVergisiOran.pdf",
+          "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fonceki-dokumanlar%2F2026_Kurumlar_Vergisi_Beyan_Rehberi.pdf",
+          "https://www.pwc.com.tr/tr/Hizmetlerimiz/vergi/vergi-bultenleri/2026/7582-sayili-kanun-resmi-gazetede-yayimlandi.pdf",
+          "https://kpmgvergi.com/yayinlar/mali-bultenler/vergi/7582-sayili-bazi-kanunlarda-degisiklik-yapilmasina-dair-kanun-resmi-gazete-de-yayimlandi/4497",
+          "https://www.grantthornton.com.tr/vergi-sirkuleri/2025---vergi-sirkuleri/7582-sayili-bazi-kanunlarda-degisiklik-yapilmasina-dair-kanun-ile-vergi-mevzuatnda-yapilan-duzenlemeler-yayimlandi/"
+        ]
+      },
+      "kuresel_ve_yerel_asgari_tamamlayici_vergi": {
+        "value": 15,
+        "unit": "percent",
+        "effective_from": "2024-08-02",
+        "effective_to": null,
+        "source_url": "https://www.muhasebetr.com/guncelmevzuat/mevzuat_oku.php?mevzuat_id=7087",
+        "source_title": "Yerel ve Küresel Asgari Tamamlayıcı Kurumlar Vergisi Uygulama Genel Tebliği (RG 26.12.2025, sayı 33119)",
+        "accessed": "2026-10-01",
+        "confidence": "single-secondary-source",
+        "notes": "Pillar-Two style top-up tax at 15% under 5520 sayılı KVK (the Tebliğ text as summarised by muhasebetr.com says the law entered into force on 02.08.2024). Applies only to large multinational groups (the EUR 750m consolidated-revenue threshold, filing and payment dates were NOT verified). Irrelevant for a standard corporate-tax calculator; mention only as a footnote."
+      },
+      "gecici_vergi_periods": {
+        "value": {
+          "rule": "3-month periods; return filed and tax paid by the 17th day of the 2nd month after the period (23:59). 4th period (Oct-Dec; cumulative Jan-Dec) restored by 7566 sayılı Kanun (RG 19.12.2025 sayı 33112) for tax periods beginning on/after 01.01.2025.",
+          "dates_in_scope": {
+            "Q3_Jul-Sep_2026": "2026-11-17",
+            "Q4_Oct-Dec_2026": "2027-02-17",
+            "next_Q1_Jan-Mar_2027": "2027-05-17 (outside window)"
+          },
+          "scope_of_4th_period": "TÜRMOB/KPMG describe the amended GVK mükerrer md.120 for 'ticari kazanç sahipleri ve serbest meslek erbabı'; BDTurkey, vergimerkezi.com.tr and PwC state that kurumlar vergisi mükellefleri file it as well, and PwC's 2026 Mali Takvim lists the corporate 4th-period return for FY2025 (window 01/01/2026-17/02/2026). GİB's own summary table lists 'Feb 17*' for geçici vergi, with an asterisk pointing to Law 7566."
+        },
+        "unit": null,
+        "effective_from": "2025-01-01",
+        "effective_to": null,
+        "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf",
+        "source_title": "GİB - Beyanname Verme ve Ödeme Süreleri (+ TÜRMOB/KPMG/PwC/BDTurkey/vergimerkezi on 7566)",
+        "accessed": "2026-10-01",
+        "confidence": "cross-checked",
+        "notes": "17th-day rule is verified-official (GİB table). The 4th period and its scope for companies rest on secondary sources (TÜRMOB özel sirküler 154-1, KPMG, PwC 2025/35, BDTurkey, vergimerkezi) plus GİB's asterisked 'Feb 17'. vergimerkezi also says '...genellikle beyan süresi Şubat ayı sonuna kadar' - inconsistent with GİB's 17th-day rule; ignored.",
+        "additional_sources": [
+          "https://www.turmob.org.tr/ekutuphane/Read/f2dc7ad5-a781-4dc1-83a0-6174e3700af6",
+          "https://kpmgvergi.com/yayinlar/mali-bultenler/vergi/7566-sayili-kanun-resmi-gazete-de-yayimlandi/3316",
+          "https://www.pwc.com.tr/tr/Hizmetlerimiz/vergi/vergi-bultenleri/2025/7566-sayili-kanunun-vergi-duzenlemeleri.pdf",
+          "https://www.bdturkey.com/2025ten-2026ya-geciste-vergi-gundemi",
+          "https://vergimerkezi.com.tr/dorduncu-gecici-vergi-donemi-geri-geldi/",
+          "https://www.pwc.com.tr/mali-takvim"
+        ]
+      },
+      "annual_return": {
+        "value": "1st day of the 4th month after the hesap dönemi end until the last day of that month, 23:59 (calendar-year companies: 1-30 April; for FY2026: 1-30 April 2027); payment within the filing period",
+        "unit": null,
+        "effective_from": null,
+        "effective_to": null,
+        "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf",
+        "source_title": "GİB - Beyanname Verme ve Ödeme Süreleri",
+        "accessed": "2026-10-01",
+        "confidence": "verified-official",
+        "notes": "GİB Kurumlar Vergisi Beyan Rehberi (Mart 2026, Yayın 606) quote: '2025 Hesap Dönemine Ait Kurumlar Vergisi Beyannamenizi 1-30 Nisan 2026 Tarihleri Arasında Vermeyi Unutmayınız.' 30 April 2027 is a Friday (outside the Oct-Mar window).",
+        "additional_sources": [
+          "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fonceki-dokumanlar%2F2026_Kurumlar_Vergisi_Beyan_Rehberi.pdf"
+        ]
+      },
+      "law_changes_2025_2026": {
+        "value": [
+          {
+            "instrument": "7524 sayılı Kanun (RG 02.08.2024)",
+            "change": "30% rate group extended to YİD/KÖİ project companies (2025+); yurt içi asgari kurumlar vergisi 10% (KVK 32/C) from 2025 periods; Küresel/Yerel Asgari Tamamlayıcı Vergi 15%.",
+            "confidence": "cross-checked"
+          },
+          {
+            "instrument": "Danıştay 3. Daire E.2024/5700 (10.02.2025)",
+            "change": "Stay of execution on KVGT (Seri 1) provisions denying prior-year-loss deduction in the minimum-tax base.",
+            "confidence": "single-secondary-source (PwC)"
+          },
+          {
+            "instrument": "7566 sayılı Kanun (RG 19.12.2025 sayı 33112)",
+            "change": "No corporate-tax rate change; 4th geçici vergi period restored from 2025 periods; extension of some temporary provisions (e.g. Geçici 2. madde to 2035); KDV exemptions unrelated to rates.",
+            "confidence": "cross-checked"
+          },
+          {
+            "instrument": "7555 sayılı Kanun (RG 24.07.2025) + KVGT Seri No 24 (RG 04.09.2025 sayı 33007)",
+            "change": "Investment-incentive reduced corporate tax (KVK md.32/A) limited to 10 accounting periods for certificates obtained from 24.07.2025 (4 periods for other-income reduction); no change to the 25% general rate or to KVK 32/C.",
+            "confidence": "cross-checked (PwC 2025 bulletin; muhasebetr text of the Tebliğ)"
+          },
+          {
+            "instrument": "7582 sayılı Kanun (RG 04.06.2026 sayı 33270)",
+            "change": "(1) NEW 12.5% corporate tax rate for qualifying production (sanayi sicil belgesi, fiilen üretim) and agricultural-production earnings from the 2027 tax period (KVK md.32(8)); (2) KVK md.10/1 (i) transit-trade and (j) nitelikli hizmet merkezi deductions raised to 95% (100% in İFM/approved zones) from returns due 01.07.2026 for FY2026 earnings; (3) KVK 32/C(2) lets those reductions be deducted in the minimum-tax base (same dates); (4) İFM financial-service export 100% deduction extended from 2031 to 2047; (5) varlık barışı (KVK Geçici md.19) until 31.07.2027 - 0% to 4% by holding commitment, 5% without commitment, +0.5 puan for notifications 01.01.2027-31.07.2027; (6) 6183 md.48: max tecil period 36 -> 72 months and larger unsecured-tecil limit (1,000,000 TL), effective 04.06.2026; (7) GVK mükerrer 20/D 20-year foreign-income exemption and 1% inheritance tax for relocating individuals (01.01.2026+). No change to the 25% general rate, the 10% minimum tax rate, KDV, damga vergisi or gecikme zammı.",
+            "confidence": "cross-checked (PwC PDF, KPMG, Grant Thornton, Alomaliye, fisle.co title); Resmî Gazete text unread"
+          },
+          {
+            "instrument": "7590 sayılı Kanun (RG 31.07.2026 sayı 33326)",
+            "change": "Nuclear-power-plant incentives (KVK Geçici md.20 örtülü sermaye 25%, KDV Geçici md.47, damga vergisi istisnası), ÖTV minimum maktu amounts for cars; nothing on corporate tax rates, minimum tax, geçici vergi, gecikme zammı or SMM.",
+            "confidence": "cross-checked (PwC, BDTurkey, Cott, Alomaliye)"
+          },
+          {
+            "instrument": "Yerel ve Küresel Asgari Tamamlayıcı KV Uygulama Genel Tebliği (RG 26.12.2025 sayı 33119)",
+            "change": "Implementing communiqué for the 15% top-up taxes.",
+            "confidence": "single-secondary-source"
+          },
+          {
+            "instrument": "7571 sayılı Kanun md.34 (RG 25.12.2025 sayı 33118) - VUK Geçici md.37 (new)",
+            "change": "NO enflasyon düzeltmesi for the 2025 hesap dönemi (geçici vergi dönemleri included) and for the 2026 and 2027 hesap dönemleri (geçici vergi dönemleri included), whether or not the VUK Geçici 33 conditions are met; special accounting periods: years ending in 2026, 2027, 2028; exception: taxpayers within VUK md.298/A(9) (precious-metals traders); the President may extend by up to three more periods. RESOLVES the earlier conflict (BDTurkey = no adjustment for 2025-2027, consistent with 7571; PwC's 'required in the 4th period' note pre-dated the law). Consequence for the calculators: take the 2026 matrah from the unadjusted VUK financial statements - no enflasyon düzeltmesi line.",
+            "confidence": "cross-checked (Andersen 2025/54, PwC 7571 bulletin; also Cott, T24, Moore, muhasebetr titles)"
+          }
+        ],
+        "unit": null,
+        "effective_from": "2024-08-02",
+        "effective_to": null,
+        "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFile?objectKey=DUYURU%2FUNIVERSAL%2F2026%2F2026_KurumlarVergisiOran.pdf",
+        "source_title": "GİB / EY / PwC / KPMG / BDTurkey (see items)",
+        "accessed": "2026-10-01",
+        "confidence": "cross-checked",
+        "notes": "Chronological list of 2024-2026 corporate-tax-relevant instruments found during the research. 7582 and 7590 were found only in a later verification sweep - other 2026 omnibus laws could still exist; checks of the 7582/7590/7555 bulletins found none relevant to rates.",
+        "additional_sources": [
+          "https://www.ey.com/tr_tr/insights/tax/yurt-ici-asgari-kurumlar-vergisi",
+          "https://www.pwc.com.tr/tr/hizmetlerimiz/vergi/bultenler/2025/asgari-kurumlar-vergisiyle-ilgili-yurutmenin-durdurulmasi-karari.html",
+          "https://kpmgvergi.com/yayinlar/mali-bultenler/vergi/7566-sayili-kanun-resmi-gazete-de-yayimlandi/3316",
+          "https://www.bdturkey.com/2025ten-2026ya-geciste-vergi-gundemi",
+          "https://www.pwc.com.tr/tr/Hizmetlerimiz/vergi/vergi-bultenleri/2025/7566-sayili-kanunun-vergi-duzenlemeleri.pdf",
+          "https://www.pwc.com.tr/tr/Hizmetlerimiz/vergi/vergi-bultenleri/2026/7582-sayili-kanun-resmi-gazetede-yayimlandi.pdf",
+          "https://kpmgvergi.com/yayinlar/mali-bultenler/vergi/7582-sayili-bazi-kanunlarda-degisiklik-yapilmasina-dair-kanun-resmi-gazete-de-yayimlandi/4497",
+          "https://www.grantthornton.com.tr/vergi-sirkuleri/2025---vergi-sirkuleri/7582-sayili-bazi-kanunlarda-degisiklik-yapilmasina-dair-kanun-ile-vergi-mevzuatnda-yapilan-duzenlemeler-yayimlandi/",
+          "https://www.pwc.com.tr/tr/hizmetlerimiz/vergi/bultenler/2026/7590-sayili-kanunun-vergi-duzenlemeleri.html",
+          "https://www.pwc.com.tr/tr/hizmetlerimiz/vergi/bultenler/2025/7555-sayili-kanunun-vergi-duzenlemeleri.html",
+          "https://www.muhasebetr.com/guncelmevzuat/mevzuat_oku.php?mevzuat_id=7003",
+          "https://tr.andersen.com/tr/images/pdf/and_54-enflasyon-duzeltmesi-uygulanmayacaktir.pdf",
+          "https://www.pwc.com.tr/tr/hizmetlerimiz/vergi/bultenler/2025/enflasyon-duzeltmesi-uygulamasini-erteleyen-7571-sayili-kanun.html",
+          "https://www.cottgroup.com/tr/mevzuat/item/2025-2027-yillari-arasinda-enflasyon-duzeltmesi-yapilmayacak",
+          "https://t24.com.tr/amp/yazarlar/erdogan-saglam/2025-2026-ve-2027-yilarinda-sartlarin-olusup-olusmadigina-bakilmaksizin-enflasyon-duzeltmesi-yapilmayacak,53021",
+          "https://www.moore.com.tr/tr/2025-2026-ve-2027-yillarinda-enflasyon-duzeltmesi-yapilmayacagina-iliskin-7571-sayili-kanun-resmi-gazetede-yayimlanmistir/"
+        ]
+      }
+    },
+    "serbest_meslek_makbuzu": {
+      "stopaj_standard": {
+        "value": 20,
+        "unit": "percent of brüt (KDV hariç)",
+        "effective_from": null,
+        "effective_to": null,
+        "source_url": "https://www.turmob.org.tr/arsiv/mbs/resmigazete/-2025_serbestmeslek.pdf",
+        "source_title": "GİB - Serbest Meslek Kazancı Elde Eden Mükellefler İçin Vergi Rehberi (Şubat 2025, Yayın No 549), p.11",
+        "accessed": "2026-10-01",
+        "confidence": "verified-official",
+        "notes": "GVK md.94/2: 'b) Diğerlerinden %20' oranında kesinti yapılır ('ödemeyi yapanlar tarafından'). Rate also in İSMMMO's GVK 94 table (page undated; its navigation references 2026 amounts). Note the sub-paragraph letters: the %20 rate is md.94/2-b (not 2-a). This is the 2025 edition of the guide; no 2026 amendment of GVK 94/2 found (summaries of Laws 7566, 7582 (RG 04.06.2026) and 7590 (RG 31.07.2026) by PwC/KPMG/Grant Thornton/BDTurkey list none; absence of evidence, Resmî Gazete not readable). Withholding applies only when the payer is a withholding agent (kamu idareleri, kurumlar vergisi mükellefleri, bilanço esasına göre defter tutanlar etc. under GVK md.94/1 - full list NOT read); faturaport.com shows 0% stopaj for individual consumers.",
+        "additional_sources": [
+          "https://ismmmo.org.tr/Mevzuat/Gelir-Vergisi-Stopaj-Oranlari-GVK-Md-94---421",
+          "https://faturaport.com/blog/e-fatura/serbest-meslek-makbuzu-nasil-hesaplanir-2026-detayli-rehber"
+        ]
+      },
+      "stopaj_gvk18": {
+        "value": 17,
+        "unit": "percent of brüt (KDV hariç)",
+        "effective_from": null,
+        "effective_to": null,
+        "source_url": "https://www.turmob.org.tr/arsiv/mbs/resmigazete/-2025_serbestmeslek.pdf",
+        "source_title": "GİB - Serbest Meslek Kazancı Vergi Rehberi (Şubat 2025), p.11",
+        "accessed": "2026-10-01",
+        "confidence": "verified-official",
+        "notes": "GVK md.94/2-a: '(Noterlere serbest meslek faaliyetlerinden dolayı yapılan ödemeler hariç); a) Gelir Vergisi Kanununun 18 inci maddesi kapsamına giren serbest meslek işleri dolayısıyla yapılan ödemelerden %17, b) Diğerlerinden %20, oranında kesinti yapılır.' (GİB guide p.11, verbatim). The kinds of work that fall under GVK md.18 were not researched. Most calculators use 20% only - offer 17% as an option."
+      },
+      "kdv_rate_default": {
+        "value": 20,
+        "unit": "percent",
+        "effective_from": "2023-07-10",
+        "effective_to": null,
+        "source_url": "https://www.pwc.com.tr/tr/hizmetlerimiz/vergi/dolayli-vergi/bultenler/kdv-otv-bultenleri/2023/kdv-oranlarinda-degisiklik.html",
+        "source_title": "see kdv.rate_general",
+        "accessed": "2026-10-01",
+        "confidence": "cross-checked",
+        "notes": "SMM services are normally taxed at the general rate. faturaport.com (single source) says 10% for healthcare services; other professions may carry 10%/exempt treatment - NOT researched, so keep the KDV rate user-selectable (0/1/10/20)."
+      },
+      "kdv_tevkifat_cases": {
+        "value": {
+          "danismanlik_denetim_etut_plan_proje": {
+            "rate": "9/10",
+            "confidence": "cross-checked",
+            "note": "GİB özelgesi (03.02.2023, E-62030549-120[65-2021/771]-166939): 'Teknik, ekonomik, mali ve hukuki alanda sunulan danışmanlık, müşavirlik, denetim ve benzeri hizmetler' -> (9/10) KDV tevkifatı. yontemymm.com.tr table (güncelleme 05.01.2026) lists 'Etüt, Plan-Proje, Danışmanlık, Denetim ve Benzeri Hizmetler' at 9/10 for designated buyers."
+          },
+          "yapim_isleri_ile_birlikte_muhendislik_mimarlik": {
+            "rate": "4/10",
+            "confidence": "single-secondary-source",
+            "note": "yontemymm.com.tr table (05.01.2026)."
+          },
+          "yapi_denetim": {
+            "rate": "9/10",
+            "confidence": "single-secondary-source",
+            "note": "yontemymm.com.tr table (05.01.2026)."
+          },
+          "who_applies": "Designated buyers per KDV GUT I/C-2.1.3.1/b (yontemymm: kamu kurumları, bankalar, sigorta şirketleri, sendikalar, vakıf üniversiteleri, KİT'ler, KDV mükellefi kurumlar vb.); the buyer list was NOT verified from the Tebliğ itself.",
+          "minimum_amount_conflict": "GİB özelgesi (Şubat 2023): KDV dahil bedel 2.000 TL'yi aşmadığı takdirde tevkifat uygulanmaz. yontemymm.com.tr (Ocak 2026): 'Sınır tutar 12.000 TL (2026) KDV dahil'. faturaport.com (Nisan 2026, nakliye context): 'kısmi KDV tevkifatına konu işlemler için tevkifatlı fatura düzenleme sınırı KDV dahil 12.000 TL', attributed to a 588 Sıra No'lu VUK Genel Tebliği effective 01.01.2026 (second secondary source, not checked against the Tebliğ). The 2026 KDV GUT amendments (Seri 56: only the 164,000 TL iade limit; Seri 57: exemption/refund items) do not touch the tevkifat rates or this threshold. Inference only: the limit was probably raised from 2,000 TL (Feb 2023) to 12,000 TL (2026, KDV dahil) - but the legal source of the 12,000 TL is not confirmed and the point remains UNRESOLVED: do not hard-code; verify in the current KDV GUT (I/C-2.1.3) before launch."
+        },
+        "unit": null,
+        "effective_from": null,
+        "effective_to": null,
+        "source_url": "https://www.gib.gov.tr/node/168110/pdf",
+        "source_title": "GİB özelgesi 03.02.2023 (danışmanlık 9/10) + yontemymm.com.tr KDV kısmi tevkifat tablosu (05.01.2026)",
+        "accessed": "2026-10-01",
+        "confidence": "cross-checked",
+        "notes": "Only the 9/10 danışmanlık/denetim case is supported by an official GİB document; the others rest on one practitioner site. The full KDV GUT list was not read. KDV tevkifatı applies only if the buyer is a designated withholding agent; otherwise the SMM carries full KDV.",
+        "additional_sources": [
+          "https://www.yontemymm.com.tr/pratik-bilgiler/kdvde-kismi-tevkifat-tablosu",
+          "https://faturaport.com/blog/vergi/nakliye-tevkifat-siniri-2026-guncel-tutar-hesaplama-ve-uygulama-rehberi",
+          "https://www.alomaliye.com/2025/12/31/katma-deger-vergisi-genel-uygulama-tebligi-seri-no-56/",
+          "https://www.pwc.com.tr/tr/hizmetlerimiz/vergi/dolayli-vergi/bultenler/kdv-otv-bultenleri/2026/kdv-genel-uygulama-tebliginde-degisiklik.html"
+        ]
+      },
+      "formulas": {
+        "value": {
+          "inputs": "B = brüt serbest meslek bedeli (KDV hariç); s = stopaj rate (0.20 / 0.17 / 0); k = KDV rate; t = tevkifat fraction (0, 0.2, 0.4, 0.9 ...)",
+          "brut_to_tahsil": "stopaj = B x s ; KDV = B x k ; tevkif edilen KDV = KDV x t ; tahsil edilecek (net ödeme) = B - stopaj + KDV - tevkif edilen KDV",
+          "net_ucret_kdv_haric": "B - stopaj = B x (1 - s)   (faturaport: 'Net Ücret = Brüt Tutar x (1 - Stopaj Oranı)')",
+          "tahsilattan_brute": "B = tahsil / (1 - s + k x (1 - t)) ; from net ücret (KDV hariç, stopaj sonrası): B = net / (1 - s)  (faturaport: 'Brüt Tutar = Net Tutar ÷ (1 - Stopaj Oranı)')",
+          "from_kdv_dahil_brut": "if the user enters a KDV-included fee F: B = F / (1 + k)"
+        },
+        "unit": null,
+        "effective_from": null,
+        "effective_to": null,
+        "source_url": "https://faturaport.com/blog/e-fatura/serbest-meslek-makbuzu-nasil-hesaplanir-2026-detayli-rehber",
+        "source_title": "faturaport.com - Serbest Meslek Makbuzu Nasıl Hesaplanır (2026)",
+        "accessed": "2026-10-01",
+        "confidence": "cross-checked",
+        "notes": "Stopaj base is the brüt fee EXCLUDING KDV (GİB guide / faturaport). The first three formulas and the 10,000 TL example are published by faturaport; the tevkifat and tahsilat-to-brüt forms are derived arithmetically."
+      },
+      "e_smm": {
+        "value": "mandatory for non-exempt serbest meslek erbabı",
+        "unit": null,
+        "effective_from": "2020-06-01",
+        "effective_to": null,
+        "source_url": "https://www.turmob.org.tr/arsiv/mbs/resmigazete/-2025_serbestmeslek.pdf",
+        "source_title": "GİB - Serbest Meslek Kazancı Vergi Rehberi (Şubat 2025), p.8",
+        "accessed": "2026-10-01",
+        "confidence": "verified-official",
+        "notes": "'vergiden muaf olmayan serbest meslek erbabınca düzenlenen serbest meslek makbuzları, 1/6/2020 tarihinden itibaren elektronik serbest meslek makbuzu (e-SMM) olarak düzenlenecektir'; two copies, one to the customer."
+      }
+    },
+    "kidem_tazminati": {
+      "tavan_2026_h1": {
+        "value": 64948.77,
+        "unit": "TRY per year of service",
+        "effective_from": "2026-01-01",
+        "effective_to": "2026-06-30",
+        "source_url": "https://www.csgb.gov.tr/Media/zewm15ah/kidem-tazminati-yillar-1980-2026.pdf",
+        "source_title": "T.C. Çalışma ve Sosyal Güvenlik Bakanlığı - Kıdem Tazminatı Yıllık Tavan Miktarı (1980-2026) PDF",
+        "accessed": "2026-10-01",
+        "confidence": "verified-official",
+        "notes": "Official CSGB table row '01.01.2026 - 30.06.2026 (**) 64.948,77'. Footnote (**) refers to the 2015/8057 decree (pension ratio 200% -> 215%, effective 01.09.2015)."
+      },
+      "tavan_2026_h2": {
+        "value": 73729.87,
+        "unit": "TRY per year of service",
+        "effective_from": "2026-07-01",
+        "effective_to": "2026-12-31",
+        "source_url": "https://www.csgb.gov.tr/yayinlar/calisma-hayati-istatistikleri-e-bulteni/temmuz-2026/ucret-ve-sendikal-istatistikler.html",
+        "source_title": "ÇSGB Çalışma Hayatı İstatistikleri E-Bülteni - Temmuz 2026 (Ücret ve Sendikal İstatistikler)",
+        "accessed": "2026-10-01",
+        "confidence": "verified-official",
+        "notes": "OFFICIAL ANNOUNCEMENT: Hazine ve Maliye Bakanlığı Kamu Mali Yönetim ve Dönüşüm Genel Müdürlüğü genelgesi dated 02.07.2026 (reference 27998389-010.06.02-4870801), quoted by TÜRMOB document 09.07.2026/98-1: '1 Temmuz 2026 - 31 Aralık 2026 tarihleri arasında geçerli olmak üzere uygulanacak vergiden istisna kıdem tazminatı tutarı 73.729,87 TL'dir.' (legal basis cited there: GVK provisions on the tax-exempt kıdem tazminatı amount, as amended by Law 7103 of 21.03.2018). The genelge PDF itself was NOT readable (kmyd.hmb.gov.tr is a JavaScript site; no direct URL found) - the date/reference come from TÜRMOB's quotation. CSGB confirms the same figure in two official e-bulletins: July 2026 and August 2026 (Sayı 6) - text: 'Kıdem tazminatı tavanı 2026 yılının ikinci yarısında 73.729,87 TL'ye ulaşmıştır'. Arithmetic cross-check: 64,948.77 x 1.1352 = 73,729.87 (+13.52%, the increase quoted by Alomaliye 06.07.2026). Also seen only as titles: Verginet ('Kıdem Tazminatı Tavanı 1/7/2026 - 31/12/2026 Dönemi için 73.729,87 TL Olarak Belirlendi'; page itself WAF-blocked), işletmerotası.com.tr, mertanilguler.av.tr, prozon.net, kariyer.net, Çalışma Genel Müdürlüğü X post. Legal basis of the ceiling (background knowledge, not in the text read): 1475 sayılı Kanun md.14 / ceiling = highest civil-servant retirement gratuity per service year. CSGB's separate 'Kıdem Tazminatı (Temmuz 2026)' PDF and the July 2026 Çalışma Genel Müdürlüğü duyuru page could not be read; the official 1980-2026 PDF as read ended at the 01.01.2026-30.06.2026 row.",
+        "additional_sources": [
+          "https://www.turmob.org.tr/ekutuphane/download/4bca3949-fb63-40cd-90c6-3f5e2a0e69d4",
+          "https://csgb.gov.tr/yayinlar/calisma-hayati-istatistikleri-e-bulteni/agustos-2026/ucret-ve-sendikal-istatistikler.html",
+          "https://www.csgb.gov.tr/%C4%B1statistikler/calisma-hayati-%C4%B1statistikleri/kidem-tazminati-tavan-miktari/",
+          "https://www.alomaliye.com/2026/07/06/2026-kidem-tazminati-tavani-2-donem-guncel-tutar-ve-merak-edilenler/",
+          "https://x.com/cgm_csgb/status/2079157224333562088",
+          "https://www.verginet.net/dtt/11/sgk-2026-23.aspx"
+        ]
+      },
+      "tavan_2025_reference": {
+        "value": {
+          "2025-01-01_to_2025-06-30": 46655.43,
+          "2025-07-01_to_2025-12-31": 53919.68
+        },
+        "unit": "TRY per year of service",
+        "effective_from": "2025-01-01",
+        "effective_to": "2025-12-31",
+        "source_url": "https://www.csgb.gov.tr/Media/zewm15ah/kidem-tazminati-yillar-1980-2026.pdf",
+        "source_title": "ÇSGB Kıdem Tazminatı Yıllık Tavan Miktarı (1980-2026) PDF",
+        "accessed": "2026-10-01",
+        "confidence": "verified-official",
+        "notes": "For reference only. The CSGB figure for H1 2025 is 46.655,43 (a figure of 46.655,64 sometimes quoted from memory is NOT the official value)."
+      },
+      "calculation_rule": {
+        "value": {
+          "days_per_full_year": 30,
+          "partial_years": "Periods beyond a full year are pro-rated; months/12 and days/365 is the common calculator convention (the day-count base is NOT stated in the CSGB FAQ).",
+          "ceiling": "The amount payable per full year of service cannot exceed the tavan in force on the termination date (tavan = max civil-servant retirement gratuity per service year; 1475 sayılı Kanun md.14 reference = background knowledge).",
+          "wage_basis": "giydirilmiş brüt ücret = base pay plus all regular cash and in-kind benefits (yol, yemek, düzenli ikramiye, prim vb.)",
+          "min_service_for_entitlement": "1 year with the same employer",
+          "formula": "kıdem = (yıl + ay/12 + gün/365) x min(giydirilmiş aylık brüt ücret, tavan(fesih tarihi))"
+        },
+        "unit": null,
+        "effective_from": null,
+        "effective_to": null,
+        "source_url": "https://www.csgb.gov.tr/sikca-sorulan-sorular/calisma-genel-mudurlugu/%C4%B1s-kanunu/",
+        "source_title": "ÇSGB - İş Kanunu Sıkça Sorulan Sorular (Çalışma Genel Müdürlüğü)",
+        "accessed": "2026-10-01",
+        "confidence": "verified-official",
+        "notes": "CSGB quotes: 'Her tam çalışma yılı için 30 günlük brüt ücret tutarında kıdem tazminatı ödenmektedir. Bir yıldan artan süreler de oranlanarak hesaplamaya dahil edilmektedir.'; 'Her tam çalışma yılı için ödenen kıdem tazminatı tutarı, fesih tarihinde geçerli olan kıdem tazminatı tavanı ile sınırlandırılmıştır.'; 'Kendisine düzenli olarak sağlanan tüm para ve para ile ölçülebilen menfaatler (yol parası, yemek parası, düzenli olmak koşuluyla ikramiye ödemeleri vb.)'. Official example (Q36): 10 years -> 300 days of wages. Open point: applying the tavan to the 30-day pay of each year (as modelled) is the standard reading and matches the CSGB sentence, but the day-count base for partial years is a calculator choice."
+      },
+      "damga_vergisi": {
+        "value": 7.59,
+        "unit": "per mille (binde 7,59 = 0.759%)",
+        "effective_from": null,
+        "effective_to": null,
+        "source_url": "https://www.kazimceylan.av.tr/kidem-ihbar-tazminati-vergi-kesintisi",
+        "source_title": "Av. Kazım Ceylan Hukuk Bürosu - Kıdem ve İhbar Tazminatı Vergi Kesintisi (21.09.2026)",
+        "accessed": "2026-10-01",
+        "confidence": "cross-checked",
+        "notes": "Damga vergisi on gross kıdem tazminatı: binde 7,59, no ceiling/floor (example: 120,000 TL gross -> 910.80 TL damga -> 119,089.20 net). Alomaliye (06.07.2026) gives the same 0.759%. Both secondary; 488 sayılı DVK (2) sayılı tablo was not read.",
+        "additional_sources": [
+          "https://www.alomaliye.com/2026/07/06/2026-kidem-tazminati-tavani-2-donem-guncel-tutar-ve-merak-edilenler/"
+        ]
+      },
+      "gelir_vergisi_status": {
+        "value": {
+          "kidem_tazminati": "Gelir vergisinden istisna (GVK md.25/7) up to the legal amount/tavan; the part above the tavan loses the exemption and is taxed at the employee's cumulative bracket.",
+          "ihbar_tazminati": "Not exempt: ücret niteliğinde -> gelir vergisi tevkifatı at the employee's cumulative bracket + damga vergisi 0.759%. Kazım Ceylan notes the asgari ücret (GV/damga) exemption (since 2022) may apply (unverified detail; 2026 asgari ücret brüt 33,030 TL / net 28,075.50 TL per CSGB bulletin).",
+          "sgk_prim": "Both kıdem and ihbar tazminatı are outside prime esas kazanç (no SGK premium)."
+        },
+        "unit": null,
+        "effective_from": null,
+        "effective_to": null,
+        "source_url": "https://www.kazimceylan.av.tr/kidem-ihbar-tazminati-vergi-kesintisi",
+        "source_title": "Av. Kazım Ceylan Hukuk Bürosu (21.09.2026) + Alomaliye (06.07.2026) + CSGB e-bulletin (asgari ücret)",
+        "accessed": "2026-10-01",
+        "confidence": "cross-checked",
+        "notes": "GVK md.25/7 and the tax treatment come from two secondary sources; GİB's 2026 Ücret Geliri guide (intvrg.gib.gov.tr PDF) could not be accessed.",
+        "additional_sources": [
+          "https://www.alomaliye.com/2026/07/06/2026-kidem-tazminati-tavani-2-donem-guncel-tutar-ve-merak-edilenler/",
+          "https://www.csgb.gov.tr/yayinlar/calisma-hayati-istatistikleri-e-bulteni/temmuz-2026/ucret-ve-sendikal-istatistikler.html"
+        ]
+      }
+    },
+    "ihbar_tazminati": {
+      "ihbar_sureleri": {
+        "value": [
+          {
+            "service": "6 aydan az",
+            "weeks": 2,
+            "days": 14
+          },
+          {
+            "service": "6 aydan 1,5 yıla kadar",
+            "weeks": 4,
+            "days": 28
+          },
+          {
+            "service": "1,5 yıldan 3 yıla kadar",
+            "weeks": 6,
+            "days": 42
+          },
+          {
+            "service": "3 yıldan fazla",
+            "weeks": 8,
+            "days": 56
+          }
+        ],
+        "unit": "weeks / calendar days",
+        "effective_from": null,
+        "effective_to": null,
+        "source_url": "https://www.csgb.gov.tr/sikca-sorulan-sorular/calisma-genel-mudurlugu/%C4%B1s-kanunu/",
+        "source_title": "ÇSGB - İş Kanunu Sıkça Sorulan Sorular (4857 sayılı Kanun md.17)",
+        "accessed": "2026-10-01",
+        "confidence": "verified-official",
+        "notes": "CSGB quotes the four bands ('iki hafta', 'dört hafta', 'altı hafta', 'sekiz hafta') and: 'Bildirim süreleri bölünemez, kısmen uygulanamaz...'; 'İş sözleşmesini belirlenen bildirim sürelerine uymaksızın fesheden taraf, söz konusu sürenin ücretini ihbar tazminatı olarak diğer tarafa ödemek durumundadır.' Boundary behaviour at exactly 6 months / 1.5 years / 3 years is NOT spelled out in the FAQ (statute wording: 'altı aydan az', 'altı aydan bir buçuk yıla kadar', 'bir buçuk yıldan üç yıla kadar', 'üç yıldan fazla'); treating exactly 3 years as the 6-week band and exactly 6 months as the 4-week band is an interpretation."
+      },
+      "ihbar_tazminati_formula": {
+        "value": "ihbar tazminatı = (giydirilmiş aylık brüt ücret / 30) x ihbar süresi (gün)",
+        "unit": "TRY",
+        "effective_from": null,
+        "effective_to": null,
+        "source_url": "https://www.csgb.gov.tr/sikca-sorulan-sorular/calisma-genel-mudurlugu/%C4%B1s-kanunu/",
+        "source_title": "ÇSGB - İş Kanunu SSS (ihbar tazminatı = sürenin ücreti)",
+        "accessed": "2026-10-01",
+        "confidence": "cross-checked",
+        "notes": "The 30-day divisor and use of the giydirilmiş ücret are standard practice (CSGB speaks of 'sürenin ücreti' and defines the wage components for kıdem). That the kıdem tavanı does NOT apply to ihbar tazminatı is background knowledge (not stated in the sources read) - unverified."
+      }
+    },
+    "gecikme_zammi": {
+      "monthly_rate": {
+        "value": 3.7,
+        "unit": "percent per month (each month separately)",
+        "effective_from": "2025-11-13",
+        "effective_to": null,
+        "source_url": "https://www.tbb.gov.tr/tr/mevzuat-duyurulari/6183-sayili-amme-alacaklarinin-tahsil-usulu-hakkinda-kanunun-51-inci-maddesinin-birinci-fikrasinda-yer-alan-gecikme-zammi-oraninin-her-ay",
+        "source_title": "Cumhurbaşkanı Kararı 10556 (RG 13.11.2025 sayı 33076) - 6183 sayılı Kanun md.51/1 gecikme zammı oranı",
+        "accessed": "2026-10-01",
+        "confidence": "cross-checked",
+        "notes": "Rate in force on 2026-10-01 as far as could be established: 3.7% per month, effective 13.11.2025 (published and effective the same day), replacing 4.5% (CK 8484, RG 21.05.2024 sayı 32552, effective 21.05.2024). Confirmed for the decision itself by TBB mevzuat duyuruları (title: '... Her Ay İçin Ayrı Ayrı Uygulanmak Üzere %3,7 Olarak Belirlenmesi Hakkında Karar (Karar Sayısı: 10556)'), KPMG Vergi, PwC Bülten 2025/33, Andersen 44-2025, T24, GAİB (17.11.2025), İstanbul Ticaret Gazetesi (13.11.2025) and STB (14.11.2025). The primary Resmî Gazete PDF could NOT be accessed. NO LATER CHANGE FOUND: dated 2026 sources still quote 3.7%/month - Osman Arıoğlu column of 19.06.2026 ('Halen aylık gecikme zammı oranı yüzde 3.70 olup yıllık karşılığı yaklaşık yüzde 44.4'), müşavirler kulübü calculator ('Son güncelleme: 10 Temmuz 2026 - Gecikme zammı 13.11.2025'ten itibaren aylık %3,70'), evrakai.com (page last updated 28.09.2026: 'aylık oran yüzde 3,7'), hesaplama.net. The 2026 tax laws that were summarised (7582 of 04.06.2026 and 7590 of 31.07.2026) leave 6183 md.51 untouched (PwC/KPMG/Grant Thornton/Cott/Alomaliye say nothing on it). Latest dated confirmation therefore 28.09.2026 (secondary) - still not the Resmî Gazete; a one-minute check on resmigazete.gov.tr before launch is advised. Some sites (e.g. savun.av.tr, dated 13.05.2026) still advertise 4.5% 'since 1 April 2024' - stale/wrong.",
+        "additional_sources": [
+          "https://kpmgvergi.com/yayinlar/mali-bultenler/vergi/10556-sayili-cumhurbaskani-karariyla-gecikme-zammi-orani-3-7-olarak-yeniden-belirlendi/3295",
+          "https://www.pwc.com.tr/tr/hizmetlerimiz/vergi/bultenler/2025/yeni-gecikme-zammi-gecikme-faizi-pismanlik-zammi-ve-tecil-faizi-orani.html",
+          "https://tr.andersen.com/tr/images/pdf/and_44-2025-gecikme-ve-tecil-faizi-oranlari.pdf",
+          "https://t24.com.tr/yazarlar/murat-bati/vergide-zam-ve-faizler-dusuruldu-gecikme-zammi-orani-nasil-uygulanacak,52375",
+          "https://www.resmigazete.gov.tr/eskiler/2025/11/20251113-2.pdf",
+          "https://istanbulticaretgazetesi.com/yazarlar/osman-arioglu/tecil-faizi-yuzde-29a-indirildi",
+          "https://musavirlerkulubu.com.tr/araclar/gecikme-faizi",
+          "https://evrakai.com/blog/gecikme-zammi-ve-faizi-rehberi",
+          "https://gecikme-zammi.hesaplama.net/",
+          "https://www.gaib.org.tr/tr/hali/duyurular/kamu-alacaklarinda-gecikme-zammi-ve-tecil-faiz-oranlari-indirildi-8279.html",
+          "https://istanbulticaretgazetesi.com/bakanliktan-kamu-alacaklari-icin-duzenleme-gecikme-zammi-ve-faiz-oranlari-dusuruldu",
+          "https://www.stb-cpaturkey.com/gecikme-zammi-tecil-faizinde-yeni-oranlar-aciklandi/"
+        ]
+      },
+      "rate_history_2025_2026": {
+        "value": [
+          {
+            "from": "2022-07-21",
+            "to": null,
+            "monthly_percent": 2.5,
+            "instrument": "CK 5801, RG 21.07.2022 sayı 31899 (previous 1.6%)",
+            "confidence": "single-secondary-source (GSG Hukuk) - pre-window context only"
+          },
+          {
+            "from": "2024-05-21",
+            "to": "2025-11-12",
+            "monthly_percent": 4.5,
+            "instrument": "CK 8484, RG 21.05.2024 sayı 32552 (replaced 3.5% per GSG Hukuk; the date of the 3.5% step was not researched)",
+            "confidence": "cross-checked (Alomaliye/SGK genelge text, Cott, KPMG, Andersen, T24)"
+          },
+          {
+            "from": "2025-11-13",
+            "to": null,
+            "monthly_percent": 3.7,
+            "instrument": "CK 10556, RG 13.11.2025 sayı 33076",
+            "confidence": "cross-checked"
+          },
+          {
+            "note": "No change to the 6183 md.51 rate was found between 2025-11-13 and 2026-10-01 (dated 2026 sources through 28.09.2026 still say 3.7%). The tecil faizi (not gecikme zammı) DID change temporarily in 2026: 29% for applications 16.06.2026-31.08.2026 (see tecil_faizi_temporary_29_2026).",
+            "confidence": "cross-checked (absence of a later decision is not provable from the Resmî Gazete itself)"
+          }
+        ],
+        "unit": null,
+        "effective_from": "2024-05-21",
+        "effective_to": null,
+        "source_url": "https://www.cottgroup.com/tr/mevzuat/item/gecikme-zammi-ve-tecil-faiz-oranlari-degisti",
+        "source_title": "Cott / KPMG / Andersen / TBB / Alomaliye (see items)",
+        "accessed": "2026-10-01",
+        "confidence": "cross-checked",
+        "notes": "Change history for the window 2025-2026: one change only (13.11.2025). The steps between 2.5% (21.07.2022) and 4.5% (21.05.2024), including the 3.5% step, are outside the window and were not researched.",
+        "additional_sources": [
+          "https://kpmgvergi.com/yayinlar/mali-bultenler/vergi/10556-sayili-cumhurbaskani-karariyla-gecikme-zammi-orani-3-7-olarak-yeniden-belirlendi/3295",
+          "https://tr.andersen.com/tr/images/pdf/and_44-2025-gecikme-ve-tecil-faizi-oranlari.pdf",
+          "https://www.tbb.gov.tr/tr/mevzuat-duyurulari/6183-sayili-amme-alacaklarinin-tahsil-usulu-hakkinda-kanunun-51-inci-maddesinin-birinci-fikrasinda-yer-alan-gecikme-zammi-oraninin-her-ay",
+          "https://www.alomaliye.com/2024/05/22/6183-sayili-kanunda-belirtilen-tecil-faizi-ile-gecikme-zammi-oranlarinda-degisiklik/amp/",
+          "https://www.gsghukuk.com/tr/bultenler-yayinlar/duyurular/yeni-gecikme-zammi-ve-tecil-faizi-orani.html",
+          "https://www.gsghukuk.com/tr/bultenler-yayinlar/duyurular/gecikme-zammi-tecil-faizi-ve-kanuni-faiz-oranlari-guncellenmistir.html"
+        ]
+      },
+      "gecikme_faizi_vuk_112": {
+        "value": 3.7,
+        "unit": "percent per month",
+        "effective_from": "2025-11-13",
+        "effective_to": null,
+        "source_url": "https://kpmgvergi.com/yayinlar/mali-bultenler/vergi/10556-sayili-cumhurbaskani-karariyla-gecikme-zammi-orani-3-7-olarak-yeniden-belirlendi/3295",
+        "source_title": "KPMG Vergi - 10556 sayılı CK ile gecikme zammı oranı %3,7",
+        "accessed": "2026-10-01",
+        "confidence": "cross-checked",
+        "notes": "Gecikme faizi follows the gecikme zammı rate: 3.7%/month from 13.11.2025 (previously 4.5%) per KPMG, PwC 2025/33, Andersen 44-2025. Part-month treatment for VUK 112 is reported to differ from 6183: Alomaliye (article dated 2006, updated 2016) states 'Gecikme faizinin hesaplanmasında ay kesirleri nazara alınmaz'. That is a single, dated source - UNVERIFIED for the current VUK md.112 text.",
+        "additional_sources": [
+          "https://www.pwc.com.tr/tr/hizmetlerimiz/vergi/bultenler/2025/yeni-gecikme-zammi-gecikme-faizi-pismanlik-zammi-ve-tecil-faizi-orani.html",
+          "https://tr.andersen.com/tr/images/pdf/and_44-2025-gecikme-ve-tecil-faizi-oranlari.pdf",
+          "https://www.alomaliye.com/2006/09/26/gecikme-faizi-ve-hesaplama-yontemleri/"
+        ]
+      },
+      "pismanlik_zammi_vuk_371": {
+        "value": 3.7,
+        "unit": "percent per month",
+        "effective_from": "2025-11-13",
+        "effective_to": null,
+        "source_url": "https://www.pwc.com.tr/tr/hizmetlerimiz/vergi/bultenler/2025/yeni-gecikme-zammi-gecikme-faizi-pismanlik-zammi-ve-tecil-faizi-orani.html",
+        "source_title": "PwC Vergi Bülteni 2025/33",
+        "accessed": "2026-10-01",
+        "confidence": "cross-checked",
+        "notes": "Same 3.7%/month from 13.11.2025 (previously 4.5%). The part-month rule for VUK 371 (background knowledge: ay kesirleri tam ay sayılır) was NOT verified in any source read.",
+        "additional_sources": [
+          "https://kpmgvergi.com/yayinlar/mali-bultenler/vergi/10556-sayili-cumhurbaskani-karariyla-gecikme-zammi-orani-3-7-olarak-yeniden-belirlendi/3295",
+          "https://tr.andersen.com/tr/images/pdf/and_44-2025-gecikme-ve-tecil-faizi-oranlari.pdf"
+        ]
+      },
+      "tecil_faizi": {
+        "value": 39,
+        "unit": "percent per year",
+        "effective_from": "2025-11-13",
+        "effective_to": null,
+        "source_url": "https://tr.andersen.com/tr/images/pdf/and_44-2025-gecikme-ve-tecil-faizi-oranlari.pdf",
+        "source_title": "Andersen mevzuat sirküleri 44-2025 - Tahsilat Genel Tebliği (Seri C, Sıra No: 9) + Ekonomi Gazetesi 26.08.2026 (rate returns to 39% on 1 Sep 2026)",
+        "accessed": "2026-10-01",
+        "confidence": "cross-checked",
+        "notes": "General (standing) annual rate from 13.11.2025: 39% (previously 48% from 21.05.2024 under CK 8484 / Tahsilat Genel Tebliği Seri C No 8; 36% before that). Confirmed by Andersen, PwC 2025/33, T24, GAİB, STB. Transitional rule quoted by Andersen: for applications before 13.11.2025 the old rate applies from the application date until the day before the Tebliğ's publication. LATE FINDING: for applications made 16.06.2026-31.08.2026 a temporary 29% applied (see tecil_faizi_temporary_29_2026); Ekonomi Gazetesi (Recep Bıyık, 26.08.2026) reports that after 31 August 2026 the rate 'yıllık %39'a çıkacak'; the müşavirler kulübü calculator (updated 10.07.2026) lists 29% under Law 7582 until 31.08.2026 and a standard 39%. So on 2026-10-01 the rate for NEW tecil applications is 39% (no source reports a further change). The accrual method of tecil faizi (6183 md.48) was NOT researched - do not build a tecil faizi calculator from this file alone.",
+        "additional_sources": [
+          "https://www.pwc.com.tr/tr/hizmetlerimiz/vergi/bultenler/2025/yeni-gecikme-zammi-gecikme-faizi-pismanlik-zammi-ve-tecil-faizi-orani.html",
+          "https://t24.com.tr/yazarlar/murat-bati/vergide-zam-ve-faizler-dusuruldu-gecikme-zammi-orani-nasil-uygulanacak,52375",
+          "https://www.cottgroup.com/tr/mevzuat/item/gecikme-zammi-ve-tecil-faiz-oranlari-degisti",
+          "https://www.ekonomigazetesi.com/kose-yazisi/avantajli-tecil-ve-taksitlendirmede-son-gunler-86194",
+          "https://musavirlerkulubu.com.tr/araclar/gecikme-faizi",
+          "https://www.gaib.org.tr/tr/hali/duyurular/kamu-alacaklarinda-gecikme-zammi-ve-tecil-faiz-oranlari-indirildi-8279.html",
+          "https://www.stb-cpaturkey.com/gecikme-zammi-tecil-faizinde-yeni-oranlar-aciklandi/"
+        ]
+      },
+      "tecil_faizi_temporary_29_2026": {
+        "value": 29,
+        "unit": "percent per year",
+        "effective_from": "2026-06-16",
+        "effective_to": "2026-08-31",
+        "source_url": "https://istanbulticaretgazetesi.com/yazarlar/osman-arioglu/tecil-faizi-yuzde-29a-indirildi",
+        "source_title": "Tahsilat Genel Tebliği (Seri: B Sıra No: 20), RG 16.06.2026 - per Osman Arıoğlu (İstanbul Ticaret Gazetesi, 19.06.2026), muhasebetr (16.06.2026), Ekonomi Gazetesi (26.08.2026), müşavirler kulübü (10.07.2026)",
+        "accessed": "2026-10-01",
+        "confidence": "cross-checked",
+        "notes": "EXPIRED for new applications on 31.08.2026 (window closed before the 2026-10-01 'today'; no extension reported in the 26.08.2026 column). Context: 7582 sayılı Kanun (RG 04.06.2026) raised the maximum tecil/taksit period of 6183 md.48 from 36 to 72 months and the unsecured-tecil limit to 1,000,000 TL (old limit given as 250,000 TL by PwC/KPMG but 50,000 TL by Grant Thornton/Alomaliye - sources disagree); the Tahsilat Genel Tebliği of 16.06.2026 set tecil faizi at 29% (Arıoğlu: 'tecil faizi oranı 10 puan indirilerek yıllık yüzde 29') for tax-office receivables due on or before 05.06.2026 and unpaid by 16.06.2026, with applications until 31.08.2026 and the first instalment starting in September 2026; instalments by liquidity ratio (0.50+: up to 36; 0.30-0.50: up to 48; below 0.30: up to 72; KDV and BSMV max 12); excluded: ÖTV, 2026 geçici vergi that will be offset against 2026 annual tax, and the related gecikme faizi/damga. Plans granted in the window keep 29% for their life (expectation, not confirmed). The Tebliğ text itself was NOT readable (resmigazete.gov.tr not accessible; gib.gov.tr page returned metadata only; the GİB 'Tecil Faizi ile Taksitlendirilmesi Rehberi' PDF returned HTTP 400). Gecikme zammı stayed at 3.7%/month (Arıoğlu: annual equivalent about 44.4%).",
+        "additional_sources": [
+          "https://www.ekonomigazetesi.com/kose-yazisi/avantajli-tecil-ve-taksitlendirmede-son-gunler-86194",
+          "https://www.muhasebetr.com/yazarlarimiz/musacakir/023/",
+          "https://musavirlerkulubu.com.tr/araclar/gecikme-faizi",
+          "https://www.resmigazete.gov.tr/eskiler/2026/06/20260616-2.htm",
+          "https://gib.gov.tr/mevzuat/kanun/442/teblig/11872",
+          "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Ffileadmin%2Fbeyannamerehberi%2F2026%2FDUYURU_UNIVERSAL_2026_2026_Tecil_Faizi_ile_Taksitlendirilmesi_Rehberi.pdf",
+          "https://www.pwc.com.tr/tr/Hizmetlerimiz/vergi/vergi-bultenleri/2026/7582-sayili-kanun-resmi-gazetede-yayimlandi.pdf",
+          "https://kpmgvergi.com/yayinlar/mali-bultenler/vergi/7582-sayili-bazi-kanunlarda-degisiklik-yapilmasina-dair-kanun-resmi-gazete-de-yayimlandi/4497"
+        ]
+      },
+      "method": {
+        "value": {
+          "6183_md51_gecikme_zammi": "Rate applied separately for each month from the vade tarihi to the payment date. Full months: anapara x oran x n. Remaining days: anapara x (oran / 30) x gün. T24 and evrakai.com examples agree.",
+          "worked_example_t24": "10,000 TL emlak vergisi unpaid since Nov 2025, paid 05.03.2026 = 3 months + 5 days -> 'gecikme zammı 1.172 TL', toplam 11.172 TL (check: 10,000 x (3 x 0.037 + 5 x 0.037/30) = 1,171.67).",
+          "worked_example_evrakai": "45,000 TL, 8 months 12 days at 3.7%: 45,000 x 0.037 = 1,665/month; 8 months = 13,320; 12 days = 1,665/30 x 12 = 666; toplam gecikme zammı 13,986 TL.",
+          "rate_change_straddling": "T24 (single secondary): on a monthly basis the old 4.5% applies to the whole of November 2025 and 3.7% starts on 1 December 2025; on a daily basis 4.5% applies through 12.11.2025 and 3.7% from 13.11.2025. evrakai.com says only that 3.7% applies 'from 13 Kasım 2025'. UNRESOLVED - matters only for debts that started before 13.11.2025.",
+          "stopping": "Accrual stops at payment; after an approved tecil request the lower tecil faizi replaces gecikme zammı (evrakai)."
+        },
+        "unit": null,
+        "effective_from": null,
+        "effective_to": null,
+        "source_url": "https://t24.com.tr/yazarlar/murat-bati/vergide-zam-ve-faizler-dusuruldu-gecikme-zammi-orani-nasil-uygulanacak,52375",
+        "source_title": "T24 (Murat Batı) + evrakai.com - gecikme zammı hesaplama",
+        "accessed": "2026-10-01",
+        "confidence": "cross-checked",
+        "notes": "The text of 6183 md.51 itself could not be read (mevzuat.gov.tr blocked), so the day-based part-month rule is supported by two secondary sources only.",
+        "additional_sources": [
+          "https://evrakai.com/blog/gecikme-zammi-ve-faizi-rehberi"
+        ]
+      }
+    }
+  },
+  "holidays": [
+    {
+      "date": "2026-10-28",
+      "weekday": "Wednesday",
+      "name": "Cumhuriyet Bayramı arifesi (half day from 13:00)",
+      "type": "half-day",
+      "source_url": "https://www.milligazete.com.tr/cumhuriyet-bayrami-2026-kac-gun-tatil-28-ekim-ogleden-sonra-tatil-mi-29-ekim-okullar-kapali-mi-30-ekim-ders-var-mi",
+      "confidence": "cross-checked",
+      "notes": "2429 sayılı Kanun: national holiday starts at 13:00 on 28 Oct (Milli Gazete: '28 Ekim Çarşamba günü sabah saatlerinde normal çalışma düzeni uygulanacak. Saat 13.00 itibarıyla ise Cumhuriyet Bayramı tatili başlayacak.'). Half days do NOT shift tax deadlines in practice (see calendar_rules)."
+    },
+    {
+      "date": "2026-10-29",
+      "weekday": "Thursday",
+      "name": "Cumhuriyet Bayramı",
+      "type": "full-day",
+      "source_url": "https://www.milligazete.com.tr/cumhuriyet-bayrami-2026-kac-gun-tatil-28-ekim-ogleden-sonra-tatil-mi-29-ekim-okullar-kapali-mi-30-ekim-ders-var-mi",
+      "confidence": "cross-checked",
+      "notes": "30 Oct 2026 (Friday) is a normal working day - no köprü/idari izin announced at the time of the article; an idari izin would need a separate decision and would not shift VUK deadlines anyway (Ekonomi Gazetesi, 13.08.2025)."
+    },
+    {
+      "date": "2027-01-01",
+      "weekday": "Friday",
+      "name": "Yılbaşı",
+      "type": "full-day",
+      "source_url": "https://www.cnnturk.com/turkiye/2027-resmi-tatiller-takvimi-dini-bayramlar-resmi-tatil-gunler-ne-zaman-2027-ramazan-ve-kurban-bayrami-tarihleri-3447415",
+      "confidence": "unverified",
+      "notes": "Statutory holiday under 2429 sayılı Kanun (background knowledge). The CNN Türk page did not list it and wrongly called 1 Jan 2027 a Wednesday - it is a Friday."
+    },
+    {
+      "date": "2027-03-08",
+      "weekday": "Monday",
+      "name": "Ramazan Bayramı arifesi (half day)",
+      "type": "half-day",
+      "source_url": "https://www.cnnturk.com/turkiye/2027-resmi-tatiller-takvimi-dini-bayramlar-resmi-tatil-gunler-ne-zaman-2027-ramazan-ve-kurban-bayrami-tarihleri-3447415",
+      "confidence": "cross-checked",
+      "notes": "Diyanet İşleri Başkanlığı calendar as reported by CNN Türk (28.07.2026)."
+    },
+    {
+      "date": "2027-03-09",
+      "weekday": "Tuesday",
+      "name": "Ramazan Bayramı 1. gün",
+      "type": "full-day",
+      "source_url": "https://www.dunya.com/gundem/ilk-oruc-tarihi-2027-ramazan-ayi-ne-zaman-basliyor-haberi-835516",
+      "confidence": "cross-checked",
+      "notes": "Dünya (09.08.2026) citing Diyanet: Ramazan 2027 starts 8 Feb 2027; 'Ramazan Bayramı'nın ilk günü 9 Mart 2027 Salı'."
+    },
+    {
+      "date": "2027-03-10",
+      "weekday": "Wednesday",
+      "name": "Ramazan Bayramı 2. gün",
+      "type": "full-day",
+      "source_url": "https://www.cnnturk.com/turkiye/2027-resmi-tatiller-takvimi-dini-bayramlar-resmi-tatil-gunler-ne-zaman-2027-ramazan-ve-kurban-bayrami-tarihleri-3447415",
+      "confidence": "cross-checked",
+      "notes": ""
+    },
+    {
+      "date": "2027-03-11",
+      "weekday": "Thursday",
+      "name": "Ramazan Bayramı 3. gün",
+      "type": "full-day",
+      "source_url": "https://www.cnnturk.com/turkiye/2027-resmi-tatiller-takvimi-dini-bayramlar-resmi-tatil-gunler-ne-zaman-2027-ramazan-ve-kurban-bayrami-tarihleri-3447415",
+      "confidence": "cross-checked",
+      "notes": "12 Mar 2027 (Fri) could become an idari izin day (not announced as of 2026-10-01); it would not shift VUK deadlines by itself."
+    }
+  ],
+  "calendar_rules": {
+    "weekend_holiday_shift": "If the last day of a VUK period falls on a Saturday, Sunday or official full-day holiday, the period ends at 23:59 of the next working day (VUK md.17 as summarised by Ekonomi Gazetesi: 'sürenin ... tatili izleyen ilk iş günü ... uzaması'). The VUK/mevzuat text itself could not be read.",
+    "half_days_and_idari_izin": "Half-day holidays (arife) and idari izin days are NOT treated as shifting days (Ekonomi Gazetesi, 13.08.2025 - single secondary source). GİB can nevertheless extend deadlines by circular: VUK Sirküler/199 (15.05.2026, VUK mükerrer md.28) moved MPHB/damga/konaklama from 26.05 to 03.06.2026 and KDV from 01.06 to 05.06.2026; the e-Defter circular of 08.06.2026 (VUK md.242) moved the 10 and 15 June deadlines to 30 June 2026. Watch GİB announcements before the Cumhuriyet Bayramı and Ramazan Bayramı windows.",
+    "sgk_premium": "Premiums are payable by the end of the month following the month of the wages (employees paid between the 1st and 30th); for pay periods running 15th-14th the date is the 14th of the following month. If the last day is an official holiday: first working day after the holiday (SGK page). The SGK page mentions only 'resmî tatil'; a Saturday/Sunday shift is standard practice but not stated there.",
+    "gib_table_rules": {
+      "KDV_monthly": "28th day of the following month, 23:59; payment within the filing period",
+      "MPHB_and_damga_vergisi": "26th day of the following month, 23:59",
+      "gecici_vergi": "17th day of the 2nd month after the 3-month period, 23:59 (May 17, Aug 17, Nov 17, Feb 17)",
+      "yillik_gelir_vergisi": "1 March - 31 March, 23:59; two instalments (March and July)",
+      "kurumlar_vergisi": "1st to last day of the 4th month after year end (calendar year: 1-30 April)"
+    },
+    "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf",
+    "confidence": "verified-official (GİB table) / cross-checked (shift practice)",
+    "accessed": "2026-10-01",
+    "official_calendar_page": "https://gib.gov.tr/vergi-takvimi",
+    "official_calendar_note": "gib.gov.tr/vergi-takvimi and the GİB 'Ekim 2026 Vergi Takvimi' announcement are JavaScript pages: only metadata could be retrieved, so no official month-by-month list could be read."
+  },
+  "calendar_facts": {
+    "form_ba_bs": {
+      "value": "ABOLISHED - there is no Form Ba/Bs deadline in Oct 2026-Mar 2027",
+      "detail": "VUK Genel Tebliği (Sıra No: 565), RG 25.09.2024 sayı 32673: 'Eylül 2024 dönemi ve bu dönemi izleyen dönemlere ilişkin olarak Form Ba ve Form Bs bildirimi verilmeyecektir'; effective 01.10.2024.",
+      "source_url": "https://kpmgvergi.com/yayinlar/mali-bultenler/vergi/form-ba-ve-form-bs-uygulamasina-son-verilmesine-iliskin-vuk-tebligi-yayimlandi/2746",
+      "additional_sources": [
+        "https://www.turmob.org.tr/ekutuphane/Read/38e59786-04c7-451f-8d08-c60cd951ce78",
+        "https://www.alomaliye.com/2024/09/25/vergi-usul-kanunu-genel-tebligi-sira-no-565/",
+        "https://www.pwc.com.tr/tr/hizmetlerimiz/vergi/bultenler/2024/vergi-usul-kanunu-genel-tebligleri.html"
+      ],
+      "accessed": "2026-10-01",
+      "confidence": "cross-checked"
+    },
+    "kurumlar_vergisi_beyannamesi_next": {
+      "value": "2027-04-30 (window 1-30 April 2027, FY2026)",
+      "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf",
+      "confidence": "verified-official",
+      "accessed": "2026-10-01",
+      "note": "Outside the Oct-Mar window; listed for reference. 30 April 2027 is a Friday."
+    },
+    "edefter_rule_2025_2026": {
+      "value": "Berat deadline is keyed to the filing month of the related beyanname: gelir vergisi mükellefleri -> 10th of the month after the month in which the related geçici vergi/gelir vergisi beyannamesi is filed; kurumlar vergisi/diğer mükellefler -> 14th of the month after the month of the related kurum geçici vergi/kurumlar vergisi beyannamesi. Monthly or geçici-vergi-dönemi (quarterly) loading is a yearly election made in the e-Defter application by 31 January (default: monthly).",
+      "source_url": "https://turmob.org.tr/ekutuphane/Read/ea271914-fa67-4079-8b63-41e27f6b66c1",
+      "additional_sources": [
+        "https://www.muhasebenews.com/?p=166132",
+        "https://www.pwc.com.tr/tr/hizmetlerimiz/vergi/dolayli-vergi/bultenler/e-donusum-bultenleri/2026/e-defter-berat-yukleme-suresi-uzatildi.html",
+        "https://www.alomaliye.com/2026/06/08/e-defter-ve-berat-dosyalarinin-yukleme-suresi-uzatildi/"
+      ],
+      "accessed": "2026-10-01",
+      "confidence": "single-secondary-source",
+      "note": "TÜRMOB 10.01.2025/24-1 gives the verbatim wording; for the last quarter/annual the quarterly option points to the month after the gelir vergisi / kurumlar vergisi beyanname month (10 April / 14 May 2027 - outside the window). Whether the restored 4th geçici vergi period (February) changes the Oct-Dec berat date for monthly filers is UNVERIFIED. The old rule (end of the 2nd month after the period) no longer applies per these sources. muhasebenews describes the deadline as 'ilgili ayı takip eden dördüncü ayın belirlenen günü', and müşavirler kulübü lists 'Haziran 2026 berat 10 Ekim' - both inconsistent with the TÜRMOB wording; ignored."
+    },
+    "kdv_2_no_lu_beyanname": {
+      "value": "UNVERIFIED - müşavirler kulübü says 25th, prozon.net says 26th; not included in the calendar",
+      "source_url": "https://musavirlerkulubu.com.tr/mevzuat/takvim/",
+      "confidence": "unverified",
+      "accessed": "2026-10-01"
+    },
+    "october_2026_gib_calendar_conflict": {
+      "value": "UNRESOLVED - prozon.net (dated 2026-10-01, presented as the GİB 'Ekim 2026 Vergi Takvimi') shows: 12 Oct re'sen damga vergisi; 20 Oct ilan ve reklam vergisi; 26 Oct Muhtasar ve Prim Hizmet Beyannamesi; 27 Oct a line beginning 'Eylül 2026 dönemine ait KDV, Muhtasar tevkifat tutarları ile SGK sigorta primlerinin ...' (rest of the line lost in the summary); 31 Oct 'Cumartesi gününe denk geldiği için ilk iş gününe uzar'. The page does not mention Cumhuriyet Bayramı.",
+      "detail": "GİB's static table (BeyannameVermeveOdemeSureleri.pdf), mikro.com.tr, multinet and müşavirler kulübü all give the 28th for KDV (beyan and ödeme). A 27 Oct payment date for KDV/SGK contradicts the SGK page (end of month). The tax_calendar therefore keeps 28 Oct for KDV (Wednesday, arife half-day from 13:00) and flags it; confirm on gib.gov.tr/vergi-takvimi (JavaScript page, unreadable here) before publishing. Any GİB circular moving the date (as VUK Sirküler/199 did for May-June 2026) would override.",
+      "source_url": "https://prozon.net/sirkuler/gelir-idaresi-baskanligi-gib-ekim-2026-vergi-takvimi-yayimlandi/",
+      "additional_sources": [
+        "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf",
+        "https://www.mikro.com.tr/vergi-takvimi/",
+        "https://multinet.com.tr/blog/vergi-muhasebe/vergi-takvimi",
+        "https://musavirlerkulubu.com.tr/mevzuat/takvim/"
+      ],
+      "accessed": "2026-10-01",
+      "confidence": "unverified"
+    },
+    "law_7582_dates_in_or_near_window": {
+      "value": {
+        "2026-06-04": "7582 sayılı Kanun in force (RG sayı 33270): 6183 md.48 tecil max 72 months; KVK 32/C and KVK 10/1 (i),(j) changes apply to returns due from 2026-07-01 for FY2026 earnings",
+        "2026-06-16": "Tahsilat Genel Tebliği (Seri B Sıra No 20) RG: 29% tecil faizi window opens (debts due by 2026-06-05 and unpaid at 2026-06-16)",
+        "2026-08-31": "Last day to apply for the 29% tecil/taksit arrangement (window already closed on 2026-10-01); first instalment from Sep 2026; later instalment dates follow each tecil plan (not generic - not put in tax_calendar)",
+        "2027-01-01": "Varlık barışı (KVK Geçici md.19): tax rates rise by 0.5 puan for notifications made 2027-01-01 to 2027-07-31 (PwC, KPMG)",
+        "2027-01-01_FY2027": "12.5% kurumlar vergisi for qualifying production earnings starts with the 2027 tax period (first geçici vergi return would be due 2027-05-17 - outside the window)",
+        "2027-07-31": "Varlık barışı notification deadline (outside the window)"
+      },
+      "source_url": "https://www.pwc.com.tr/tr/Hizmetlerimiz/vergi/vergi-bultenleri/2026/7582-sayili-kanun-resmi-gazetede-yayimlandi.pdf",
+      "additional_sources": [
+        "https://kpmgvergi.com/yayinlar/mali-bultenler/vergi/7582-sayili-bazi-kanunlarda-degisiklik-yapilmasina-dair-kanun-resmi-gazete-de-yayimlandi/4497",
+        "https://www.grantthornton.com.tr/vergi-sirkuleri/2025---vergi-sirkuleri/7582-sayili-bazi-kanunlarda-degisiklik-yapilmasina-dair-kanun-ile-vergi-mevzuatnda-yapilan-duzenlemeler-yayimlandi/",
+        "https://www.alomaliye.com/2026/06/04/7582-sayili-kanunla-getirilen-vergisel-yenilikler/",
+        "https://istanbulticaretgazetesi.com/yazarlar/osman-arioglu/tecil-faizi-yuzde-29a-indirildi",
+        "https://www.ekonomigazetesi.com/kose-yazisi/avantajli-tecil-ve-taksitlendirmede-son-gunler-86194"
+      ],
+      "accessed": "2026-10-01",
+      "confidence": "cross-checked",
+      "note": "Informational milestones, not recurring deadlines. Varlık barışı rate table (PwC): 5+ years 0%, 4 years 1%, 3 years 2%, 2 years 3%, 1 year 4%; KPMG adds 5% without a holding commitment; Grant Thornton gives the same 0-4% range and 5% standard rate."
+    }
+  },
+  "test_vectors": {
+    "kdv": [
+      {
+        "id": "KDV-1",
+        "description": "KDV hariç -> dahil, 20%",
+        "inputs": {
+          "tutar": 1000,
+          "oran": 20,
+          "mode": "hariç"
+        },
+        "expected": {
+          "kdv": 200.0,
+          "dahil": 1200.0,
+          "haric": 1000.0
+        },
+        "source_or_derivation": "matrah x 0.20",
+        "confidence": "self-computed (arithmetic)"
+      },
+      {
+        "id": "KDV-2",
+        "description": "KDV dahil -> hariç, 20%",
+        "inputs": {
+          "tutar": 1200,
+          "oran": 20,
+          "mode": "dahil"
+        },
+        "expected": {
+          "kdv": 200.0,
+          "dahil": 1200.0,
+          "haric": 1000.0
+        },
+        "source_or_derivation": "dahil / 1.20",
+        "confidence": "self-computed (arithmetic)"
+      },
+      {
+        "id": "KDV-3",
+        "description": "KDV dahil -> hariç, 10%",
+        "inputs": {
+          "tutar": 1100,
+          "oran": 10,
+          "mode": "dahil"
+        },
+        "expected": {
+          "kdv": 100.0,
+          "haric": 1000.0
+        },
+        "source_or_derivation": "dahil / 1.10",
+        "confidence": "self-computed (arithmetic)"
+      },
+      {
+        "id": "KDV-4",
+        "description": "KDV dahil -> hariç, 1%",
+        "inputs": {
+          "tutar": 1010,
+          "oran": 1,
+          "mode": "dahil"
+        },
+        "expected": {
+          "kdv": 10.0,
+          "haric": 1000.0
+        },
+        "source_or_derivation": "dahil / 1.01",
+        "confidence": "self-computed (arithmetic)"
+      },
+      {
+        "id": "KDV-5",
+        "description": "Rounding case, 20% dahil",
+        "inputs": {
+          "tutar": 999.99,
+          "oran": 20,
+          "mode": "dahil"
+        },
+        "expected": {
+          "haric": 833.33,
+          "kdv": 166.66
+        },
+        "source_or_derivation": "haric = round(999.99/1.2 = 833.325 -> 833.33); KDV = dahil - haric = 166.66 (see kdv.formulas.rounding_convention)",
+        "confidence": "self-computed; rounding convention unsourced"
+      },
+      {
+        "id": "KDV-6",
+        "description": "Kısmi tevkifat 9/10 (danışmanlık), 20%",
+        "inputs": {
+          "haric": 10000,
+          "oran": 20,
+          "tevkifat": "9/10"
+        },
+        "expected": {
+          "hesaplanan_kdv": 2000.0,
+          "tevkif_edilen_kdv": 1800.0,
+          "saticiya_odenecek_kdv": 200.0,
+          "saticiya_toplam_odeme": 10200.0
+        },
+        "source_or_derivation": "KDV x 9/10; 9/10 rate per GİB özelgesi (danışmanlık)",
+        "confidence": "self-computed; 9/10 rate cross-checked"
+      }
+    ],
+    "kurumlar_vergisi": [
+      {
+        "id": "KV-1",
+        "description": "Standard rate",
+        "inputs": {
+          "matrah": 1000000,
+          "oran": 25
+        },
+        "expected": {
+          "kurumlar_vergisi": 250000.0
+        },
+        "source_or_derivation": "matrah x 25% (GİB oran tablosu)",
+        "confidence": "self-computed from verified-official rate"
+      },
+      {
+        "id": "KV-2",
+        "description": "Finance group",
+        "inputs": {
+          "matrah": 1000000,
+          "oran": 30
+        },
+        "expected": {
+          "kurumlar_vergisi": 300000.0
+        },
+        "source_or_derivation": "matrah x 30% (GİB Oran Uygulamaları pp.12-13)",
+        "confidence": "self-computed from verified-official rate"
+      },
+      {
+        "id": "KV-3",
+        "description": "Export-reduced rate on a fully export-based profit (illustrative only)",
+        "inputs": {
+          "matrah": 1000000,
+          "oran": 20
+        },
+        "expected": {
+          "kurumlar_vergisi": 200000.0
+        },
+        "source_or_derivation": "matrah x 20% - the real calculation reduces the rate only for the export share of the kazanç (apportionment formula not verified)",
+        "confidence": "self-computed; apportionment unverified"
+      },
+      {
+        "id": "KV-4",
+        "description": "Cumulative geçici vergi, 4 periods (illustrative)",
+        "inputs": {
+          "cumulative_kar": [
+            400000,
+            900000,
+            1500000,
+            2000000
+          ],
+          "oran": 25
+        },
+        "expected": {
+          "odenecek": [
+            100000.0,
+            125000.0,
+            150000.0,
+            125000.0
+          ],
+          "yillik_kv_after_mahsup": 0.0
+        },
+        "source_or_derivation": "cumulative profit x 25% minus geçici vergi already paid; the 4th period assumes 7566 applies to the company",
+        "confidence": "self-computed; mahsup mechanism standard, 4th-period scope cross-checked only"
+      },
+      {
+        "id": "KV-6",
+        "description": "Manufacturing rate FY2026 (qualifying earnings only)",
+        "inputs": {
+          "matrah": 1000000,
+          "oran": 24
+        },
+        "expected": {
+          "kurumlar_vergisi": 240000.0
+        },
+        "source_or_derivation": "matrah x 24% (GİB oran tablosu); applies only to earnings arising exclusively from manufacturing - apportionment for mixed earnings not verified",
+        "confidence": "self-computed from verified-official rate"
+      },
+      {
+        "id": "KV-7",
+        "description": "Production rate FY2027 under 7582 (NOT for FY2026)",
+        "inputs": {
+          "matrah": 1000000,
+          "oran": 12.5,
+          "tax_year": 2027
+        },
+        "expected": {
+          "kurumlar_vergisi": 125000.0
+        },
+        "source_or_derivation": "matrah x 12.5% - 7582 sayılı Kanun, effective from the 2027 tax period; interaction with other reductions unverified",
+        "confidence": "self-computed from cross-checked rate"
+      },
+      {
+        "id": "KV-5",
+        "description": "Yurt içi asgari KV (simplified)",
+        "inputs": {
+          "kurum_kazanci_oncesi": 10000000,
+          "vergilendirilecek_kazanc_after_indirim_istisna": 2000000
+        },
+        "expected": {
+          "normal_kv": 500000.0,
+          "asgari_kv": 1000000.0,
+          "odenecek": 1000000.0
+        },
+        "source_or_derivation": "max(25% x 2,000,000; 10% x 10,000,000) - the list of items deductible from the minimum-tax base is NOT verified",
+        "confidence": "self-computed; base definition unverified"
+      }
+    ],
+    "smm": [
+      {
+        "id": "SMM-1",
+        "description": "Corporate client, stopaj 20%, KDV 20% (published example)",
+        "inputs": {
+          "brut": 10000,
+          "stopaj": 20,
+          "kdv": 20,
+          "tevkifat": 0
+        },
+        "expected": {
+          "stopaj": 2000.0,
+          "net_ucret": 8000.0,
+          "kdv": 2000.0,
+          "tahsil_edilecek": 10000.0
+        },
+        "source_or_derivation": "faturaport.com 2026 guide worked example: 10.000 - 2.000 + 2.000 = 10.000",
+        "confidence": "cross-checked (published example, arithmetic re-verified)",
+        "published_in_source": "Brüt 10.000; stopaj 2.000; net 8.000; KDV 2.000; tahsil edilecek 10.000"
+      },
+      {
+        "id": "SMM-2",
+        "description": "Individual (non-withholding) client",
+        "inputs": {
+          "brut": 10000,
+          "stopaj": 0,
+          "kdv": 20
+        },
+        "expected": {
+          "stopaj": 0.0,
+          "kdv": 2000.0,
+          "tahsil_edilecek": 12000.0
+        },
+        "source_or_derivation": "faturaport.com: 'Stopaj 0%, KDV 20%, toplam brüt + 2.000'",
+        "confidence": "cross-checked"
+      },
+      {
+        "id": "SMM-3",
+        "description": "GVK 18 case, stopaj 17%",
+        "inputs": {
+          "brut": 10000,
+          "stopaj": 17
+        },
+        "expected": {
+          "stopaj": 1700.0,
+          "net_ucret": 8300.0
+        },
+        "source_or_derivation": "GİB guide p.11 rate",
+        "confidence": "self-computed from verified-official rate"
+      },
+      {
+        "id": "SMM-4",
+        "description": "KDV tevkifatı 9/10 with stopaj 20%",
+        "inputs": {
+          "brut": 10000,
+          "stopaj": 20,
+          "kdv": 20,
+          "tevkifat": "9/10"
+        },
+        "expected": {
+          "stopaj": 2000.0,
+          "kdv": 2000.0,
+          "tevkif_edilen_kdv": 1800.0,
+          "tahsil_edilecek": 8200.0
+        },
+        "source_or_derivation": "B - s + KDV - tevkifat = 10,000 - 2,000 + 2,000 - 1,800",
+        "confidence": "self-computed"
+      },
+      {
+        "id": "SMM-5",
+        "description": "Net -> brüt: net ücret (stopaj sonrası, KDV hariç) 8,000 TL",
+        "inputs": {
+          "net_ucret": 8000,
+          "stopaj": 20
+        },
+        "expected": {
+          "brut": 10000.0
+        },
+        "source_or_derivation": "faturaport: Brüt = Net / (1 - Stopaj)",
+        "confidence": "cross-checked"
+      },
+      {
+        "id": "SMM-6",
+        "description": "Tahsil -> brüt with 20% stopaj and 20% KDV",
+        "inputs": {
+          "tahsil": 10000,
+          "stopaj": 20,
+          "kdv": 20,
+          "tevkifat": 0
+        },
+        "expected": {
+          "brut": 10000.0
+        },
+        "source_or_derivation": "B = T / (1 - s + k) = 10,000 / 1.00 (stopaj and KDV offset exactly)",
+        "confidence": "self-computed"
+      },
+      {
+        "id": "SMM-7",
+        "description": "Tahsil -> brüt with 20% stopaj and 10% KDV",
+        "inputs": {
+          "tahsil": 9000,
+          "stopaj": 20,
+          "kdv": 10
+        },
+        "expected": {
+          "brut": 10000.0
+        },
+        "source_or_derivation": "B = 9,000 / 0.90",
+        "confidence": "self-computed"
+      },
+      {
+        "id": "SMM-8",
+        "description": "Tahsil -> brüt with stopaj 20%, KDV 20%, tevkifat 9/10",
+        "inputs": {
+          "tahsil": 8200,
+          "stopaj": 20,
+          "kdv": 20,
+          "tevkifat": "9/10"
+        },
+        "expected": {
+          "brut": 10000.0
+        },
+        "source_or_derivation": "B = 8,200 / (1 - 0.2 + 0.2 x 0.1) = 8,200 / 0.82",
+        "confidence": "self-computed"
+      }
+    ],
+    "kidem_tazminati": [
+      {
+        "id": "KT-1",
+        "description": "Official CSGB example: 10 years -> 300 days",
+        "inputs": {
+          "hizmet": "10 yıl"
+        },
+        "expected": {
+          "gun": 300
+        },
+        "source_or_derivation": "CSGB İş Kanunu SSS Q36: 'her yıl için 30 günlük olmak üzere toplam 300 günlük ücreti tutarında'",
+        "confidence": "verified-official"
+      },
+      {
+        "id": "KT-2",
+        "description": "Tavan binds (July-Dec 2026)",
+        "inputs": {
+          "giydirilmis_aylik_brut": 100000,
+          "hizmet": "1 yıl",
+          "fesih": "2026-08-15"
+        },
+        "expected": {
+          "yillik_esas": 73729.87,
+          "hizmet_yili_orani": 1.0,
+          "kidem_tazminati_brut": 73729.87,
+          "damga_vergisi": 559.61,
+          "net_ele_gecen": 73170.26
+        },
+        "source_or_derivation": "Alomaliye 06.07.2026: 73,729.87 x 1 year = 73,729.87 (tavan binds); damga 0.759% computed (559.61)",
+        "confidence": "cross-checked"
+      },
+      {
+        "id": "KT-3",
+        "description": "Below tavan, 10 years",
+        "inputs": {
+          "giydirilmis_aylik_brut": 40000,
+          "hizmet": "10 yıl",
+          "fesih": "2026-10-01"
+        },
+        "expected": {
+          "yillik_esas": 40000.0,
+          "hizmet_yili_orani": 10.0,
+          "kidem_tazminati_brut": 400000.0,
+          "damga_vergisi": 3036.0,
+          "net_ele_gecen": 396964.0
+        },
+        "source_or_derivation": "40,000 x 10; damga 0.759%",
+        "confidence": "self-computed"
+      },
+      {
+        "id": "KT-4",
+        "description": "Partial year, below tavan (365-day fraction)",
+        "inputs": {
+          "giydirilmis_aylik_brut": 60000,
+          "hizmet": "3 yıl 6 ay 15 gün",
+          "fesih": "2026-09-30"
+        },
+        "expected": {
+          "yillik_esas": 60000.0,
+          "hizmet_yili_orani": 3.541096,
+          "kidem_tazminati_brut": 212465.75,
+          "damga_vergisi": 1612.62,
+          "net_ele_gecen": 210853.13
+        },
+        "source_or_derivation": "60,000 x (3 + 6/12 + 15/365); the day-count convention is unsourced",
+        "confidence": "self-computed; day-count convention unverified"
+      },
+      {
+        "id": "KT-5",
+        "description": "H1 2026 tavan binds, 2 years",
+        "inputs": {
+          "giydirilmis_aylik_brut": 80000,
+          "hizmet": "2 yıl",
+          "fesih": "2026-03-31"
+        },
+        "expected": {
+          "yillik_esas": 64948.77,
+          "hizmet_yili_orani": 2.0,
+          "kidem_tazminati_brut": 129897.54,
+          "damga_vergisi": 985.92,
+          "net_ele_gecen": 128911.62
+        },
+        "source_or_derivation": "64,948.77 x 2; damga 0.759%",
+        "confidence": "self-computed from verified-official tavan"
+      },
+      {
+        "id": "KT-6",
+        "description": "Published damga example",
+        "inputs": {
+          "brut_kidem": 120000
+        },
+        "expected": {
+          "damga_vergisi": 910.8,
+          "net": 119089.2
+        },
+        "source_or_derivation": "Kazım Ceylan (21.09.2026): 120.000 TL -> 910,80 TL damga -> 119.089,20 TL",
+        "confidence": "cross-checked"
+      }
+    ],
+    "ihbar_tazminati": [
+      {
+        "id": "IH-1",
+        "description": "Band check",
+        "inputs": {
+          "hizmet": [
+            "5 ay",
+            "6 ay",
+            "1 yıl 5 ay",
+            "1 yıl 6 ay",
+            "2 yıl 3 ay",
+            "3 yıl",
+            "3 yıl 1 gün"
+          ]
+        },
+        "expected": {
+          "hafta": [
+            2,
+            4,
+            4,
+            "6 (boundary = interpretation)",
+            6,
+            "6 (boundary = interpretation)",
+            8
+          ]
+        },
+        "source_or_derivation": "4857 md.17 via CSGB SSS; boundaries unverified",
+        "confidence": "verified-official (bands) / unverified (exact boundaries)"
+      },
+      {
+        "id": "IH-2",
+        "description": "İhbar tazminatı, 2 years 3 months of service -> 6 weeks",
+        "inputs": {
+          "giydirilmis_aylik_brut": 45000,
+          "hizmet": "2 yıl 3 ay"
+        },
+        "expected": {
+          "gunluk": 1500.0,
+          "gun": 42,
+          "ihbar_tazminati_brut": 63000.0,
+          "damga_vergisi": 478.17,
+          "gelir_vergisi": "employee's cumulative bracket (income-tax brackets are handled separately)",
+          "sgk": 0
+        },
+        "source_or_derivation": "45,000/30 x 42; damga 0.759%; GV/SGK treatment per Kazım Ceylan",
+        "confidence": "self-computed; tax treatment cross-checked"
+      }
+    ],
+    "gecikme_zammi": [
+      {
+        "id": "GZ-1",
+        "description": "T24 example: 10,000 TL, 3 months 5 days at 3.7%",
+        "inputs": {
+          "anapara": 10000,
+          "tam_ay": 3,
+          "gun": 5,
+          "aylik_oran": 3.7
+        },
+        "expected": {
+          "gecikme_zammi": 1171.67,
+          "toplam": 11171.67
+        },
+        "source_or_derivation": "https://t24.com.tr/yazarlar/murat-bati/vergide-zam-ve-faizler-dusuruldu-gecikme-zammi-orani-nasil-uygulanacak,52375",
+        "confidence": "cross-checked (published example; unrounded 1,171.67)",
+        "published_in_source": "gecikme zammı 1.172 TL, toplam 11.172 TL (whole lira)"
+      },
+      {
+        "id": "GZ-2",
+        "description": "evrakai example: 45,000 TL, 8 months 12 days at 3.7%",
+        "inputs": {
+          "anapara": 45000,
+          "tam_ay": 8,
+          "gun": 12,
+          "aylik_oran": 3.7
+        },
+        "expected": {
+          "gecikme_zammi": 13986.0,
+          "toplam": 58986.0
+        },
+        "source_or_derivation": "https://evrakai.com/blog/gecikme-zammi-ve-faizi-rehberi",
+        "confidence": "cross-checked (published example)",
+        "published_in_source": "13.320 + 666 = 13.986 TL"
+      },
+      {
+        "id": "GZ-3",
+        "description": "One day late",
+        "inputs": {
+          "anapara": 100000,
+          "tam_ay": 0,
+          "gun": 1,
+          "aylik_oran": 3.7
+        },
+        "expected": {
+          "gecikme_zammi": 123.33,
+          "toplam": 100123.33
+        },
+        "source_or_derivation": "100,000 x 0.037 / 30",
+        "confidence": "self-computed"
+      },
+      {
+        "id": "GZ-4",
+        "description": "Rate-change straddle: NOT provided",
+        "inputs": {},
+        "expected": null,
+        "source_or_derivation": "Rule differs by source (monthly vs daily split) - do not test until resolved",
+        "confidence": "unverified"
+      }
+    ],
+    "vergi_takvimi": [
+      {
+        "id": "CAL-1",
+        "description": "KDV Eylül 2026 dönemi: 28 Oct (Wednesday, half-day) - no shift",
+        "inputs": {
+          "nominal_due_date": "2026-10-28"
+        },
+        "expected": {
+          "nominal": "2026-10-28",
+          "nominal_weekday": "Wednesday",
+          "effective": "2026-10-28",
+          "effective_weekday": "Wednesday"
+        },
+        "source_or_derivation": "weekend/holiday shift rule in calendar_rules",
+        "confidence": "cross-checked (half-day rule = single secondary source)"
+      },
+      {
+        "id": "CAL-2",
+        "description": "SGK Eylül primleri: 31 Oct is Saturday",
+        "inputs": {
+          "nominal_due_date": "2026-10-31"
+        },
+        "expected": {
+          "nominal": "2026-10-31",
+          "nominal_weekday": "Saturday",
+          "effective": "2026-11-02",
+          "effective_weekday": "Monday"
+        },
+        "source_or_derivation": "weekend/holiday shift rule in calendar_rules",
+        "confidence": "cross-checked"
+      },
+      {
+        "id": "CAL-3",
+        "description": "KDV Ekim dönemi: 28 Nov is Saturday",
+        "inputs": {
+          "nominal_due_date": "2026-11-28"
+        },
+        "expected": {
+          "nominal": "2026-11-28",
+          "nominal_weekday": "Saturday",
+          "effective": "2026-11-30",
+          "effective_weekday": "Monday"
+        },
+        "source_or_derivation": "weekend/holiday shift rule in calendar_rules",
+        "confidence": "cross-checked"
+      },
+      {
+        "id": "CAL-4",
+        "description": "MPHB Kasım dönemi: 26 Dec is Saturday",
+        "inputs": {
+          "nominal_due_date": "2026-12-26"
+        },
+        "expected": {
+          "nominal": "2026-12-26",
+          "nominal_weekday": "Saturday",
+          "effective": "2026-12-28",
+          "effective_weekday": "Monday"
+        },
+        "source_or_derivation": "weekend/holiday shift rule in calendar_rules",
+        "confidence": "verified-official rule"
+      },
+      {
+        "id": "CAL-5",
+        "description": "SGK Aralık primleri: 31 Jan 2027 is Sunday",
+        "inputs": {
+          "nominal_due_date": "2027-01-31"
+        },
+        "expected": {
+          "nominal": "2027-01-31",
+          "nominal_weekday": "Sunday",
+          "effective": "2027-02-01",
+          "effective_weekday": "Monday"
+        },
+        "source_or_derivation": "weekend/holiday shift rule in calendar_rules",
+        "confidence": "cross-checked"
+      },
+      {
+        "id": "CAL-6",
+        "description": "KDV Ocak dönemi: 28 Feb 2027 is Sunday",
+        "inputs": {
+          "nominal_due_date": "2027-02-28"
+        },
+        "expected": {
+          "nominal": "2027-02-28",
+          "nominal_weekday": "Sunday",
+          "effective": "2027-03-01",
+          "effective_weekday": "Monday"
+        },
+        "source_or_derivation": "weekend/holiday shift rule in calendar_rules",
+        "confidence": "cross-checked"
+      },
+      {
+        "id": "CAL-7",
+        "description": "KDV Şubat dönemi: 28 Mar 2027 is Sunday",
+        "inputs": {
+          "nominal_due_date": "2027-03-28"
+        },
+        "expected": {
+          "nominal": "2027-03-28",
+          "nominal_weekday": "Sunday",
+          "effective": "2027-03-29",
+          "effective_weekday": "Monday"
+        },
+        "source_or_derivation": "weekend/holiday shift rule in calendar_rules",
+        "confidence": "cross-checked"
+      },
+      {
+        "id": "CAL-8",
+        "description": "Hypothetical deadline inside Ramazan Bayramı (10 Mar 2027) -> Friday 12 Mar",
+        "inputs": {
+          "nominal_due_date": "2027-03-10"
+        },
+        "expected": {
+          "nominal": "2027-03-10",
+          "nominal_weekday": "Wednesday",
+          "effective": "2027-03-12",
+          "effective_weekday": "Friday"
+        },
+        "source_or_derivation": "weekend/holiday shift rule in calendar_rules",
+        "confidence": "cross-checked"
+      },
+      {
+        "id": "CAL-9",
+        "description": "Hypothetical deadline on 1 Jan 2027 (Friday, holiday) -> Monday 4 Jan",
+        "inputs": {
+          "nominal_due_date": "2027-01-01"
+        },
+        "expected": {
+          "nominal": "2027-01-01",
+          "nominal_weekday": "Friday",
+          "effective": "2027-01-04",
+          "effective_weekday": "Monday"
+        },
+        "source_or_derivation": "weekend/holiday shift rule in calendar_rules",
+        "confidence": "unverified (holiday not source-confirmed)"
+      }
+    ]
+  },
+  "tax_calendar": [
+    {
+      "date": "2026-10-26",
+      "weekday": "Monday",
+      "title": "3 aylık Muhtasar ve Prim Hizmet Beyannamesi (Temmuz-Eylül 2026)",
+      "who": "Quarterly muhtasar filers (eligibility not researched)",
+      "source_url": "https://musavirlerkulubu.com.tr/mevzuat/takvim/",
+      "confidence": "single-secondary-source",
+      "period": "Q3 2026"
+    },
+    {
+      "date": "2026-10-26",
+      "weekday": "Monday",
+      "title": "Muhtasar ve Prim Hizmet Beyannamesi (Eylül 2026) + damga vergisi beyannamesi",
+      "who": "İşverenler / stopaj sorumluları (muhtasar, damga vergisi, SGK bildirimi)",
+      "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf",
+      "confidence": "verified-official",
+      "period": "Eylül 2026",
+      "notes": "Withheld stopaj / damga vergisi is paid within the filing period (GİB table)."
+    },
+    {
+      "date": "2026-10-28",
+      "weekday": "Wednesday",
+      "title": "KDV beyannamesi (Eylül 2026) - beyan ve ödeme",
+      "who": "KDV mükellefleri (şirketler ve gerçek kişiler)",
+      "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf",
+      "confidence": "cross-checked",
+      "period": "Eylül 2026",
+      "half_day_note": "Nominal date is a half-day holiday (arife); no shift applied (see calendar_rules)",
+      "notes": "28th rule: GİB table, mikro, müşavirler kulübü, multinet. CONFLICT: prozon.net's summary of the 'GİB Ekim 2026 Vergi Takvimi' (dated 2026-10-01) lists 26 Oct for 'MPHB ve KDV (1 ve 2 No'lu)' and 27 Oct for payment of KDV/muhtasar/SGK. Treated as unreliable (a 27 Oct SGK payment contradicts the SGK page) but UNRESOLVED - confirm on gib.gov.tr/vergi-takvimi. 28 Oct is a half-day holiday: no shift assumed; 29 Oct is a full holiday.",
+      "additional_sources": [
+        "https://www.mikro.com.tr/vergi-takvimi/",
+        "https://multinet.com.tr/blog/vergi-muhasebe/vergi-takvimi",
+        "https://musavirlerkulubu.com.tr/mevzuat/takvim/"
+      ],
+      "conflicting_source": "https://prozon.net/sirkuler/gelir-idaresi-baskanligi-gib-ekim-2026-vergi-takvimi-yayimlandi/",
+      "verify_before_publishing": true
+    },
+    {
+      "date": "2026-11-02",
+      "weekday": "Monday",
+      "title": "SGK prim ödemesi (Eylül 2026 primleri)",
+      "who": "İşverenler (SGK'ya tabi)",
+      "source_url": "https://www.sgk.gov.tr/Content/Post/1f3a8bec-bca6-4e83-8e5c-f957a7d28af4/Isverenlerin-Prim-Odeme-Islemleri-2025-02-06-03-29-17",
+      "confidence": "cross-checked",
+      "period": "Eylül 2026",
+      "nominal_date": "2026-10-31",
+      "shift_reason": "nominal date is a Saturday -> next working day",
+      "notes": "Last day = end of the following month (SGK); 31 Oct is a Saturday."
+    },
+    {
+      "date": "2026-11-17",
+      "weekday": "Tuesday",
+      "title": "3. dönem geçici vergi beyanı ve ödemesi (Temmuz-Eylül 2026)",
+      "who": "Şirketler (kurumlar vergisi mükellefleri) ve gerçek kişiler (gelir vergisi: ticari kazanç, serbest meslek; basit usul hariç)",
+      "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf",
+      "confidence": "verified-official",
+      "period": "Jul-Sep 2026",
+      "notes": "Companies also compute the yurt içi asgari kurumlar vergisi in geçici vergi periods (EY)."
+    },
+    {
+      "date": "2026-11-26",
+      "weekday": "Thursday",
+      "title": "Muhtasar ve Prim Hizmet Beyannamesi (Ekim 2026) + damga vergisi beyannamesi",
+      "who": "İşverenler / stopaj sorumluları (muhtasar, damga vergisi, SGK bildirimi)",
+      "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf",
+      "confidence": "verified-official",
+      "period": "Ekim 2026"
+    },
+    {
+      "date": "2026-11-30",
+      "weekday": "Monday",
+      "title": "Emlak vergisi 2. taksit (son gün)",
+      "who": "Property owners (individuals and companies)",
+      "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf",
+      "confidence": "cross-checked",
+      "period": "2026 2. taksit",
+      "notes": "GİB table: emlak vergisi taksitleri 'March-May / Nov'; mikro.com.tr lists 30 Nov 2026."
+    },
+    {
+      "date": "2026-11-30",
+      "weekday": "Monday",
+      "title": "KDV beyannamesi (Ekim 2026) - beyan ve ödeme",
+      "who": "KDV mükellefleri (şirketler ve gerçek kişiler)",
+      "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf",
+      "confidence": "cross-checked",
+      "period": "Ekim 2026",
+      "nominal_date": "2026-11-28",
+      "shift_reason": "nominal date is a Saturday -> next working day"
+    },
+    {
+      "date": "2026-11-30",
+      "weekday": "Monday",
+      "title": "SGK prim ödemesi (Ekim 2026 primleri)",
+      "who": "İşverenler (SGK'ya tabi)",
+      "source_url": "https://www.sgk.gov.tr/Content/Post/1f3a8bec-bca6-4e83-8e5c-f957a7d28af4/Isverenlerin-Prim-Odeme-Islemleri-2025-02-06-03-29-17",
+      "confidence": "cross-checked",
+      "period": "Ekim 2026"
+    },
+    {
+      "date": "2026-12-10",
+      "weekday": "Thursday",
+      "title": "e-Defter beratları - Temmuz-Eylül 2026 defterleri (gelir vergisi mükellefleri)",
+      "who": "e-Defter users (gelir vergisi mükellefleri)",
+      "source_url": "https://turmob.org.tr/ekutuphane/Read/ea271914-fa67-4079-8b63-41e27f6b66c1",
+      "confidence": "single-secondary-source",
+      "period": "Jul-Sep 2026",
+      "notes": "DERIVED, LOW CONFIDENCE. TÜRMOB 10.01.2025/24-1 quotes: gelir vergisi mükellefleri -> 'ilgili olduğu geçici vergi dönemine ilişkin gelir geçici vergi beyannamesinin verileceği ayı takip eden ayın 10 uncu günü sonuna kadar' (the Q3 return is filed in November -> 10 Dec). Rule restated for 2026 by muhasebenews (election deadline 31.01.2026). GİB extended some 2026 e-Defter deadlines by circular. Verify on the GİB e-Defter pages.",
+      "verify_before_publishing": true
+    },
+    {
+      "date": "2026-12-14",
+      "weekday": "Monday",
+      "title": "e-Defter beratları - Temmuz-Eylül 2026 defterleri (kurumlar vergisi ve diğer mükellefler)",
+      "who": "e-Defter users (companies / other taxpayers)",
+      "source_url": "https://turmob.org.tr/ekutuphane/Read/ea271914-fa67-4079-8b63-41e27f6b66c1",
+      "confidence": "single-secondary-source",
+      "period": "Jul-Sep 2026",
+      "notes": "DERIVED, LOW CONFIDENCE: 'diğer mükellefler için kurum geçici vergi beyannamesinin verileceği ayı takip eden ayın 14 üncü günü sonuna kadar' (the Nov return -> 14 Dec).",
+      "verify_before_publishing": true
+    },
+    {
+      "date": "2026-12-28",
+      "weekday": "Monday",
+      "title": "KDV beyannamesi (Kasım 2026) - beyan ve ödeme",
+      "who": "KDV mükellefleri (şirketler ve gerçek kişiler)",
+      "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf",
+      "confidence": "cross-checked",
+      "period": "Kasım 2026"
+    },
+    {
+      "date": "2026-12-28",
+      "weekday": "Monday",
+      "title": "Muhtasar ve Prim Hizmet Beyannamesi (Kasım 2026) + damga vergisi beyannamesi",
+      "who": "İşverenler / stopaj sorumluları (muhtasar, damga vergisi, SGK bildirimi)",
+      "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf",
+      "confidence": "verified-official",
+      "period": "Kasım 2026",
+      "nominal_date": "2026-12-26",
+      "shift_reason": "nominal date is a Saturday -> next working day"
+    },
+    {
+      "date": "2026-12-31",
+      "weekday": "Thursday",
+      "title": "SGK prim ödemesi (Kasım 2026 primleri)",
+      "who": "İşverenler (SGK'ya tabi)",
+      "source_url": "https://www.sgk.gov.tr/Content/Post/1f3a8bec-bca6-4e83-8e5c-f957a7d28af4/Isverenlerin-Prim-Odeme-Islemleri-2025-02-06-03-29-17",
+      "confidence": "cross-checked",
+      "period": "Kasım 2026"
+    },
+    {
+      "date": "2027-01-26",
+      "weekday": "Tuesday",
+      "title": "3 aylık Muhtasar ve Prim Hizmet Beyannamesi (Ekim-Aralık 2026)",
+      "who": "Quarterly muhtasar filers (eligibility not researched)",
+      "source_url": "https://musavirlerkulubu.com.tr/mevzuat/takvim/",
+      "confidence": "single-secondary-source",
+      "period": "Q4 2026"
+    },
+    {
+      "date": "2027-01-26",
+      "weekday": "Tuesday",
+      "title": "Muhtasar ve Prim Hizmet Beyannamesi (Aralık 2026) + damga vergisi beyannamesi",
+      "who": "İşverenler / stopaj sorumluları (muhtasar, damga vergisi, SGK bildirimi)",
+      "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf",
+      "confidence": "verified-official",
+      "period": "Aralık 2026"
+    },
+    {
+      "date": "2027-01-28",
+      "weekday": "Thursday",
+      "title": "KDV beyannamesi (Aralık 2026) - beyan ve ödeme",
+      "who": "KDV mükellefleri (şirketler ve gerçek kişiler)",
+      "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf",
+      "confidence": "cross-checked",
+      "period": "Aralık 2026"
+    },
+    {
+      "date": "2027-02-01",
+      "weekday": "Monday",
+      "title": "Motorlu taşıtlar vergisi 1. taksit (son gün)",
+      "who": "Vehicle owners",
+      "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf",
+      "confidence": "cross-checked",
+      "period": "2027 1. taksit",
+      "nominal_date": "2027-01-31",
+      "shift_reason": "nominal date is a Sunday -> next working day",
+      "notes": "GİB table: MTV 'Jan/July instalments' (no filing). mikro.com.tr gave 'Feb 2 and Jul 31, 2026' for 2026, i.e. the 31 Jan date shifts when it falls on a weekend."
+    },
+    {
+      "date": "2027-02-01",
+      "weekday": "Monday",
+      "title": "SGK prim ödemesi (Aralık 2026 primleri)",
+      "who": "İşverenler (SGK'ya tabi)",
+      "source_url": "https://www.sgk.gov.tr/Content/Post/1f3a8bec-bca6-4e83-8e5c-f957a7d28af4/Isverenlerin-Prim-Odeme-Islemleri-2025-02-06-03-29-17",
+      "confidence": "cross-checked",
+      "period": "Aralık 2026",
+      "nominal_date": "2027-01-31",
+      "shift_reason": "nominal date is a Sunday -> next working day",
+      "notes": "31 Jan 2027 is a Sunday."
+    },
+    {
+      "date": "2027-02-17",
+      "weekday": "Wednesday",
+      "title": "4. dönem geçici vergi beyanı ve ödemesi (Ekim-Aralık 2026; kümülatif Ocak-Aralık)",
+      "who": "Şirketler (kurumlar vergisi mükellefleri) ve gerçek kişiler (gelir vergisi: ticari kazanç, serbest meslek; basit usul hariç)",
+      "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf",
+      "confidence": "cross-checked",
+      "period": "Oct-Dec 2026 (cumulative Jan-Dec)",
+      "notes": "4th period restored by 7566 sayılı Kanun for periods beginning on/after 01.01.2025 (TÜRMOB/KPMG/PwC/BDTurkey/vergimerkezi). Whether kurumlar vergisi mükellefleri file it: BDTurkey, vergimerkezi and PwC bulletins say yes, and PwC's '2026 Yılı Mali Takvimi' lists '2025 IV. Geçici Vergi Dönemine (Ekim-Kasım-Aralık) Ait Kurum Geçici Vergisinin Beyanı ve Ödemesi' with the window 01/01/2026-17/02/2026 (so the FY2025 4th period for companies was due 17.02.2026; the FY2026 equivalent is 17.02.2027) plus a 'Gerçek Faydalanıcıya İlişkin Bildirim Formu' attached to the kurum geçici vergi beyannamesi; TÜRMOB/KPMG summaries mention only ticari kazanç/serbest meslek. GİB's table shows 'Feb 17*'.",
+      "additional_sources": [
+        "https://www.pwc.com.tr/mali-takvim",
+        "https://www.bdturkey.com/2025ten-2026ya-geciste-vergi-gundemi",
+        "https://vergimerkezi.com.tr/dorduncu-gecici-vergi-donemi-geri-geldi/",
+        "https://kpmgvergi.com/yayinlar/mali-bultenler/vergi/7566-sayili-kanun-resmi-gazete-de-yayimlandi/3316",
+        "https://www.turmob.org.tr/ekutuphane/Read/f2dc7ad5-a781-4dc1-83a0-6174e3700af6"
+      ]
+    },
+    {
+      "date": "2027-02-26",
+      "weekday": "Friday",
+      "title": "Muhtasar ve Prim Hizmet Beyannamesi (Ocak 2027) + damga vergisi beyannamesi",
+      "who": "İşverenler / stopaj sorumluları (muhtasar, damga vergisi, SGK bildirimi)",
+      "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf",
+      "confidence": "verified-official",
+      "period": "Ocak 2027"
+    },
+    {
+      "date": "2027-03-01",
+      "weekday": "Monday",
+      "title": "KDV beyannamesi (Ocak 2027) - beyan ve ödeme",
+      "who": "KDV mükellefleri (şirketler ve gerçek kişiler)",
+      "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf",
+      "confidence": "cross-checked",
+      "period": "Ocak 2027",
+      "nominal_date": "2027-02-28",
+      "shift_reason": "nominal date is a Sunday -> next working day"
+    },
+    {
+      "date": "2027-03-01",
+      "weekday": "Monday",
+      "title": "SGK prim ödemesi (Ocak 2027 primleri)",
+      "who": "İşverenler (SGK'ya tabi)",
+      "source_url": "https://www.sgk.gov.tr/Content/Post/1f3a8bec-bca6-4e83-8e5c-f957a7d28af4/Isverenlerin-Prim-Odeme-Islemleri-2025-02-06-03-29-17",
+      "confidence": "cross-checked",
+      "period": "Ocak 2027",
+      "nominal_date": "2027-02-28",
+      "shift_reason": "nominal date is a Sunday -> next working day",
+      "notes": "28 Feb 2027 is a Sunday."
+    },
+    {
+      "date": "2027-03-26",
+      "weekday": "Friday",
+      "title": "Muhtasar ve Prim Hizmet Beyannamesi (Şubat 2027) + damga vergisi beyannamesi",
+      "who": "İşverenler / stopaj sorumluları (muhtasar, damga vergisi, SGK bildirimi)",
+      "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf",
+      "confidence": "verified-official",
+      "period": "Şubat 2027"
+    },
+    {
+      "date": "2027-03-29",
+      "weekday": "Monday",
+      "title": "KDV beyannamesi (Şubat 2027) - beyan ve ödeme",
+      "who": "KDV mükellefleri (şirketler ve gerçek kişiler)",
+      "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf",
+      "confidence": "cross-checked",
+      "period": "Şubat 2027",
+      "nominal_date": "2027-03-28",
+      "shift_reason": "nominal date is a Sunday -> next working day"
+    },
+    {
+      "date": "2027-03-31",
+      "weekday": "Wednesday",
+      "title": "SGK prim ödemesi (Şubat 2027 primleri)",
+      "who": "İşverenler (SGK'ya tabi)",
+      "source_url": "https://www.sgk.gov.tr/Content/Post/1f3a8bec-bca6-4e83-8e5c-f957a7d28af4/Isverenlerin-Prim-Odeme-Islemleri-2025-02-06-03-29-17",
+      "confidence": "cross-checked",
+      "period": "Şubat 2027"
+    },
+    {
+      "date": "2027-03-31",
+      "weekday": "Wednesday",
+      "title": "Yıllık gelir vergisi beyannamesi (2026 geliri) - son gün (1-31 Mart 2027) ve 1. taksit",
+      "who": "Individuals with a gelir vergisi beyan yükümlülüğü",
+      "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf",
+      "confidence": "verified-official",
+      "period": "2026 geliri",
+      "notes": "GİB table: 'İzleyen yılın Mart ayı başından itibaren Mart ayının son günü saat 23.59'a kadar'; two instalments (March and July). Ramazan Bayramı (9-11 Mar) falls inside the window but does not touch the last day."
+    }
+  ]
+}

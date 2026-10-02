@@ -1,0 +1,72 @@
+{
+  "title": "Hakkımızda",
+  "lead": "Bu sayfa; kapsamı nasıl ele aldığımızı, bağımsızlık ve gizliliğe yaklaşımımızı ve bu sitedeki bilgilerin nasıl okunması gerektiğini kısaca açıklar.",
+  "sections": [
+    {
+      "id": "kapsam-anlayisi",
+      "eyebrow": "Kapsam anlayışı",
+      "heading": "Her çalışmanın kapsamı kendi ihtiyacından doğar",
+      "paragraphs": [
+        "Aynı hizmet adını taşıyan iki çalışma, kurumun faaliyetlerine ve mevcut süreçlerine göre farklı kapsamlara sahip olabilir. Bu nedenle kapsam, hazır bir paket olarak değil, kurumun ihtiyaçları değerlendirilerek belirlenir.",
+        "[Hizmetler](/hizmetler/) sayfasındaki açıklamalar genel çerçeveyi tanıtır. Belirli bir çalışmanın kapsamı, yöntemi ve çıktıları ihtiyaç değerlendirildikten sonra netleşir; kapsam ve süre işin niteliğine göre belirlendiği için hizmet açıklamalarında sabit bir ücret veya süre belirtilmez."
+      ]
+    },
+    {
+      "id": "bagimsizlik-ve-tarafsizlik",
+      "eyebrow": "Bağımsızlık ve tarafsızlık",
+      "heading": "Bağımsızlık, denetim görüşünün dayanağıdır",
+      "paragraphs": [
+        "Bağımsız denetimde amaç, finansal tablolar hakkında denetlenen kuruluştan ayrı, tarafsız ve kanıta dayalı bir görüş oluşturmaktır. Bu görüşün güvenilirliği, denetçinin bağımsızlığına bağlıdır.",
+        "Bağımsız denetim hizmeti verilen kuruluşlara, bağımsızlık kurallarının izin vermediği hizmetler sunulmaz. Bir hizmetin kapsamı, ilgili mevzuat ve meslek kuralları çerçevesinde görev başında ayrıca değerlendirilir."
+      ]
+    },
+    {
+      "id": "gizlilik-ve-veri-guvenligi",
+      "eyebrow": "Gizlilik ve veri güvenliği",
+      "heading": "Paylaşılan bilgi, özel bilgi olarak ele alınır",
+      "paragraphs": [
+        "Çalışma sırasında paylaşılan mali, vergisel ve personel bilgileri özel bilgi niteliğindedir; bu bilgilerin korunması mesleki ilkelerimizin parçasıdır.",
+        "Kişisel veriler ayrıca 6698 sayılı Kişisel Verilerin Korunması Kanunu çerçevesinde işlenir. Bu sitedeki formların, çerez ve benzeri teknolojilerin ve diğer veri uygulamalarının ayrıntıları [KVKK Aydınlatma Metni](/yasal/kvkk-aydinlatma-metni/), [Gizlilik Politikası](/yasal/gizlilik-politikasi/) ve [Çerez Politikası](/yasal/cerez-politikasi/) sayfalarında açıklanmıştır."
+      ]
+    },
+    {
+      "id": "bilgi-paylasimi-ve-egitim",
+      "eyebrow": "Bilgi paylaşımı ve eğitim",
+      "heading": "Bilgi merkezi, hesaplayıcılar ve akademi",
+      "paragraphs": [
+        "[Bilgi Merkezi](/bilgi-merkezi/); sirkülerleri, duyuruları, blog yazılarını, haberleri, sektör raporlarını ve sözlüğü bir araya getirir. [Hesaplayıcılar](/hesaplayicilar/) ve [vergi takvimi](/vergi-takvimi/) ise sık karşılaşılan hesaplama ve tarih sorularında yol gösterici olmak üzere hazırlanmıştır.",
+        "Bu içerikler genel bilgilendirme amaçlıdır; hesaplayıcılar tahmini sonuç verir ve mali, hukuki veya vergisel tavsiye yerine geçmez. Mesleki eğitim ihtiyaçları için [Boraden Akademi](/hizmetler/akademi/) altında muhasebe ve vergi, UFRS/TFRS, finansal analiz, iç denetim ve insan kaynakları eğitimleri yer alır."
+      ]
+    },
+    {
+      "id": "calisma-bicimi",
+      "eyebrow": "Çalışma biçimi",
+      "heading": "Uzmanlıklar birlikte çalışır, bağımsızlık kuralları gözetilir",
+      "paragraphs": [
+        "Vergi, denetim, insan kaynakları, sistemler ve eğitim gibi alanlar çoğu zaman birbirini etkiler: bir vergi konusu bordroyu, bir raporlama konusu sistemleri ilgilendirebilir. Bu nedenle farklı görüşler değerlendirilir ve bulgular ilgili uzmanlıklarla paylaşılır.",
+        "Bu birlikte çalışma, bağımsızlık ve gizlilik kurallarının izin verdiği ölçüde yürütülür; bağımsız denetim hizmeti verilen bir kuruluş için hangi hizmetlerin birlikte sunulabileceği ve bilgilerin nasıl paylaşılabileceği bu kurallara göre değerlendirilir. Her alanın hizmetlerine [Hizmetler](/hizmetler/) sayfasından ulaşabilirsiniz."
+      ]
+    }
+  ],
+  "facts": [
+    {
+      "label": "Kuruluş",
+      "value": "1993"
+    },
+    {
+      "label": "Konum",
+      "value": "İstanbul"
+    },
+    {
+      "label": "Hizmet alanı",
+      "value": "6",
+      "from": "groups"
+    },
+    {
+      "label": "Hizmet başlığı",
+      "value": "47",
+      "from": "services"
+    }
+  ],
+  "closing": "Çalışma alanlarımız, kapsam anlayışımız veya bu sitedeki içerikler hakkında sorularınız için [İletişim](/iletisim/) sayfasından bize ulaşabilirsiniz."
+}

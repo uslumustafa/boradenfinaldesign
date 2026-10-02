@@ -1,0 +1,106 @@
+/* ═══════════════════════════════════════════════════════════════
+   BORADEN — Tasarım belirteçleri (tokens)
+   Tek kaynak: renkler, tipografi, aralıklar, hareket.
+   Wagtail'de bu dosya tema ayarlarından (SiteSettings) üretilebilir.
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  /* Marka renkleri — logonun kendi tonları (logo dosyasından örneklendi) */
+  --b-blue: #1e759d;
+  --b-blue-2: #3f88ad;
+  --b-red: #b83030;
+  --b-red-2: #e05840;
+  --b-green: #007a31;
+  --b-green-2: #33a052;
+
+  /* Lacivert ölçeği (koyu "dünya" ve header/footer plakaları) */
+  --navy-1000: #050c1a;
+  --navy-950: #08132a;
+  --navy-900: #0a1730;
+  --navy-800: #102244;
+  --navy-700: #17325f;
+  --navy-600: #24457f;
+
+  /* Kâğıt (açık yüzeyler) ve mürekkep */
+  --paper: #ffffff;
+  --paper-2: #f4f6f9;
+  --paper-3: #e9edf3;
+  --ink: #0a1730;
+  --ink-2: #39465f;
+  --ink-3: #66728a;
+  --line: #dde2ea;
+  --line-strong: #c3cbd8;
+
+  /* Koyu zeminde metin ve çizgi */
+  --on-dark: #ffffff;
+  --on-dark-2: rgba(255, 255, 255, 0.74);
+  --on-dark-3: rgba(255, 255, 255, 0.52);
+  --line-dark: rgba(255, 255, 255, 0.14);
+  --line-dark-2: rgba(255, 255, 255, 0.24);
+
+  /* Vurgu */
+  --accent: var(--b-blue);
+  --accent-dark: #7cc0e2; /* koyu zeminde okunabilir mavi ton */
+  --focus: #2b8ccc;
+  --warn: #9a6a12;
+  --warn-bg: #fbf4e4;
+
+  /* Tipografi */
+  --f-display: 'Newsreader', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --f-sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --f-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  --fs-0: clamp(0.78rem, 0.76rem + 0.1vw, 0.84rem);
+  --fs-1: clamp(0.94rem, 0.92rem + 0.15vw, 1.02rem);
+  --fs-2: clamp(1.03rem, 0.98rem + 0.25vw, 1.18rem);
+  --fs-3: clamp(1.25rem, 1.12rem + 0.65vw, 1.7rem);
+  --fs-4: clamp(1.6rem, 1.3rem + 1.4vw, 2.5rem);
+  --fs-5: clamp(2.1rem, 1.5rem + 2.7vw, 3.9rem);
+  --fs-6: clamp(2.6rem, 1.5rem + 4.6vw, 6.2rem);
+  --fs-7: clamp(3.1rem, 1rem + 8.6vw, 10.4rem);
+
+  /* Aralık */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4.5rem;
+  --s-9: 6rem;
+  --s-10: 8rem;
+  --sec: clamp(4.5rem, 2.6rem + 7.4vw, 10rem);
+  --gutter: clamp(1.25rem, 0.5rem + 3.4vw, 4.25rem);
+  --maxw: 1480px;
+  --narrow: 860px;
+
+  /* Yerleşim */
+  --hdr: 86px;
+  --logo-h: 38px;
+  --radius: 2px;
+
+  /* Hareket */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
+  --t-fast: 180ms;
+  --t-med: 420ms;
+  --t-slow: 900ms;
+
+  /* Katmanlar */
+  --z-world: 0;
+  --z-content: 1;
+  --z-hud: 40;
+  --z-header: 50;
+  --z-menu: 60;
+  --z-skip: 100;
+
+  color-scheme: light;
+}
+
+@media (max-width: 860px) {
+  :root {
+    --hdr: 72px;
+    --logo-h: 31px;
+  }
+}

@@ -1,0 +1,147 @@
+// Ekip modeli (scripts/team.mjs): atama kuralları, gizli iletişim bilgisi, veri bütünlüğü. DOM/tarayıcı gerekmez.
+//   node --test tests/team.test.mjs
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { buildTeam, initialsOf, shortTitle } from '../scripts/team.mjs';
+import { loadData } from '../scripts/build.mjs';
+import { buildModel } from '../scripts/model.mjs';
+
+// ——— Yapay veri: iki alan (a, b), dört hizmet, üç sektör
+const mk = () => {
+  const groups = [
+    { id: 'a', name: 'Alan A', short: 'A', url: '/hizmetler/a/', number: '01' },
+    { id: 'b', name: 'Alan B', short: 'B', url: '/hizmetler/b/', number: '02' },
+  ];
+  const svc = (id, group) => ({ id, group, title: id.toUpperCase(), url: `/hizmetler/${group}/${id}/`, groupName: group, groupNumber: '00' });
+  const services = [svc('s1', 'a'), svc('s2', 'a'), svc('s3', 'b'), svc('s4', 'b')];
+  const sectors = [
+    { slug: 'x', name: 'X', short: '', url: '/sektorler/x/', services: ['s1', 's2', 's3'] },
+    { slug: 'y', name: 'Y', short: '', url: '/sektorler/y/', services: ['s3', 's4'] },
+    { slug: 'z', name: 'Z', short: '', url: '/sektorler/z/', services: ['s1'] },
+  ];
+  return { groups, services, sectors };
+};
+const person = (slug, extra = {}) => ({ slug, name: `Kişi ${slug}`, role: 'Uzman', areas: [], services: [], sectors: [], status: 'published', ...extra });
+
+test('baş harfler Türkçe büyük harf kuralıyla çıkar', () => {
+  assert.equal(initialsOf('Cengiz Turmaz'), 'CT');
+  assert.equal(initialsOf('ismail yılmaz'), 'İY');
+  assert.equal(initialsOf('ışık şahin'), 'IŞ');
+  assert.equal(initialsOf('Ayşenur Kansız'), 'AK');
+  assert.equal(initialsOf('Madonna'), 'M');
+  assert.equal(initialsOf(''), '');
+});
+
+test('unvanın parantez içi kurum adı kısa biçimde atılır', () => {
+  assert.equal(shortTitle('Serbest Muhasebeci Mali Müşavir (TÜRMOB)'), 'Serbest Muhasebeci Mali Müşavir');
+  assert.equal(shortTitle('Bilirkişi (İstanbul Adli Yargı İlk Derece Mahkemesi Adalet Komisyonu Başkanlığı)'), 'Bilirkişi');
+  assert.equal(shortTitle('Bağımsız Denetçi'), 'Bağımsız Denetçi');
+});
+
+test('hizmet kişileri: açık atananlar önce, sonra alan sorumluları', () => {
+  const ctx = mk();
+  const t = buildTeam({ members: [person('m1', { services: ['s1', 's2'] }), person('m2', { areas: ['b'] }), person('m3', { services: ['s4'] })] }, ctx);
+  const byId = Object.fromEntries(ctx.services.map((s) => [s.id, s]));
+  assert.deepEqual(byId.s1.people.map((p) => [p.slug, p.via]), [['m1', 'service']]);
+  assert.deepEqual(byId.s4.people.map((p) => [p.slug, p.via]), [['m3', 'service'], ['m2', 'area']]);
+  assert.deepEqual(byId.s3.people.map((p) => [p.slug, p.via]), [['m2', 'area']]);
+  assert.equal(t.issues.length, 0);
+});
+
+test('alan kişileri: sorumlular önce; ≥2 hizmete atananlar eklenir; en az 2 kişiye tamamlanır', () => {
+  const ctx = mk();
+  buildTeam({ members: [person('m1', { services: ['s1', 's2'] }), person('m2', { areas: ['b'] }), person('m3', { services: ['s4'] })] }, ctx);
+  const [a, b] = ctx.groups;
+  assert.deepEqual(a.people.map((p) => p.slug), ['m1']); // tek aday: tamamlanacak başka kişi yok
+  assert.deepEqual(b.people.map((p) => [p.slug, p.via]), [['m2', 'area'], ['m3', 'service']]); // 1 sorumlu + tamamlama
+  assert.deepEqual(a.people[0].topics.map((x) => x.id), ['s1', 's2']);
+});
+
+test('sektör kişileri: hizmet sahiplerinden türetilir (en çok hizmet önce, en az 2 kişi)', () => {
+  const ctx = mk();
+  buildTeam({ members: [person('m1', { services: ['s1', 's2'] }), person('m2', { areas: ['b'] }), person('m3', { services: ['s4'] })] }, ctx);
+  const [x, y] = ctx.sectors;
+  assert.equal(x.peopleDerived, true);
+  assert.deepEqual(x.people.map((p) => p.slug), ['m1', 'm2']); // m1: 2 hizmet, m2: 1 (alan sorumlusu) → 2 kişiye tamamlandı
+  assert.deepEqual(y.people.map((p) => p.slug), ['m2', 'm3']); // m2: 2 hizmet (s3, s4), m3: 1
+  assert.deepEqual(x.people[0].topics.map((t) => t.id), ['s1', 's2']);
+});
+
+test('sektöre açık atama varsa türetme devre dışı kalır (editör önceliği)', () => {
+  const ctx = mk();
+  buildTeam({ members: [person('m1', { services: ['s1', 's2'] }), person('m3', { sectors: ['z'] })] }, ctx);
+  const z = ctx.sectors.find((s) => s.slug === 'z');
+  assert.equal(z.peopleDerived, false);
+  assert.deepEqual(z.people.map((p) => [p.slug, p.via]), [['m3', 'sector']]);
+});
+
+test('bilinmeyen alan/hizmet/sektör kimlikleri ve eksik zorunlu alanlar hata listesine yazılır', () => {
+  const ctx = mk();
+  const t = buildTeam({ members: [person('m1', { areas: ['yok'], services: ['yok2'], sectors: ['yok3'], photo: 'foto-yok' }), { slug: 'Kötü Slug', status: 'published' }] }, ctx);
+  const text = t.issues.join('\n');
+  for (const k of ['yok', 'yok2', 'yok3', 'foto-yok', 'slug', 'zorunlu']) assert.ok(text.includes(k), `${k} için hata beklenirdi:\n${text}`);
+  assert.deepEqual(t.members[0].areaIds, []); // geçersiz kimlikler atanmaz
+});
+
+test('iletişim bilgisi yalnızca showContact=true iken modele girer', () => {
+  const ctx = mk();
+  const t = buildTeam(
+    {
+      members: [
+        person('gizli', { contact: { email: 'gizli@ornek.com', phone: '+90 212 000 00 00', linkedin: 'https://linkedin.com/in/x' }, showContact: false }),
+        person('acik', { contact: { email: 'acik@ornek.com', phone: '', linkedin: '' }, showContact: true }),
+        person('bos', { contact: { email: '', phone: '', linkedin: '' }, showContact: true }),
+      ],
+    },
+    ctx
+  );
+  assert.equal(t.bySlug.gizli.contact, null);
+  assert.deepEqual(t.bySlug.acik.contact, { email: 'acik@ornek.com', phone: '', linkedin: '' });
+  assert.equal(t.bySlug.bos.contact, null, 'izin açık ama alanlar boşsa kutu çizilmez');
+  assert.ok(!JSON.stringify(t).includes('gizli@ornek.com'), 'gizli e-posta hiçbir yerde bulunmamalı');
+  assert.ok(!JSON.stringify(ctx).includes('gizli@ornek.com'), 'alan/hizmet/sektör kayıtlarına da sızmamalı');
+});
+
+test('taslak kişiler yayımlanmaz; çevrimsel başvuru yok (JSON.stringify çalışır)', () => {
+  const ctx = mk();
+  const t = buildTeam({ members: [person('m1', { services: ['s1'] }), person('taslak', { status: 'draft', services: ['s1'] })] }, ctx);
+  assert.deepEqual(t.members.map((m) => m.slug), ['m1']);
+  assert.ok(!ctx.services[0].people.some((p) => p.slug === 'taslak'));
+  assert.doesNotThrow(() => JSON.stringify([t, ctx]));
+});
+
+// ——— Gerçek veri: src/data/team.json + hizmetler + sektörler
+const model = buildModel(loadData());
+const team = model.team;
+
+test('gerçek veri: team.json hatasız ve en az bir kişi içerir', () => {
+  assert.ok(team, 'model.team yok');
+  assert.deepEqual(team.issues, []);
+  assert.ok(team.members.length >= 1);
+});
+
+test('gerçek veri: adresler ve slug\'lar tektir; profil adresi /hakkimizda/ekibimiz/<slug>/', () => {
+  const urls = team.members.map((m) => m.url);
+  assert.equal(new Set(urls).size, urls.length);
+  for (const m of team.members) assert.equal(m.url, `/hakkimizda/ekibimiz/${m.slug}/`);
+});
+
+test('gerçek veri: her sektörde en az bir ilgili kişi var; kimsesiz hizmet sayfaları kart çizmez', () => {
+  for (const s of model.sectors) assert.ok(s.people.length >= 1, `${s.slug}: ilgili kişi yok`);
+  for (const g of model.groups) for (const p of g.people) assert.ok(['area', 'service'].includes(p.via));
+  for (const s of model.services) assert.ok(s.people.length <= 3, `${s.id}: en çok 3 kişi`);
+});
+
+test('gerçek veri: gizli iletişim bilgisi ve kişisel e-posta metinlere sızmamış', () => {
+  for (const m of team.members) {
+    if (!m.showContact) assert.equal(m.contact, null, `${m.slug}: showContact=false iken contact boş olmalı`);
+    const prose = [m.summary, ...(m.bio || []), ...(m.expertise || []), ...(m.titles || [])].join(' ');
+    assert.ok(!/@/.test(prose), `${m.slug}: özgeçmiş metninde e-posta adresi var`);
+    assert.ok(!/\+?\d[\d\s()-]{8,}\d/.test(prose), `${m.slug}: özgeçmiş metninde telefon numarası var`);
+  }
+});
+
+test('gerçek veri: yayından önce doğrulanacak kişiler işaretli (needsVerification)', () => {
+  // Bu test bilgilendiricidir: doğrulanan kişiler bayrağı kaldırınca listeden düşer; bayrak varken kişi sayfada yayınlanır.
+  assert.ok(Array.isArray(team.unverified));
+});

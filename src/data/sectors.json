@@ -1,0 +1,773 @@
+[
+  {
+    "slug": "finansal-hizmetler",
+    "name": "Finansal Hizmetler",
+    "short": "Banka, sigorta, faktoring, leasing ve finansal teknoloji kuruluşları",
+    "segment": false,
+    "lead": "Banka, sigorta, faktoring, finansal kiralama ve fintek kuruluşlarının düzenleyici raporlama, iç kontrol ve vergi gündemine genel bir bakış.",
+    "overview": [
+      "Finansal hizmet kuruluşları, faaliyet türüne göre farklı düzenleyici ve gözetim çerçevelerine tabidir. Bu çerçeveler; finansal tabloların hazırlanma esaslarını, raporlama sıklığını, iç sistemlere ilişkin beklentileri ve bağımsız denetimin kapsamını şekillendirir. Muhasebe kararları çoğu zaman düzenleyici bildirimlerle birlikte düşünülür.",
+      "Vergi tarafında finansal işlemlerin kendine özgü hükümleri, yüksek işlem hacmi ve grup içi finansman ilişkileri öne çıkar. İnsan kaynakları tarafında yetkinlik, ücretlendirme ve uyum süreçlerinin belgelenmesi gündemdedir. Sektör düzenlemeleri raporlama gerekliliklerini de şekillendirir."
+    ],
+    "topics": [
+      {
+        "title": "Düzenleyici raporlama ve finansal tablolar",
+        "text": "Kuruluş türüne göre değişen raporlama çerçeveleri, finansal tabloların hazırlanma esaslarını ve dönemsel bildirim yükümlülüklerini belirler. Bu çerçevenin doğru okunması, muhasebe politikalarının tutarlı uygulanmasının temelidir."
+      },
+      {
+        "title": "Finansal araçlar ve beklenen kredi zararları",
+        "text": "Finansal araçların sınıflandırılması, ölçümü ve değer düşüklüğü, UFRS/TFRS uygulamasının merkezindedir. Varsayımların, modellerin ve verinin belgelenmesi, hem raporlamada hem denetimde izlenebilirlik sağlar."
+      },
+      {
+        "title": "İç kontrol, risk ve uyum yapıları",
+        "text": "Kontrol ortamı, görevler ayrılığı, süreç sahipliği ve uyum işlevlerinin işleyişi bu alanda ayrıntılı biçimde ele alınır. Düzenli test ve raporlama, kontrol boşluklarının erken fark edilmesine yardımcı olur."
+      },
+      {
+        "title": "Vergisel işlemler ve veri yoğun süreçler",
+        "text": "Finansal işlemlerin vergisel nitelendirilmesi, işlem hacmi ve veri bütünlüğüyle birlikte düşünülmelidir. Grup içi finansman ve hizmet ilişkilerinde transfer fiyatlandırması dokümantasyonu da gündeme gelir."
+      }
+    ],
+    "services": [
+      "bagimsiz-denetim",
+      "ufrs-tfrs-raporlama",
+      "ic-denetim-ve-ic-kontrol",
+      "suistimal-inceleme-ve-onleme",
+      "kurumsal-raporlama",
+      "transfer-fiyatlandirma",
+      "veri-analiz-sistemleri"
+    ],
+    "calculators": [],
+    "glossary": [
+      "ufrs-tfrs",
+      "ic-kontrol",
+      "uyum",
+      "hile-ve-usulsuzluk",
+      "konsolidasyon"
+    ],
+    "questions": [
+      [
+        "Finansal kuruluşlar bağımsız denetime tabi midir?",
+        "Bu, kuruluşun türüne ve ilgili düzenlemelere bağlıdır. Bazı kuruluşlar için sektör düzenlemeleri bağımsız denetimi ayrıca öngörebilir; diğerleri için Türk Ticaret Kanunu ve ilgili Cumhurbaşkanı kararı esas alınır. Kendi durumunuz için güncel metinler incelenmelidir."
+      ],
+      [
+        "Finansal tablolarda hangi standartlar uygulanır?",
+        "Kuruluş türüne göre değişir. Birçok kuruluş için Türkiye Finansal Raporlama Standartları esastır; düzenlemeye tabi kuruluşlarda ilgili düzenleyicinin ek hükümleri de dikkate alınır. Geçerli çerçeve, görev başında mevzuat üzerinden belirlenir."
+      ],
+      [
+        "Bağımsız denetim verilen bir kuruluşa başka hizmet verilebilir mi?",
+        "Bağımsız denetim hizmeti verilen kuruluşlara, bağımsızlık kurallarının izin vermediği hizmetler sunulmaz. Bir hizmetin kapsamı, ilgili mevzuat ve meslek kuralları çerçevesinde görev başında ayrıca değerlendirilir."
+      ]
+    ],
+    "sources": [
+      [
+        "Bankacılık Düzenleme ve Denetleme Kurumu (BDDK)",
+        "https://www.bddk.org.tr"
+      ],
+      [
+        "Sermaye Piyasası Kurulu (SPK)",
+        "https://www.spk.gov.tr"
+      ],
+      [
+        "Sigortacılık ve Özel Emeklilik Düzenleme ve Denetleme Kurumu (SEDDK)",
+        "https://www.seddk.gov.tr"
+      ]
+    ]
+  },
+  {
+    "slug": "uretim-ve-sanayi",
+    "name": "Üretim ve Sanayi",
+    "short": "Üretim, yan sanayi ve ihracat odaklı işletmeler",
+    "segment": false,
+    "lead": "Üretim, yan sanayi ve ihracat odaklı işletmelerde maliyet, stok, KDV iadesi, teşvik ve grup içi işlem gündemine genel bir bakış.",
+    "overview": [
+      "Üretim işletmelerinde mali tablolar; hammadde, stok, maliyetleme, yatırım ve finansman kararlarının bir sonucudur. Kayıt düzeninin üretim süreçleriyle uyumlu olması, hem dönem sonu raporlamasını hem de yönetim kararlarını destekler. İhracat yapan işletmelerde döviz, belge ve gümrük süreçleri de kayıtlara yansır.",
+      "Vergi tarafında KDV iadesi, indirim hakkı ve belge düzeni, Ar-Ge ve yatırım teşvikleri ile ilişkili taraflarla yapılan işlemler sık karşılaşılan başlıklardır. İnsan kaynakları tarafında vardiya, fazla çalışma ve işçilik maliyetinin doğru izlenmesi gündemdedir."
+    ],
+    "topics": [
+      {
+        "title": "Maliyet muhasebesi ve stok değerleme",
+        "text": "Hammadde, yarı mamul ve mamul stoklarının izlenmesi, genel üretim giderlerinin dağıtımı ve fire takibi; hem finansal tabloları hem vergisel kayıtları etkiler. Yöntemlerin yazılı ve tutarlı olması karşılaştırılabilirliği artırır."
+      },
+      {
+        "title": "İhracat, KDV iadesi ve belge düzeni",
+        "text": "İhracat teslimleri ve yüklenilen KDV’nin iadesi; fatura, gümrük ve taşıma belgelerinin eksiksiz ve birbiriyle tutarlı olmasına dayanır. İade sürecinin başında hazırlanan dosya, ilerleyen aşamalardaki soruları azaltır."
+      },
+      {
+        "title": "Ar-Ge, tasarım ve yatırım teşvikleri",
+        "text": "Teşviklerden yararlanma koşulları, harcamaların ayrıştırılmasını ve belgelenmesini gerektirir. Proje bazlı kayıt, personel ve gider takibi uygulamanın izlenebilir olmasını sağlar. Koşullar yürürlükteki mevzuata göre ayrıca teyit edilmelidir."
+      },
+      {
+        "title": "Grup içi işlemler ve transfer fiyatlandırması",
+        "text": "Ana şirket, iştirak veya yurt dışı bağlantılı şirketlerle mal ve hizmet alım satımı, emsallere uygunluk ilkesi çerçevesinde değerlendirilir. Sürecin kayıtlı ve gerekçeli olması, ilerideki incelemelerde izlenebilirlik sağlar."
+      }
+    ],
+    "services": [
+      "muhasebe-sistemleri",
+      "kdv-iade-islemleri",
+      "ar-ge-hizmetleri",
+      "transfer-fiyatlandirma",
+      "istihdam-tesvik",
+      "veri-analiz-sistemleri",
+      "kurumsal-raporlama"
+    ],
+    "calculators": [
+      "kdv-hesaplama",
+      "isveren-maliyeti-hesaplama",
+      "kurumlar-vergisi-hesaplama"
+    ],
+    "glossary": [
+      "kdv-iadesi",
+      "transfer-fiyatlandirmasi",
+      "isletme-sermayesi",
+      "erp",
+      "isveren-maliyeti"
+    ],
+    "questions": [
+      [
+        "KDV iadesi sürecinde ilk hazırlık nedir?",
+        "İade talebinin dayanağı olan işlemlerin belirlenmesi, ilgili faturaların ve gümrük belgelerinin toplanması ve indirilecek KDV’nin dönemler itibarıyla tutarlı olması ilk adımlardır. Hangi iade türünün ve usulün geçerli olduğu, işlemin niteliğine göre mevzuattan belirlenir."
+      ],
+      [
+        "Ar-Ge faaliyetleri için hangi kayıtlar tutulur?",
+        "Proje bazlı personel, malzeme ve diğer gider kayıtları ile faaliyetin niteliğini gösteren belgeler önemlidir. Gerekli kayıt ve belge seti, yararlanılmak istenen teşvikin koşullarına göre değişir; bu nedenle ilgili mevzuat esas alınır."
+      ],
+      [
+        "Grup içi işlemlerde hangi bilgiler belgelenir?",
+        "İşlemin tarafları, niteliği, bedeli ve bedelin belirlenme yöntemi ile emsallere uygunluğu destekleyen veriler belgelenir. Dokümantasyonun kapsamı ve zorunlu olup olmadığı, işlemin türüne ve ilgili düzenlemeye göre belirlenir."
+      ]
+    ],
+    "sources": [
+      [
+        "Katma Değer Vergisi Kanunu (3065) — mevzuat.gov.tr",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=3065&MevzuatTur=1&MevzuatTertip=5"
+      ],
+      [
+        "T.C. Ticaret Bakanlığı",
+        "https://ticaret.gov.tr"
+      ]
+    ]
+  },
+  {
+    "slug": "enerji-ve-dogal-kaynaklar",
+    "name": "Enerji ve Doğal Kaynaklar",
+    "short": "Üretim, dağıtım ve ticaret faaliyetleri ile madencilik",
+    "segment": false,
+    "lead": "Enerji üretimi, dağıtımı, ticareti ve madencilik faaliyetlerinde yatırım, finansman, düzenleyici raporlama ve vergi gündemine genel bir bakış.",
+    "overview": [
+      "Enerji ve doğal kaynaklar alanı; yüksek yatırım tutarları, uzun varlık ömürleri ve düzenlenmiş piyasa yapısıyla öne çıkar. Lisans, tarife ve piyasa işleyişine ilişkin düzenlemeler, gelir tanıma ve raporlama kararlarını etkileyebilir. Varlıkların ölçümü ve karşılıklar ayrıntılı değerlendirme gerektirir.",
+      "Vergi tarafında yatırım dönemindeki KDV, ithalat ve teşvik uygulamaları ile işletme dönemindeki gelir ve gider dağılımı gündemdedir. Proje finansmanı, grup içi borçlanma ve sürdürülebilirlik raporlaması da bu alanda sık ele alınan başlıklardır."
+    ],
+    "topics": [
+      {
+        "title": "Yatırım dönemi maliyetleri ve aktifleştirme",
+        "text": "Proje maliyetlerinin hangi kalemlerinin varlık değerine dahil edileceği, borçlanma maliyetlerinin ele alınışı ve yatırım dönemi KDV’sinin izlenmesi; finansal tablolar ve vergisel sonuçlar açısından dikkatle değerlendirilir."
+      },
+      {
+        "title": "Varlık değerleme ve değer düşüklüğü",
+        "text": "Uzun ömürlü üretim varlıklarında faydalı ömür, kalıntı değer ve değer düşüklüğü testleri; fiyat, talep ve işletme varsayımlarına dayanır. Varsayımların belgelenmesi, raporlamada tutarlılık ve açıklanabilirlik sağlar."
+      },
+      {
+        "title": "Proje finansmanı ve grup içi borçlanma",
+        "text": "Kredi sözleşmelerindeki koşullar, teminat yapıları ve ortaklardan alınan borçlar hem finansal tablolarda hem vergisel değerlendirmede incelenir. Örtülü sermaye ve transfer fiyatlandırması hükümleri de gündeme gelebilir."
+      },
+      {
+        "title": "Sürdürülebilirlik ve çevresel raporlama",
+        "text": "Emisyon, enerji kullanımı ve çevresel yükümlülükler gibi konulardaki raporlama beklentileri, veri toplama süreçlerinin ve iç kontrollerin kurulmasını gerektirir. Kapsama giren kuruluşlar ve takvim, ilgili düzenleyici kararlarla belirlenir."
+      }
+    ],
+    "services": [
+      "ufrs-tfrs-raporlama",
+      "bagimsiz-denetim",
+      "mali-danismanlik",
+      "sirket-degerlemesi",
+      "kdv-iade-islemleri",
+      "kurumsal-raporlama",
+      "transfer-fiyatlandirma"
+    ],
+    "calculators": [
+      "kurumlar-vergisi-hesaplama",
+      "kdv-hesaplama"
+    ],
+    "glossary": [
+      "indirgenmis-nakit-akisi",
+      "degerleme",
+      "ufrs-tfrs",
+      "tsrs",
+      "konsolidasyon"
+    ],
+    "questions": [
+      [
+        "Enerji yatırımlarında KDV nasıl izlenir?",
+        "Yatırım dönemindeki KDV’nin indirilebilirliği, iade koşulları ve teşvik belgesi kapsamındaki istisnalar, projenin niteliğine göre değişir. Faturaların proje bazlı izlenmesi ve belgelerin eksiksiz tutulması sürecin temelidir; güncel uygulama için ilgili mevzuat esas alınmalıdır."
+      ],
+      [
+        "Varlıklarda değer düşüklüğü nasıl değerlendirilir?",
+        "Değer düşüklüğüne işaret eden olaylar izlenir; gerektiğinde varlığın geri kazanılabilir tutarı, nakit akışı veya piyasa verilerine dayanan bir modelle tahmin edilir. Kullanılan varsayımlar ve duyarlılık analizleri finansal tablo açıklamalarında yer alır."
+      ],
+      [
+        "Sürdürülebilirlik raporlaması tüm kuruluşlar için zorunlu mudur?",
+        "Hayır; zorunluluk, ilgili düzenleyici kurumun belirlediği kapsam ve ölçütlere bağlıdır. Kapsama girip girmediğinizi KGK ve diğer yetkili kurumların güncel duyuruları üzerinden kontrol etmek gerekir."
+      ]
+    ],
+    "sources": [
+      [
+        "Enerji Piyasası Düzenleme Kurumu (EPDK)",
+        "https://www.epdk.gov.tr"
+      ],
+      [
+        "T.C. Enerji ve Tabii Kaynaklar Bakanlığı",
+        "https://enerji.gov.tr"
+      ],
+      [
+        "Türkiye Sürdürülebilirlik Raporlama Standartları — KGK",
+        "https://www.kgk.gov.tr/SustainabilityDetailForm/11455/Raporlama%20Standartlar%C4%B1"
+      ]
+    ]
+  },
+  {
+    "slug": "perakende-tuketici-ve-gida",
+    "name": "Perakende, Tüketici ve Gıda",
+    "short": "Perakende zincirleri, tüketici ürünleri ve gıda üreticileri",
+    "segment": false,
+    "lead": "Perakende zincirleri, tüketici ürünleri ve gıda üreticilerinde stok, e-belge, çalışan yönetimi ve vergi gündemine genel bir bakış.",
+    "overview": [
+      "Perakende ve tüketici ürünleri alanında işlem hacmi yüksek, çok noktalı ve veri yoğun bir işleyiş vardır. Satış, iade, stok ve kampanya hareketlerinin muhasebe kayıtlarına doğru ve zamanında yansıması, dönem sonu raporlamasının temelidir. Gıda üreticilerinde ayrıca üretim maliyeti ve parti izlenebilirliği öne çıkar.",
+      "Vergi tarafında e-fatura ve e-arşiv gibi elektronik belge uygulamaları, KDV oranlarının doğru uygulanması ve ödeme araçlarına ilişkin kayıtlar gündemdedir. İnsan kaynakları tarafında vardiyalı çalışma, mevsimsel istihdam ve bordro maliyetinin takibi sık karşılaşılan konulardır."
+    ],
+    "topics": [
+      {
+        "title": "Stok, fire ve envanter yönetimi",
+        "text": "Çok noktalı satışlarda stok sayımı, fire ve zayiat kayıtları ile kayıt-fiziki stok farklarının izlenmesi hem finansal tabloları hem vergisel sonuçları etkiler. Düzenli sayım ve mutabakat süreçleri farkların erken görülmesini sağlar."
+      },
+      {
+        "title": "Elektronik belge ve KDV uygulamaları",
+        "text": "E-fatura, e-arşiv ve benzeri uygulamalarda kapsam ve süreç, işletmenin durumuna göre belirlenir. Farklı oranlara tabi ürünlerin doğru kodlanması ve belge-kayıt uyumu, KDV beyanının dayanağını oluşturur."
+      },
+      {
+        "title": "Tedarikçi, iade ve kampanya ilişkileri",
+        "text": "Tedarikçi primleri, iade hakları, vade farkları ve kampanya katkıları; kayıt zamanı ve belge düzeni açısından özen ister. Sözleşme şartlarının muhasebe kayıtlarına tutarlı yansıması, cari hesap mutabakatlarını kolaylaştırır."
+      },
+      {
+        "title": "Vardiyalı çalışma ve bordro maliyeti",
+        "text": "Vardiya, fazla mesai ve mevsimsel işe alım düzenleri bordro hesaplamasını ve işveren maliyetini doğrudan etkiler. Puantaj ve bordro verisinin tutarlılığı, hem kayıtların hem çalışan bildirimlerinin dayanağıdır."
+      }
+    ],
+    "services": [
+      "mali-musavirlik-ve-muhasebe",
+      "bordrolama",
+      "muhasebe-sistemleri",
+      "veri-analiz-sistemleri",
+      "cari-hesap-mutabakatlarinin-yapilmasi",
+      "istihdam-tesvik",
+      "diger-dolayli-vergiler"
+    ],
+    "calculators": [
+      "kdv-hesaplama",
+      "maas-hesaplama",
+      "isveren-maliyeti-hesaplama"
+    ],
+    "glossary": [
+      "kdv",
+      "e-fatura",
+      "isletme-sermayesi",
+      "bordro",
+      "e-donusum"
+    ],
+    "questions": [
+      [
+        "E-fatura veya e-arşiv uygulamasına geçiş zorunlu mudur?",
+        "Zorunluluk, mükellefin faaliyetine ve Gelir İdaresi Başkanlığı’nın belirlediği kapsam ve ölçütlere bağlıdır. Güncel koşullar GİB’in eBelge sayfalarında ve ilgili tebliğlerde yer alır; işletmenizin durumu bu kaynaklar üzerinden değerlendirilmelidir."
+      ],
+      [
+        "Stok farkları nasıl ele alınır?",
+        "Sayım sonuçları ile kayıtlar karşılaştırılır, farkların nedenleri araştırılır ve gerekirse düzeltme kaydı yapılır. Fireler ve zayiat için dayanak belgeler önemlidir; vergisel sonuçlar işlemin niteliğine göre mevzuattan değerlendirilir."
+      ],
+      [
+        "Mevsimsel çalışanlar için hangi bildirimler gerekir?",
+        "İşe giriş ve çıkış bildirimleri ile aylık prim ve hizmet bildirimleri, çalışmanın niteliğine göre yapılır. Geçerli süre ve usuller sosyal güvenlik mevzuatına tabidir; bordro sürecinin bu bildirimlerle uyumlu yürütülmesi gerekir."
+      ]
+    ],
+    "sources": [
+      [
+        "T.C. Ticaret Bakanlığı",
+        "https://ticaret.gov.tr"
+      ],
+      [
+        "Gelir İdaresi Başkanlığı — e-Fatura Hakkında",
+        "https://ebelge.gib.gov.tr/efaturahakkinda.html"
+      ],
+      [
+        "Tüketicinin Korunması Hakkında Kanun (6502) — mevzuat.gov.tr",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=6502&MevzuatTur=1&MevzuatTertip=5"
+      ]
+    ]
+  },
+  {
+    "slug": "teknoloji-medya-ve-telekom",
+    "name": "Teknoloji, Medya ve Telekomünikasyon",
+    "short": "Yazılım, dijital hizmetler, medya ve telekomünikasyon",
+    "segment": false,
+    "lead": "Yazılım, dijital hizmetler, medya ve telekomünikasyon işletmelerinde gelir tanıma, Ar-Ge, veri koruma ve sınır ötesi işlem gündemine genel bir bakış.",
+    "overview": [
+      "Teknoloji, medya ve telekomünikasyon işletmelerinde gelir; abonelik, lisans, reklam ve hizmet gibi farklı modellerden doğabilir. Gelirin ne zaman ve hangi tutarda tanınacağı, sözleşme koşullarının dikkatle okunmasını gerektirir. Geliştirme maliyetlerinin ele alınışı da finansal tablolarda önemli bir değerlendirme alanıdır.",
+      "Vergi tarafında Ar-Ge ve teknoloji geliştirme bölgelerine ilişkin düzenlemeler, yurt dışına yapılan ödemeler ve ilişkili taraf işlemleri öne çıkar. Kişisel verilerin işlendiği iş modellerinde veri koruma yükümlülükleri ve sistem güvenliği de yönetim gündeminde yer alır."
+    ],
+    "topics": [
+      {
+        "title": "Gelir tanıma ve sözleşme yapıları",
+        "text": "Abonelik, lisans, bakım ve çok unsurlu sözleşmelerde edimlerin ayrıştırılması ve gelirin zamanlaması UFRS/TFRS’ye göre değerlendirilir. Sözleşme verisinin düzenli ve izlenebilir olması bu değerlendirmeyi kolaylaştırır."
+      },
+      {
+        "title": "Ar-Ge ve yazılım geliştirme maliyetleri",
+        "text": "Geliştirme harcamalarının hangi koşulda varlık olarak kaydedileceği, hangi durumda gider yazılacağı ve teşvik kapsamındaki faaliyetlerin ayrıştırılması; kayıt düzenine ve belgelemeye bağlıdır."
+      },
+      {
+        "title": "Kişisel veri ve bilgi güvenliği",
+        "text": "Kullanıcı verisi işleyen işletmelerde aydınlatma, saklama ve aktarım süreçleri ile erişim kontrolleri yönetim gündemindedir. Kişisel Verilerin Korunması Kanunu’na uyum, süreç ve sistem tasarımıyla birlikte ele alınır."
+      },
+      {
+        "title": "Sınır ötesi hizmet ve ödemeler",
+        "text": "Yurt dışı müşteri ve tedarikçilerle yapılan işlemlerde KDV, stopaj ve belge düzeni ayrı değerlendirilir. Grup içi hizmet bedelleri ise emsallere uygunluk ilkesi çerçevesinde belgelenir."
+      }
+    ],
+    "services": [
+      "ar-ge-hizmetleri",
+      "transfer-fiyatlandirma",
+      "muhasebe-sistemleri",
+      "veri-analiz-sistemleri",
+      "ufrs-tfrs-raporlama",
+      "sirket-degerlemesi",
+      "istihdam-tesvik"
+    ],
+    "calculators": [
+      "kdv-hesaplama",
+      "serbest-meslek-makbuzu-hesaplama"
+    ],
+    "glossary": [
+      "kvkk",
+      "veri-yonetisimi",
+      "e-donusum",
+      "carpan-yontemi",
+      "transfer-fiyatlandirmasi"
+    ],
+    "questions": [
+      [
+        "Abonelik gelirleri nasıl kaydedilir?",
+        "Gelir, müşteriye aktarılan hizmetin niteliği ve sürenin dağılımı dikkate alınarak ilgili standarda göre tanınır. Peşin tahsil edilen tutarlar hizmet sunuldukça gelire yansır. Sözleşme koşulları farklılaştıkça değerlendirme de değişebilir."
+      ],
+      [
+        "Yazılım geliştirme harcamaları aktifleştirilebilir mi?",
+        "Belirli koşulların sağlanması hâlinde geliştirme aşamasındaki harcamalar varlık olarak kaydedilebilir; aksi hâlde gider yazılır. Koşulların varlığı, projenin teknik ve ticari yapılabilirliğini gösteren belgelerle desteklenir. Vergisel işleyiş ayrıca değerlendirilir."
+      ],
+      [
+        "Yurt dışına yapılan ödemelerde hangi vergisel konular incelenir?",
+        "Ödemenin niteliği, tarafların bulunduğu ülke, ilgili vergi anlaşmaları ve belge düzeni birlikte değerlendirilir. KDV sorumluluğu ile gelir veya kurumlar vergisi kesintisi gibi hususlar işlemin türüne göre mevzuattan belirlenir."
+      ]
+    ],
+    "sources": [
+      [
+        "Bilgi Teknolojileri ve İletişim Kurumu (BTK)",
+        "https://www.btk.gov.tr"
+      ],
+      [
+        "Radyo ve Televizyon Üst Kurulu (RTÜK)",
+        "https://www.rtuk.gov.tr"
+      ],
+      [
+        "Kişisel Verileri Koruma Kurumu (KVKK)",
+        "https://www.kvkk.gov.tr"
+      ]
+    ]
+  },
+  {
+    "slug": "saglik-ve-ilac",
+    "name": "Sağlık ve İlaç",
+    "short": "Hastaneler, klinikler, ilaç ve tıbbi ürün şirketleri",
+    "segment": false,
+    "lead": "Hastane, klinik, ilaç ve tıbbi ürün şirketlerinde gelir kaynakları, sosyal güvenlik bildirimleri, personel ve vergi gündemine genel bir bakış.",
+    "overview": [
+      "Sağlık ve ilaç alanında gelirler; hastalardan, özel sigortalardan ve sosyal güvenlik kurumundan gelen farklı kaynaklara dayanabilir. Bu kaynakların vade, mutabakat ve kesinti özellikleri, alacak ve gelir kayıtlarının dikkatle izlenmesini gerektirir. İlaç ve tıbbi ürün tarafında stok ve fiyatlandırma süreçleri ayrıca öne çıkar.",
+      "Vergi tarafında KDV oranları ve istisnaları, ürün ve hizmetin türüne göre farklılaşır. İnsan kaynakları tarafında çok sayıda farklı meslek grubu, vardiya düzeni ve sosyal güvenlik bildirimleri yer alır. Bu işleyiş, bordro ve özlük süreçlerinin düzenli kurulmasını gerektirir."
+    ],
+    "topics": [
+      {
+        "title": "Gelir kaynakları ve alacak takibi",
+        "text": "Hasta, özel sigorta ve kurum kaynaklı gelirlerde fatura, provizyon ve ödeme zamanlaması farklıdır. Kesinti ve mutabakat farklarının izlenmesi, alacakların gerçeğe uygun gösterilmesine yardımcı olur."
+      },
+      {
+        "title": "Sosyal güvenlik bildirimleri ve protokoller",
+        "text": "Çok sayıda personelin bulunduğu kuruluşlarda sosyal güvenlik bildirimleri ve prim süreçleri düzenli takip gerektirir. Geçici iş göremezlik ödemeleri ve protokol esaslı mahsup süreçleri belge odaklı yürütülür."
+      },
+      {
+        "title": "Stok, fiyat ve tıbbi sarf malzeme yönetimi",
+        "text": "İlaç, tıbbi cihaz ve sarf malzeme stoklarında parti, son kullanma ve değer düşüklüğü takibi önem taşır. Fiyat düzenlemelerinin kayıtlara tutarlı yansıması, kâr ve stok değerlemesini etkileyebilir."
+      },
+      {
+        "title": "Çok meslek gruplu insan kaynakları yapısı",
+        "text": "Hekim, hemşire, teknisyen ve idari personelden oluşan karma yapılarda ücret, nöbet ve fazla mesai uygulamaları farklılaşır. Bordro kurallarının tutarlı işlemesi, işveren maliyetinin doğru izlenmesini sağlar."
+      }
+    ],
+    "services": [
+      "muhasebe-sistemleri",
+      "bordrolama",
+      "isveren-denetimi-ve-raporlamasi",
+      "sgk-protokolu",
+      "istihdam-tesvik",
+      "kdv-iade-islemleri",
+      "ic-denetim-ve-ic-kontrol"
+    ],
+    "calculators": [
+      "maas-hesaplama",
+      "isveren-maliyeti-hesaplama",
+      "kdv-hesaplama"
+    ],
+    "glossary": [
+      "sgk-primi",
+      "bordro",
+      "isveren-maliyeti",
+      "kdv",
+      "isletme-sermayesi"
+    ],
+    "questions": [
+      [
+        "Sağlık hizmetlerinde KDV uygulaması nasıl belirlenir?",
+        "Uygulama; hizmetin veya ürünün türüne, sunulduğu kişiye ve ilgili mevzuattaki istisna ve indirimli oranlara göre değişir. Her işlem grubu için dayanağın belirlenmesi ve faturaların buna uygun düzenlenmesi gerekir. Güncel hükümler KDV mevzuatından kontrol edilmelidir."
+      ],
+      [
+        "Çalışan sayısı yüksek kuruluşlarda bordro süreci nasıl planlanır?",
+        "Puantaj, vardiya ve ek ödeme verilerinin tek bir akışta toplanması, hesaplama öncesi kontrol adımları ve aylık bildirimlerin takvimi planın temelini oluşturur. Süreç, kuruluşun çalışma düzenine göre belirlenir."
+      ],
+      [
+        "Geçici iş göremezlik ödemeleri nasıl mahsup edilir?",
+        "Ödemelerin yapılması, belgelerin hazırlanması ve prim ödemelerinden mahsup edilmesi; sosyal güvenlik mevzuatı ve ilgili protokollerdeki usule göre yürütülür. Süreç belge odaklıdır; koşullar kuruluşa ve ödemenin türüne göre değişebilir."
+      ]
+    ],
+    "sources": [
+      [
+        "T.C. Sağlık Bakanlığı",
+        "https://www.saglik.gov.tr"
+      ],
+      [
+        "Türkiye İlaç ve Tıbbi Cihaz Kurumu (TİTCK)",
+        "https://www.titck.gov.tr"
+      ],
+      [
+        "Sosyal Güvenlik Kurumu (SGK)",
+        "https://www.sgk.gov.tr"
+      ]
+    ]
+  },
+  {
+    "slug": "insaat-gayrimenkul-ve-altyapi",
+    "name": "İnşaat, Gayrimenkul ve Altyapı",
+    "short": "Taahhüt, gayrimenkul geliştirme ve altyapı projeleri",
+    "segment": false,
+    "lead": "Taahhüt, gayrimenkul geliştirme ve altyapı projelerinde hasılat tanıma, vergilendirme, işçilik ve değerleme gündemine genel bir bakış.",
+    "overview": [
+      "İnşaat ve gayrimenkul projeleri, uzun süreli ve çok paydaşlı yapılarıyla muhasebe ve vergi açısından özgün sonuçlar doğurur. Hasılatın ve maliyetin hangi dönemlere dağıtılacağı, sözleşme yapısına ve ilerleme ölçümüne bağlıdır. Proje bazlı kayıt düzeni, bu değerlendirmenin dayanağıdır.",
+      "Vergi tarafında yıllara yaygın inşaat işleri, KDV uygulamaları ve tevkifat öne çıkar. İşçilik ve alt yüklenici ilişkileri, sosyal güvenlik yükümlülükleri açısından ayrıca izlenir. Gayrimenkul geliştirmede değerleme ve finansman kararları da gündemdedir."
+    ],
+    "topics": [
+      {
+        "title": "Hasılat ve maliyetin dönemlere dağıtımı",
+        "text": "Taahhüt ve yıllara yaygın işlerde ilerleme ölçümü, hakediş kayıtları ve maliyet takibi; finansal tablolardaki hasılat ile vergisel sonuçlar arasındaki ilişkiyi belirler. Kullanılan yöntemin proje bazında belgelenmesi gerekir."
+      },
+      {
+        "title": "KDV, tevkifat ve stopaj uygulamaları",
+        "text": "Yapım işlerinde KDV tevkifatı ve belirli ödemelerdeki gelir vergisi kesintisi, hakediş ve fatura düzeniyle birlikte izlenir. Uygulamanın kapsamı işin türüne ve tarafların niteliğine göre mevzuattan belirlenir."
+      },
+      {
+        "title": "İşçilik, alt yüklenici ve kapanış belgeleri",
+        "text": "Proje bazlı işçilik kayıtları, alt yüklenici ödemeleri ve iş bitiminde alınan belgeler, sosyal güvenlik yükümlülükleriyle birlikte izlenir. Kayıtların proje takvimiyle uyumlu tutulması kapanış sürecini kolaylaştırır."
+      },
+      {
+        "title": "Gayrimenkul değerleme ve finansman",
+        "text": "Proje geliştirme, satın alma veya finansman kararlarında değerleme çalışması; arsa, proje ve işletme varsayımlarına dayanır. Varsayımların ve verinin açıkça belgelenmesi, sonucun anlaşılır olmasını sağlar."
+      }
+    ],
+    "services": [
+      "sirket-degerlemesi",
+      "mali-danismanlik",
+      "asgari-iscilik-ve-ilisiksizlik-belgesi",
+      "ufrs-tfrs-raporlama",
+      "kdv-iade-islemleri",
+      "diger-dolayli-vergiler",
+      "ic-denetim-ve-ic-kontrol"
+    ],
+    "calculators": [
+      "kdv-hesaplama",
+      "isveren-maliyeti-hesaplama"
+    ],
+    "glossary": [
+      "degerleme",
+      "indirgenmis-nakit-akisi",
+      "durum-tespiti",
+      "tevkifat",
+      "stopaj",
+      "isletme-sermayesi"
+    ],
+    "questions": [
+      [
+        "Yıllara yaygın inşaat işlerinde gelir ve gider nasıl izlenir?",
+        "İşin süresi birden fazla hesap dönemine yayıldığında, kazancın ve maliyetlerin kayıtlarda hangi dönemlere yansıtılacağı ilgili vergi mevzuatı ve muhasebe standartlarına göre belirlenir. Proje bazlı maliyet takibi ve hakediş kayıtları bu sürecin dayanağıdır."
+      ],
+      [
+        "Kısmi KDV tevkifatı hangi işlemlerde uygulanır?",
+        "Tevkifat uygulanacak işlemler ve oranlar KDV mevzuatındaki düzenlemelerle belirlenir ve zaman içinde güncellenebilir. Yapım işleri gibi bazı hizmet türleri bu kapsama girebilir. Her işlem için güncel tebliğ hükümleri kontrol edilmelidir."
+      ],
+      [
+        "Gayrimenkul projelerinde değerleme hangi amaçlarla yapılır?",
+        "Satın alma, ortaklık, finansman veya raporlama gibi farklı amaçlarla yapılabilir. Amaç, değer esasını ve kullanılacak yöntemi belirler; bu nedenle çalışmanın amacı baştan netleştirilir ve raporda sınırlarıyla birlikte açıklanır."
+      ]
+    ],
+    "sources": [
+      [
+        "T.C. Çevre, Şehircilik ve İklim Değişikliği Bakanlığı",
+        "https://csb.gov.tr"
+      ],
+      [
+        "Kamu İhale Kurumu (KİK)",
+        "https://www.kik.gov.tr"
+      ],
+      [
+        "Tapu ve Kadastro Genel Müdürlüğü (TKGM)",
+        "https://www.tkgm.gov.tr"
+      ]
+    ]
+  },
+  {
+    "slug": "turizm-ulastirma-ve-lojistik",
+    "name": "Turizm, Ulaştırma ve Lojistik",
+    "short": "Konaklama, ulaştırma ve tedarik zinciri işletmeleri",
+    "segment": false,
+    "lead": "Konaklama, ulaştırma ve tedarik zinciri işletmelerinde sezonluk çalışma, KDV uygulamaları, filo ve varlık yönetimi gündemine genel bir bakış.",
+    "overview": [
+      "Turizm ve ulaştırma işletmelerinde gelir ve nakit akışı çoğunlukla sezon, talep ve döviz hareketlerine duyarlıdır. Rezervasyon, avans ve komisyon ilişkilerinin kayıtlara doğru yansıması, dönem sonu sonuçlarının güvenilirliği açısından önemlidir. Lojistikte sefer, filo ve gümrük süreçleri maliyet takibini şekillendirir.",
+      "Vergi tarafında konaklama ve taşımacılık hizmetlerine özgü KDV hükümleri, teşvik belgesi uygulamaları ve yabancı para ile yapılan işlemler gündemdedir. Sezonluk istihdam ve yabancı uyruklu çalışanlar, bordro ve izin süreçlerinde ayrıca takip gerektirir."
+    ],
+    "topics": [
+      {
+        "title": "Sezonluk gelir ve nakit akışı planlaması",
+        "text": "Gelirlerin belirli dönemlerde yoğunlaştığı işletmelerde bütçe, nakit planı ve borç vade yapısı birlikte ele alınır. Düzenli yönetim raporlaması, sezon dışı dönemin finansmanına ilişkin kararları destekler."
+      },
+      {
+        "title": "KDV uygulamaları ve yabancı para işlemleri",
+        "text": "Konaklama, taşımacılık ve acentelik hizmetlerinde KDV uygulaması, hizmetin ve müşterinin niteliğine göre değişir. Yabancı para ile yapılan satışlarda kur farkı ve belge düzeni birlikte izlenir."
+      },
+      {
+        "title": "Filo, tesis ve varlık yönetimi",
+        "text": "Araç, gemi, uçak ve tesis gibi yüksek tutarlı varlıklarda amortisman, bakım giderleri ve ölçüm tercihleri finansal tabloları etkiler. Varlık sicilinin güncel tutulması bu süreci destekler."
+      },
+      {
+        "title": "Mevsimlik ve yabancı uyruklu çalışanlar",
+        "text": "Sezonluk işe alım, vardiya ve konaklama gibi yan haklar bordro maliyetini belirler. Yabancı çalışanlar için çalışma izni ve bildirim süreçleri, işe başlama öncesinde planlanmalıdır."
+      }
+    ],
+    "services": [
+      "mali-musavirlik-ve-muhasebe",
+      "bordrolama",
+      "istihdam-tesvik",
+      "calisma-izni-alma-ve-iptali",
+      "kdv-iade-islemleri",
+      "muhasebe-sistemleri",
+      "kurumsal-raporlama"
+    ],
+    "calculators": [
+      "kdv-hesaplama",
+      "asgari-ucret-hesaplama",
+      "isveren-maliyeti-hesaplama"
+    ],
+    "glossary": [
+      "kdv-iadesi",
+      "bordro",
+      "isveren-maliyeti",
+      "asgari-ucret",
+      "e-fatura"
+    ],
+    "questions": [
+      [
+        "Sezonluk işletmelerde nakit akışı nasıl izlenir?",
+        "Gelir ve gider takvimi aylık bazda çıkarılır; sezon dışı dönemdeki sabit giderler ve borç ödemeleri nakit planına yansıtılır. Gerçekleşen ve planlanan tutarların düzenli karşılaştırılması, sapmaların erken görülmesine yardımcı olur."
+      ],
+      [
+        "Yabancı uyruklu çalışan istihdamında nelere dikkat edilir?",
+        "Çalışma izni, ikamet izni ve sosyal güvenlik bildirimleri çalışma başlamadan önce planlanmalıdır. Başvuru koşulları ve süreler ilgili mevzuata ve çalışanın durumuna göre değişir; güncel gereklilikler yetkili kurumların açıklamalarından teyit edilmelidir."
+      ],
+      [
+        "Teşvik belgeli turizm yatırımlarında hangi kayıtlar önemlidir?",
+        "Yatırım harcamalarının belgeye uygun biçimde ayrıştırılması ve izlenmesi önemlidir. Teşvikten yararlanma koşulları ve yükümlülükler ilgili mevzuata bağlıdır; belge kapsamı ve süreler kuruluşa göre değişebilir."
+      ]
+    ],
+    "sources": [
+      [
+        "T.C. Kültür ve Turizm Bakanlığı",
+        "https://www.ktb.gov.tr"
+      ],
+      [
+        "T.C. Ulaştırma ve Altyapı Bakanlığı",
+        "https://www.uab.gov.tr"
+      ],
+      [
+        "Turizmi Teşvik Kanunu (2634) — mevzuat.gov.tr",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=2634&MevzuatTur=1&MevzuatTertip=5"
+      ]
+    ]
+  },
+  {
+    "slug": "aile-sirketleri-ve-kobiler",
+    "name": "Aile Şirketleri ve KOBİ’ler",
+    "short": "Kurumsallaşma ve süreklilik gündemindeki aile şirketleri ile KOBİ’ler",
+    "segment": true,
+    "lead": "Kurumsallaşma ve süreklilik gündemindeki aile şirketleri ile KOBİ’ler için yönetişim, finansal düzen ve nesiller arası geçiş başlıklarına genel bir bakış.",
+    "overview": [
+      "Aile şirketlerinde ve KOBİ’lerde mülkiyet, yönetim ve aile ilişkileri çoğu zaman iç içedir. Bu yapı karar almayı kolaylaştırabilir; ancak sorumlulukların, yetkilerin ve kayıt düzeninin yazılı hâle getirilmesi sürekliliği destekler. Finansal bilginin düzenli üretilmesi, bu yapıdaki işletmeler için temel bir ihtiyaçtır.",
+      "Büyüme, ortaklık değişikliği, yeni nesil katılımı veya dış finansman ihtiyacı gibi dönüm noktaları; hesap verebilirlik, raporlama ve değerleme gündemini öne çıkarır. Vergi ve bordro uyumu ile şirket kayıtlarının güncelliği de bu süreçlerin zeminini oluşturur."
+    ],
+    "topics": [
+      {
+        "title": "Kurumsallaşma ve yönetişim yapısı",
+        "text": "Yönetim kurulu, genel kurul ve karar süreçlerinin işleyişi; aile üyelerinin ve profesyonel yöneticilerin rol ve yetkilerinin açıkça tanımlanmasıyla ele alınır. Yazılı politikalar, süreklilik ve hesap verebilirliği destekler."
+      },
+      {
+        "title": "Finansal raporlama düzeni ve yönetim bilgisi",
+        "text": "Aylık yönetim raporları, bütçe takibi ve nakit akışı izleme, kararların güncel veriyle alınmasını sağlar. Kayıt düzeninin sade ama tutarlı kurulması, hem iç yönetim hem dış paydaşlar için güven oluşturur."
+      },
+      {
+        "title": "Ortaklık değişiklikleri ve değerleme",
+        "text": "Pay devri, yeni ortak girişi veya aile içi geçişlerde şirket değerinin nasıl belirleneceği, ortaklar arasında önceden konuşulması gereken bir konudur. Değerleme amacı ve yöntemi netleştiğinde sonuç daha açıklanabilir olur."
+      },
+      {
+        "title": "Nesiller arası geçiş ve süreklilik planı",
+        "text": "Yönetim ve mülkiyet devrinde yasal, vergisel ve organizasyonel boyutlar birlikte düşünülür. Planın erken aşamada yapılması belirsizlikleri azaltmaya yardımcı olur; hukuki konularda ayrıca hukuk danışmanlığı alınmalıdır."
+      }
+    ],
+    "services": [
+      "yonetim-danismanligi",
+      "mali-danismanlik",
+      "sirket-degerlemesi",
+      "mali-musavirlik-ve-muhasebe",
+      "ticaret-sicil-islemleri",
+      "insan-kaynaklari-ve-bordro",
+      "ic-denetim-ve-ic-kontrol",
+      "raporlama"
+    ],
+    "calculators": [
+      "kurumlar-vergisi-hesaplama",
+      "isveren-maliyeti-hesaplama",
+      "kidem-tazminati-hesaplama"
+    ],
+    "glossary": [
+      "kurumsal-yonetim",
+      "anonim-sirket",
+      "limited-sirket",
+      "sermaye-artirimi",
+      "degerleme",
+      "isletme-sermayesi"
+    ],
+    "questions": [
+      [
+        "Kurumsallaşma nereden başlar?",
+        "Genellikle karar yetkilerinin, raporlama düzeninin ve kayıt süreçlerinin yazılı hâle getirilmesiyle başlar. İlk adım, işletmenin mevcut işleyişini ve ihtiyaçlarını tespit etmektir; kapsam ve sıra buna göre belirlenir."
+      ],
+      [
+        "Şirket değerleme hangi durumlarda gündeme gelir?",
+        "Pay devri, yeni ortak girişi, birleşme, finansman görüşmeleri veya miras ve paylaşım süreçleri gibi durumlarda gündeme gelebilir. Amaç, değer esasını ve yöntemi etkilediğinden çalışmanın hangi karar için yapılacağı baştan belirlenir."
+      ],
+      [
+        "KOBİ’ler için hangi raporlama çerçevesi geçerlidir?",
+        "İşletmenin büyüklüğüne ve bağımsız denetime tabi olup olmadığına göre değişir. KGK’nın yayımladığı finansal raporlama standartları arasında farklı ölçekler için ayrı çerçeveler bulunur; hangisinin uygulanacağı ilgili mevzuat ve ölçütlerle belirlenir."
+      ]
+    ],
+    "sources": [
+      [
+        "Türk Ticaret Kanunu (6102) — mevzuat.gov.tr",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=6102&MevzuatTur=1&MevzuatTertip=5"
+      ],
+      [
+        "Türkiye Muhasebe Standartları — KGK",
+        "https://www.kgk.gov.tr/DynamicContentDetail/4105/TurkiyeMuhasebeStandartlar%C4%B1"
+      ],
+      [
+        "KOSGEB — Küçük ve Orta Ölçekli İşletmeleri Geliştirme ve Destekleme İdaresi Başkanlığı",
+        "https://www.kosgeb.gov.tr"
+      ]
+    ]
+  },
+  {
+    "slug": "kamu-ve-sivil-toplum",
+    "name": "Kamu İştirakleri ve Sivil Toplum",
+    "short": "Kamu kurum ve iştirakleri, dernek ve vakıflar",
+    "segment": true,
+    "lead": "Kamu kurum ve iştirakleri ile dernek ve vakıflar için hesap verebilirlik, mevzuata uyum, iç kontrol ve bağış ile hibe raporlaması başlıklarına genel bir bakış.",
+    "overview": [
+      "Kamu kurum ve iştirakleri ile sivil toplum kuruluşları, kaynaklarını belirli amaçlar ve kurallar çerçevesinde kullanır ve bunu çeşitli paydaşlara hesap verebilir biçimde göstermek durumundadır. Bu nedenle kayıt düzeni, belge saklama ve raporlama süreçleri faaliyetin ayrılmaz bir parçasıdır.",
+      "Tabi olunan mevzuat kuruluşun hukuki yapısına göre farklılaşır; kamu iştiraklerinde ticari işletme kuralları ile kamu düzenlemeleri birlikte gündeme gelebilir. Dernek ve vakıflarda bağış, hibe ve üyelik gelirlerinin amacına uygun kullanımı ve raporlanması ön plandadır."
+    ],
+    "topics": [
+      {
+        "title": "Kamu hesap verebilirliği ve iç kontrol",
+        "text": "Kamu kaynaklarının kullanımında iç kontrol sistemi, risk değerlendirmesi ve iç denetim faaliyetleri hesap verebilirliğin araçlarıdır. Süreçlerin yazılı olması ve düzenli test edilmesi, bulguların izlenebilir biçimde takip edilmesini sağlar."
+      },
+      {
+        "title": "Mevzuata uyum ve belge düzeni",
+        "text": "Satın alma, harcama ve personel işlemlerinde ilgili mevzuatın aradığı belge ve onay adımları kayıt düzeninin dayanağıdır. Uyum kontrolleri, olası sapmaların dönem içinde fark edilmesine yardımcı olur."
+      },
+      {
+        "title": "Hibe ve bağış raporlaması",
+        "text": "Hibe sözleşmelerinde, harcamaların amacına uygun yapıldığını gösteren kayıt ve belge beklentileri bulunur. Bağış ve hibe gelirlerinin ayrı izlenmesi, kullanıcılara ve denetim mercilerine açıklanabilirlik sağlar."
+      },
+      {
+        "title": "İktisadi işletmeler ve vergisel yükümlülükler",
+        "text": "Dernek ve vakıfların iktisadi işletmeleri ile kamu iştiraklerinin ticari faaliyetleri, vergi ve muhasebe açısından ayrıca değerlendirilir. Faaliyetin niteliği ve kuruluşun hukuki statüsü, uygulanacak kuralları belirler."
+      }
+    ],
+    "services": [
+      "ic-denetim-ve-ic-kontrol",
+      "mali-tablolarin-denetimi",
+      "kurumsal-raporlama",
+      "muhasebe-sistemleri",
+      "bordrolama",
+      "isveren-denetimi-ve-raporlamasi",
+      "ic-denetim"
+    ],
+    "calculators": [
+      "maas-hesaplama",
+      "isveren-maliyeti-hesaplama"
+    ],
+    "glossary": [
+      "ic-kontrol",
+      "ic-denetim",
+      "kurumsal-yonetim",
+      "uyum",
+      "finansal-tablolar"
+    ],
+    "questions": [
+      [
+        "Kamu iştiraklerinde iç denetim ve iç kontrol nasıl ele alınır?",
+        "Kuruluşun hukuki yapısına göre farklı düzenlemeler geçerlidir. Genel olarak risk değerlendirmesi, kontrol faaliyetleri ve bağımsız bir iç denetim işlevi birlikte düşünülür. Uygulanacak çerçeve, ilgili mevzuat ve kuruluşun yönetim yapısı üzerinden belirlenir."
+      ],
+      [
+        "Dernek ve vakıflarda bağış ve hibe nasıl raporlanır?",
+        "Gelirler kaynağına ve amacına göre ayrı izlenir; harcamalar belgelerle desteklenir. Dernek ve vakıflar için bildirim ve beyan yükümlülükleri ilgili kanun ve yönetmeliklerde düzenlenmiştir; hibe sözleşmeleri ayrıca kendi raporlama şartlarını içerebilir."
+      ],
+      [
+        "Bu alandaki kuruluşlar için hangi çalışmalar yapılabilir?",
+        "Kapsam, kuruluşun yapısına ve ihtiyacına göre belirlenir; muhasebe düzeni, bordro, iç kontrol incelemeleri ve finansal tabloların denetimi örnek olarak sayılabilir. Bağımsız denetim verilen kuruluşa, bağımsızlık kurallarının izin vermediği hizmetler sunulmaz."
+      ]
+    ],
+    "sources": [
+      [
+        "Kamu Malî Yönetimi ve Kontrol Kanunu (5018) — mevzuat.gov.tr",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=5018&MevzuatTur=1&MevzuatTertip=5"
+      ],
+      [
+        "Dernekler Kanunu (5253) — mevzuat.gov.tr",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=5253&MevzuatTur=1&MevzuatTertip=5"
+      ],
+      [
+        "Vakıflar Kanunu (5737) — mevzuat.gov.tr",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=5737&MevzuatTur=1&MevzuatTertip=5"
+      ]
+    ]
+  }
+]

@@ -1,0 +1,14 @@
+{# Yayın türleri arasında geçiş (sirkülerler · duyurular · blog · haberler).
+   Wagtail karşılığı: PublicationIndexPage kardeş sayfaları (page.get_siblings) + yayın sayıları. Bağlam: types, page. #}
+<nav class="pub-tabs" aria-label="Yayın türleri" data-reveal>
+  <ul class="pub-tabs__list">
+    {% for t in types %}
+    <li>
+      <a class="pub-tab{% if page.url == t.url %} is-current{% endif %}" href="{{ t.url }}"{% if page.url == t.url %} aria-current="page"{% endif %}>
+        <span class="pub-tab__l">{{ t.title }}</span><span class="pub-tab__n mono tnum">{{ t.count }}</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  <a class="textlink pub-tabs__hub" href="/bilgi-merkezi/">Bilgi merkezi <span class="arr" aria-hidden="true">→</span></a>
+</nav>

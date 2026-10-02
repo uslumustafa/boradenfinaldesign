@@ -1,0 +1,96 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+
+{% block head_extra %}
+<script type="application/ld+json">{{ ld | json_script }}</script>
+{% endblock %}
+
+{# Yayın listesi (duyurular · blog · haberler). Wagtail karşılığı: PublicationIndexPage (title, intro) + alt PublicationPage'ler.
+   Kategori çipleri öğelerden türetilir (tek kategori varsa gösterilmez); öğe yoksa boş durum bloğu çıkar. #}
+{% block main %}
+{% set newest = items[0] %}
+{{ m.phero(page, type.title, type.lead, "Bilgi merkezi · " ~ type.label, 6, [
+  ((items | length) ~ " yayın") if (items | length) else "Henüz yayın yok",
+  ("Son yayın: " ~ (newest.date | date_tr)) if newest else ""
+]) }}
+
+<div class="sheet sec--paper">
+  <div class="container">
+    {% include "pages/insights/_type-tabs.njk" %}
+
+    {% if items | length %}
+    <div class="pub" data-listing="{{ type.slug }}">
+      {% if cats | length > 1 %}
+      <div class="toolbar pub__bar">
+        <div class="chips" role="group" aria-label="Kategoriye göre süz" data-filter-by="kategori">
+          <button class="chip is-on" type="button" data-filter="all" aria-pressed="true">Tümü<span class="ic-chip__n tnum">{{ items | length }}</span></button>
+          {% for c in cats %}<button class="chip" type="button" data-filter="{{ c.slug }}" aria-pressed="false">{{ c.label }}<span class="ic-chip__n tnum">{{ c.count }}</span></button>{% endfor %}
+        </div>
+        <p class="pub__count mono" data-result-count aria-live="polite"></p>
+      </div>
+      {% endif %}
+
+      <ol class="pub-list">
+        {% for p in items %}
+        <li class="pub-li{% if loop.first %} pub-li--feat{% endif %}" data-item data-kategori="{{ p.category | slugify }}" data-reveal>
+          {% if loop.first %}
+          <a class="pub-feat" href="{{ p.url }}">
+            <span class="pub-feat__rail" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="pub-feat__top mono"><span class="pub-feat__k">Son yayın</span><span>{{ p.category }}</span><time datetime="{{ p.date }}">{{ p.date | date_tr }}</time></span>
+            <div class="pub-feat__grid">
+              <h2 class="pub-feat__t">{{ p.title }}</h2>
+              <div class="pub-feat__side">
+                <p class="pub-feat__s">{{ p.summary }}</p>
+                <span class="pub-feat__foot"><span class="mono">{{ p.sourceList | length }} kaynak{% if p.sourceDate %} · kaynak tarihi {{ p.sourceDate | date_short }}{% endif %}</span><span class="pub-feat__go">Okuyun <span class="arr" aria-hidden="true">→</span></span></span>
+              </div>
+            </div>
+          </a>
+          {% else %}
+          <a class="pub-row" href="{{ p.url }}">
+            <time class="pub-row__d" datetime="{{ p.date }}"><span class="pub-row__day tnum">{{ p.date | day_of }}</span><span class="pub-row__my mono">{{ p.date | month_short }} {{ p.date | year_of }}</span></time>
+            <div class="pub-row__main">
+              <p class="pub-row__meta mono">{{ p.category }}{% if p.editorialType %} · {{ p.editorialType }}{% endif %}</p>
+              <h2 class="pub-row__t">{{ p.title }}</h2>
+            </div>
+            <div class="pub-row__side">
+              <p class="pub-row__s">{{ p.summary }}</p>
+              <p class="pub-row__src mono tnum">{{ p.sourceList | length }} kaynak{% if p.sourceDate %} · kaynak tarihi {{ p.sourceDate | date_short }}{% endif %}</p>
+            </div>
+            <span class="pub-row__go" aria-hidden="true">→</span>
+          </a>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ol>
+      <p class="empty" data-empty hidden>Bu kategoride yayın bulunamadı.</p>
+    </div>
+    {% else %}
+    <div class="pub-empty" data-reveal>
+      <p class="pub-empty__k mono">Boş liste</p>
+      <p class="pub-empty__t">Bu bölümde henüz yayın yok.</p>
+      <p class="pub-empty__d">Yeni {{ type.title | lower_tr }} yayımlandığında burada listelenir. Bu arada bilgi merkezindeki diğer koleksiyonlara göz atabilirsiniz.</p>
+      <p><a class="textlink" href="/bilgi-merkezi/">Bilgi merkezine dönün {{ m.arrow() }}</a></p>
+    </div>
+    {% endif %}
+
+    {% if others | length %}
+    <section class="pub-more" aria-labelledby="pub-more-h">
+      <h2 class="svc__label mono" data-reveal id="pub-more-h">Bilgi merkezinden</h2>
+      <ul class="pub-cards pub-cards--3">
+        {% for p in others %}
+        <li data-reveal data-reveal-delay="{{ loop.index0 }}">
+          <a class="pub-card" href="{{ p.url }}">
+            <span class="pub-card__meta mono"><span>{{ p.typeLabel }}</span><span>{{ p.category }}</span></span>
+            <h3 class="pub-card__t">{{ p.title }}</h3>
+            <span class="pub-card__foot"><time class="mono" datetime="{{ p.date }}">{{ p.date | date_short }}</time><span class="pub-card__go">Okuyun {{ m.arrow() }}</span></span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+  </div>
+</div>
+
+{% include "partials/cta.njk" %}
+{% endblock %}

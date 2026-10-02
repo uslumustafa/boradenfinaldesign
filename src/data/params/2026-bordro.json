@@ -1,0 +1,146 @@
+{
+  "meta": {
+    "id": "2026-bordro",
+    "year": 2026,
+    "verifiedOn": "2026-10-01",
+    "notes": "Bordro, gelir vergisi, kıdem ve ihbar tazminatı hesaplayıcılarının parametreleri. Kaynak: docs/research/payroll-params-2026.json ve other-params-2026.json (bölüm 6). Oranlar kesir olarak saklanır (0,15 = %15). Tarih-etkili öğeler from/to ile verilir; hesaplayıcılar değerleri yalnızca bu dosyadan okur. confidence: verified-official (resmî sayfada okundu) | secondary (ikincil kaynak, çapraz kontrol) | assumption (varsayım). needsVerification: true olan maddeler hesap sonucunda uyarı üretir; teyit edilince bayrak ve warning alanı kaldırılır."
+  },
+  "incomeTax": {
+    "from": "2026-01-01",
+    "to": "2026-12-31",
+    "wage": [
+      { "upTo": 190000, "rate": 0.15 },
+      { "upTo": 400000, "rate": 0.2 },
+      { "upTo": 1500000, "rate": 0.27 },
+      { "upTo": 5300000, "rate": 0.35 },
+      { "upTo": null, "rate": 0.4 }
+    ],
+    "other": [
+      { "upTo": 190000, "rate": 0.15 },
+      { "upTo": 400000, "rate": 0.2 },
+      { "upTo": 1000000, "rate": 0.27 },
+      { "upTo": 5300000, "rate": 0.35 },
+      { "upTo": null, "rate": 0.4 }
+    ],
+    "source": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2Fgelir-vergisi-tarifeleri%2Fgelir-vergisi-tarifesi-2026.pdf",
+    "confidence": "verified-official",
+    "note": "GVK md.103; Gelir Vergisi Genel Tebliği Seri No: 332 (RG 31.12.2025, sayı 33124, 5. Mükerrer). Ücret tarifesinde 3. sınır 1.500.000 TL, ücret dışı tarifede 1.000.000 TL'dir. Sınırlar yeniden değerleme oranından türetilmez; yayımlanan tutarlar girilir."
+  },
+  "revaluation": {
+    "year": 2026,
+    "rate": 0.2549,
+    "source": "https://ms.hmb.gov.tr/uploads/2026/01/Ek-4-BKS_2026_YDO_GUNCEL.TUTARLAR-5d367d135f56b5e2.pdf",
+    "confidence": "verified-official",
+    "note": "VUK Genel Tebliği Sıra No: 585 (RG 27.11.2025, sayı 33090). Tarife sınırları bu oranın tek tek uygulanmasıyla bulunmaz; yayımlanan tutarlar kullanılır."
+  },
+  "minWage": {
+    "periods": [
+      { "from": "2026-01-01", "to": "2026-12-31", "gross": 33030, "net": 28075.5, "daily": 1101 }
+    ],
+    "source": "https://www.csgb.gov.tr/haberler/2026-yilinda-gecerli-olacak-yeni-asgari-ucret-28-bin-75-lira-olarak-belirlendi/",
+    "confidence": "verified-official",
+    "note": "Asgari Ücret Tespit Komisyonu Kararı 2025/1. 2026 için yıl içi (Temmuz) güncelleme bulunmadı; ÇSGB e-bülteni tek dönem gösterir (01.01.2026-31.12.2026). Yıl içinde değişiklik olursa yeni dönem satırı eklenir ve önceki dönemin 'to' tarihi kısaltılır; GV ve DV istisnaları buna göre otomatik yeniden hesaplanır."
+  },
+  "sgkBounds": {
+    "periods": [
+      { "from": "2026-01-01", "to": "2026-12-31", "floor": 33030, "ceiling": 297270 }
+    ],
+    "source": "https://www.sgk.gov.tr/Content/Post/2e0c9e1a-2cfe-4456-af10-49d3de0c58ba/Prime-Esas-Kazanc-Miktarlari-2026-01-14-10-35-39",
+    "confidence": "verified-official",
+    "note": "Prime esas kazanç aylık alt sınırı (günlük 1.101,00) ve üst sınırı (günlük 9.909,00); 4/a özel sektör. Üst sınır alt sınırın 9 katıdır (7566 sayılı Kanun md.24, 5510 md.82); 2026 için dönem içi değişiklik yoktur."
+  },
+  "employeeRates": {
+    "sgk": 0.14,
+    "unemployment": 0.01,
+    "source": "https://www.csgb.gov.tr/Media/gm2fekds/asgari-%C3%BCcret-2026.pdf",
+    "confidence": "verified-official",
+    "note": "SGK işçi payı %14 (%9 malullük-yaşlılık-ölüm + %5 genel sağlık sigortası); işsizlik sigortası işçi payı %1."
+  },
+  "employerRates": {
+    "sgk": 0.2175,
+    "unemployment": 0.02,
+    "source": "https://www.csgb.gov.tr/Media/gm2fekds/asgari-%C3%BCcret-2026.pdf",
+    "confidence": "verified-official",
+    "note": "Teşviksiz işveren SGK payı %21,75 ve işsizlik işveren payı %2, ÇSGB'nin yayımladığı standart işveren maliyeti tablosundaki oranlardır. Kısa vadeli sigorta kolları primi işyerinin tehlike sınıfına göre değişebilir; %21,75 içindeki ayrışım (12 + 7,5 + 2,25) ikincil kaynaklara dayanır ve hesapta kullanılmaz."
+  },
+  "employerIncentives": {
+    "options": [
+      { "id": "none", "label": "Teşviksiz", "points": 0 },
+      { "id": "p2", "label": "2 puan indirim (imalat dışı özel sektör)", "points": 0.02, "from": "2026-01-01" },
+      { "id": "p5", "label": "5 puan indirim (yalnızca imalat)", "points": 0.05, "from": "2026-01-01", "to": "2026-12-31" }
+    ],
+    "conditions": "İndirim; Muhtasar ve Prim Hizmet Beyannamesinin süresinde verilmesi, primlerin süresinde ödenmesi ve vadesi geçmiş SGK prim borcunun bulunmaması gibi koşullara bağlıdır; emekli (SGDP) çalışanlar için uygulanmaz. 5 puanlık indirim yalnızca fiili faaliyeti ve SGK işyeri tescili imalat (NACE C) olan işyerlerinde geçerlidir.",
+    "source": "https://www.sgk.gov.tr/Download/DownloadFile?d=de85036d-ef64-49f1-834c-916a79f1a923&amp=&f=c94c643d-2190-4d85-9b14-a8c7c5d241e8.pdf",
+    "confidence": "verified-official",
+    "note": "5510 sayılı Kanun md.81/1-(ı), 7566 sayılı Kanunla değişik. 01.01.2026'dan itibaren imalat dışı işyerlerinde 2 puan; imalatta 5 puan yalnızca 31.12.2026'ya kadar öngörülmüştür, sonrası için düzenleme bulunamadı."
+  },
+  "sgdp": {
+    "employeeRate": 0.075,
+    "employerRate": 0.2475,
+    "source": "https://lebibyalkin.com.tr/makale/2026-yili-ucretlerinin-hesaplanisi-ve-sosyal-guvenlik-destek-primine-tabi-asgari-ucret-ile-calisanlarin-durumu",
+    "confidence": "secondary",
+    "needsVerification": true,
+    "warning": "Emekli (SGDP) çalışan oranları ikincil kaynaklara dayanır; SGK'nın birincil metni doğrulanmadı. SGDP'de işsizlik primi ve işveren teşvikleri uygulanmaz. Sonucu SGK uygulamasıyla karşılaştırın.",
+    "note": "İşçi %7,5; işveren %22,5 + %2,25 kısa vadeli = %24,75; işsizlik sigortası yok. Prime esas kazanç sınırlarının aynı olduğu varsayılmıştır."
+  },
+  "stampTax": {
+    "wageRate": 0.00759,
+    "from": "2026-01-01",
+    "to": "2026-12-31",
+    "source": "https://www.cottgroup.com/tr/mevzuat/item/2026-yili-icin-bordrodaki-yasal-kesintiler",
+    "confidence": "secondary",
+    "note": "Ücrette damga vergisi binde 7,59; brüt ücret üzerinden hesaplanır, SGK üst sınırıyla sınırlanmaz. 488 sayılı Kanun (2) sayılı tablonun birincil metni okunmadı; oran birden çok kaynakta ve resmî asgari ücret hesabında aynıdır."
+  },
+  "minWageSupport": {
+    "perDay": 42.33,
+    "days": 30,
+    "from": "2026-01-01",
+    "to": "2026-12-31",
+    "conditions": "Destek, özel sektör işverenlerinin 4/a kapsamındaki sigortalıları için belirlenen kazanç sınırları ve prim ile idari para cezası borcu bulunmaması gibi koşullara bağlıdır; başvuru gerekmez, tutar SGK prim borçlarına mahsup edilir.",
+    "source": "https://www.sgk.gov.tr/Download/DownloadFile?d=de85036d-ef64-49f1-834c-916a79f1a923&amp=&f=c94c643d-2190-4d85-9b14-a8c7c5d241e8.pdf",
+    "confidence": "verified-official",
+    "needsVerification": true,
+    "warning": "Asgari ücret desteğinin yasal dayanağı ve ayrıntılı yararlanma şartları doğrulanmadı; destek tutarı bilgi amaçlıdır ve çalışanın şartları sağladığı varsayılır.",
+    "note": "5510 sayılı Kanun geçici md.112; prim ödeme günü başına 42,33 TL (30 gün 1.269,90 TL; duyurularda 1.270 TL olarak yuvarlanır). ÇSGB'nin resmî işveren maliyeti tablosuna dahil değildir."
+  },
+  "severance": {
+    "minServiceYears": 1,
+    "ceilings": [
+      { "from": "2025-01-01", "to": "2025-06-30", "amount": 46655.43 },
+      { "from": "2025-07-01", "to": "2025-12-31", "amount": 53919.68 },
+      { "from": "2026-01-01", "to": "2026-06-30", "amount": 64948.77 },
+      { "from": "2026-07-01", "to": "2026-12-31", "amount": 73729.87 }
+    ],
+    "source": "https://www.csgb.gov.tr/Media/zewm15ah/kidem-tazminati-yillar-1980-2026.pdf",
+    "confidence": "verified-official",
+    "note": "Hizmet yılı başına uygulanan kıdem tazminatı tavanı; fesih tarihinde geçerli olan tutar alınır. 2026 ikinci yarı tutarı ÇSGB e-bülteninde (Temmuz 2026) ve Hazine ve Maliye Bakanlığı genelgesinde (02.07.2026) yer alır. Her tam yıl için 30 günlük ücret ödenir; en az 1 yıl hizmet gerekir."
+  },
+  "servicePeriod": {
+    "dayBase": 365,
+    "countEndDay": true,
+    "source": "https://www.alomaliye.com/2026/01/29/kidem-tazminatina-esas-hesaplamada-365-gun-uzerinden-hesaplama-yapilmasi-gerekir/",
+    "confidence": "secondary",
+    "note": "Kıdem tazminatında tam yılı aşan süre oranlanır: ay/12 ve gün/365. Çıkış günü (son çalışılan gün) hizmet süresine dahil edilir. Dayanak, Yargıtay 9. HD E.2024/5138 K.2024/6724 (05.04.2024) kararını aktaran ikincil kaynaktır; ÇSGB günlerin hangi tabana göre oranlanacağını belirtmez."
+  },
+  "notice": {
+    "bands": [
+      { "minMonths": 0, "weeks": 2 },
+      { "minMonths": 6, "weeks": 4 },
+      { "minMonths": 18, "weeks": 6 },
+      { "minMonths": 36, "exclusive": true, "weeks": 8 }
+    ],
+    "dailyDivisor": 30,
+    "boundaryWarning": "Hizmet süresi tam 6 ay, 1,5 yıl veya 3 yıl olduğunda sınır yorumu uygulanmıştır (6 ay: 4 hafta; 1,5 yıl: 6 hafta; 3 yıl: 6 hafta). ÇSGB bu sınır günlerini ayrıca belirtmez; sonucu teyit edin.",
+    "source": "https://www.csgb.gov.tr/sikca-sorulan-sorular/calisma-genel-mudurlugu/%C4%B1s-kanunu/",
+    "confidence": "verified-official",
+    "note": "4857 sayılı İş Kanunu md.17: 6 aydan az 2 hafta; 6 aydan 1,5 yıla kadar 4 hafta; 1,5 yıldan 3 yıla kadar 6 hafta; 3 yıldan fazla 8 hafta. İhbar tazminatı = giydirilmiş aylık brüt ücret / 30 x ihbar süresi (gün)."
+  },
+  "compensationTax": {
+    "stampRate": 0.00759,
+    "source": "https://www.kazimceylan.av.tr/kidem-ihbar-tazminati-vergi-kesintisi",
+    "confidence": "secondary",
+    "needsVerification": true,
+    "warning": "Kıdem ve ihbar tazminatının vergilendirmesi (damga vergisi, kıdem tazminatında gelir vergisi istisnası, ihbar tazminatında gelir vergisi) ikincil kaynaklara dayanır; GİB'in ücret rehberi doğrulanamadı. Uygulama öncesinde teyit edin.",
+    "note": "Kıdem tazminatı: damga vergisi binde 7,59; gelir vergisinden istisna (GVK md.25/7) yasal tutar ve tavan kadardır, aşan kısım ücret gibi vergilenir. İhbar tazminatı: ücret niteliğindedir; kümülatif matraha gelir vergisi ve damga vergisi uygulanır. İkisi de SGK primine tabi değildir."
+  }
+}

@@ -1,0 +1,112 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+
+{% block head_extra %}
+<script type="application/ld+json">{{ ld | json_script }}</script>
+{% endblock %}
+
+{# Sözlük. Wagtail karşılığı: GlossaryPage + GlossaryTerm snippet'i (slug, term, category, short, long (paragraflar),
+   related (M2M kendine), services (M2M ServicePage), sources (Orderable: etiket, url)); harf grupları ve kategori sayıları
+   rota modülünde hesaplanır. Süzme/arama: listing.js (data-listing). A–Z rayı, #çapa ile açma/vurgulama, sonuç sayısı ve
+   yazdırma: modules/glossary.js. JS yokken tüm terimler ve «Ayrıntı» bölümleri kullanılabilir.
+   Not: terim makrosu girintisiz yazıldı (60 terimde HTML boyutunu ~300 KB sınırının altında tutmak için). #}
+
+{% macro term(t) %}
+<article class="gl-term" id="{{ t.slug }}" tabindex="-1" data-item data-cat="{{ t.catId }}" data-text="{{ t.searchText | lower_tr }}" aria-labelledby="{{ t.slug }}-t">
+<div class="gl-term__head">
+<h3 class="gl-term__t" id="{{ t.slug }}-t">{{ t.term }}</h3>
+<p class="gl-term__cat mono">{{ t.category }}</p>
+</div>
+<div class="gl-term__body">
+<p class="gl-term__short">{{ t.short }}</p>
+<details class="gl-more" data-gl-more>
+<summary>Ayrıntı<span class="sr-only">: {{ t.term }}</span></summary>
+<div class="gl-more__body">
+{% for p in t.long %}<p>{{ p | rich }}</p>{% endfor %}
+{% if t.relatedList | length %}
+<div class="gl-rel"><p class="gl-rel__h mono">İlgili terimler</p>
+<ul class="gl-rel__chips">{% for r in t.relatedList %}<li><a class="chip" href="#{{ r.slug }}">{{ r.term }}</a></li>{% endfor %}</ul></div>
+{% endif %}
+{% if (t.svcList | length) or (t.sectorList | length) %}
+<div class="gl-rel gl-rel--2">
+{% if t.svcList | length %}<div><p class="gl-rel__h mono">İlgili hizmetler</p>
+<ul class="gl-rel__links">{% for x in t.svcList %}<li><a href="{{ x.url }}">{{ x.title }}<span aria-hidden="true"> →</span></a></li>{% endfor %}</ul></div>{% endif %}
+{% if t.sectorList | length %}<div><p class="gl-rel__h mono">Geçtiği sektör sayfaları</p>
+<ul class="gl-rel__links">{% for o in t.sectorList %}<li><a href="{{ o.url }}">{{ o.name }}<span aria-hidden="true"> →</span></a></li>{% endfor %}</ul></div>{% endif %}
+</div>
+{% endif %}
+{% if t.sources | length %}
+<div class="gl-rel"><p class="gl-rel__h mono">Kaynaklar</p>
+<ul class="srclist gl-src">{% for src in t.sources %}<li><a class="srclink" href="{{ src[1] }}" target="_blank" rel="noopener noreferrer"><span>{{ src[0] }}</span><span class="srclink__go" aria-hidden="true">↗</span><span class="sr-only"> (yeni sekmede açılır)</span></a></li>{% endfor %}</ul></div>
+{% endif %}
+</div>
+</details>
+</div>
+<a class="gl-term__link" href="#{{ t.slug }}" aria-label="«{{ t.term }}» terimine doğrudan bağlantı"><span aria-hidden="true">#</span></a>
+</article>
+{% endmacro %}
+
+{% block main %}
+{{ m.phero(page, "Sözlük", "Denetim, vergi, bordro, şirketler, değerleme, raporlama ve veri alanlarında sık karşılaşılan terimler; kısa tanımı, ayrıntısı ve resmî kaynaklarıyla.", "Bilgi merkezi · Sözlük", 6) }}
+
+<div class="gl-stats sec--dark">
+  <div class="container">
+    <dl class="gl-stats__row">
+      <div data-reveal><dt>Terim</dt><dd class="tnum" data-count="{{ terms | length }}">{{ terms | length }}</dd></div>
+      <div data-reveal data-reveal-delay="1"><dt>Kategori</dt><dd class="tnum" data-count="{{ cats | length }}">{{ cats | length }}</dd></div>
+      <div data-reveal data-reveal-delay="2"><dt>Harf</dt><dd class="tnum" data-count="{{ letters | length }}">{{ letters | length }}</dd></div>
+    </dl>
+  </div>
+</div>
+
+<div class="sheet sec--paper">
+  <div class="container" data-listing="glossary" data-module="glossary">
+    <div class="toolbar gl-toolbar" style="margin-top:0">
+      <div class="chips" role="group" aria-label="Kategoriye göre süz" data-filter-by="cat">
+        <button class="chip is-on" type="button" data-filter="all" aria-pressed="true">Tümü<span class="gl-chip__n tnum">{{ terms | length }}</span></button>
+        {% for c in cats %}<button class="chip" type="button" data-filter="{{ c.id }}" aria-pressed="false">{{ c.label }}<span class="gl-chip__n tnum">{{ c.n }}</span></button>{% endfor %}
+      </div>
+      <label class="searchbox gl-search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+        <span class="sr-only">Sözlükte ara</span>
+        <input type="search" placeholder="Terim veya tanım ara…" data-search autocomplete="off">
+      </label>
+    </div>
+    <p class="gl-count mono tnum" data-gl-count role="status" aria-live="polite"></p>
+
+    <div class="g12 gl-layout">
+      <nav class="gc gl-rail" style="--gc: 1 / span 3" aria-label="Harfe göre git" data-gl-rail>
+        <p class="gl-rail__h mono">A – Z</p>
+        <ol class="gl-rail__list" data-gl-rail-list>
+          {% for L in letters %}<li><a href="#{{ L.id }}" data-gl-letter="{{ L.id }}"><span aria-hidden="true">{{ L.letter }}</span><span class="sr-only">{{ L.letter }} harfi, {{ L.terms | length }} terim</span></a></li>{% endfor %}
+        </ol>
+        <p class="gl-rail__note">Yalnızca terim bulunan harfler gösterilir. Her terimin adresi paylaşılabilir: <span class="mono">…/sozluk/#terim</span></p>
+      </nav>
+
+      <div class="gc gl-list" style="--gc: 4 / -1">
+        {% for L in letters %}
+        <section class="gl-letter" id="{{ L.id }}" data-group="{{ L.id }}" aria-labelledby="{{ L.id }}-h">
+          <h2 class="gl-letter__h" id="{{ L.id }}-h"><span aria-hidden="true">{{ L.letter }}</span><span class="sr-only">{{ L.letter }} harfi</span><span class="gl-letter__n mono tnum" aria-hidden="true">{{ L.terms | length | pad2 }}</span></h2>
+          {% for t in L.terms %}
+{{ term(t) }}
+          {% endfor %}
+        </section>
+        {% endfor %}
+
+        <div class="gl-empty" data-empty hidden>
+          <p class="empty">Aramanızla eşleşen terim bulunamadı.</p>
+          <button class="tbtn gl-reset" type="button" data-gl-reset hidden>Süzgeçleri temizle</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="notice gl-notice" data-reveal>
+      <p><strong>Genel bilgilendirme.</strong> Sözlükteki açıklamalar kavramları tanıtmak içindir; oranlar, eşikler ve uygulama esasları mevzuatla değişebilir. Uygulama öncesinde güncel mevzuat ve ilgili kurum açıklamaları esas alınmalıdır.</p>
+    </div>
+  </div>
+</div>
+
+{% set cta_title = "Bir kavramın sizin için anlamını konuşalım." %}
+{% set cta_text = "Terimlerin işletmenize ve işlemlerinize nasıl yansıdığını, kapsamı netleştirerek birlikte değerlendirelim." %}
+{% include "partials/cta.njk" %}
+{% endblock %}

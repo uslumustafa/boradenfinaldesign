@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="tr" class="no-js" data-fx="auto">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{{ page.titleFull }}</title>
+  <meta name="description" content="{{ page.description }}">
+  {% if page.noindex %}<meta name="robots" content="noindex">{% endif %}
+  {% if page.canonical %}<link rel="canonical" href="{{ page.canonical }}">{% endif %}
+  <meta name="theme-color" content="#08132a">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ site.name }}">
+  <meta property="og:title" content="{{ page.titleFull }}">
+  <meta property="og:description" content="{{ page.description }}">
+  <meta property="og:locale" content="tr_TR">
+  <link rel="icon" href="data:,">
+  <link rel="preload" href="/assets/fonts/newsreader-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css?v={{ build_id }}">
+  {% block head_extra %}{% endblock %}
+  <script>
+    /* Erken: efekt katmanı + animasyon sınıfı (içerik gizleme yalnızca JS çalışıyorsa) */
+    (function () {
+      var d = document.documentElement;
+      d.classList.remove('no-js');
+      d.classList.add('js');
+      var m = null;
+      try { m = localStorage.getItem('boraden-fx'); } catch (e) {}
+      var r = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var fx = m || (r ? 'off' : 'auto');
+      d.setAttribute('data-fx', fx);
+      if (fx !== 'off') d.classList.add('js-anim');
+      /* güvenlik ağı: ana betik yüklenemezse içerik görünür kalsın */
+      setTimeout(function () {
+        if (!window.__boraden) { d.classList.remove('js-anim'); d.classList.add('is-ready'); }
+      }, 3500);
+    })();
+  </script>
+</head>
+<body class="{{ page.bodyClass }}">
+  <a class="skip" href="#main">İçeriğe geç</a>
+
+  {# Kalıcı dünya: sayfalar arasında değişmez; içerik üstüne biner #}
+  <div class="world" id="world" aria-hidden="true">
+    <div class="world__bg"></div>
+    <div class="world__floor"></div>
+    <canvas id="world-canvas"></canvas>
+  </div>
+
+  {% include "partials/header.njk" %}
+  <div class="prog" aria-hidden="true"><div class="prog__fill"></div></div>
+
+  <main id="main" tabindex="-1"
+        data-scene="{{ page.scene if page.scene !== null else '' }}"
+        data-url="{{ page.url }}"
+        data-title="{{ page.titleFull }}"
+        data-body-class="{{ page.bodyClass }}">
+    {% block main %}{% endblock %}
+  </main>
+
+  {% include "partials/footer.njk" %}
+
+  <div class="curtain" id="curtain" aria-hidden="true">
+    <div class="curtain__panel"><div class="curtain__rail"><i></i><i></i><i></i></div></div>
+  </div>
+  <div class="sr-only" id="live" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <script type="module" src="/assets/js/main.js?v={{ build_id }}"></script>
+</body>
+</html>

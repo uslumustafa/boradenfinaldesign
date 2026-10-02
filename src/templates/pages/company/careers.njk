@@ -1,0 +1,165 @@
+{# Kariyer. Wagtail karşılığı: CareersPage — intro (RichText), areas / values / process (StreamField), open_positions
+   (JobPosting snippet'leri; boşsa empty_state), başvuru formu (AbstractEmailForm FormField'ları + consent + landing metinleri), note.
+   Statik sürümde form yalnızca ön yüzdür: modules/career-form.js geçerli gönderimde mailto: taslağı hazırlar (CV eklenemez). #}
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+{% import "pages/company/kit.njk" as kit %}
+
+{% block head_extra %}
+<script type="application/ld+json">{{ ld | json_script }}</script>
+{% endblock %}
+
+{% block main %}
+{{ m.phero(page, cr.title, cr.lead, "Kurumsal", 7, [(cr.areas | length) ~ " çalışma alanı", "Genel başvuru"]) }}
+
+<div class="sheet sec--paper">
+  <div class="container">
+
+    {# ── Giriş #}
+    <div class="g12 cr-intro">
+      <p class="eyebrow gc" style="--gc: 1 / span 4" data-reveal>Kariyer</p>
+      <div class="gc cr-intro__body" style="--gc: 5 / -1">
+        {% for p in cr.intro %}
+        <p class="{{ 'cr-intro__lead' if loop.first else 'cr-intro__p' }}" data-reveal{% if not loop.first %} data-reveal-delay="1"{% endif %}>{{ p | rich }}</p>
+        {% endfor %}
+        <p class="cr-intro__go" data-reveal data-reveal-delay="2"><a class="textlink" href="#basvuru">Genel başvuru formuna geçin <span class="arr" aria-hidden="true">↓</span></a></p>
+      </div>
+    </div>
+
+    {# ── Çalışma alanları: üzerine gelince / odaklanınca yanda açılan önizleme (modules/career-areas.js) #}
+    <section class="cr-sec" id="calisma-alanlari" aria-labelledby="cr-areas-h">
+      <header class="g12 cr-head">
+        <div class="gc" style="--gc: 1 / span 5">
+          <p class="eyebrow" data-reveal>Çalışma alanları</p>
+          <h2 id="cr-areas-h" data-reveal data-reveal-delay="1">{{ cr.areas | length }} alan, tek başvuru formu</h2>
+        </div>
+        <p class="gc cr-head__lead" style="--gc: 7 / -1" data-reveal data-reveal-delay="2">Her alanda yürütülen işler ve bu işlerle ilgilenebilecek adaylar aşağıda özetlenmiştir. Bir alanı seçerek doğrudan başvuru formuna geçebilirsiniz.</p>
+      </header>
+
+      <div class="cr-areas" data-module="career-areas">
+        <ol class="cr-alist">
+          {% for a in cr.areas %}
+          {% set grp = (groups | where("id", a.id))[0] %}
+          <li class="cr-area{% if loop.first %} is-active{% endif %}" data-cr-area="{{ a.id }}">
+            <div class="cr-area__row">
+              <span class="cr-area__n mono tnum">{{ loop.index | pad2 }}</span>
+              <h3 class="cr-area__t">{{ a.title }}</h3>
+              <span class="cr-area__go" aria-hidden="true">→</span>
+            </div>
+            <div class="cr-area__body">
+              <p class="cr-area__pn mono tnum" aria-hidden="true">{{ loop.index | pad2 }} / {{ cr.areas | length | pad2 }}</p>
+              <p class="cr-area__pt" aria-hidden="true">{{ a.title }}</p>
+              <p class="cr-area__d">{{ a.text | rich }}</p>
+              <p class="cr-area__acts">
+                <a class="btn btn--sm" href="#basvuru" data-cr-pick="{{ a.id }}">Bu alan için başvurun <span class="arr" aria-hidden="true">↓</span></a>
+                {% if grp %}<a class="textlink" href="{{ grp.url }}">Alanın hizmetleri <span class="arr" aria-hidden="true">→</span><span class="sr-only"> ({{ grp.name }})</span></a>{% endif %}
+              </p>
+            </div>
+          </li>
+          {% endfor %}
+        </ol>
+      </div>
+    </section>
+
+    {# ── Değerler #}
+    <section class="cr-sec" aria-labelledby="cr-values-h">
+      <header class="g12 cr-head">
+        <div class="gc" style="--gc: 1 / span 5">
+          <p class="eyebrow" data-reveal>Değerler</p>
+          <h2 id="cr-values-h" data-reveal data-reveal-delay="1">Birlikte çalışırken gözettiklerimiz</h2>
+        </div>
+      </header>
+      <ol class="cr-values">
+        {% for v in cr.values %}
+        <li class="cr-value cr-value--{{ ['b', 'r', 'g'][loop.index0 % 3] }}" data-reveal data-reveal-delay="{{ loop.index0 }}">
+          <span class="cr-value__n mono tnum">{{ loop.index | pad2 }}</span>
+          <h3>{{ v.title }}</h3>
+          <p>{{ v.text | rich }}</p>
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+
+    {# ── Başvuru süreci: kaydırdıkça dolan ray #}
+    <section class="cr-sec" aria-labelledby="cr-proc-h">
+      <header class="g12 cr-head">
+        <div class="gc" style="--gc: 1 / span 5">
+          <p class="eyebrow" data-reveal>Başvuru süreci</p>
+          <h2 id="cr-proc-h" data-reveal data-reveal-delay="1">Başvurudan sonuca {{ cr.process | length }} adım</h2>
+        </div>
+      </header>
+      <ol class="cr-steps" data-steps>
+        {% for s in cr.process %}
+        <li class="cr-step" data-reveal data-reveal-delay="{{ loop.index0 }}">
+          <span class="cr-step__n mono tnum">{{ loop.index | pad2 }}</span>
+          <h3>{{ s.title }}</h3>
+          <p>{{ s.text | rich }}</p>
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+  </div>
+</div>
+
+{# ── Açık pozisyonlar: koyu bölüm, arkada yapı ağacı sahnesi #}
+<section class="cr-open sec--dark" data-world="3" id="acik-pozisyonlar" aria-labelledby="cr-open-h">
+  <div class="container">
+    <div class="g12">
+      <div class="gc" style="--gc: 1 / span 4">
+        <h2 class="eyebrow" id="cr-open-h" data-reveal>Açık pozisyonlar</h2>
+      </div>
+      <div class="gc" style="--gc: 5 / -1">
+        {% if cr.openPositions | length %}
+        <ul class="cr-jobs">
+          {% for j in cr.openPositions %}
+          <li class="cr-job" data-reveal>
+            <h3 class="cr-job__t">{{ j.title }}</h3>
+            {% if j.summary %}<p class="cr-job__d">{{ j.summary | rich }}</p>{% endif %}
+            <p class="cr-job__m mono">{% for x in [j.area, j.location, j.type] %}{% if x %}<span>{{ x }}</span>{% endif %}{% endfor %}</p>
+          </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p class="cr-open__t" data-reveal>{{ cr.emptyState }}</p>
+        {% endif %}
+        <p class="cr-open__go" data-reveal data-reveal-delay="2"><a class="btn" href="#basvuru">Genel başvuru formu <span class="arr" aria-hidden="true">↓</span></a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ── Genel başvuru formu (modules/career-form.js) #}
+<div class="sheet sec--paper">
+  <div class="container">
+    <section class="g12 cr-apply" id="basvuru" aria-labelledby="cr-apply-h">
+      <div class="gc cr-apply__side" style="--gc: 1 / span 4">
+        <p class="eyebrow" data-reveal>Genel başvuru</p>
+        <h2 class="cr-apply__h" id="cr-apply-h" data-reveal data-reveal-delay="1">Başvuru formu</h2>
+        <p class="cr-apply__lead" data-reveal data-reveal-delay="2">{{ fallbackNote | rich }}</p>
+        <div class="notice cr-apply__note" data-reveal data-reveal-delay="3"><p>{{ cr.note | rich }}</p></div>
+        <p class="cr-apply__q" data-reveal data-reveal-delay="3">Başvuru süreciyle ilgili sorularınız için <a href="/iletisim/?konu=kariyer">iletişim formunu</a> kullanabilirsiniz.</p>
+      </div>
+
+      <div class="gc" style="--gc: 6 / -1">
+        <div class="ct-formwrap" data-module="career-form" data-mail-to="{{ mail.to }}" data-mail-prefix="{{ mail.prefix }}">
+          <form class="ct-form ct-form--card" id="cr-form" action="mailto:{{ mail.to }}" method="post" enctype="text/plain" aria-labelledby="cr-apply-h">
+            <p class="ct-form__legend"><span class="ct-req" aria-hidden="true">*</span> işaretli alanların doldurulması zorunludur.</p>
+            <div class="ct-form__grid">
+              {% for f in fields %}{{ kit.field(f, "cr-f") }}{% endfor %}
+              {{ kit.consent(cr.form.consent, "cr-f") }}
+            </div>
+            <div class="ct-status" data-fk-status role="alert" data-error="{{ cr.form.errorText }}"></div>
+            {{ kit.foot(cr.form.submitLabel) }}
+          </form>
+          {{ kit.done("cr-f", { "title": cr.form.successTitle, "text": successText, "to": mail.to, "attach": cr.form.attachNote, "copyLabel": "Başvuru metnini kopyala" }) }}
+          <p class="sr-only" data-fk-live role="status" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+{% set cta_title = "Sorunuz mu var?" %}
+{% set cta_text = "Çalışma alanları veya başvuru süreci hakkındaki sorularınız için bize yazabilir ya da bizi arayabilirsiniz." %}
+{% include "partials/cta.njk" %}
+{% endblock %}

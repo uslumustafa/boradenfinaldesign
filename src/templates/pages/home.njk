@@ -1,0 +1,308 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+
+{#
+  ANA SAYFA (v3) — kısa, sahne tabanlı akış. Masaüstünde ≈9 ekran (eski sürüm ≈15,5), mobilde sabitleme yok.
+    0  Açılış perdesi     yalnızca ilk gelişte görünür (html.is-opening; opening.js)
+    1  Kahraman           parçacık alanı (Şekil 00) + başlık          [dünya 0]
+    2  Giriş sayfası      ifade + rakamlar + çalışma akışı (beyaz yaprak, kahramanın üstüne biner)
+    3  Hizmet alanları    sabit sahne, kaydırdıkça 6 formasyon         [dünya 1–6]
+    4  Film               ofis görüntüsü, kaydırdıkça genişleyen çerçeve (video yalnızca «Tam» katmanda, masaüstünde)
+    5  Sektörler          koyu, alan solda                             [dünya 5, sol]
+    6  Hesaplayıcılar     mini KDV + seçki
+    7  Bilgi merkezi      öne çıkan + son yayınlar
+    8  Kariyer şeridi     genel başvuru girişleri
+    9  Kapanış (cta)      kapı formasyonu                              [dünya 7]
+#}
+
+{% block main %}
+
+{# ───────── 0 · Açılış perdesi ───────── #}
+<div class="open" aria-hidden="true">
+  <canvas class="open__cv"></canvas>
+  <div class="open__mid">
+    <p class="open__year tnum" data-open-year data-year="{{ site.founded }}">{{ site.founded }}</p>
+    <span class="open__line"></span>
+    <p class="open__lab">Kuruluş</p>
+  </div>
+</div>
+<button class="open__skip" type="button" data-open-skip>Girişi atla</button>
+
+{# ───────── 1 · Kahraman + 2 · Giriş: koyu sahne üstüne beyaz sayfa biner ───────── #}
+<div class="stack" data-stack>
+  <section class="hero sec--dark" id="giris" data-world="0" data-chapter="Giriş" data-hero data-module="swipe-word">
+    <div class="container hero__inner">
+      <p class="eyebrow hero__eyebrow" data-hero-in="1">Bağımsız denetim · Vergi · Danışmanlık</p>
+
+      {# Başlık satırları sloganın (site.tagline) virgülle ayrılmış öbeklerinden gelir; her satırın sonundaki denetçi tiki otomatiktir
+         (renk ve çizilme sırası satır sırasına göre: mavi → kırmızı → yeşil). Okunan metin h1[aria-label]; satırlar ve tikler süstür. #}
+      <h1 class="hero__title" aria-label="{{ site.tagline }}">
+        {% for w in site.tagline | tagline_words %}
+        <span class="line" aria-hidden="true"><span data-hero-in="{{ loop.index + 1 }}">{{ w }}<i class="p" aria-hidden="true"></i></span></span>
+        {% endfor %}
+      </h1>
+
+      <div class="hero__foot">
+        <p class="hero__text" data-hero-in="5">{{ data.content.about.foundation }}</p>
+        <div class="hero__btns" data-hero-in="6">
+          <a class="btn" href="/hizmetler/">Hizmetlerimiz {{ m.arrow() }}</a>
+          <a class="btn btn--ghost" href="/iletisim/">İletişime geçin</a>
+        </div>
+      </div>
+
+      <a class="hero__scroll" href="#hakkimizda" data-hero-in="7"><span class="hero__scroll-line" aria-hidden="true"></span>Kaydırın</a>
+      <p class="hero__fig mono" aria-hidden="true" data-hero-in="7">Şekil 00 · Ufuk — veri arazisi</p>
+    </div>
+  </section>
+
+  <section class="intro sec--paper" id="hakkimizda" data-chapter="Hakkımızda">
+    <div class="container">
+      <div class="intro__grid">
+        <p class="eyebrow" data-reveal>Boraden hakkında</p>
+        <div>
+          <p class="statement" data-lit>Denetim, vergi ve danışmanlık süreçlerinde kapsamı önce birlikte netleştirir, çalışmayı kayda ve belgeye dayandırır, sonucu açıklanabilir biçimde raporlarız.</p>
+          <p class="intro__more" data-reveal><a class="textlink" href="/hakkimizda/">Hakkımızda {{ m.arrow() }}</a></p>
+        </div>
+      </div>
+
+      <dl class="figures">
+        <div class="figure" data-reveal data-reveal-delay="0">
+          <dt>Kuruluş yılı</dt>
+          <dd class="tnum">{{ site.founded }}</dd>
+        </div>
+        <div class="figure" data-reveal data-reveal-delay="1">
+          <dt>Hizmet alanı</dt>
+          <dd class="tnum" data-count="{{ groups | length }}">{{ groups | length }}</dd>
+        </div>
+        <div class="figure" data-reveal data-reveal-delay="2">
+          <dt>Hizmet başlığı</dt>
+          <dd class="tnum" data-count="{{ services | length }}">{{ services | length }}</dd>
+        </div>
+        <div class="figure" data-reveal data-reveal-delay="3">
+          <dt>Hesaplama aracı</dt>
+          <dd class="tnum" data-count="{{ (model.calculators | length) or 12 }}">{{ (model.calculators | length) or 12 }}</dd>
+        </div>
+      </dl>
+
+      <h2 class="sr-only">Çalışma akışımız</h2>
+      <ol class="flow" data-steps>
+        <li class="flow__step" data-reveal>
+          <span class="flow__no mono">01</span>
+          <h3>Tanışma ve kapsam</h3>
+          <p>Faaliyetler ve beklentiler dinlenir; kapsam ve takvim netleşir.</p>
+        </li>
+        <li class="flow__step" data-reveal data-reveal-delay="1">
+          <span class="flow__no mono">02</span>
+          <h3>Planlama</h3>
+          <p>İlgili uzmanlık alanları belirlenir; gereken belgeler önceden bildirilir.</p>
+        </li>
+        <li class="flow__step" data-reveal data-reveal-delay="2">
+          <span class="flow__no mono">03</span>
+          <h3>Uygulama</h3>
+          <p>Çalışma kayıt ve belgelere dayanır; ara bulgular paylaşılır.</p>
+        </li>
+        <li class="flow__step" data-reveal data-reveal-delay="3">
+          <span class="flow__no mono">04</span>
+          <h3>Raporlama</h3>
+          <p>Sonuçlar varsayım ve sınırlarıyla raporlanır.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+</div>
+
+{# ───────── 3 · Hizmet alanları: sabitlenen sahne, scroll ile değişir ───────── #}
+<section class="areas sec--dark" id="alanlar" data-areas data-world-range="1,6" data-chapter="Hizmetler" style="--n: {{ groups | length }}">
+  <div class="areas__track">
+    <div class="areas__stage">
+      <div class="container areas__grid">
+        <header class="areas__head">
+          <p class="eyebrow" data-reveal>Hizmet alanları</p>
+          <h2 data-reveal data-reveal-delay="1">Altı alan.<br><em>İhtiyaca göre kapsam.</em></h2>
+        </header>
+
+        <ol class="areas__list">
+          {% for g in groups %}
+          <li class="area{% if loop.first %} is-active{% endif %}" data-area="{{ loop.index0 }}" data-fig="Şekil {{ g.number }} · {{ g.figure }}">
+            <a class="area__link" href="{{ g.url }}">
+              <span class="area__no tnum">{{ g.number }}</span>
+              <span class="area__name">{{ g.name }}</span>
+              <span class="area__go" aria-hidden="true">→</span>
+            </a>
+            <div class="area__body">
+              <div class="area__inner">
+                <p class="area__desc">{{ g.description }}</p>
+                <ul class="area__services">
+                  {% for s in g.services | limit(4) %}<li><a href="{{ s.url }}">{{ s.title }}</a></li>{% endfor %}
+                </ul>
+                <a class="textlink" href="{{ g.url }}">Alana göz atın {{ m.arrow() }}</a>
+              </div>
+            </div>
+          </li>
+          {% endfor %}
+        </ol>
+
+        <div class="areas__visual" aria-hidden="true">
+          <div class="areas__cap mono">
+            <span data-areas-cap>Şekil {{ groups[0].number }} · {{ groups[0].figure }}</span>
+            <span class="areas__count tnum"><b data-areas-idx>01</b> / {{ groups | length | pad2 }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ───────── 4 · Film: ofis görüntüsü (arşiv). Video yalnızca «Tam» katmanda ve masaüstünde oynar; diğerlerinde poster + «Videoyu oynat» ───────── #}
+<section class="film sec--dark" id="film" data-chapter="Ofisimiz" data-module="film" aria-label="Ofisimizden kareler">
+  <div class="film__frame" data-film-frame>
+    <img class="film__poster" src="/assets/video/boraden-ofis-poster.jpg" width="1280" height="720" alt="Açık ofiste bilgisayar başında çalışan Boraden ekibi" loading="lazy" decoding="async">
+    <video class="film__video" muted loop playsinline preload="none" tabindex="-1" aria-hidden="true" data-src="/assets/video/boraden-ofis.mp4"></video>
+    <div class="film__shade" aria-hidden="true"></div>
+    <div class="film__cap container">
+      <p class="eyebrow" data-reveal>Ofisimiz</p>
+      <h2 class="film__title" data-reveal data-reveal-delay="1">Çalışma masasından<br><em>kareler.</em></h2>
+    </div>
+    <p class="film__note mono">Arşiv görüntüsü · ses yok</p>
+    <button class="film__ctl" type="button" data-film-ctl aria-label="Videoyu oynat" hidden>
+      <span class="film__ico" aria-hidden="true"></span>
+      <span class="film__ctl-t" data-film-ctl-t>Videoyu oynat</span>
+    </button>
+  </div>
+</section>
+
+{# ───────── 5 · Sektörler (koyu; formasyon solda, liste sağda) ───────── #}
+<section class="sectors sec--dark" id="sektorler" data-world="5" data-world-side="-1" data-chapter="Sektörler" data-sectors>
+  <div class="container sectors__grid">
+    <header class="sectors__head">
+      <p class="eyebrow" data-reveal>Sektörler</p>
+      <h2 data-reveal data-reveal-delay="1">Sektörün dilini<br><em>bilen bir bakış.</em></h2>
+    </header>
+
+    <ul class="sectorlist">
+      {% for s in model.sectors | limit(8) %}
+      <li data-reveal data-reveal-delay="{{ loop.index0 % 4 }}">
+        <a class="sector" href="/sektorler/{{ s.slug }}/" data-short="{{ s.short }}">
+          <span class="sector__no mono tnum">{{ loop.index | pad2 }}</span>
+          <span class="sector__name">{{ s.name }}</span>
+          <span class="sector__go" aria-hidden="true">→</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <div class="sectors__side">
+      <p class="sectors__cap lead" data-sectors-cap data-default="Denetim, vergi ve danışmanlık gündemi sektörden sektöre değişir. Her sektör için güncel konuları ayrı sayfalarda topluyoruz.">Denetim, vergi ve danışmanlık gündemi sektörden sektöre değişir. Her sektör için güncel konuları ayrı sayfalarda topluyoruz.</p>
+      <p class="sectors__more"><a class="textlink" href="/sektorler/">Tüm sektörler {{ m.arrow() }}</a></p>
+    </div>
+  </div>
+</section>
+
+{# ───────── 6 · Hesaplayıcılar ───────── #}
+<section class="tools sec--paper2" id="araclar" data-chapter="Hesaplayıcılar">
+  <div class="container">
+    <div class="tools__grid">
+      <div class="tools__intro">
+        {{ m.head("Hesaplayıcılar", "Rakamları<br><em>kendiniz de görün.</em>", "Maaş, KDV, kıdem tazminatı ve daha fazlası için, güncel yıl parametreleriyle çalışan hesaplama araçları.") }}
+        <ul class="toolchips" data-reveal data-reveal-delay="3" aria-label="Öne çıkan hesaplayıcılar">
+          {# hesaplayıcı seçkisi: başlık hesaplayıcı tanımından gelir (Wagtail: HomePage.featured_calculators) #}
+          {% set picks = ['maas-hesaplama', 'isveren-maliyeti-hesaplama', 'kidem-tazminati-hesaplama', 'gelir-vergisi-hesaplama'] %}
+          {% for slug in picks %}{% set t = model.calcBySlug[slug] %}{% if t %}<li><a class="chip chip--link" href="{{ t.url }}">{{ t.title }}</a></li>{% endif %}{% endfor %}
+        </ul>
+        <p data-reveal data-reveal-delay="3"><a class="btn" href="/hesaplayicilar/">Tüm hesaplayıcılar {{ m.arrow() }}</a></p>
+      </div>
+
+      <form class="mini" data-mini="kdv" data-reveal data-reveal-delay="2" aria-label="Hızlı KDV hesabı" onsubmit="return false">
+        <p class="mini__title"><span class="eyebrow">Hızlı hesap</span></p>
+        <h3 class="mini__h">KDV hesaplama</h3>
+        <div class="mini__row">
+          <label class="field">
+            <span class="field__label">Tutar</span>
+            <span class="field__box"><input name="amount" type="text" inputmode="decimal" value="10.000" autocomplete="off"><i>₺</i></span>
+          </label>
+          <label class="field">
+            <span class="field__label">KDV oranı</span>
+            <span class="field__box">
+              <select name="rate">
+                <option value="20" selected>%20</option>
+                <option value="10">%10</option>
+                <option value="1">%1</option>
+              </select>
+            </span>
+          </label>
+        </div>
+        <div class="seg" role="radiogroup" aria-label="Tutarın türü">
+          <label><input type="radio" name="mode" value="excl" checked><span>KDV hariç</span></label>
+          <label><input type="radio" name="mode" value="incl"><span>KDV dahil</span></label>
+        </div>
+        <dl class="mini__out" aria-live="polite">
+          <div><dt>KDV hariç</dt><dd class="tnum" data-out="net">—</dd></div>
+          <div><dt>KDV tutarı</dt><dd class="tnum" data-out="vat">—</dd></div>
+          <div class="is-main"><dt>KDV dahil toplam</dt><dd class="tnum" data-out="gross">—</dd></div>
+        </dl>
+        <p class="mini__note">Tahmini sonuçtur; genel bilgilendirme amaçlıdır.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+{# ───────── 7 · Bilgi merkezi ───────── #}
+<section class="insights sec--paper" id="bilgi" data-chapter="Bilgi merkezi">
+  <div class="container">
+    <div class="insights__head">
+      {{ m.head("Bilgi merkezi", "Gündemi<br><em>kaynağıyla birlikte.</em>") }}
+      <p data-reveal data-reveal-delay="2"><a class="textlink" href="/bilgi-merkezi/">Tüm yayınlar {{ m.arrow() }}</a></p>
+    </div>
+
+    <div class="insights__grid">
+      {% set feat = model.latest[0] %}
+      {% if feat %}
+      <a class="feat" href="{{ feat.url }}" data-reveal>
+        <span class="feat__meta mono"><span>{{ feat.typeLabel }}</span><span>{{ feat.category }}</span><time datetime="{{ feat.date }}">{{ feat.date | date_tr }}</time></span>
+        <h3 class="feat__t">{{ feat.title }}</h3>
+        <p class="feat__s">{{ feat.summary }}</p>
+        <span class="feat__go textlink">Okuyun {{ m.arrow() }}</span>
+      </a>
+      {% endif %}
+
+      <ul class="newslist">
+        {% for p in model.latest.slice(1, 4) %}
+        <li data-reveal data-reveal-delay="{{ loop.index0 }}">
+          <a class="news" href="{{ p.url }}">
+            <span class="news__meta mono"><span>{{ p.typeLabel }}</span><time datetime="{{ p.date }}">{{ p.date | date_short }}</time></span>
+            <span class="news__t">{{ p.title }}</span>
+          </a>
+        </li>
+        {% endfor %}
+        <li data-reveal>
+          <a class="news news--archive" href="/bilgi-merkezi/sirkulerler/">
+            <span class="news__meta mono"><span>Arşiv</span><span class="tnum">{{ model.archive | length }} sirküler</span></span>
+            <span class="news__t">Sirküler arşivi ({{ model.archiveYears | last }}–{{ model.archiveYears | first }})</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+{# ───────── 8 · Kariyer şeridi: yalnızca genel başvuru (açık pozisyon iddiası yok; veri: careers.json) ───────── #}
+{% if data.careers and data.careers.areas %}
+<section class="join sec--paper2" id="kariyer" data-chapter="Kariyer">
+  <div class="container join__row">
+    <div class="join__head">
+      <p class="eyebrow" data-reveal>Kariyer</p>
+      <h2 data-reveal data-reveal-delay="1">Ekibimize<br><em>katılın.</em></h2>
+    </div>
+    <div class="join__body">
+      <p class="lead" data-reveal data-reveal-delay="2">İlgilendiğiniz alanı seçerek genel başvuru yapabilirsiniz.</p>
+      <ul class="join__areas" data-reveal data-reveal-delay="3" aria-label="Çalışma alanları">
+        {% for a in data.careers.areas %}<li><a class="chip chip--link" href="/kariyer/?alan={{ a.id }}">{{ a.title }}</a></li>{% endfor %}
+      </ul>
+      <p data-reveal data-reveal-delay="3"><a class="textlink" href="/kariyer/">Kariyer sayfası {{ m.arrow() }}</a></p>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% include "partials/cta.njk" %}
+{% endblock %}

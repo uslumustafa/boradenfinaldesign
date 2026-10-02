@@ -1,0 +1,83 @@
+{
+  "slug": "cerez-politikasi",
+  "title": "Çerez Politikası",
+  "status": "Taslak",
+  "updatedAt": "2026-10-01",
+  "intro": "Bu politika, bu internet sitesinin çerezleri ve tarayıcıda veri saklayan benzer teknolojileri nasıl kullandığını açıklar. Kısaca: sitede çerez yerleştirilmez; tarayıcınızda yalnızca görsel efekt tercihinizi hatırlayan, kişisel veri içermeyen tek bir kayıt tutulur.",
+  "sections": [
+    {
+      "id": "nedir",
+      "heading": "1. Çerez ve benzeri teknolojiler nedir?",
+      "paragraphs": [
+        "Çerezler, bir internet sitesini ziyaret ettiğinizde cihazınıza yerleştirilen küçük metin dosyalarıdır. Tarayıcının yerel depolama alanı (localStorage) gibi benzer teknolojiler de bir sitenin tarayıcınızda bilgi saklamasına imkân verir. Bu politika her ikisini de kapsar."
+      ]
+    },
+    {
+      "id": "kullanim",
+      "heading": "2. Bu sitede neler kullanılıyor?",
+      "paragraphs": [
+        "Bu sitede çerez yerleştirilmez. Analitik, reklam, sosyal medya eklentisi veya benzeri takip amaçlı bir teknoloji ile üçüncü taraf betik kullanılmaz; yazı tipleri ve görseller sitenin kendi sunucusundan sunulur.",
+        "Tarayıcınızda saklanan tek kayıt bir sonraki bölümde açıklanmıştır."
+      ]
+    },
+    {
+      "id": "saklanan-kayit",
+      "heading": "3. Tarayıcınızda saklanan tek kayıt",
+      "paragraphs": [
+        "Sitenin alt bölümündeki “Efektler” anahtarından (Tam, Hafif, Kapalı) bir seçim yaptığınızda, bu tercih tarayıcınızın yerel depolama alanında saklanır ve sonraki ziyaretlerinizde hatırlanır. Seçim yapmazsanız hiçbir kayıt oluşturulmaz; efekt düzeyi, tarayıcıda yerel olarak, cihazınızın başlıca özelliklerine ve işletim sisteminizdeki hareketi azaltma ayarına göre belirlenir ve bu bilgiler sunucuya iletilmez."
+      ],
+      "list": [
+        "**Ad:** boraden-fx",
+        "**Tür:** tarayıcı yerel depolama kaydı (localStorage); çerez değildir",
+        "**Amaç:** görsel efekt düzeyi tercihinizi (tam, hafif veya kapalı) hatırlamak",
+        "**Süre:** siz silene kadar; tarayıcı verilerini temizlediğinizde silinir",
+        "**Taraf:** birinci taraf; yalnızca bu site tarafından okunur, üçüncü taraflarla paylaşılmaz",
+        "**Kişisel veri:** içermez; yalnızca seçtiğiniz efekt düzeyi saklanır"
+      ]
+    },
+    {
+      "id": "onay",
+      "heading": "4. Onay ve kayıtla ilgili bilgi",
+      "paragraphs": [
+        "Bu kayıt yalnızca sizin açıkça yaptığınız bir tercihi hatırlamak için yazılır; tercih yapmadan hiçbir şey saklanmaz. Kayıt kişisel veri içermez ve sizi tanımlamaz. Sitede çerez yerleştirilmediği için bir çerez onay penceresi de gösterilmez."
+      ]
+    },
+    {
+      "id": "yeni-teknolojiler",
+      "heading": "5. Yeni teknolojiler eklenirse",
+      "paragraphs": [
+        "Bu sitede ileride analitik, reklam, sosyal medya eklentisi veya benzeri bir teknoloji kullanılması gerekirse, bu teknoloji çalıştırılmadan önce onayınız alınır ve bu politika güncellenir."
+      ]
+    },
+    {
+      "id": "silme",
+      "heading": "6. Kaydı nasıl silebilir veya engelleyebilirsiniz?",
+      "paragraphs": [
+        "Site verilerini tarayıcınızın ayarlarından silebilirsiniz; bu seçenek çoğu tarayıcıda gizlilik, güvenlik veya site verileri bölümünde yer alır ve tarayıcıdan tarayıcıya farklı adlarla sunulur. Siteye ait verileri sildiğinizde efekt tercihiniz sıfırlanır.",
+        "Tarayıcınız site verilerinin saklanmasını engelliyorsa site çalışmaya devam eder; yalnızca efekt tercihiniz hatırlanmaz."
+      ]
+    },
+    {
+      "id": "hukuki-cerceve",
+      "heading": "7. Hukuki çerçeve",
+      "paragraphs": [
+        "Bu politika; 6698 sayılı Kişisel Verilerin Korunması Kanunu, 5809 sayılı Elektronik Haberleşme Kanunu'nun 51. maddesi ve Kişisel Verileri Koruma Kurumu'nun [Çerez Uygulamaları Hakkında Rehber](https://www.kvkk.gov.tr/SharedFolderServer/CMSFiles/fb193dbb-b159-4221-8a7b-3addc083d33f.pdf) (Temmuz 2025) dikkate alınarak hazırlanmıştır. Kişisel verilerin işlenmesine ilişkin bilgi için [KVKK Aydınlatma Metni](/yasal/kvkk-aydinlatma-metni/) sayfasına bakabilirsiniz."
+      ]
+    },
+    {
+      "id": "degisiklikler-ve-iletisim",
+      "heading": "8. Değişiklikler ve iletişim",
+      "paragraphs": [
+        "Sitede kullanılan teknolojilerde veya mevzuatta değişiklik olması hâlinde bu politika güncellenir; güncel sürüm bu sayfada yayımlanır. Sorularınız için info@boraden.com.tr adresine yazabilirsiniz."
+      ]
+    }
+  ],
+  "placeholders": [],
+  "reviewNotes": [
+    "Kurum'un Çerez Uygulamaları Hakkında Rehberi (KVKK Yayınları No: 69, Temmuz 2025) çerezleri kapsar; localStorage ve benzeri teknolojiler hakkında yönlendirme içermediğini belirtir (bölüm 1.2 ve dipnot 2). Rehber ayrıca 5809 sayılı Kanun m.51/3'ün esas olarak elektronik haberleşme işletmecilerine uygulandığını belirtir. boraden-fx kaydının 5809 sayılı Kanun m.51/3 veya 6698 sayılı Kanun kapsamında ayrıca onay gerektirip gerektirmediği avukatça teyit edilmelidir. Metin bu kaydı, yalnızca ziyaretçinin açıkça yaptığı tercihi hatırlayan, kişisel veri içermeyen işlevsel bir kayıt olarak tanımlar.",
+    "Bölüm 5'teki taahhüt (analitik veya reklam eklenmeden önce onay alınması) bilinçli bir tercih olarak teyit edilmelidir: Rehber bazı birinci taraf analitik kullanımlarını açık rıza dışındaki şartlarla değerlendirmeye açık görür; çevrim içi davranışsal reklam çerezleri ise açık rıza gerektirir.",
+    "“Çerez yerleştirilmez” ve “üçüncü taraf betik yok” beyanları 2026-10-01 tarihli kod tabanı denetimine dayanır (tarayıcıda yalnızca boraden-fx anahtarı okunur ve yazılır; çerez, harici adres veya takip aracı bulunmaz). Yayın ortamında barındırma veya CDN sağlayıcısının kendi çerezini yerleştirmediği, tarayıcı geliştirici araçlarıyla yeniden doğrulanmalıdır.",
+    "Efekt tercihi yalnızca ziyaretçi alt bölümdeki anahtarı kullandığında yazılır; otomatik düşürme ve cihaz algılama kayıt oluşturmaz. Bu davranış değişirse politika güncellenmelidir.",
+    "Rehber bağlantısı (kvkk.gov.tr dosya adresi) yayın öncesinde yeniden denetlenmelidir."
+  ]
+}

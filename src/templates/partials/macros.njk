@@ -1,0 +1,45 @@
+{# Duyarlı fotoğraf: data/photos.json manifestinden srcset üretir.
+   Wagtail karşılığı: {% image page.image width-1200 %} + srcset. #}
+{% macro photo(name, sizes="100vw", cls="", eager=false, alt=null) %}
+{% set p = data.photos[name] %}
+{% if p %}
+<img class="{{ cls }}"
+  src="/assets/img/photos/{{ name }}-{{ p.sizes | last }}.webp"
+  srcset="{% for s in p.sizes %}/assets/img/photos/{{ name }}-{{ s }}.webp {{ s }}w{% if not loop.last %}, {% endif %}{% endfor %}"
+  sizes="{{ sizes }}" width="{{ p.w }}" height="{{ p.h }}"
+  alt="{{ alt if alt !== null else p.alt }}"
+  {% if eager %}fetchpriority="high"{% else %}loading="lazy" decoding="async"{% endif %}>
+{% endif %}
+{% endmacro %}
+
+{# Küçük ok simgesi (metin okunabilirliği için aria-hidden) #}
+{% macro arrow() %}<span class="arr" aria-hidden="true">→</span>{% endmacro %}
+
+{# Bölüm başlığı: etiket + başlık + (isteğe bağlı) açıklama #}
+{% macro head(eyebrow, title, lead="", cls="") %}
+<header class="sechead {{ cls }}">
+  <p class="eyebrow" data-reveal>{{ eyebrow }}</p>
+  <h2 data-reveal data-reveal-delay="1">{{ title | safe }}</h2>
+  {% if lead %}<p class="lead sechead__lead" data-reveal data-reveal-delay="2">{{ lead }}</p>{% endif %}
+</header>
+{% endmacro %}
+
+{# Alt sayfa kahramanı: koyu bölüm, 3B dünya arkada. page: sayfa nesnesi (crumbs için) #}
+{% macro phero(page, title, lead="", eyebrow="", scene=null, chips=[]) %}
+<section class="phero sec--dark" data-world="{{ scene if scene !== null else (page.scene or 0) }}">
+  <div class="container">
+    {% if page.crumbs and page.crumbs.length %}
+    <nav aria-label="Sayfa yolu">
+      <ol class="crumbs">
+        {% for c in page.crumbs %}<li><a href="{{ c.url }}">{{ c.label }}</a></li>{% endfor %}
+        <li aria-current="page">{{ title }}</li>
+      </ol>
+    </nav>
+    {% endif %}
+    {% if eyebrow %}<p class="eyebrow" data-reveal>{{ eyebrow }}</p>{% endif %}
+    <h1 style="margin-top:1.2rem" data-reveal data-reveal-delay="1">{{ title }}</h1>
+    {% if lead %}<p class="phero__lead" data-reveal data-reveal-delay="2">{{ lead }}</p>{% endif %}
+    {% if chips and chips.length %}<div class="phero__meta" data-reveal data-reveal-delay="3">{% for c in chips %}{% if c %}<span class="chip">{{ c }}</span>{% endif %}{% endfor %}</div>{% endif %}
+  </div>
+</section>
+{% endmacro %}

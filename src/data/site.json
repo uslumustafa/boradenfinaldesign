@@ -1,0 +1,124 @@
+{
+  "name": "Boraden",
+  "legalName": "Boraden Bağımsız Denetim ve Danışmanlık A.Ş.",
+  "tagline": "Tam, doğru, zamanında.",
+  "description": "Boraden; 1993'ten bu yana kamu kurumlarına, özel sektöre ve bireylere bağımsız denetim, vergi, muhasebe, insan kaynakları ve danışmanlık hizmetleri sunar.",
+  "url": "https://www.boraden.com.tr",
+  "founded": 1993,
+  "year": 2026,
+  "nav": [
+    {
+      "label": "Hizmetler",
+      "url": "/hizmetler/",
+      "panel": "services"
+    },
+    {
+      "label": "Sektörler",
+      "url": "/sektorler/"
+    },
+    {
+      "label": "Bilgi Merkezi",
+      "url": "/bilgi-merkezi/",
+      "panel": "insights"
+    },
+    {
+      "label": "Hesaplayıcılar",
+      "url": "/hesaplayicilar/"
+    },
+    {
+      "label": "Hakkımızda",
+      "url": "/hakkimizda/"
+    }
+  ],
+  "cta": {
+    "label": "İletişim",
+    "url": "/iletisim/"
+  },
+  "insights": [
+    {
+      "label": "Sirkülerler",
+      "url": "/bilgi-merkezi/sirkulerler/",
+      "desc": "Mevzuat ve uygulama değişikliklerini izleyen arşiv"
+    },
+    {
+      "label": "Duyurular",
+      "url": "/bilgi-merkezi/duyurular/",
+      "desc": "Mevzuat ve süreç duyuruları"
+    },
+    {
+      "label": "Blog",
+      "url": "/bilgi-merkezi/blog/",
+      "desc": "Konu odaklı yazılar"
+    },
+    {
+      "label": "Haberler",
+      "url": "/bilgi-merkezi/haberler/",
+      "desc": "Güncel gelişmeler"
+    },
+    {
+      "label": "Sektör raporları",
+      "url": "/bilgi-merkezi/sektor-raporlari/",
+      "desc": "Sektör bazlı raporlar"
+    },
+    {
+      "label": "Okuma notları",
+      "url": "/bilgi-merkezi/okuma-notlari/",
+      "desc": "Kaynağına bağlı kısa okumalar"
+    },
+    {
+      "label": "Vergi takvimi",
+      "url": "/vergi-takvimi/",
+      "desc": "Beyan ve ödeme tarihleri"
+    },
+    {
+      "label": "Sözlük",
+      "url": "/bilgi-merkezi/sozluk/",
+      "desc": "Denetim, vergi ve bordro terimleri"
+    },
+    {
+      "label": "Sık sorulan sorular",
+      "url": "/bilgi-merkezi/sss/",
+      "desc": "Çalışma biçimi, kapsam, gizlilik"
+    }
+  ],
+  "footerLinks": {
+    "kurumsal": [
+      {
+        "label": "Hakkımızda",
+        "url": "/hakkimizda/"
+      },
+      {
+        "label": "Ekibimiz",
+        "url": "/hakkimizda/ekibimiz/"
+      },
+      {
+        "label": "Kariyer",
+        "url": "/kariyer/"
+      },
+      {
+        "label": "İletişim",
+        "url": "/iletisim/"
+      }
+    ],
+    "yasal": [
+      {
+        "label": "KVKK Aydınlatma Metni",
+        "url": "/yasal/kvkk-aydinlatma-metni/"
+      },
+      {
+        "label": "Gizlilik Politikası",
+        "url": "/yasal/gizlilik-politikasi/"
+      },
+      {
+        "label": "Çerez Politikası",
+        "url": "/yasal/cerez-politikasi/"
+      },
+      {
+        "label": "Kullanım Koşulları",
+        "url": "/yasal/kullanim-kosullari/"
+      }
+    ]
+  },
+  "independenceNote": "Bağımsız denetim hizmeti verilen kuruluşlara, bağımsızlık kurallarının izin vermediği hizmetler sunulmaz. Bir hizmetin kapsamı, ilgili mevzuat ve meslek kuralları çerçevesinde görev başında ayrıca değerlendirilir.",
+  "disclaimer": "Bu sitedeki bilgiler genel bilgilendirme amaçlıdır; mali, hukuki veya vergisel tavsiye niteliği taşımaz. Hesaplama araçları tahmini sonuç verir; uygulama öncesinde güncel mevzuat ve ilgili kurum açıklamaları esas alınmalıdır."
+}

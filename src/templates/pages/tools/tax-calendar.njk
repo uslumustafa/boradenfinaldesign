@@ -1,0 +1,118 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+
+{% block head_extra %}
+<script type="application/ld+json">{{ ld | json_script }}</script>
+{% endblock %}
+
+{# Vergi takvimi. Wagtail karşılığı: TaxCalendarPage + CalendarItem snippet'leri (src/data/calendar.json şeması).
+   Geçmiş/sıradaki işaretleme, kalan gün ve .ics dışa aktarma tarayıcıda calc-ui.js ile yapılır. #}
+{% block main %}
+{% set cal = model.calendar %}
+{{ m.phero(page, "Vergi Takvimi", "Beyanname, ödeme ve bildirim günleri. Hafta sonu ve resmî tatil kaymaları işlenmiştir; her kaydın kaynağı yanındadır.", "Araçlar · Takvim", 1, [
+  (cal.count ~ " kayıt"),
+  (cal.meta.from | date_short) ~ " – " ~ (cal.meta.to | date_short),
+  "Doğrulama: " ~ (cal.meta.verifiedOn | date_tr)
+]) }}
+
+<div class="sheet sec--paper">
+  <div class="container" data-listing="calendar" data-cal>
+
+    <div class="cal__next" data-cal-next hidden aria-label="Sıradaki tarihler"></div>
+
+    <div class="toolbar">
+      <div class="chips" role="group" aria-label="Türe göre filtrele" data-filter-by="cat">
+        <button class="chip is-on" type="button" data-filter="all" aria-pressed="true">Tümü</button>
+        {% for c in cal.categories %}<button class="chip" type="button" data-filter="{{ c.id }}" aria-pressed="false"><i class="dot dot--{{ c.id }}" aria-hidden="true"></i>{{ c.label }}</button>{% endfor %}
+      </div>
+      <div class="cal__tools">
+        <label class="searchbox">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+          <span class="sr-only">Takvimde ara</span>
+          <input type="search" placeholder="Başlık veya dönem ara…" data-search autocomplete="off">
+        </label>
+        <button class="tbtn" type="button" data-cal-ics>Takvime aktar (.ics)</button>
+      </div>
+    </div>
+    <p class="cal__count mono" data-result-count aria-live="polite"></p>
+
+    {% for mo in cal.months %}
+    <section class="cal__month" data-group="{{ mo.key }}" id="ay-{{ mo.key }}">
+      <header class="cal__mhead">
+        <h2>{{ mo.label }}</h2>
+        <span class="mono tnum">{{ mo.items | length }} kayıt</span>
+      </header>
+      <ol class="cal__list">
+        {% for it in mo.items %}
+        <li class="cal__row" id="{{ it.id }}" data-item data-date="{{ it.date }}" data-cat="{{ it.category }}"
+            data-title="{{ it.title }}" data-desc="{{ it.period }} · {{ it.who }}"
+            data-text="{{ (it.title ~ ' ' ~ it.who ~ ' ' ~ it.period ~ ' ' ~ it.catLabel ~ ' ' ~ (it.date | date_tr)) | lower_tr }}">
+          <time class="cal__date" datetime="{{ it.date }}">
+            <span class="cal__day tnum">{{ it.date | day_of }}</span>
+            <span class="cal__mon mono">{{ it.date | month_short }}</span>
+            <span class="cal__wd mono">{{ it.date | weekday_tr }}</span>
+          </time>
+          <div class="cal__main">
+            <h3 class="cal__title">{{ it.title }}</h3>
+            <p class="cal__who">{{ it.who }}</p>
+            <p class="cal__per mono"><span>Dönem</span> {{ it.period }}</p>
+            {% if it.shifted %}<p class="cal__shift"><span class="mono">Asıl tarih {{ it.nominalDate | date_tr }}</span> {{ it.shiftNote }}</p>{% endif %}
+            {% if it.note %}<p class="cal__note">{{ it.note }}</p>{% endif %}
+            {% if it.source %}<p class="cal__src"><a class="textlink" href="{{ it.source[1] }}" target="_blank" rel="noopener noreferrer">{{ it.source[0] }} <span aria-hidden="true">↗</span><span class="sr-only"> (yeni sekmede açılır)</span></a></p>{% endif %}
+          </div>
+          <div class="cal__meta">
+            <span class="cal__cat"><i class="dot dot--{{ it.category }}" aria-hidden="true"></i>{{ it.catLabel }}</span>
+            <span class="cal__left mono tnum" data-left></span>
+            <span class="cal__conf mono">{% if it.confidence == 'verified-official' %}Resmî kaynak{% else %}İkincil kaynak{% endif %}</span>
+            {% if it.needsVerification %}<span class="cal__flag mono">Teyit önerilir</span>{% endif %}
+          </div>
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+    {% endfor %}
+
+    <p class="empty" data-empty hidden>Aramanızla eşleşen kayıt bulunamadı.</p>
+
+    <div class="g12 calrules">
+      <p class="eyebrow gc" style="--gc: 1 / span 4" data-reveal>Nasıl okunur</p>
+      <ol class="gc calrules__list" style="--gc: 5 / -1">
+        {% for r in cal.rules %}<li data-reveal>{{ r | rich }}</li>{% endfor %}
+      </ol>
+    </div>
+
+    <div class="g12 calhol">
+      <p class="eyebrow gc" style="--gc: 1 / span 4" data-reveal>Takvimdeki tatiller</p>
+      <div class="gc" style="--gc: 5 / -1" data-reveal>
+        <div class="table-wrap">
+          <table class="table">
+            <thead><tr><th scope="col">Tarih</th><th scope="col">Gün</th><th scope="col">Tatil</th><th scope="col">Tür</th></tr></thead>
+            <tbody>
+              {% for h in cal.holidays %}
+              <tr>
+                <td class="nowrap">{{ h.date | date_tr }}</td>
+                <td>{{ h.date | weekday_tr }}</td>
+                <td>{{ h.name }}</td>
+                <td>{% if h.kind == 'half-day' %}Yarım gün (süreyi uzatmaz){% else %}Tam gün resmî tatil{% endif %}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="notice notice--warn" style="margin-top: clamp(3rem, 6vw, 5rem)" data-reveal>
+      <p><strong>Önemli.</strong> {{ cal.meta.disclaimer }}</p>
+    </div>
+
+    <p class="calfoot" data-reveal>
+      Tarihlerin kendi durumunuza etkisini görüşmek isterseniz: <a class="textlink" href="/iletisim/?hizmet=mali-musavirlik-ve-muhasebe">Mali müşavirlik ve muhasebe <span class="arr" aria-hidden="true">→</span></a>
+    </p>
+  </div>
+</div>
+
+{% set cta_title = "Hangi tarihler sizi kapsıyor?" %}
+{% set cta_text = "Yükümlülüklerinizi ve ilgili beyan–ödeme tarihlerini birlikte netleştirelim." %}
+{% include "partials/cta.njk" %}
+{% endblock %}

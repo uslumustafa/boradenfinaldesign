@@ -1,0 +1,1478 @@
+[
+  {
+    "slug": "bagimsiz-denetim",
+    "term": "Bağımsız denetim",
+    "category": "Denetim",
+    "short": "Bağımsız denetim, finansal tabloların uygulanan raporlama çerçevesine uygun hazırlanıp hazırlanmadığı konusunda bağımsız bir denetçinin görüş bildirmesidir.",
+    "long": [
+      "Bağımsız denetçi; denetim kanıtı toplar, riskleri ve iç kontrol ortamını değerlendirir, finansal tabloların önemli yanlışlık içerip içermediğini inceler ve sonucu denetim raporuyla bildirir. Denetim mutlak değil, makul güvence sağlar; tablolardaki her kalemin doğruluğunu tek tek teyit etmeyi amaçlamaz.",
+      "Hangi şirketlerin bağımsız denetime tabi olacağı Türk Ticaret Kanunu uyarınca Cumhurbaşkanınca belirlenir; ölçütler ve eşikler değişebildiği için güncel düzenlemeye bakılmalıdır. Denetim, KGK tarafından yayımlanan Türkiye Denetim Standartları’na göre yürütülür."
+    ],
+    "related": [
+      "denetim-gorusu",
+      "onemlilik",
+      "denetim-riski",
+      "turkiye-denetim-standartlari"
+    ],
+    "services": [
+      "bagimsiz-denetim",
+      "finansal-tablo-denetimi"
+    ],
+    "sources": [
+      [
+        "6102 sayılı Türk Ticaret Kanunu (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=6102&MevzuatTur=1&MevzuatTertip=5"
+      ],
+      [
+        "KGK — Türkiye Denetim Standartları",
+        "https://www.kgk.gov.tr/DynamicContentDetail/4106/TurkiyeDenetimStandartlar%C4%B1"
+      ]
+    ]
+  },
+  {
+    "slug": "denetim-gorusu",
+    "term": "Denetim görüşü",
+    "category": "Denetim",
+    "short": "Denetim görüşü, denetçinin finansal tablolar hakkında denetim raporunda ifade ettiği sonuç ve değerlendirmedir.",
+    "long": [
+      "Denetçi, topladığı denetim kanıtlarına dayanarak finansal tabloların önemli yönleriyle uygulanan finansal raporlama çerçevesine uygun olup olmadığını değerlendirir. Standartlar görüşün türünü tanımlar: olumlu görüş, şartlı görüş, olumsuz görüş ve görüş bildirmekten kaçınma.",
+      "Görüş, tabloların mutlak doğruluğunu değil, önemli yanlışlık içermediğine ilişkin makul güvenceyi ifade eder. Raporun görüşün dayanağını ve diğer açıklamaları içeren bölümleri de görüşle birlikte okunmalıdır."
+    ],
+    "related": [
+      "bagimsiz-denetim",
+      "onemlilik",
+      "turkiye-denetim-standartlari"
+    ],
+    "services": [
+      "bagimsiz-denetim"
+    ],
+    "sources": [
+      [
+        "KGK — Türkiye Denetim Standartları",
+        "https://www.kgk.gov.tr/DynamicContentDetail/4106/TurkiyeDenetimStandartlar%C4%B1"
+      ]
+    ]
+  },
+  {
+    "slug": "onemlilik",
+    "term": "Önemlilik",
+    "category": "Denetim",
+    "short": "Önemlilik, bir yanlışlığın finansal tablo kullanıcılarının kararlarını etkileyecek büyüklükte ya da nitelikte olup olmadığını belirleyen denetim kavramıdır.",
+    "long": [
+      "Bir yanlışlık, tek başına ya da diğer yanlışlıklarla birlikte, finansal tablolara dayanarak karar veren kullanıcıların kararlarını etkileyebiliyorsa önemli sayılır. Denetçi, denetimi planlarken ve sonuçları değerlendirirken önemlilik düzeyini belirler; bu düzey sabit bir oran değil, işletmenin koşullarına ve kullanıcıların ihtiyaçlarına göre yapılan mesleki bir yargıdır.",
+      "Önemlilik yalnızca tutara bağlı değildir. Yasal düzenlemelere uyumu, ilişkili taraf işlemlerini veya yönetimin tutumunu ilgilendiren bir konu, küçük bir tutarda bile nitelik bakımından önemli olabilir."
+    ],
+    "related": [
+      "denetim-riski",
+      "denetim-gorusu",
+      "bagimsiz-denetim"
+    ],
+    "services": [
+      "bagimsiz-denetim"
+    ],
+    "sources": [
+      [
+        "KGK — Türkiye Denetim Standartları",
+        "https://www.kgk.gov.tr/DynamicContentDetail/4106/TurkiyeDenetimStandartlar%C4%B1"
+      ]
+    ]
+  },
+  {
+    "slug": "denetim-riski",
+    "term": "Denetim riski",
+    "category": "Denetim",
+    "short": "Denetim riski, finansal tablolar önemli yanlışlık içerdiği hâlde denetçinin uygun olmayan bir görüş verme olasılığıdır.",
+    "long": [
+      "Denetim riski iki bileşenden oluşur: işletmenin önemli yanlışlık içerme riski (doğal risk ile iç kontrolün yanlışlığı önleyememe veya zamanında düzeltememe riski) ve denetçinin yanlışlığı saptayamama riski. Denetçi, riskleri değerlendirerek prosedürlerinin türünü, zamanlamasını ve kapsamını belirler.",
+      "Denetim riski sıfıra indirilemez; amaç, riski kabul edilebilir ölçüde düşük bir düzeye çekmek ve makul güvence sağlamaktır. İç kontrol ortamı ve hile riski değerlendirmeleri bu çerçevenin önemli girdileridir."
+    ],
+    "related": [
+      "onemlilik",
+      "ic-kontrol",
+      "hile-ve-usulsuzluk",
+      "bagimsiz-denetim"
+    ],
+    "services": [
+      "bagimsiz-denetim"
+    ],
+    "sources": [
+      [
+        "KGK — Türkiye Denetim Standartları",
+        "https://www.kgk.gov.tr/DynamicContentDetail/4106/TurkiyeDenetimStandartlar%C4%B1"
+      ]
+    ]
+  },
+  {
+    "slug": "denetim-kaniti",
+    "term": "Denetim kanıtı",
+    "category": "Denetim",
+    "short": "Denetim kanıtı, denetçinin görüşüne dayanak oluşturmak için topladığı ve değerlendirdiği bilgilerin tümüdür.",
+    "long": [
+      "Kanıt; muhasebe kayıtlarını, belgeleri, dış doğrulamaları (örneğin banka ve alacak-borç teyitleri), fiziksel gözlemleri, yeniden hesaplamaları ve yönetime yöneltilen sorulara alınan yanıtları içerebilir. Kanıtın yeterliliği miktarıyla, uygunluğu ise ilgililiği ve güvenilirliğiyle ölçülür.",
+      "Dış kaynaklardan doğrudan elde edilen kanıt, genellikle işletme içinde hazırlanan bilgiye göre daha güvenilir kabul edilir. Denetçi, riskin düzeyine ve kanıtın niteliğine göre hangi prosedürleri uygulayacağını belirler."
+    ],
+    "related": [
+      "mutabakat",
+      "denetim-riski",
+      "onemlilik"
+    ],
+    "services": [
+      "finansal-tablo-denetimi"
+    ],
+    "sources": [
+      [
+        "KGK — Türkiye Denetim Standartları",
+        "https://www.kgk.gov.tr/DynamicContentDetail/4106/TurkiyeDenetimStandartlar%C4%B1"
+      ]
+    ]
+  },
+  {
+    "slug": "turkiye-denetim-standartlari",
+    "term": "Türkiye Denetim Standartları (TDS)",
+    "category": "Denetim",
+    "short": "TDS, Kamu Gözetimi Kurumu’nun yayımladığı ve bağımsız denetimin yürütülme esaslarını belirleyen denetim standartlarıdır.",
+    "long": [
+      "TDS; denetimin planlanması, risklerin değerlendirilmesi, kanıt toplanması, sonuçların değerlendirilmesi ve raporlanması aşamalarında bağımsız denetçinin uyacağı ilke ve uygulama esaslarını içerir. Türk Ticaret Kanunu, denetime tabi şirketlerin finansal tablolarının uluslararası denetim standartlarıyla uyumlu TDS’ye göre denetlenmesini öngörür.",
+      "Standartlar zaman içinde güncellenebilir; geçerli metinler KGK’nın internet sayfasında yer alır. Denetimin yürütülmesinde ve raporun hazırlanmasında ilgili döneme ait yürürlükteki sürüm esas alınır."
+    ],
+    "related": [
+      "bagimsiz-denetim",
+      "kgk",
+      "denetim-gorusu",
+      "denetim-kaniti"
+    ],
+    "services": [
+      "bagimsiz-denetim"
+    ],
+    "sources": [
+      [
+        "KGK — Türkiye Denetim Standartları",
+        "https://www.kgk.gov.tr/DynamicContentDetail/4106/TurkiyeDenetimStandartlar%C4%B1"
+      ],
+      [
+        "6102 sayılı Türk Ticaret Kanunu (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=6102&MevzuatTur=1&MevzuatTertip=5"
+      ]
+    ]
+  },
+  {
+    "slug": "bagimsizlik",
+    "term": "Denetçi bağımsızlığı",
+    "category": "Denetim",
+    "short": "Bağımsızlık, denetçinin görüşünü çıkar ilişkilerinden ve dış etkilerden uzak, tarafsız biçimde oluşturabilmesini sağlayan ilke ve kurallar bütünüdür.",
+    "long": [
+      "Finansal tablo kullanıcılarının denetim görüşüne güvenebilmesi, denetçinin hem fiilen hem de görünüşte bağımsız olmasına bağlıdır. Bağımsızlık kuralları; denetlenen kuruluşla mali veya kişisel çıkar ilişkileri, denetim dışında sunulabilecek hizmetler ve ücret gibi konuları kapsar.",
+      "Bu çerçeve bağımsız denetime ilişkin mevzuat ve meslek kurallarıyla belirlenir. Bağımsız denetim hizmeti verilen kuruluşlara, bağımsızlık kurallarının izin vermediği hizmetler sunulmaz; bir hizmetin kapsamı ilgili mevzuat ve meslek kuralları çerçevesinde ayrıca değerlendirilir."
+    ],
+    "related": [
+      "bagimsiz-denetim",
+      "denetim-gorusu",
+      "uyum"
+    ],
+    "services": [
+      "bagimsiz-denetim"
+    ],
+    "sources": []
+  },
+  {
+    "slug": "ic-kontrol",
+    "term": "İç kontrol",
+    "category": "Denetim",
+    "short": "İç kontrol, kuruluşun amaçlarına ulaşmasına, varlıklarını korumasına ve güvenilir raporlama yapmasına yardımcı olan politika, süreç ve kontrollerin bütünüdür.",
+    "long": [
+      "İç kontrol; yetki ve görevlerin ayrılması, onay ve mutabakat adımları, erişim yetkileri ve kayıtların düzenli gözden geçirilmesi gibi unsurlardan oluşur. Etkin bir iç kontrol ortamı, hata ve usulsüzlüklerin önlenmesine veya zamanında saptanmasına katkı sağlar.",
+      "Bağımsız denetçi iç kontrolü yönetimin yerine tasarlamaz veya işletmez; yalnızca denetimin gerektirdiği ölçüde anlar ve risk değerlendirmesinde dikkate alır. COSO gibi çerçeveler, iç kontrolün bileşenlerini sistematik biçimde tanımlar."
+    ],
+    "related": [
+      "ic-denetim",
+      "denetim-riski",
+      "hile-ve-usulsuzluk",
+      "uyum"
+    ],
+    "services": [
+      "ic-denetim-ve-ic-kontrol"
+    ],
+    "sources": [
+      [
+        "COSO — İç kontrol rehberi (İngilizce)",
+        "https://www.coso.org/guidance-on-ic"
+      ]
+    ]
+  },
+  {
+    "slug": "ic-denetim",
+    "term": "İç denetim",
+    "category": "Denetim",
+    "short": "İç denetim, kuruluşun risk yönetimi, kontrol ve yönetişim süreçlerini bağımsız ve tarafsız biçimde değerlendiren güvence ve danışmanlık faaliyetidir.",
+    "long": [
+      "İç denetim birimi, bulgularını yönetim organına veya denetim komitesine raporlayarak süreçlerdeki zayıflıkları ve iyileştirme alanlarını ortaya koyar. Yıllık denetim planı çoğunlukla risk değerlendirmesine dayanır; sonuçlar izleme çalışmalarıyla takip edilir.",
+      "İç denetim ile bağımsız denetim aynı şey değildir: iç denetim kuruluşun kendi yönetimine hizmet eder ve süreçlere odaklanır; bağımsız denetim ise finansal tablolar hakkında dışarıdan görüş bildirir. Uluslararası İç Denetçiler Enstitüsü (IIA), Küresel İç Denetim Standartları’nı yayımlar."
+    ],
+    "related": [
+      "ic-kontrol",
+      "hile-ve-usulsuzluk",
+      "kurumsal-yonetim",
+      "uyum"
+    ],
+    "services": [
+      "ic-denetim-ve-ic-kontrol"
+    ],
+    "sources": [
+      [
+        "IIA — Küresel İç Denetim Standartları (İngilizce)",
+        "https://www.theiia.org/en/standards/2024-standards/global-internal-audit-standards/"
+      ]
+    ]
+  },
+  {
+    "slug": "hile-ve-usulsuzluk",
+    "term": "Hile ve usulsüzlük",
+    "category": "Denetim",
+    "short": "Hile ve usulsüzlük, finansal tablolarda yanlışlığa yol açabilecek kasıtlı eylemleri ve kurallara aykırı işlemleri ifade eder.",
+    "long": [
+      "Finansal raporlama bağlamında hile; hileli finansal raporlamayı ve varlıkların kötüye kullanılmasını kapsar ve kasıt unsuru taşır. Kasıtsız yanlışlıklar ise hata olarak değerlendirilir. Hile riski genellikle baskı, fırsat ve gerekçelendirme unsurlarının bir arada bulunduğu ortamlarda artar.",
+      "Bağımsız denetçi hile arayan bir soruşturmacı değildir; tablolarda hileden kaynaklanan önemli yanlışlık riskini değerlendirir ve buna uygun prosedürler uygular. Hileyi önleme ve saptama sorumluluğu öncelikle yönetimde ve yönetişimden sorumlu olanlardadır."
+    ],
+    "related": [
+      "ic-kontrol",
+      "denetim-riski",
+      "ic-denetim",
+      "uyum"
+    ],
+    "services": [
+      "usulsuzluk-ve-hile-denetimi",
+      "suistimal-inceleme-ve-onleme"
+    ],
+    "sources": []
+  },
+  {
+    "slug": "uyum",
+    "term": "Uyum (compliance)",
+    "category": "Denetim",
+    "short": "Uyum, bir kuruluşun tabi olduğu kanun, düzenleme, standart ve kendi iç politikalarına uygun hareket etmesini ve bunu izleyip belgelemesini ifade eder.",
+    "long": [
+      "Uyum faaliyeti; geçerli yükümlülüklerin belirlenmesini, bunlara ilişkin süreç ve kontrollerin kurulmasını, düzenli izlemeyi ve gerektiğinde raporlamayı içerir. Vergi, sosyal güvenlik, kişisel verilerin korunması ve sektör düzenlemeleri sık karşılaşılan alanlardır.",
+      "Uyum, tek seferlik bir çalışma değil, mevzuattaki değişikliklerin izlenmesini gerektiren sürekli bir süreçtir. Bağımsız denetim ise kuruluşun tüm uyum yükümlülüklerini kapsayan bir güvence vermez; denetimin amacı finansal tablolar hakkında görüş bildirmektir."
+    ],
+    "related": [
+      "ic-kontrol",
+      "ic-denetim",
+      "kvkk",
+      "kurumsal-yonetim"
+    ],
+    "services": [],
+    "sources": []
+  },
+  {
+    "slug": "mutabakat",
+    "term": "Mutabakat",
+    "category": "Denetim",
+    "short": "Mutabakat, iki tarafın kayıtlarındaki bakiye veya işlem tutarlarının karşılaştırılarak aradaki farkların belirlenmesi ve giderilmesi işlemidir.",
+    "long": [
+      "Cari hesap mutabakatında alıcı ve satıcı, belirli bir tarih itibarıyla birbirlerine olan alacak ve borç bakiyelerini karşılıklı teyit eder. Aynı yaklaşım banka hesapları ve kuruluş içi hesaplar için de uygulanır; farklar çoğunlukla zamanlama, kayıt hatası veya itiraz edilen işlemlerden kaynaklanır.",
+      "Mutabakat kayıtların güvenilirliğini artırır ve denetim sürecinde önemli bir kanıt kaynağıdır. Bağımsız denetimde alacak ve borçlara ilişkin dış teyit (konfirmasyon) yazıları da benzer amaca hizmet eder."
+    ],
+    "related": [
+      "denetim-kaniti",
+      "bagimsiz-denetim",
+      "ic-kontrol"
+    ],
+    "services": [
+      "cari-hesap-mutabakatlarinin-yapilmasi"
+    ],
+    "sources": []
+  },
+  {
+    "slug": "kdv",
+    "term": "KDV (Katma Değer Vergisi)",
+    "category": "Vergi",
+    "short": "KDV, mal teslimi ve hizmet ifası gibi işlemler üzerinden alınan ve nihai yükü tüketiciye ait olan bir dolaylı vergidir.",
+    "long": [
+      "3065 sayılı Kanun kapsamındaki işlemler üzerinden KDV hesaplanır. Satıcı, sattığı mal veya hizmet için hesapladığı KDV’den alışlarında yüklendiği KDV’yi indirir ve aradaki farkı vergi dairesine öder; vergiyi sonuçta işlemin son alıcısı üstlenir.",
+      "Uygulanacak oran işlemin türüne göre belirlenir ve değişebilir; istisna ve tevkifat hükümleri de ayrıca değerlendirilir. Bu nedenle güncel düzenlemeye bakılmalıdır. [KDV hesaplama aracı](/hesaplayicilar/kdv-hesaplama/) bilgilendirme amacıyla tutar dönüşümleri için kullanılabilir."
+    ],
+    "related": [
+      "kdv-iadesi",
+      "tevkifat",
+      "e-fatura"
+    ],
+    "services": [
+      "diger-dolayli-vergiler",
+      "kdv-iade-islemleri"
+    ],
+    "sources": [
+      [
+        "3065 sayılı Katma Değer Vergisi Kanunu (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=3065&MevzuatTur=1&MevzuatTertip=5"
+      ]
+    ]
+  },
+  {
+    "slug": "kdv-iadesi",
+    "term": "KDV iadesi",
+    "category": "Vergi",
+    "short": "KDV iadesi, indirim yoluyla telafi edilemeyen KDV’nin, şartları sağlandığında yükümlüye nakden veya mahsuben geri verilmesidir.",
+    "long": [
+      "KDV Kanunu’nun 32. maddesi, indirim yoluyla giderilemeyen verginin iadesine ilişkin esasları düzenler. Yurt dışına yapılan teslimler gibi istisna kapsamındaki işlemlerde yüklenilen KDV, belirli koşullarda iade konusu olabilir; iade nakden veya mahsuben yapılabilir.",
+      "İade talepleri, talebin türüne ve tutarına göre farklı belge ve inceleme yöntemleriyle sonuçlandırılır; bunlar arasında yeminli mali müşavir raporu gibi belgeler de bulunabilir. Usul ve esaslar tebliğlerle belirlenir ve güncellenir; talep öncesinde güncel düzenleme kontrol edilmelidir."
+    ],
+    "related": [
+      "kdv",
+      "ymm",
+      "tam-tasdik",
+      "tevkifat"
+    ],
+    "services": [
+      "kdv-iade-islemleri"
+    ],
+    "sources": [
+      [
+        "3065 sayılı Katma Değer Vergisi Kanunu (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=3065&MevzuatTur=1&MevzuatTertip=5"
+      ]
+    ]
+  },
+  {
+    "slug": "tevkifat",
+    "term": "KDV tevkifatı",
+    "category": "Vergi",
+    "short": "KDV tevkifatı, bazı işlemlerde KDV’nin tamamının veya bir kısmının satıcı yerine alıcı tarafından sorumlu sıfatıyla beyan edilip ödenmesidir.",
+    "long": [
+      "Tevkifat uygulanan işlemlerde faturada hesaplanan KDV, belirlenen oranda alıcı ve satıcı arasında bölünür ya da tamamen alıcıya yüklenir. Hangi işlemlerde ve hangi oranlarda uygulanacağı, KDV Kanunu’nun verdiği yetkiye dayanan düzenlemelerle belirlenir ve zamanla değişebilir.",
+      "KDV tevkifatı, gelir veya kurumlar vergisi kesintisini ifade eden stopajdan farklıdır; ikisi ayrı kanunlara dayanır ve ayrı beyan edilir. Tevkifatlı işlemlerde fatura düzeni ve beyan sorumluluğu için güncel tebliğlere bakılmalıdır."
+    ],
+    "related": [
+      "kdv",
+      "stopaj",
+      "kdv-iadesi"
+    ],
+    "services": [
+      "diger-dolayli-vergiler"
+    ],
+    "sources": [
+      [
+        "3065 sayılı Katma Değer Vergisi Kanunu (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=3065&MevzuatTur=1&MevzuatTertip=5"
+      ]
+    ]
+  },
+  {
+    "slug": "stopaj",
+    "term": "Stopaj (gelir vergisi tevkifatı)",
+    "category": "Vergi",
+    "short": "Stopaj, belirli ödemeler yapılırken verginin ödemeyi yapan tarafından kesilerek kazanç sahibi adına vergi dairesine yatırılmasıdır.",
+    "long": [
+      "Gelir Vergisi Kanunu’nun 94. maddesi; ücret, serbest meslek ödemesi, kira gibi ödemeler üzerinden vergi kesintisi yapılmasını düzenler. Kesinti oranları ödemenin türüne göre değişir ve mevzuatla belirlenir; güncel oranlar kontrol edilmelidir.",
+      "Ödemeyi yapan, kesintiyi ilgili beyannameyle (genellikle muhtasar veya muhtasar ve prim hizmet beyannamesiyle) beyan eder ve öder. Kazanç sahibi açısından kesinti, kazanç türüne göre ya nihai vergi sayılır ya da yıllık beyannamede mahsup edilir."
+    ],
+    "related": [
+      "tevkifat",
+      "muhtasar-ve-prim-hizmet-beyannamesi",
+      "gelir-vergisi",
+      "brut-net-ucret"
+    ],
+    "services": [
+      "mali-musavirlik-ve-muhasebe"
+    ],
+    "sources": [
+      [
+        "193 sayılı Gelir Vergisi Kanunu (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=193&MevzuatTur=1&MevzuatTertip=4"
+      ]
+    ]
+  },
+  {
+    "slug": "gecici-vergi",
+    "term": "Geçici vergi",
+    "category": "Vergi",
+    "short": "Geçici vergi, yıllık gelir veya kurumlar vergisinin bir kısmının yıl içinde dönemler hâlinde peşin olarak beyan edilip ödenmesidir.",
+    "long": [
+      "Kurumlar vergisi mükellefleri ile gelir vergisi mükelleflerinden ilgili hükümlere tabi olanlar, kazançlarını belirlenen dönemler itibarıyla beyan eder ve hesaplanan geçici vergiyi öder. Ödenen geçici vergi, yıllık beyannameye göre hesaplanan vergiden mahsup edilir.",
+      "Dönem sayısı, beyan ve ödeme tarihleri ile uygulama esasları yürürlükteki düzenlemelere ve mükellef grubuna göre değişebilir. Güncel tarihler için [vergi takvimine](/vergi-takvimi/), tahmini bir hesap için [geçici vergi hesaplama aracına](/hesaplayicilar/gecici-vergi-hesaplama/) bakılabilir."
+    ],
+    "related": [
+      "kurumlar-vergisi",
+      "gelir-vergisi",
+      "gecikme-zammi"
+    ],
+    "services": [
+      "mali-musavirlik-ve-muhasebe"
+    ],
+    "sources": [
+      [
+        "193 sayılı Gelir Vergisi Kanunu (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=193&MevzuatTur=1&MevzuatTertip=4"
+      ],
+      [
+        "5520 sayılı Kurumlar Vergisi Kanunu (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=5520&MevzuatTur=1&MevzuatTertip=5"
+      ]
+    ]
+  },
+  {
+    "slug": "kurumlar-vergisi",
+    "term": "Kurumlar vergisi",
+    "category": "Vergi",
+    "short": "Kurumlar vergisi, sermaye şirketleri gibi Kanun’da sayılan kurumların kazançları üzerinden ödedikleri gelir niteliğindeki vergidir.",
+    "long": [
+      "5520 sayılı Kurumlar Vergisi Kanunu, vergi mükellefleri olarak sermaye şirketlerini, kooperatifleri, iktisadi kamu kuruluşlarını, dernek ve vakıflara ait iktisadi işletmeleri ile iş ortaklıklarını sayar. Vergi, ticari bilanço kârına kanunen kabul edilmeyen giderlerin eklenmesi, istisna ve indirimlerin düşülmesiyle bulunan kurum kazancı üzerinden hesaplanır.",
+      "Vergi oranı Kanun’da belirlenir ve dönemlere göre değişebileceğinden güncel oran kontrol edilmelidir. Beyan ve ödeme süreleri için [vergi takvimine](/vergi-takvimi/), bilgilendirme amaçlı tahmini hesap için [kurumlar vergisi hesaplama aracına](/hesaplayicilar/kurumlar-vergisi-hesaplama/) bakılabilir."
+    ],
+    "related": [
+      "gecici-vergi",
+      "transfer-fiyatlandirmasi",
+      "ortulu-sermaye",
+      "gelir-vergisi"
+    ],
+    "services": [
+      "kurumlar-vergisi-denetim-ve-tasdik"
+    ],
+    "sources": [
+      [
+        "5520 sayılı Kurumlar Vergisi Kanunu (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=5520&MevzuatTur=1&MevzuatTertip=5"
+      ]
+    ]
+  },
+  {
+    "slug": "gelir-vergisi",
+    "term": "Gelir vergisi",
+    "category": "Vergi",
+    "short": "Gelir vergisi, gerçek kişilerin bir takvim yılında elde ettiği kazanç ve iratların toplamı üzerinden alınan, artan oranlı bir vergidir.",
+    "long": [
+      "193 sayılı Gelir Vergisi Kanunu, vergiye tabi gelirin unsurlarını yedi grupta sayar: ticari kazançlar, zirai kazançlar, ücretler, serbest meslek kazançları, gayrimenkul sermaye iratları, menkul sermaye iratları ile diğer kazanç ve iratlar. Beyana tabi gelirler yıllık tarifeye göre vergilendirilir; bazı gelirlerde vergi stopaj yoluyla kesilir.",
+      "Tarife dilimleri ile bazı istisna ve indirim tutarları dönemler itibarıyla güncellenebilir; güncel rakamlar resmi kaynaklardan teyit edilmelidir. [Gelir vergisi hesaplama aracı](/hesaplayicilar/gelir-vergisi-hesaplama/) bilgilendirme amacıyla tahmini sonuç verir."
+    ],
+    "related": [
+      "stopaj",
+      "brut-net-ucret",
+      "gecici-vergi",
+      "kurumlar-vergisi"
+    ],
+    "services": [
+      "bireysel-danismanlik-hizmetleri"
+    ],
+    "sources": [
+      [
+        "193 sayılı Gelir Vergisi Kanunu (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=193&MevzuatTur=1&MevzuatTertip=4"
+      ]
+    ]
+  },
+  {
+    "slug": "gecikme-zammi",
+    "term": "Gecikme zammı",
+    "category": "Vergi",
+    "short": "Gecikme zammı, vadesinde ödenmeyen vergi ve benzeri amme alacaklarına, gecikilen her ay için uygulanan ek tutardır.",
+    "long": [
+      "6183 sayılı Kanun’un 51. maddesine göre amme alacağı vadesinde ödenmezse, vadeyi izleyen günden ödemenin yapıldığı güne kadar geçen her ay için ayrı ayrı gecikme zammı hesaplanır. Aylık oran, Kanun’un verdiği yetkiyle belirlenir ve değişebilir.",
+      "Zam, ödemenin geciktiği süreye bağlı olarak arttığı için tutarın hesaplanmasında ödeme tarihi belirleyicidir. Güncel aylık oranı resmi düzenlemelerden teyit edin; bilgilendirme amaçlı tahmini hesap için [gecikme zammı hesaplama aracı](/hesaplayicilar/gecikme-zammi-hesaplama/) kullanılabilir."
+    ],
+    "related": [
+      "gecici-vergi",
+      "kdv",
+      "kurumlar-vergisi"
+    ],
+    "services": [],
+    "sources": [
+      [
+        "6183 sayılı Amme Alacaklarının Tahsil Usulü Hakkında Kanun (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=6183&MevzuatTur=1&MevzuatTertip=3"
+      ]
+    ]
+  },
+  {
+    "slug": "transfer-fiyatlandirmasi",
+    "term": "Transfer fiyatlandırması",
+    "category": "Vergi",
+    "short": "Transfer fiyatlandırması, ilişkili kişiler arasındaki mal ve hizmet işlemlerinin emsallere uygunluk ilkesine göre fiyatlandırılmasıdır.",
+    "long": [
+      "Kurumlar Vergisi Kanunu’nun 13. maddesine göre kurumlar, ilişkili kişilerle emsallere uygunluk ilkesine aykırı bir bedel veya fiyat üzerinden mal ya da hizmet alım satımı yaparsa, kazanç tamamen veya kısmen transfer fiyatlandırması yoluyla örtülü olarak dağıtılmış sayılır. Bu şekilde dağıtılan kazanç, kurum kazancının tespitinde indirilemez.",
+      "İlişkili kişi kavramı; kurumun ortaklarını, idare, denetim veya sermaye yönünden bağlı olduğu kişi ve kurumları ve Kanun’da sayılan bazı yakınlık ilişkilerini kapsar. Uygulamada işlemlerin belgelendirilmesi, yöntem seçimi ve emsal analizi önem taşır; ayrıntılı usul ve bildirim yükümlülükleri tebliğlerle belirlenir."
+    ],
+    "related": [
+      "ortulu-sermaye",
+      "kurumlar-vergisi",
+      "konsolidasyon"
+    ],
+    "services": [
+      "transfer-fiyatlandirma"
+    ],
+    "sources": [
+      [
+        "5520 sayılı Kurumlar Vergisi Kanunu (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=5520&MevzuatTur=1&MevzuatTertip=5"
+      ]
+    ]
+  },
+  {
+    "slug": "ortulu-sermaye",
+    "term": "Örtülü sermaye",
+    "category": "Vergi",
+    "short": "Örtülü sermaye, ortaklardan veya ilişkili kişilerden sağlanan borcun Kanun’da belirtilen sınırı aşan ve vergi açısından sermaye sayılan kısmıdır.",
+    "long": [
+      "Kurumlar Vergisi Kanunu’nun 12. maddesine göre kurumların ortaklarından veya ortaklarla ilişkili kişilerden doğrudan ya da dolaylı olarak temin edip işletmede kullandıkları borçların, hesap dönemi içinde herhangi bir tarihte kurumun öz sermayesinin üç katını aşan kısmı, ilgili hesap dönemi için örtülü sermaye sayılır.",
+      "Örtülü sermaye üzerinden ödenen veya hesaplanan faiz, kur farkı ve benzeri giderler kurum kazancının tespitinde indirilemez; kur farkı hariç faiz ve benzeri ödemeler ayrıca dağıtılmış kâr payı sayılır. Hesaplamada dikkate alınacak borçlar ve istisnalar Kanun’da ayrıntılı düzenlendiğinden her olay ayrıca değerlendirilmelidir."
+    ],
+    "related": [
+      "transfer-fiyatlandirmasi",
+      "kurumlar-vergisi",
+      "sermaye-artirimi"
+    ],
+    "services": [
+      "kurumlar-vergisi-denetim-ve-tasdik"
+    ],
+    "sources": [
+      [
+        "5520 sayılı Kurumlar Vergisi Kanunu (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=5520&MevzuatTur=1&MevzuatTertip=5"
+      ]
+    ]
+  },
+  {
+    "slug": "tam-tasdik",
+    "term": "Tam tasdik",
+    "category": "Vergi",
+    "short": "Tam tasdik, yeminli mali müşavirin bir mükellefin defter, kayıt ve belgelerini vergi mevzuatına uygunluk açısından inceleyip tasdik raporu düzenlemesidir.",
+    "long": [
+      "3568 sayılı Kanun, yeminli mali müşavirlere mükelleflerin defter, kayıt ve belgelerinin ilgili mevzuata uygunluğunu tasdik etme yetkisi tanır. Tam tasdik sözleşmesi kapsamında yeminli mali müşavir, mükellefin bir hesap dönemine ilişkin defter, kayıt ve belgelerini vergi mevzuatına uygunluk bakımından inceler ve sonucu tasdik raporuyla bildirir.",
+      "Tam tasdik, bağımsız denetimden farklıdır: bağımsız denetim finansal tablolar hakkında görüş bildirirken, tam tasdik vergi mevzuatına uygunluğa odaklanır. Kapsamı, yetkili meslek mensubu ve usulleri ilgili mevzuatla belirlendiğinden, sözleşme öncesinde güncel düzenlemeler kontrol edilmelidir."
+    ],
+    "related": [
+      "ymm",
+      "smmm",
+      "kdv-iadesi",
+      "bagimsiz-denetim"
+    ],
+    "services": [
+      "tam-tasdik-islemleri"
+    ],
+    "sources": [
+      [
+        "3568 sayılı Kanun (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=3568&MevzuatTur=1&MevzuatTertip=5"
+      ]
+    ]
+  },
+  {
+    "slug": "ymm",
+    "term": "YMM (Yeminli Mali Müşavir)",
+    "category": "Vergi",
+    "short": "YMM, 3568 sayılı Kanun’da tanımlanan unvana sahip; tasdik, denetim ve inceleme gibi yetkileri bulunan meslek mensubudur.",
+    "long": [
+      "Yeminli mali müşavirlik, 3568 sayılı Kanun’la düzenlenen bir meslektir. Kanun, yeminli mali müşavirlere defter ve belgelerin ilgili mevzuata uygunluğunu tasdik etme, denetim ve inceleme yapma gibi yetkiler tanır; yetkinin kapsamı ve sınırları Kanun ile ilgili yönetmeliklerde belirlenir.",
+      "Meslek mensupları TÜRMOB ve bağlı odalar çatısında örgütlenir. Bazı işlemlerde, örneğin KDV iadesi taleplerinde, yeminli mali müşavir raporu istenebilir; hangi durumlarda hangi raporun aranacağı ilgili tebliğlerde yer alır ve güncellenebilir."
+    ],
+    "related": [
+      "smmm",
+      "tam-tasdik",
+      "kdv-iadesi"
+    ],
+    "services": [
+      "tam-tasdik-islemleri"
+    ],
+    "sources": [
+      [
+        "3568 sayılı Kanun (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=3568&MevzuatTur=1&MevzuatTertip=5"
+      ]
+    ]
+  },
+  {
+    "slug": "smmm",
+    "term": "SMMM (Serbest Muhasebeci Mali Müşavir)",
+    "category": "Vergi",
+    "short": "SMMM, 3568 sayılı Kanun’a göre muhasebe, mali müşavirlik ve beyan hazırlığı gibi hizmetleri bağımsız olarak sunma yetkisine sahip meslek mensubudur.",
+    "long": [
+      "Serbest muhasebeci mali müşavirler; defter tutma, finansal tablo ve beyanname hazırlama, vergi ve muhasebe danışmanlığı gibi hizmetleri sunar. Yetkinin kapsamı 3568 sayılı Kanun’un 2. maddesindeki tanımlara ve ilgili yönetmeliklere göre belirlenir.",
+      "SMMM’nin hizmet kapsamı ile yeminli mali müşavirin tasdik ve denetim yetkileri mevzuatta ayrı ayrı düzenlendiği için, bir işlemi hangi unvanın yapabileceği 3568 sayılı Kanun ve ilgili tebliğlerden kontrol edilmelidir. Meslek mensupları TÜRMOB ve bağlı odalar çatısında örgütlenir."
+    ],
+    "related": [
+      "ymm",
+      "tam-tasdik",
+      "bordro"
+    ],
+    "services": [
+      "mali-musavirlik-ve-muhasebe"
+    ],
+    "sources": [
+      [
+        "3568 sayılı Kanun (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=3568&MevzuatTur=1&MevzuatTertip=5"
+      ]
+    ]
+  },
+  {
+    "slug": "e-fatura",
+    "term": "e-Fatura",
+    "category": "Vergi",
+    "short": "e-Fatura, Gelir İdaresi’nin belirlediği standartla elektronik ortamda düzenlenip iletilen ve kâğıt faturayla aynı niteliklere sahip faturadır.",
+    "long": [
+      "e-Fatura; veri formatı ve standardı Gelir İdaresi Başkanlığı tarafından belirlenen, Vergi Usul Kanunu uyarınca faturada yer alması gereken bilgileri içeren ve satıcı ile alıcı arasında merkezi bir platform üzerinden iletilen elektronik bir belgedir. Yeni bir belge türü değildir; kâğıt ortamındaki faturayla aynı niteliklere sahiptir.",
+      "e-Fatura uygulamasına kayıtlı mükellefler, birbirlerine sattıkları mal ve hizmetler için faturayı e-Fatura olarak düzenlemek ve almak zorundadır; kayıtlı olmayan mükelleflere ise kâğıt fatura veya e-Arşiv fatura düzenlenir. Uygulama kapsamına hangi mükelleflerin ne zaman gireceği Gelir İdaresi’nin düzenlemelerine bağlıdır."
+    ],
+    "related": [
+      "e-defter",
+      "e-donusum",
+      "kdv"
+    ],
+    "services": [
+      "muhasebe-sistemleri"
+    ],
+    "sources": [
+      [
+        "GİB — e-Fatura hakkında",
+        "https://ebelge.gib.gov.tr/efaturahakkinda.html"
+      ]
+    ]
+  },
+  {
+    "slug": "e-defter",
+    "term": "e-Defter",
+    "category": "Vergi",
+    "short": "e-Defter, yasal defterlerin belirlenen format ve standartlarda elektronik ortamda hazırlanması, bastırılmadan kaydedilmesi ve saklanmasıdır.",
+    "long": [
+      "e-Defter; Vergi Usul Kanunu ve Türk Ticaret Kanunu uyarınca tutulması zorunlu defterlerin Gelir İdaresi’nin duyurduğu format ve standartlara uygun biçimde elektronik dosya olarak hazırlanmasını sağlayan hukuki ve teknik düzenlemeler bütünüdür. Amaç, defterlerin değişmezliğinin, bütünlüğünün ve kaynağının doğruluğunun güvence altına alınmasıdır.",
+      "Elektronik defterlerin değişmezliği ve kaynağı; gerçek kişiler için güvenli elektronik imza, tüzel kişiler için mali mühür kullanılarak sağlanır. Hangi mükelleflerin e-Defter tutmak zorunda olduğu ve hangi defterlerin kapsandığı Gelir İdaresi Başkanlığı’nın düzenlemelerine ve duyurularına göre belirlenir."
+    ],
+    "related": [
+      "e-fatura",
+      "e-donusum",
+      "finansal-tablolar"
+    ],
+    "services": [
+      "muhasebe-sistemleri",
+      "mali-musavirlik-ve-muhasebe"
+    ],
+    "sources": [
+      [
+        "GİB — e-Defter hakkında",
+        "https://edefter.gov.tr/edefterhakkinda.html"
+      ]
+    ]
+  },
+  {
+    "slug": "brut-net-ucret",
+    "term": "Brüt ücret ve net ücret",
+    "category": "Bordro ve İK",
+    "short": "Brüt ücret kesintiler yapılmadan önceki tutardır; net ücret ise SGK primi ve vergi kesintileri düşüldükten sonra çalışana ödenen tutardır.",
+    "long": [
+      "Çalışanın aylık brüt ücretinden sigortalı payı olarak SGK primi ve işsizlik sigortası primi ile gelir vergisi ve damga vergisi gibi yasal kesintiler düşülür; kalan tutar net ücrettir. Gelir vergisi yıl içindeki kümülatif matraha göre hesaplandığı için aylık net ücret yıl boyunca değişebilir.",
+      "İşverenin toplam maliyeti ise brüt ücrete ek olarak işveren payı primleri gibi kalemleri de içerir. Brüt ve net ücret dönüşümünü gösteren [maaş hesaplama aracı](/hesaplayicilar/maas-hesaplama/) bilgilendirme amaçlıdır; oranlar ve istisnalar güncel mevzuata göre belirlenir."
+    ],
+    "related": [
+      "sgk-primi",
+      "isveren-maliyeti",
+      "bordro",
+      "gelir-vergisi"
+    ],
+    "services": [
+      "bordrolama"
+    ],
+    "sources": [
+      [
+        "193 sayılı Gelir Vergisi Kanunu (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=193&MevzuatTur=1&MevzuatTertip=4"
+      ],
+      [
+        "5510 sayılı Sosyal Sigortalar ve Genel Sağlık Sigortası Kanunu (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=5510&MevzuatTur=1&MevzuatTertip=5"
+      ]
+    ]
+  },
+  {
+    "slug": "sgk-primi",
+    "term": "SGK primi",
+    "category": "Bordro ve İK",
+    "short": "SGK primi, sigortalı çalışanlar için sosyal sigorta kapsamında ödenen ve çalışan ile işveren arasında paylaşılan prim tutarıdır.",
+    "long": [
+      "5510 sayılı Kanun kapsamındaki sigortalılar için aylık prim, prime esas kazanç üzerinden hesaplanır. Prim; sigortalı ve işveren payından oluşur, sigortalı payı ücretten kesilir ve işveren payıyla birlikte Sosyal Güvenlik Kurumu’na ödenir.",
+      "Prime esas kazanç alt ve üst sınırları ile prim oranları dönemlere göre değişebilir. Güncel oranlar ve sınırlar için SGK’nın resmi duyurularına bakılmalıdır; teşvik ve indirimlerden yararlanılıp yararlanılamayacağı ise işyeri ve çalışanın durumuna göre ayrıca değerlendirilir."
+    ],
+    "related": [
+      "brut-net-ucret",
+      "isveren-maliyeti",
+      "muhtasar-ve-prim-hizmet-beyannamesi",
+      "asgari-ucret"
+    ],
+    "services": [
+      "bordrolama",
+      "istihdam-tesvik"
+    ],
+    "sources": [
+      [
+        "5510 sayılı Sosyal Sigortalar ve Genel Sağlık Sigortası Kanunu (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=5510&MevzuatTur=1&MevzuatTertip=5"
+      ],
+      [
+        "Sosyal Güvenlik Kurumu",
+        "https://www.sgk.gov.tr"
+      ]
+    ]
+  },
+  {
+    "slug": "isveren-maliyeti",
+    "term": "İşveren maliyeti",
+    "category": "Bordro ve İK",
+    "short": "İşveren maliyeti, bir çalışan için işverenin brüt ücretin yanı sıra ödediği işveren primleri ve diğer yasal yükümlülüklerle oluşan toplam maliyettir.",
+    "long": [
+      "İşveren maliyeti, brüt ücrete işveren payı SGK primi, işsizlik sigortası işveren payı ve varsa ek ödemeler ile yasal yükümlülüklerin eklenmesiyle hesaplanır. Teşvik veya prim desteği uygulanıyorsa maliyet bu desteklere göre değişebilir.",
+      "İşe alım, ücret planlaması ve bütçeleme kararlarında çalışanın net ücreti kadar toplam işveren maliyeti de dikkate alınmalıdır. [İşveren maliyeti hesaplama aracı](/hesaplayicilar/isveren-maliyeti-hesaplama/) bilgilendirme amacıyla tahmini bir hesap sunar; nihai tutar bordro ve güncel mevzuata göre belirlenir."
+    ],
+    "related": [
+      "brut-net-ucret",
+      "sgk-primi",
+      "bordro",
+      "asgari-ucret"
+    ],
+    "services": [
+      "insan-kaynaklari-ve-bordro",
+      "istihdam-tesvik"
+    ],
+    "sources": [
+      [
+        "5510 sayılı Sosyal Sigortalar ve Genel Sağlık Sigortası Kanunu (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=5510&MevzuatTur=1&MevzuatTertip=5"
+      ]
+    ]
+  },
+  {
+    "slug": "kidem-tazminati",
+    "term": "Kıdem tazminatı",
+    "category": "Bordro ve İK",
+    "short": "Kıdem tazminatı, belirli koşullarda iş sözleşmesi sona eren işçiye çalıştığı süreye bağlı olarak ödenen yasal tazminattır.",
+    "long": [
+      "1475 sayılı İş Kanunu’nun 14. maddesine göre, aynı işverenin işyerinde en az bir yıl çalışmış işçinin iş sözleşmesinin Kanun’da sayılan hâllerde sona ermesi durumunda işçiye, çalıştığı her tam yıl için otuz günlük ücreti tutarında kıdem tazminatı ödenir.",
+      "Ödenecek tutar için Kanun’da bir üst sınır (tavan) öngörülür ve bu sınır dönemsel olarak güncellenir. Hakkın doğup doğmadığı iş sözleşmesinin sona erme biçimine göre belirlendiğinden, [kıdem tazminatı hesaplama aracı](/hesaplayicilar/kidem-tazminati-hesaplama/) hakkın doğup doğmadığını değil, yalnızca tahmini tutarı gösterir."
+    ],
+    "related": [
+      "ihbar-tazminati",
+      "brut-net-ucret",
+      "bordro"
+    ],
+    "services": [
+      "bordrolama"
+    ],
+    "sources": [
+      [
+        "1475 sayılı İş Kanunu (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=1475&MevzuatTur=1&MevzuatTertip=5"
+      ]
+    ]
+  },
+  {
+    "slug": "ihbar-tazminati",
+    "term": "İhbar tazminatı",
+    "category": "Bordro ve İK",
+    "short": "İhbar tazminatı, belirsiz süreli iş sözleşmesini bildirim süresine uymadan sona erdiren tarafın karşı tarafa ödediği tazminattır.",
+    "long": [
+      "4857 sayılı İş Kanunu’nun 17. maddesine göre belirsiz süreli iş sözleşmelerinde fesih yapacak taraf, çalışma süresine göre belirlenen bildirim sürelerine uymak zorundadır. Bu süreye uyulmadan fesih yapılırsa, bildirim süresine ait ücret tutarında ihbar tazminatı ödenir.",
+      "Bildirim süreleri kıdeme göre değişir ve sözleşmeyle artırılabilir; fesih nedeninin Kanun’daki haklı nedenlerden biri olup olmadığı da ihbar tazminatı doğup doğmadığını etkiler. Tahmini tutar için [ihbar tazminatı hesaplama aracı](/hesaplayicilar/ihbar-tazminati-hesaplama/) bilgilendirme amacıyla kullanılabilir."
+    ],
+    "related": [
+      "kidem-tazminati",
+      "brut-net-ucret",
+      "bordro"
+    ],
+    "services": [
+      "bordrolama"
+    ],
+    "sources": [
+      [
+        "4857 sayılı İş Kanunu (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=4857&MevzuatTur=1&MevzuatTertip=5"
+      ]
+    ]
+  },
+  {
+    "slug": "bordro",
+    "term": "Bordro",
+    "category": "Bordro ve İK",
+    "short": "Bordro, belirli bir dönemde çalışanlara ödenen ücretin, kesintilerin ve işveren yükümlülüklerinin çalışan bazında gösterildiği hesap ve kayıt belgesidir.",
+    "long": [
+      "Bordro; brüt ücreti, ek ödemeleri, SGK primi, gelir vergisi ve damga vergisi gibi kesintileri ve net ödenecek tutarı çalışan bazında gösterir. Bordro verileri, ücret ödemelerinin kayda alınması ile SGK ve vergi beyanlarının hazırlanması için temel oluşturur.",
+      "Doğru bir bordro için işe giriş ve çıkış bildirimleri, çalışılan gün sayısı, izin ve rapor bilgileri, ek ödemeler gibi verilerin eksiksiz ve zamanında iletilmesi gerekir. Bordro verilerinin tutarlılığı, işçilik giderlerinin muhasebe kayıtlarıyla eşleşmesi bakımından da önemlidir."
+    ],
+    "related": [
+      "brut-net-ucret",
+      "sgk-primi",
+      "muhtasar-ve-prim-hizmet-beyannamesi",
+      "isveren-maliyeti"
+    ],
+    "services": [
+      "bordrolama",
+      "insan-kaynaklari-ve-bordro"
+    ],
+    "sources": []
+  },
+  {
+    "slug": "muhtasar-ve-prim-hizmet-beyannamesi",
+    "term": "Muhtasar ve prim hizmet beyannamesi",
+    "category": "Bordro ve İK",
+    "short": "Muhtasar ve prim hizmet beyannamesi, vergi kesintileri ile sigortalı prim ve hizmet bilgilerinin tek beyannamede birleştirilerek bildirilmesini sağlar.",
+    "long": [
+      "Gelir Vergisi Kanunu’nun 98/A maddesine göre bu beyanname, muhtasar beyanname ile 5510 sayılı Kanun uyarınca verilmesi gereken aylık prim ve hizmet belgesini birleştirir; kesilen vergilerin matrahları ile sigortalıların kazanç, prim ve prim ödeme gün sayısı bilgileri birlikte bildirilir.",
+      "Hangi işverenlerin bu beyannameyi vereceği ve beyan dönemleri ilgili düzenlemelerle belirlenir. Beyanname bilgilerinin bordro ve muhasebe kayıtlarıyla tutarlı olması gerekir; 5510 sayılı Kanun’a göre yazılı sözleşmeyle yetki verilmiş meslek mensupları da beyannamenin kayıtlara uygunluğundan işverenle birlikte sorumludur."
+    ],
+    "related": [
+      "bordro",
+      "sgk-primi",
+      "stopaj",
+      "brut-net-ucret"
+    ],
+    "services": [
+      "bordrolama",
+      "mali-musavirlik-ve-muhasebe"
+    ],
+    "sources": [
+      [
+        "193 sayılı Gelir Vergisi Kanunu (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=193&MevzuatTur=1&MevzuatTertip=4"
+      ],
+      [
+        "5510 sayılı Sosyal Sigortalar ve Genel Sağlık Sigortası Kanunu (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=5510&MevzuatTur=1&MevzuatTertip=5"
+      ]
+    ]
+  },
+  {
+    "slug": "asgari-ucret",
+    "term": "Asgari ücret",
+    "category": "Bordro ve İK",
+    "short": "Asgari ücret, bir işçiye normal çalışma karşılığında ödenebilecek, yasal olarak belirlenmiş en düşük ücrettir.",
+    "long": [
+      "4857 sayılı İş Kanunu’nun 39. maddesine göre ücretlerin asgari sınırları, Çalışma ve Sosyal Güvenlik Bakanlığınca Asgari Ücret Tespit Komisyonu aracılığıyla ve en geç iki yılda bir belirlenir; komisyon kararları Resmî Gazete’de yayımlanarak yürürlüğe girer.",
+      "Güncel tutarlar ve uygulanan istisnalar için Çalışma ve Sosyal Güvenlik Bakanlığı’nın duyurularına bakılmalıdır; tutar dönemler itibarıyla değişebilir. Brüt ve net karşılıkları için [asgari ücret hesaplama aracı](/hesaplayicilar/asgari-ucret-hesaplama/) bilgilendirme amacıyla kullanılabilir."
+    ],
+    "related": [
+      "brut-net-ucret",
+      "bordro",
+      "isveren-maliyeti",
+      "sgk-primi"
+    ],
+    "services": [
+      "bordrolama"
+    ],
+    "sources": [
+      [
+        "4857 sayılı İş Kanunu (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=4857&MevzuatTur=1&MevzuatTertip=5"
+      ],
+      [
+        "Çalışma ve Sosyal Güvenlik Bakanlığı — Asgari ücret",
+        "https://www.csgb.gov.tr/poco-pages/asgari-ucret/"
+      ]
+    ]
+  },
+  {
+    "slug": "anonim-sirket",
+    "term": "Anonim şirket",
+    "category": "Şirketler ve ticaret",
+    "short": "Anonim şirket, sermayesi paylara bölünmüş olan ve pay sahiplerinin yalnızca taahhüt ettikleri sermaye payıyla sorumlu olduğu sermaye şirketidir.",
+    "long": [
+      "Türk Ticaret Kanunu’nun 329. maddesine göre anonim şirketin sermayesi belirli ve paylara bölünmüştür; şirket borçlarından yalnızca kendi malvarlığıyla sorumludur ve pay sahipleri sadece taahhüt ettikleri sermaye paylarını ödemekle yükümlüdür.",
+      "Şirket, genel kurul ve yönetim kurulu aracılığıyla yönetilir. Kuruluşu; esas sözleşmenin düzenlenmesi, sermaye taahhüdü ve ticaret siciline tescil gibi adımlara dayanır; bazı şirketler ayrıca bağımsız denetime tabi olabilir. Şirket türü seçiminde faaliyetin niteliği ve ortaklık yapısı birlikte değerlendirilir."
+    ],
+    "related": [
+      "limited-sirket",
+      "sermaye-artirimi",
+      "ticaret-sicili",
+      "kurumsal-yonetim"
+    ],
+    "services": [
+      "sirket-kurulus-danismanligi"
+    ],
+    "sources": [
+      [
+        "6102 sayılı Türk Ticaret Kanunu (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=6102&MevzuatTur=1&MevzuatTertip=5"
+      ]
+    ]
+  },
+  {
+    "slug": "limited-sirket",
+    "term": "Limited şirket",
+    "category": "Şirketler ve ticaret",
+    "short": "Limited şirket, sermayesi esas sermaye paylarından oluşan ve ortakların şirket borçlarından sorumlu olmadığı bir sermaye şirketidir.",
+    "long": [
+      "Türk Ticaret Kanunu’nun 573. maddesine göre limited şirket, bir veya daha çok gerçek ya da tüzel kişi tarafından bir ticaret unvanı altında kurulur ve sermayesi esas sermaye paylarının toplamından oluşur. Ortaklar şirket borçlarından sorumlu olmayıp yalnızca taahhüt ettikleri esas sermaye paylarını ödemekle ve sözleşmede öngörülen ek ödeme ile yan edim yükümlülüklerini yerine getirmekle yükümlüdür.",
+      "Limited şirkette payların devri ve ortaklık yapısı, anonim şirkete göre daha sıkı kurallara bağlıdır; esas sözleşme, ortaklar kurulu ve müdürler şirketin yönetimini belirler. Hangi şirket türünün uygun olduğu, faaliyetin niteliğine ve ortaklık yapısına göre değerlendirilir."
+    ],
+    "related": [
+      "anonim-sirket",
+      "ticaret-sicili",
+      "sermaye-artirimi"
+    ],
+    "services": [
+      "sirket-kurulus-danismanligi"
+    ],
+    "sources": [
+      [
+        "6102 sayılı Türk Ticaret Kanunu (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=6102&MevzuatTur=1&MevzuatTertip=5"
+      ]
+    ]
+  },
+  {
+    "slug": "ticaret-sicili",
+    "term": "Ticaret sicili",
+    "category": "Şirketler ve ticaret",
+    "short": "Ticaret sicili, tacirlere ve ticaret şirketlerine ilişkin Kanun’da belirtilen bilgilerin kayda alındığı ve ilan edildiği resmî kayıt sistemidir.",
+    "long": [
+      "Ticaret sicili; şirketlerin kuruluşu, unvanı, sermayesi, yönetim organları ve temsile yetkili kişiler gibi bilgilerin tescil edildiği ve ilan edildiği resmî kayıttır. Tescil ve ilan, bu bilgilerin üçüncü kişilere karşı geçerliliği bakımından önem taşır.",
+      "Esas sözleşme değişikliği, sermaye artırımı, yönetim kurulu veya müdür değişikliği, adres ve unvan değişikliği gibi pek çok işlem, ilgili ticaret sicili müdürlüğüne tescil edilerek tamamlanır. İlanlar Türkiye Ticaret Sicili Gazetesi’nde yayımlanır."
+    ],
+    "related": [
+      "mersis",
+      "anonim-sirket",
+      "limited-sirket",
+      "sermaye-artirimi"
+    ],
+    "services": [
+      "ticaret-sicil-islemleri"
+    ],
+    "sources": [
+      [
+        "Türkiye Ticaret Sicili Gazetesi",
+        "https://www.ticaretsicil.gov.tr"
+      ],
+      [
+        "6102 sayılı Türk Ticaret Kanunu (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=6102&MevzuatTur=1&MevzuatTertip=5"
+      ]
+    ]
+  },
+  {
+    "slug": "mersis",
+    "term": "MERSİS",
+    "category": "Şirketler ve ticaret",
+    "short": "MERSİS, ticaret sicili işlemlerinin elektronik ortamda yürütüldüğü ve Ticaret Bakanlığı tarafından işletilen merkezi sicil kayıt sistemidir.",
+    "long": [
+      "MERSİS (Merkezi Sicil Kayıt Sistemi), ticaret sicili işlemlerinin elektronik ortamda yürütülmesini sağlayan merkezi sistemdir. Ticaret Bakanlığı’nın sayfasında, ticaret sicili işlemlerinin MERSİS ile elektronik ortamda yürütülebileceği ve kuruluş işlemleri için mobil uygulamanın kullanılabileceği belirtilmektedir.",
+      "Sistemdeki bilgilerin güncel kalması; adres, yönetim ve ortaklık değişikliklerinin ilgili ticaret sicili müdürlüğüne zamanında bildirilmesine bağlıdır. İşlem türüne göre gerekli belgeler ve başvuru yöntemleri değişebilir; güncel bilgi için MERSİS sayfasındaki kullanım kılavuzuna bakılabilir."
+    ],
+    "related": [
+      "ticaret-sicili",
+      "anonim-sirket",
+      "limited-sirket"
+    ],
+    "services": [
+      "ticaret-sicil-islemleri"
+    ],
+    "sources": [
+      [
+        "Ticaret Bakanlığı — MERSİS",
+        "https://mersis.ticaret.gov.tr"
+      ]
+    ]
+  },
+  {
+    "slug": "sermaye-artirimi",
+    "term": "Sermaye artırımı",
+    "category": "Şirketler ve ticaret",
+    "short": "Sermaye artırımı, bir şirketin sermayesinin ortaklarca ek sermaye konulması veya iç kaynakların sermayeye eklenmesiyle yükseltilmesidir.",
+    "long": [
+      "Sermaye; ortakların yeni nakit veya ayni sermaye koymasıyla ya da şirketin yedek akçeleri gibi iç kaynakların sermayeye eklenmesiyle artırılabilir. Anonim şirketlerde sermaye artırımının esasları Türk Ticaret Kanunu’nun 456. ve izleyen maddelerinde düzenlenir.",
+      "Artırım kararı ilgili organ tarafından alınır; esas sözleşme değişikliği ile birlikte ticaret siciline tescil ve ilan edilir. Mevcut ortakların yeni paylar üzerindeki hakları ile vergisel ve muhasebe sonuçları işlemin türüne göre değiştiğinden, uygulamadan önce bu yönler ayrıca incelenmelidir."
+    ],
+    "related": [
+      "anonim-sirket",
+      "limited-sirket",
+      "ticaret-sicili",
+      "ozsermaye-degeri"
+    ],
+    "services": [
+      "sirket-kurulus-danismanligi",
+      "ticaret-sicil-islemleri"
+    ],
+    "sources": [
+      [
+        "6102 sayılı Türk Ticaret Kanunu (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=6102&MevzuatTur=1&MevzuatTertip=5"
+      ]
+    ]
+  },
+  {
+    "slug": "kurumsal-yonetim",
+    "term": "Kurumsal yönetim",
+    "category": "Şirketler ve ticaret",
+    "short": "Kurumsal yönetim, bir kuruluşun yönetim organı, ortakları ve paydaşları arasındaki ilişkileri ve karar süreçlerini düzenleyen ilke ve uygulamalardır.",
+    "long": [
+      "Kurumsal yönetim; sorumlulukların net tanımlanması, yönetim organının işleyişi, zamanında ve şeffaf bilgilendirme, risk yönetimi ve iç kontrol gibi başlıklarda ilke ve uygulamalar içerir. Amaç, kararların hesap verebilir, öngörülebilir ve belgelenebilir biçimde alınmasıdır.",
+      "Halka açık şirketler, kurumsal yönetim konusunda Sermaye Piyasası Kurulu’nun düzenlemelerine tabidir. Aile şirketleri ve KOBİ’ler ise yönetim kurulu yapısı, yetki dağılımı ve süreklilik planı gibi konularda bu ilkelerden gönüllü olarak yararlanabilir."
+    ],
+    "related": [
+      "ic-kontrol",
+      "ic-denetim",
+      "uyum",
+      "anonim-sirket"
+    ],
+    "services": [
+      "yonetim-danismanligi"
+    ],
+    "sources": [
+      [
+        "Sermaye Piyasası Kurulu",
+        "https://www.spk.gov.tr/"
+      ]
+    ]
+  },
+  {
+    "slug": "degerleme",
+    "term": "Değerleme",
+    "category": "Değerleme",
+    "short": "Değerleme, bir işletmenin, varlığın veya hakkın değerinin belirli bir tarih ve amaç için kabul görmüş yöntemlerle tahmin edilmesidir.",
+    "long": [
+      "Değerleme; amaç, değer esası ve tarih belirlenerek yapılır. Aynı işletme için satın alma, ortaklık payı devri, sermaye artırımı, finansal raporlama veya vergi amaçlarında farklı değer kavramları ve varsayımlar gündeme gelebilir. Bu nedenle değerlemenin amacı ve kullanım koşulları raporda açıkça belirtilmelidir.",
+      "Yaygın yaklaşımlar gelir yaklaşımı (örneğin indirgenmiş nakit akışı), piyasa yaklaşımı (örneğin çarpanlar) ve maliyet yaklaşımıdır; Uluslararası Değerleme Standartları Konseyi (IVSC) değerleme uygulamasına yönelik standartlar yayımlar. Sonuç varsayımlara duyarlıdır; bu nedenle aralık ve duyarlılık analiziyle birlikte okunmalıdır."
+    ],
+    "related": [
+      "indirgenmis-nakit-akisi",
+      "carpan-yontemi",
+      "ozsermaye-degeri",
+      "firma-degeri"
+    ],
+    "services": [
+      "sirket-degerlemesi"
+    ],
+    "sources": [
+      [
+        "IVSC — Uluslararası Değerleme Standartları (İngilizce)",
+        "https://ivsc.org/standards/"
+      ]
+    ]
+  },
+  {
+    "slug": "indirgenmis-nakit-akisi",
+    "term": "İndirgenmiş nakit akışı (İNA)",
+    "category": "Değerleme",
+    "short": "İndirgenmiş nakit akışı yöntemi, işletmenin gelecekte üreteceği nakit akışlarını risklerini yansıtan bir oranla bugüne indirgeyerek değer bulur.",
+    "long": [
+      "Yöntemde açık projeksiyon dönemi için serbest nakit akışları tahmin edilir ve dönem sonrası için bir son değer hesaplanır. Nakit akışları ve son değer, işletmenin sermaye maliyetini yansıtan bir iskonto oranıyla bugünkü değere indirgenir; toplamları firma değerini verir.",
+      "Sonuç büyüme, marj, yatırım ve iskonto oranı varsayımlarına duyarlıdır. Bu nedenle varsayımların dayanağı açıklanmalı, duyarlılık analizi yapılmalı ve sonuç çarpan yöntemi gibi diğer yaklaşımlarla karşılaştırılmalıdır. Yüksek enflasyonlu ortamlarda nominal ve reel varsayımların tutarlı kullanılması ayrıca önem taşır."
+    ],
+    "related": [
+      "degerleme",
+      "carpan-yontemi",
+      "firma-degeri",
+      "ozsermaye-degeri"
+    ],
+    "services": [
+      "sirket-degerlemesi"
+    ],
+    "sources": [
+      [
+        "IVSC — Uluslararası Değerleme Standartları (İngilizce)",
+        "https://ivsc.org/standards/"
+      ]
+    ]
+  },
+  {
+    "slug": "carpan-yontemi",
+    "term": "Çarpan yöntemi",
+    "category": "Değerleme",
+    "short": "Çarpan yöntemi, benzer işletme veya işlemlerden elde edilen çarpanları finansal göstergelere uygulayarak değer tahmin eder.",
+    "long": [
+      "Yöntemde FAVÖK, satışlar veya net kâr gibi bir göstergeye, benzer şirketlerin piyasa ya da işlem değerlerinden türetilen çarpan uygulanır (örneğin firma değeri/FAVÖK veya fiyat/kazanç). Karşılaştırılabilir şirketlerin seçimi ve göstergelerin aynı esasa göre normalleştirilmesi sonucu doğrudan etkiler.",
+      "Piyasa verilerine dayandığı için anlaşılması kolaydır; ancak büyüklük, büyüme, risk ve muhasebe politikası farkları dikkate alınmalıdır. Yaklaşım çoğunlukla indirgenmiş nakit akışı gibi bir gelir yaklaşımıyla birlikte kullanılır ve sonuçlar çapraz kontrol edilir."
+    ],
+    "related": [
+      "degerleme",
+      "indirgenmis-nakit-akisi",
+      "firma-degeri",
+      "ozsermaye-degeri"
+    ],
+    "services": [
+      "sirket-degerlemesi"
+    ],
+    "sources": [
+      [
+        "IVSC — Uluslararası Değerleme Standartları (İngilizce)",
+        "https://ivsc.org/standards/"
+      ]
+    ]
+  },
+  {
+    "slug": "ozsermaye-degeri",
+    "term": "Öz sermaye değeri",
+    "category": "Değerleme",
+    "short": "Öz sermaye değeri, firma değerinden net borç ve benzeri kalemlerin düşülmesiyle bulunan, ortaklara ait değerdir.",
+    "long": [
+      "Firma değeri işletmenin faaliyetlerinin toplam değerini gösterirken öz sermaye değeri yalnızca ortakların payına düşen kısmı ifade eder. Geçiş genellikle net finansal borcun ve borç benzeri kalemlerin (örneğin finansal kiralama yükümlülükleri) düşülmesiyle yapılır; hangi kalemlerin dahil edileceği işlemin niteliğine göre değişir.",
+      "Pay başına değer, öz sermaye değerinin pay sayısına bölünmesiyle bulunabilir. Azınlık payı, kontrol primi ve pazarlanabilirlik iskontosu gibi düzeltmelerin uygulanıp uygulanmayacağı değerlemenin amacına ve dayanağına göre belirlenir."
+    ],
+    "related": [
+      "firma-degeri",
+      "degerleme",
+      "indirgenmis-nakit-akisi",
+      "sermaye-artirimi"
+    ],
+    "services": [
+      "sirket-degerlemesi"
+    ],
+    "sources": []
+  },
+  {
+    "slug": "firma-degeri",
+    "term": "Firma değeri",
+    "category": "Değerleme",
+    "short": "Firma değeri, bir işletmenin faaliyetlerinin, finansman yapısından bağımsız olarak tüm sermaye sağlayıcıları açısından taşıdığı toplam değerdir.",
+    "long": [
+      "Firma değeri hem ortaklara hem de borç verenlere ait değeri kapsar. Bu nedenle indirgenmiş nakit akışı hesabında tüm sermaye sağlayıcılarına ait serbest nakit akışları kullanılır ve ağırlıklı ortalama sermaye maliyetiyle indirgenir; çarpan yönteminde ise firma değeri/FAVÖK gibi çarpanlar bu kavrama karşılık gelir.",
+      "Firma değerinden net borç ve benzeri kalemler düşüldüğünde öz sermaye değerine ulaşılır. İki kavramın karıştırılması, özellikle ortaklık payı devri görüşmelerinde fiyatın yanlış okunmasına yol açabilir."
+    ],
+    "related": [
+      "ozsermaye-degeri",
+      "indirgenmis-nakit-akisi",
+      "carpan-yontemi",
+      "degerleme"
+    ],
+    "services": [
+      "sirket-degerlemesi"
+    ],
+    "sources": []
+  },
+  {
+    "slug": "durum-tespiti",
+    "term": "Durum tespiti (due diligence)",
+    "category": "Değerleme",
+    "short": "Durum tespiti, bir satın alma, ortaklık veya finansman işlemi öncesinde hedef işletmenin mali, vergisel ve hukuki durumunun incelenmesidir.",
+    "long": [
+      "Alıcı veya yatırımcı, işlemin fiyatını ve koşullarını belirlemeden önce hedef işletmenin finansal tablolarını, vergi pozisyonunu, sözleşmelerini, çalışan yükümlülüklerini ve diğer risklerini inceler. İnceleme genellikle mali, vergisel, hukuki ve operasyonel başlıklara ayrılır.",
+      "Bulgular fiyat ayarlaması, sözleşme güvenceleri veya işlem yapısında değişiklik gibi sonuçlar doğurabilir. Durum tespiti bir denetim değildir: kapsamı işlemin amacına göre belirlenir ve finansal tablolar hakkında görüş bildirmeyi amaçlamaz."
+    ],
+    "related": [
+      "degerleme",
+      "firma-degeri",
+      "isletme-sermayesi",
+      "uyum"
+    ],
+    "services": [
+      "mali-danismanlik"
+    ],
+    "sources": []
+  },
+  {
+    "slug": "isletme-sermayesi",
+    "term": "İşletme sermayesi",
+    "category": "Değerleme",
+    "short": "İşletme sermayesi, işletmenin günlük faaliyetlerini sürdürmek için kullandığı kısa vadeli varlıklar ile kısa vadeli yükümlülükler arasındaki farktır.",
+    "long": [
+      "Net işletme sermayesi çoğunlukla dönen varlıklar (stoklar, ticari alacaklar, nakit) ile kısa vadeli yükümlülükler (ticari borçlar, kısa vadeli krediler) arasındaki fark olarak tanımlanır. Bu fark, işletmenin kısa vadeli yükümlülüklerini karşılama kapasitesi hakkında fikir verir.",
+      "İşletme sermayesi ihtiyacı tahsilat ve ödeme vadeleri, stok devri ve büyümeyle değişir. Satın alma ve değerleme işlemlerinde olağan işletme sermayesi düzeyi sıklıkla görüşme konusudur; bu çalışmalarda nakit ve finansal borçlar genellikle hesabın dışında tutulur."
+    ],
+    "related": [
+      "degerleme",
+      "durum-tespiti",
+      "finansal-tablolar",
+      "firma-degeri"
+    ],
+    "services": [
+      "mali-danismanlik"
+    ],
+    "sources": []
+  },
+  {
+    "slug": "ufrs-tfrs",
+    "term": "UFRS / TFRS",
+    "category": "Raporlama ve standartlar",
+    "short": "UFRS, uluslararası düzeyde kabul gören raporlama standartlarıdır; Türkiye’deki karşılığı KGK’nın yayımladığı TMS/TFRS’dir.",
+    "long": [
+      "UFRS/IFRS, Uluslararası Muhasebe Standartları Kurulu (IASB) tarafından yayımlanır ve farklı ülkelerdeki işletmelerin finansal tablolarının karşılaştırılabilir olmasını amaçlar. Türkiye’de bunların karşılığı, KGK’nın yayımladığı Türkiye Muhasebe Standartları ve Türkiye Finansal Raporlama Standartları’dır (TMS/TFRS).",
+      "Hangi işletmelerin TMS/TFRS’yi, hangilerinin BOBİ FRS veya KÜMİ FRS gibi diğer standart setlerini uygulayacağı mevzuat ve KGK kararlarıyla belirlenir. Standartlar sık güncellendiği için raporlama dönemine ilişkin yürürlükteki sürüm esas alınmalıdır."
+    ],
+    "related": [
+      "bobi-frs",
+      "kgk",
+      "finansal-tablolar",
+      "konsolidasyon"
+    ],
+    "services": [
+      "ufrs-tfrs-raporlama",
+      "ufrs"
+    ],
+    "sources": [
+      [
+        "KGK — Türkiye Muhasebe Standartları",
+        "https://www.kgk.gov.tr/DynamicContentDetail/4105/TurkiyeMuhasebeStandartlar%C4%B1"
+      ],
+      [
+        "IFRS Vakfı — Standartlar listesi (İngilizce)",
+        "https://www.ifrs.org/issued-standards/list-of-standards/"
+      ]
+    ]
+  },
+  {
+    "slug": "bobi-frs",
+    "term": "BOBİ FRS",
+    "category": "Raporlama ve standartlar",
+    "short": "BOBİ FRS, KGK tarafından yayımlanan Büyük ve Orta Boy İşletmeler İçin Finansal Raporlama Standardı’dır.",
+    "long": [
+      "BOBİ FRS, KGK’nın TMS/TFRS’den ayrı olarak yayımladığı bir finansal raporlama standardı setidir. Hangi işletmelerin bu standardı uygulayacağı ya da uygulayabileceği, ilgili mevzuat ve KGK kararlarıyla belirlenir.",
+      "KGK ayrıca küçük ve mikro işletmeler için ayrı bir standart yayımlar (KÜMİ FRS). Hangi setin geçerli olduğu işletmenin niteliğine ve ölçütlere göre değiştiğinden, uygulama öncesinde güncel kapsam ve geçiş hükümleri KGK’nın sayfasından kontrol edilmelidir."
+    ],
+    "related": [
+      "ufrs-tfrs",
+      "kgk",
+      "finansal-tablolar"
+    ],
+    "services": [
+      "kurumsal-raporlama"
+    ],
+    "sources": [
+      [
+        "KGK — Türkiye Muhasebe Standartları",
+        "https://www.kgk.gov.tr/DynamicContentDetail/4105/TurkiyeMuhasebeStandartlar%C4%B1"
+      ]
+    ]
+  },
+  {
+    "slug": "kgk",
+    "term": "KGK (Kamu Gözetimi Kurumu)",
+    "category": "Raporlama ve standartlar",
+    "short": "KGK, finansal raporlama ve bağımsız denetim alanında standart koymak ve kamu gözetimi yapmak üzere kurulmuş düzenleyici kurumdur.",
+    "long": [
+      "Kamu Gözetimi Kurumu (KGK), Türkiye’de finansal raporlama ve bağımsız denetim alanında standartları belirleyen ve kamu gözetimini yürüten kurumdur. Kurumun misyonu, finansal raporların uluslararası standartlarla uyumlu olarak düzenlenmesini ve denetlenmesini sağlayacak standartlar koymak ve etkin bir kamu gözetimi gerçekleştirmektir.",
+      "KGK; TMS/TFRS, BOBİ FRS ve KÜMİ FRS gibi raporlama standartlarını, Türkiye Denetim Standartları’nı (TDS) ve sürdürülebilirlik raporlama standartlarını (TSRS) yayımlar; bağımsız denetçi ve denetim kuruluşlarının yetkilendirilmesi ile gözetimi alanlarında da faaliyet gösterir. Güncel düzenlemeler KGK’nın internet sayfasında yer alır."
+    ],
+    "related": [
+      "turkiye-denetim-standartlari",
+      "ufrs-tfrs",
+      "bobi-frs",
+      "bagimsiz-denetim"
+    ],
+    "services": [],
+    "sources": [
+      [
+        "KGK — Vizyon ve misyon",
+        "https://www.kgk.gov.tr/DynamicContentDetail/5282/Vizyon-Misyon"
+      ],
+      [
+        "KGK — Yetkilendirme",
+        "https://www.kgk.gov.tr/DynamicContentDetail/5209/Yetkilendirme"
+      ]
+    ]
+  },
+  {
+    "slug": "konsolidasyon",
+    "term": "Konsolidasyon",
+    "category": "Raporlama ve standartlar",
+    "short": "Konsolidasyon, ana ortaklık ile bağlı ortaklıklarının finansal tablolarının tek bir ekonomik birimmiş gibi birleştirilerek sunulmasıdır.",
+    "long": [
+      "Konsolide finansal tablolarda ana ortaklığın ve kontrol ettiği ortaklıkların varlık, yükümlülük, gelir ve giderleri birleştirilir; şirketler arası bakiyeler, işlemler ve gerçekleşmemiş kârlar elenir. UFRS 10 (TFRS 10), konsolide finansal tabloların hazırlanması ve sunulmasına ilişkin esasları belirler.",
+      "Konsolidasyon, hukuki ortaklık oranından çok kontrol kavramına dayanır. Türk Ticaret Kanunu’nun 517. maddesi, konsolide finansal tabloları hazırlamakla yükümlü işletmelerin ve konsolidasyon kapsamına girenlerin belirlenmesinde Türkiye Muhasebe Standartları’nın geçerli olduğunu belirtir."
+    ],
+    "related": [
+      "ufrs-tfrs",
+      "finansal-tablolar",
+      "transfer-fiyatlandirmasi",
+      "tms-29"
+    ],
+    "services": [
+      "ufrs-tfrs-raporlama",
+      "kurumsal-raporlama"
+    ],
+    "sources": [
+      [
+        "6102 sayılı Türk Ticaret Kanunu (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=6102&MevzuatTur=1&MevzuatTertip=5"
+      ],
+      [
+        "IFRS Vakfı — UFRS 10 Konsolide Finansal Tablolar (İngilizce)",
+        "https://www.ifrs.org/issued-standards/list-of-standards/ifrs-10-consolidated-financial-statements/"
+      ]
+    ]
+  },
+  {
+    "slug": "finansal-tablolar",
+    "term": "Finansal tablolar",
+    "category": "Raporlama ve standartlar",
+    "short": "Finansal tablolar, bir işletmenin mali durumunu ve dönem performansını gösteren bilanço, gelir tablosu ve ilgili diğer tabloları kapsar.",
+    "long": [
+      "Genel amaçlı finansal tablo seti genellikle finansal durum tablosu (bilanço), kâr veya zarar ve diğer kapsamlı gelir tablosu, özkaynak değişim tablosu, nakit akış tablosu ve dipnotlardan oluşur. Standart setlerine göre sunum gereklilikleri farklılaşabilir.",
+      "Finansal tabloların hazırlanması yönetimin sorumluluğundadır; bağımsız denetçi bu tablolar hakkında görüş bildirir ancak tabloları hazırlamaz. Tabloların karşılaştırılabilir ve anlaşılır olması için tutarlı muhasebe politikaları ve yeterli açıklama gerekir."
+    ],
+    "related": [
+      "ufrs-tfrs",
+      "bobi-frs",
+      "konsolidasyon",
+      "denetim-gorusu"
+    ],
+    "services": [
+      "kurumsal-raporlama",
+      "finansal-tablo-denetimi"
+    ],
+    "sources": [
+      [
+        "KGK — Türkiye Muhasebe Standartları",
+        "https://www.kgk.gov.tr/DynamicContentDetail/4105/TurkiyeMuhasebeStandartlar%C4%B1"
+      ]
+    ]
+  },
+  {
+    "slug": "tms-29",
+    "term": "TMS 29 (yüksek enflasyonlu ekonomiler)",
+    "category": "Raporlama ve standartlar",
+    "short": "TMS 29, yüksek enflasyonlu ekonomilerde raporlama yapan işletmelerin finansal tablolarının cari ölçü birimiyle yeniden ifade edilmesini düzenler.",
+    "long": [
+      "TMS 29 (UMS 29), fonksiyonel para birimi yüksek enflasyonlu bir ekonominin para birimi olan işletmelerin finansal tablolarının, raporlama dönemi sonundaki cari ölçü birimi cinsinden ifade edilmesini öngörür. Parasal olmayan kalemler genel fiyat endeksiyle düzeltilir; parasal kalemler düzeltilmez ve net parasal pozisyon kazanç veya kaybı ayrıca hesaplanır.",
+      "Standardın Türkiye’de hangi işletmeler ve hangi raporlama dönemleri için uygulanacağı KGK kararlarıyla belirlenir. Vergi mevzuatındaki enflasyon düzeltmesi ayrı bir düzenlemedir ve finansal raporlamadaki düzeltmeyle aynı sonucu vermeyebilir; ikisi için güncel mevzuat ayrı ayrı izlenmelidir."
+    ],
+    "related": [
+      "ufrs-tfrs",
+      "finansal-tablolar",
+      "kgk",
+      "konsolidasyon"
+    ],
+    "services": [
+      "ufrs-tfrs-raporlama"
+    ],
+    "sources": [
+      [
+        "IFRS Vakfı — IAS 29 (İngilizce)",
+        "https://www.ifrs.org/issued-standards/list-of-standards/ias-29-financial-reporting-in-hyperinflationary-economies/"
+      ],
+      [
+        "KGK — Türkiye Muhasebe Standartları",
+        "https://www.kgk.gov.tr/DynamicContentDetail/4105/TurkiyeMuhasebeStandartlar%C4%B1"
+      ]
+    ]
+  },
+  {
+    "slug": "tsrs",
+    "term": "TSRS (sürdürülebilirlik raporlama standartları)",
+    "category": "Raporlama ve standartlar",
+    "short": "TSRS, KGK’nın yayımladığı Türkiye Sürdürülebilirlik Raporlama Standartları’dır; sürdürülebilirlikle ilgili finansal bilgilerin açıklanmasını düzenler.",
+    "long": [
+      "Türkiye Sürdürülebilirlik Raporlama Standartları KGK tarafından yayımlanır. KGK’nın sürdürülebilirlik sayfasında TSRS 1 (Sürdürülebilirlikle İlgili Finansal Bilgilerin Açıklanmasına İlişkin Genel Hükümler) ve TSRS 2 (İklimle İlgili Açıklamalar) yer almaktadır.",
+      "Standartların hangi işletmeler için ve hangi tarihten itibaren zorunlu olduğu KGK ile ilgili kurumların kararlarıyla belirlenir; bu nedenle kapsama girilip girilmediği güncel kararlardan kontrol edilmelidir. Sürdürülebilirlik raporlaması çoğu zaman veri toplama ve iç kontrol süreçlerinin de kurulmasını gerektirir."
+    ],
+    "related": [
+      "ufrs-tfrs",
+      "kgk",
+      "finansal-tablolar",
+      "ic-kontrol"
+    ],
+    "services": [
+      "kurumsal-raporlama"
+    ],
+    "sources": [
+      [
+        "KGK — Sürdürülebilirlik raporlama standartları",
+        "https://www.kgk.gov.tr/SustainabilityDetailForm/11455/Raporlama%20Standartlar%C4%B1"
+      ]
+    ]
+  },
+  {
+    "slug": "e-donusum",
+    "term": "e-Dönüşüm",
+    "category": "Sistemler ve veri",
+    "short": "e-Dönüşüm, fatura, defter ve irsaliye gibi belge ve kayıtların Gelir İdaresi’nin belirlediği standartlarla elektronik ortama taşınmasıdır.",
+    "long": [
+      "Türkiye’de e-dönüşüm kapsamında e-Fatura, e-Arşiv, e-İrsaliye, e-Defter, e-Serbest Meslek Makbuzu ve e-Müstahsil Makbuzu gibi belgeler, Gelir İdaresi Başkanlığı’nın belirlediği usul ve standartlarla elektronik ortamda düzenlenir. Hangi mükelleflerin hangi uygulamaya geçeceği Gelir İdaresi’nin düzenlemeleri ve duyurularıyla belirlenir.",
+      "Geçiş yalnızca bir yazılım seçimi değildir; muhasebe, satış, depo ve finans süreçlerinin belgelerle tutarlı çalışmasını da gerektirir. Entegrasyon, arşivleme ve erişim yetkileri önceden planlanmalıdır."
+    ],
+    "related": [
+      "e-fatura",
+      "e-defter",
+      "erp",
+      "veri-yonetisimi"
+    ],
+    "services": [
+      "muhasebe-sistemleri"
+    ],
+    "sources": [
+      [
+        "GİB — eBelge sitesi",
+        "https://ebelge.gib.gov.tr/anasayfa.html"
+      ]
+    ]
+  },
+  {
+    "slug": "erp",
+    "term": "ERP (kurumsal kaynak planlama)",
+    "category": "Sistemler ve veri",
+    "short": "ERP, işletmenin muhasebe, satın alma, satış, stok ve insan kaynakları gibi süreçlerini tek veri tabanında bütünleştiren yazılım sistemidir.",
+    "long": [
+      "ERP sistemleri farklı birimlerin aynı veri üzerinde çalışmasını sağlar; böylece kayıtların tekrar girilmesi azalır ve raporlamanın tutarlılığı artabilir. Muhasebe modülü, e-Fatura ve e-Defter gibi yasal gerekliliklerle entegrasyon açısından önem taşır.",
+      "Kurulumda hesap planı, yetki matrisi, veri aktarımı ve kapanış süreçleri dikkatle planlanmalıdır. Sistemde tanımlanan onay ve erişim kontrolleri iç kontrol ortamının bir parçasıdır; canlıya geçişten sonra da düzenli gözden geçirme gerekir."
+    ],
+    "related": [
+      "e-donusum",
+      "is-zekasi",
+      "ic-kontrol",
+      "veri-yonetisimi"
+    ],
+    "services": [
+      "muhasebe-sistemleri",
+      "cozum-prosedurleri"
+    ],
+    "sources": []
+  },
+  {
+    "slug": "is-zekasi",
+    "term": "İş zekâsı",
+    "category": "Sistemler ve veri",
+    "short": "İş zekâsı, işletme verilerinin toplanıp birleştirilmesi, analiz edilmesi ve karar vericiler için rapor ve panolar hâlinde sunulmasıdır.",
+    "long": [
+      "İş zekâsı çözümleri; muhasebe, satış, operasyon ve insan kaynakları gibi kaynaklardan gelen veriyi ortak bir modelde birleştirir ve göstergeler (KPI), panolar ve analizlerle sunar. Böylece yönetim, bütçe ile gerçekleşme farkları ve eğilimler gibi konuları düzenli izleyebilir.",
+      "Çıktıların güvenilirliği; kaynak verinin kalitesine, tanımların tutarlılığına ve erişim yetkilerinin düzenine bağlıdır. Bu nedenle iş zekâsı projeleri çoğunlukla veri yönetişimi ve iç kontrol çalışmalarıyla birlikte ele alınır."
+    ],
+    "related": [
+      "veri-yonetisimi",
+      "erp",
+      "ic-kontrol"
+    ],
+    "services": [
+      "veri-analiz-sistemleri"
+    ],
+    "sources": []
+  },
+  {
+    "slug": "kvkk",
+    "term": "KVKK (Kişisel Verilerin Korunması Kanunu)",
+    "category": "Sistemler ve veri",
+    "short": "KVKK, 6698 sayılı Kişisel Verilerin Korunması Kanunu’dur; kişisel verilerin işlenmesine ilişkin esasları ve ilgili kişilerin haklarını düzenler.",
+    "long": [
+      "6698 sayılı Kanun, kişisel verilerin (kimliği belirli veya belirlenebilir gerçek kişiye ilişkin her türlü bilginin) işlenmesinde uyulacak usul ve esasları, veri sorumlusunun yükümlülüklerini ve ilgili kişinin haklarını düzenler. Kişisel Verileri Koruma Kurumu bu alandaki düzenleyici ve denetleyici kurumdur.",
+      "Bordro, insan kaynakları, müşteri ve tedarikçi kayıtlarını yöneten işletmeler, işledikleri verinin türüne ve amacına göre aydınlatma, açık rıza veya diğer hukuki sebep gerekliliklerini değerlendirmelidir. Veri güvenliği tedbirleri ve veri ihlali süreçleri de uyum çalışmalarının parçasıdır."
+    ],
+    "related": [
+      "veri-yonetisimi",
+      "uyum",
+      "bordro",
+      "erp"
+    ],
+    "services": [],
+    "sources": [
+      [
+        "6698 sayılı Kişisel Verilerin Korunması Kanunu (mevzuat.gov.tr)",
+        "https://www.mevzuat.gov.tr/mevzuat?MevzuatNo=6698&MevzuatTur=1&MevzuatTertip=5"
+      ],
+      [
+        "Kişisel Verileri Koruma Kurumu",
+        "https://www.kvkk.gov.tr"
+      ]
+    ]
+  },
+  {
+    "slug": "veri-yonetisimi",
+    "term": "Veri yönetişimi",
+    "category": "Sistemler ve veri",
+    "short": "Veri yönetişimi, bir kuruluşta verinin kalitesi, sahipliği, erişimi, güvenliği ve kullanımına ilişkin rol, politika ve süreçlerin belirlenmesidir.",
+    "long": [
+      "Veri yönetişimi; verinin kim tarafından sahiplenildiğini, hangi tanımlarla ve hangi kalite ölçütleriyle tutulduğunu, kimin hangi veriye eriştiğini ve ne kadar süre saklandığını belirler. Finansal raporlama, vergi beyanları ve bordro gibi alanlarda verinin tutarlılığı, sonuçların doğruluğunu doğrudan etkiler.",
+      "Kişisel veriler söz konusu olduğunda yönetişim çalışmaları KVKK gereklilikleriyle birlikte ele alınmalıdır. Veri envanteri, rol ve yetki tanımları ve değişiklik kayıtları, hem iç kontrol hem de denetim süreçlerinde güvenilir bilgi sağlar."
+    ],
+    "related": [
+      "kvkk",
+      "is-zekasi",
+      "erp",
+      "ic-kontrol"
+    ],
+    "services": [
+      "veri-analiz-sistemleri"
+    ],
+    "sources": []
+  }
+]

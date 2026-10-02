@@ -1,0 +1,107 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+
+{% block head_extra %}
+<script type="application/ld+json">{{ ld | json_script }}</script>
+{% endblock %}
+
+{# Site içi arama. Wagtail karşılığı: SearchPage — istemci tarafı dizin (/assets/data/search-index.json: t başlık, u adres,
+   d açıklama, k tür); ileride wagtail.search arka ucuyla sunucu tarafı aramaya geçilebilir (işaretleme ve data-* aynı kalır).
+   Davranış modules/search.js'tedir: Türkçe harf katlama, VE mantığı, puanlama, türe göre gruplama, vurgulama, ?q= eşitlemesi,
+   klavye (↑/↓, Enter, Esc). JS yokken önerilen yollar ve site haritası bağlantısı kullanılabilir. #}
+{% block main %}
+<section class="phero sr-hero sec--dark" data-world="0">
+  <div class="container">
+    <nav aria-label="Sayfa yolu">
+      <ol class="crumbs">
+        {% for c in page.crumbs %}<li><a href="{{ c.url }}">{{ c.label }}</a></li>{% endfor %}
+        <li aria-current="page">{{ copy.title }}</li>
+      </ol>
+    </nav>
+    <p class="eyebrow" data-reveal>{{ copy.title }}</p>
+    <h1 class="sr-h1" data-reveal data-reveal-delay="1">{{ copy.h1 }}</h1>
+    <form class="sr-form" role="search" action="/arama/" method="get" data-module="search" data-index="/assets/data/search-index.json?v={{ build_id }}" data-reveal data-reveal-delay="2">
+      <label class="sr-only" for="sr-q">Aranacak sözcükler</label>
+      <div class="sr-field">
+        <svg class="sr-field__ic" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+        <input class="sr-input" id="sr-q" type="search" name="q" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="search" placeholder="{{ copy.placeholder }}" aria-describedby="sr-keys" aria-controls="sr-results">
+        <button class="sr-clear" type="button" data-sr-clear hidden aria-label="Aramayı temizle">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+      <p class="sr-keys mono" id="sr-keys">
+        <span><kbd>↑</kbd><kbd>↓</kbd> Sonuçlar arasında gezinin</span>
+        <span><kbd>Enter</kbd> Açın</span>
+        <span><kbd>Esc</kbd> Temizleyin</span>
+      </p>
+    </form>
+  </div>
+</section>
+
+<div class="sheet sec--paper">
+  <div class="container">
+    <div class="g12 sr-layout">
+      <aside class="gc sr-side" style="--gc: 1 / span 3" aria-label="Sonuç türleri">
+        <div class="sr-facets" data-sr-facets hidden>
+          <p class="toc__h mono">Türe göre</p>
+          <div class="sr-chips" role="group" aria-label="Sonuçları türe göre süzün" data-sr-chips></div>
+        </div>
+      </aside>
+
+      <div class="gc sr-main" style="--gc: 4 / -1">
+        <p class="sr-status mono" data-sr-status role="status" aria-live="polite" aria-atomic="true"></p>
+        <div class="sr-results" id="sr-results" data-sr-results></div>
+        <p class="sr-morewrap" data-sr-morewrap hidden><button class="tbtn" type="button" data-sr-more>Daha fazla göster</button></p>
+      </div>
+    </div>
+
+    <noscript>
+      <div class="notice sr-noscript"><p><strong>Arama için JavaScript gerekir.</strong> Tarayıcınızda JavaScript kapalı görünüyor. Sitedeki tüm sayfalara <a href="/site-haritasi/">site haritasından</a> ulaşabilirsiniz.</p></div>
+    </noscript>
+
+    <section class="g12 sr-start" data-sr-start aria-labelledby="sr-start-h">
+      <div class="gc sr-start__side" style="--gc: 1 / span 3">
+        <h2 class="sr-start__h" id="sr-start-h" data-reveal>Önerilen yollar</h2>
+        <p class="sr-start__p" data-reveal data-reveal-delay="1">Aramak için yazmaya başlayın ya da sitenin ana bölümlerinden birine gidin.</p>
+      </div>
+      <div class="gc sr-start__main" style="--gc: 4 / -1">
+        <ul class="sr-paths">
+          {% for p in paths %}
+          <li data-reveal data-reveal-delay="{{ loop.index0 % 3 }}">
+            <a class="sr-path" href="{{ p.url }}">
+              <span class="sr-path__n tnum">{% if p.count %}{{ p.count }}<small>{{ p.unit }}</small>{% else %}<span aria-hidden="true">→</span>{% endif %}</span>
+              <span class="sr-path__t">{{ p.label }}</span>
+              <span class="sr-path__d">{{ p.desc }}</span>
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+        <div class="sr-try" data-reveal>
+          <p class="sr-try__h mono">Örnek aramalar</p>
+          <ul class="sr-try__list">
+            {% for q in copy.examples %}<li><a class="chip" href="/arama/?q={{ q | urlencode }}" data-sr-try="{{ q }}">{{ q }}</a></li>{% endfor %}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="g12 sr-none" data-sr-none hidden aria-labelledby="sr-none-h">
+      <div class="gc" style="--gc: 1 / span 3">
+        <h2 class="sr-none__h" id="sr-none-h">Sonuç bulunamadı</h2>
+      </div>
+      <div class="gc" style="--gc: 4 / -1">
+        <p class="lead sr-none__lead">«<span data-sr-none-q></span>» için eşleşen sayfa yok. Yazımı denetleyin, daha genel bir sözcük deneyin ya da aşağıdaki yollardan birini kullanın.</p>
+        <ul class="sr-mini">
+          {% for p in paths %}<li><a class="textlink" href="{{ p.url }}">{{ p.label }}</a></li>{% endfor %}
+          <li><a class="textlink" href="/site-haritasi/">Site haritası</a></li>
+        </ul>
+        <p class="sr-none__more">Aradığınızı bulamadıysanız <a href="/iletisim/">bize yazın</a>; sorunuzu ilgili uzmanlık alanına iletelim.</p>
+      </div>
+    </section>
+  </div>
+</div>
+
+{% set cta_title = "Aradığınızı bulamadınız mı?" %}
+{% set cta_text = "Sorunuzu kısaca yazın; ilgili uzmanlık alanına yönlendirelim." %}
+{% include "partials/cta.njk" %}
+{% endblock %}

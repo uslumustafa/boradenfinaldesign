@@ -1,0 +1,143 @@
+{# İletişim. Wagtail karşılığı: ContactPage (AbstractEmailForm) — lead, intro, topics (ContactTopic snippet'i: id, label, description,
+   groups, services), form alanları (FormField), consent, submit/success/error metinleri (landing), notice, process (StreamField),
+   channels + adres (SiteSettings «İletişim»), addressNote, privacyNote. ?hizmet=<hizmet-id> ve ?konu=<konu-id> konu ön seçimi yapar
+   (modules/contact-form.js; eşleme rota modülünde üretilip sayfaya gömülür). JS yokken form mailto: ile çalışır. #}
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+{% import "pages/company/kit.njk" as kit %}
+
+{% block head_extra %}
+<script type="application/ld+json">{{ ld | json_script }}</script>
+{% endblock %}
+
+{% block main %}
+{{ m.phero(page, cp.title, cp.lead, "Kurumsal", 7) }}
+
+<div class="sheet sec--paper">
+  <div class="container">
+    <div class="ct-grid">
+
+      {# ── Kanallar #}
+      <section class="ct-ch" aria-labelledby="ct-ch-h">
+        <h2 class="ct-label mono" id="ct-ch-h" data-reveal>Doğrudan iletişim</h2>
+        <ul class="ct-channels">
+          {% for ch in cp.channels %}
+          {% set ext = ch.href.startsWith("http") %}
+          <li data-reveal data-reveal-delay="{{ loop.index }}">
+            <a class="ct-channel" href="{{ ch.href }}"{% if ext %} target="_blank" rel="noopener noreferrer"{% endif %}>
+              <span class="ct-channel__ic">{{ kit.icon(ch.id) }}</span>
+              <span class="ct-channel__k mono">{{ ch.label }}</span>
+              <span class="ct-channel__v tnum">{{ ch.value }}</span>
+              <span class="ct-channel__go" aria-hidden="true">{{ "↗" if ext else "→" }}</span>
+              {% if ext %}<span class="sr-only"> (yeni sekmede açılır)</span>{% endif %}
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      {# ── Form (modules/contact-form.js) #}
+      <section class="ct-main" id="mesaj" aria-labelledby="ct-form-h">
+        <p class="eyebrow" data-reveal>Mesaj formu</p>
+        <h2 class="ct-main__h" id="ct-form-h" data-reveal data-reveal-delay="1">Bize yazın</h2>
+        {% if cp.intro %}<p class="ct-main__intro" data-reveal data-reveal-delay="2">{{ cp.intro | rich }}</p>{% endif %}
+
+        <div class="ct-formwrap" data-module="contact-form" data-mail-to="{{ mail.to }}" data-mail-prefix="{{ mail.prefix }}" data-wa="{{ mail.wa }}">
+          <script type="application/json" data-ct-services>{{ svcMap | json_script }}</script>
+          <script type="application/json" data-ct-person-map>{{ peopleMap | json_script }}</script>
+          <script type="application/json" data-ct-sector-map>{{ sectorMap | json_script }}</script>
+          <form class="ct-form ct-form--card" id="ct-form" action="mailto:{{ mail.to }}" method="post" enctype="text/plain" aria-labelledby="ct-form-h">
+            <p class="ct-form__legend"><span class="ct-req" aria-hidden="true">*</span> işaretli alanların doldurulması zorunludur.</p>
+            <div class="ct-svc" data-ct-svc hidden>
+              <span class="ct-svc__k mono">Seçilen hizmet</span>
+              <b class="ct-svc__v" data-ct-svc-name></b>
+              <button class="ct-svc__x" type="button" data-ct-svc-x aria-label="Seçilen hizmeti kaldır">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+              </button>
+            </div>
+            {# bağlam çipleri: kişi kartından (?kisi=) ve sektör sayfasından (?sektor=) gelen seçim; kaldırılabilir #}
+            <div class="ct-svc" data-ct-person hidden>
+              <span class="ct-svc__k mono">Görüşmek istediğiniz kişi</span>
+              <b class="ct-svc__v" data-ct-name></b>
+              <button class="ct-svc__x" type="button" data-ct-x aria-label="Seçilen kişiyi kaldır">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+              </button>
+            </div>
+            <div class="ct-svc" data-ct-sector hidden>
+              <span class="ct-svc__k mono">Seçilen sektör</span>
+              <b class="ct-svc__v" data-ct-name></b>
+              <button class="ct-svc__x" type="button" data-ct-x aria-label="Seçilen sektörü kaldır">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+              </button>
+            </div>
+            <div class="ct-form__grid">
+              {% for f in fields %}{{ kit.field(f, "ct-f") }}{% endfor %}
+              {{ kit.consent(cp.form.consent, "ct-f") }}
+            </div>
+            <div class="ct-status" data-fk-status role="alert" data-error="{{ cp.form.errorText }}"></div>
+            {{ kit.foot(cp.form.submitLabel) }}
+          </form>
+          {{ kit.done("ct-f", { "title": cp.form.successTitle, "text": successText, "to": mail.to, "copyLabel": "Mesajı kopyala", "wa": mail.wa }) }}
+          <p class="sr-only" data-fk-live role="status" aria-live="polite"></p>
+        </div>
+
+        <div class="ct-notes">
+          <div class="notice" data-legal-review="BDY m.22"><p>{{ cp.form.notice | rich }}</p></div>
+          <p class="ct-notes__p">{{ cp.privacyNote | rich }}</p>
+        </div>
+      </section>
+
+      {# ── Ofis ve süreç #}
+      <div class="ct-info">
+        <section class="ct-office" aria-labelledby="ct-office-h">
+          <h2 class="ct-label mono" id="ct-office-h" data-reveal>Ofis</h2>
+          <div class="ct-office__box" data-reveal data-reveal-delay="1">
+            <span class="ct-office__ic">{{ kit.icon("pin") }}</span>
+            <address class="ct-office__addr">
+              <strong>{{ site.legalName }}</strong><br>
+              {{ contact.street }}<br>
+              {{ contact.postcode }} {{ contact.district }} / {{ contact.city }}<br>
+              {{ contact.country }}
+            </address>
+          </div>
+          {% if cp.addressNote %}<p class="ct-office__note" data-reveal data-reveal-delay="2">{{ cp.addressNote | rich }}</p>{% endif %}
+          <p class="ct-office__map" data-reveal data-reveal-delay="2"><a class="textlink" href="{{ mapsUrl }}" target="_blank" rel="noopener noreferrer">Haritada aç <span aria-hidden="true">↗</span><span class="sr-only"> (Google Haritalar, yeni sekmede açılır)</span></a></p>
+        </section>
+
+        <section class="ct-proc" aria-labelledby="ct-proc-h">
+          <h2 class="ct-label mono" id="ct-proc-h" data-reveal>Mesajınızdan sonra</h2>
+          <ol class="ct-steps" data-steps>
+            {% for s in cp.process %}
+            <li class="ct-step" data-reveal data-reveal-delay="{{ loop.index0 }}">
+              <span class="ct-step__n mono tnum">{{ loop.index | pad2 }}</span>
+              <h3 class="ct-step__t">{{ s.title }}</h3>
+              <p class="ct-step__d">{{ s.text | rich }}</p>
+            </li>
+            {% endfor %}
+          </ol>
+        </section>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{# ── Kapanış: yanıtı kaynaklarıyla sunan sayfalar (koyu bölüm; arkada kapı sahnesi). Sayılar modelden. #}
+<section class="ct-more sec--dark" data-world="7" aria-labelledby="ct-more-h">
+  <div class="container">
+    <div class="g12">
+      <div class="gc" style="--gc: 1 / span 4">
+        <h2 class="eyebrow" id="ct-more-h" data-reveal>Bilgi merkezi ve araçlar</h2>
+      </div>
+      <div class="gc" style="--gc: 5 / -1">
+        <p class="ct-more__t" data-reveal data-reveal-delay="1">Sık karşılaşılan soruların bir kısmı, kaynaklarıyla birlikte bu sayfalarda yanıtlanmıştır.</p>
+        <ul class="ct-more__list">
+          {% for x in more %}
+          <li data-reveal data-reveal-delay="{{ loop.index if loop.index < 5 else 5 }}"><a class="ct-more__a" href="{{ x.url }}"><span class="ct-more__k">{{ x.label }}</span><span class="ct-more__v mono tnum">{{ x.meta }}</span><span class="ct-more__go" aria-hidden="true">→</span></a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

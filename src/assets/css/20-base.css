@@ -1,0 +1,375 @@
+/* ── Sıfırlama + temel tipografi */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: auto;
+  background: var(--navy-950);
+}
+body {
+  margin: 0;
+  font-family: var(--f-sans);
+  font-size: var(--fs-1);
+  line-height: 1.62;
+  color: var(--ink);
+  background: var(--navy-950);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'kern', 'liga';
+  overflow-x: clip;
+}
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+img {
+  height: auto;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+button {
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+hr {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 0;
+}
+::selection {
+  background: var(--b-blue);
+  color: #fff;
+}
+
+/* Başlıklar */
+h1,
+h2,
+h3 {
+  font-family: var(--f-display);
+  font-weight: 300;
+  letter-spacing: -0.018em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+h4,
+h5,
+h6 {
+  font-family: var(--f-sans);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  line-height: 1.25;
+}
+h1 {
+  font-size: var(--fs-6);
+}
+h2 {
+  font-size: var(--fs-5);
+}
+h3 {
+  font-size: var(--fs-4);
+}
+h4 {
+  font-size: var(--fs-3);
+}
+em,
+.it {
+  font-style: italic;
+  font-family: var(--f-display);
+}
+strong,
+b {
+  font-weight: 600;
+}
+p {
+  text-wrap: pretty;
+}
+
+/* Etiket (eyebrow) — mono, ince çizgili */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  font-family: var(--f-mono);
+  font-size: var(--fs-0);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ink-3);
+}
+.eyebrow::before {
+  content: '';
+  width: 2.2rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.7;
+}
+.on-dark .eyebrow,
+.sec--dark .eyebrow,
+.sec--solid .eyebrow {
+  color: var(--on-dark-3);
+}
+.lead {
+  font-family: var(--f-display);
+  font-weight: 300;
+  font-size: var(--fs-3);
+  line-height: 1.38;
+  letter-spacing: -0.008em;
+  color: var(--ink-2);
+}
+.sec--dark .lead,
+.sec--solid .lead,
+.on-dark .lead {
+  color: var(--on-dark-2);
+}
+.mono {
+  font-family: var(--f-mono);
+}
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+}
+
+/* Metin akışı (zengin içerik) */
+.prose > * + * {
+  margin-top: 1.1em;
+}
+.prose p {
+  color: var(--ink-2);
+  max-width: 68ch;
+}
+.prose h2 {
+  font-size: var(--fs-4);
+  margin-top: 2em;
+}
+.prose h3 {
+  font-size: var(--fs-3);
+  margin-top: 1.6em;
+}
+.prose ul {
+  list-style: none;
+  display: grid;
+  gap: 0.6em;
+}
+.prose ul li {
+  position: relative;
+  padding-left: 1.6em;
+  color: var(--ink-2);
+}
+.prose ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.78em;
+  width: 0.7em;
+  height: 1px;
+  background: var(--ink-3);
+}
+.prose a,
+.link {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+  transition: text-decoration-color var(--t-fast), color var(--t-fast);
+}
+.prose a:hover,
+.link:hover {
+  text-decoration-color: currentColor;
+  color: var(--accent);
+}
+
+/* Erişilebilirlik */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+.sec--dark :focus-visible,
+.sec--solid :focus-visible,
+.hdr :focus-visible,
+.ftr :focus-visible,
+.on-dark :focus-visible {
+  outline-color: #8fd0f2;
+}
+/* <main> yalnızca program aracılığıyla odaklanır (sayfa geçişi, «İçeriğe geç»); tüm içeriği çerçevelemesin */
+#main:focus,
+#main:focus-visible {
+  outline: none;
+}
+.skip {
+  position: fixed;
+  left: 1rem;
+  top: -4rem;
+  z-index: var(--z-skip);
+  background: #fff;
+  color: var(--ink);
+  padding: 0.7rem 1rem;
+  font-weight: 500;
+  transition: top var(--t-fast);
+}
+.skip:focus {
+  top: 1rem;
+}
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Düğmeler */
+.btn {
+  --bg: var(--ink);
+  --fg: #fff;
+  --bd: var(--ink);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  min-height: 3.2rem;
+  padding: 0 1.7rem;
+  border: 1px solid var(--bd);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--fg);
+  font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: 0.005em;
+  white-space: nowrap;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color var(--t-med) var(--ease-out), border-color var(--t-med) var(--ease-out);
+}
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--fg);
+  transform: translateY(101%);
+  transition: transform var(--t-med) var(--ease-out);
+  z-index: -1;
+}
+.btn:hover {
+  color: var(--bg);
+}
+.btn:hover::before {
+  transform: translateY(0);
+}
+.btn .arr {
+  display: inline-block;
+  transition: transform var(--t-med) var(--ease-out);
+}
+.btn:hover .arr {
+  transform: translateX(4px);
+}
+.btn--ghost {
+  --bg: transparent;
+  --fg: var(--ink);
+  --bd: var(--line-strong);
+}
+.btn--ghost::before {
+  background: var(--ink);
+}
+.btn--ghost:hover {
+  color: #fff;
+  border-color: var(--ink);
+}
+.on-dark .btn,
+.sec--dark .btn,
+.sec--solid .btn {
+  --bg: #fff;
+  --fg: var(--navy-950);
+  --bd: #fff;
+}
+.on-dark .btn::before,
+.sec--dark .btn::before,
+.sec--solid .btn::before {
+  background: var(--navy-950);
+}
+.on-dark .btn:hover,
+.sec--dark .btn:hover,
+.sec--solid .btn:hover {
+  color: #fff;
+}
+.on-dark .btn--ghost,
+.sec--dark .btn--ghost,
+.sec--solid .btn--ghost {
+  --bg: transparent;
+  --fg: #fff;
+  --bd: var(--line-dark-2);
+}
+.on-dark .btn--ghost::before,
+.sec--dark .btn--ghost::before,
+.sec--solid .btn--ghost::before {
+  background: #fff;
+}
+.on-dark .btn--ghost:hover,
+.sec--dark .btn--ghost:hover,
+.sec--solid .btn--ghost:hover {
+  color: var(--navy-950);
+  border-color: #fff;
+}
+
+.textlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding-bottom: 0.2rem;
+  background: linear-gradient(currentColor, currentColor) left bottom / 100% 1px no-repeat;
+  transition: background-size var(--t-med) var(--ease-out);
+}
+.textlink .arr {
+  transition: transform var(--t-med) var(--ease-out);
+}
+.textlink:hover .arr {
+  transform: translateX(4px);
+}

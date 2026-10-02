@@ -1,0 +1,169 @@
+{
+  "title": "Kariyer",
+  "lead": "Denetim, vergi, danışmanlık, insan kaynakları, sistemler ve eğitim alanlarında çalışmak isteyenler için genel başvuru sayfası.",
+  "intro": [
+    "Boraden'in hizmetleri şu alanlarda toplanır: denetim ve raporlama, vergi ve mali müşavirlik, kurumsal danışmanlık, insan kaynakları ve bordro, sistemler ve iş zekâsı ile eğitim. Bu sayfa, bu alanlardan birinde çalışmak isteyen adaylar için hazırlanmıştır.",
+    "Çalışma alanlarımız ve ilkelerimiz aşağıda özetlenmiştir. İlgilendiğiniz alanı seçerek genel başvuru yapabilirsiniz."
+  ],
+  "areas": [
+    {
+      "id": "denetim",
+      "title": "Denetim ve Raporlama",
+      "text": "Finansal tabloların, kontrollerin ve raporlama süreçlerinin bağımsız ve kanıta dayalı biçimde incelenmesi: finansal tablo denetimi, UFRS/TFRS raporlama, iç denetim ve iç kontrol. Muhasebe, finans veya denetim alanında eğitim almış; belgeye ve kanıta dayalı çalışmaya yatkın adaylar bu alanla ilgilenebilir."
+    },
+    {
+      "id": "vergi",
+      "title": "Vergi ve Mali Müşavirlik",
+      "text": "Vergi, muhasebe ve tasdik süreçlerinin birlikte yürütüldüğü alan: yeminli mali müşavirlik ve tam tasdik, KDV iadesi, kurumlar vergisi, transfer fiyatlandırması ve Ar-Ge danışmanlığı. Vergi mevzuatını ve muhasebe uygulamalarını izlemeye ilgi duyan adaylar için uygun bir alandır."
+    },
+    {
+      "id": "danismanlik",
+      "title": "Kurumsal Danışmanlık",
+      "text": "Şirket kuruluşu ve değerlemesi, ticaret sicil işlemleri, mali ve yönetim danışmanlığı; hukuki danışmanlık, sözleşme ve tahsilat süreçleri. Finans, işletme veya hukuk alanında eğitim almış; analiz yapmaya ve sonuçları raporlamaya ilgi duyan adaylar bu alanda çalışmak isteyebilir."
+    },
+    {
+      "id": "insan",
+      "title": "İnsan Kaynakları ve Bordro",
+      "text": "Bordro, özlük ve SGK işlemleri, istihdam teşvikleri, emeklilik danışmanlığı ve çalışma izni süreçleri. Çalışma ve sosyal güvenlik mevzuatına ilgi duyan, titiz ve düzenli çalışan adaylar için uygun bir alandır."
+    },
+    {
+      "id": "sistem",
+      "title": "Sistemler ve İş Zekâsı",
+      "text": "Muhasebe sistemlerinin kurulması ve sürdürülmesi, veri analiz sistemleri, iş zekâsı ve çözüm prosedürleri. Yazılım, veri veya bilgi sistemleri alanında deneyimi olan ve muhasebe süreçlerini anlamaya ilgi duyan adaylar bu alanla ilgilenebilir."
+    },
+    {
+      "id": "akademi",
+      "title": "Boraden Akademi",
+      "text": "Muhasebe ve vergi, UFRS/TFRS, finansal analiz, iç denetim ve insan kaynakları alanlarında eğitim. Bu alanlardan birinde deneyimi olan ve bilgi aktarmaya ilgi duyan adaylar bu alanla ilgilenebilir."
+    }
+  ],
+  "values": [
+    {
+      "title": "Şeffaflık ve gizlilik",
+      "text": "Bilginin açık biçimde paylaşılması ve özel bilgilerin korunması, çalışmanın temel ilkelerinden biridir."
+    },
+    {
+      "title": "Dürüstlük ve sorumluluk",
+      "text": "Mesleki ilkeler doğrultusunda çalışmak ve üstlenilen sorumlulukları yerine getirmek."
+    },
+    {
+      "title": "Birlikte çalışma",
+      "text": "Farklı görüşleri değerlendirmek, bulguları paylaşmak ve ilgili uzmanlıklarla birlikte çalışmak."
+    }
+  ],
+  "process": [
+    {
+      "title": "Başvuru",
+      "text": "İlgilendiğiniz alanı seçerek formu doldurun. Form, e-posta uygulamanızda bir başvuru taslağı hazırlar; özgeçmişinizi bu e-postaya ekleyerek gönderin."
+    },
+    {
+      "title": "Değerlendirme",
+      "text": "Başvurunuz, seçtiğiniz alan ve deneyim düzeyiniz dikkate alınarak ilgili ekip tarafından incelenir."
+    },
+    {
+      "title": "Görüşme",
+      "text": "Uygun görülen adaylarla görüşme için iletişime geçilir; görüşmelerin biçimi ve sayısı alana göre değişebilir."
+    },
+    {
+      "title": "Sonuç",
+      "text": "Süreç, değerlendirme sonucuna ve ilgili alandaki ihtiyaca göre sonuçlandırılır. Başvurunuzdaki bilgilerin saklanmasına ilişkin ayrıntılar KVKK Aydınlatma Metni'nde yer alır."
+    }
+  ],
+  "openPositions": [],
+  "emptyState": "Şu anda yayımlanmış bir açık pozisyon bulunmuyor. Aşağıdaki formla, ilgilendiğiniz alanı belirterek genel başvuru yapabilirsiniz.",
+  "form": {
+    "fields": [
+      {
+        "id": "ad",
+        "label": "Ad soyad",
+        "type": "text",
+        "required": true,
+        "autocomplete": "name"
+      },
+      {
+        "id": "eposta",
+        "label": "E-posta",
+        "type": "email",
+        "required": true,
+        "autocomplete": "email"
+      },
+      {
+        "id": "telefon",
+        "label": "Telefon",
+        "type": "tel",
+        "required": false,
+        "autocomplete": "tel",
+        "help": "İsteğe bağlı."
+      },
+      {
+        "id": "sehir",
+        "label": "Yaşadığınız şehir",
+        "type": "text",
+        "required": false,
+        "autocomplete": "address-level2"
+      },
+      {
+        "id": "alan",
+        "label": "İlgilendiğiniz alan",
+        "type": "select",
+        "required": true,
+        "optionsFrom": "areas"
+      },
+      {
+        "id": "deneyim",
+        "label": "Deneyim düzeyi",
+        "type": "radio",
+        "required": true,
+        "options": [
+          {
+            "value": "ogrenci-stajyer",
+            "label": "Öğrenci/Stajyer adayı"
+          },
+          {
+            "value": "yeni-mezun",
+            "label": "Yeni mezun"
+          },
+          {
+            "value": "1-3-yil",
+            "label": "1–3 yıl"
+          },
+          {
+            "value": "4-8-yil",
+            "label": "4–8 yıl"
+          },
+          {
+            "value": "8-yildan-fazla",
+            "label": "8 yıldan fazla"
+          }
+        ]
+      },
+      {
+        "id": "on-yazi",
+        "label": "Ön yazı",
+        "type": "textarea",
+        "required": false,
+        "help": "Kendinizi ve ilgilendiğiniz alanı kısaca anlatabilirsiniz. Başvurunun değerlendirilmesi için gerekli olmayan kişisel bilgileri yazmayın."
+      },
+      {
+        "id": "cv",
+        "label": "Özgeçmiş (CV)",
+        "type": "file",
+        "required": false,
+        "accept": ".pdf,.doc,.docx",
+        "maxSizeMb": 5,
+        "help": "PDF, DOC veya DOCX biçiminde, en fazla 5 MB. Özgeçmişinizde kimlik numarası, banka bilgisi veya sağlık bilgisi gibi bilgilere yer vermeyin."
+      }
+    ],
+    "consent": {
+      "text": "[KVKK Aydınlatma Metni'ni](/yasal/kvkk-aydinlatma-metni/) okudum. Başvurumun ve özgeçmişimin başvuru sürecinin yürütülmesi amacıyla işleneceğini anlıyorum.",
+      "required": true
+    },
+    "submitLabel": "Başvuruyu hazırla",
+    "fallbackNote": "CV'nizi doğrudan info@boraden.com.tr adresine de gönderebilirsiniz.",
+    "successTitle": "Başvurunuz hazırlandı",
+    "successText": "Başvurunuz info@boraden.com.tr adresine iletilmek üzere e-posta taslağı olarak hazırlandı. Gönderim tamamlanmadan başvurunuz bize ulaşmış olmaz; e-posta uygulamanızda son adımı tamamlayın. E-posta uygulamanız açılmadıysa başvuru metnini kopyalayıp özgeçmişinizle birlikte bu adrese gönderebilirsiniz.",
+    "attachNote": "Özgeçmiş dosyası e-posta taslağına otomatik olarak eklenemez; göndermeden önce dosyanızı e-postaya ekleyin.",
+    "errorText": "Başvurunuz hazırlanamadı. Lütfen işaretli alanları kontrol edin ya da özgeçmişinizi doğrudan info@boraden.com.tr adresine gönderin."
+  },
+  "note": "Başvuru formunda ve özgeçmişinizde, başvurunuzun değerlendirilmesi için gerekli olmayan bilgilere (kimlik numarası, banka bilgisi; sağlık, sendika üyeliği, ceza mahkûmiyeti gibi özel nitelikli kişisel veriler) yer vermemenizi rica ederiz. Başvurunuzdaki kişisel veriler [KVKK Aydınlatma Metni](/yasal/kvkk-aydinlatma-metni/) kapsamında işlenir. Bu sayfadaki başvuru, bir iş teklifi veya iş sözleşmesi doğurmaz."
+}

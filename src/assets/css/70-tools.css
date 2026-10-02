@@ -1,0 +1,877 @@
+/* ═══════════════════════════════════════════════════════════════
+   ARAÇLAR — hesaplayıcılar ve vergi takvimi
+   Beyaz "kâğıt" üstünde koyu "defter" sonuç paneli; ince çizgiler, mono etiketler.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Zengin metin: yer tutucu işareti ve satır içi bağlantılar */
+mark.ph {
+  background: var(--warn-bg);
+  color: var(--warn);
+  padding: 0 0.3em;
+  border-bottom: 1px dashed var(--warn);
+  font-style: normal;
+}
+p > a:not([class]),
+.ticklist a:not([class]),
+.faq__a a:not([class]),
+.notice a:not([class]),
+td > a:not([class]) {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+  transition: text-decoration-color var(--t-fast), color var(--t-fast);
+}
+p > a:not([class]):hover,
+.ticklist a:not([class]):hover,
+.faq__a a:not([class]):hover,
+.notice a:not([class]):hover,
+td > a:not([class]):hover {
+  text-decoration-color: currentColor;
+  color: var(--accent);
+}
+
+/* ── Küçük düğme (araç eylemleri) */
+.tbtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.5rem;
+  padding: 0 1.05rem;
+  border: 1px solid var(--line-strong);
+  background: #fff;
+  font-family: var(--f-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  transition: border-color var(--t-fast), color var(--t-fast), background var(--t-fast);
+}
+.tbtn:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.tbtn.is-done {
+  border-color: var(--b-green);
+  color: var(--b-green);
+}
+
+/* ── Renk noktası (takvim kategorileri; logonun üç tonu yalnızca nokta olarak) */
+.dot {
+  display: inline-block;
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--ink-3);
+}
+.dot--kdv {
+  background: var(--b-blue);
+}
+.dot--muhtasar {
+  background: var(--b-red);
+}
+.dot--sgk {
+  background: var(--b-green);
+}
+.dot--gecici-vergi {
+  background: var(--b-blue-2);
+}
+.dot--yillik-beyan {
+  background: var(--b-red-2);
+}
+.dot--e-defter {
+  background: var(--b-green-2);
+}
+.chip .dot {
+  margin-right: 0.55rem;
+}
+.chip[aria-pressed='true'] .dot,
+.chip.is-on .dot {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.4);
+}
+
+/* ═══ Hesaplayıcı dizini ═══ */
+.toolsmeta {
+  margin-top: clamp(4rem, 8vw, 7rem);
+  row-gap: 1.6rem;
+  align-items: start;
+}
+.toolsmeta__list {
+  border-top: 1px solid var(--ink);
+}
+.toolsmeta__list li {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.4rem 1.5rem;
+  padding: 1.05rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.toolsmeta__k {
+  font-family: var(--f-display);
+  font-size: var(--fs-3);
+  letter-spacing: -0.01em;
+}
+.toolsmeta__v {
+  color: var(--ink-3);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+}
+.toolsmeta__note {
+  margin-top: 1.4rem;
+  max-width: 62ch;
+  color: var(--ink-2);
+  font-size: 0.95rem;
+}
+
+/* ═══ Hesaplayıcı sayfası ═══ */
+.calc__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  gap: clamp(2rem, 4.5vw, 5rem);
+  align-items: start;
+}
+.calc__lab {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: clamp(1.4rem, 3vw, 2rem);
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--ink);
+  font-size: var(--fs-0);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.calc__loading {
+  color: var(--ink-3);
+  font-size: 0.82rem;
+}
+.calc__fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem 1.2rem;
+}
+.calc__fields--2 {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15.5rem), 1fr));
+}
+.calc__fields:not(.calc__fields--2) > .field:not([data-type='segment']) {
+  max-width: 28rem;
+}
+.calc .seg {
+  justify-self: start;
+}
+.calc__fields > .calc__presets,
+.calc__fields > .calc__adv,
+.calc__fields > .calc__formfoot,
+.calc__fields > .field[data-type='segment'],
+.calc__fields > .field[data-type='checkbox'],
+.calc__fields > .field[data-type='select'] {
+  grid-column: 1 / -1;
+}
+.calc .field[hidden],
+.calc .calc__adv[hidden] {
+  display: none;
+}
+.calc__presets {
+  display: grid;
+  gap: 0.7rem;
+}
+.calc__adv {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.calc__adv summary,
+.calc__params summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--f-mono);
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.calc__adv summary::-webkit-details-marker,
+.calc__params summary::-webkit-details-marker {
+  display: none;
+}
+.calc__adv summary::after,
+.calc__params summary::after {
+  content: '';
+  flex: none;
+  width: 0.8rem;
+  height: 0.8rem;
+  background: linear-gradient(var(--ink), var(--ink)) center / 100% 1.5px no-repeat, linear-gradient(var(--ink), var(--ink)) center / 1.5px 100% no-repeat;
+  transition: transform var(--t-med) var(--ease-out);
+}
+.calc__adv[open] summary::after,
+.calc__params[open] summary::after {
+  transform: rotate(45deg);
+}
+.calc__advbody {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15.5rem), 1fr));
+  gap: 1.5rem 1.2rem;
+  padding: 0.4rem 0 1.5rem;
+}
+.calc__advbody > .field[data-type='segment'],
+.calc__advbody > .field[data-type='checkbox'],
+.calc__advbody > .field[data-type='select'] {
+  grid-column: 1 / -1;
+}
+.calc__formfoot {
+  display: flex;
+  justify-content: flex-end;
+}
+.field__box input[type='date'] {
+  min-height: 3.2rem;
+}
+
+/* Sonuç paneli: koyu defter */
+.calc__out {
+  position: sticky;
+  top: calc(var(--hdr) + 1.5rem);
+  display: grid;
+  gap: 1.2rem;
+  scroll-margin-top: calc(var(--hdr) + 1rem);
+}
+.calc__sum {
+  position: relative;
+  padding: clamp(1.5rem, 2.8vw, 2.4rem);
+  background: var(--navy-900);
+  color: var(--on-dark);
+  box-shadow: 0 40px 70px -45px rgba(5, 12, 26, 0.85);
+  overflow: hidden;
+}
+.calc__sum::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--b-blue-2) 0 33.34%, var(--b-red-2) 33.34% 66.67%, var(--b-green-2) 66.67% 100%);
+}
+.calc__sum--idle .calc__main dd {
+  opacity: 0.35;
+}
+.calc__main {
+  display: grid;
+  gap: 1.4rem;
+}
+.calc__main dt {
+  margin-bottom: 0.7rem;
+  font-family: var(--f-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--on-dark-3);
+}
+.calc__main dd {
+  font-family: var(--f-display);
+  font-weight: 300;
+  font-size: clamp(2.3rem, 1.4rem + 3.2vw, 4.2rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  overflow-wrap: anywhere;
+}
+.calc__main > div + div dd {
+  font-size: clamp(1.7rem, 1.2rem + 1.7vw, 2.5rem);
+}
+.calc__main dd small {
+  display: block;
+  margin-top: 0.8rem;
+  font-family: var(--f-sans);
+  font-size: 0.84rem;
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: 0;
+  color: var(--on-dark-2);
+}
+.calc__sum .calc__rows {
+  margin-top: 1.8rem;
+  border-top: 1px solid var(--line-dark-2);
+}
+.calc__rows > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1.2rem;
+  padding: 0.82rem 0;
+  border-bottom: 1px solid var(--line-dark);
+}
+.calc__rows dt {
+  color: var(--on-dark-2);
+  font-size: 0.92rem;
+}
+.calc__rows dt small {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.76rem;
+  color: var(--on-dark-3);
+}
+.calc__rows dd {
+  flex: none;
+  font-family: var(--f-mono);
+  font-size: 0.96rem;
+  text-align: right;
+  white-space: nowrap;
+}
+.calc__rows--light {
+  margin-top: 0.4rem;
+  border-top: 1px solid var(--ink);
+}
+.calc__rows--light > div {
+  border-bottom: 1px solid var(--line);
+}
+.calc__rows--light dt {
+  color: var(--ink-2);
+}
+.calc__rows--light dd {
+  color: var(--ink);
+  white-space: normal;
+}
+.calc__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.calc__err {
+  margin: 0;
+}
+
+@keyframes calc-pop {
+  from {
+    opacity: 0.25;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.calc__out.is-updated .calc__main dd {
+  animation: calc-pop 0.55s var(--ease-out) both;
+}
+.calc__out.is-updated .calc__rows dd {
+  animation: calc-pop 0.55s var(--ease-out) 0.05s both;
+}
+
+/* Ayrıntı bölgesi: uyarılar, tablolar, adımlar, notlar, parametreler */
+.calc__detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(2rem, 4vw, 3.4rem);
+  margin-top: clamp(2.4rem, 5vw, 4rem);
+}
+.calc__detail > *,
+.calc__in,
+.calc__out {
+  min-width: 0;
+}
+.calc__detail:empty {
+  display: none;
+}
+.calc__h {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 1.2rem;
+  font-family: var(--f-mono);
+  font-size: var(--fs-0);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.calc__h::before {
+  content: '';
+  width: 2.2rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.7;
+}
+.calc__tnote {
+  margin: -0.4rem 0 1rem;
+  max-width: 72ch;
+  color: var(--ink-3);
+  font-size: 0.88rem;
+}
+.calc__table th,
+.calc__table td {
+  padding-right: 1.4rem;
+}
+.calc__steps {
+  border-top: 1px solid var(--ink);
+}
+.calc__steps li {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr) auto;
+  gap: 0.4rem 1.2rem;
+  align-items: baseline;
+  padding: 0.95rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.calc__stepn {
+  font-size: var(--fs-0);
+  letter-spacing: 0.12em;
+  color: var(--ink-3);
+}
+.calc__stept em {
+  display: block;
+  margin-top: 0.25rem;
+  font-family: var(--f-mono);
+  font-style: normal;
+  font-size: 0.8rem;
+  color: var(--ink-3);
+  overflow-wrap: anywhere;
+}
+.calc__steps strong {
+  font-family: var(--f-mono);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.calc__params {
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--line);
+}
+.calc__foot {
+  max-width: 80ch;
+  color: var(--ink-3);
+  font-size: 0.85rem;
+}
+.calc__recap {
+  display: none;
+}
+
+/* Dar ekran: sonuç görünmüyorken altta özet çubuğu */
+.calc__peek {
+  display: none;
+}
+@media (max-width: 960px) {
+  .calc__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .calc__out {
+    position: static;
+  }
+  .calc__peek {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: var(--z-hud);
+    display: flex;
+    align-items: baseline;
+    gap: 0.9rem;
+    padding: 0.8rem var(--gutter) calc(0.8rem + env(safe-area-inset-bottom, 0px));
+    background: var(--navy-900);
+    color: #fff;
+    border-top: 1px solid var(--line-dark-2);
+    box-shadow: 0 -22px 40px -22px rgba(3, 8, 20, 0.7);
+    text-align: left;
+  }
+  .calc__peek[hidden] {
+    display: none;
+  }
+  .calc__peekl {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--on-dark-3);
+  }
+  .calc__peekv {
+    margin-left: auto;
+    font-family: var(--f-display);
+    font-size: 1.55rem;
+    font-weight: 300;
+  }
+  .calc__peeka {
+    color: var(--accent-dark);
+  }
+}
+
+/* Açıklama bölgesi (hesaplayıcı sayfasının altı) */
+.calcdoc {
+  margin-top: clamp(3.5rem, 8vw, 6.5rem);
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+  border-top: 1px solid var(--ink);
+}
+.calcdoc__blocks {
+  display: grid;
+  gap: 2.4rem;
+  max-width: 68ch;
+}
+.calcdoc__block h3 {
+  margin-bottom: 0.8rem;
+  font-size: var(--fs-3);
+}
+.calcdoc__block p {
+  color: var(--ink-2);
+}
+.calcdoc__block p + p {
+  margin-top: 0.85rem;
+}
+.calcdoc__upd {
+  margin-top: 1.4rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+}
+
+/* ═══ Vergi takvimi ═══ */
+.cal__next {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-bottom: 2.6rem;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--line);
+}
+.cal__next::before {
+  content: 'Sıradaki tarihler';
+  grid-column: 1 / -1;
+  padding: 1rem 0 0;
+  font-family: var(--f-mono);
+  font-size: var(--fs-0);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.cal__nx {
+  position: relative;
+  display: grid;
+  gap: 0.55rem;
+  align-content: start;
+  padding: 1.2rem 1.4rem 1.6rem 0;
+  transition: background-color var(--t-med);
+}
+.cal__nx + .cal__nx {
+  padding-left: 1.4rem;
+  border-left: 1px solid var(--line);
+}
+.cal__nxd {
+  font-family: var(--f-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.cal__nx b {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: var(--fs-3);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+.cal__nx .cal__left {
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+.cal__nx:hover b {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+.cal__tools {
+  display: flex;
+  flex: 1 1 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 1.4rem;
+}
+.cal__count {
+  min-height: 1.4em;
+  margin-top: 1rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+}
+.cal__month {
+  padding-top: clamp(2rem, 4vw, 3.2rem);
+}
+.cal__mhead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid var(--ink);
+}
+.cal__mhead h2 {
+  font-size: var(--fs-4);
+}
+.cal__mhead span {
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  color: var(--ink-3);
+}
+.cal__row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 6.2rem minmax(0, 1fr) minmax(0, 14.5rem);
+  gap: 0.8rem clamp(1rem, 3vw, 2.6rem);
+  margin-inline: -1.2rem;
+  padding: 1.8rem 1.2rem;
+  border-bottom: 1px solid var(--line);
+  scroll-margin-top: calc(var(--hdr) + 1.5rem);
+  transition: opacity var(--t-med), background-color var(--t-med);
+}
+.cal__row::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -1px;
+  bottom: -1px;
+  width: 3px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: 50% 0;
+  transition: transform var(--t-med) var(--ease-out);
+}
+.cal__row.is-next::before {
+  transform: scaleY(1);
+}
+.cal__row.is-next {
+  background: var(--paper-2);
+}
+.cal__row.is-past {
+  opacity: 0.5;
+}
+.cal__row:target {
+  background: var(--paper-2);
+}
+.cal__date {
+  display: grid;
+  justify-items: start;
+  align-content: start;
+  line-height: 1;
+}
+.cal__day {
+  font-family: var(--f-display);
+  font-weight: 300;
+  font-size: clamp(2.6rem, 2rem + 2vw, 3.8rem);
+  letter-spacing: -0.03em;
+}
+.cal__mon {
+  margin-top: 0.55rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.cal__wd {
+  margin-top: 0.25rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.cal__title {
+  font-family: var(--f-display);
+  font-size: var(--fs-3);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.012em;
+}
+.cal__who {
+  margin-top: 0.5rem;
+  color: var(--ink-2);
+  font-size: 0.95rem;
+}
+.cal__per {
+  margin-top: 0.7rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+}
+.cal__per span {
+  margin-right: 0.5rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.cal__shift {
+  margin-top: 0.9rem;
+  padding: 0.7rem 1rem;
+  border-left: 2px solid var(--warn);
+  background: var(--warn-bg);
+  font-size: 0.88rem;
+  color: var(--ink-2);
+}
+.cal__shift .mono {
+  display: block;
+  margin-bottom: 0.2rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--warn);
+}
+.cal__note {
+  max-width: 64ch;
+  margin-top: 0.9rem;
+  font-size: 0.9rem;
+  color: var(--ink-2);
+}
+.cal__src {
+  margin-top: 0.9rem;
+  font-size: 0.88rem;
+}
+.cal__meta {
+  display: grid;
+  gap: 0.65rem;
+  align-content: start;
+  justify-items: end;
+  text-align: right;
+}
+.cal__cat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--f-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.cal__left {
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+}
+.cal__conf {
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.cal__flag {
+  padding: 0.15rem 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--warn) 45%, transparent);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--warn);
+}
+.calrules,
+.calhol {
+  margin-top: clamp(4rem, 8vw, 7rem);
+  row-gap: 1.6rem;
+  align-items: start;
+}
+.calrules__list {
+  counter-reset: rule;
+  border-top: 1px solid var(--ink);
+}
+.calrules__list li {
+  counter-increment: rule;
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-2);
+}
+.calrules__list li::before {
+  content: counter(rule, decimal-leading-zero);
+  padding-top: 0.15rem;
+  font-family: var(--f-mono);
+  font-size: var(--fs-0);
+  letter-spacing: 0.12em;
+  color: var(--ink-3);
+}
+.calfoot {
+  margin-top: 2rem;
+  color: var(--ink-2);
+}
+@media (max-width: 980px) {
+  .cal__row {
+    grid-template-columns: 4.6rem minmax(0, 1fr);
+  }
+  .cal__meta {
+    grid-column: 2;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1.1rem;
+    justify-items: start;
+    text-align: left;
+  }
+}
+@media (max-width: 860px) {
+  .cal__next {
+    grid-template-columns: 1fr;
+  }
+  .cal__nx + .cal__nx {
+    padding-left: 0;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+}
+
+/* ═══ Yazdırma: araç sayfaları ═══ */
+@media print {
+  .calc__grid {
+    display: block;
+  }
+  .calc__out {
+    position: static;
+  }
+  .calc__sum {
+    background: #fff !important;
+    color: #000 !important;
+    border: 1px solid #000;
+    box-shadow: none;
+  }
+  .calc__sum::before,
+  .calc__peek,
+  .calc__presets,
+  .calc__formfoot,
+  .calc__actions,
+  .calcdoc,
+  .svc__side,
+  .cal__next,
+  .cal__tools {
+    display: none !important;
+  }
+  .calc__main dt,
+  .calc__rows dt,
+  .calc__rows dt small,
+  .calc__main dd small {
+    color: #333 !important;
+  }
+  .calc__rows > div {
+    border-bottom: 1px solid #999;
+  }
+  .calc__recap {
+    display: grid;
+    gap: 0;
+    margin: 0 0 1.2rem;
+    border-top: 1px solid #000;
+  }
+  .calc__recap > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.3rem 0;
+    border-bottom: 1px solid #ccc;
+  }
+  .calc__recap dd {
+    margin: 0;
+    font-family: var(--f-mono);
+  }
+  .calc__fields {
+    display: none;
+  }
+  .cal__row {
+    break-inside: avoid;
+  }
+}

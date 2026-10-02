@@ -1,0 +1,716 @@
+[
+  {
+    "slug": "maas-hesaplama",
+    "order": 1,
+    "title": "Maaş Hesaplama (Brüt–Net)",
+    "short": "Brüt ücretten net ücreti ya da net ücretten brüt ücreti, kümülatif vergi matrahıyla ay ay hesaplar.",
+    "group": "bordro",
+    "description": "Brüt–net maaş hesaplama: SGK ve işsizlik primi, kümülatif gelir vergisi matrahı, damga vergisi ve asgari ücret istisnasıyla 12 aylık tablo.",
+    "lead": "Aylık ücreti brütten nete ya da netten brüte çevirin; kümülatif gelir vergisi matrahına göre dilim geçişlerini ay ay izleyin.",
+    "engine": "grossNet",
+    "params": "bordro",
+    "inputs": [
+      {
+        "id": "mode",
+        "label": "Hesap türü",
+        "type": "segment",
+        "default": "gross",
+        "options": [
+          { "value": "gross", "label": "Brütten nete" },
+          { "value": "net", "label": "Netten brüte" }
+        ]
+      },
+      {
+        "id": "gross",
+        "label": "Aylık brüt ücret",
+        "type": "money",
+        "default": 50000,
+        "min": 0,
+        "max": 1000000000,
+        "step": 0.01,
+        "unit": "₺",
+        "help": "Her ay aynı kabul edilir. Asgari ücretin altındaki tutarlar hesaplanmaz.",
+        "showIf": { "id": "mode", "eq": "gross" }
+      },
+      {
+        "id": "net",
+        "label": "Aylık net ücret",
+        "type": "money",
+        "default": 40000,
+        "min": 0,
+        "max": 1000000000,
+        "step": 0.01,
+        "unit": "₺",
+        "help": "Her ay elinize geçmesini istediğiniz tutar; brüt ücret her ay için ayrıca bulunur.",
+        "showIf": { "id": "mode", "eq": "net" }
+      },
+      {
+        "id": "startMonth",
+        "label": "Hesabın başlayacağı ay",
+        "type": "select",
+        "default": "1",
+        "options": [
+          { "value": "1", "label": "Ocak" },
+          { "value": "2", "label": "Şubat" },
+          { "value": "3", "label": "Mart" },
+          { "value": "4", "label": "Nisan" },
+          { "value": "5", "label": "Mayıs" },
+          { "value": "6", "label": "Haziran" },
+          { "value": "7", "label": "Temmuz" },
+          { "value": "8", "label": "Ağustos" },
+          { "value": "9", "label": "Eylül" },
+          { "value": "10", "label": "Ekim" },
+          { "value": "11", "label": "Kasım" },
+          { "value": "12", "label": "Aralık" }
+        ],
+        "help": "Ocak dışında bir ay seçerseniz önceki aylardan devreden matrahı da girin.",
+        "group": "Gelişmiş seçenekler"
+      },
+      {
+        "id": "cumBase",
+        "label": "Önceki aylardan devreden kümülatif matrah",
+        "type": "money",
+        "default": 0,
+        "min": 0,
+        "max": 100000000000,
+        "step": 0.01,
+        "unit": "₺",
+        "help": "Aynı yıl içinde başlangıç ayından önceki aylara ait gelir vergisi matrahları toplamı.",
+        "group": "Gelişmiş seçenekler"
+      },
+      {
+        "id": "retired",
+        "label": "Emekli çalışan (SGDP)",
+        "type": "checkbox",
+        "default": false,
+        "help": "Sosyal güvenlik destek primine tabi emekli çalışanlarda işçi payı farklıdır; işsizlik primi kesilmez.",
+        "group": "Gelişmiş seçenekler"
+      }
+    ],
+    "presets": [
+      { "label": "50.000 ₺ brüt", "values": { "mode": "gross", "gross": 50000 } },
+      { "label": "75.000 ₺ brüt", "values": { "mode": "gross", "gross": 75000 } },
+      { "label": "100.000 ₺ brüt", "values": { "mode": "gross", "gross": 100000 } },
+      { "label": "60.000 ₺ net", "values": { "mode": "net", "net": 60000 } }
+    ],
+    "explain": [
+      {
+        "heading": "Brütten nete nasıl hesaplanır?",
+        "paragraphs": [
+          "Brüt ücretten önce SGK işçi payı ve işsizlik sigortası işçi payı düşülür. Bu primler, prime esas kazanç alt ve üst sınırları arasındaki tutar üzerinden hesaplanır; brüt ücret üst sınırı aşıyorsa primler üst sınır üzerinden alınır.",
+          "Brüt ücretten bu primler düşüldükten sonra kalan tutar gelir vergisi matrahıdır. Damga vergisi ise brüt ücret üzerinden, sabit bir binde oranıyla hesaplanır.",
+          "Net ücret; brüt ücretten SGK, işsizlik, gelir vergisi ve damga vergisi kesintileri çıkarılarak bulunur."
+        ]
+      },
+      {
+        "heading": "Kümülatif gelir vergisi matrahı",
+        "paragraphs": [
+          "Gelir vergisi her ay ayrı ayrı değil, yıl başından itibaren biriken (kümülatif) matraha göre hesaplanır. Bir ayın vergisi, o ayın sonundaki kümülatif matrahın vergisi ile önceki ayın sonundaki kümülatif matrahın vergisi arasındaki farktır.",
+          "Kümülatif matrah bir dilim sınırını aştığında, aşan kısım bir üst dilimin oranıyla vergilenir. Bu nedenle aynı brüt ücretin neti yıl içinde düşebilir; tablodaki Dilim sütunu bu geçişleri gösterir."
+        ]
+      },
+      {
+        "heading": "Asgari ücret istisnası ve netten brüte hesap",
+        "paragraphs": [
+          "Asgari ücret tutarına isabet eden gelir vergisi ve damga vergisi istisnadır. Gelir vergisi istisnası, asgari ücretin kendi kümülatif matrahı üzerinden hesaplanan vergiye eşittir ve her ay hesaplanan verginin üzerine çıkamaz.",
+          "Netten brüte hesapta net ücret her ay sabit tutulur; o neti sağlayan brüt ücret her ay kümülatif matraha göre yeniden bulunur. Bu nedenle gereken brüt tutar yıl boyunca değişebilir."
+        ]
+      }
+    ],
+    "assumptions": [
+      "Brüt ücretin her ay aynı olduğu varsayılır; ikramiye, prim, fazla mesai ve ay içi giriş-çıkış hesaba katılmaz.",
+      "Hesap, tam ay çalışan 4/a kapsamındaki özel sektör işçisi içindir; kısmi süreli çalışma ve kamu görevlileri kapsam dışıdır.",
+      "Asgari geçim indirimi uygulanmaz; engellilik indirimi, yemek ve yol yardımı gibi istisna ve indirimler bu araçta hesaba katılmaz.",
+      "Aynı yıl içinde başka bir işverenden alınan ücret ya da işyeri değişikliği kümülatif matrahı etkiler; gerekirse gelişmiş seçeneklerden devreden matrahı girin.",
+      "Emekli (SGDP) seçeneğindeki oranlar ikincil kaynaklara dayanır ve teyit gerektirir.",
+      "Parametreler, sonuçtaki Kullanılan parametreler bölümünde görünen yıla aittir; sonradan yapılan mevzuat değişiklikleri sonuca yansımayabilir."
+    ],
+    "faq": [
+      [
+        "Brüt ve net ücret arasındaki fark nedir?",
+        "Brüt ücret, kesintiler yapılmadan önceki tutardır. Net ücret; SGK işçi payı, işsizlik sigortası işçi payı, gelir vergisi ve damga vergisi düşüldükten sonra çalışanın eline geçen tutardır."
+      ],
+      [
+        "Net ücret yıl içinde neden değişiyor?",
+        "Gelir vergisi kümülatif matraha göre hesaplandığı için matrah bir dilim sınırını aştığında vergi oranı yükselir ve aynı brüt ücretin neti düşer. Asgari ücret istisnası da bazı aylarda farklı tutarda uygulanabilir."
+      ],
+      [
+        "Netten brüte hesap nasıl yapılıyor?",
+        "Her ay için, o ayın kümülatif matrahı dikkate alınarak belirtilen neti veren brüt tutar kuruşu kuruşuna aranır. Net sabit olduğundan brüt tutar vergi dilimine bağlı olarak aylar arasında farklılaşır."
+      ],
+      [
+        "SGK prime esas kazanç üst sınırı ne anlama gelir?",
+        "SGK ve işsizlik primleri, brüt ücretin belirli bir üst sınıra kadar olan kısmı üzerinden hesaplanır. Bu sınırın üzerindeki ücret için ek prim kesilmez; gelir vergisi matrahı ve damga vergisi ise ücretin tamamını kapsar."
+      ],
+      [
+        "Sonuçlar bordroyla aynı olur mu?",
+        "Hesaplayıcı yayımlanan parametreleri ve genel kuralları uygular. İşyerindeki ek ödemeler, izinler, ay içi giriş-çıkışlar veya farklı bordro yuvarlama yöntemleri nedeniyle fark oluşabilir; sonuçlar tahminidir."
+      ]
+    ],
+    "sources": [
+      ["ÇSGB — Asgari ücret hesap tablosu", "https://www.csgb.gov.tr/Media/gm2fekds/asgari-%C3%BCcret-2026.pdf"],
+      ["SGK — Prime esas kazanç miktarları", "https://www.sgk.gov.tr/Content/Post/2e0c9e1a-2cfe-4456-af10-49d3de0c58ba/Prime-Esas-Kazanc-Miktarlari-2026-01-14-10-35-39"],
+      ["GİB — Gelir vergisi tarifesi", "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2Fgelir-vergisi-tarifeleri%2Fgelir-vergisi-tarifesi-2026.pdf"]
+    ],
+    "related": ["isveren-maliyeti-hesaplama", "asgari-ucret-hesaplama", "gelir-vergisi-hesaplama"],
+    "relatedServices": ["bordrolama", "insan-kaynaklari-ve-bordro"],
+    "disclaimer": "Sonuçlar, yayımlanan parametrelere ve genel kurallara dayanan tahmini hesaplardır; bordro, vergi veya hukuki tavsiye niteliği taşımaz. Uygulama öncesinde güncel mevzuat ve ilgili kurum açıklamaları esas alınmalıdır.",
+    "updated": "2026-10-01"
+  },
+  {
+    "slug": "isveren-maliyeti-hesaplama",
+    "order": 2,
+    "title": "İşveren Maliyeti Hesaplama",
+    "short": "Brüt ücretin SGK ve işsizlik işveren payları dahil aylık ve yıllık toplam işveren maliyetini hesaplar.",
+    "group": "bordro",
+    "description": "İşveren maliyeti hesaplama: brüt ücrete SGK işveren payı, işsizlik işveren payı, 2 ve 5 puanlık teşvik seçenekleri ve asgari ücret desteği.",
+    "lead": "Bir çalışanın aylık ve yıllık toplam maliyetini; işveren paylarını, teşvik seçeneklerini ve asgari ücret desteğini ayrı ayrı görerek hesaplayın.",
+    "engine": "employerCost",
+    "params": "bordro",
+    "inputs": [
+      {
+        "id": "gross",
+        "label": "Aylık brüt ücret",
+        "type": "money",
+        "default": 60000,
+        "min": 0,
+        "max": 1000000000,
+        "step": 0.01,
+        "unit": "₺",
+        "help": "Her ay aynı kabul edilir. Asgari ücretin altındaki tutarlar hesaplanmaz."
+      },
+      {
+        "id": "incentive",
+        "label": "İşveren prim teşviki",
+        "type": "select",
+        "default": "none",
+        "options": [
+          { "value": "none", "label": "Teşviksiz", "help": "SGK işveren payı indirimsiz hesaplanır." },
+          { "value": "p2", "label": "2 puan indirim (imalat dışı)", "help": "İmalat dışı özel sektör işyerleri için Hazine indirimi." },
+          { "value": "p5", "label": "5 puan indirim (yalnızca imalat)", "help": "Yalnızca fiili faaliyeti imalat olan işyerleri için; süresi sınırlıdır." }
+        ],
+        "help": "Teşvikler beyanname, ödeme ve prim borcu koşullarına bağlıdır."
+      },
+      {
+        "id": "support",
+        "label": "Asgari ücret desteği uygulansın",
+        "type": "checkbox",
+        "default": false,
+        "help": "Koşulları sağlayan çalışan için aylık destek tutarı toplam maliyetten düşülür.",
+        "group": "Gelişmiş seçenekler"
+      },
+      {
+        "id": "retired",
+        "label": "Emekli çalışan (SGDP)",
+        "type": "checkbox",
+        "default": false,
+        "help": "Emekli çalışanlarda işsizlik payı ve teşvikler uygulanmaz; işveren payı farklıdır.",
+        "group": "Gelişmiş seçenekler"
+      }
+    ],
+    "presets": [
+      { "label": "50.000 ₺ brüt", "values": { "gross": 50000 } },
+      { "label": "75.000 ₺ brüt", "values": { "gross": 75000 } },
+      { "label": "100.000 ₺ brüt", "values": { "gross": 100000 } }
+    ],
+    "explain": [
+      {
+        "heading": "İşveren maliyeti nasıl hesaplanır?",
+        "paragraphs": [
+          "İşveren maliyeti; brüt ücret, işverenin ödediği SGK işveren payı ve işsizlik sigortası işveren payının toplamıdır. Bu paylar, brüt ücretin prime esas kazanç alt ve üst sınırları arasındaki kısmı üzerinden hesaplanır.",
+          "Çalışanın net ücreti ve kesilen vergiler maliyete ayrıca eklenmez; çünkü bunlar brüt ücretin içindedir."
+        ]
+      },
+      {
+        "heading": "Teşvik seçenekleri",
+        "paragraphs": [
+          "Hazine desteği kapsamındaki işveren prim indirimi, imalat dışı özel sektör işyerlerinde 2 puan, imalat işyerlerinde 5 puandır; indirim SGK işveren payı oranından düşülür.",
+          "Teşvikten yararlanmak; beyannamenin süresinde verilmesi, primlerin süresinde ödenmesi ve vadesi geçmiş SGK prim borcunun bulunmaması gibi koşullara bağlıdır. Oranlar ve süreler yıllara göre değişebilir; sonuçta seçeneğin hangi tarihe kadar öngörüldüğü belirtilir."
+        ]
+      },
+      {
+        "heading": "Asgari ücret desteği",
+        "paragraphs": [
+          "Asgari ücret desteği, koşulları sağlayan işverenlere prim ödeme günü başına belirli bir tutarın SGK prim borçlarına mahsup edilmesiyle uygulanır. Seçildiğinde aylık destek tutarı toplam maliyetten düşülür.",
+          "Desteğin şartları çalışana ve işyerine göre değiştiği için sonuç bilgi amaçlıdır; resmî asgari ücret işveren maliyeti tablolarında destek düşülmeden gösterilir."
+        ]
+      }
+    ],
+    "assumptions": [
+      "Brüt ücretin yıl boyunca sabit olduğu varsayılır; yıllık maliyet aylık maliyetin 12 katıdır.",
+      "SGK işveren payı resmî standart orandan hesaplanır; işyerinin tehlike sınıfına göre kısa vadeli sigorta primi farklı olabilir.",
+      "Yemek, yol, ikramiye, kıdem ve ihbar karşılığı gibi brüt ücret dışındaki işveren giderleri hesaba katılmaz.",
+      "Teşvik ve destek koşullarının sağlandığı varsayılır; koşulların sağlanıp sağlanmadığı bu araçta denetlenmez.",
+      "Emekli (SGDP) çalışan seçeneğindeki oranlar ikincil kaynaklara dayanır ve teyit gerektirir."
+    ],
+    "faq": [
+      [
+        "İşveren maliyeti brüt ücretten neden yüksektir?",
+        "Brüt ücrete ek olarak işveren, SGK işveren payı ve işsizlik sigortası işveren payını da öder. Bu paylar çalışanın brüt ücretinden kesilmez; işverenin ek yüküdür."
+      ],
+      [
+        "2 puan ve 5 puanlık indirim arasındaki fark nedir?",
+        "İkisi de SGK işveren payından yapılan Hazine desteğidir: imalat dışı özel sektör işyerlerinde 2 puan, imalat işyerlerinde 5 puan uygulanır. İşyerinin hangi gruba girdiği fiili faaliyetine ve SGK tescil durumuna göre belirlenir."
+      ],
+      [
+        "Asgari ücret desteği toplam maliyetten düşülür mü?",
+        "Seçildiğinde düşülür. Ancak destek koşullara bağlıdır ve SGK borçlarına mahsup edilir; gerçek nakit etkisi farklı zamanlanabilir. Resmî tablolar desteği ayrıca gösterir."
+      ],
+      [
+        "Brüt ücret prime esas kazanç üst sınırını aşarsa ne olur?",
+        "SGK ve işsizlik işveren payları üst sınır üzerinden hesaplanır; sınırın üzerindeki ücret için ek işveren primi doğmaz."
+      ]
+    ],
+    "sources": [
+      ["ÇSGB — Asgari ücret ve işveren maliyeti tablosu", "https://www.csgb.gov.tr/Media/gm2fekds/asgari-%C3%BCcret-2026.pdf"],
+      ["SGK — Sigorta primi teşvikleri", "https://www.sgk.gov.tr/Download/DownloadFile?d=de85036d-ef64-49f1-834c-916a79f1a923&amp=&f=c94c643d-2190-4d85-9b14-a8c7c5d241e8.pdf"],
+      ["İŞKUR — Asgari ücret desteği", "https://www.iskur.gov.tr/isveren/tesvikler/asgari-ucret-destegi/"]
+    ],
+    "related": ["maas-hesaplama", "asgari-ucret-hesaplama", "kidem-tazminati-hesaplama"],
+    "relatedServices": ["bordrolama", "istihdam-tesvik", "insan-kaynaklari-ve-bordro"],
+    "disclaimer": "Sonuçlar, yayımlanan parametrelere ve genel kurallara dayanan tahmini hesaplardır; teşvik ve destek koşulları ayrıca değerlendirilmelidir. Uygulama öncesinde güncel mevzuat ve ilgili kurum açıklamaları esas alınmalıdır.",
+    "updated": "2026-10-01"
+  },
+  {
+    "slug": "asgari-ucret-hesaplama",
+    "order": 3,
+    "title": "Asgari Ücret Hesaplama",
+    "short": "Brüt asgari ücretin netini, aylık dökümünü, işveren maliyetini ve günlük brüt tutarını gösterir.",
+    "group": "bordro",
+    "description": "Asgari ücret hesaplama: brütten nete aylık döküm, SGK ve işsizlik kesintileri, gelir ve damga vergisi istisnası, işveren maliyeti ve günlük brüt tutar.",
+    "lead": "Seçtiğiniz tarihte yürürlükte olan asgari ücretin netini, aylık dökümünü, işveren maliyetini ve günlük brüt tutarını görün.",
+    "engine": "minWage",
+    "params": "bordro",
+    "inputs": [
+      {
+        "id": "date",
+        "label": "Hesaplama tarihi",
+        "type": "date",
+        "default": "today",
+        "help": "Bu tarihte yürürlükte olan asgari ücret dönemi gösterilir."
+      }
+    ],
+    "presets": [],
+    "explain": [
+      {
+        "heading": "Asgari ücretin neti nasıl bulunur?",
+        "paragraphs": [
+          "Asgari ücret, Asgari Ücret Tespit Komisyonu kararıyla belirlenen brüt tutardır. Brüt tutardan SGK işçi payı ve işsizlik sigortası işçi payı düşülür; bu primler brüt asgari ücret üzerinden hesaplanır.",
+          "Asgari ücret tutarına isabet eden gelir vergisi ve damga vergisi istisna olduğundan kesilmez. Net asgari ücret, bu nedenle brüt tutardan yalnızca prim kesintileri düşülerek bulunur."
+        ]
+      },
+      {
+        "heading": "Gelir vergisi ve damga vergisi istisnası",
+        "paragraphs": [
+          "Gelir vergisi istisnası, asgari ücretin kendi kümülatif matrahı üzerinden hesaplanan vergiye; damga vergisi istisnası ise brüt tutar üzerinden hesaplanan damga vergisine eşittir. Kümülatif matrah yıl içinde bir dilim sınırını aştığında istisna tutarı da yükselir.",
+          "Tablodaki hesaplanan vergi ve istisna sütunları her ay birbirine eşit olduğu için net asgari ücret tüm aylarda aynı kalır."
+        ]
+      },
+      {
+        "heading": "İşveren maliyeti ve günlük brüt tutar",
+        "paragraphs": [
+          "İşveren maliyeti; brüt asgari ücret, SGK işveren payı ve işsizlik sigortası işveren payının toplamıdır. İşveren prim indirimleri koşullara bağlı olduğundan tablo, seçilen tarihte yürürlükte olan seçenekleri ayrı ayrı gösterir.",
+          "Günlük brüt tutar, aylık brüt asgari ücretin 30 güne bölünmesiyle bulunan resmî günlük tutardır."
+        ]
+      }
+    ],
+    "assumptions": [
+      "Hesap, tam ay çalışan 4/a kapsamındaki özel sektör işçisi içindir; kısmi süreli çalışma, ay içi giriş-çıkış ve ücret ödenmeyen izin kapsam dışıdır.",
+      "Asgari geçim indirimi uygulanmaz; net tutar yalnızca prim kesintileri ve gelir ve damga vergisi istisnası dikkate alınarak bulunur.",
+      "Seçilen tarih için asgari ücret açıklanmamışsa en yakın dönemin tutarları gösterilir ve sonuçta uyarı yer alır.",
+      "Hesaplanan net tutar resmî net asgari ücretten farklı çıkarsa sonuçta uyarı görünür.",
+      "İşveren maliyeti, resmî tablolardaki gibi asgari ücret desteği düşülmeden gösterilir; teşvik indirimleri beyanname, ödeme ve prim borcu koşullarına bağlıdır."
+    ],
+    "faq": [
+      [
+        "Asgari ücretten gelir vergisi ve damga vergisi kesilir mi?",
+        "Hayır. Asgari ücret tutarına isabet eden gelir vergisi ve damga vergisi istisnadır; bu nedenle net asgari ücret yalnızca SGK ve işsizlik sigortası işçi paylarının düşülmesiyle bulunur."
+      ],
+      [
+        "Net asgari ücret her ay aynı mıdır?",
+        "Evet. İstisnalar hesaplanan vergilerin tamamını karşıladığı için brüt tutar, kesintiler ve net tutar yıl boyunca değişmez. Yıl içinde yeni bir asgari ücret dönemi başlarsa tutarlar yeni döneme göre değişir."
+      ],
+      [
+        "Asgari ücret ne zaman belirlenir?",
+        "Asgari ücret, Asgari Ücret Tespit Komisyonu kararıyla belirlenir. Yeni bir dönem başladığında hesaplayıcıdaki tarih seçimi ilgili dönemin tutarlarını gösterir; parametreler resmî duyuruya göre güncellenir."
+      ],
+      [
+        "İşveren maliyeti neden brüt tutardan yüksektir?",
+        "İşveren, brüt ücrete ek olarak SGK işveren payını ve işsizlik sigortası işveren payını öder. İndirim koşullarını sağlayan işyerlerinde SGK işveren payı daha düşüktür."
+      ]
+    ],
+    "sources": [
+      ["ÇSGB — 2026 asgari ücret açıklaması", "https://www.csgb.gov.tr/haberler/2026-yilinda-gecerli-olacak-yeni-asgari-ucret-28-bin-75-lira-olarak-belirlendi/"],
+      ["ÇSGB — Asgari ücret ve işveren maliyeti tablosu", "https://www.csgb.gov.tr/Media/gm2fekds/asgari-%C3%BCcret-2026.pdf"],
+      ["SGK — Prime esas kazanç miktarları", "https://www.sgk.gov.tr/Content/Post/2e0c9e1a-2cfe-4456-af10-49d3de0c58ba/Prime-Esas-Kazanc-Miktarlari-2026-01-14-10-35-39"]
+    ],
+    "related": ["maas-hesaplama", "isveren-maliyeti-hesaplama", "gelir-vergisi-hesaplama"],
+    "relatedServices": ["bordrolama", "istihdam-tesvik"],
+    "disclaimer": "Tutarlar, ÇSGB'nin yayımladığı resmî asgari ücret verilerine dayanan bilgilendirme amaçlı hesaplardır. Yeni bir dönem belirlendiğinde tutarlar değişebilir; bordro işlemlerinde güncel resmî duyurular esas alınmalıdır.",
+    "updated": "2026-10-01"
+  },
+  {
+    "slug": "gelir-vergisi-hesaplama",
+    "order": 4,
+    "title": "Gelir Vergisi Hesaplama",
+    "short": "Yıllık gelir vergisi matrahı için dilim dilim vergiyi, ortalama ve marjinal oranı hesaplar.",
+    "group": "vergi",
+    "description": "Gelir vergisi hesaplama: yıllık matrah için ücret ve ücret dışı tarifeye göre dilim dilim vergi, ortalama ve marjinal oran, dilimde kalan matrah.",
+    "lead": "Yıllık gelir vergisi matrahınızı girin; hangi dilimde olduğunuzu, dilim dilim vergiyi ve ortalama vergi oranını görün.",
+    "engine": "incomeTax",
+    "params": "bordro",
+    "inputs": [
+      {
+        "id": "tariff",
+        "label": "Tarife türü",
+        "type": "segment",
+        "default": "wage",
+        "options": [
+          { "value": "wage", "label": "Ücret gelirleri", "help": "Ücret tarifesi uygulanır." },
+          { "value": "other", "label": "Ücret dışı gelirler", "help": "Ticari kazanç, serbest meslek kazancı, kira geliri gibi gelirler." }
+        ]
+      },
+      {
+        "id": "income",
+        "label": "Yıllık gelir vergisi matrahı",
+        "type": "money",
+        "default": 1000000,
+        "min": 0,
+        "max": 100000000000,
+        "step": 0.01,
+        "unit": "₺",
+        "help": "İndirim ve istisnalar düşüldükten sonra kalan yıllık matrah."
+      }
+    ],
+    "presets": [
+      { "label": "500.000 ₺", "values": { "income": 500000 } },
+      { "label": "1.000.000 ₺", "values": { "income": 1000000 } },
+      { "label": "2.000.000 ₺", "values": { "income": 2000000 } }
+    ],
+    "explain": [
+      {
+        "heading": "Dilimli tarife nasıl işler?",
+        "paragraphs": [
+          "Gelir vergisi artan oranlı tarifeyle hesaplanır. Matrahın her dilime düşen kısmı o dilimin oranıyla vergilenir ve dilim vergileri toplanır; matrahın tamamı bulunduğu dilimin oranıyla vergilendirilmez.",
+          "Araç, matrahın dilimlere dağılımını ve her dilimin vergisini tabloda gösterir. Dilim vergileri toplamı, özetteki hesaplanan gelir vergisine eşittir."
+        ]
+      },
+      {
+        "heading": "Ücret ve ücret dışı tarifeler",
+        "paragraphs": [
+          "Ücret gelirleri için ayrı, diğer gelirler (ticari kazanç, serbest meslek kazancı, kira geliri gibi) için ayrı bir tarife uygulanır. İki tarife arasındaki fark üçüncü dilimin üst sınırındadır; uygulanan sınırlar sonuç tablosunda görünür.",
+          "Tarife sınırları her yıl güncellenir ve Gelir Vergisi Genel Tebliği ile ilan edilir. Araç, ilan edilen tutarları olduğu gibi kullanır; yeniden değerleme oranından kendisi sınır türetmez."
+        ]
+      },
+      {
+        "heading": "Ortalama oran, marjinal oran ve kalan alan",
+        "paragraphs": [
+          "Ortalama oran, toplam verginin matraha bölünmesiyle bulunur. Marjinal oran, matrahın bulunduğu dilimin oranıdır ve matraha eklenecek bir sonraki liranın hangi oranla vergilendirileceğini gösterir.",
+          "Dilimde kalan alan, matrahın bir üst dilime geçmeden en fazla ne kadar artabileceğini gösterir."
+        ]
+      }
+    ],
+    "assumptions": [
+      "Girilen tutarın, indirim ve istisnalar düşüldükten sonraki yıllık gelir vergisi matrahı olduğu varsayılır.",
+      "Sonuç hesaplanan vergidir; yıl içinde kesilen stopajlar, ödenen geçici vergiler ve diğer mahsuplar hesaba katılmaz.",
+      "Tek bir tarife uygulanır; birden fazla gelir unsuru bulunan mükellefler için hangi tarifenin uygulanacağı ayrıca değerlendirilmelidir.",
+      "Tarife, sonuçtaki Kullanılan parametreler bölümünde görünen yıla aittir; başka bir yılın geliri için o yılın tarifesi esas alınmalıdır.",
+      "Damga vergisi, SGK primi ve KDV gibi diğer yükümlülükler bu hesaba dahil değildir."
+    ],
+    "faq": [
+      [
+        "Ücret tarifesi ile ücret dışı tarife arasındaki fark nedir?",
+        "Ücret gelirlerine ayrı bir tarife uygulanır; ticari kazanç, serbest meslek kazancı ve kira geliri gibi gelirlerde ücret dışı tarife kullanılır. İki tarife arasındaki fark üçüncü dilimin üst sınırındadır ve sonuç tablosunda görülebilir."
+      ],
+      [
+        "Marjinal vergi oranı ne anlama gelir?",
+        "Matrahınıza eklenecek bir sonraki lira, bulunduğunuz dilimin oranıyla vergilendirilir. Matrah bir üst dilime geçtiğinde yalnızca aşan kısım yeni oranla vergilenir; önceki kısımların vergisi değişmez."
+      ],
+      [
+        "Ortalama oran neden marjinal orandan düşüktür?",
+        "Matrahın alt dilimleri daha düşük oranlarla vergilendirildiği için toplam verginin matrahın tamamına bölünmesiyle bulunan ortalama oran, bulunulan dilimin oranından düşük kalır."
+      ],
+      [
+        "Hesaplanan vergi ödenecek vergi midir?",
+        "Hayır. Hesaplanan vergi, yıllık matrah üzerinden bulunan vergidir. Yıl içinde kesilen stopajlar ve ödenen geçici vergiler, beyanname üzerinde bu tutardan mahsup edilir."
+      ],
+      [
+        "Tarife sınırları nasıl belirlenir?",
+        "Sınırlar her yıl güncellenir ve Gelir Vergisi Genel Tebliği ile ilan edilir. Hesaplayıcı, ilan edilen tutarları kullanır ve parametre dosyasındaki yıl sonuçta belirtilir."
+      ]
+    ],
+    "sources": [
+      ["GİB — Gelir vergisi tarifesi", "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2Fgelir-vergisi-tarifeleri%2Fgelir-vergisi-tarifesi-2026.pdf"],
+      ["HMB — Yeniden değerleme oranı ve güncel tutarlar", "https://ms.hmb.gov.tr/uploads/2026/01/Ek-4-BKS_2026_YDO_GUNCEL.TUTARLAR-5d367d135f56b5e2.pdf"]
+    ],
+    "related": ["maas-hesaplama", "serbest-meslek-makbuzu-hesaplama", "ihbar-tazminati-hesaplama"],
+    "relatedServices": ["bireysel-danismanlik-hizmetleri", "mali-musavirlik-ve-muhasebe"],
+    "disclaimer": "Sonuçlar, yayımlanan tarifeye dayanan tahmini hesaplardır; vergi beyanı veya vergi danışmanlığı yerine geçmez. Mükellefin özel durumu (indirim, istisna, mahsup) ayrıca değerlendirilmelidir.",
+    "updated": "2026-10-01"
+  },
+  {
+    "slug": "kidem-tazminati-hesaplama",
+    "order": 9,
+    "title": "Kıdem Tazminatı Hesaplama",
+    "short": "Hizmet süresi ve ücrete göre brüt ve net kıdem tazminatını, tavan sınırını ve damga vergisini hesaplar.",
+    "group": "tazminat",
+    "description": "Kıdem tazminatı hesaplama: işe giriş ve çıkış tarihine göre hizmet süresi, çıkış tarihindeki tavan, damga vergisi ve net tutar.",
+    "lead": "İşe giriş ve çıkış tarihlerini ve aylık ücreti girin; hizmet süresini, tavan uygulamasını ve brütten nete tazminat tutarını görün.",
+    "engine": "severance",
+    "params": "bordro",
+    "inputs": [
+      {
+        "id": "start",
+        "label": "İşe giriş tarihi",
+        "type": "date",
+        "default": "today-5y",
+        "help": "İşyerinde fiilen çalışmaya başlanan tarih."
+      },
+      {
+        "id": "end",
+        "label": "İşten çıkış tarihi",
+        "type": "date",
+        "default": "today",
+        "help": "Son çalışılan gün; hizmet süresine dahil edilir."
+      },
+      {
+        "id": "gross",
+        "label": "Aylık brüt ücret",
+        "type": "money",
+        "default": 60000,
+        "min": 0,
+        "max": 1000000000,
+        "step": 0.01,
+        "unit": "₺",
+        "help": "Çıkış tarihindeki son aylık brüt ücret."
+      },
+      {
+        "id": "benefits",
+        "label": "Aylık yan haklar",
+        "type": "money",
+        "default": 0,
+        "min": 0,
+        "max": 1000000000,
+        "step": 0.01,
+        "unit": "₺",
+        "help": "Yol, yemek, düzenli ikramiye gibi düzenli ödemelerin aylık brüt toplamı."
+      },
+      {
+        "id": "extra",
+        "label": "Yasal tutarın üzerinde ödenen kıdem tazminatı",
+        "type": "money",
+        "default": 0,
+        "min": 0,
+        "max": 100000000000,
+        "step": 0.01,
+        "unit": "₺",
+        "help": "Sözleşme veya anlaşmayla yasal hesabın üstünde ödenen tutar varsa girin; ücret gibi vergilendirilir.",
+        "group": "Gelişmiş seçenekler"
+      },
+      {
+        "id": "cumBase",
+        "label": "Önceki aylardan devreden kümülatif matrah",
+        "type": "money",
+        "default": 0,
+        "min": 0,
+        "max": 100000000000,
+        "step": 0.01,
+        "unit": "₺",
+        "help": "Ödemenin yapıldığı yılda önceki aylara ait gelir vergisi matrahı; yalnızca yasal tutarı aşan kısmın vergisini etkiler.",
+        "showIf": { "id": "extra", "truthy": true },
+        "group": "Gelişmiş seçenekler"
+      }
+    ],
+    "presets": [
+      { "label": "10 yıl, 40.000 ₺ brüt", "values": { "start": "2016-10-01", "end": "2026-09-30", "gross": 40000, "benefits": 0 } },
+      { "label": "3,5 yıl, 60.000 ₺ brüt", "values": { "start": "2023-03-16", "end": "2026-09-30", "gross": 60000, "benefits": 0 } },
+      { "label": "1 yıl, tavanı aşan ücret", "values": { "start": "2025-08-15", "end": "2026-08-14", "gross": 100000, "benefits": 0 } }
+    ],
+    "explain": [
+      {
+        "heading": "Kıdem tazminatı nasıl hesaplanır?",
+        "paragraphs": [
+          "Kıdem tazminatı, işçinin aynı işverenin yanında en az bir yıl çalışması ve iş sözleşmesinin kıdem tazminatına hak kazandıran bir nedenle sona ermesi hâlinde ödenir. Her tam hizmet yılı için 30 günlük ücret tutarında hesaplanır; bir yılı aşan süreler oranlanır.",
+          "Araç, hizmet süresini yıl, ay ve gün olarak bulur; ay kısmını 12'ye, gün kısmını 365'e bölerek yıl oranına ekler. Çıkış günü hizmet süresine dahil edilir."
+        ]
+      },
+      {
+        "heading": "Giydirilmiş ücret ve tavan",
+        "paragraphs": [
+          "Hesaba esas ücret, brüt ücrete yol, yemek ve düzenli ikramiye gibi düzenli yan hakların eklenmesiyle bulunan giydirilmiş brüt ücrettir.",
+          "Her hizmet yılı için esas alınan tutar, çıkış tarihinde geçerli kıdem tazminatı tavanını aşamaz. Tavan dönemlere göre belirlenir; araç çıkış tarihine uygun tavanı kullanır ve tavan uygulandığında bunu uyarı olarak gösterir."
+        ]
+      },
+      {
+        "heading": "Vergi kesintileri",
+        "paragraphs": [
+          "Kıdem tazminatından SGK primi kesilmez. Yasal tutar gelir vergisinden istisna olduğundan yalnızca damga vergisi kesilir; yasal tutarın üzerinde bir ödeme varsa aşan kısım ücret gibi gelir vergisine tabi tutulur.",
+          "Bu vergi uygulaması ikincil kaynaklara dayanır ve teyit gerektirir; sonuçta ilgili uyarı gösterilir."
+        ]
+      }
+    ],
+    "assumptions": [
+      "İş sözleşmesinin kıdem tazminatına hak kazandıran bir nedenle sona erdiği varsayılır; fesih nedeni araçta değerlendirilmez.",
+      "Aynı işverenin yanında en az bir yıl hizmet aranır; daha kısa sürelerde tutar 0 gösterilir.",
+      "Hizmet süresi tek bir kesintisiz dönem olarak hesaplanır; birleştirilebilen önceki hizmetler ve ara dönemler ayrıca ele alınmaz.",
+      "Ay ve gün kısmının oranlanmasında 12 ay ve 365 gün tabanı kullanılır, çıkış günü hizmete dahildir; bu uygulama ikincil kaynağa dayanır ve resmî kurumlar gün tabanını belirtmez.",
+      "Ücret tutarını siz girersiniz; değişken ücret ve primlerde ortalama alma gibi ayrıntılar hesaba katılmaz.",
+      "Damga vergisi ve gelir vergisi uygulaması ikincil kaynaklara dayanır; işlem öncesinde teyit edilmelidir.",
+      "Tavan, çıkış tarihindeki dönem için yayımlanan tutardır; yeni dönem açıklanmamışsa son açıklanan tavan kullanılır ve sonuçta uyarı yer alır."
+    ],
+    "faq": [
+      [
+        "Kıdem tazminatı için ne kadar çalışmak gerekir?",
+        "Aynı işverenin yanında en az bir yıl çalışmış olmak ve iş sözleşmesinin kıdem tazminatına hak kazandıran bir nedenle sona ermesi gerekir. Bir yıldan kısa hizmette tazminat doğmaz."
+      ],
+      [
+        "Kıdem tazminatı tavanı nedir?",
+        "Her hizmet yılı için esas alınan ücretin çıkış tarihinde geçerli üst sınırıdır. Tavan belirli dönemler için ilan edilir; aylık ücret tavanı aşıyorsa hesapta tavan kullanılır."
+      ],
+      [
+        "Kıdem tazminatından hangi kesintiler yapılır?",
+        "SGK primi kesilmez. Yasal tutar gelir vergisinden istisnadır; damga vergisi kesilir. Bu uygulama ikincil kaynaklara dayandığı için işlem öncesinde teyit edilmelidir."
+      ],
+      [
+        "Hizmet süresi nasıl hesaplanır?",
+        "İşe giriş tarihinden işten çıkış tarihine kadar geçen süre yıl, ay ve gün olarak bulunur; çıkış günü dahil edilir. Tam yılı aşan ay kısmı 12'ye, gün kısmı 365'e bölünerek oranlanır."
+      ],
+      [
+        "Yan haklar hesaba katılır mı?",
+        "Yol, yemek ve düzenli ikramiye gibi düzenli olarak sağlanan para ve para ile ölçülebilen menfaatler giydirilmiş ücrete eklenir. Aylık tutarlarını Aylık yan haklar alanına girin."
+      ]
+    ],
+    "sources": [
+      ["ÇSGB — Kıdem tazminatı tavan miktarları (1980–2026)", "https://www.csgb.gov.tr/Media/zewm15ah/kidem-tazminati-yillar-1980-2026.pdf"],
+      ["ÇSGB — İş Kanunu sıkça sorulan sorular", "https://www.csgb.gov.tr/sikca-sorulan-sorular/calisma-genel-mudurlugu/%C4%B1s-kanunu/"],
+      ["ÇSGB — Çalışma Hayatı İstatistikleri E-Bülteni (Temmuz 2026)", "https://www.csgb.gov.tr/yayinlar/calisma-hayati-istatistikleri-e-bulteni/temmuz-2026/ucret-ve-sendikal-istatistikler.html"]
+    ],
+    "related": ["ihbar-tazminati-hesaplama", "maas-hesaplama", "isveren-maliyeti-hesaplama"],
+    "relatedServices": ["bordrolama", "insan-kaynaklari-ve-bordro", "sgk-dosya-kapanisi"],
+    "disclaimer": "Sonuç, genel kurallara göre yapılan tahmini bir hesaptır ve hukuki görüş değildir. Fesih nedeni, ücret unsurları ve vergilendirme somut duruma göre değişebilir; vergi uygulaması ikincil kaynaklara dayandığından işlem öncesinde teyit edilmelidir.",
+    "updated": "2026-10-01"
+  },
+  {
+    "slug": "ihbar-tazminati-hesaplama",
+    "order": 10,
+    "title": "İhbar Tazminatı Hesaplama",
+    "short": "Hizmet süresine göre ihbar süresini ve ihbar tazminatının brüt ve net tutarını hesaplar.",
+    "group": "tazminat",
+    "description": "İhbar tazminatı hesaplama: hizmet süresine göre 2, 4, 6 veya 8 haftalık ihbar süresi, brüt tutar, gelir vergisi, damga vergisi ve net tutar.",
+    "lead": "İşe giriş ve çıkış tarihlerini ve aylık ücreti girin; ihbar süresini ve tazminatın brütten nete tutarını görün.",
+    "engine": "notice",
+    "params": "bordro",
+    "inputs": [
+      {
+        "id": "start",
+        "label": "İşe giriş tarihi",
+        "type": "date",
+        "default": "today-2y",
+        "help": "İşyerinde fiilen çalışmaya başlanan tarih."
+      },
+      {
+        "id": "end",
+        "label": "İşten çıkış tarihi",
+        "type": "date",
+        "default": "today",
+        "help": "Son çalışılan gün; hizmet süresine dahil edilir."
+      },
+      {
+        "id": "gross",
+        "label": "Aylık brüt ücret",
+        "type": "money",
+        "default": 45000,
+        "min": 0,
+        "max": 1000000000,
+        "step": 0.01,
+        "unit": "₺",
+        "help": "Çıkış tarihindeki son aylık brüt ücret."
+      },
+      {
+        "id": "benefits",
+        "label": "Aylık yan haklar",
+        "type": "money",
+        "default": 0,
+        "min": 0,
+        "max": 1000000000,
+        "step": 0.01,
+        "unit": "₺",
+        "help": "Yol, yemek, düzenli ikramiye gibi düzenli ödemelerin aylık brüt toplamı."
+      },
+      {
+        "id": "cumBase",
+        "label": "Önceki aylardan devreden kümülatif matrah",
+        "type": "money",
+        "default": 0,
+        "min": 0,
+        "max": 100000000000,
+        "step": 0.01,
+        "unit": "₺",
+        "help": "Ödemenin yapıldığı yılda önceki aylara ait gelir vergisi matrahları toplamı; gelir vergisi dilimini etkiler.",
+        "group": "Gelişmiş seçenekler"
+      }
+    ],
+    "presets": [
+      { "label": "8 ay, 50.000 ₺ brüt", "values": { "start": "2026-01-01", "end": "2026-08-31", "gross": 50000, "benefits": 0 } },
+      { "label": "2 yıl 3 ay, 45.000 ₺ brüt", "values": { "start": "2024-06-01", "end": "2026-08-31", "gross": 45000, "benefits": 0 } },
+      { "label": "5 yıl, 60.000 ₺ brüt", "values": { "start": "2021-09-01", "end": "2026-08-31", "gross": 60000, "benefits": 0 } }
+    ],
+    "explain": [
+      {
+        "heading": "İhbar süresi nasıl belirlenir?",
+        "paragraphs": [
+          "Belirsiz süreli iş sözleşmesini feshedecek taraf, karşı tarafa önceden bildirimde bulunmak zorundadır. Bildirim süresi hizmet süresine göre belirlenir: 6 aydan az hizmette 2 hafta, 6 aydan 1,5 yıla kadar 4 hafta, 1,5 yıldan 3 yıla kadar 6 hafta, 3 yıldan fazla hizmette 8 haftadır.",
+          "Hizmet süresi, işe giriş ve çıkış tarihlerinden yıl, ay ve gün olarak bulunur; çıkış günü hizmete dahil edilir."
+        ]
+      },
+      {
+        "heading": "İhbar tazminatı nasıl bulunur?",
+        "paragraphs": [
+          "Bildirim süresine uymadan fesheden taraf, sürenin ücretini ihbar tazminatı olarak karşı tarafa öder. Tutar, giydirilmiş aylık brüt ücretin 30'a bölünmesiyle bulunan günlük ücretin ihbar süresindeki gün sayısıyla çarpımıdır.",
+          "Giydirilmiş ücret; brüt ücret ile yol, yemek ve düzenli ikramiye gibi düzenli yan hakların toplamıdır."
+        ]
+      },
+      {
+        "heading": "Vergi kesintileri",
+        "paragraphs": [
+          "İhbar tazminatı ücret niteliğindedir: SGK primi kesilmez, ancak gelir vergisi ve damga vergisi uygulanır. Gelir vergisi, tutarın yıl içindeki kümülatif matraha eklenmesiyle ücret tarifesine göre hesaplanır; bu nedenle aynı tutar yılın farklı aylarında farklı vergilendirilebilir.",
+          "Bu vergi uygulaması ikincil kaynaklara dayanır ve teyit gerektirir; sonuçta ilgili uyarı gösterilir."
+        ]
+      }
+    ],
+    "assumptions": [
+      "İhbar süresine hiç uyulmadığı varsayılır; süre kısmen kullanıldıysa yalnızca kullanılmayan günlerin ücreti esas alınmalıdır.",
+      "Taraflar sözleşmeyle daha uzun bir bildirim süresi belirlemiş olabilir; araç yalnızca kanundaki asgari süreleri kullanır.",
+      "Hizmet süresi tam 6 ay, 1,5 yıl veya 3 yıl olduğunda bir sınır yorumu uygulanır (6 ay: 4 hafta; 1,5 yıl: 6 hafta; 3 yıl: 6 hafta). Resmî kaynaklar bu günleri ayrıca belirtmez; sonuçta uyarı görünür.",
+      "Gelir vergisi, girilen devreden matrahın üzerine tazminat eklenerek hesaplanır; girilmezse matrah sıfırdan başlar. Asgari ücret gelir vergisi ve damga vergisi istisnası uygulanmaz.",
+      "Kıdem tazminatı tavanı ihbar tazminatına uygulanmaz; bu kabul resmî kaynaklarda ayrıca belirtilmediğinden teyit edilmelidir.",
+      "Vergi uygulaması ikincil kaynaklara dayanır; işlem öncesinde teyit edilmelidir."
+    ],
+    "faq": [
+      [
+        "İhbar tazminatı kime ödenir?",
+        "Bildirim süresine uymadan iş sözleşmesini fesheden taraf, sürenin ücretini karşı tarafa öder: işveren süreye uymadan fesheder ise tazminat işçiye, işçi süreye uymadan ayrılırsa işverene ödenir."
+      ],
+      [
+        "İhbar süresi kaç haftadır?",
+        "Hizmet süresi 6 aydan azsa 2 hafta, 6 aydan 1,5 yıla kadar ise 4 hafta, 1,5 yıldan 3 yıla kadar ise 6 hafta, 3 yıldan fazlaysa 8 haftadır. Sözleşmeyle daha uzun süre kararlaştırılmış olabilir."
+      ],
+      [
+        "İhbar tazminatından hangi kesintiler yapılır?",
+        "SGK primi kesilmez; gelir vergisi ve damga vergisi kesilir. Gelir vergisi yıl içindeki kümülatif matraha göre hesaplandığı için gelişmiş seçeneklerdeki devreden matrah sonucu etkiler."
+      ],
+      [
+        "Kıdem tazminatı ile ihbar tazminatı aynı şey midir?",
+        "Hayır. Kıdem tazminatı hizmet süresine bağlıdır ve en az bir yıl çalışmayı gerektirir; ihbar tazminatı ise bildirim süresine uyulmamasının karşılığıdır. İkisi ayrı hesaplanır ve ayrı vergilendirilir."
+      ]
+    ],
+    "sources": [
+      ["ÇSGB — İş Kanunu sıkça sorulan sorular", "https://www.csgb.gov.tr/sikca-sorulan-sorular/calisma-genel-mudurlugu/%C4%B1s-kanunu/"],
+      ["GİB — Gelir vergisi tarifesi", "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2Fgelir-vergisi-tarifeleri%2Fgelir-vergisi-tarifesi-2026.pdf"]
+    ],
+    "related": ["kidem-tazminati-hesaplama", "maas-hesaplama", "gelir-vergisi-hesaplama"],
+    "relatedServices": ["bordrolama", "insan-kaynaklari-ve-bordro", "sgk-dosya-kapanisi"],
+    "disclaimer": "Sonuç, genel kurallara göre yapılan tahmini bir hesaptır ve hukuki görüş değildir. Fesih nedeni, ücret unsurları ve vergilendirme somut duruma göre değişebilir; vergi uygulaması ikincil kaynaklara dayandığından işlem öncesinde teyit edilmelidir.",
+    "updated": "2026-10-01"
+  }
+]

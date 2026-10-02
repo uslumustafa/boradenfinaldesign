@@ -1,0 +1,102 @@
+{# Ekibimiz. Wagtail karşılığı: TeamIndexPage (title, lead, intro, photo_caption, fotoğraf = FK Image) — kartlar = alt sayfalar
+   TeamMemberPage (sıra = sayfa sırası; yayında/taslak = Wagtail yayın durumu). «Kimle görüşmeli?» listeleri ServiceAreaPage ve SectorPage
+   → team_members ilişkisinden üretilir (açık atama; yoksa hizmet sahiplerinden türetilir — scripts/team.mjs). Kişi sayısı sabitlenmez. #}
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+{% import "partials/people.njk" as pp %}
+
+{% block head_extra %}
+<script type="application/ld+json">{{ ld | json_script }}</script>
+{% endblock %}
+
+{% block main %}
+{{ m.phero(page, team.title, team.lead, "Kurumsal", 3) }}
+
+<div class="sheet sec--paper">
+  <div class="container">
+
+    {# ── Kadro #}
+    <section class="tm-roster" id="kadro" data-chapter="Ekip" aria-labelledby="tm-roster-h">
+      <div class="g12 tm-head">
+        <div class="gc" style="--gc: 1 / span 4">
+          <h2 class="eyebrow" id="tm-roster-h" data-reveal>Yönetici ve uzmanlar</h2>
+        </div>
+        {% if team.intro %}<p class="gc tm-head__t" style="--gc: 5 / -1" data-reveal data-reveal-delay="1">{{ team.intro | rich }}</p>{% endif %}
+      </div>
+      <ul class="tm-grid">
+        {% for p in team.members %}
+        <li data-reveal data-reveal-delay="{{ loop.index0 % 4 }}">{{ pp.card(p) }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    {# ── Kimle görüşmeli? Alan ve sektöre göre ilgilenen kişiler (hizmet/sektör sayfalarının altındaki kartlarla aynı atama) #}
+    <section class="who" id="konular" data-chapter="Kimle görüşmeli" aria-labelledby="who-h">
+      <div class="g12 tm-head">
+        <div class="gc" style="--gc: 1 / span 4">
+          <h2 class="eyebrow" id="who-h" data-reveal>Kimle görüşmeli?</h2>
+        </div>
+        <p class="gc tm-head__t" style="--gc: 5 / -1" data-reveal data-reveal-delay="1">Konunuza göre ilgilenen ekip arkadaşlarımız aşağıda; aynı kişiler ilgili hizmet ve sektör sayfalarının altında da yer alır.</p>
+      </div>
+      <div class="who__cols">
+        <div class="who__col">
+          <h3 class="who__h mono" data-reveal>Hizmet alanına göre</h3>
+          <ol class="who__list">
+            {% for g in groups %}
+            <li class="who__row" data-reveal>
+              <span class="who__n mono tnum">{{ g.number }}</span>
+              <a class="who__t" href="{{ g.url }}">{{ g.name }}</a>
+              <div class="who__p">
+                {% if g.people | length %}{{ pp.inline(g.people) }}{% else %}<a class="who__none" href="/iletisim/">İletişim formu {{ m.arrow() }}</a>{% endif %}
+              </div>
+            </li>
+            {% endfor %}
+          </ol>
+        </div>
+        <div class="who__col">
+          <h3 class="who__h mono" data-reveal>Sektöre göre</h3>
+          <ol class="who__list">
+            {% for s in sectorRows %}
+            <li class="who__row" data-reveal>
+              <span class="who__n mono tnum">{{ s.number }}</span>
+              <a class="who__t" href="{{ s.url }}">{{ s.name }}{% if s.segment %}<span class="who__tag mono">Segment</span>{% endif %}</a>
+              <div class="who__p">
+                {% if s.people | length %}{{ pp.inline(s.people) }}{% else %}<a class="who__none" href="/iletisim/">İletişim formu {{ m.arrow() }}</a>{% endif %}
+              </div>
+            </li>
+            {% endfor %}
+          </ol>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+{# ── Ekip fotoğrafı (arşiv; kaydırdıkça açılır) #}
+<figure class="ab-band ab-band--team" id="ofis" data-chapter="Ekip fotoğrafı">
+  <div class="ab-band__media" data-parallax="0.18">
+    {{ m.photo("team-lobby", sizes="100vw", cls="ab-band__img") }}
+  </div>
+  {% if team.photoCaption %}<figcaption class="ab-band__cap mono">{{ team.photoCaption }}</figcaption>{% endif %}
+</figure>
+
+{# ── Kariyer yönlendirmesi #}
+<section class="tm-join sec--paper" id="kariyer" data-chapter="Kariyer" aria-labelledby="tm-join-h">
+  <div class="container">
+    <div class="g12">
+      <div class="gc" style="--gc: 1 / span 4">
+        <h2 class="eyebrow" id="tm-join-h" data-reveal>Kariyer</h2>
+      </div>
+      <div class="gc" style="--gc: 5 / -1">
+        <p class="tm-join__t" data-lit>Ekibimizde yer almak ister misiniz? Açık pozisyonları ve genel başvuru formunu kariyer sayfamızda bulabilirsiniz.</p>
+        <p class="tm-join__go" data-reveal><a class="btn" href="/kariyer/">Kariyer sayfasına gidin {{ m.arrow() }}</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% set cta_title = "Kiminle görüşeceğinizden emin değil misiniz?" %}
+{% set cta_text = "Konunuzu kısaca yazın; mesajınızı ilgili ekip arkadaşımıza iletelim." %}
+{% include "partials/cta.njk" %}
+{% endblock %}

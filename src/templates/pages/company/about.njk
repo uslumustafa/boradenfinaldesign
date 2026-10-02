@@ -1,0 +1,148 @@
+{# Hakkımızda. Wagtail karşılığı: AboutPage — lead, facts (InlinePanel: label, value | modelden sayım), sections (StreamField:
+   id, eyebrow, heading, paragraphs[RichText]), closing (RichText). Kuruluş, kapsam, yaklaşım ve ilkeler: «Kurum» ayarları
+   (SiteSettings) — ana sayfayla ortak kaynak. Hizmet alanları: ServiceAreaPage sorgusu. #}
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+{% import "partials/people.njk" as pp %}
+
+{% block head_extra %}
+<script type="application/ld+json">{{ ld | json_script }}</script>
+{% endblock %}
+
+{% block main %}
+{{ m.phero(page, ap.title, ap.lead, "Kurumsal", 3) }}
+
+<div class="sheet sec--paper">
+  <div class="container">
+
+    {# ── Olgular: sayısal olanlar sayaçla gelir #}
+    <dl class="ab-facts">
+      {% for f in facts %}
+      <div class="ab-fact" data-reveal data-reveal-delay="{{ loop.index0 }}">
+        <dt>{{ f.label }}</dt>
+        <dd class="tnum{% if not f.num %} ab-fact__txt{% endif %}"{% if f.count %} data-count="{{ f.value }}"{% endif %}>{{ f.value }}</dd>
+      </div>
+      {% endfor %}
+    </dl>
+
+    {# ── Kuruluş ve kapsam #}
+    <section class="ab-found g12" aria-labelledby="ab-found-h">
+      <div class="gc" style="--gc: 1 / span 4">
+        <h2 class="eyebrow" id="ab-found-h" data-reveal>Kuruluş ve kapsam</h2>
+      </div>
+      <div class="gc" style="--gc: 5 / -1">
+        <p class="ab-statement" data-lit>{{ about.foundation }}</p>
+        <p class="ab-found__text" data-reveal>{{ about.overview }}</p>
+        <p class="ab-found__legal mono" data-reveal><span>Unvan</span> {{ about.name or site.legalName }}</p>
+      </div>
+    </section>
+
+    {# ── Altı hizmet alanı: alanın kapsamı + alan sayfasına bağlantı #}
+    <section class="ab-areas" aria-labelledby="ab-areas-h">
+      <div class="g12 ab-head">
+        <div class="gc" style="--gc: 1 / span 4">
+          <h2 class="eyebrow" id="ab-areas-h" data-reveal>Hizmet alanları</h2>
+        </div>
+        <p class="gc ab-head__t" style="--gc: 5 / -1" data-reveal data-reveal-delay="1">{{ groups | length }} hizmet alanı, {{ services | length }} hizmet başlığı. Her alanın hizmetleri ve kapsamı kendi sayfasında ayrıntılı olarak yer alır.</p>
+      </div>
+      <ol class="ab-arows">
+        {% for g in groups %}
+        <li data-reveal>
+          <a class="ab-arow" href="{{ g.url }}">
+            <span class="ab-arow__n mono tnum">{{ g.number }}</span>
+            <span class="ab-arow__t">{{ g.name }}</span>
+            <span class="ab-arow__d">{{ g.scope }}</span>
+            <span class="ab-arow__c mono tnum">{{ g.services | length }} başlık</span>
+            <span class="ab-arow__go" aria-hidden="true">→</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+
+    {# ── Ekibimiz: kısa tanıtım + profillere bağlantı (veri: team.json → Wagtail'de TeamIndexPage alt sayfaları) #}
+    {% if model.team and (model.team.members | length) %}
+    <section class="ab-team g12" id="ekip" aria-labelledby="ab-team-h">
+      <div class="gc" style="--gc: 1 / span 4">
+        <h2 class="eyebrow" id="ab-team-h" data-reveal>Ekibimiz</h2>
+      </div>
+      <div class="gc" style="--gc: 5 / -1">
+        <p class="ab-team__t" data-reveal data-reveal-delay="1">{{ model.team.lead }}</p>
+        <ul class="ab-team__list">
+          {% for p in model.team.members %}<li data-reveal data-reveal-delay="{{ loop.index0 % 2 }}">{{ pp.mini(p) }}</li>{% endfor %}
+        </ul>
+        <p class="ab-team__go" data-reveal><a class="btn" href="{{ model.team.url }}">Ekibimizin tamamı {{ m.arrow() }}</a></p>
+      </div>
+    </section>
+    {% endif %}
+  </div>
+</div>
+
+{# ── Fotoğraf arası: kaydırdıkça açılan görsel #}
+<figure class="ab-band">
+  <div class="ab-band__media" data-parallax="0.18">
+    {{ m.photo("table-top-1", sizes="100vw", cls="ab-band__img") }}
+  </div>
+</figure>
+
+{# ── Yaklaşım ve ilkeler: koyu bölüm, arkada sütunlar sahnesi #}
+<section class="ab-method sec--dark" data-world="6" aria-labelledby="ab-method-h">
+  <div class="container">
+    <div class="g12">
+      <div class="gc" style="--gc: 1 / span 4">
+        <h2 class="eyebrow" id="ab-method-h" data-reveal>Yaklaşım</h2>
+      </div>
+      <div class="gc" style="--gc: 5 / -1">
+        <p class="ab-method__t" data-lit>{{ about.method }}</p>
+      </div>
+    </div>
+    <div class="ab-princ">
+      <p class="ab-princ__k mono" data-reveal>Çalışmayı yönlendiren ilkeler</p>
+      <ol class="ab-princ__list">
+        {% for p in about.principles %}
+        <li class="ab-princ__i ab-princ__i--{{ ['b', 'r', 'g'][loop.index0 % 3] }}" data-reveal data-reveal-delay="{{ loop.index0 + 1 }}">
+          <span class="ab-princ__n mono tnum">{{ loop.index | pad2 }}</span>
+          <h3>{{ p[0] }}</h3>
+          <p>{{ p[1] }}</p>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+</section>
+
+{# ── Bölümler: yapışkan içindekiler + kaydırma izleme #}
+<div class="sheet sec--paper">
+  <div class="container">
+    <div class="ab-doc g12">
+      <aside class="ab-doc__side gc" style="--gc: 1 / span 3">
+        <nav class="toc" data-toc aria-label="Konu başlıkları">
+          <p class="toc__h mono">Konu başlıkları</p>
+          <ol>
+            {% for s in ap.sections %}<li><a href="#{{ s.id }}">{{ s.eyebrow }}</a></li>{% endfor %}
+          </ol>
+        </nav>
+      </aside>
+
+      <div class="ab-doc__main gc" style="--gc: 5 / -1">
+        {% for s in ap.sections %}
+        <section class="ab-sec" id="{{ s.id }}" aria-labelledby="{{ s.id }}-h">
+          <p class="ab-sec__k mono" data-reveal><span class="tnum">{{ loop.index | pad2 }}</span>{{ s.eyebrow }}</p>
+          <h2 class="ab-sec__h" id="{{ s.id }}-h" data-reveal data-reveal-delay="1">{{ s.heading }}</h2>
+          <div class="ab-sec__body">
+            {% for p in s.paragraphs %}<p data-reveal data-reveal-delay="2">{{ p | rich }}</p>{% endfor %}
+          </div>
+        </section>
+        {% endfor %}
+
+        <div class="notice ab-note" data-legal-review="BDY m.22" data-reveal>
+          <p><strong>Bağımsızlık ilkesi.</strong> {{ site.independenceNote }}</p>
+        </div>
+        <p class="ab-closing" data-reveal>{{ ap.closing | rich }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% include "partials/cta.njk" %}
+{% endblock %}

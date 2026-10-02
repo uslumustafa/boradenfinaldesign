@@ -1,0 +1,514 @@
+{
+  "meta": {
+    "from": "2026-10-01",
+    "to": "2027-03-31",
+    "verifiedOn": "2026-10-01",
+    "disclaimer": "Bu takvim genel bilgilendirme amaçlıdır; tarihler 01.10.2026'da kamuya açık kaynaklardan derlenmiştir. Gelir İdaresi Başkanlığı sirkülerleri, resmî tatil kararları ve idari izinler tarihleri değiştirebilir. Yükümlülükleriniz için GİB ve SGK'nın güncel duyurularını esas alın; işaretli kalemleri kullanmadan önce teyit edin."
+  },
+  "categories": [
+    {
+      "id": "kdv",
+      "label": "KDV"
+    },
+    {
+      "id": "muhtasar",
+      "label": "Muhtasar ve damga vergisi"
+    },
+    {
+      "id": "sgk",
+      "label": "SGK primleri"
+    },
+    {
+      "id": "gecici-vergi",
+      "label": "Geçici vergi"
+    },
+    {
+      "id": "yillik-beyan",
+      "label": "Yıllık beyannameler"
+    },
+    {
+      "id": "e-defter",
+      "label": "e-Defter"
+    },
+    {
+      "id": "emlak-mtv",
+      "label": "Emlak ve motorlu taşıtlar vergisi"
+    }
+  ],
+  "rules": [
+    "Son gün cumartesi, pazar veya tam gün resmî tatile denk gelirse süre, izleyen ilk iş gününün sonunda (saat 23.59) biter. Takvimde kaydırma uygulanmış tarih gösterilir; kaydırılan kalemlerde asıl tarih ayrıca belirtilir.",
+    "Yarım gün tatiller (arife günleri) ve idari izin günleri süreleri uzatmaz.",
+    "Beyanname ve ödeme süreleri ilgili günün saat 23.59'unda sona erer; vergi, beyan süresi içinde ödenir.",
+    "SGK primleri, ücretin ait olduğu ayı izleyen ayın sonuna kadar ödenir; son gün resmî tatile denk gelirse izleyen ilk iş günü esas alınır, hafta sonu için de uygulama aynıdır.",
+    "Gelir İdaresi Başkanlığı sirkülerle süreleri uzatabilir; yayımlanan duyurular bu takvimin önüne geçer.",
+    "Form Ba ve Form Bs bildirimi 01.10.2024'ten itibaren kaldırıldığı için takvimde yer almaz."
+  ],
+  "holidays": [
+    {
+      "date": "2026-10-28",
+      "name": "Cumhuriyet Bayramı arifesi (13.00'ten sonra)",
+      "kind": "half-day"
+    },
+    {
+      "date": "2026-10-29",
+      "name": "Cumhuriyet Bayramı",
+      "kind": "official"
+    },
+    {
+      "date": "2027-01-01",
+      "name": "Yılbaşı",
+      "kind": "official"
+    },
+    {
+      "date": "2027-03-08",
+      "name": "Ramazan Bayramı arifesi (13.00'ten sonra)",
+      "kind": "half-day"
+    },
+    {
+      "date": "2027-03-09",
+      "name": "Ramazan Bayramı 1. gün",
+      "kind": "official"
+    },
+    {
+      "date": "2027-03-10",
+      "name": "Ramazan Bayramı 2. gün",
+      "kind": "official"
+    },
+    {
+      "date": "2027-03-11",
+      "name": "Ramazan Bayramı 3. gün",
+      "kind": "official"
+    }
+  ],
+  "items": [
+    {
+      "id": "muhtasar-3-aylik-2026-q3",
+      "date": "2026-10-26",
+      "nominalDate": "2026-10-26",
+      "shifted": false,
+      "title": "3 aylık Muhtasar ve Prim Hizmet Beyannamesi",
+      "category": "muhtasar",
+      "who": "Üç aylık dönemde beyan veren işverenler ve stopaj sorumluları",
+      "period": "Temmuz–Eylül 2026",
+      "note": "Tek bir takvim kaynağına dayanır; üç aylık beyan verme koşulları araştırılmamıştır. Kendi yükümlülüğünüzü teyit edin.",
+      "source": [
+        "Müşavirler Kulübü — Vergi takvimi",
+        "https://musavirlerkulubu.com.tr/mevzuat/takvim/"
+      ],
+      "confidence": "secondary",
+      "needsVerification": true
+    },
+    {
+      "id": "muhtasar-damga-2026-09",
+      "date": "2026-10-26",
+      "nominalDate": "2026-10-26",
+      "shifted": false,
+      "title": "Muhtasar ve Prim Hizmet Beyannamesi ile damga vergisi beyannamesi",
+      "category": "muhtasar",
+      "who": "İşverenler ve stopaj sorumluları",
+      "period": "Eylül 2026",
+      "note": "Kesilen stopaj ve damga vergisi, beyan süresi içinde ödenir.",
+      "source": [
+        "GİB — Beyanname Verme ve Ödeme Süreleri",
+        "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf"
+      ],
+      "confidence": "verified-official"
+    },
+    {
+      "id": "kdv-2026-09",
+      "date": "2026-10-28",
+      "nominalDate": "2026-10-28",
+      "shifted": false,
+      "title": "KDV beyannamesi (beyan ve ödeme)",
+      "category": "kdv",
+      "who": "KDV mükellefleri (şirketler ve gerçek kişiler)",
+      "period": "Eylül 2026",
+      "note": "28 Ekim yarım gün tatildir (arife) ve süreyi kaydırmaz. Bazı kaynaklar Ekim 2026 takvimini farklı günlerle gösterdiği için GİB'in resmî takvimiyle teyit edin.",
+      "source": [
+        "GİB — Beyanname Verme ve Ödeme Süreleri",
+        "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf"
+      ],
+      "confidence": "secondary",
+      "needsVerification": true
+    },
+    {
+      "id": "sgk-2026-09",
+      "date": "2026-11-02",
+      "nominalDate": "2026-10-31",
+      "shifted": true,
+      "shiftNote": "31 Ekim 2026 Cumartesi gününe denk geldiği için süre izleyen ilk iş gününe uzar.",
+      "title": "SGK prim ödemesi",
+      "category": "sgk",
+      "who": "SGK kapsamında çalışan bulunduran işverenler",
+      "period": "Eylül 2026 primleri",
+      "source": [
+        "SGK — İşverenlerin Prim Ödeme İşlemleri",
+        "https://www.sgk.gov.tr/Content/Post/1f3a8bec-bca6-4e83-8e5c-f957a7d28af4/Isverenlerin-Prim-Odeme-Islemleri-2025-02-06-03-29-17"
+      ],
+      "confidence": "secondary"
+    },
+    {
+      "id": "gecici-vergi-2026-d3",
+      "date": "2026-11-17",
+      "nominalDate": "2026-11-17",
+      "shifted": false,
+      "title": "3. dönem geçici vergi beyanı ve ödemesi",
+      "category": "gecici-vergi",
+      "who": "Kurumlar vergisi mükellefleri ile gelir vergisi mükellefleri (ticari kazanç ve serbest meslek; basit usul hariç)",
+      "period": "Temmuz–Eylül 2026",
+      "note": "Şirketlerin yurt içi asgari kurumlar vergisini geçici vergi dönemlerinde de hesapladığı ikincil kaynaklarda belirtilmektedir.",
+      "source": [
+        "GİB — Beyanname Verme ve Ödeme Süreleri",
+        "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf"
+      ],
+      "confidence": "verified-official"
+    },
+    {
+      "id": "muhtasar-damga-2026-10",
+      "date": "2026-11-26",
+      "nominalDate": "2026-11-26",
+      "shifted": false,
+      "title": "Muhtasar ve Prim Hizmet Beyannamesi ile damga vergisi beyannamesi",
+      "category": "muhtasar",
+      "who": "İşverenler ve stopaj sorumluları",
+      "period": "Ekim 2026",
+      "source": [
+        "GİB — Beyanname Verme ve Ödeme Süreleri",
+        "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf"
+      ],
+      "confidence": "verified-official"
+    },
+    {
+      "id": "emlak-vergisi-2026-taksit-2",
+      "date": "2026-11-30",
+      "nominalDate": "2026-11-30",
+      "shifted": false,
+      "title": "Emlak vergisi 2. taksit (son gün)",
+      "category": "emlak-mtv",
+      "who": "Bina, arsa ve arazi sahipleri (gerçek kişiler ve şirketler)",
+      "period": "2026 yılı 2. taksit",
+      "note": "Emlak vergisi taksitleri GİB tablosunda Mart–Mayıs ve Kasım dönemleri olarak gösterilir.",
+      "source": [
+        "GİB — Beyanname Verme ve Ödeme Süreleri",
+        "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf"
+      ],
+      "confidence": "secondary"
+    },
+    {
+      "id": "kdv-2026-10",
+      "date": "2026-11-30",
+      "nominalDate": "2026-11-28",
+      "shifted": true,
+      "shiftNote": "28 Kasım 2026 Cumartesi gününe denk geldiği için süre izleyen ilk iş gününe uzar.",
+      "title": "KDV beyannamesi (beyan ve ödeme)",
+      "category": "kdv",
+      "who": "KDV mükellefleri (şirketler ve gerçek kişiler)",
+      "period": "Ekim 2026",
+      "source": [
+        "GİB — Beyanname Verme ve Ödeme Süreleri",
+        "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf"
+      ],
+      "confidence": "secondary"
+    },
+    {
+      "id": "sgk-2026-10",
+      "date": "2026-11-30",
+      "nominalDate": "2026-11-30",
+      "shifted": false,
+      "title": "SGK prim ödemesi",
+      "category": "sgk",
+      "who": "SGK kapsamında çalışan bulunduran işverenler",
+      "period": "Ekim 2026 primleri",
+      "source": [
+        "SGK — İşverenlerin Prim Ödeme İşlemleri",
+        "https://www.sgk.gov.tr/Content/Post/1f3a8bec-bca6-4e83-8e5c-f957a7d28af4/Isverenlerin-Prim-Odeme-Islemleri-2025-02-06-03-29-17"
+      ],
+      "confidence": "secondary"
+    },
+    {
+      "id": "e-defter-berat-2026-q3-gelir",
+      "date": "2026-12-10",
+      "nominalDate": "2026-12-10",
+      "shifted": false,
+      "title": "e-Defter berat yüklemesi (Temmuz–Eylül 2026 defterleri)",
+      "category": "e-defter",
+      "who": "e-Defter kullanan gelir vergisi mükellefleri",
+      "period": "Temmuz–Eylül 2026",
+      "note": "Tarih, TÜRMOB'un 10.01.2025 tarihli açıklamasındaki kuraldan (geçici vergi beyan ayını izleyen ayın 10. veya 14. günü) türetilmiştir; GİB bazı 2026 e-Defter sürelerini sirkülerle uzatmıştır. Yüklemeyi aylık veya üç aylık yaptığınıza göre GİB e-Defter duyurularından teyit edin.",
+      "source": [
+        "TÜRMOB — e-Defter berat süreleri (10.01.2025/24-1)",
+        "https://turmob.org.tr/ekutuphane/Read/ea271914-fa67-4079-8b63-41e27f6b66c1"
+      ],
+      "confidence": "secondary",
+      "needsVerification": true
+    },
+    {
+      "id": "e-defter-berat-2026-q3-kurum",
+      "date": "2026-12-14",
+      "nominalDate": "2026-12-14",
+      "shifted": false,
+      "title": "e-Defter berat yüklemesi (Temmuz–Eylül 2026 defterleri)",
+      "category": "e-defter",
+      "who": "e-Defter kullanan kurumlar vergisi ve diğer mükellefler",
+      "period": "Temmuz–Eylül 2026",
+      "note": "Tarih, TÜRMOB'un 10.01.2025 tarihli açıklamasındaki kuraldan (geçici vergi beyan ayını izleyen ayın 10. veya 14. günü) türetilmiştir; GİB bazı 2026 e-Defter sürelerini sirkülerle uzatmıştır. Yüklemeyi aylık veya üç aylık yaptığınıza göre GİB e-Defter duyurularından teyit edin.",
+      "source": [
+        "TÜRMOB — e-Defter berat süreleri (10.01.2025/24-1)",
+        "https://turmob.org.tr/ekutuphane/Read/ea271914-fa67-4079-8b63-41e27f6b66c1"
+      ],
+      "confidence": "secondary",
+      "needsVerification": true
+    },
+    {
+      "id": "kdv-2026-11",
+      "date": "2026-12-28",
+      "nominalDate": "2026-12-28",
+      "shifted": false,
+      "title": "KDV beyannamesi (beyan ve ödeme)",
+      "category": "kdv",
+      "who": "KDV mükellefleri (şirketler ve gerçek kişiler)",
+      "period": "Kasım 2026",
+      "source": [
+        "GİB — Beyanname Verme ve Ödeme Süreleri",
+        "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf"
+      ],
+      "confidence": "secondary"
+    },
+    {
+      "id": "muhtasar-damga-2026-11",
+      "date": "2026-12-28",
+      "nominalDate": "2026-12-26",
+      "shifted": true,
+      "shiftNote": "26 Aralık 2026 Cumartesi gününe denk geldiği için süre izleyen ilk iş gününe uzar.",
+      "title": "Muhtasar ve Prim Hizmet Beyannamesi ile damga vergisi beyannamesi",
+      "category": "muhtasar",
+      "who": "İşverenler ve stopaj sorumluları",
+      "period": "Kasım 2026",
+      "source": [
+        "GİB — Beyanname Verme ve Ödeme Süreleri",
+        "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf"
+      ],
+      "confidence": "verified-official"
+    },
+    {
+      "id": "sgk-2026-11",
+      "date": "2026-12-31",
+      "nominalDate": "2026-12-31",
+      "shifted": false,
+      "title": "SGK prim ödemesi",
+      "category": "sgk",
+      "who": "SGK kapsamında çalışan bulunduran işverenler",
+      "period": "Kasım 2026 primleri",
+      "source": [
+        "SGK — İşverenlerin Prim Ödeme İşlemleri",
+        "https://www.sgk.gov.tr/Content/Post/1f3a8bec-bca6-4e83-8e5c-f957a7d28af4/Isverenlerin-Prim-Odeme-Islemleri-2025-02-06-03-29-17"
+      ],
+      "confidence": "secondary"
+    },
+    {
+      "id": "muhtasar-3-aylik-2026-q4",
+      "date": "2027-01-26",
+      "nominalDate": "2027-01-26",
+      "shifted": false,
+      "title": "3 aylık Muhtasar ve Prim Hizmet Beyannamesi",
+      "category": "muhtasar",
+      "who": "Üç aylık dönemde beyan veren işverenler ve stopaj sorumluları",
+      "period": "Ekim–Aralık 2026",
+      "note": "Tek bir takvim kaynağına dayanır; üç aylık beyan verme koşulları araştırılmamıştır. Kendi yükümlülüğünüzü teyit edin.",
+      "source": [
+        "Müşavirler Kulübü — Vergi takvimi",
+        "https://musavirlerkulubu.com.tr/mevzuat/takvim/"
+      ],
+      "confidence": "secondary",
+      "needsVerification": true
+    },
+    {
+      "id": "muhtasar-damga-2026-12",
+      "date": "2027-01-26",
+      "nominalDate": "2027-01-26",
+      "shifted": false,
+      "title": "Muhtasar ve Prim Hizmet Beyannamesi ile damga vergisi beyannamesi",
+      "category": "muhtasar",
+      "who": "İşverenler ve stopaj sorumluları",
+      "period": "Aralık 2026",
+      "source": [
+        "GİB — Beyanname Verme ve Ödeme Süreleri",
+        "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf"
+      ],
+      "confidence": "verified-official"
+    },
+    {
+      "id": "kdv-2026-12",
+      "date": "2027-01-28",
+      "nominalDate": "2027-01-28",
+      "shifted": false,
+      "title": "KDV beyannamesi (beyan ve ödeme)",
+      "category": "kdv",
+      "who": "KDV mükellefleri (şirketler ve gerçek kişiler)",
+      "period": "Aralık 2026",
+      "source": [
+        "GİB — Beyanname Verme ve Ödeme Süreleri",
+        "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf"
+      ],
+      "confidence": "secondary"
+    },
+    {
+      "id": "mtv-2027-taksit-1",
+      "date": "2027-02-01",
+      "nominalDate": "2027-01-31",
+      "shifted": true,
+      "shiftNote": "31 Ocak 2027 Pazar gününe denk geldiği için süre izleyen ilk iş gününe uzar.",
+      "title": "Motorlu taşıtlar vergisi 1. taksit (son gün)",
+      "category": "emlak-mtv",
+      "who": "Taşıt sahipleri",
+      "period": "2027 yılı 1. taksit",
+      "note": "Motorlu taşıtlar vergisi Ocak ve Temmuz aylarında iki taksitte ödenir; beyanname verilmez.",
+      "source": [
+        "GİB — Beyanname Verme ve Ödeme Süreleri",
+        "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf"
+      ],
+      "confidence": "secondary"
+    },
+    {
+      "id": "sgk-2026-12",
+      "date": "2027-02-01",
+      "nominalDate": "2027-01-31",
+      "shifted": true,
+      "shiftNote": "31 Ocak 2027 Pazar gününe denk geldiği için süre izleyen ilk iş gününe uzar.",
+      "title": "SGK prim ödemesi",
+      "category": "sgk",
+      "who": "SGK kapsamında çalışan bulunduran işverenler",
+      "period": "Aralık 2026 primleri",
+      "source": [
+        "SGK — İşverenlerin Prim Ödeme İşlemleri",
+        "https://www.sgk.gov.tr/Content/Post/1f3a8bec-bca6-4e83-8e5c-f957a7d28af4/Isverenlerin-Prim-Odeme-Islemleri-2025-02-06-03-29-17"
+      ],
+      "confidence": "secondary"
+    },
+    {
+      "id": "gecici-vergi-2026-d4",
+      "date": "2027-02-17",
+      "nominalDate": "2027-02-17",
+      "shifted": false,
+      "title": "4. dönem geçici vergi beyanı ve ödemesi",
+      "category": "gecici-vergi",
+      "who": "Kurumlar vergisi mükellefleri ile gelir vergisi mükellefleri (ticari kazanç ve serbest meslek; basit usul hariç)",
+      "period": "Ekim–Aralık 2026 (kümülatif Ocak–Aralık)",
+      "note": "4. geçici vergi dönemi, 7566 sayılı Kanun'la 2025 ve sonrası dönemler için yeniden getirilmiştir; kurumlar vergisi mükellefleri bakımından kapsamı ikincil kaynaklara dayanır.",
+      "source": [
+        "GİB — Beyanname Verme ve Ödeme Süreleri",
+        "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf"
+      ],
+      "confidence": "secondary"
+    },
+    {
+      "id": "muhtasar-damga-2027-01",
+      "date": "2027-02-26",
+      "nominalDate": "2027-02-26",
+      "shifted": false,
+      "title": "Muhtasar ve Prim Hizmet Beyannamesi ile damga vergisi beyannamesi",
+      "category": "muhtasar",
+      "who": "İşverenler ve stopaj sorumluları",
+      "period": "Ocak 2027",
+      "source": [
+        "GİB — Beyanname Verme ve Ödeme Süreleri",
+        "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf"
+      ],
+      "confidence": "verified-official"
+    },
+    {
+      "id": "kdv-2027-01",
+      "date": "2027-03-01",
+      "nominalDate": "2027-02-28",
+      "shifted": true,
+      "shiftNote": "28 Şubat 2027 Pazar gününe denk geldiği için süre izleyen ilk iş gününe uzar.",
+      "title": "KDV beyannamesi (beyan ve ödeme)",
+      "category": "kdv",
+      "who": "KDV mükellefleri (şirketler ve gerçek kişiler)",
+      "period": "Ocak 2027",
+      "source": [
+        "GİB — Beyanname Verme ve Ödeme Süreleri",
+        "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf"
+      ],
+      "confidence": "secondary"
+    },
+    {
+      "id": "sgk-2027-01",
+      "date": "2027-03-01",
+      "nominalDate": "2027-02-28",
+      "shifted": true,
+      "shiftNote": "28 Şubat 2027 Pazar gününe denk geldiği için süre izleyen ilk iş gününe uzar.",
+      "title": "SGK prim ödemesi",
+      "category": "sgk",
+      "who": "SGK kapsamında çalışan bulunduran işverenler",
+      "period": "Ocak 2027 primleri",
+      "source": [
+        "SGK — İşverenlerin Prim Ödeme İşlemleri",
+        "https://www.sgk.gov.tr/Content/Post/1f3a8bec-bca6-4e83-8e5c-f957a7d28af4/Isverenlerin-Prim-Odeme-Islemleri-2025-02-06-03-29-17"
+      ],
+      "confidence": "secondary"
+    },
+    {
+      "id": "muhtasar-damga-2027-02",
+      "date": "2027-03-26",
+      "nominalDate": "2027-03-26",
+      "shifted": false,
+      "title": "Muhtasar ve Prim Hizmet Beyannamesi ile damga vergisi beyannamesi",
+      "category": "muhtasar",
+      "who": "İşverenler ve stopaj sorumluları",
+      "period": "Şubat 2027",
+      "source": [
+        "GİB — Beyanname Verme ve Ödeme Süreleri",
+        "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf"
+      ],
+      "confidence": "verified-official"
+    },
+    {
+      "id": "kdv-2027-02",
+      "date": "2027-03-29",
+      "nominalDate": "2027-03-28",
+      "shifted": true,
+      "shiftNote": "28 Mart 2027 Pazar gününe denk geldiği için süre izleyen ilk iş gününe uzar.",
+      "title": "KDV beyannamesi (beyan ve ödeme)",
+      "category": "kdv",
+      "who": "KDV mükellefleri (şirketler ve gerçek kişiler)",
+      "period": "Şubat 2027",
+      "source": [
+        "GİB — Beyanname Verme ve Ödeme Süreleri",
+        "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf"
+      ],
+      "confidence": "secondary"
+    },
+    {
+      "id": "sgk-2027-02",
+      "date": "2027-03-31",
+      "nominalDate": "2027-03-31",
+      "shifted": false,
+      "title": "SGK prim ödemesi",
+      "category": "sgk",
+      "who": "SGK kapsamında çalışan bulunduran işverenler",
+      "period": "Şubat 2027 primleri",
+      "source": [
+        "SGK — İşverenlerin Prim Ödeme İşlemleri",
+        "https://www.sgk.gov.tr/Content/Post/1f3a8bec-bca6-4e83-8e5c-f957a7d28af4/Isverenlerin-Prim-Odeme-Islemleri-2025-02-06-03-29-17"
+      ],
+      "confidence": "secondary"
+    },
+    {
+      "id": "gelir-vergisi-yillik-2026",
+      "date": "2027-03-31",
+      "nominalDate": "2027-03-31",
+      "shifted": false,
+      "title": "Yıllık gelir vergisi beyannamesi: son gün ve 1. taksit",
+      "category": "yillik-beyan",
+      "who": "Beyan yükümlülüğü olan gelir vergisi mükellefleri",
+      "period": "2026 geliri (1–31 Mart 2027)",
+      "note": "Beyan Mart ayı içinde verilir; vergi iki taksitte (Mart ve Temmuz) ödenebilir. Ramazan Bayramı (9–11 Mart) süre içindedir ancak son günü etkilemez.",
+      "source": [
+        "GİB — Beyanname Verme ve Ödeme Süreleri",
+        "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf"
+      ],
+      "confidence": "verified-official"
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+/* ═══════════════════════════════════════════════════════════════
+   Erişilebilirlik ve yardımcılar: efektler kapalı / azaltılmış hareket / yazdırma
+   ═══════════════════════════════════════════════════════════════ */
+
+/* JS yok ya da efektler kapalı: her şey görünür, hareket yok */
+html[data-fx='off'] *,
+html[data-fx='off'] *::before,
+html[data-fx='off'] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  transition-delay: 0s !important;
+  scroll-behavior: auto !important;
+}
+html[data-fx='off'] [data-reveal],
+html[data-fx='off'] [data-hero-in] {
+  opacity: 1 !important;
+  transform: none !important;
+}
+html[data-fx='off'] [data-lit] .w,
+html[data-fx='off'] .statement .w,
+html[data-fx='off'] .areahead__text .w,
+html[data-fx='off'] .svc__def .w {
+  opacity: 1 !important;
+}
+html[data-fx='off'] .world canvas {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-fx='full']):not([data-fx='lite']) *,
+  html:not([data-fx='full']):not([data-fx='lite']) *::before,
+  html:not([data-fx='full']):not([data-fx='lite']) *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Dokunmatik hedefler: etkileşimli çip/düğmeler ≥ 44 px; küçük metin bağlantıları (kırıntı, adres)
+   görünümü bozmadan ≥ 24 px (WCAG 2.5.8) — dolgu negatif kenar boşluğuyla dengelenir */
+@media (pointer: coarse) {
+  button.chip,
+  a.chip,
+  .btn--sm,
+  .fxswitch button,
+  .gl-rel__chips a.chip {
+    min-height: 44px;
+  }
+  input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='hidden']):not([type='file']),
+  select {
+    min-height: 44px;
+  }
+  .crumbs {
+    row-gap: 0.8rem;
+  }
+  .crumbs a,
+  .ftr__addr a,
+  .cta__side dd a,
+  .art__jump,
+  .rp-title a {
+    display: inline-block;
+    padding-block: 0.4rem;
+    margin-block: -0.4rem;
+  }
+  .sx-mx th a {
+    padding-block: 0.4rem;
+    margin-block: -0.4rem;
+  }
+}
+
+/* Taşma güvenliği */
+.u-clip {
+  overflow: clip;
+}
+.u-hide {
+  display: none !important;
+}
+[hidden] {
+  display: none !important;
+}
+
+/* Yazdırma: koyu zemin, dünya ve menü gizlenir */
+@media print {
+  .world,
+  .hdr,
+  .mnav,
+  .prog,
+  .hud,
+  .cta,
+  .ftr__cols,
+  .fxswitch,
+  .toolbar,
+  .skip {
+    display: none !important;
+  }
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  .phero,
+  .hero {
+    min-height: 0 !important;
+    padding: 1rem 0 !important;
+    color: #000 !important;
+    position: static !important;
+  }
+  .phero::before,
+  .hero::before {
+    display: none;
+  }
+  .phero h1,
+  .phero__lead,
+  .crumbs {
+    color: #000 !important;
+  }
+  .sheet {
+    box-shadow: none !important;
+    padding-block: 1rem !important;
+  }
+  .svc__side {
+    display: none;
+  }
+  .svc__main {
+    grid-column: 1 / -1 !important;
+  }
+  a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.8em;
+    color: #555;
+  }
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

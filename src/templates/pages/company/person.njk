@@ -1,0 +1,138 @@
+{# Kişi profili. Wagtail karşılığı: TeamMemberPage — title (ad), role, titles (Orderable), summary, bio (RichText paragrafları),
+   expertise (Orderable), education (Orderable: label, year), areas / services / sectors (ParentalManyToManyField; boşsa hizmet sahipliğinden
+   türetilir), photo (FK Image — yalnızca yazılı izinle), show_contact + email/phone/linkedin (isteğe bağlı; kapalıyken hiçbir yerde yazılmaz).
+   Boş alanlar bölümü ve içindekiler satırını gizler. #}
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+{% import "partials/people.njk" as pp %}
+
+{% block head_extra %}
+<script type="application/ld+json">{{ ld | json_script }}</script>
+{% endblock %}
+
+{% block main %}
+{% set p = person %}
+{{ m.phero(page, p.name, p.summary, p.role, 3, p.titlesShort) }}
+
+<div class="sheet sec--paper">
+  <div class="container">
+    <div class="svc g12 pf-page">
+
+      <aside class="svc__side gc" style="--gc: 1 / span 3">
+        <div class="pf-card">
+          {{ pp.avatar(p, "xl") }}
+          <dl class="pf-facts">
+            <div><dt>Görev</dt><dd>{{ p.role }}</dd></div>
+            {% if p.titles | length %}
+            <div><dt>Unvanlar</dt><dd><ul>{% for t in p.titles %}<li>{{ t }}</li>{% endfor %}</ul></dd></div>
+            {% endif %}
+            {% if p.groupList | length %}
+            <div><dt>Alanlar</dt><dd><ul class="pf-facts__chips">{% for g in p.groupList %}<li><a href="{{ g.url }}">{{ g.short }}</a></li>{% endfor %}</ul></dd></div>
+            {% endif %}
+          </dl>
+          {% if p.contact %}
+          <ul class="pf-contact">
+            {% if p.contact.email %}<li><a href="mailto:{{ p.contact.email }}">{{ p.contact.email }}</a></li>{% endif %}
+            {% if p.contact.phone %}<li><a href="tel:{{ p.contact.phone | replace(' ', '') }}">{{ p.contact.phone }}</a></li>{% endif %}
+            {% if p.contact.linkedin %}<li><a href="{{ p.contact.linkedin }}" target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span><span class="sr-only"> (yeni sekmede açılır)</span></a></li>{% endif %}
+          </ul>
+          {% endif %}
+          <a class="btn pf-card__cta" href="/iletisim/?kisi={{ p.slug }}">Görüşme talep edin {{ m.arrow() }}</a>
+        </div>
+      </aside>
+
+      <div class="svc__main gc" style="--gc: 4 / -1">
+
+        {% if p.bio | length %}
+        <section class="svc__sec" id="ozgecmis" data-chapter="Özgeçmiş">
+          <h2 class="svc__label mono" data-reveal>Özgeçmiş</h2>
+          <div class="pf-bio">
+            {% for para in p.bio %}<p data-reveal>{{ para }}</p>{% endfor %}
+          </div>
+        </section>
+        {% endif %}
+
+        {% if p.expertise | length %}
+        <section class="svc__sec" id="uzmanlik" data-chapter="Uzmanlık">
+          <h2 class="svc__label mono" data-reveal>Uzmanlık alanları</h2>
+          <ul class="pf-exp">
+            {% for e in p.expertise %}<li data-reveal data-reveal-delay="{{ loop.index0 % 2 }}">{{ e }}</li>{% endfor %}
+          </ul>
+        </section>
+        {% endif %}
+
+        {% if p.education | length %}
+        <section class="svc__sec" id="egitim" data-chapter="Eğitim">
+          <h2 class="svc__label mono" data-reveal>Eğitim ve sertifikalar</h2>
+          <ol class="pf-edu">
+            {% for e in p.education %}
+            <li data-reveal>
+              <span class="pf-edu__y mono tnum">{{ e[1] }}</span>
+              <span class="pf-edu__t">{{ e[0] }}</span>
+            </li>
+            {% endfor %}
+          </ol>
+        </section>
+        {% endif %}
+
+        {% if p.svcGroups | length %}
+        <section class="svc__sec" id="hizmetler" data-chapter="Hizmetler">
+          <h2 class="svc__label mono" data-reveal>İlgilendiği hizmetler</h2>
+          <div class="pf-svcs">
+            {% for x in p.svcGroups %}
+            <div class="pf-svcgrp" data-reveal>
+              <h3 class="pf-svcgrp__h"><a href="{{ x.group.url }}"><span class="mono tnum">{{ x.group.number }}</span>{{ x.group.name }}</a></h3>
+              <ul class="pf-svcgrp__l">
+                {% for s in x.items %}<li><a href="{{ s.url }}">{{ s.title }}</a></li>{% endfor %}
+              </ul>
+            </div>
+            {% endfor %}
+          </div>
+        </section>
+        {% endif %}
+
+        {% if p.sectorList | length %}
+        <section class="svc__sec" id="sektorler">
+          <h2 class="svc__label mono" data-reveal>Sektörler</h2>
+          <ul class="pf-secs" data-reveal>
+            {% for s in p.sectorList %}<li><a href="{{ s.url }}">{{ s.name }}</a></li>{% endfor %}
+          </ul>
+        </section>
+        {% endif %}
+
+        {% if others | length %}
+        <section class="svc__sec" id="diger">
+          <h2 class="svc__label mono" data-reveal>Ekibin diğer üyeleri</h2>
+          <ul class="pf-others">
+            {% for o in others %}<li data-reveal data-reveal-delay="{{ loop.index0 % 2 }}">{{ pp.mini(o) }}</li>{% endfor %}
+          </ul>
+        </section>
+        {% endif %}
+
+      </div>
+    </div>
+
+    <nav class="svcnav" aria-label="Komşu profiller">
+      {% if prev %}
+      <a class="svcnav__a svcnav__a--prev" href="{{ prev.url }}" rel="prev">
+        <span class="svcnav__k mono">← Önceki</span>
+        <span class="svcnav__t">{{ prev.name }}</span>
+      </a>
+      {% else %}<span></span>{% endif %}
+      {% if next %}
+      <a class="svcnav__a svcnav__a--next" href="{{ next.url }}" rel="next">
+        <span class="svcnav__k mono">Sonraki →</span>
+        <span class="svcnav__t">{{ next.name }}</span>
+      </a>
+      {% else %}<span></span>{% endif %}
+    </nav>
+
+    <p class="svcback"><a class="textlink" href="/hakkimizda/ekibimiz/">Ekibimizin tamamı {{ m.arrow() }}</a></p>
+  </div>
+</div>
+
+{% set cta_title = p.name ~ " ile görüşme talep edin." %}
+{% set cta_text = "Konunuzu ve beklentinizi kısaca yazın; mesajınız ilgili ekip arkadaşımıza ulaşsın." %}
+{% set cta_href = "/iletisim/?kisi=" ~ p.slug %}
+{% include "partials/cta.njk" %}
+{% endblock %}

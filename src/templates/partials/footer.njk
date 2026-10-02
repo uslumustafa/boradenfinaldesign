@@ -1,0 +1,54 @@
+<footer class="ftr on-dark" id="footer">
+  <div class="container">
+    <div class="ftr__top">
+      <div class="ftr__brand">
+        {% include "partials/logo.njk" %}
+        <p>{{ data.content.about.foundation }}</p>
+        <address class="ftr__addr">
+          {{ contact.street }}<br>
+          {{ contact.postcode }} {{ contact.district }} / {{ contact.city }}<br>
+          <a href="tel:{{ contact.phoneHref }}">{{ contact.phone }}</a> ·
+          <a href="mailto:{{ contact.email }}">{{ contact.email }}</a>
+        </address>
+      </div>
+
+      <nav class="ftr__cols" aria-label="Alt menü">
+        <div>
+          <h2>Hizmet alanları</h2>
+          {% for g in groups %}<a href="{{ g.url }}">{{ g.name }}</a>{% endfor %}
+        </div>
+        <div>
+          <h2>Bilgi merkezi</h2>
+          {% for it in site.insights %}<a href="{{ it.url }}">{{ it.label }}</a>{% endfor %}
+        </div>
+        <div>
+          <h2>Keşfet</h2>
+          <a href="/hesaplayicilar/">Hesaplayıcılar</a>
+          <a href="/sektorler/">Sektörler</a>
+          <a href="/arama/">Site içi arama</a>
+          <a href="/site-haritasi/">Site haritası</a>
+        </div>
+        <div>
+          <h2>Kurumsal</h2>
+          {% for it in site.footerLinks.kurumsal %}<a href="{{ it.url }}">{{ it.label }}</a>{% endfor %}
+          {% for it in site.footerLinks.yasal %}<a href="{{ it.url }}">{{ it.label }}</a>{% endfor %}
+        </div>
+      </nav>
+    </div>
+
+    <div class="ftr__legal">
+      <p>{{ site.disclaimer }}</p>
+      <div class="ftr__row">
+        <span>© {{ site.year }} {{ site.legalName }}</span>
+        <div class="fxswitch" role="group" aria-label="Görsel efektler">
+          <span id="fxlabel">Efektler</span>
+          <span class="fxswitch__opts">
+            <button type="button" data-fx-set="full" aria-pressed="false" aria-describedby="fxlabel">Tam</button>
+            <button type="button" data-fx-set="lite" aria-pressed="false" aria-describedby="fxlabel">Hafif</button>
+            <button type="button" data-fx-set="off" aria-pressed="false" aria-describedby="fxlabel">Kapalı</button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

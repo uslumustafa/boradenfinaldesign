@@ -1,0 +1,14 @@
+# bağımlılıklar ve üretilen çıktı
+node_modules/
+dist/
+
+# geliştirme çıktıları
+tests/shots/
+docs/research/__pycache__/
+*.log
+.DS_Store
+
+# NOT: src/assets/documents (≈156 MB, 247 PDF) depoda tutulur; Git LFS / harici depolama kararı için bkz. docs/HANDOFF.md §7.
+
+# taşınan/silinecek geçici dosyalar (kullanıcı onayıyla silinir)
+_to_delete/

@@ -1,0 +1,99 @@
+{# Kişi bileşenleri. Veri: model.team (scripts/team.mjs). Hizmet/alan/sektör kayıtlarındaki `people` = o sayfanın kişileri.
+   Wagtail karşılığı: includes/person_*.html — TeamMemberPage kartları. Fotoğraf varsa {% image member.photo fill-480x600 %},
+   yoksa baş harfli, marka vurgulu kutu (izinli portre yüklenene kadar). Kişi sayısı ve sırası şablonda sabitlenmez:
+   sektör/alan/hizmet sayfalarında liste ilgili kayıtların `people` alanından gelir (açık atama, yoksa türetilen). #}
+{% import "partials/macros.njk" as m %}
+
+{# Baş harfli kutu ya da portre. size: xs | sm | md | lg | xl #}
+{% macro avatar(p, size="md") %}
+<span class="avatar avatar--{{ size }}{% if p.photoKey %} has-photo{% endif %}" data-accent="{{ p.accent }}"{% if not p.photoKey %} aria-hidden="true"{% endif %}>
+  {% if p.photoKey %}{{ m.photo(p.photoKey, "(min-width: 900px) 320px, 45vw", "avatar__img", false, p.name) }}{% else %}<span class="avatar__ini">{{ p.initials }}</span>{% endif %}
+</span>
+{% endmacro %}
+
+{# Ekibimiz sayfasındaki büyük kart #}
+{% macro card(p) %}
+<article class="pcard" data-accent="{{ p.accent }}">
+  <a class="pcard__media" href="{{ p.url }}" tabindex="-1" aria-hidden="true">{{ avatar(p, "xl") }}</a>
+  <div class="pcard__body">
+    <h3 class="pcard__name"><a href="{{ p.url }}">{{ p.name }}</a></h3>
+    <p class="pcard__role">{{ p.role }}</p>
+    {% if p.titlesShort | length %}<p class="pcard__titles">{{ p.titlesShort | join(" · ") }}</p>{% endif %}
+    {% if p.summary %}<p class="pcard__sum">{{ p.summary }}</p>{% endif %}
+    {% if p.groupList | length %}
+    <ul class="pcard__areas" aria-label="Çalışma alanları">
+      {% for g in p.groupList %}<li><a href="{{ g.url }}">{{ g.short }}</a></li>{% endfor %}
+    </ul>
+    {% endif %}
+    <p class="pcard__act"><a class="textlink" href="{{ p.url }}">Profili inceleyin {{ m.arrow() }}</a></p>
+  </div>
+</article>
+{% endmacro %}
+
+{# Sayfa altı kişi kartı (sektör, alan, hizmet). o.label: «Bu alanda» etiketi · o.query: iletişim bağlantısına eklenen parametre (&sektor=…) #}
+{% macro person(p, o={}) %}
+<article class="pp" data-accent="{{ p.accent }}">
+  <a class="pp__media" href="{{ p.url }}" tabindex="-1" aria-hidden="true">{{ avatar(p, "lg") }}</a>
+  <div class="pp__body">
+    <p class="pp__role">{{ p.role }}</p>
+    <h3 class="pp__name"><a href="{{ p.url }}">{{ p.name }}</a></h3>
+    {% if p.titlesShort | length %}<p class="pp__titles">{{ p.titlesShort | join(" · ") }}</p>{% endif %}
+    {% if p.topics | length %}
+    <div class="pp__topics">
+      <p class="pp__k mono">{{ o.label or "Bu alanda" }}</p>
+      <ul>
+        {% for t in p.topics | limit(3) %}<li><a href="{{ t.url }}">{{ t.title }}</a></li>{% endfor %}
+        {% if p.topics | length > 3 %}<li class="pp__more mono">+{{ (p.topics | length) - 3 }} hizmet</li>{% endif %}
+      </ul>
+    </div>
+    {% endif %}
+    <p class="pp__act">
+      <a class="btn btn--sm" href="/iletisim/?kisi={{ p.slug }}{{ o.query or '' }}">Görüşme talep edin {{ m.arrow() }}</a>
+      <a class="textlink" href="{{ p.url }}">Profil</a>
+    </p>
+  </div>
+</article>
+{% endmacro %}
+
+{# Sayfa altı «İlgili ekip» bandı. people: kayıtın `people` listesi; liste boşsa hiçbir şey çizilmez.
+   o: { id, eyebrow, title, lead, label, query, headingId } #}
+{% macro band(people, o={}) %}
+{% if people | length %}
+{% set hid = (o.id or "ekip") ~ "-h" %}
+<section class="pband sec--paper2" id="{{ o.id or 'ekip' }}" data-chapter="Ekip" aria-labelledby="{{ hid }}">
+  <div class="container">
+    <div class="pband__head g12">
+      <div class="gc" style="--gc: 1 / span 4">
+        <p class="eyebrow" data-reveal>{{ o.eyebrow or "İlgili ekip" }}</p>
+      </div>
+      <div class="gc" style="--gc: 5 / -1">
+        <h2 class="pband__t" id="{{ hid }}" data-reveal data-reveal-delay="1">{{ o.title }}</h2>
+        {% if o.lead %}<p class="pband__lead" data-reveal data-reveal-delay="2">{{ o.lead }}</p>{% endif %}
+      </div>
+    </div>
+    <ul class="pband__list pband__list--{{ people | length }}">
+      {% for p in people %}
+      <li data-reveal data-reveal-delay="{{ loop.index0 }}">{{ person(p, o) }}</li>
+      {% endfor %}
+    </ul>
+    <p class="pband__foot" data-reveal>Ekibimizin tamamı için <a class="textlink" href="/hakkimizda/ekibimiz/">Ekibimiz {{ m.arrow() }}</a></p>
+  </div>
+</section>
+{% endif %}
+{% endmacro %}
+
+{# Küçük satır: avatar + ad + görev (diğer üyeler, Hakkımızda özeti) #}
+{% macro mini(p) %}
+<a class="pmini" href="{{ p.url }}">
+  {{ avatar(p, "sm") }}
+  <span class="pmini__t"><b>{{ p.name }}</b><small>{{ p.role }}</small></span>
+  <span class="pmini__go" aria-hidden="true">→</span>
+</a>
+{% endmacro %}
+
+{# Satır içi kişi listesi: küçük avatar + ad (dizin tabloları) #}
+{% macro inline(people) %}
+<ul class="pinline">
+  {% for p in people %}<li><a href="{{ p.url }}">{{ avatar(p, "xs") }}<span>{{ p.name }}</span></a></li>{% endfor %}
+</ul>
+{% endmacro %}

@@ -1,0 +1,28 @@
+{
+  "name": "boraden-web",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Boraden — frontend (statik üretim; Wagtail şablonlarına birebir taşınabilir yapı)",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "build:prod": "node scripts/build.mjs --prod",
+    "build:assets": "node scripts/build.mjs --assets --prod",
+    "serve": "node scripts/serve.mjs",
+    "dev": "node scripts/dev.mjs",
+    "fonts": "node scripts/vendor-fonts.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "test:e2e": "node tests/forms.e2e.mjs && node tests/router.e2e.mjs && node tests/hud.e2e.mjs && node tests/hero.e2e.mjs && node tests/services.e2e.mjs && node tests/calc-smoke.mjs",
+    "links": "node tests/links.mjs",
+    "audit": "node tests/audit.mjs"
+  },
+  "devDependencies": {
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@fontsource/ibm-plex-sans": "^5.3.0",
+    "@fontsource/newsreader": "^5.3.0",
+    "esbuild": "^0.28.2",
+    "nunjucks": "^3.2.4",
+    "playwright-core": "^1.63.0",
+    "three": "^0.186.1"
+  }
+}

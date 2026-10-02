@@ -1,0 +1,198 @@
+{
+  "slug": "kvkk-aydinlatma-metni",
+  "title": "KVKK Aydınlatma Metni",
+  "status": "Taslak",
+  "updatedAt": "2026-10-01",
+  "intro": "Bu metin, 6698 sayılı Kişisel Verilerin Korunması Kanunu'nun (Kanun) 10. maddesi ile Aydınlatma Yükümlülüğünün Yerine Getirilmesinde Uyulacak Usul ve Esaslar Hakkında Tebliğ uyarınca, bu internet sitesini (www.boraden.com.tr) kullanırken ve sitedeki formları doldururken işlenen kişisel verilerinize ilişkin olarak sizi bilgilendirmek amacıyla hazırlanmıştır.",
+  "sections": [
+    {
+      "id": "veri-sorumlusu",
+      "heading": "1. Veri sorumlusu",
+      "paragraphs": [
+        "Kişisel verileriniz, Kanun kapsamında veri sorumlusu sıfatıyla **Boraden Bağımsız Denetim ve Danışmanlık A.Ş.** (Boraden) tarafından işlenir. Adres: Maltepe Mahallesi, Yedikule Çırpıcı Yolu Sokak, Avrupa Kale Ofis Blok, No: 2, Kat: 2, Daire: 5, 34010 Zeytinburnu / İstanbul. E-posta: info@boraden.com.tr. Telefon: +90 (212) 483 26 11."
+      ],
+      "list": [
+        "MERSİS numarası: [[MERSİS numarası]]",
+        "Ticaret sicil numarası: [[Ticaret sicil numarası]]",
+        "Kayıtlı elektronik posta (KEP) adresi: [[KEP adresi]]",
+        "Veri Sorumluları Sicili (VERBİS) kaydı: [[VERBİS kayıt durumu]]"
+      ]
+    },
+    {
+      "id": "kapsam",
+      "heading": "2. Metnin kapsamı",
+      "paragraphs": [
+        "Bu metin yalnızca bu internet sitesi üzerinden gerçekleşen kişisel veri işleme faaliyetlerini kapsar: iletişim formu, kariyer ve genel başvuru formu, sitedeki iletişim bağlantıları ve sitenin barındırıldığı altyapıda oluşan teknik günlük kayıtları. Boraden ile kurulan hizmet ilişkisi kapsamında yürütülen işlemler bu metnin dışındadır.",
+        "Sitede çerez yerleştirilmez ve analitik ya da reklam amaçlı bir araç çalıştırılmaz. Tarayıcınızda yalnızca görsel efekt tercihinizi hatırlayan, kişisel veri içermeyen bir kayıt tutulur; ayrıntılar için [Çerez Politikası](/yasal/cerez-politikasi/) sayfasına bakabilirsiniz."
+      ]
+    },
+    {
+      "id": "veriler-amaclar-hukuki-sebepler",
+      "heading": "3. İşlenen veriler, işleme amaçları ve hukuki sebepler",
+      "paragraphs": [
+        "Kişisel verileriniz aşağıdaki faaliyetler kapsamında, belirtilen amaçlarla ve Kanun'un 5. maddesinin ikinci fıkrasında yer alan hukuki sebeplere dayanılarak işlenir; ilgili bentler, örneğin 5. maddenin ikinci fıkrasının (f) bendi için “m. 5/2-(f)” biçiminde gösterilmiştir. Açık rızanıza dayanan bir işleme faaliyeti bulunduğunda bu rıza, aydınlatmadan ayrı olarak ve ilgili işleme faaliyeti özelinde istenir."
+      ],
+      "list": [
+        "**İletişim formu ve iletişim bağlantıları.** Veriler: ad soyad, e-posta adresi, telefon numarası (isteğe bağlı), şirket veya kurum adı (isteğe bağlı), konu ve mesajınızın içeriği. Amaç: mesajınızı değerlendirmek, size dönüş yapmak ve talebinizi ilgili uzmanlık alanına yönlendirmek. Hukuki sebep: m. 5/2-(f) (veri sorumlusunun meşru menfaati); mesajınız bir hizmet ilişkisinin kurulmasına yönelikse ayrıca m. 5/2-(c) (sözleşmenin kurulması veya ifasıyla doğrudan ilgili olması). Sitedeki e-posta, telefon ve WhatsApp bağlantıları üzerinden bize ilettiğiniz bilgiler de aynı amaç ve hukuki sebeplerle işlenir; WhatsApp gibi üçüncü taraf uygulamalar kendi veri işleme uygulamalarına tabidir.",
+        "**Kariyer ve genel başvuru formu.** Veriler: ad soyad, e-posta adresi, telefon numarası (isteğe bağlı), şehir, ilgilendiğiniz alan, deneyim düzeyi, ön yazı ve özgeçmişinizde (CV) yer alan eğitim, iş deneyimi ve iletişim bilgileri gibi veriler. Amaç: başvurunuzu değerlendirmek ve başvuru süreci hakkında sizinle iletişim kurmak. Hukuki sebep: m. 5/2-(c) (sözleşmenin kurulması veya ifasıyla doğrudan ilgili olması) ve m. 5/2-(f) (veri sorumlusunun meşru menfaati). Başvurunuzun, ilgili olduğu pozisyon veya başvuru süreci dışında, ileride açılabilecek pozisyonlar için saklanması ayrıca açık rızanıza dayanır: [[Aday havuzu saklama süresi ve açık rıza uygulaması]].",
+        "**Teknik günlük kayıtları.** Veriler: IP adresi, erişim tarihi ve saati, istenen sayfa adresi, HTTP durum kodu, yönlendiren sayfa ile tarayıcı ve cihaz bilgisi (user agent). Amaç: sitenin güvenli ve sorunsuz çalışmasını sağlamak, teknik arızaları ve kötüye kullanımı tespit etmek. Hukuki sebep: m. 5/2-(f) (veri sorumlusunun meşru menfaati). Bu kayıtlar siteyi barındıran altyapı sağlayıcısı tarafından da tutulabilir.",
+        "**Hukuki yükümlülüklerin yerine getirilmesi ve hakların korunması.** Veriler: yukarıdaki faaliyetlerde işlenen veriler, ilgili olduğu ölçüde. Amaç: mevzuattan doğan yükümlülükleri yerine getirmek, yetkili kurum ve kuruluşların taleplerini yanıtlamak, olası uyuşmazlıklarda haklarımızı tesis etmek, kullanmak veya korumak. Hukuki sebep: m. 5/2-(a) (kanunlarda açıkça öngörülmesi), m. 5/2-(ç) (veri sorumlusunun hukuki yükümlülüğünü yerine getirebilmesi için zorunlu olması) ve m. 5/2-(e) (bir hakkın tesisi, kullanılması veya korunması için zorunlu olması).",
+        "**Bülten.** Sitede şu anda bülten aboneliği bulunmamaktadır. [[Bülten aboneliği (planlanıyorsa)]]"
+      ]
+    },
+    {
+      "id": "ozel-nitelikli-veriler",
+      "heading": "4. Özel nitelikli kişisel veriler",
+      "paragraphs": [
+        "Sitedeki formlarda özel nitelikli kişisel veri talep edilmez. Özgeçmişinizde veya mesajınızda, değerlendirme için gerekli olmayan sağlık bilgisi, sendika veya dernek üyeliği, ceza mahkûmiyeti, din veya etnik köken gibi verilere yer vermemenizi rica ederiz. Bu tür verilerin yine de iletilmesi hâlinde, bunların işlenmesi Kanun'un 6. maddesinde öngörülen şartlara tabidir. [[Özel nitelikli veriler için işlem esasları]]"
+      ]
+    },
+    {
+      "id": "toplama-yontemi",
+      "heading": "5. Kişisel verilerin toplanma yöntemi",
+      "paragraphs": [
+        "Verileriniz doğrudan sizden, sitedeki formlara girdiğiniz bilgiler ve yüklediğiniz belgeler aracılığıyla elektronik ortamda toplanır. Teknik günlük kayıtları ise siteyi ziyaret ettiğinizde otomatik yollarla oluşur. Veriler tamamen veya kısmen otomatik yollarla elde edilir ve işlenir.",
+        "Formlar aracılığıyla gönderilen bilgiler info@boraden.com.tr adresine ve Boraden'in kayıtlarına aktarılır."
+      ]
+    },
+    {
+      "id": "aktarim",
+      "heading": "6. Kişisel verilerin aktarılması",
+      "paragraphs": [
+        "Kişisel verileriniz, Kanun'un 8. maddesine uygun olarak ve yukarıda belirtilen amaçlarla sınırlı olmak üzere aşağıdaki alıcı gruplarına aktarılabilir:"
+      ],
+      "list": [
+        "Siteyi barındıran, e-posta iletimini ve bilgi teknolojileri desteğini sağlayan hizmet sağlayıcılar ([[Barındırma ve e-posta hizmet sağlayıcıları]]). Bu hizmet sağlayıcılar, verileri Boraden adına ve talimatları doğrultusunda işleyen veri işleyen konumundadır; amaç, sitenin ve iletişim kanallarının işletilmesidir.",
+        "Yasal yükümlülük hâlinde yetkili kamu kurum ve kuruluşları ile adli makamlar; amaç, mevzuattan doğan yükümlülüklerin yerine getirilmesi ve ilgili makamların yetkileri çerçevesindeki taleplerinin karşılanmasıdır.",
+        "Hukuki danışmanlar ve avukatlar; amaç, hukuki haklarımızın tesisi, kullanılması veya korunmasıdır."
+      ]
+    },
+    {
+      "id": "yurt-disina-aktarim",
+      "heading": "7. Yurt dışına aktarım",
+      "paragraphs": [
+        "Yurt dışına aktarım: [[Yurt dışına aktarım durumu]]. Yurt dışına aktarım yapılması hâlinde Kanun'un 9. maddesi ile Kişisel Verilerin Yurt Dışına Aktarılmasına İlişkin Usul ve Esaslar Hakkında Yönetmelik hükümlerine uyulur."
+      ]
+    },
+    {
+      "id": "saklama-sureleri",
+      "heading": "8. Saklama süreleri",
+      "paragraphs": [
+        "Kişisel verileriniz, ilgili mevzuatta öngörülen veya işlendikleri amaç için gerekli olan süre kadar muhafaza edilir. Sürenin sona ermesi hâlinde verileriniz Kanun'un 7. maddesi uyarınca silinir, yok edilir veya anonim hâle getirilir."
+      ],
+      "list": [
+        "İletişim formu ve iletişim kanallarıyla ilettiğiniz mesajlar: [[İletişim formu kayıtları için saklama süresi]]",
+        "Başvuru ve özgeçmiş bilgileri: [[Başvuru ve özgeçmiş bilgileri için saklama süresi]]",
+        "Teknik günlük kayıtları: [[Günlük kayıtları için saklama süresi]]"
+      ]
+    },
+    {
+      "id": "haklariniz",
+      "heading": "9. İlgili kişi olarak haklarınız",
+      "paragraphs": [
+        "Kanun'un 11. maddesi uyarınca, veri sorumlusuna başvurarak kendinizle ilgili şu haklara sahipsiniz:"
+      ],
+      "list": [
+        "Kişisel veri işlenip işlenmediğini öğrenme,",
+        "Kişisel verileri işlenmişse buna ilişkin bilgi talep etme,",
+        "Kişisel verilerin işlenme amacını ve bunların amacına uygun kullanılıp kullanılmadığını öğrenme,",
+        "Yurt içinde veya yurt dışında kişisel verilerin aktarıldığı üçüncü kişileri bilme,",
+        "Kişisel verilerin eksik veya yanlış işlenmiş olması hâlinde bunların düzeltilmesini isteme,",
+        "Kanun'un 7. maddesinde öngörülen şartlar çerçevesinde kişisel verilerin silinmesini veya yok edilmesini isteme,",
+        "Düzeltme ile silme veya yok edilme işlemlerinin, kişisel verilerin aktarıldığı üçüncü kişilere bildirilmesini isteme,",
+        "İşlenen verilerin münhasıran otomatik sistemler vasıtasıyla analiz edilmesi suretiyle kişinin kendisi aleyhine bir sonucun ortaya çıkmasına itiraz etme,",
+        "Kişisel verilerin kanuna aykırı olarak işlenmesi sebebiyle zarara uğraması hâlinde zararın giderilmesini talep etme."
+      ]
+    },
+    {
+      "id": "basvuru",
+      "heading": "10. Haklarınızı nasıl kullanabilirsiniz?",
+      "paragraphs": [
+        "Başvurularınızı Türkçe olarak ve Veri Sorumlusuna Başvuru Usul ve Esasları Hakkında Tebliğ'de öngörülen yöntemlerden biriyle iletebilirsiniz:"
+      ],
+      "list": [
+        "Yazılı ve imzalı olarak, yukarıda belirtilen adrese;",
+        "Kayıtlı elektronik posta (KEP) ile [[KEP adresi]] adresine;",
+        "Güvenli elektronik imza veya mobil imza ile imzalanmış başvurunuzu info@boraden.com.tr adresine göndererek;",
+        "Daha önce bize bildirdiğiniz ve sistemimizde kayıtlı olan e-posta adresinizden info@boraden.com.tr adresine yazarak."
+      ]
+    },
+    {
+      "id": "basvuru-icerigi-ve-cevap",
+      "heading": "11. Başvurunun içeriği, cevap süresi ve şikâyet",
+      "paragraphs": [
+        "Başvuruda; ad ve soyadınız (yazılı başvuruda imzanız), T.C. vatandaşları için T.C. kimlik numaranız (yabancılar için uyruğunuz ile pasaport numaranız veya varsa kimlik numaranız), tebligata esas yerleşim yeri veya iş yeri adresiniz, varsa bildirime esas e-posta adresiniz, telefon ve faks numaranız ile talep konunuz bulunmalıdır; konuya ilişkin bilgi ve belgeler başvuruya eklenir. Başvuruyu yapanın ilgili kişi olduğunu doğrulamak için ek bilgi veya belge istenebilir.",
+        "Başvurunuz, talebin niteliğine göre en kısa sürede ve en geç otuz gün içinde sonuçlandırılır. Cevap size yazılı olarak veya elektronik ortamda bildirilir; telefon ya da yüz yüze bilgilendirme tek başına cevap yerine geçmez. İşlemin ayrıca bir maliyet gerektirmesi hâlinde, Kişisel Verileri Koruma Kurulu'nca belirlenen tarifedeki ücret alınabilir.",
+        "Başvurunuzun reddedilmesi, verilen cevabın yetersiz bulunması veya süresinde cevap verilmemesi hâllerinde; cevabı öğrendiğiniz tarihten itibaren otuz ve her hâlde başvuru tarihinden itibaren altmış gün içinde [Kişisel Verileri Koruma Kurumu](https://www.kvkk.gov.tr) nezdinde Kurul'a şikâyette bulunabilirsiniz. Kurul'a şikâyet için önce veri sorumlusuna başvurulması gerekir."
+      ]
+    },
+    {
+      "id": "degisiklikler-ve-iletisim",
+      "heading": "12. Değişiklikler ve iletişim",
+      "paragraphs": [
+        "Bu metin, mevzuattaki veya veri işleme faaliyetlerimizdeki değişikliklere bağlı olarak güncellenebilir. Güncel sürüm bu sayfada yayımlanır; sayfadaki güncelleme tarihi son değişikliği gösterir.",
+        "Bu metin ve kişisel verilerinizin işlenmesi hakkındaki sorularınız için info@boraden.com.tr adresine yazabilirsiniz. Genel veri uygulamalarımız için [Gizlilik Politikası](/yasal/gizlilik-politikasi/) ve [Çerez Politikası](/yasal/cerez-politikasi/) sayfalarına da bakabilirsiniz."
+      ]
+    }
+  ],
+  "placeholders": [
+    {
+      "token": "MERSİS numarası",
+      "description": "Şirketin MERSİS (Merkezi Sicil Kayıt Sistemi) numarası."
+    },
+    {
+      "token": "Ticaret sicil numarası",
+      "description": "Bağlı olunan ticaret sicil müdürlüğü ve ticaret sicil numarası."
+    },
+    {
+      "token": "KEP adresi",
+      "description": "Şirketin kayıtlı elektronik posta (KEP) adresi; Veri Sorumlusuna Başvuru Usul ve Esasları Hakkında Tebliğ m.5 kapsamındaki başvuru yöntemlerinden biridir."
+    },
+    {
+      "token": "VERBİS kayıt durumu",
+      "description": "Veri Sorumluları Siciline kayıt yükümlülüğünün durumu ve varsa sicil bilgisi (kayıt yükümlülüğü yoksa dayanağı). Aydınlatma Tebliği m.5/1-ç uyarınca bu metin, sicile verilen bilgilerle uyumlu olmalıdır."
+    },
+    {
+      "token": "Aday havuzu saklama süresi ve açık rıza uygulaması",
+      "description": "Başvuruların ilgili pozisyon dışında, ileride açılabilecek pozisyonlar için saklanıp saklanmayacağı, saklama süresi ve bunun için ayrı ve isteğe bağlı açık rızanın nasıl alınacağı."
+    },
+    {
+      "token": "Bülten aboneliği (planlanıyorsa)",
+      "description": "Bülten gönderimi planlanıyorsa işlenecek veriler, amaç, hukuki sebep ve ticari elektronik ileti onayı (6563 sayılı Kanun m.6) burada düzenlenmelidir; planlanmıyorsa bu madde kaldırılmalıdır."
+    },
+    {
+      "token": "Özel nitelikli veriler için işlem esasları",
+      "description": "Özgeçmişlerde istem dışı yer alan özel nitelikli kişisel verilerin nasıl ele alınacağı (ör. silme veya maskeleme) ve Kanun m.6 kapsamındaki dayanak."
+    },
+    {
+      "token": "Barındırma ve e-posta hizmet sağlayıcıları",
+      "description": "Siteyi barındıran, form e-postalarını ileten ve bilgi teknolojileri desteği sağlayan hizmet sağlayıcıların unvanları ve bulundukları ülkeler."
+    },
+    {
+      "token": "Yurt dışına aktarım durumu",
+      "description": "Verilerin yurt dışına aktarılıp aktarılmadığı; aktarılıyorsa alıcı ülke veya kuruluş, Kanun m.9 kapsamındaki dayanak ve gereken bildirimler."
+    },
+    {
+      "token": "İletişim formu kayıtları için saklama süresi",
+      "description": "İletişim formu ve iletişim kanallarıyla gelen mesajların saklama süresi ve süre sonunda yapılacak işlem."
+    },
+    {
+      "token": "Başvuru ve özgeçmiş bilgileri için saklama süresi",
+      "description": "Kariyer ve genel başvuru verilerinin saklama süresi ve süre sonunda yapılacak işlem."
+    },
+    {
+      "token": "Günlük kayıtları için saklama süresi",
+      "description": "Teknik günlük kayıtlarının saklama süresi (barındırma sağlayıcısının uygulamasıyla birlikte teyit edilmelidir)."
+    }
+  ],
+  "reviewNotes": [
+    "Metindeki köşeli parantezli yer tutucular firma bilgileriyle doldurulmalıdır. VERBİS bildirimi ile bu metin uyumlu olmalıdır (Aydınlatma Tebliği m.5/1-ç).",
+    "Hukuki sebep eşlemesi (iletişim: m.5/2-f ve c; başvuru: m.5/2-c ve f; günlük kayıtları: m.5/2-f; yükümlülük ve hak tesisi: m.5/2-a, ç, e) avukatça teyit edilmelidir; meşru menfaat dayanağı için denge testi belgelenmelidir.",
+    "Aday havuzu için açık rıza gerekiyorsa aydınlatmadan ayrı ve isteğe bağlı bir onay mekanizması kurulmalıdır (Aydınlatma Tebliği m.5/1-f). Formlardaki zorunlu onay kutusu yalnızca aydınlatma metninin okunduğunu teyit eder; açık rıza değildir ve metinde öyle sunulmamıştır (KVKK Kurulu'nun 27.02.2020 tarihli ve 2020/173 sayılı kararındaki yaklaşım).",
+    "Barındırma, e-posta ve form altyapısı sağlayıcıları belirlenmelidir. Yurt dışına aktarım varsa Kanun m.9 (7499 sayılı Kanunla 2024'te değiştirilmiş hâliyle) ve 10.07.2024 tarihli, 32598 sayılı Resmî Gazete'de yayımlanan yönetmelik kapsamında dayanak ve bildirim yükümlülükleri değerlendirilmelidir.",
+    "Başvuru yöntemleri Veri Sorumlusuna Başvuru Usul ve Esasları Hakkında Tebliğ m.5'e göre yazılmıştır. KVKK Kurumu'nun 1 Ekim 2026 tarihli duyurusuna göre başvuru cevapları yazılı veya elektronik ortamda bildirilmelidir; KEP adresi ve başvuru yönetim süreci (sorumlu kişi, kayıt, 30 günlük süre takibi) tanımlanmalıdır.",
+    "Saklama süreleri belirlenmeli ve saklama ve imha politikasıyla (Kişisel Verilerin Silinmesi, Yok Edilmesi veya Anonim Hale Getirilmesi Hakkında Yönetmelik) uyumlandırılmalıdır.",
+    "Bu taslak yalnızca web sitesi kapsamını düzenler; hizmet ilişkisi, çalışan, tedarikçi ve diğer süreçler için ayrı aydınlatma metinleri gerekir. Formlar bağlandığında verilerin gerçekte nereye gittiği (e-posta, kayıt sistemi) bu metinle karşılaştırılmalıdır.",
+    "Teknik günlük kayıtlarının nerede ve ne kadar süre tutulduğu (barındırma sağlayıcısı) ile 5651 sayılı Kanun kapsamındaki saklama yükümlülüğünün kimde olduğu teyit edilmelidir."
+  ]
+}

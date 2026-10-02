@@ -1,0 +1,101 @@
+{# Kurumsal sayfaların ortak parçaları: form alanları (iletişim + kariyer), onay kutusu, gönderim satırı, «taslak hazır» paneli, simgeler.
+   Wagtail karşılığı: wagtail.contrib.forms FormField şablonu (field_type → aşağıdaki dallar) + form sayfasının «gönderim sonrası»
+   (landing) bölümü. Statik sürümde gönderim modules/form-kit.js ile bir mailto: taslağına dönüşür; ağ isteği yoktur. #}
+
+{# Tek alan. f: { id, label, type(text|email|tel|select|radio|textarea|file), required, autocomplete, help,
+   options[{ value, label, desc? }], minLength, accept, maxSizeMb, wide, hasDesc } · uid: sayfadaki form öneki #}
+{% macro field(f, uid) %}
+{% set fid = uid ~ "-" ~ f.id %}
+{% set desc = (fid ~ "-h " if f.help else "") ~ (fid ~ "-d " if f.hasDesc else "") ~ fid ~ "-e" %}
+{% if f.type == "radio" %}
+<fieldset class="field ct-field ct-field--wide" data-field="{{ f.id }}" data-type="radio">
+  <legend class="field__label">{{ f.label }}{% if f.required %}<span class="ct-req" aria-hidden="true">*</span>{% endif %}</legend>
+  <div class="seg ct-seg">
+    {% for o in f.options %}
+    <label><input type="radio" name="{{ f.id }}" value="{{ o.value }}"{% if f.required %} required{% endif %} aria-describedby="{{ desc }}"><span>{{ o.label }}</span></label>
+    {% endfor %}
+  </div>
+  {% if f.help %}<p class="field__help" id="{{ fid }}-h">{{ f.help }}</p>{% endif %}
+  <p class="field__err" id="{{ fid }}-e" hidden></p>
+</fieldset>
+{% else %}
+<div class="field ct-field{% if f.wide %} ct-field--wide{% endif %}{% if f.type == 'file' %} ct-file{% endif %}" data-field="{{ f.id }}" data-type="{{ f.type }}">
+  <label class="field__label" for="{{ fid }}">{{ f.label }}{% if f.required %}<span class="ct-req" aria-hidden="true">*</span>{% endif %}</label>
+  <span class="field__box">
+  {% if f.type == "select" %}
+    <select id="{{ fid }}" name="{{ f.id }}"{% if f.required %} required{% endif %} aria-describedby="{{ desc }}">
+      <option value="">Seçin…</option>
+      {% for o in f.options %}<option value="{{ o.value }}"{% if o.desc %} data-desc="{{ o.desc }}"{% endif %}>{{ o.label }}</option>{% endfor %}
+    </select>
+  {% elif f.type == "textarea" %}
+    <textarea id="{{ fid }}" name="{{ f.id }}" rows="6"{% if f.required %} required{% endif %}{% if f.minLength %} minlength="{{ f.minLength }}"{% endif %} aria-describedby="{{ desc }}"></textarea>
+  {% elif f.type == "file" %}
+    <input id="{{ fid }}" name="{{ f.id }}" type="file"{% if f.accept %} accept="{{ f.accept }}"{% endif %}{% if f.maxSizeMb %} data-max-mb="{{ f.maxSizeMb }}"{% endif %}{% if f.required %} required{% endif %} aria-describedby="{{ desc }}">
+    {# Türkçe düğme/durum metni (tarayıcının kendi dosya düğmesi dilden bağımsız olsun diye; modül etkinleştirir) #}
+    <span class="ct-file__btn mono" aria-hidden="true">Dosya seçin</span>
+    <span class="ct-file__name" data-fk-filename aria-hidden="true">Dosya seçilmedi</span>
+  {% else %}
+    <input id="{{ fid }}" name="{{ f.id }}" type="{{ f.type }}"{% if f.autocomplete %} autocomplete="{{ f.autocomplete }}"{% endif %}{% if f.type == "email" %} inputmode="email" spellcheck="false"{% elif f.type == "tel" %} inputmode="tel"{% endif %}{% if f.required %} required{% endif %} aria-describedby="{{ desc }}">
+  {% endif %}
+  </span>
+  {% if f.hasDesc %}<p class="ct-optdesc" id="{{ fid }}-d" data-fk-desc hidden></p>{% endif %}
+  {% if f.help %}<p class="field__help" id="{{ fid }}-h">{{ f.help }}</p>{% endif %}
+  {% if f.type == "textarea" and f.minLength %}<p class="ct-count mono tnum" data-fk-count="{{ f.minLength }}" aria-hidden="true" hidden></p>{% endif %}
+  {% if f.type == "file" %}<p class="ct-filenote" data-fk-file aria-live="polite"></p>{% endif %}
+  <p class="field__err" id="{{ fid }}-e" hidden></p>
+</div>
+{% endif %}
+{% endmacro %}
+
+{# KVKK onay kutusu (zorunlu). c: { text (satır içi işaretleme), required } #}
+{% macro consent(c, uid) %}
+<div class="field ct-field ct-field--wide ct-consent" data-field="kvkk-onay" data-type="checkbox">
+  <label class="check" for="{{ uid }}-kvkk-onay">
+    <input id="{{ uid }}-kvkk-onay" name="kvkk-onay" type="checkbox" value="evet"{% if c.required %} required{% endif %} aria-describedby="{{ uid }}-kvkk-onay-e">
+    <span>{{ c.text | rich }}{% if c.required %}<span class="ct-req" aria-hidden="true">*</span>{% endif %}</span>
+  </label>
+  <p class="field__err" id="{{ uid }}-kvkk-onay-e" hidden></p>
+</div>
+{% endmacro %}
+
+{# Gönderim satırı: düğme + ne olacağını açıklayan kısa not (statik sürüm: mailto taslağı) #}
+{% macro foot(label) %}
+<div class="ct-form__foot">
+  <button class="btn ct-submit" type="submit">{{ label }} <span class="arr" aria-hidden="true">→</span></button>
+  <p class="ct-form__hint">Düğme, e-posta uygulamanızda bir taslak hazırlar; gönderimi siz tamamlarsınız. Bu sayfa girdiğiniz bilgileri hiçbir yere iletmez ve saklamaz.</p>
+</div>
+{% endmacro %}
+
+{# «Taslak hazır» paneli. o: { title, text, to, attach?, copyLabel, wa? } #}
+{% macro done(uid, o) %}
+<section class="ct-done on-dark" data-fk-done tabindex="-1" aria-labelledby="{{ uid }}-done-h" hidden>
+  <p class="ct-done__k mono"><span class="ct-done__dot" aria-hidden="true"></span>E-posta taslağı</p>
+  <h3 class="ct-done__h" id="{{ uid }}-done-h">{{ o.title }}</h3>
+  <p class="ct-done__text">{{ o.text | rich }}</p>
+  {% if o.attach %}<div class="notice notice--warn ct-done__attach"><p><strong>CV'nizi e-postaya ekleyin.</strong> {{ o.attach }}</p></div>{% endif %}
+  <div class="notice ct-done__cut" data-fk-cut hidden><p>Metniniz uzun olduğu için e-posta taslağında kısaltıldı. Tam metni «{{ o.copyLabel }}» ile kopyalayıp e-postanıza yapıştırabilirsiniz.</p></div>
+  <dl class="ct-done__mail">
+    <div><dt>Alıcı</dt><dd>{{ o.to }}</dd></div>
+    <div><dt>Konu</dt><dd data-fk-subject></dd></div>
+    <div class="ct-done__row"><dt>Metin</dt><dd><pre class="ct-done__body" data-fk-body tabindex="0" aria-label="Hazırlanan e-posta metni"></pre></dd></div>
+  </dl>
+  <div class="ct-done__acts">
+    <a class="btn" data-fk-mailto href="mailto:{{ o.to }}">E-posta taslağını aç <span class="arr" aria-hidden="true">→</span></a>
+    <button class="btn btn--ghost" type="button" data-fk-copy data-label="{{ o.copyLabel }}">{{ o.copyLabel }}</button>
+    {% if o.wa %}<a class="btn btn--ghost" data-fk-wa href="https://wa.me/{{ o.wa }}" target="_blank" rel="noopener noreferrer">WhatsApp ile yaz <span aria-hidden="true">↗</span><span class="sr-only"> (yeni sekmede açılır)</span></a>{% endif %}
+  </div>
+  <p class="ct-done__more">
+    <button class="textlink" type="button" data-fk-edit>Forma dön ve düzenle</button>
+    <button class="textlink" type="button" data-fk-reset>Formu sıfırla</button>
+  </p>
+</section>
+{% endmacro %}
+
+{# Satır içi simgeler (stroke 1.6) #}
+{% macro icon(name) %}
+{% if name == "email" %}<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="1"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg>
+{% elif name == "phone" %}<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.6 3.5h2.6l1.4 4.2-2 1.3a11 11 0 0 0 6.4 6.4l1.3-2 4.2 1.4v2.6a1.6 1.6 0 0 1-1.7 1.6A16.5 16.5 0 0 1 5 5.2a1.6 1.6 0 0 1 1.6-1.7z"/></svg>
+{% elif name == "whatsapp" %}<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11.6a8 8 0 0 1-11.8 7l-4.2 1.1 1.1-4A8 8 0 1 1 20 11.6z"/><path d="M9 8.8c.3 2.6 2.5 5 5.4 5.6"/></svg>
+{% elif name == "pin" %}<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>
+{% endif %}
+{% endmacro %}

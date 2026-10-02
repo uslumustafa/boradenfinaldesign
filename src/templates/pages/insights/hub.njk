@@ -1,0 +1,152 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+
+{% block head_extra %}
+<script type="application/ld+json">{{ ld | json_script }}</script>
+{% endblock %}
+
+{# Bilgi merkezi (merkez). Wagtail karşılığı: InsightsHubPage — son yayınlar (PublicationPage sorgusu, tür süzgeci),
+   koleksiyonlar (StreamField; sayılar sorgulardan), arşivin yıllık dağılımı (ArchiveCircular sorgusu).
+   Kahraman, phero makrosunun yapısını izler; ek olarak sayaç satırı taşır. #}
+{% block main %}
+{% set feat = latest[0] %}
+<section class="phero sec--dark ic-hero" data-world="6" id="giris" data-chapter="Bilgi merkezi">
+  <div class="container">
+    <nav aria-label="Sayfa yolu">
+      <ol class="crumbs">
+        {% for c in page.crumbs %}<li><a href="{{ c.url }}">{{ c.label }}</a></li>{% endfor %}
+        <li aria-current="page">{{ page.title }}</li>
+      </ol>
+    </nav>
+    <p class="eyebrow" data-reveal>Yayınlar · Arşiv · Araçlar</p>
+    <h1 style="margin-top:1.2rem" data-reveal data-reveal-delay="1">Bilgi Merkezi</h1>
+    <p class="phero__lead" data-reveal data-reveal-delay="2">Güncel yayınlar, sirküler arşivi, başvuru içerikleri ve araçlar bir arada. Her yayın, dayandığı kaynağa bağlantı verir.</p>
+    <dl class="ic-stats" data-reveal data-reveal-delay="3">
+      <div class="ic-stat"><dt>Güncel yayın</dt><dd class="tnum" data-count="{{ total }}">{{ total }}</dd></div>
+      <div class="ic-stat"><dt>Arşiv sirküleri</dt><dd class="tnum" data-count="{{ arc.total }}">{{ arc.total }}</dd></div>
+      <div class="ic-stat"><dt>Arşiv yılı · {{ arc.range }}</dt><dd class="tnum" data-count="{{ arc.years | length }}">{{ arc.years | length }}</dd></div>
+      <div class="ic-stat"><dt>Koleksiyon</dt><dd class="tnum" data-count="{{ collectionCount }}">{{ collectionCount }}</dd></div>
+    </dl>
+  </div>
+</section>
+
+<div class="sheet sec--paper">
+  <section class="container ic-latest" id="son-yayinlar" data-chapter="Son yayınlar" data-listing="son-yayinlar" data-module="insights-hub" aria-labelledby="son-yayinlar-h">
+    <div class="ic-latest__head">
+      <header class="sechead">
+        <p class="eyebrow" data-reveal>Son yayınlar</p>
+        <h2 id="son-yayinlar-h" data-reveal data-reveal-delay="1">Güncel gündem,<br><em>kaynağıyla.</em></h2>
+      </header>
+      <div class="ic-latest__tools" data-reveal data-reveal-delay="2">
+        <div class="chips" role="group" aria-label="Yayın türüne göre süz" data-filter-by="tur">
+          <button class="chip is-on" type="button" data-filter="all" aria-pressed="true">Tümü<span class="ic-chip__n tnum">{{ latest | length }}</span></button>
+          {% for t in types %}{% if t.inList %}
+          <button class="chip" type="button" data-filter="{{ t.slug }}" aria-pressed="false">{{ t.title }}<span class="ic-chip__n tnum">{{ t.inList }}</span></button>
+          {% endif %}{% endfor %}
+        </div>
+        <p class="ic-count mono" data-result-count aria-live="polite"></p>
+      </div>
+    </div>
+
+    <div class="ic-latest__grid">
+      <ol class="ic-list">
+        {% for p in latest %}
+        <li class="ic-li" data-item data-tur="{{ p.typeSlug }}" data-text="{{ (p.title ~ ' ' ~ p.summary ~ ' ' ~ p.category ~ ' ' ~ p.typeLabel) | lower_tr }}" data-reveal{% if loop.index0 < 5 %} data-reveal-delay="{{ loop.index0 }}"{% endif %}>
+          <a class="ic-row" href="{{ p.url }}" data-ic-row data-type="{{ p.typeLabel }}" data-cat="{{ p.category }}" data-date="{{ p.date | date_tr }}" data-src="{{ p.sourceList | length }} kaynak">
+            <span class="ic-row__meta mono"><span class="ic-row__type">{{ p.typeLabel }}</span><time datetime="{{ p.date }}">{{ p.date | date_short }}</time></span>
+            <div class="ic-row__main">
+              <h3 class="ic-row__t">{{ p.title }}</h3>
+              <p class="ic-row__s">{{ p.summary }}</p>
+            </div>
+            <span class="ic-row__go" aria-hidden="true">→</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ol>
+
+      {# Önizleme paneli: satırın görsel kopyası (ekran okuyucudan gizli, sekme sırasında değil); JS ile üzerine gelinen satırı izler #}
+      {% if feat %}
+      <div class="ic-prev-wrap">
+        <a class="ic-prev" href="{{ feat.url }}" tabindex="-1" aria-hidden="true" data-ic-panel>
+          <span class="ic-prev__rail" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="ic-prev__in" data-ic-in>
+            <span class="ic-prev__meta mono"><span data-p="type">{{ feat.typeLabel }}</span><span data-p="cat">{{ feat.category }}</span><span data-p="date">{{ feat.date | date_tr }}</span></span>
+            <span class="ic-prev__t" data-p="title">{{ feat.title }}</span>
+            <span class="ic-prev__s" data-p="sum">{{ feat.summary }}</span>
+            <span class="ic-prev__foot"><span class="mono" data-p="src">{{ feat.sourceList | length }} kaynak</span><span class="ic-prev__go">Okuyun <span class="arr">→</span></span></span>
+          </span>
+        </a>
+        <p class="ic-prev__hint mono" aria-hidden="true">Önizleme · satırın üzerine gelin</p>
+      </div>
+      {% endif %}
+    </div>
+    <p class="empty" data-empty hidden>Bu türde yayın bulunamadı.</p>
+  </section>
+</div>
+
+{# Koleksiyonlar: koyu bölüm, 3B dünya arkada (katman çubukları) #}
+<section class="ic-cols sec sec--dark" data-world="5" id="koleksiyonlar" data-chapter="Koleksiyonlar" aria-labelledby="koleksiyonlar-h">
+  <div class="container">
+    <div class="g12 ic-cols__head">
+      <header class="sechead gc" style="--gc: 1 / span 7">
+        <p class="eyebrow" data-reveal>Koleksiyonlar</p>
+        <h2 id="koleksiyonlar-h" data-reveal data-reveal-delay="1">Arşivden araca,<br><em>tek yerde.</em></h2>
+      </header>
+      <p class="lead gc ic-cols__lead" style="--gc: 8 / -1" data-reveal data-reveal-delay="2">Yayınlar, başvuru içerikleri ve araçlar; her koleksiyonun güncel kayıt sayısıyla.</p>
+    </div>
+
+    {% for g in collections %}
+    <div class="ic-cg" data-reveal>
+      <p class="ic-cg__h mono"><span class="tnum">{{ loop.index | pad2 }}</span> {{ g.label }}</p>
+      <ul class="ic-cg__list ic-cg__list--{{ g.items | length }}">
+        {% for c in g.items %}
+        <li>
+          <a class="ic-col" href="{{ c.url }}">
+            <span class="ic-col__n tnum" data-count="{{ c.count }}">{{ c.count }}</span>
+            <span class="ic-col__u mono">{{ c.unit }}</span>
+            <span class="ic-col__t">{{ c.title }}</span>
+            <span class="ic-col__d">{{ c.desc }}</span>
+            <span class="ic-col__go" aria-hidden="true">→</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+{# Arşivin yıllara göre dağılımı: CSS çubuk grafiği (görünür olunca dolar) #}
+{% if arc.total %}
+<div class="sheet sec--paper">
+  <section class="container ic-arc" id="arsiv-dagilimi" data-chapter="Arşiv" aria-labelledby="arsiv-h">
+    <div class="g12">
+      <div class="gc ic-arc__text" style="--gc: 1 / span 4">
+        <header class="sechead">
+          <p class="eyebrow" data-reveal>Arşiv yıllara göre</p>
+          <h2 id="arsiv-h" data-reveal data-reveal-delay="1"><span class="tnum">{{ arc.total }}</span> sirküler,<br><em>{{ arc.years | length }} yıl.</em></h2>
+        </header>
+        <p class="ic-arc__lead" data-reveal data-reveal-delay="2">{{ arc.range }} döneminde yayımlanan sirkülerler PDF olarak arşivdedir.{% if arc.peak %} Arşivde en çok sirküler {{ arc.peak.year }} yılına aittir ({{ arc.peak.count }}).{% endif %} Bir yıla tıklayarak arşivi o yıla göre açabilirsiniz.</p>
+        <p class="ic-arc__link" data-reveal data-reveal-delay="3"><a class="textlink" href="/bilgi-merkezi/sirkulerler/#arsiv">Sirküler arşivine gidin {{ m.arrow() }}</a></p>
+      </div>
+      <figure class="gc ic-chart" style="--gc: 6 / -1" data-reveal>
+        <ol class="ic-bars" style="--n: {{ arc.years | length }}">
+          {% for y in arc.years %}
+          <li class="ic-bar" style="--v: {{ y.ratio }}; --i: {{ loop.index0 }}">
+            <a class="ic-bar__a" href="/bilgi-merkezi/sirkulerler/?yil={{ y.year }}#arsiv" aria-label="{{ y.year }}: {{ y.count }} sirküler (arşivi bu yıla göre aç)">
+              <span class="ic-bar__n tnum" aria-hidden="true"><span data-count="{{ y.count }}">{{ y.count }}</span><small>%{{ y.share }}</small></span>
+              <span class="ic-bar__col" aria-hidden="true"><span class="ic-bar__fill"></span></span>
+              <span class="ic-bar__y mono tnum" aria-hidden="true">{{ y.year }}</span>
+            </a>
+          </li>
+          {% endfor %}
+        </ol>
+        <figcaption class="ic-chart__cap mono" id="ic-chart-cap">Sirküler arşivi · yıllara göre adet (toplam {{ arc.total }})</figcaption>
+      </figure>
+    </div>
+  </section>
+</div>
+{% endif %}
+
+{% include "partials/cta.njk" %}
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+
+{% block head_extra %}
+<script type="application/ld+json">{{ ld | json_script }}</script>
+{% endblock %}
+
+{# Hesaplayıcı dizini. Wagtail karşılığı: CalculatorIndexPage (alt sayfalar: CalculatorPage) #}
+{% block main %}
+{% set yr = model.paramsLatest.bordro.year if model.paramsLatest.bordro else (model.paramsLatest.vergi.year if model.paramsLatest.vergi else '') %}
+{{ m.phero(page, "Hesaplayıcılar", "Ücret, maliyet, tazminat ve vergi hesapları; her sonuçta hesap adımları, varsayımlar ve kullanılan parametreler açıkça görünür.", "Araçlar", 5, [(model.calculators | length) ~ " hesaplayıcı", (yr ~ " yılı parametreleri") if yr else "Güncel parametreler"]) }}
+
+<div class="sheet sec--paper">
+  <div class="container" data-listing="calculators">
+    <div class="toolbar" style="margin-top:0">
+      <div class="chips" role="group" aria-label="Türe göre filtrele" data-filter-by="group">
+        <button class="chip is-on" type="button" data-filter="all" aria-pressed="true">Tümü</button>
+        {% for g in model.calcGroups %}<button class="chip" type="button" data-filter="{{ g.id }}" aria-pressed="false">{{ g.short }}</button>{% endfor %}
+        {% if model.calendar %}<button class="chip" type="button" data-filter="takvim" aria-pressed="false">Takvim</button>{% endif %}
+      </div>
+      <label class="searchbox">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+        <span class="sr-only">Hesaplayıcılarda ara</span>
+        <input type="search" placeholder="Hesaplayıcı ara…" data-search autocomplete="off">
+      </label>
+    </div>
+
+    {% for g in model.calcGroups %}
+    <section class="grp" data-group="{{ g.id }}" id="{{ g.id }}">
+      <header class="grp__head">
+        <div>
+          <span class="grp__no mono tnum">{{ loop.index | pad2 }} / {{ (model.calcGroups | length + (1 if model.calendar else 0)) | pad2 }}</span>
+          <h2>{{ g.label }}</h2>
+          <p>{{ g.blurb }}</p>
+        </div>
+        <span class="grp__all mono tnum">{{ g.items | length }} araç</span>
+      </header>
+      <ul class="svclist">
+        {% for c in g.items %}
+        <li data-item data-text="{{ (c.title ~ ' ' ~ c.short ~ ' ' ~ c.description) | lower_tr }}">
+          <a class="svcrow" href="{{ c.url }}">
+            <span class="svcrow__t">{{ c.title }}</span>
+            <span class="svcrow__d">{{ c.short }}</span>
+            <span class="svcrow__go" aria-hidden="true">→</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endfor %}
+
+    {% if model.calendar %}
+    <section class="grp" data-group="takvim" id="takvim">
+      <header class="grp__head">
+        <div>
+          <span class="grp__no mono tnum">{{ (model.calcGroups | length + 1) | pad2 }} / {{ (model.calcGroups | length + 1) | pad2 }}</span>
+          <h2>Takvim</h2>
+          <p>Beyan ve ödeme tarihleri; hafta sonu ve resmî tatil kaymaları işlenmiş, kaynaklarıyla birlikte.</p>
+        </div>
+        <span class="grp__all mono tnum">{{ model.calendar.count }} kayıt</span>
+      </header>
+      <ul class="svclist">
+        <li data-item data-text="vergi takvimi beyanname kdv muhtasar sgk geçici vergi e-defter son gün">
+          <a class="svcrow" href="/vergi-takvimi/">
+            <span class="svcrow__t">Vergi Takvimi</span>
+            <span class="svcrow__d">Sıradaki beyan ve ödeme günleri, kalan gün sayacı ve takvime aktarma.</span>
+            <span class="svcrow__go" aria-hidden="true">→</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    {% endif %}
+
+    <p class="empty" data-empty hidden>Aramanızla eşleşen hesaplayıcı bulunamadı.</p>
+
+    <div class="g12 toolsmeta">
+      <p class="eyebrow gc" style="--gc: 1 / span 4" data-reveal>Parametreler</p>
+      <div class="gc" style="--gc: 5 / -1" data-reveal>
+        <ul class="toolsmeta__list">
+          {% for alan, lp in model.paramsLatest %}
+          <li>
+            <span class="toolsmeta__k">{% if alan == 'bordro' %}Bordro, gelir vergisi ve tazminat{% elif alan == 'vergi' %}KDV, kurumlar ve diğer vergiler{% else %}{{ alan }}{% endif %}</span>
+            <span class="toolsmeta__v mono tnum">{{ lp.year }} · son doğrulama {{ data.params[lp.key].meta.verifiedOn | date_tr }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+        <p class="toolsmeta__note">Hesaplayıcılar yıllık parametre dosyalarıyla çalışır. Oranlar, sınırlar ve tarihler her sonuç sayfasında “Kullanılan parametreler” bölümünde listelenir; yıl değiştiğinde yeni dosya eklenir, eski yıllar korunur.</p>
+      </div>
+    </div>
+
+    <div class="notice" style="margin-top: clamp(3rem, 6vw, 5rem)">
+      <p><strong>Sonuçlar tahminidir.</strong> {{ site.disclaimer }}</p>
+    </div>
+  </div>
+</div>
+
+{% include "partials/cta.njk" %}
+{% endblock %}

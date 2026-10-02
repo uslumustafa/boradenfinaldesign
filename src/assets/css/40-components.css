@@ -1,0 +1,485 @@
+/* ── Bölüm başlığı */
+.sechead h2 {
+  margin-top: 1.4rem;
+}
+.sechead__lead {
+  margin-top: 1.6rem;
+  max-width: 38ch;
+}
+.sechead h2 em {
+  font-weight: 300;
+  color: inherit;
+}
+
+/* ── Giriş animasyonları (reveal) — yalnızca JS çalışıyorsa gizler */
+.js-anim [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition: opacity 0.9s var(--ease-out), transform 1.1s var(--ease-out);
+  transition-delay: calc(var(--rd, 0) * 90ms);
+}
+.js-anim [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+[data-reveal-delay='1'] {
+  --rd: 1;
+}
+[data-reveal-delay='2'] {
+  --rd: 2;
+}
+[data-reveal-delay='3'] {
+  --rd: 3;
+}
+[data-reveal-delay='4'] {
+  --rd: 4;
+}
+[data-reveal-delay='5'] {
+  --rd: 5;
+}
+
+/* ── Formlar */
+.field {
+  display: grid;
+  gap: 0.5rem;
+  min-width: 0;
+}
+.field__label {
+  font-family: var(--f-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.field__box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 3.3rem;
+  border: 1px solid var(--line-strong);
+  background: #fff;
+  border-radius: var(--radius);
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+}
+.field__box:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(30, 117, 157, 0.18);
+}
+.field__box input,
+.field__box select,
+.field__box textarea {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  padding: 0.8rem 1rem;
+  font-size: 1.02rem;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  appearance: none;
+  -webkit-appearance: none;
+}
+.field__box textarea {
+  min-height: 9rem;
+  resize: vertical;
+  line-height: 1.5;
+}
+.field__box select {
+  padding-right: 2.4rem;
+  cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, var(--ink-3) 50%), linear-gradient(135deg, var(--ink-3) 50%, transparent 50%);
+  background-position: calc(100% - 1.2rem) 55%, calc(100% - 0.85rem) 55%;
+  background-size: 0.35rem 0.35rem, 0.35rem 0.35rem;
+  background-repeat: no-repeat;
+}
+.field__box i {
+  font-style: normal;
+  padding-right: 1rem;
+  color: var(--ink-3);
+  font-family: var(--f-mono);
+  font-size: 0.9rem;
+}
+.field__help {
+  font-size: 0.82rem;
+  color: var(--ink-3);
+}
+.field.is-invalid .field__box {
+  border-color: var(--b-red);
+}
+.field__err {
+  font-size: 0.82rem;
+  color: var(--b-red);
+}
+.seg {
+  display: inline-flex;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #fff;
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+.seg label {
+  position: relative;
+  cursor: pointer;
+}
+.seg input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+}
+.seg span {
+  display: block;
+  padding: 0.7rem 1.1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ink-2);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.seg label + label span {
+  border-left: 1px solid var(--line-strong);
+}
+.seg input:checked + span {
+  background: var(--ink);
+  color: #fff;
+}
+.seg input:focus-visible + span {
+  outline: 2px solid var(--focus);
+  outline-offset: -3px;
+}
+.check {
+  display: flex;
+  gap: 0.8rem;
+  align-items: flex-start;
+  font-size: 0.92rem;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+.check input {
+  margin-top: 0.25rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: var(--ink);
+}
+
+/* ── Hızlı hesap kartı (ana sayfa) */
+.mini {
+  background: #fff;
+  border: 1px solid var(--line);
+  padding: clamp(1.5rem, 3vw, 2.4rem);
+  display: grid;
+  gap: 1.4rem;
+  box-shadow: 0 30px 60px -40px rgba(10, 23, 48, 0.35);
+}
+.mini__h {
+  font-size: var(--fs-4);
+  margin-top: -0.6rem;
+}
+.mini__row {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 1rem;
+}
+.mini__out {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--line);
+  margin: 0;
+}
+.mini__out > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.mini__out dt {
+  color: var(--ink-3);
+  font-size: 0.92rem;
+}
+.mini__out dd {
+  margin: 0;
+  font-family: var(--f-mono);
+  font-size: 1.02rem;
+  font-variant-numeric: tabular-nums;
+}
+.mini__out .is-main dt {
+  color: var(--ink);
+  font-weight: 500;
+}
+.mini__out .is-main dd {
+  font-family: var(--f-display);
+  font-size: 2rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+.mini__note {
+  font-size: 0.8rem;
+  color: var(--ink-3);
+}
+
+/* ── Kartlar */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: clamp(1.4rem, 2.4vw, 2rem);
+  background: #fff;
+  border: 1px solid var(--line);
+  transition: transform var(--t-med) var(--ease-out), border-color var(--t-med), box-shadow var(--t-med);
+}
+a.card:hover,
+.card--link:hover {
+  transform: translateY(-4px);
+  border-color: var(--ink);
+  box-shadow: 0 26px 50px -30px rgba(10, 23, 48, 0.45);
+}
+.card__meta {
+  font-family: var(--f-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  display: flex;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+}
+.card h3 {
+  font-size: var(--fs-3);
+  line-height: 1.15;
+}
+.card p {
+  color: var(--ink-2);
+  font-size: 0.97rem;
+}
+.card__go {
+  margin-top: auto;
+  padding-top: 0.6rem;
+  font-weight: 500;
+  font-size: 0.92rem;
+}
+
+/* ── Etiketler */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.25rem 0.8rem;
+  border: 1px solid var(--line-strong);
+  font-family: var(--f-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  background: transparent;
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+}
+button.chip:hover,
+a.chip:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.chip[aria-pressed='true'],
+.chip.is-on {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+.on-dark .chip,
+.sec--dark .chip,
+.phero .chip {
+  border-color: var(--line-dark-2);
+  color: var(--on-dark-2);
+}
+.phero .chip {
+  min-height: 1.9rem;
+}
+
+/* ── SSS / açılır panel */
+.faq {
+  border-top: 1px solid var(--line);
+}
+.faq details {
+  border-bottom: 1px solid var(--line);
+}
+.faq summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.35rem 0;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--f-display);
+  font-size: var(--fs-3);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+.faq summary::after {
+  content: '';
+  flex: none;
+  width: 0.9rem;
+  height: 0.9rem;
+  background: linear-gradient(var(--ink), var(--ink)) center / 100% 1.5px no-repeat, linear-gradient(var(--ink), var(--ink)) center / 1.5px 100% no-repeat;
+  transition: transform var(--t-med) var(--ease-out);
+}
+.faq details[open] summary::after {
+  transform: rotate(45deg);
+}
+.faq .faq__a {
+  padding: 0 0 1.5rem;
+  max-width: 68ch;
+  color: var(--ink-2);
+}
+
+/* ── Tablolar (defter görünümü) */
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.table {
+  min-width: 100%;
+  font-size: 0.93rem;
+  font-variant-numeric: tabular-nums;
+}
+.table th,
+.table td {
+  padding: 0.8rem 1rem 0.8rem 0;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+.table th {
+  font-family: var(--f-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  border-bottom: 1px solid var(--ink);
+  white-space: nowrap;
+}
+.table .num,
+.table td.num,
+.table th.num {
+  text-align: right;
+  padding-right: 1rem;
+  white-space: nowrap;
+}
+.table tfoot td {
+  font-weight: 600;
+  border-top: 1px solid var(--ink);
+  border-bottom: 0;
+}
+
+/* ── Bildirim kutusu */
+.notice {
+  display: flex;
+  gap: 1rem;
+  padding: 1.1rem 1.3rem;
+  border-left: 3px solid var(--b-blue);
+  background: var(--paper-2);
+  color: var(--ink-2);
+  font-size: 0.93rem;
+  line-height: 1.55;
+}
+.notice--warn {
+  border-left-color: var(--warn);
+  background: var(--warn-bg);
+}
+.notice strong {
+  color: var(--ink);
+}
+
+/* ── Sayfalama / filtre çubuğu */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--line);
+}
+.searchbox {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-width: min(100%, 22rem);
+  border-bottom: 1px solid var(--ink);
+  padding: 0.35rem 0;
+}
+.searchbox input {
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-size: 1rem;
+  padding: 0.3rem 0;
+}
+.searchbox svg {
+  color: var(--ink-3);
+  flex: none;
+}
+.pager {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: center;
+  margin-top: 2.5rem;
+}
+.pager button {
+  min-width: 2.6rem;
+  min-height: 2.6rem;
+  padding: 0 0.8rem;
+  border: 1px solid var(--line-strong);
+  font-family: var(--f-mono);
+  font-size: 0.82rem;
+}
+.pager button:hover {
+  border-color: var(--ink);
+}
+.pager button[aria-current='page'] {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+.pager button[disabled] {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* ── Küçük yardımcılar */
+.stack-2 > * + * {
+  margin-top: 0.5rem;
+}
+.stack-4 > * + * {
+  margin-top: 1rem;
+}
+.stack-6 > * + * {
+  margin-top: 2rem;
+}
+.muted {
+  color: var(--ink-3);
+}
+.tr {
+  text-align: right;
+}
+.nowrap {
+  white-space: nowrap;
+}

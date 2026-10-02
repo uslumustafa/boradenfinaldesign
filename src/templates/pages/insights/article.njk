@@ -1,0 +1,120 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+
+{% block head_extra %}
+<script type="application/ld+json">{{ ld | json_script }}</script>
+{% endblock %}
+
+{# Yayın sayfası (sirküler · duyuru · blog · haber). Wagtail karşılığı: PublicationPage — date, category, summary,
+   body (StreamField paragraf blokları; satır içi işaretleme `rich`), sources (ListBlock [etiket, url]), service (FK → ServicePage),
+   source_date, editorial_type. Okuma ilerlemesi modules/insights-article.js ile (JS yoksa ilerleme göstergesi görünmez). #}
+{% block main %}
+{{ m.phero(page, pub.title, pub.summary, pub.editorialType or type.title, 6, [type.label, pub.category, pub.date | date_tr]) }}
+
+<div class="sheet sec--paper">
+  <div class="container">
+    <div class="art g12" data-module="insights-article">
+      <aside class="art__side gc" style="--gc: 1 / span 3" aria-label="Yayın bilgileri">
+        <div class="art__meta" data-reveal>
+          <p class="art__mh mono">Yayın bilgileri</p>
+          <dl class="art__dl">
+            <div><dt>Tür</dt><dd>{{ type.label }}</dd></div>
+            <div><dt>Kategori</dt><dd>{{ pub.category }}</dd></div>
+            <div><dt>Yayın tarihi</dt><dd><time datetime="{{ pub.date }}">{{ pub.date | date_tr }}</time></dd></div>
+            {% if pub.sourceDate %}<div><dt>Kaynak tarihi</dt><dd><time datetime="{{ pub.sourceDate }}">{{ pub.sourceDate | date_tr }}</time></dd></div>{% endif %}
+            <div><dt>Okuma süresi</dt><dd>≈ {{ minutes }} dk <span class="art__words mono tnum">· {{ words }} kelime</span></dd></div>
+            {% if pub.sourceList | length %}<div><dt>Kaynaklar</dt><dd><a class="art__jump" href="#kaynaklar">{{ pub.sourceList | length }} bağlantı ↓</a></dd></div>{% endif %}
+          </dl>
+          <div class="art__prog" aria-hidden="true">
+            <span class="art__prog-k mono">Okuma</span>
+            <span class="art__prog-bar"><i></i></span>
+            <span class="art__prog-n mono tnum" data-art-pct>%0</span>
+          </div>
+          <a class="textlink art__all" href="{{ type.url }}">{{ type.all }} {{ m.arrow() }}</a>
+        </div>
+      </aside>
+
+      <div class="art__main gc" style="--gc: 5 / span 7">
+        <div class="art__read" data-art-body>
+          <div class="art__body">
+            {% for para in pub.body %}<p>{{ para | rich }}</p>{% endfor %}
+          </div>
+
+          {% if pub.sourceList | length %}
+          <section class="art__sec" id="kaynaklar" aria-labelledby="kaynaklar-h">
+            <h2 class="svc__label mono" data-reveal id="kaynaklar-h">Kaynaklar</h2>
+            <ol class="srclist art__src">
+              {% for s in pub.sourceList %}
+              <li>
+                <a class="srclink art__srclink" href="{{ s.url }}" target="_blank" rel="noopener noreferrer">
+                  <span class="art__src-n mono tnum">{{ loop.index | pad2 }}</span>
+                  <span class="art__src-t">{{ s.label }}{% if s.host %}<span class="art__src-h mono">{{ s.host }}</span>{% endif %}</span>
+                  <span class="srclink__go" aria-hidden="true">↗</span><span class="sr-only"> (yeni sekmede açılır)</span>
+                </a>
+              </li>
+              {% endfor %}
+            </ol>
+            {% if pub.sourceDate %}<p class="art__srcdate mono">Kaynak tarihi · <time datetime="{{ pub.sourceDate }}">{{ pub.sourceDate | date_tr }}</time></p>{% endif %}
+          </section>
+          {% endif %}
+        </div>
+
+        {% if service %}
+        <section class="art__sec" aria-labelledby="ilgili-h">
+          <h2 class="svc__label mono" data-reveal id="ilgili-h">İlgili hizmet</h2>
+          <a class="art__svc" href="{{ service.url }}" data-reveal>
+            <span class="art__svc-k mono">{{ service.groupNumber }} · {{ service.groupName }}</span>
+            <span class="art__svc-t">{{ service.title }}</span>
+            <span class="art__svc-d">{{ service.lead | truncate_words(32) }}</span>
+            <span class="art__svc-go">Hizmeti inceleyin {{ m.arrow() }}</span>
+          </a>
+        </section>
+        {% endif %}
+
+        <div class="notice art__note">
+          <p><strong>Genel bilgilendirme.</strong> {{ site.disclaimer }}</p>
+        </div>
+      </div>
+    </div>
+
+    {% if older or newer %}
+    <nav class="svcnav" aria-label="Aynı türdeki diğer yayınlar">
+      {% if older %}
+      <a class="svcnav__a svcnav__a--prev" href="{{ older.url }}" rel="prev">
+        <span class="svcnav__k mono">← Önceki {{ type.one }}</span>
+        <span class="svcnav__t">{{ older.title }}</span>
+      </a>
+      {% else %}<span></span>{% endif %}
+      {% if newer %}
+      <a class="svcnav__a svcnav__a--next" href="{{ newer.url }}" rel="next">
+        <span class="svcnav__k mono">Sonraki {{ type.one }} →</span>
+        <span class="svcnav__t">{{ newer.title }}</span>
+      </a>
+      {% else %}<span></span>{% endif %}
+    </nav>
+    {% endif %}
+    <p class="svcback"><a class="textlink" href="{{ type.url }}">{{ type.all }} {{ m.arrow() }}</a></p>
+
+    {% if others | length %}
+    <section class="pub-more" aria-labelledby="pub-more-h">
+      <h2 class="svc__label mono" data-reveal id="pub-more-h">Bilgi merkezinden</h2>
+      <ul class="pub-cards pub-cards--3">
+        {% for p in others %}
+        <li data-reveal data-reveal-delay="{{ loop.index0 }}">
+          <a class="pub-card" href="{{ p.url }}">
+            <span class="pub-card__meta mono"><span>{{ p.typeLabel }}</span><span>{{ p.category }}</span></span>
+            <h3 class="pub-card__t">{{ p.title }}</h3>
+            <span class="pub-card__foot"><time class="mono" datetime="{{ p.date }}">{{ p.date | date_short }}</time><span class="pub-card__go">Okuyun {{ m.arrow() }}</span></span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+  </div>
+</div>
+
+{% set cta_title = "Konuyu birlikte ele alalım." %}
+{% set cta_text = "Bu başlığın şirketiniz için ne anlama geldiğini, kapsamı netleştirerek konuşalım." %}
+{% include "partials/cta.njk" %}
+{% endblock %}

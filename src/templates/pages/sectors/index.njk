@@ -1,0 +1,144 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+
+{% block head_extra %}
+<script type="application/ld+json">{{ ld | json_script }}</script>
+{% endblock %}
+
+{# Sektörler dizini. Wagtail karşılığı: SectorIndexPage (alt sayfalar: SectorPage; müşteri segmenti = SectorPage.is_segment).
+   Masaüstünde satır üzerine gelince/odaklanınca yan panel önizlemesi (modules/sector-index.js; panel yalnızca görsel, aria-hidden).
+   Mobilde her satır <details> ile açılır. İlgi matrisi rota modülünde sectors.json listelerinden sayılır (uydurma değer yok). #}
+
+{% macro row(s) %}
+<li class="sx-row" data-sx-row="{{ s.slug }}">
+  <a class="sx-row__a" href="{{ s.url }}">
+    <span class="sx-row__n mono tnum">{{ s.number }}</span>
+    <span class="sx-row__name">{{ s.name }}</span>
+    <span class="sx-row__short">{{ s.short }}</span>
+    <span class="sx-row__go" aria-hidden="true">→</span>
+  </a>
+  <details class="sx-row__more">
+    <summary>Gündem başlıkları<span class="sr-only">: {{ s.name }}</span></summary>
+    <div class="sx-row__body">
+      <p>{{ s.lead }}</p>
+      <ol class="sx-topiclist">
+        {% for t in s.topics %}<li><span class="mono tnum" aria-hidden="true">{{ loop.index | pad2 }}</span><span>{{ t.title }}</span></li>{% endfor %}
+      </ol>
+      <a class="textlink" href="{{ s.url }}">{{ s.name }} sayfası {{ m.arrow() }}</a>
+    </div>
+  </details>
+</li>
+{% endmacro %}
+
+{% block main %}
+{{ m.phero(page, "Sektörler", "Denetim, vergi ve danışmanlık gündemi sektörden sektöre değişir. Her sayfa; öne çıkan konuları, ilgili hizmet başlıklarını, hesaplayıcıları ve sık sorulan soruları bir araya getirir.", "Sektörler ve müşteri segmentleri", 0, [(industries | length) ~ " sektör", (segments | length) ~ " müşteri segmenti"]) }}
+
+<div class="sheet sec--paper">
+  <div class="container" data-module="sector-index">
+    <div class="g12 sx-dir">
+      <div class="gc sx-dir__lists" style="--gc: 1 / span 7">
+        <section class="sx-block" aria-labelledby="sx-h-ind">
+          <header class="sx-block__head">
+            <h2 class="sx-block__h" id="sx-h-ind" data-reveal>Sektör sayfaları</h2>
+            <span class="sx-block__n mono tnum" data-reveal>{{ industries | length | pad2 }}</span>
+          </header>
+          <ol class="sx-rows">
+            {% for s in industries %}{{ row(s) }}{% endfor %}
+          </ol>
+        </section>
+
+        {% if segments | length %}
+        <section class="sx-block" aria-labelledby="sx-h-seg">
+          <header class="sx-block__head">
+            <div>
+              <h2 class="sx-block__h" id="sx-h-seg" data-reveal>Müşteri segmentleri</h2>
+              <p class="sx-block__p" data-reveal data-reveal-delay="1">Endüstriden bağımsız olarak yapısı, ölçeği veya hesap verme biçimi ortak bir gündem oluşturan kuruluş grupları.</p>
+            </div>
+            <span class="sx-block__n mono tnum" data-reveal>{{ segments | length | pad2 }}</span>
+          </header>
+          <ol class="sx-rows">
+            {% for s in segments %}{{ row(s) }}{% endfor %}
+          </ol>
+        </section>
+        {% endif %}
+      </div>
+
+      <div class="gc sx-dir__side" style="--gc: 9 / span 4" aria-hidden="true">
+        <div class="sx-pv" data-sx-pv>
+          {% for s in sectors %}
+          <div class="sx-pv__card{% if loop.first %} is-on{% endif %}" data-sx-card="{{ s.slug }}">
+            <p class="sx-pv__k mono"><span class="tnum">{{ s.number }}</span><span>{{ s.kindLabel }}</span></p>
+            <p class="sx-pv__name">{{ s.name }}</p>
+            <p class="sx-pv__lead">{{ s.lead }}</p>
+            <p class="sx-pv__h mono">Gündem başlıkları</p>
+            <ol class="sx-topiclist">
+              {% for t in s.topics %}<li><span class="mono tnum">{{ loop.index | pad2 }}</span><span>{{ t.title }}</span></li>{% endfor %}
+            </ol>
+            <p class="sx-pv__meta mono"><span class="tnum">{{ s.svcList | length }}</span> hizmet başlığı{% if s.calcList | length %} · <span class="tnum">{{ s.calcList | length }}</span> hesaplayıcı{% endif %} · <span class="tnum">{{ s.termList | length }}</span> terim</p>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="notice sx-indep" data-legal-review="BDY m.22" data-reveal>
+      <p><strong>Bağımsızlık ilkesi.</strong> {{ site.independenceNote }}</p>
+    </div>
+  </div>
+</div>
+
+<section class="sx-mxsec sec--dark" data-world="0" aria-labelledby="sx-mx-h">
+  <div class="container">
+    <div class="g12 sx-mxhead">
+      <div class="gc" style="--gc: 1 / span 7">
+        <p class="eyebrow" data-reveal>İlgi matrisi</p>
+        <h2 id="sx-mx-h" data-reveal data-reveal-delay="1">Sektör sayfalarında öne çıkan hizmet başlıkları</h2>
+      </div>
+      <p class="gc lead sx-mxhead__lead" style="--gc: 8 / span 5" data-reveal data-reveal-delay="2">Her nokta, ilgili sektör sayfasının «İlgili hizmetler» bölümünde yer alan bir hizmet başlığıdır; sütunlar hizmet alanlarıdır.</p>
+    </div>
+
+    <div class="sx-mxwrap" data-reveal>
+      <table class="sx-mx">
+        <caption class="sr-only">Sektör ve müşteri segmenti sayfalarında yer alan hizmet başlıklarının hizmet alanlarına göre sayısı</caption>
+        <thead>
+          <tr>
+            <th scope="col" class="sx-mx__corner"><span class="sr-only">Sektör</span></th>
+            {% for c in matrix.cols %}
+            <th scope="col"><a href="{{ c.url }}" title="{{ c.name }}"><span class="sx-mx__no tnum">{{ c.number }}</span><span class="sx-mx__lbl">{{ c.short }}</span><span class="sr-only"> — {{ c.name }}</span></a></th>
+            {% endfor %}
+            <th scope="col" class="sx-mx__sum"><span class="sx-mx__lbl">Toplam</span></th>
+          </tr>
+        </thead>
+        {% for blk in [{ label: "Sektörler", rows: industries }, { label: "Müşteri segmentleri", rows: segments }] %}
+        {% if blk.rows | length %}
+        <tbody>
+          <tr class="sx-mx__grp"><th scope="rowgroup" colspan="{{ (matrix.cols | length) + 2 }}">{{ blk.label }}</th></tr>
+          {% for s in blk.rows %}
+          <tr>
+            <th scope="row"><a href="{{ s.url }}"><span class="sx-mx__no tnum">{{ s.number }}</span><span>{{ s.name }}</span></a></th>
+            {% for c in s.byGroup %}
+            <td style="--j: {{ loop.index0 }}">{% if c.n %}<span class="sx-dots" aria-hidden="true">{% for k in range(0, c.n) %}<i></i>{% endfor %}</span><span class="sr-only">{{ c.n }}</span>{% else %}<span class="sx-nil" aria-hidden="true"></span><span class="sr-only">0</span>{% endif %}</td>
+            {% endfor %}
+            <td class="sx-mx__sum tnum">{{ s.svcList | length }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        {% endif %}
+        {% endfor %}
+        <tfoot>
+          <tr>
+            <th scope="row">Toplam</th>
+            {% for c in matrix.cols %}<td class="tnum">{{ c.total }}</td>{% endfor %}
+            <td class="sx-mx__sum tnum">{{ matrix.total }}</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <p class="sx-mxnote" data-reveal>Matris, sektör sayfalarındaki seçkiyi özetler; bir sektörde ele alınabilecek konuların ve hizmetlerin tamamını göstermez. Kapsam her çalışmada ayrıca belirlenir.</p>
+  </div>
+</section>
+
+{% set cta_title = "Sektörünüzün gündemini konuşalım." %}
+{% set cta_text = "Faaliyetlerinizi ve ihtiyacınızı dinleyelim; ilgili uzmanlık alanlarını ve çalışmanın kapsamını birlikte netleştirelim." %}
+{% include "partials/cta.njk" %}
+{% endblock %}

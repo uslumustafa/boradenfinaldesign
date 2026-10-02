@@ -1,0 +1,2811 @@
+{
+  "about": {
+    "name": "Boraden Bağımsız Denetim ve Danışmanlık A.Ş.",
+    "foundation": "Temelleri 1993 yılında atılan Boraden, kamu kurum ve kuruluşlarına, özel sektöre, gerçek ve tüzel kişilere hizmet verir.",
+    "overview": "Faaliyetleri; bağımsız denetim ve yeminli mali müşavirlik, vergi ve muhasebe, mali, hukuki ve yönetim danışmanlığı, insan kaynakları ve bordro, muhasebe ve veri analiz sistemleri ile mesleki eğitim alanlarını kapsar.",
+    "scope": {
+      "vergi": "Yeminli mali müşavirlik ve tam tasdik, muhasebe, KDV iadesi, kurumlar vergisi, transfer fiyatlandırması ve Ar-Ge danışmanlığı.",
+      "denetim": "Bağımsız denetim, finansal tablo denetimi, UFRS/TFRS raporlama, iç denetim, iç kontrol ve suistimal incelemeleri.",
+      "danismanlik": "Şirket kuruluşu ve değerlemesi, ticaret sicil işlemleri, mali ve yönetim danışmanlığı; hukuki danışmanlık, sözleşme ve tahsilat süreçleri.",
+      "insan": "İnsan kaynakları ve bordro, özlük ve SGK işlemleri, istihdam teşvikleri, emeklilik danışmanlığı ve çalışma izni süreçleri.",
+      "sistem": "Muhasebe sistemlerinin kurulması ve sürdürülmesi, veri analiz sistemleri, iş zekâsı ve çözüm prosedürleri.",
+      "akademi": "Muhasebe ve vergi, UFRS/TFRS, finansal analiz, iç denetim ve insan kaynakları alanlarında eğitim."
+    },
+    "method": "Çalışmanın kapsamı; kurumun faaliyetleri, mevcut süreçleri ve ihtiyaçları değerlendirilerek belirlenir. İlgili uzmanlık alanları bu kapsam doğrultusunda birlikte ele alınır.",
+    "principles": [
+      [
+        "Şeffaflık ve gizlilik",
+        "Bilginin açık biçimde paylaşılması ve özel bilgilerin korunması."
+      ],
+      [
+        "Dürüstlük ve sorumluluk",
+        "Mesleki ilkeler doğrultusunda çalışma ve üstlenilen sorumlulukları yerine getirme."
+      ],
+      [
+        "Birlikte çalışma",
+        "Farklı görüşleri değerlendirme, bulguları paylaşma ve ilgili uzmanlıklarla birlikte çalışma."
+      ]
+    ]
+  },
+  "sources": {
+    "valuation": [
+      "IVSC — International Valuation Standards",
+      "https://ivsc.org/standards/"
+    ],
+    "formation": [
+      "Ticaret Bakanlığı — 2026 ETDS uygulaması",
+      "https://ticaret.gov.tr/haberler/1-ocak-2026-tarihinden-sonra-kurulacak-sirketlerde-elektronik-ticari-defter-sistemi-zorunlu-olacak"
+    ],
+    "registry": [
+      "Ticaret Bakanlığı — Şirketler ve ticaret sicili",
+      "https://ticaret.gov.tr/ic-ticaret/mevzuat/sirketler-ve-ticaret-sicili"
+    ],
+    "payroll": [
+      "GİB — Muhtasar ve Prim Hizmet Beyannamesi",
+      "https://ebeyanname.gib.gov.tr/mphb.html"
+    ],
+    "reporting": [
+      "KGK — Finansal raporlama çerçeveleri",
+      "https://www.kgk.gov.tr/DynamicContentDetail/4105/TurkiyeMuhasebeStandartları"
+    ],
+    "privacy": [
+      "KVKK — Çalışan verileri ve erişim yetkileri",
+      "https://www.kvkk.gov.tr/Icerik/6913/2020-404"
+    ],
+    "permits": [
+      "ÇSGB — Çalışma izni başvuru kılavuzları",
+      "https://www.csgb.gov.tr/uigm/tr/calisma-izni/basvuru-kilavuzlari/"
+    ],
+    "framework": [
+      "KGK — finansal raporlama ve bağımsız denetim sistemi",
+      "https://www.kgk.gov.tr/Portalv2Uploads/files/Duyurular/v2/20_Soruda_Ulkemizdeki_Finansal_Raporlama_ve_Bagimsiz_Denetim_Sistemi.pdf"
+    ],
+    "kdv": [
+      "GİB — KDV iadesinde ortak hususlar",
+      "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2Fkdv-iadesinde-ortak-husular.pdf"
+    ],
+    "tasdik": [
+      "TÜRMOB — tasdike ilişkin usul ve esaslar",
+      "https://www.turmob.org.tr/Arsiv/FCKEditor/userfiles/file/TURMOB-2023-YASA-YONETMELIK-MM/3.pdf"
+    ]
+  },
+  "publications": {
+    "circulars": [
+      {
+        "id": "etds-yeni-sirketler-2026",
+        "status": "published",
+        "date": "2026-09-06",
+        "category": "Ticaret ve şirketler",
+        "title": "Yeni şirketlerde elektronik ticari defter yükümlülüğü",
+        "summary": "1 Ocak 2026’dan sonra tescil edilen şirketlerde pay ve genel kurul defterlerinin ETDS kapsamındaki yükümlülüğü.",
+        "body": [
+          "Ticaret Bakanlığının duyurusuna göre, 1 Ocak 2026’dan itibaren kuruluşu ticaret siciline tescil edilen tüm şirketler pay defteri ile genel kurul toplantı ve müzakere defterini Elektronik Ticari Defter Sistemi’nde tutmakla yükümlü.",
+          "Şirket türü ve kuruluş işlemi özelindeki kapsam, güncel tebliğ ve ETDS uygulama belgeleriyle ayrıca kontrol edilmelidir. Bu yayın genel bilgilendirme niteliğindedir."
+        ],
+        "sources": [
+          [
+            "Ticaret Bakanlığı — ETDS zorunluluğu",
+            "https://ticaret.gov.tr/haberler/1-ocak-2026-tarihinden-sonra-kurulacak-sirketlerde-elektronik-ticari-defter-sistemi-zorunlu-olacak"
+          ],
+          [
+            "ETDS — Elektronik Ticari Defter Sistemi",
+            "https://etds.ticaret.gov.tr/"
+          ]
+        ]
+      },
+      {
+        "id": "vergi-takvimi-2026",
+        "status": "published",
+        "date": "2026-09-06",
+        "category": "Vergi gündemi",
+        "title": "2026 Vergi Takvimi yayımlandı",
+        "summary": "GİB’in 2026 takvimi beyan, ödeme, bildirim ve elektronik defter berat sürelerini aylık olarak sunuyor.",
+        "body": [
+          "Gelir İdaresi Başkanlığı, mükelleflerin beyan ve ödeme sürelerini takip edebilmesi için 2026 Vergi Takvimi’ni yayımladı. Takvim, resmî tatil ve mali tatil dikkate alınarak hazırlanmış aylık dönemleri içeriyor.",
+          "Her yükümlülük için güncel resmî takvim ve ilgili beyanname ekranı birlikte kontrol edilmelidir; bu yayın kişiye veya şirkete özel vergi görüşü değildir."
+        ],
+        "sources": [
+          [
+            "GİB — 2026 Yılı Vergi Takvimi",
+            "https://gib.gov.tr/duyuru-arsivi/guncel/15614_2026_yili_vergi_takvimi_yayimlandi"
+          ]
+        ]
+      }
+    ],
+    "announcements": [
+      {
+        "id": "etds-kaynak-duyurusu",
+        "status": "published",
+        "date": "2026-09-06",
+        "category": "Kaynak duyurusu",
+        "title": "ETDS için güncel resmî kaynaklar",
+        "summary": "Kuruluş ve defter süreçlerini planlayanlar için Ticaret Bakanlığının ETDS duyurusu ve portalı tek yerde.",
+        "body": [
+          "Kuruluş sürecinde elektronik ticari defter kapsamını kontrol etmek isteyenler için Ticaret Bakanlığının güncel duyurusu ve ETDS portalı birlikte incelenmelidir.",
+          "Boraden içerikleri kaynak bağlantılarını görünür tutar; uygulama kapsamı şirket türü, tescil tarihi ve güncel düzenlemeye göre değerlendirilmelidir."
+        ],
+        "sources": [
+          [
+            "Ticaret Bakanlığı — ETDS duyurusu",
+            "https://ticaret.gov.tr/haberler/1-ocak-2026-tarihinden-sonra-kurulacak-sirketlerde-elektronik-ticari-defter-sistemi-zorunlu-olacak"
+          ],
+          [
+            "ETDS portalı",
+            "https://etds.ticaret.gov.tr/"
+          ]
+        ]
+      }
+    ],
+    "blog": [
+      {
+        "id": "degerleme-oncesi-bes-soru",
+        "status": "published",
+        "date": "2026-09-06",
+        "category": "Şirket değerlemesi",
+        "title": "Şirket değerlemesine hazırlık",
+        "summary": "Şirket değerlemesine hazırlanırken amaç, tarih, veri, varsayım ve karar ilişkisini birlikte düşünmek.",
+        "body": [
+          "Değerleme görüşmesini “Şirketimiz ne kadar eder?” sorusuyla açmak doğaldır. Ancak kullanılabilir bir sonuç için önce o rakamın hangi kararı destekleyeceğini açıklamak gerekir. Pay devri, yeni ortak veya iç planlama farklı çalışma çerçeveleri gerektirebilir.",
+          "İlk soru amaçtır: Sonucu kim, hangi işlemde kullanacak? İkincisi tarihtir: Değer hangi günün koşullarını yansıtacak? Üçüncüsü veridir: Finansal tablolar, borçlar, nakit ve işletme sermayesi ne kadar tutarlı?",
+          "Dördüncü soru varsayımlardır: Büyüme beklentisi, yatırım ihtiyacı ve kârlılık hangi dayanaklarla kuruluyor? Son soru belirsizliktir: Bu varsayımlar değiştiğinde sonuç ne kadar değişiyor?",
+          "İlk görüşmede son dönem finansal tablolarını, borç ve nakit dökümünü, iş planını ve çalışmanın amacını paylaşmak iyi bir başlangıçtır. Yöntem ve rapor kapsamı, bu bilgilerin ışığında belirlenir. Değerleme görüşü ile gerçekleşecek satış fiyatı aynı olmak zorunda değildir."
+        ],
+        "service": "sirket-degerlemesi",
+        "sources": [
+          [
+            "IVSC — International Valuation Standards",
+            "https://ivsc.org/standards/"
+          ]
+        ],
+        "publicationDateVerified": false
+      },
+      {
+        "id": "kurulustan-once-isleyisi-tasarlamak",
+        "status": "published",
+        "date": "2026-09-06",
+        "category": "Kuruluş ve büyüme",
+        "title": "Şirket kuruluşunda temel süreçler",
+        "summary": "Tescilin ötesinde: ortaklık, temsil, defter, kayıt ve ilk dönem sorumlulukları.",
+        "body": [
+          "Kuruluşu yalnızca bir tescil işlemi olarak görmek, sonraki adımları belirsiz bırakabilir. Faaliyet modelinin, ortakların beklentilerinin ve karar yetkilerinin birlikte konuşulması, daha sağlam bir hazırlık sağlar.",
+          "Şirket türü seçilirken maliyetin yanında yönetim yapısı, pay devri ve finansman beklentileri değerlendirilmelidir. Unvan, faaliyet kodları, adres ve gerekli izinler için bir kontrol listesi hazırlanabilir.",
+          "1 Ocak 2026’dan itibaren ticaret siciline tescil edilen şirketlerde pay defteri ile genel kurul toplantı ve müzakere defterinin ETDS kapsamında tutulması yükümlülüğü bulunmaktadır. Şirket türüne ve defter kapsamına göre güncel uygulama kontrol edilmelidir.",
+          "İlk ayın sonunda hangi kayıtlar hazırlanacak, kim onaylayacak ve hangi bilgi muhasebeye aktarılacak? Bu sorulara kuruluş aşamasında cevap vermek, tescilden sonraki işleyişi kolaylaştırır."
+        ],
+        "service": "sirket-kurulus-danismanligi",
+        "sources": [
+          [
+            "Ticaret Bakanlığı — 2026 ETDS uygulaması",
+            "https://ticaret.gov.tr/haberler/1-ocak-2026-tarihinden-sonra-kurulacak-sirketlerde-elektronik-ticari-defter-sistemi-zorunlu-olacak"
+          ],
+          [
+            "Ticaret Bakanlığı — Şirketler ve ticaret sicili",
+            "https://ticaret.gov.tr/ic-ticaret/mevzuat/sirketler-ve-ticaret-sicili"
+          ]
+        ],
+        "publicationDateVerified": false
+      },
+      {
+        "id": "bordroda-veriden-guvene",
+        "status": "published",
+        "date": "2026-09-06",
+        "category": "İnsan ve bordro",
+        "title": "Bordroda veri ve kayıt düzeni",
+        "summary": "Puantajdan onaya uzanan akışta görünür sorumluluklar ve çalışan bilgilerinin korunması.",
+        "body": [
+          "Bordro hesaplamasının doğruluğu, sisteme giren bilginin doğruluğuyla başlar. Ücret değişiklikleri, puantaj, izin, yan hak ve işe giriş–çıkış bilgileri aynı döneme ve aynı onay düzenine bağlanmalıdır.",
+          "Kimin hangi veriyi hazırladığı, kimin kontrol ettiği ve değişikliklerin hangi tarihe kadar kabul edildiği açık olmalıdır. Bu düzen, son dakika düzeltmelerinin nedenini takip etmeyi kolaylaştırır.",
+          "Çalışan bilgileri için erişim ihtiyaca göre tanımlanmalıdır. Bordro ve özlük dosyalarının herkese açık klasörlerde veya genel iletişim formlarında dolaşması uygun bir çalışma akışı oluşturmaz.",
+          "Hesaplama merkezimizde standart ücret için 2026 parametreleriyle bir ön hesap yapabilirsiniz. Yan haklar, teşvikler, özel istisnalar ve farklı çalışma biçimleri ayrıca değerlendirilmelidir."
+        ],
+        "service": "insan-kaynaklari-ve-bordro",
+        "sources": [
+          [
+            "GİB — Muhtasar ve Prim Hizmet Beyannamesi",
+            "https://ebeyanname.gib.gov.tr/mphb.html"
+          ],
+          [
+            "KVKK — Çalışan verileri ve erişim yetkileri",
+            "https://www.kvkk.gov.tr/Icerik/6913/2020-404"
+          ]
+        ],
+        "publicationDateVerified": false
+      }
+    ],
+    "stories": [],
+    "news": [
+      {
+        "id": "otv-eylul-2026",
+        "status": "published",
+        "date": "2026-09-04",
+        "title": "ÖTV tutarlarında 4 Eylül güncellemesi",
+        "category": "Mevzuat gündemi",
+        "summary": "GİB, 10995 sayılı Karar kapsamındaki mallar için uygulanacak ÖTV tutarlarını yayımladı.",
+        "body": [
+          "Gelir İdaresi Başkanlığının duyurusuna göre, 10995 sayılı Cumhurbaşkanı Kararı ekindeki listede yer alan mallar için 4 Eylül 2026’dan itibaren uygulanacak özel tüketim vergisi tutarları güncellendi.",
+          "İşlem tarihi ve ürünün ilgili listedeki yeri birlikte kontrol edilmelidir. Güncel tutarlar için aşağıdaki resmî duyurunun eki esas alınmalıdır."
+        ],
+        "sources": [
+          [
+            "GİB — 4 Eylül 2026 duyurusu",
+            "https://www.gib.gov.tr/duyuru-arsivi/mevzuat/18777_10995_sayili_cumhurbaskani_karari_uyarinca_uygulanacak_ozel_tuketim_vergisi_tutarlari"
+          ]
+        ]
+      },
+      {
+        "id": "enflasyon-raporu-2026-uc",
+        "title": "Enflasyon raporunu iş planınıza nasıl taşırsınız?",
+        "category": "Ekonomi",
+        "date": "2026-09-06",
+        "sourceDate": "2026-08-13",
+        "summary": "TCMB’nin 2026-III raporundan hareketle bütçe, fiyatlama ve senaryolar için bir okuma çerçevesi.",
+        "body": [
+          "TCMB, Enflasyon Raporu 2026-III’ü 13 Ağustos 2026 tarihinde yayımladı. Raporun tamamına aşağıdaki resmî yayın sayfasından ulaşabilirsiniz.",
+          "Bir iş planında rapordaki değerlendirmeyi doğrudan şirket tahmini gibi kullanmak yerine, varsayımlarınızla ilişkilendirin. Fiyat, vade ve maliyet senaryolarını ayrı göstermek, sonuçların hangi koşullara bağlı olduğunu açıklamayı kolaylaştırır.",
+          "Bu yazı 6 Eylül tarihli editoryal bir okuma notudur; şirketinize özgü tahmin veya yatırım tavsiyesi içermez."
+        ],
+        "sources": [
+          [
+            "TCMB · Enflasyon raporları 2026",
+            "https://www.tcmb.gov.tr/wps/wcm/connect/TR/TCMB%2BTR/Main%2BMenu/Yayinlar/Raporlar/Enflasyon%2BRaporu/2026"
+          ]
+        ],
+        "status": "published",
+        "kind": "news",
+        "editorialType": "Kaynaklı gündem notu"
+      },
+      {
+        "id": "tfrs-2026-kaynak-seti",
+        "title": "Finansal raporlamada doğru kaynak seti.",
+        "category": "Raporlama",
+        "date": "2026-09-06",
+        "summary": "KGK’nın TFRS 2026 seti, raporlama hazırlığında başvurulabilecek resmî kaynaklar arasında.",
+        "body": [
+          "KGK’nın TFRS 2026 Seti sayfasında Kırmızı Kitap ve Mavi Kitap başlıkları yer alıyor. Çalışmaya başlarken kullanılacak düzenleme ve sürümün açık olması önemlidir.",
+          "Bir standardın kaynak setinde bulunması, her işletmenin aynı uygulama kapsamına girdiği anlamına gelmez. İşletmenin tabi olduğu çerçeve, raporlama dönemi ve ilgili geçiş hükümleri birlikte değerlendirilmelidir."
+        ],
+        "sources": [
+          [
+            "KGK · TFRS 2026 Seti",
+            "https://www.kgk.gov.tr/DynamicContentDetail/12042/TFRS-2026-Seti"
+          ]
+        ],
+        "status": "published",
+        "kind": "news",
+        "editorialType": "Kaynaklı gündem notu"
+      },
+      {
+        "id": "eylul-2026-vergi-takvimi",
+        "title": "Eylül için takviminizi görünür kılın.",
+        "category": "Vergi",
+        "date": "2026-09-06",
+        "summary": "Beyan, ödeme ve bildirimleri işlem türüyle birlikte takip etmek için GİB’in güncel takvimine erişin.",
+        "body": [
+          "Gelir İdaresi Başkanlığının vergi takvimi, yükümlülükleri dönem ve işlem türüne göre listeler. Eylül planı hazırlanırken ilgili yükümlülüklerin güncel takvimdeki kayıtlarına bakılmalıdır.",
+          "Kendi çalışma takviminizde belge hazırlığı, kontrol ve onay tarihlerini resmî süreden ayrı planlayabilirsiniz. Duyurulan süre değişiklikleri ve işletmenize özgü koşullar ayrıca kontrol edilmelidir."
+        ],
+        "sources": [
+          [
+            "GİB · Vergi takvimi",
+            "https://gib.gov.tr/vergi-takvimi?selectedDate=2026-09-02"
+          ]
+        ],
+        "status": "published",
+        "kind": "news",
+        "editorialType": "Kaynaklı gündem notu"
+      },
+      {
+        "id": "tufe-2026-yontem-okumasi",
+        "title": "Veriyi okurken, yöntemini de okuyun.",
+        "category": "Veri",
+        "date": "2026-09-06",
+        "sourceDate": "2025-10-30",
+        "summary": "TÜİK’in 2026 TÜFE yöntem güncellemeleri duyurusu, karşılaştırmalar için önemli bir kaynak notu.",
+        "body": [
+          "TÜİK, 30 Ekim 2025 tarihli bilgi notunda Ocak 2026’dan itibaren TÜFE’de yapılacak yöntemsel güncellemelerin genel çerçevesini açıkladı.",
+          "Bir endeksi bütçe veya yönetim raporunda kullanırken dönem, seri ve yöntem notunu birlikte kaydedin. Bu yazı güncel enflasyon oranı açıklaması değildir; resmî yöntem belgesine yönlendiren bir editoryal nottur."
+        ],
+        "sources": [
+          [
+            "TÜİK · TÜFE yöntem güncellemeleri bilgi notu",
+            "https://www.tuik.gov.tr/media/announcements/TUFE_Duyuru30102025.pdf"
+          ]
+        ],
+        "status": "published",
+        "kind": "news",
+        "editorialType": "Kaynaklı gündem notu"
+      },
+      {
+        "id": "konkordato-denetimi-2026-duyuru",
+        "title": "Konkordato denetiminde kaynak kontrolü.",
+        "category": "Denetim",
+        "date": "2026-09-06",
+        "sourceDate": "2026-05-14",
+        "summary": "KGK’nın Mayıs 2026 duyurusu, ilgili denetim sözleşmeleri ve raporlama süreci için okunabilecek bir kaynak.",
+        "body": [
+          "KGK, 14 Mayıs 2026 tarihli duyurusunda Konkordato Talebine Eklenecek Belgeler Hakkında Yönetmelik’te yapılan değişiklikleri açıkladı.",
+          "İşlem planı hazırlanırken duyurunun tamamı ve yürürlükteki düzenleme birlikte okunmalıdır. Bu kısa not kapsam veya uygunluk görüşü vermez; ilgili kaynağa erişim sağlar."
+        ],
+        "sources": [
+          [
+            "KGK · 14 Mayıs 2026 duyurusu",
+            "https://www.kgk.gov.tr/Portalv2Uploads/files/Duyurular/v2/Diger/Duyuru-21.pdf"
+          ]
+        ],
+        "status": "published",
+        "kind": "news",
+        "editorialType": "Kaynaklı gündem notu"
+      }
+    ]
+  },
+  "sectorReports": [
+    {
+      "id": "tuik-sektor-bilancolari-2025",
+      "title": "Sektör Bilançoları",
+      "period": "2025",
+      "publisher": "TÜİK · TCMB",
+      "publishedAt": "2026-09-16",
+      "url": "https://veriportali.tuik.gov.tr/tr/press/58019",
+      "summary": "Firmaların bilanço ve gelir tablolarından derlenen sektör bazında varlık, borç, öz kaynak, satış ve kârlılık göstergeleri.",
+      "kind": "İstatistik",
+      "checkedAt": "2026-09-17"
+    },
+    {
+      "id": "tuik-girisim-bilisim-2026",
+      "title": "Girişimlerde Bilişim Teknolojileri Kullanımı",
+      "period": "2025–2026",
+      "publisher": "TÜİK",
+      "publishedAt": "2026-09-10",
+      "url": "https://veriportali.tuik.gov.tr/tr/press/58021",
+      "summary": "Girişimlerin internet, bulut bilişim ve bilgi güvenliği kullanımı ile e-satış faaliyetleri. Göstergelere göre 2025 ve 2026 dönemleri kapsanır.",
+      "kind": "İstatistik",
+      "checkedAt": "2026-09-17"
+    },
+    {
+      "id": "tuik-dolayli-arge-2025",
+      "title": "Dolaylı Ar-Ge Teşvikleri",
+      "period": "2025",
+      "publisher": "TÜİK",
+      "publishedAt": "2026-09-04",
+      "url": "https://veriportali.tuik.gov.tr/tr/press/58305",
+      "summary": "Ar-Ge vergi teşviklerinin türlerine, ekonomik faaliyetlere ve işletme büyüklüğüne göre dağılımı.",
+      "kind": "İstatistik",
+      "checkedAt": "2026-09-17"
+    },
+    {
+      "id": "sektorel-pmi-2026-08",
+      "title": "Türkiye Sektörel PMI",
+      "period": "Ağustos 2026",
+      "publisher": "İstanbul Sanayi Odası · S&P Global",
+      "publishedAt": "2026-09-01",
+      "checkedAt": "2026-09-17",
+      "summary": "İmalat sektörlerinde üretim, yeni siparişler, istihdam ve maliyet eğilimlerini karşılaştıran aylık rapor.",
+      "url": "https://www.iso.org.tr/haberler/diger-haberler/iso-turkiye-imalat-pmi-agustos-2026-raporu-ile-turkiye-sektorel-pmi-raporu-aciklandi/",
+      "reportUrl": "https://www.iso.org.tr/file/TRSektorelPMI_2026.08_TUR-13639.pdf",
+      "kind": "Rapor"
+    },
+    {
+      "id": "tcmb-enflasyon-2026-3",
+      "title": "Enflasyon Raporu 2026-III",
+      "period": "Ağustos 2026 değerlendirmesi",
+      "publisher": "Türkiye Cumhuriyet Merkez Bankası",
+      "publishedAt": "2026-08-13",
+      "url": "https://www.tcmb.gov.tr/wps/wcm/connect/TR/TCMB%2BTR/Main%2BMenu/Yayinlar/Raporlar/Enflasyon%2BRaporu/2026/Enflasyon%2BRaporu%2B2026%2B-%2BIII/",
+      "summary": "Ekonomik görünüm, finansal koşullar, fiyat gelişmeleri ve orta vadeli tahminler. Tahminler gerçekleşmiş verilerden ayrı sunulur.",
+      "kind": "Rapor",
+      "checkedAt": "2026-09-17"
+    },
+    {
+      "id": "iso-ikinci500-2025",
+      "title": "Türkiye’nin İkinci 500 Büyük Sanayi Kuruluşu",
+      "period": "2025",
+      "publisher": "İstanbul Sanayi Odası",
+      "publishedAt": "2026-07-20",
+      "url": "https://www.iso.org.tr/haberler/basin-aciklamalari/iso-turkiyenin-ikinci-500-buyuk-sanayi-kurulusu2025-arastirmasinin-sonuclarini-acikladi/",
+      "summary": "İSO İkinci 500 kapsamındaki sanayi kuruluşlarının üretimden satış, ihracat, istihdam ve finansal sonuçları.",
+      "kind": "Araştırma",
+      "checkedAt": "2026-09-17"
+    },
+    {
+      "id": "iso500-2025",
+      "title": "Türkiye’nin 500 Büyük Sanayi Kuruluşu",
+      "period": "2025",
+      "publisher": "İstanbul Sanayi Odası",
+      "publishedAt": "2026-06-17",
+      "checkedAt": "2026-09-17",
+      "summary": "Üretimden satışlar, ihracat, istihdam ve finansal göstergelerle büyük sanayi kuruluşlarının 2025 sonuçları.",
+      "url": "https://www.iso500.org.tr/500-buyuk-sanayi-kurulusu?yil=2025",
+      "announcementUrl": "https://www.iso.org.tr/basin/basin-bultenleri/iso-turkiyenin-500-buyuk-sanayi-kurulusu-arastirmasi2025-sonuclarini-acikladi/",
+      "kind": "Araştırma"
+    },
+    {
+      "id": "tcmb-finansal-istikrar-2026-1",
+      "title": "Finansal İstikrar Raporu",
+      "period": "Mayıs 2026",
+      "publisher": "Türkiye Cumhuriyet Merkez Bankası",
+      "publishedAt": "2026-05-22",
+      "url": "https://www.tcmb.gov.tr/wps/wcm/connect/TR/TCMB%2BTR/Main%2BMenu/Yayinlar/Raporlar/Finansal%2BIstikrar%2BRaporu/2026/Sayi%2B42",
+      "summary": "Reel sektör, hanehalkı ve finansal kesimde borçluluk, kredi, likidite ve risk gelişmelerini ele alan 42. sayı.",
+      "kind": "Rapor",
+      "checkedAt": "2026-09-17"
+    },
+    {
+      "id": "ticaret-eticaret-2025",
+      "title": "Türkiye’de E-Ticaretin Görünümü",
+      "period": "2025",
+      "publisher": "T.C. Ticaret Bakanlığı",
+      "publishedAt": "2026-05-14",
+      "url": "https://icticaret.ticaret.gov.tr/haberler/turkiyede-e-ticaretin-gorunumu-raporu-2025-yayinlandi",
+      "summary": "E-ticaret hacmi, işletmeler, perakende satışlar ve sektör dağılımlarını inceleyen 2025 yılı raporu.",
+      "kind": "Rapor",
+      "checkedAt": "2026-09-17"
+    },
+    {
+      "id": "tim-ilk1000-2025",
+      "title": "Türkiye’nin İlk 1000 İhracatçısı",
+      "period": "2025",
+      "publisher": "Türkiye İhracatçılar Meclisi",
+      "publishedAt": null,
+      "checkedAt": "2026-09-17",
+      "summary": "İhracatçı firmaların 2025 sıralaması, sektör dağılımları ve araştırma sonuçları. Kaynak sayfada rapor kitabı ile Excel listesi yer alır.",
+      "url": "https://tim.org.tr/tr/turkiyenin-ilk-1000-ihracatci-arastirmasi-2025",
+      "reportUrl": "https://tim.org.tr/files/downloads/Ihracat1000/2025/ILK_1000_2025_Kitabi.pdf",
+      "kind": "Araştırma"
+    }
+  ],
+  "groups": [
+    {
+      "id": "vergi",
+      "name": "Vergi ve Mali Müşavirlik",
+      "short": "Vergi",
+      "description": "Vergi, muhasebe ve tasdik süreçlerini birbirini tamamlayan bir bütün olarak ele alıyoruz.",
+      "number": "01"
+    },
+    {
+      "id": "denetim",
+      "name": "Denetim ve Raporlama",
+      "short": "Denetim",
+      "description": "Finansal tablolar, kontroller ve raporlama süreçlerine bağımsız, kanıta dayalı bir bakış.",
+      "number": "02"
+    },
+    {
+      "id": "danismanlik",
+      "name": "Kurumsal Danışmanlık",
+      "short": "Danışmanlık",
+      "description": "Şirketinizin kuruluşundan değerlemesine, yönetiminden finansal kararlarına uzanan uzmanlık.",
+      "number": "03"
+    },
+    {
+      "id": "insan",
+      "name": "İnsan Kaynakları ve Bordro",
+      "short": "İnsan",
+      "description": "İnsan kaynakları, ücret, özlük ve sosyal güvenlik ihtiyaçlarını aynı çerçevede değerlendiren yaklaşım.",
+      "number": "04"
+    },
+    {
+      "id": "sistem",
+      "name": "Sistemler ve İş Zekâsı",
+      "short": "Sistemler",
+      "description": "Muhasebe sistemlerini, veri akışlarını ve yönetim raporlamasını işinizin ihtiyaçlarına göre kurgulamak.",
+      "number": "05"
+    },
+    {
+      "id": "akademi",
+      "name": "Boraden Akademi",
+      "short": "Akademi",
+      "description": "Muhasebe, finans, denetim ve insan kaynaklarında kurumsal öğrenme başlıkları.",
+      "number": "06"
+    }
+  ],
+  "services": [
+    {
+      "id": "sirket-degerlemesi",
+      "title": "Şirket Değerlemesi",
+      "group": "danismanlik",
+      "lead": "Değer, tek bir rakamdan fazlasıdır. Şirketinizin bugünkü performansını, varlıklarını ve geleceğe ilişkin varsayımlarını aynı resimde değerlendirin.",
+      "scope": [
+        [
+          "Amaç ve değerleme tarihi",
+          "Pay devri, ortaklık görüşmesi veya stratejik planlama: çalışmanın amacı, değer esası ve kullanılacağı karar önce netleştirilir."
+        ],
+        [
+          "Finansal ve operasyonel analiz",
+          "Finansal tablolar, borç ve nakit pozisyonu, işletme sermayesi, iş modeli ve gelecek dönem beklentileri birlikte incelenir."
+        ],
+        [
+          "Yöntem ve senaryolar",
+          "İndirgenmiş nakit akışı, piyasa karşılaştırmaları ve varlık temelli yaklaşımlar; veri kalitesi ve iş modeline göre değerlendirilir."
+        ],
+        [
+          "Açıklanabilir sonuç",
+          "Sonuç, kullanılan varsayımlar, duyarlılık analizleri ve çalışmanın sınırlarıyla birlikte raporlanır."
+        ]
+      ],
+      "intro": "Değerleme çalışmasını, hangi kararı destekleyeceğinden başlayarak planlayın. Finansal sonuçların yanında gelir üretme kapasitesi, operasyonel dinamikler ve veri tutarlılığı da değerlendirme çerçevesine alınır. Böylece sonuç kadar o sonuca nasıl ulaşıldığı da anlaşılır olur.",
+      "steps": [
+        [
+          "Çerçeve",
+          "Amaç, kapsam ve tarih"
+        ],
+        [
+          "Analiz",
+          "Veri ve iş modeli"
+        ],
+        [
+          "Model",
+          "Yöntem ve senaryolar"
+        ],
+        [
+          "Rapor",
+          "Varsayımlar ve sonuç"
+        ]
+      ],
+      "prepare": [
+        "Son dönem finansal tabloları ve hesap dökümleri",
+        "Borç, nakit ve işletme sermayesi bilgileri",
+        "İş planı, bütçe ve değerlemenin kullanılacağı karar"
+      ],
+      "note": "IVS çerçevesi; kapsam, değer esası, veri, model ve raporlama disiplinini birlikte ele alır. Kullanılacak çerçeve ve raporun ilgili işlem için yeterliliği görev başında belirlenmelidir.",
+      "sourceKeys": [
+        "valuation"
+      ],
+      "faqs": [
+        [
+          "Şirket değeri nasıl hesaplanır?",
+          "Tek bir evrensel formül yoktur. Nakit akışı, piyasa karşılaştırmaları ve varlık temelli yaklaşımlar; iş modeli, değerleme amacı ve verinin niteliğine göre değerlendirilir."
+        ],
+        [
+          "Değerleme için hangi belgeler gerekir?",
+          "Finansal tablolar, borç ve nakit dökümleri, işletme sermayesi bilgileri, iş planı ve işlem amacı başlangıç belgeleridir. Ayrıntılı liste kapsam görüşmesinde belirlenir."
+        ],
+        [
+          "Şirket değerleme ücreti ve süresi nasıl belirlenir?",
+          "Şirketin yapısı, grup şirketleri, veri hazırlığı, yöntem ve rapor kullanım amacı birlikte değerlendirilir. Bu bilgileri görmeden sabit ücret veya teslim süresi taahhüt edilmez."
+        ],
+        [
+          "Değerleme raporu satış fiyatını garanti eder mi?",
+          "Hayır. Değerleme belirli varsayımlarla bir görüş üretir; pazarlık, işlem koşulları ve tarafların kararları gerçekleşen fiyatı etkileyebilir."
+        ]
+      ],
+      "seoTitle": "Şirket Değerleme Danışmanlığı ve Yöntemleri | Boraden",
+      "description": "Şirket değerleme danışmanlığı: ortaklık, pay devri ve yatırım kararlarında amaç, finansal analiz, yöntem ve senaryolar. Boraden ile kapsamı belirleyin.",
+      "definition": "Şirket değerlemesi, belirli bir tarih ve amaç için işletmenin veya paylarının değerini; seçilen değer esası, veri ve varsayımlarla birlikte değerlendiren çalışmadır.",
+      "explanation": "İndirgenmiş nakit akışı gelecekteki nakit beklentilerine, piyasa yaklaşımı karşılaştırılabilir işlemlere, varlık temelli yaklaşım ise varlık ve yükümlülüklerin değerine bakar. Uygun yaklaşım şirketin iş modeline ve erişilebilir veriye göre seçilir. Değerleme sonucuyla gerçekleşecek satış fiyatı aynı olmak zorunda değildir.",
+      "output": "Amaç, yöntem, varsayım ve sınırları birlikte gösteren değerleme çerçevesi.",
+      "needs": [
+        "Yeni ortak alırken",
+        "Pay devri görüşmesinde",
+        "Bir yatırım kararında"
+      ]
+    },
+    {
+      "id": "sirket-kurulus-danismanligi",
+      "title": "Şirket Kuruluş Danışmanlığı",
+      "group": "danismanlik",
+      "lead": "İyi bir başlangıç, tescilden önce başlar. İş fikrinizin şirket yapısına, mali düzene ve günlük işleyişe dönüşmesini birlikte planlayalım.",
+      "scope": [
+        [
+          "Şirket yapısı",
+          "Faaliyet alanı, ortaklık ve yönetim ihtiyaçları değerlendirilerek kuruluş seçenekleri karşılaştırılır."
+        ],
+        [
+          "Kuruluş hazırlığı",
+          "Unvan, faaliyet kodu, sermaye ve temsil yapısı için gerekli bilgi ve belgeler bir araya getirilir."
+        ],
+        [
+          "Sicil ve kayıt koordinasyonu",
+          "MERSİS ve ticaret sicili adımları, şirketin hukuki yapısına ve gerekli izinlere göre planlanır."
+        ],
+        [
+          "Kuruluştan sonraki düzen",
+          "Vergi, muhasebe, ticari defter ve gerekiyorsa işveren kayıtlarına ilişkin başlangıç iş planı oluşturulur."
+        ]
+      ],
+      "intro": "Kuruluş kararları, işletmenin sonraki yıllarını etkiler. Yaklaşımımız, ortakların beklentilerini ve faaliyet modelini anlayarak mali ve idari ihtiyaçları görünür kılmaktır. Tescil süreciyle birlikte ilk dönem muhasebe düzeni ve sorumluluk takvimi de ele alınır.",
+      "steps": [
+        [
+          "Fikir",
+          "İş modeli ve ortaklar"
+        ],
+        [
+          "Yapı",
+          "Şirket türü ve hazırlık"
+        ],
+        [
+          "Tescil",
+          "Başvuru koordinasyonu"
+        ],
+        [
+          "Başlangıç",
+          "Mali ve idari düzen"
+        ]
+      ],
+      "prepare": [
+        "Faaliyet konusu, adres ve ortaklık planı",
+        "Ortakların ve temsilcilerin gerekli kimlik / yetki bilgileri",
+        "Sermaye, finansman ve ilk dönem çalışma planı"
+      ],
+      "note": "1 Ocak 2026’dan itibaren ticaret siciline tescil edilen şirketler için pay defteri ile genel kurul toplantı ve müzakere defterinin ETDS’de tutulması yükümlülüğü bulunmaktadır. Şirket türüne göre kuruluş ve defter kapsamı birlikte kontrol edilmelidir.",
+      "sourceKeys": [
+        "formation",
+        "registry"
+      ],
+      "faqs": [
+        [
+          "Limited şirket mi anonim şirket mi kurmalıyım?",
+          "Seçim yalnızca kuruluş maliyetine göre yapılmamalıdır. Ortaklık, temsil, pay devri, yönetim ve finansman beklentileri karşılaştırılmalıdır; her işletme için aynı yapı uygun değildir."
+        ],
+        [
+          "MERSİS işlemi bütün kuruluş sürecini tamamlar mı?",
+          "MERSİS ve ticaret sicili adımları sürecin bir bölümüdür. Gerekli izinler, vergi ve defter yükümlülükleri ile işveren kayıtları faaliyet ve şirket yapısına göre ayrıca planlanır."
+        ],
+        [
+          "2026’da elektronik ticari defter yönünden ne kontrol edilmeli?",
+          "1 Ocak 2026’dan itibaren tescil edilen şirketlerin pay defteri ile genel kurul toplantı ve müzakere defteri için ETDS kapsamı kontrol edilmelidir. Şirket türüne ve deftere ilişkin güncel düzenleme esas alınır."
+        ]
+      ],
+      "seoTitle": "Şirket Kuruluş Danışmanlığı: Yapı, Tescil ve Kayıt | Boraden",
+      "description": "Şirket kuruluş danışmanlığıyla şirket türü, ortaklık, MERSİS, ticaret sicili ve kuruluş sonrası mali işleyişi planlayın. Boraden İstanbul.",
+      "definition": "Şirket kuruluş danışmanlığı, iş modelinin şirket yapısına dönüşmesi için karar, belge, tescil ve ilk dönem kayıt ihtiyaçlarını birlikte planlar.",
+      "explanation": "Şirket türü seçimi; ortakların yönetim beklentisi, temsil düzeni, pay devri ve finansman planıyla birlikte ele alınır. Sicil işlemlerinden sonra ticari defter, vergi ve muhasebe sorumluluklarının da bir takvime bağlanması gerekir. Şirket türüne veya faaliyete özgü izinler ayrıca değerlendirilir.",
+      "output": "Kuruluş adımları ve ilk dönem sorumlulukları için açık bir hazırlık planı.",
+      "needs": [
+        "Yeni bir iş kurarken",
+        "Şirket türünü seçerken",
+        "İlk kayıt düzenini kurarken"
+      ]
+    },
+    {
+      "id": "insan-kaynaklari-ve-bordro",
+      "title": "İnsan Kaynakları ve Bordro Hizmetleri",
+      "group": "insan",
+      "lead": "Çalışan deneyiminin arkasında doğru işleyen süreçler vardır. Bordro, özlük ve sosyal güvenlik ihtiyaçlarını tutarlı bir akışta buluşturalım.",
+      "scope": [
+        [
+          "Bordro döngüsü",
+          "Puantaj, ücret değişiklikleri, yan haklar ve kesintiler dönem bazında değerlendirilir; kontrol ve onay akışı planlanır."
+        ],
+        [
+          "Bildirim hazırlığı",
+          "Ücret ve sosyal güvenlik verilerinin Muhtasar ve Prim Hizmet Beyannamesi kapsamındaki tutarlılığı kontrol edilir."
+        ],
+        [
+          "Özlük ve süreç düzeni",
+          "İşe giriş–çıkış, izin ve çalışan kayıtlarının sorumluları ve belge akışları netleştirilir."
+        ],
+        [
+          "Maliyet ve kontrol",
+          "İşveren maliyeti, bütçe karşılaştırmaları ve teşvik uygunluğu; işletmenin ihtiyacına göre değerlendirilir."
+        ]
+      ],
+      "intro": "Bordro yalnızca bir hesaplama işi değildir; doğru veri, zamanında kontrol ve çalışan bilgilerinin korunması birlikte gerekir. Boraden’in insan kaynakları ve bordro kapsamı, kurum içindeki ekiplerinizle görev paylaşımını belirleyen, izlenebilir bir çalışma düzeni etrafında şekillenir.",
+      "steps": [
+        [
+          "Tanıma",
+          "Mevcut düzen ve veri"
+        ],
+        [
+          "Kurgu",
+          "Takvim ve sorumlular"
+        ],
+        [
+          "Kontrol",
+          "Hesaplama ve onay"
+        ],
+        [
+          "Takip",
+          "Bildirim ve raporlama"
+        ]
+      ],
+      "prepare": [
+        "Çalışan sayısı, işyeri yapısı ve mevcut bordro akışı",
+        "Puantaj, ücret, yan hak ve kesinti kuralları",
+        "Veri teslimi, kontrol ve onay sorumluları"
+      ],
+      "note": "MPHB hazırlığında ücret kesintileri ile sigortalıların kazanç ve hizmet bilgileri birlikte değerlendirilir. Bordro parametreleri dönem bazında güncellenir; çalışan verilerine erişim görev ve yetkiyle sınırlandırılmalıdır.",
+      "sourceKeys": [
+        "payroll",
+        "privacy"
+      ],
+      "faqs": [
+        [
+          "Bordro dış kaynak hizmeti neyi kapsar?",
+          "Kapsam; veri toplama düzeni, bordro hesaplama ve kontrolü, raporlar ve bildirim hazırlığı gibi adımlardan oluşabilir. İşletmeye ait onay ve yasal sorumluluklar hizmet sözleşmesinde açıkça ayrıştırılmalıdır."
+        ],
+        [
+          "Brütten nete ücret neden aylara göre değişebilir?",
+          "Gelir vergisi tarifesi ve kümülatif matrah, ilgili ayın gelir vergisini etkileyebilir. SGK tavanı, istisna ve kişiye özgü kalemler de sonuçta rol oynar. Hesaplama merkezindeki araç standart çalışan varsayımlarıyla ön hesap sunar."
+        ],
+        [
+          "Çalışan verileri nasıl paylaşılmalı?",
+          "İhtiyaç duyulan veri, yetkili kişiler ve güvenli aktarım yöntemi belirlenmelidir. Özlük ve ücret dosyalarını genel iletişim formuna eklemek yerine çalışma kapsamında kararlaştırılan kanalı kullanın."
+        ]
+      ],
+      "seoTitle": "İnsan Kaynakları, Bordro ve Dış Kaynak Hizmetleri | Boraden",
+      "description": "Bordro dış kaynak hizmetleri, puantaj, ücret kontrolü, özlük ve bildirim hazırlığı. İnsan kaynakları süreçlerinizi Boraden ile birlikte değerlendirin.",
+      "definition": "İnsan kaynakları ve bordro hizmetleri, çalışan verisinin dönemsel ücret hesabına, kontrollere ve ilgili bildirim hazırlığına tutarlı biçimde aktarılmasını ele alır.",
+      "explanation": "Dış kaynak bordro modelinde kimin veri hazırladığı, kimin kontrol ettiği ve kimin son onayı verdiği açıkça belirlenmelidir. Puantaj, ücret değişiklikleri, izin ve yan hakların teslim takvimi önemlidir. Çalışan verilerinin erişim yetkileri ile işverenin devam eden sorumlulukları görev kapsamında ayrıca tanımlanır.",
+      "output": "Dönemi, sorumluları ve kontrol adımları belli bir bordro çalışma düzeni.",
+      "needs": [
+        "Çalışan sayısı artarken",
+        "Bordroyu dış kaynağa taşırken",
+        "Veri ve onay akışını kurarken"
+      ]
+    },
+    {
+      "id": "mali-musavirlik-ve-muhasebe",
+      "title": "Mali Müşavirlik ve Muhasebe",
+      "group": "vergi",
+      "lead": "Mali kayıtların günlük işleyişten dönem sonuna kadar düzenli, anlaşılır ve takip edilebilir olması için.",
+      "scope": [
+        [
+          "Kayıt düzeni",
+          "Belge akışı ve muhasebe kayıtlarının işletmeye uygun organizasyonu."
+        ],
+        [
+          "Dönem kontrolü",
+          "Hesapların, mutabakatların ve kapanış hazırlıklarının değerlendirilmesi."
+        ],
+        [
+          "Beyan hazırlığı",
+          "Vergisel yükümlülükler için belge, sorumluluk ve takvim planlaması."
+        ]
+      ],
+      "prepare": [
+        "Kayıt düzeni: Belge akışı ve muhasebe kayıtlarının işletmeye uygun organizasyonu.",
+        "Dönem kontrolü: Hesapların, mutabakatların ve kapanış hazırlıklarının değerlendirilmesi.",
+        "Beyan hazırlığı: Vergisel yükümlülükler için belge, sorumluluk ve takvim planlaması."
+      ],
+      "faqs": [],
+      "seoTitle": "Mali Müşavirlik ve Muhasebe | Boraden",
+      "description": "Mali Müşavirlik ve Muhasebe kapsamında kayıt düzeni, dönem kontrolü, beyan hazırlığı. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "Mali müşavirlik ve muhasebe hizmetleri; belge akışını, muhasebe kayıtlarını, dönem kontrollerini ve beyan hazırlığını işletmenin ihtiyaçlarına göre düzenler.",
+      "output": "Vergisel yükümlülükler için belge, sorumluluk ve takvim planlaması.",
+      "needs": [
+        "Belge akışı dağınıkken",
+        "Kapanışlar gecikirken",
+        "Beyan takvimini kurarken"
+      ]
+    },
+    {
+      "id": "diger-dolayli-vergiler",
+      "title": "Dolaylı Vergiler",
+      "group": "vergi",
+      "lead": "İşlemlerin vergi boyutunu doğru okuyun; belge ve uygulama tutarlılığını güçlendirin.",
+      "scope": [
+        [
+          "İşlem analizi",
+          "Faaliyetin ilgili dolaylı vergi düzenlemeleri açısından değerlendirilmesi."
+        ],
+        [
+          "Belge kontrolü",
+          "Vergiyi doğuran işlem ile fatura ve kayıtların karşılaştırılması."
+        ],
+        [
+          "Uygulama desteği",
+          "İstisna, muafiyet veya iade koşullarının somut işlem bazında incelenmesi."
+        ]
+      ],
+      "prepare": [
+        "İşlem analizi: Faaliyetin ilgili dolaylı vergi düzenlemeleri açısından değerlendirilmesi.",
+        "Belge kontrolü: Vergiyi doğuran işlem ile fatura ve kayıtların karşılaştırılması.",
+        "Uygulama desteği: İstisna, muafiyet veya iade koşullarının somut işlem bazında incelenmesi."
+      ],
+      "faqs": [],
+      "seoTitle": "Dolaylı Vergiler | Boraden",
+      "description": "Dolaylı Vergiler kapsamında işlem analizi, belge kontrolü, uygulama desteği. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "Dolaylı vergi danışmanlığı, işlemlerin vergisel kapsamını ve belge düzenini; ilgili istisna, muafiyet ve iade koşullarıyla birlikte değerlendirir.",
+      "output": "İstisna, muafiyet veya iade koşullarının somut işlem bazında incelenmesi.",
+      "needs": [
+        "Yeni bir işlem türünde",
+        "İstisna koşullarını incelerken",
+        "Fatura ve kayıt eşleşmesinde"
+      ]
+    },
+    {
+      "id": "bireysel-danismanlik-hizmetleri",
+      "title": "Bireysel Vergi Danışmanlığı",
+      "group": "vergi",
+      "lead": "Kişisel gelir ve varlık işlemlerinizin vergisel çerçevesini birlikte netleştirelim.",
+      "scope": [
+        [
+          "Gelirlerin değerlendirilmesi",
+          "Gelir türleri ve mükellefiyet durumunun belirlenmesi."
+        ],
+        [
+          "Beyan hazırlığı",
+          "Belge ve kayıtların ilgili beyan dönemi için düzenlenmesi."
+        ],
+        [
+          "Özel durumlar",
+          "Veraset, intikal veya sınır ötesi gelirlerin kendi koşullarında incelenmesi."
+        ]
+      ],
+      "prepare": [
+        "Gelirlerin değerlendirilmesi: Gelir türleri ve mükellefiyet durumunun belirlenmesi.",
+        "Beyan hazırlığı: Belge ve kayıtların ilgili beyan dönemi için düzenlenmesi.",
+        "Özel durumlar: Veraset, intikal veya sınır ötesi gelirlerin kendi koşullarında incelenmesi."
+      ],
+      "faqs": [],
+      "seoTitle": "Bireysel Vergi Danışmanlığı | Boraden",
+      "description": "Bireysel Vergi Danışmanlığı kapsamında gelirlerin değerlendirilmesi, beyan hazırlığı, özel durumlar. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "Bireysel vergi danışmanlığı; gelir türlerini, mükellefiyet durumunu, beyan belgelerini ve özel vergisel koşulları kişi bazında değerlendirir.",
+      "output": "Veraset, intikal veya sınır ötesi gelirlerin kendi koşullarında incelenmesi.",
+      "needs": [
+        "Birden çok geliriniz varken",
+        "Beyana hazırlanırken",
+        "Sınır ötesi gelir elde ederken"
+      ]
+    },
+    {
+      "id": "ar-ge-hizmetleri",
+      "title": "Ar-Ge ve Teknokent Danışmanlığı",
+      "group": "vergi",
+      "lead": "Yenilik faaliyetlerinin mali kayıtlarını ve teşvik süreçlerini izlenebilir bir yapıya taşıyın.",
+      "scope": [
+        [
+          "Faaliyet ayrımı",
+          "Ar-Ge, tasarım ve destek faaliyetlerine ait kayıtların ayrıştırılması."
+        ],
+        [
+          "Kapsam kontrolü",
+          "Teknoloji geliştirme bölgesi veya merkez statüsüne göre uygunluk incelemesi."
+        ],
+        [
+          "Dokümantasyon",
+          "Proje, harcama ve personel kayıtları arasındaki ilişkinin kurulması."
+        ]
+      ],
+      "prepare": [
+        "Faaliyet ayrımı: Ar-Ge, tasarım ve destek faaliyetlerine ait kayıtların ayrıştırılması.",
+        "Kapsam kontrolü: Teknoloji geliştirme bölgesi veya merkez statüsüne göre uygunluk incelemesi.",
+        "Dokümantasyon: Proje, harcama ve personel kayıtları arasındaki ilişkinin kurulması."
+      ],
+      "faqs": [],
+      "seoTitle": "Ar-Ge ve Teknokent Danışmanlığı | Boraden",
+      "description": "Ar-Ge ve Teknokent Danışmanlığı kapsamında faaliyet ayrımı, kapsam kontrolü, dokümantasyon. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "Ar-Ge ve teknokent danışmanlığı; faaliyet ayrımını, teşvik kapsamını ve proje, harcama, personel kayıtlarının birbiriyle ilişkisini ele alır.",
+      "output": "Proje, harcama ve personel kayıtları arasındaki ilişkinin kurulması.",
+      "needs": [
+        "Ar-Ge kayıtlarını ayırırken",
+        "Teknokent faaliyetinde",
+        "Proje maliyetini izlerken"
+      ]
+    },
+    {
+      "id": "tam-tasdik-islemleri",
+      "title": "Tam Tasdik ve Yeminli Mali Müşavirlik",
+      "group": "vergi",
+      "lead": "Dönem sonunu beklemeden vergisel kayıt ve uygulamalarınıza kapsamlı bir bakış.",
+      "scope": [
+        [
+          "Vergisel inceleme",
+          "Hesap ve belgelerin tam tasdik kapsamı açısından değerlendirilmesi."
+        ],
+        [
+          "Risk tespiti",
+          "Matrah ve uygulamalara ilişkin bulguların dönem içinde paylaşılması."
+        ],
+        [
+          "Tasdik raporu",
+          "Çalışma kapsamındaki tespitlerin ilgili usullere göre raporlanması."
+        ]
+      ],
+      "prepare": [
+        "İlgili dönem mizanı ve mali tablolar",
+        "Beyanname, indirim ve istisna çalışma dosyaları",
+        "Önemli sözleşmeler ve karşıt inceleme belge akışı"
+      ],
+      "sourceKeys": [
+        "tasdik"
+      ],
+      "faqs": [
+        [
+          "Tam tasdik yaptırmak her şirket için zorunlu mu?",
+          "Genel bir zorunluluk varsayımı yapılmamalıdır. Şirketin durumu, işlem türü ve yararlanılan uygulamalar bakımından tasdik koşulları ayrı incelenmelidir."
+        ],
+        [
+          "Tam tasdik vergi incelemesini engeller mi?",
+          "Tam tasdik, idarenin inceleme yetkisini ortadan kaldıran bir garanti olarak sunulamaz. Çalışmanın kapsamı ve sorumlulukları ilgili mevzuat ve sözleşmeyle belirlenir."
+        ],
+        [
+          "Tam tasdik ile KDV iade tasdiki aynı dosya mı?",
+          "Amaç ve kapsamları farklı olabilir. İade hakkı doğuran işlem ve ilgili düzenlemeler doğrultusunda ayrı belge ve rapor gereklilikleri değerlendirilir."
+        ]
+      ],
+      "seoTitle": "YMM Tam Tasdik ve Yeminli Mali Müşavirlik | Boraden",
+      "description": "Yeminli mali müşavirlik ve tam tasdik hizmeti: vergi beyanları, kayıt incelemesi, matrah ve rapor kapsamı. Boraden ile dönem hazırlığını planlayın.",
+      "definition": "Tam tasdik, yıllık gelir veya kurumlar vergisi beyannameleri ve ilgili mali tabloların vergi mevzuatı çerçevesindeki inceleme ve tasdik sürecidir.",
+      "explanation": "Ticari kayıtların beyannameye doğru taşınması, dönem içi tespitlerin paylaşılması ve gerekli belgelerin hazırlanması birlikte ele alınır. Tam tasdik, bağımsız finansal tablo denetiminin yerine geçmez. İndirim ve istisnalara özgü tasdik koşulları, ilgili dönemin düzenlemeleri üzerinden ayrıca değerlendirilmelidir.",
+      "output": "Beyan ile kayıtlar arasındaki ilişkiyi ve tasdik kapsamını belgeleyen çalışma.",
+      "needs": [
+        "Yıllık beyana hazırlanırken",
+        "Vergisel riskleri incelerken",
+        "Tasdik kapsamını belirlerken"
+      ]
+    },
+    {
+      "id": "kdv-iade-islemleri",
+      "title": "KDV İade İşlemleri",
+      "group": "vergi",
+      "lead": "İade sürecinin temelini oluşturan belge ve hesapları birlikte ele alalım.",
+      "scope": [
+        [
+          "İşlem ve kapsam",
+          "İade hakkı doğuran işlemin ve gerekli belgelerin belirlenmesi."
+        ],
+        [
+          "Liste ve mutabakat",
+          "Yüklenim, indirim ve satış kayıtlarının tutarlılık kontrolü."
+        ],
+        [
+          "Dosya takibi",
+          "Başvuru hazırlığı, eksikliklerin değerlendirilmesi ve dosya koordinasyonu."
+        ]
+      ],
+      "prepare": [
+        "İade hakkı doğuran işlem ve dönem bilgisi",
+        "İlgili satış, indirim ve yüklenim listeleri",
+        "Beyanname, fatura ve mutabakat çalışma dosyaları"
+      ],
+      "sourceKeys": [
+        "kdv"
+      ],
+      "faqs": [
+        [
+          "Devreden KDV’nin tamamını geri alabilir miyim?",
+          "Devreden tutar tek başına iade hakkı anlamına gelmez. İade hakkı doğuran işlem ve buna ilişkin koşullar belirlenmeli; tutar ilgili düzenlemeye göre hesaplanmalıdır."
+        ],
+        [
+          "KDV iadesi için hangi belgeler gerekir?",
+          "Liste ve belgeler işlem türüne göre değişir. İade talebine konu dönem, beyannameler, satış ve alış kayıtları ile yüklenim hesapları başlangıçta incelenir."
+        ],
+        [
+          "KDV iadesi ne kadar sürer?",
+          "Dosyanın niteliği, eksiklikler, seçilen iade yolu ve idari inceleme süreci etkili olur. Sabit bir süre veya kesin iade sonucu taahhüt edilmez."
+        ]
+      ],
+      "seoTitle": "KDV İade Danışmanlığı ve Dosya Hazırlığı | Boraden",
+      "description": "KDV iade işlemlerinde kapsam, yüklenim ve indirim listeleri, mutabakat ve dosya hazırlığı. İşleminize özgü iade sürecini Boraden ile değerlendirin.",
+      "definition": "KDV iade çalışması, iade hakkı doğuran işlemle ilgili tutar, kayıt ve belgelerin ilgili mevzuata göre değerlendirilmesini ve dosya hazırlığını ele alır.",
+      "explanation": "Her devreden KDV otomatik olarak iade hakkı oluşturmaz. İhracat, indirimli oran veya diğer iade hakkı doğuran işlemler kendi koşullarında incelenir. İade yolu, tutarı, gerekli listeler ve rapor koşulları somut işlem ve dönem üzerinden belirlenmelidir.",
+      "output": "İşlemle, kayıtlarla ve gerekli belgelerle ilişkilendirilmiş bir iade dosyası hazırlığı.",
+      "needs": [
+        "İade hakkını değerlendirirken",
+        "İade listeleri hazırlanırken",
+        "Dosya eksikliklerini giderirken"
+      ]
+    },
+    {
+      "id": "kurumlar-vergisi-denetim-ve-tasdik",
+      "title": "Kurumlar Vergisi Denetimi ve Tasdiki",
+      "group": "vergi",
+      "lead": "Finansal sonuçlardan vergi matrahına uzanan köprüyü açık ve izlenebilir kılın.",
+      "scope": [
+        [
+          "Matrah çalışması",
+          "Ticari sonuç ile vergisel düzeltmelerin ilişkilendirilmesi."
+        ],
+        [
+          "Uygulama kontrolü",
+          "İndirim, istisna ve gider uygulamalarının şirket özelinde incelenmesi."
+        ],
+        [
+          "Raporlama",
+          "Tespit ve değerlendirmelerin tasdik kapsamı içinde belgelenmesi."
+        ]
+      ],
+      "prepare": [
+        "Matrah çalışması: Ticari sonuç ile vergisel düzeltmelerin ilişkilendirilmesi.",
+        "Uygulama kontrolü: İndirim, istisna ve gider uygulamalarının şirket özelinde incelenmesi.",
+        "Raporlama: Tespit ve değerlendirmelerin tasdik kapsamı içinde belgelenmesi."
+      ],
+      "faqs": [],
+      "seoTitle": "Kurumlar Vergisi Denetim ve Tasdik | Boraden",
+      "description": "Kurumlar Vergisi Denetim ve Tasdik kapsamında matrah çalışması, uygulama kontrolü, raporlama. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "Kurumlar vergisi denetimi ve tasdiki; ticari sonuçtan vergi matrahına geçişi, indirim ve istisna uygulamalarını ve ilgili raporlama kapsamını inceler.",
+      "output": "Tespit ve değerlendirmelerin tasdik kapsamı içinde belgelenmesi.",
+      "needs": [
+        "Ticari kârdan matraha geçerken",
+        "İndirimleri değerlendirirken",
+        "Beyan eklerini hazırlarken"
+      ]
+    },
+    {
+      "id": "transfer-fiyatlandirma",
+      "title": "Transfer Fiyatlandırması",
+      "group": "vergi",
+      "lead": "İlişkili taraf işlemlerinizde yöntemi, veriyi ve gerekçeyi aynı dosyada buluşturun.",
+      "scope": [
+        [
+          "İlişkili işlemler",
+          "Tarafların, işlem türlerinin ve işlevlerin belirlenmesi."
+        ],
+        [
+          "Karşılaştırma",
+          "Emsal değerlendirmesi ve yöntem seçimine ilişkin çalışma."
+        ],
+        [
+          "Dokümantasyon",
+          "Uygulanabilir raporlama kapsamı için veri ve belge hazırlığı."
+        ]
+      ],
+      "prepare": [
+        "İlişkili işlemler: Tarafların, işlem türlerinin ve işlevlerin belirlenmesi.",
+        "Karşılaştırma: Emsal değerlendirmesi ve yöntem seçimine ilişkin çalışma.",
+        "Dokümantasyon: Uygulanabilir raporlama kapsamı için veri ve belge hazırlığı."
+      ],
+      "faqs": [],
+      "seoTitle": "Transfer Fiyatlandırması | Boraden",
+      "description": "Transfer Fiyatlandırması kapsamında ilişkili işlemler, karşılaştırma, dokümantasyon. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "Transfer fiyatlandırması çalışması; ilişkili taraf işlemlerini, işlevleri, emsal karşılaştırmalarını ve uygun yöntem için gerekli belgeleri değerlendirir.",
+      "output": "Uygulanabilir raporlama kapsamı için veri ve belge hazırlığı.",
+      "needs": [
+        "İlişkili taraf işlemlerinde",
+        "Yöntemi belgelendirirken",
+        "Emsal çalışması hazırlığında"
+      ]
+    },
+    {
+      "id": "cari-hesap-mutabakatlarinin-yapilmasi",
+      "title": "Cari Hesap Mutabakatları",
+      "group": "vergi",
+      "lead": "Alacak ve borç kayıtlarının arkasındaki farkları görünür kılan sistemli kontrol.",
+      "scope": [
+        [
+          "Hesap eşleştirme",
+          "Karşı taraf ve dönem bazında cari hesapların hazırlanması."
+        ],
+        [
+          "Fark analizi",
+          "Fatura, ödeme ve mahsup hareketlerindeki farklılıkların incelenmesi."
+        ],
+        [
+          "Takip",
+          "Açık kalemler ve düzeltme ihtiyaçlarının sorumlularla paylaşılması."
+        ]
+      ],
+      "prepare": [
+        "Hesap eşleştirme: Karşı taraf ve dönem bazında cari hesapların hazırlanması.",
+        "Fark analizi: Fatura, ödeme ve mahsup hareketlerindeki farklılıkların incelenmesi.",
+        "Takip: Açık kalemler ve düzeltme ihtiyaçlarının sorumlularla paylaşılması."
+      ],
+      "faqs": [],
+      "seoTitle": "Cari Hesap Mutabakatları | Boraden",
+      "description": "Cari Hesap Mutabakatları kapsamında hesap eşleştirme, fark analizi, takip. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "Cari hesap mutabakatı; tarafların hesap kayıtlarını karşılaştırarak farkların belirlenmesini, açıklanmasını ve belgelendirilmesini sağlar.",
+      "output": "Açık kalemler ve düzeltme ihtiyaçlarının sorumlularla paylaşılması.",
+      "needs": [
+        "Açık bakiyeler birikirken",
+        "Dönem kapanışında",
+        "Karşılıklı kayıtlar farklıyken"
+      ]
+    },
+    {
+      "id": "otv-hizmetleri",
+      "title": "ÖTV Hizmetleri",
+      "group": "vergi",
+      "lead": "Ürün ve işlem özelindeki vergisel koşulları, kayıt ve belge düzeniyle birlikte değerlendirin.",
+      "scope": [
+        [
+          "Ürün ve işlem",
+          "İlgili liste, faaliyet ve işlem türünün incelenmesi."
+        ],
+        [
+          "Uygulama kontrolü",
+          "Hesaplama, istisna ve tecil-terkin koşullarının değerlendirilmesi."
+        ],
+        [
+          "Dosya ve rapor",
+          "Uygun olan iade veya tasdik süreçleri için belge koordinasyonu."
+        ]
+      ],
+      "prepare": [
+        "Ürün ve işlem: İlgili liste, faaliyet ve işlem türünün incelenmesi.",
+        "Uygulama kontrolü: Hesaplama, istisna ve tecil-terkin koşullarının değerlendirilmesi.",
+        "Dosya ve rapor: Uygun olan iade veya tasdik süreçleri için belge koordinasyonu."
+      ],
+      "faqs": [],
+      "seoTitle": "ÖTV Hizmetleri | Boraden",
+      "description": "ÖTV Hizmetleri kapsamında ürün ve işlem, uygulama kontrolü, dosya ve rapor. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "ÖTV hizmetleri; işlem ve ürünün vergi kapsamını, belge ve kayıt düzenini ve ilgili uygulama koşullarını birlikte değerlendirir.",
+      "output": "Uygun olan iade veya tasdik süreçleri için belge koordinasyonu.",
+      "needs": [
+        "Ürün kapsamını belirlerken",
+        "Tecil-terkin sürecinde",
+        "Vergi dosyasını hazırlarken"
+      ]
+    },
+    {
+      "id": "bagimsiz-denetim",
+      "title": "Bağımsız Denetim",
+      "group": "denetim",
+      "lead": "Güvenilir kararların temelinde, sorgulanan ve kanıtla desteklenen bilgi vardır.",
+      "scope": [
+        [
+          "Risk odaklı planlama",
+          "İş modelinin, raporlama çerçevesinin ve önemli risklerin anlaşılması."
+        ],
+        [
+          "Denetim çalışması",
+          "Belge, hesap ve kontrol süreçlerine yönelik denetim prosedürleri."
+        ],
+        [
+          "Görüş ve iletişim",
+          "Finansal tablolar üzerindeki denetim görüşü ve yönetimle bulgu paylaşımı."
+        ]
+      ],
+      "prepare": [
+        "Denetlenecek dönem ve finansal tablo seti",
+        "Muhasebe kayıtları, sözleşmeler ve iç kontrol bilgileri",
+        "Kapanış takvimi ve ilgili yönetim sorumluları"
+      ],
+      "sourceKeys": [
+        "framework"
+      ],
+      "faqs": [
+        [
+          "Bağımsız denetim ile vergi denetimi aynı mı?",
+          "Finansal tablo denetimi ile vergi beyanı / tasdik çalışmasının amaç ve çerçeveleri farklıdır. İhtiyaç, raporun kim tarafından hangi kararda kullanılacağına göre ayrıştırılır."
+        ],
+        [
+          "Şirketimizin denetime tabi olduğunu nasıl öğreniriz?",
+          "Güncel kapsam düzenlemeleri, ilgili listeler ve şirketin koşulları birlikte incelenir. Geçmiş yıl eşiklerine bakarak güncel yükümlülük sonucu çıkarılmamalıdır."
+        ],
+        [
+          "Denetim için ne zaman hazırlanmaya başlamalıyız?",
+          "Kayıt, kapanış ve belge sorumlularının dönem sonundan önce belirlenmesi hazırlığı kolaylaştırır. Çalışma takvimi raporlama dönemi ve kapsam görüşmesiyle netleştirilir."
+        ]
+      ],
+      "seoTitle": "Bağımsız Denetim Hizmetleri | Boraden İstanbul",
+      "description": "Risk odaklı bağımsız denetim, finansal tablo incelemesi ve bulgu iletişimi. Boraden İstanbul ile denetim dönemi, çerçevesi ve kapsamını değerlendirin.",
+      "definition": "Bağımsız denetim, finansal tablolar hakkında denetim görüşü oluşturmak amacıyla ilgili standartlar uyarınca kanıt toplama ve değerlendirme çalışmasıdır.",
+      "explanation": "Çalışmanın başlangıcında işletmenin faaliyetleri, raporlama çerçevesi, önemli hesapları ve riskleri anlaşılır. Denetim makul güvence yaklaşımına dayanır; bütün işlemlerin tek tek kontrol edildiği veya her hatanın mutlaka tespit edileceği anlamına gelmez. Zorunlu denetim kapsamı ve seçim koşulları güncel düzenleme ve işletme özelinde incelenmelidir.",
+      "output": "Uygulanabilir standartlar çerçevesinde denetim görüşü ve yönetimle bulgu iletişimi.",
+      "needs": [
+        "Raporlama döneminde",
+        "Paydaşların güvence ihtiyacında",
+        "Denetim kapsamına hazırlanırken"
+      ]
+    },
+    {
+      "id": "kurumsal-raporlama",
+      "title": "Kurumsal Raporlama",
+      "group": "denetim",
+      "lead": "Finansal sonuçları, faaliyetinizin arkasındaki göstergelerle birlikte anlatın.",
+      "scope": [
+        [
+          "Bilgi ihtiyaçları",
+          "Yönetim ve paydaşların raporlama beklentilerinin tanımlanması."
+        ],
+        [
+          "Gösterge kurgusu",
+          "Finansal ve operasyonel göstergelerin tutarlı kaynaklarla ilişkilendirilmesi."
+        ],
+        [
+          "Rapor bütünlüğü",
+          "Açıklamaların, dönem karşılaştırmalarının ve veri akışının düzenlenmesi."
+        ]
+      ],
+      "prepare": [
+        "Bilgi ihtiyaçları: Yönetim ve paydaşların raporlama beklentilerinin tanımlanması.",
+        "Gösterge kurgusu: Finansal ve operasyonel göstergelerin tutarlı kaynaklarla ilişkilendirilmesi.",
+        "Rapor bütünlüğü: Açıklamaların, dönem karşılaştırmalarının ve veri akışının düzenlenmesi."
+      ],
+      "sourceKeys": [
+        "reporting"
+      ],
+      "faqs": [],
+      "seoTitle": "Kurumsal Raporlama | Boraden",
+      "description": "Kurumsal Raporlama kapsamında bilgi ihtiyaçları, gösterge kurgusu, rapor bütünlüğü. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "Kurumsal raporlama; işletmenin finansal ve operasyonel bilgilerini, rapor kullanıcılarının ihtiyaçlarına uygun bir çerçevede bir araya getirir.",
+      "output": "Açıklamaların, dönem karşılaştırmalarının ve veri akışının düzenlenmesi.",
+      "needs": [
+        "Paydaş bilgi ihtiyacında",
+        "Gösterge tanımları farklıyken",
+        "Dönemleri karşılaştırırken"
+      ]
+    },
+    {
+      "id": "ufrs-tfrs-raporlama",
+      "title": "UFRS / TFRS Raporlama",
+      "group": "denetim",
+      "lead": "Finansal bilgiyi ortak bir raporlama diliyle anlamlı ve karşılaştırılabilir hâle getirin.",
+      "scope": [
+        [
+          "Çerçeve analizi",
+          "İşletmenin tabi olduğu raporlama çerçevesinin değerlendirilmesi."
+        ],
+        [
+          "Dönüşüm çalışması",
+          "Mevcut kayıtlar ile ilgili standartlar arasındaki farkların belirlenmesi."
+        ],
+        [
+          "Tablo ve dipnot",
+          "Finansal tablo seti ve açıklama hazırlıklarının koordinasyonu."
+        ]
+      ],
+      "prepare": [
+        "Mizan, hesap dökümleri ve önceki finansal tablolar",
+        "Sözleşmeler, duran varlık, stok, alacak ve borç detayları",
+        "Grup raporlama talepleri, kapanış takvimi ve mevcut politikalar"
+      ],
+      "sourceKeys": [
+        "framework",
+        "reporting"
+      ],
+      "faqs": [
+        [
+          "UFRS ile TFRS aynı kavram mı?",
+          "UFRS, uluslararası finansal raporlama standartlarını ifade eder. Türkiye’de uygulanacak standartlar ve kapsam KGK düzenlemeleri üzerinden değerlendirilir. Çalışmada raporun hangi çerçeve ve amaçla hazırlanacağı açıkça belirtilmelidir."
+        ],
+        [
+          "VUK kayıtları doğrudan TFRS finansal tablosu olur mu?",
+          "Otomatik olarak aynı kabul edilmez. Ölçüm, sınıflama, muhasebe politikası ve açıklama farklılıkları işletmenin işlemleri üzerinden incelenir; gerekli dönüşüm çalışmaları belgelenir."
+        ],
+        [
+          "Bağımsız denetime tabi her işletme TFRS uygulamak zorunda mı?",
+          "Hayır. Zorunlu TFRS uygulama kapsamı ve diğer raporlama çerçeveleri ayrı değerlendirilir. BOBİ FRS uygulaması veya ihtiyari tercihler, güncel KGK düzenlemesi ve işletmenin durumuna göre kontrol edilmelidir."
+        ],
+        [
+          "Rapor hazırlama ile bağımsız denetim aynı hizmet mi?",
+          "Rapor hazırlama, finansal bilginin ilgili çerçevede derlenmesini; bağımsız denetim ise standartlar çerçevesinde denetim görüşü oluşturulmasını ele alır. Görevler ve bağımsızlık koşulları ayrı değerlendirilir."
+        ]
+      ],
+      "seoTitle": "UFRS / TFRS Raporlama ve Dönüşüm Danışmanlığı | Boraden",
+      "description": "UFRS/TFRS raporlama: uygun çerçeve, VUK kayıtlarından dönüşüm, finansal tablo ve dipnot hazırlığı. Boraden ile raporlama ihtiyacınızı netleştirin.",
+      "definition": "UFRS/TFRS raporlama çalışması, işletmenin finansal bilgisini uygulanabilir finansal raporlama çerçevesine göre hazırlama ve sunma ihtiyaçlarını ele alır.",
+      "explanation": "Vergi amacıyla tutulan kayıtlar ile genel amaçlı finansal raporlama aynı hedefe hizmet etmez. Bu nedenle başlangıçta işletmenin tabi olduğu çerçeve ve rapor kullanıcıları belirlenir. Muhasebe politikaları, ölçüm farklılıkları, sınıflamalar ve dipnotlar birlikte değerlendirilir. Her işletmenin zorunlu olarak TFRS uyguladığı varsayılmaz; BOBİ FRS ve diğer çerçevelerin kapsamı ayrıca kontrol edilir.",
+      "output": "İzlenebilir dönüşüm kayıtlarıyla bağlantılı finansal tablo ve açıklama hazırlığı.",
+      "needs": [
+        "VUK kayıtlarından dönüşümde",
+        "Grup raporlaması hazırlığında",
+        "Tablo ve dipnot setinde"
+      ]
+    },
+    {
+      "id": "finansal-tablo-denetimi",
+      "title": "Finansal Tablo Denetimi",
+      "group": "denetim",
+      "lead": "Finansal durum ve faaliyet sonuçlarına kanıt odaklı inceleme.",
+      "scope": [
+        [
+          "Kapsam",
+          "Tablo seti, hesap dönemi ve geçerli raporlama çerçevesinin belirlenmesi."
+        ],
+        [
+          "İnceleme",
+          "Önemli hesaplar, tahminler ve açıklamalar için denetim kanıtı değerlendirmesi."
+        ],
+        [
+          "Sonuç",
+          "Bulguların görüş oluşturma süreci içinde ele alınması."
+        ]
+      ],
+      "prepare": [
+        "Kapsam: Tablo seti, hesap dönemi ve geçerli raporlama çerçevesinin belirlenmesi.",
+        "İnceleme: Önemli hesaplar, tahminler ve açıklamalar için denetim kanıtı değerlendirmesi.",
+        "Sonuç: Bulguların görüş oluşturma süreci içinde ele alınması."
+      ],
+      "sourceKeys": [
+        "reporting"
+      ],
+      "faqs": [],
+      "seoTitle": "Finansal Tablo Denetimi | Boraden",
+      "description": "Finansal Tablo Denetimi kapsamında kapsam, inceleme, sonuç. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "Finansal tablo denetimi; önemli hesaplar, tahminler ve açıklamalar için denetim kanıtını, geçerli raporlama çerçevesi içinde değerlendirir.",
+      "output": "Bulguların görüş oluşturma süreci içinde ele alınması.",
+      "needs": [
+        "Finansal tablo seti hazırlanırken",
+        "Önemli tahminler incelenirken",
+        "Açıklamalar değerlendirilirken"
+      ]
+    },
+    {
+      "id": "mali-tablolarin-denetimi",
+      "title": "Mali Tabloların Denetimi",
+      "group": "denetim",
+      "lead": "Kayıtların mali tablolara doğru yansımasını ve açıklamaların tutarlılığını değerlendirin.",
+      "scope": [
+        [
+          "Planlama",
+          "İşletmenin mali yapısı ve raporlama risklerinin anlaşılması."
+        ],
+        [
+          "Kontrol",
+          "Hesap bakiyeleri, işlem akışları ve dönem sonu çalışmalarının incelenmesi."
+        ],
+        [
+          "Değerlendirme",
+          "Tablo ve dipnot bulgularının ilgili çerçeveye göre raporlanması."
+        ]
+      ],
+      "prepare": [
+        "Planlama: İşletmenin mali yapısı ve raporlama risklerinin anlaşılması.",
+        "Kontrol: Hesap bakiyeleri, işlem akışları ve dönem sonu çalışmalarının incelenmesi.",
+        "Değerlendirme: Tablo ve dipnot bulgularının ilgili çerçeveye göre raporlanması."
+      ],
+      "sourceKeys": [
+        "reporting"
+      ],
+      "faqs": [],
+      "seoTitle": "Mali Tabloların Denetimi | Boraden",
+      "description": "Mali Tabloların Denetimi kapsamında planlama, kontrol, değerlendirme. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "Mali tabloların denetimi; tablo, hesap ve belgeleri ilgili çalışma kapsamına göre inceleyerek bulguların raporlanmasını ele alır.",
+      "output": "Tablo ve dipnot bulgularının ilgili çerçeveye göre raporlanması.",
+      "needs": [
+        "Kapanış kayıtlarını incelerken",
+        "Hesaplar tabloya aktarılırken",
+        "Mali bilgi tutarlılığında"
+      ]
+    },
+    {
+      "id": "usulsuzluk-ve-hile-denetimi",
+      "title": "Usulsüzlük ve Hile Denetimi",
+      "group": "denetim",
+      "lead": "Şüpheleri varsayımlarla değil, sistemli inceleme ve belgelenen bulgularla ele alın.",
+      "scope": [
+        [
+          "İnceleme çerçevesi",
+          "İddia, dönem ve erişilebilir bilgi kaynaklarının belirlenmesi."
+        ],
+        [
+          "İşlem analizi",
+          "Kayıt, belge ve işlem örüntülerinin karşılaştırmalı incelenmesi."
+        ],
+        [
+          "Bulgu raporu",
+          "Kanıtlar, kısıtlar ve kontrol geliştirme önerilerinin ayrıştırılması."
+        ]
+      ],
+      "prepare": [
+        "İnceleme çerçevesi: İddia, dönem ve erişilebilir bilgi kaynaklarının belirlenmesi.",
+        "İşlem analizi: Kayıt, belge ve işlem örüntülerinin karşılaştırmalı incelenmesi.",
+        "Bulgu raporu: Kanıtlar, kısıtlar ve kontrol geliştirme önerilerinin ayrıştırılması."
+      ],
+      "sourceKeys": [
+        "reporting"
+      ],
+      "faqs": [],
+      "seoTitle": "Usulsüzlük ve Hile Denetimi | Boraden",
+      "description": "Usulsüzlük ve Hile Denetimi kapsamında inceleme çerçevesi, işlem analizi, bulgu raporu. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "Usulsüzlük ve hile denetimi; iddiaları, kayıtları ve kontrol süreçlerini belirlenen kapsam içinde inceleyerek bulguları değerlendirir.",
+      "output": "Kanıtlar, kısıtlar ve kontrol geliştirme önerilerinin ayrıştırılması.",
+      "needs": [
+        "Bir işlem şüphesi doğduğunda",
+        "Kayıt örüntüleri incelenirken",
+        "Kontrol zafiyeti araştırılırken"
+      ]
+    },
+    {
+      "id": "ic-denetim-ve-ic-kontrol",
+      "title": "İç Denetim ve İç Kontrol",
+      "group": "denetim",
+      "lead": "İşleyen süreçleri görünür kılın. Kontrol boşluklarını öncelikleriyle birlikte anlayın.",
+      "scope": [
+        [
+          "Süreç haritası",
+          "Görevlerin, risklerin ve mevcut kontrollerin belirlenmesi."
+        ],
+        [
+          "Etkinlik incelemesi",
+          "Kontrollerin tasarımı ve uygulamasının değerlendirilmesi."
+        ],
+        [
+          "İyileştirme planı",
+          "Bulguların sorumlu, öncelik ve izleme adımlarıyla paylaşılması."
+        ]
+      ],
+      "prepare": [
+        "Süreç haritası: Görevlerin, risklerin ve mevcut kontrollerin belirlenmesi.",
+        "Etkinlik incelemesi: Kontrollerin tasarımı ve uygulamasının değerlendirilmesi.",
+        "İyileştirme planı: Bulguların sorumlu, öncelik ve izleme adımlarıyla paylaşılması."
+      ],
+      "sourceKeys": [
+        "reporting"
+      ],
+      "faqs": [],
+      "seoTitle": "İç Denetim ve İç Kontrol | Boraden",
+      "description": "İç Denetim ve İç Kontrol kapsamında süreç haritası, etkinlik incelemesi, iyileştirme planı. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "İç denetim ve iç kontrol çalışması; süreçlerdeki görevleri, riskleri ve kontrolleri inceleyerek bulguları iyileştirme ve izleme adımlarıyla birlikte ele alır.",
+      "output": "Bulguların sorumlu, öncelik ve izleme adımlarıyla paylaşılması.",
+      "needs": [
+        "İç kontrol düzeni kurulurken",
+        "Risk öncelikleri değişirken",
+        "Süreçler değerlendiriliyorken"
+      ]
+    },
+    {
+      "id": "suistimal-inceleme-ve-onleme",
+      "title": "Suistimal İnceleme ve Önleme",
+      "group": "denetim",
+      "lead": "İşlem güvenliğini, önleyici kontrol ve erken farkındalık yaklaşımıyla güçlendirin.",
+      "scope": [
+        [
+          "Risk alanları",
+          "Suistimale açık süreç ve yetki ilişkilerinin incelenmesi."
+        ],
+        [
+          "Önleyici kontroller",
+          "Görev ayrılığı, onay ve izleme yapılarının değerlendirilmesi."
+        ],
+        [
+          "Takip yaklaşımı",
+          "Bulgu değerlendirme ve iyileştirme döngüsünün oluşturulması."
+        ]
+      ],
+      "prepare": [
+        "Risk alanları: Suistimale açık süreç ve yetki ilişkilerinin incelenmesi.",
+        "Önleyici kontroller: Görev ayrılığı, onay ve izleme yapılarının değerlendirilmesi.",
+        "Takip yaklaşımı: Bulgu değerlendirme ve iyileştirme döngüsünün oluşturulması."
+      ],
+      "sourceKeys": [
+        "reporting"
+      ],
+      "faqs": [],
+      "seoTitle": "Suistimal İnceleme ve Önleme | Boraden",
+      "description": "Suistimal İnceleme ve Önleme kapsamında risk alanları, önleyici kontroller, takip yaklaşımı. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "Suistimal inceleme ve önleme çalışmaları; risklerin, işlem kayıtlarının ve kontrol açıklarının değerlendirilmesini ve önleyici adımların planlanmasını ele alır.",
+      "output": "Bulgu değerlendirme ve iyileştirme döngüsünün oluşturulması.",
+      "needs": [
+        "Kontrol açıkları araştırılırken",
+        "Şüpheli işlemler incelenirken",
+        "Önleyici adımlar planlanırken"
+      ]
+    },
+    {
+      "id": "sgk-dosya-acilisi",
+      "title": "SGK Dosya Açılışı",
+      "group": "insan",
+      "lead": "İstihdamın ilk adımında işyeri kayıt ve bildirim hazırlıklarını birlikte planlayın.",
+      "scope": [
+        [
+          "İhtiyacı belirleme",
+          "İşyeri ve istihdam yapısının belirlenmesi."
+        ],
+        [
+          "Süreç hazırlığı",
+          "Tescil için gerekli belgelerin hazırlanması."
+        ],
+        [
+          "Kontrol ve takip",
+          "Bildirim sorumlulukları ve başlangıç takvimi."
+        ]
+      ],
+      "prepare": [
+        "İhtiyacı belirleme: İşyeri ve istihdam yapısının belirlenmesi.",
+        "Süreç hazırlığı: Tescil için gerekli belgelerin hazırlanması.",
+        "Kontrol ve takip: Bildirim sorumlulukları ve başlangıç takvimi."
+      ],
+      "sourceKeys": [],
+      "faqs": [],
+      "seoTitle": "SGK Dosya Açılışı | Boraden",
+      "description": "SGK Dosya Açılışı kapsamında ihtiyacı belirleme, süreç hazırlığı, kontrol ve takip. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "SGK dosya açılışı; işyerinin ve işverenin durumuna göre gerekli belgelerin, tescil adımlarının ve başlangıç yükümlülüklerinin hazırlanmasını ele alır.",
+      "output": "Bildirim sorumlulukları ve başlangıç takvimi.",
+      "needs": [
+        "İlk çalışan istihdamında",
+        "Yeni işyeri açılırken",
+        "İşveren kaydı hazırlığında"
+      ]
+    },
+    {
+      "id": "ev-hizmetlisi-sgk-dosya-acilisi",
+      "title": "Ev Hizmetlerinde SGK İşlemleri",
+      "group": "insan",
+      "lead": "Ev hizmetlerinde çalışan kişinin çalışma düzenine uygun sigortalılık sürecini değerlendirin.",
+      "scope": [
+        [
+          "İhtiyacı belirleme",
+          "Çalışma günleri ve istihdam biçiminin belirlenmesi."
+        ],
+        [
+          "Süreç hazırlığı",
+          "İlgili sigortalılık kapsamının değerlendirilmesi."
+        ],
+        [
+          "Kontrol ve takip",
+          "Kayıt ve bildirim hazırlığının yapılması."
+        ]
+      ],
+      "prepare": [
+        "İhtiyacı belirleme: Çalışma günleri ve istihdam biçiminin belirlenmesi.",
+        "Süreç hazırlığı: İlgili sigortalılık kapsamının değerlendirilmesi.",
+        "Kontrol ve takip: Kayıt ve bildirim hazırlığının yapılması."
+      ],
+      "sourceKeys": [],
+      "faqs": [],
+      "seoTitle": "Ev Hizmetlerinde SGK İşlemleri | Boraden",
+      "description": "Ev Hizmetlerinde SGK İşlemleri kapsamında ihtiyacı belirleme, süreç hazırlığı, kontrol ve takip. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "Ev hizmetlerinde SGK işlemleri; çalışma biçimini, ilgili sigortalılık kapsamını ve gerekli kayıt ve bildirim hazırlığını değerlendirir.",
+      "output": "Kayıt ve bildirim hazırlığının yapılması.",
+      "needs": [
+        "Ev hizmetlerinde istihdamda",
+        "Çalışma günleri belirlenirken",
+        "Bildirim koşulları incelenirken"
+      ]
+    },
+    {
+      "id": "bordrolama",
+      "title": "Bordrolama",
+      "group": "insan",
+      "lead": "Her dönemde tutarlı veri, kontrollü hesaplama ve anlaşılır bordro raporlaması.",
+      "scope": [
+        [
+          "İhtiyacı belirleme",
+          "Puantaj ve ücret verilerinin kontrolü."
+        ],
+        [
+          "Süreç hazırlığı",
+          "Bordro hesaplama ve onay akışının kurulması."
+        ],
+        [
+          "Kontrol ve takip",
+          "Dönemsel bildirim ve maliyet raporu hazırlığı."
+        ]
+      ],
+      "prepare": [
+        "İhtiyacı belirleme: Puantaj ve ücret verilerinin kontrolü.",
+        "Süreç hazırlığı: Bordro hesaplama ve onay akışının kurulması.",
+        "Kontrol ve takip: Dönemsel bildirim ve maliyet raporu hazırlığı."
+      ],
+      "sourceKeys": [
+        "payroll",
+        "privacy"
+      ],
+      "faqs": [],
+      "seoTitle": "Bordrolama | Boraden",
+      "description": "Bordrolama kapsamında ihtiyacı belirleme, süreç hazırlığı, kontrol ve takip. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "Bordrolama; dönemsel çalışan ve ücret verilerini, kesintileri, kontrol adımlarını ve bildirim hazırlığını düzenli bir akışta ele alır.",
+      "output": "Dönemsel bildirim ve maliyet raporu hazırlığı.",
+      "needs": [
+        "Aylık ücret döneminde",
+        "Puantajlar birleştirilirken",
+        "Ücret icmali hazırlanırken"
+      ]
+    },
+    {
+      "id": "istihdam-tesvik",
+      "title": "İstihdam Teşvikleri",
+      "group": "insan",
+      "lead": "İşyeriniz ve çalışanlarınız için uygulanabilir teşvik koşullarını birlikte değerlendirin.",
+      "scope": [
+        [
+          "İhtiyacı belirleme",
+          "İşyeri ve çalışan bazında uygunluk incelemesi."
+        ],
+        [
+          "Süreç hazırlığı",
+          "Teşvik koşullarını destekleyen belge kontrolü."
+        ],
+        [
+          "Kontrol ve takip",
+          "Devam eden uygunluk ve dönem takibi."
+        ]
+      ],
+      "prepare": [
+        "İhtiyacı belirleme: İşyeri ve çalışan bazında uygunluk incelemesi.",
+        "Süreç hazırlığı: Teşvik koşullarını destekleyen belge kontrolü.",
+        "Kontrol ve takip: Devam eden uygunluk ve dönem takibi."
+      ],
+      "sourceKeys": [],
+      "faqs": [],
+      "seoTitle": "İstihdam Teşvikleri | Boraden",
+      "description": "İstihdam Teşvikleri kapsamında ihtiyacı belirleme, süreç hazırlığı, kontrol ve takip. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "İstihdam teşviki çalışmaları; işverenin ve çalışanların koşullarını ilgili teşvik kapsamıyla karşılaştırarak uygunluk ve takip hazırlığını ele alır.",
+      "output": "Devam eden uygunluk ve dönem takibi.",
+      "needs": [
+        "İşyeri uygunluğu incelenirken",
+        "Yeni istihdam planında",
+        "Teşvik devam koşullarında"
+      ]
+    },
+    {
+      "id": "sgk-protokolu",
+      "title": "SGK Protokol Süreçleri",
+      "group": "insan",
+      "lead": "Geçici iş göremezlik ödemeleriyle ilgili protokol ve mahsup süreçlerine belge odaklı yaklaşım.",
+      "scope": [
+        [
+          "İhtiyacı belirleme",
+          "İşveren uygulaması ve protokol ihtiyacının analizi."
+        ],
+        [
+          "Süreç hazırlığı",
+          "Başvuru koşulları ve belge hazırlığı."
+        ],
+        [
+          "Kontrol ve takip",
+          "Ödeme ve mahsup kayıtlarının mutabakatı."
+        ]
+      ],
+      "prepare": [
+        "İhtiyacı belirleme: İşveren uygulaması ve protokol ihtiyacının analizi.",
+        "Süreç hazırlığı: Başvuru koşulları ve belge hazırlığı.",
+        "Kontrol ve takip: Ödeme ve mahsup kayıtlarının mutabakatı."
+      ],
+      "sourceKeys": [],
+      "faqs": [],
+      "seoTitle": "SGK Protokol Süreçleri | Boraden",
+      "description": "SGK Protokol Süreçleri kapsamında ihtiyacı belirleme, süreç hazırlığı, kontrol ve takip. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "SGK protokol süreçleri; ilgili uygulamanın kapsamını, gerekli belgeleri ve başvuru ile takip adımlarını birlikte değerlendirir.",
+      "output": "Ödeme ve mahsup kayıtlarının mutabakatı.",
+      "needs": [
+        "Protokol başvurusu öncesinde",
+        "İş göremezlik kayıtlarında",
+        "Ödeme ve mahsup kontrolünde"
+      ]
+    },
+    {
+      "id": "asgari-iscilik-ve-ilisiksizlik-belgesi",
+      "title": "Asgari İşçilik ve İlişiksizlik Belgesi",
+      "group": "insan",
+      "lead": "Proje ve taahhüt işlerinde işçilik kayıtlarıyla kapanış belgelerini aynı takvimde ele alın.",
+      "scope": [
+        [
+          "İhtiyacı belirleme",
+          "İşin kapsamı ve kayıtlarının incelenmesi."
+        ],
+        [
+          "Süreç hazırlığı",
+          "İşçilik bildirimleri için dosya kontrolü."
+        ],
+        [
+          "Kontrol ve takip",
+          "İlişiksizlik belgesi sürecinin koordinasyonu."
+        ]
+      ],
+      "prepare": [
+        "İhtiyacı belirleme: İşin kapsamı ve kayıtlarının incelenmesi.",
+        "Süreç hazırlığı: İşçilik bildirimleri için dosya kontrolü.",
+        "Kontrol ve takip: İlişiksizlik belgesi sürecinin koordinasyonu."
+      ],
+      "sourceKeys": [],
+      "faqs": [],
+      "seoTitle": "Asgari İşçilik ve İlişiksizlik Belgesi | Boraden",
+      "description": "Asgari İşçilik ve İlişiksizlik Belgesi kapsamında ihtiyacı belirleme, süreç hazırlığı, kontrol ve takip. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "Asgari işçilik ve ilişiksizlik belgesi çalışmaları; işin kapsamını, kayıtları ve ilgili sosyal güvenlik yükümlülüklerini birlikte değerlendirir.",
+      "output": "İlişiksizlik belgesi sürecinin koordinasyonu.",
+      "needs": [
+        "Taahhüt işi tamamlanırken",
+        "İşçilik kayıtları incelenirken",
+        "İlişiksizlik dosyası hazırlığında"
+      ]
+    },
+    {
+      "id": "borclanma-islemleri",
+      "title": "Hizmet Borçlanması İşlemleri",
+      "group": "insan",
+      "lead": "Sigortalılık geçmişinizde değerlendirilebilecek borçlanma dönemlerini somut belgelerle inceleyelim.",
+      "scope": [
+        [
+          "İhtiyacı belirleme",
+          "Hizmet ve sigortalılık geçmişinin incelenmesi."
+        ],
+        [
+          "Süreç hazırlığı",
+          "Borçlanmaya konu dönemlerin değerlendirilmesi."
+        ],
+        [
+          "Kontrol ve takip",
+          "Başvuru ve belge hazırlığına destek."
+        ]
+      ],
+      "prepare": [
+        "İhtiyacı belirleme: Hizmet ve sigortalılık geçmişinin incelenmesi.",
+        "Süreç hazırlığı: Borçlanmaya konu dönemlerin değerlendirilmesi.",
+        "Kontrol ve takip: Başvuru ve belge hazırlığına destek."
+      ],
+      "sourceKeys": [],
+      "faqs": [],
+      "seoTitle": "Hizmet Borçlanması İşlemleri | Boraden",
+      "description": "Hizmet Borçlanması İşlemleri kapsamında ihtiyacı belirleme, süreç hazırlığı, kontrol ve takip. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "Hizmet borçlanması işlemleri; borçlanılabilecek sürelerin, ilgili belgelerin ve başvuru koşullarının değerlendirilmesini ele alır.",
+      "output": "Başvuru ve belge hazırlığına destek.",
+      "needs": [
+        "Hizmet geçmişi incelenirken",
+        "Eksik dönem araştırılırken",
+        "Borçlanma başvurusu öncesinde"
+      ]
+    },
+    {
+      "id": "emeklilik-danismanligi",
+      "title": "Emeklilik Danışmanlığı",
+      "group": "insan",
+      "lead": "Sigorta başlangıcı, hizmet süreleri ve statüleri birlikte değerlendirerek yol haritanızı netleştirin.",
+      "scope": [
+        [
+          "İhtiyacı belirleme",
+          "Hizmet dökümü ve statü analizi."
+        ],
+        [
+          "Süreç hazırlığı",
+          "Kişiye özgü koşullar ve başvuru zamanı değerlendirmesi."
+        ],
+        [
+          "Kontrol ve takip",
+          "Eksik belge ve kayıtların takip planı."
+        ]
+      ],
+      "prepare": [
+        "İhtiyacı belirleme: Hizmet dökümü ve statü analizi.",
+        "Süreç hazırlığı: Kişiye özgü koşullar ve başvuru zamanı değerlendirmesi.",
+        "Kontrol ve takip: Eksik belge ve kayıtların takip planı."
+      ],
+      "sourceKeys": [],
+      "faqs": [],
+      "seoTitle": "Emeklilik Danışmanlığı | Boraden",
+      "description": "Emeklilik Danışmanlığı kapsamında ihtiyacı belirleme, süreç hazırlığı, kontrol ve takip. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "Emeklilik danışmanlığı; sigortalılık geçmişini, hizmet sürelerini ve başvuru koşullarını kişinin durumuna göre birlikte değerlendirir.",
+      "output": "Eksik belge ve kayıtların takip planı.",
+      "needs": [
+        "Hizmet süreleri birleştirilirken",
+        "Başvuru zamanı araştırılırken",
+        "Farklı sigorta statülerinde"
+      ]
+    },
+    {
+      "id": "insan-kiymetleri-surec-yonetimi",
+      "title": "İnsan Kaynakları Süreç Yönetimi",
+      "group": "insan",
+      "lead": "Çalışan yolculuğunu açık sorumluluklar ve tutarlı uygulamalarla güçlendirin.",
+      "scope": [
+        [
+          "İhtiyacı belirleme",
+          "İşe alım, görev ve özlük süreçlerinin haritalanması."
+        ],
+        [
+          "Süreç hazırlığı",
+          "İzin ve çalışan uygulamalarının değerlendirilmesi."
+        ],
+        [
+          "Kontrol ve takip",
+          "Prosedür ve kontrol düzeninin geliştirilmesi."
+        ]
+      ],
+      "prepare": [
+        "İhtiyacı belirleme: İşe alım, görev ve özlük süreçlerinin haritalanması.",
+        "Süreç hazırlığı: İzin ve çalışan uygulamalarının değerlendirilmesi.",
+        "Kontrol ve takip: Prosedür ve kontrol düzeninin geliştirilmesi."
+      ],
+      "sourceKeys": [],
+      "faqs": [],
+      "seoTitle": "İnsan Kaynakları Süreç Yönetimi | Boraden",
+      "description": "İnsan Kaynakları Süreç Yönetimi kapsamında ihtiyacı belirleme, süreç hazırlığı, kontrol ve takip. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "İnsan kaynakları süreç yönetimi; çalışan kayıtlarının, görevlerin, belge akışının ve kontrol adımlarının düzenlenmesini ele alır.",
+      "output": "Prosedür ve kontrol düzeninin geliştirilmesi.",
+      "needs": [
+        "Görevler belirsizleşirken",
+        "İzin düzeni kurulurken",
+        "Çalışan süreçleri büyürken"
+      ]
+    },
+    {
+      "id": "yabanci-uyruklu-ikamet-izini",
+      "title": "Yabancı Uyruklular için İkamet İzni",
+      "group": "insan",
+      "lead": "Başvuru amacına ve kişinin durumuna göre ikamet sürecinin belge ve takip ihtiyaçlarını belirleyin.",
+      "scope": [
+        [
+          "İhtiyacı belirleme",
+          "İkamet amacı ve mevcut statünün değerlendirilmesi."
+        ],
+        [
+          "Süreç hazırlığı",
+          "Başvuru belgeleri ve süreç koordinasyonu."
+        ],
+        [
+          "Kontrol ve takip",
+          "İkamet ve çalışma izni süreçlerinin ayrı değerlendirilmesi."
+        ]
+      ],
+      "prepare": [
+        "İhtiyacı belirleme: İkamet amacı ve mevcut statünün değerlendirilmesi.",
+        "Süreç hazırlığı: Başvuru belgeleri ve süreç koordinasyonu.",
+        "Kontrol ve takip: İkamet ve çalışma izni süreçlerinin ayrı değerlendirilmesi."
+      ],
+      "sourceKeys": [],
+      "faqs": [],
+      "seoTitle": "Yabancı Uyruklular İçin İkamet İzni | Boraden",
+      "description": "Yabancı Uyruklular İçin İkamet İzni kapsamında ihtiyacı belirleme, süreç hazırlığı, kontrol ve takip. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "İkamet izni danışmanlığı; yabancı uyruklu kişinin durumuna göre başvuru yolunu, gerekli belgeleri ve takip adımlarını değerlendirir.",
+      "output": "İkamet ve çalışma izni süreçlerinin ayrı değerlendirilmesi.",
+      "needs": [
+        "İkamet amacı belirlenirken",
+        "Başvuru dosyası hazırlığında",
+        "Mevcut statü değişirken"
+      ]
+    },
+    {
+      "id": "calisma-izni-alma-ve-iptali",
+      "title": "Çalışma İzni Süreçleri",
+      "group": "insan",
+      "lead": "Yabancı çalışanların başvuru, uzatma ve sona erme süreçlerini düzenli bir akışta ele alın.",
+      "scope": [
+        [
+          "İhtiyacı belirleme",
+          "Yurt içi veya yurt dışı başvuru yolunun belirlenmesi."
+        ],
+        [
+          "Süreç hazırlığı",
+          "e-İzin için bilgi ve belge koordinasyonu."
+        ],
+        [
+          "Kontrol ve takip",
+          "Uzatma ve sona erme bildirimlerinin takip planı."
+        ]
+      ],
+      "prepare": [
+        "İhtiyacı belirleme: Yurt içi veya yurt dışı başvuru yolunun belirlenmesi.",
+        "Süreç hazırlığı: e-İzin için bilgi ve belge koordinasyonu.",
+        "Kontrol ve takip: Uzatma ve sona erme bildirimlerinin takip planı."
+      ],
+      "sourceKeys": [
+        "permits"
+      ],
+      "faqs": [],
+      "seoTitle": "Çalışma İzni Süreçleri | Boraden",
+      "description": "Çalışma İzni Süreçleri kapsamında ihtiyacı belirleme, süreç hazırlığı, kontrol ve takip. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "Çalışma izni süreçleri; başvuru yolunun belirlenmesini, e-İzin için belge hazırlığını ve uzatma veya sona erme bildirimlerinin takibini ele alır.",
+      "output": "Uzatma ve sona erme bildirimlerinin takip planı.",
+      "needs": [
+        "Yabancı çalışan istihdamında",
+        "Uzatma hazırlığında",
+        "İzin süreci sona ererken"
+      ]
+    },
+    {
+      "id": "yurtdisina-isci-gonderimi",
+      "title": "Yurt Dışına İşçi Gönderimi",
+      "group": "insan",
+      "lead": "Görevlendirmenin ülke ve istihdam koşullarına göre sosyal güvenlik hazırlığını planlayın.",
+      "scope": [
+        [
+          "İhtiyacı belirleme",
+          "Görevlendirme ülkesi ve istihdam yapısı analizi."
+        ],
+        [
+          "Süreç hazırlığı",
+          "İkili sosyal güvenlik sözleşmesi kapsamının kontrolü."
+        ],
+        [
+          "Kontrol ve takip",
+          "Belge, bildirim ve görevlendirme süreci takibi."
+        ]
+      ],
+      "prepare": [
+        "İhtiyacı belirleme: Görevlendirme ülkesi ve istihdam yapısı analizi.",
+        "Süreç hazırlığı: İkili sosyal güvenlik sözleşmesi kapsamının kontrolü.",
+        "Kontrol ve takip: Belge, bildirim ve görevlendirme süreci takibi."
+      ],
+      "sourceKeys": [],
+      "faqs": [],
+      "seoTitle": "Yurt Dışına İşçi Gönderimi | Boraden",
+      "description": "Yurt Dışına İşçi Gönderimi kapsamında ihtiyacı belirleme, süreç hazırlığı, kontrol ve takip. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "Yurt dışına işçi gönderimi çalışması; görevlendirme ülkesini, istihdam yapısını ve ikili sosyal güvenlik sözleşmesi kapsamını birlikte değerlendirir.",
+      "output": "Belge, bildirim ve görevlendirme süreci takibi.",
+      "needs": [
+        "Yeni bir ülkeye görevlendirmede",
+        "Sosyal güvenlik hazırlığında",
+        "Bildirim akışı belirlenirken"
+      ]
+    },
+    {
+      "id": "isveren-denetimi-ve-raporlamasi",
+      "title": "İşveren Denetimi ve Raporlaması",
+      "group": "insan",
+      "lead": "İstihdam uygulamalarınızı belge, yükümlülük ve risk açısından bir arada görün.",
+      "scope": [
+        [
+          "İhtiyacı belirleme",
+          "Personel ve işyeri kayıtlarının incelenmesi."
+        ],
+        [
+          "Süreç hazırlığı",
+          "Bordro ve bildirim tutarlılığının değerlendirilmesi."
+        ],
+        [
+          "Kontrol ve takip",
+          "Öncelikli bulgular ve iyileştirme planı."
+        ]
+      ],
+      "prepare": [
+        "İhtiyacı belirleme: Personel ve işyeri kayıtlarının incelenmesi.",
+        "Süreç hazırlığı: Bordro ve bildirim tutarlılığının değerlendirilmesi.",
+        "Kontrol ve takip: Öncelikli bulgular ve iyileştirme planı."
+      ],
+      "sourceKeys": [],
+      "faqs": [],
+      "seoTitle": "İşveren Denetimi ve Raporlaması | Boraden",
+      "description": "İşveren Denetimi ve Raporlaması kapsamında ihtiyacı belirleme, süreç hazırlığı, kontrol ve takip. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "İşveren denetimi ve raporlaması; personel, işyeri, bordro ve bildirim kayıtlarının tutarlılığını inceleyerek öncelikli bulguları değerlendirir.",
+      "output": "Öncelikli bulgular ve iyileştirme planı.",
+      "needs": [
+        "Personel kayıtları incelenirken",
+        "İşyeri uyum değerlendirmesinde",
+        "Bordro-bildirim farklarında"
+      ]
+    },
+    {
+      "id": "sgk-dosya-kapanisi",
+      "title": "SGK Dosya Kapanışı",
+      "group": "insan",
+      "lead": "Faaliyet tamamlanırken işveren kayıtları ve son bildirimlerin birlikte kontrolü.",
+      "scope": [
+        [
+          "İhtiyacı belirleme",
+          "Faaliyetin sona erme durumunun belirlenmesi."
+        ],
+        [
+          "Süreç hazırlığı",
+          "Son dönem kayıt ve bildirimlerinin kontrolü."
+        ],
+        [
+          "Kontrol ve takip",
+          "Dosya kapanış başvurusu ve takip hazırlığı."
+        ]
+      ],
+      "prepare": [
+        "İhtiyacı belirleme: Faaliyetin sona erme durumunun belirlenmesi.",
+        "Süreç hazırlığı: Son dönem kayıt ve bildirimlerinin kontrolü.",
+        "Kontrol ve takip: Dosya kapanış başvurusu ve takip hazırlığı."
+      ],
+      "sourceKeys": [],
+      "faqs": [],
+      "seoTitle": "SGK Dosya Kapanışı | Boraden",
+      "description": "SGK Dosya Kapanışı kapsamında ihtiyacı belirleme, süreç hazırlığı, kontrol ve takip. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "SGK dosya kapanışı; faaliyetin sona erme durumunu, son dönem kayıt ve bildirimlerini ve kapanış başvurusu hazırlığını birlikte ele alır.",
+      "output": "Dosya kapanış başvurusu ve takip hazırlığı.",
+      "needs": [
+        "Faaliyet sona ererken",
+        "Son bildirimler hazırlanırken",
+        "Dosya kapanışı planlanırken"
+      ]
+    },
+    {
+      "id": "ticaret-sicil-islemleri",
+      "title": "Ticaret Sicil İşlemleri",
+      "group": "danismanlik",
+      "lead": "Şirket yaşam döngüsündeki değişiklikleri kayıt ve karar süreçleriyle birlikte yönetin.",
+      "scope": [
+        [
+          "Değişiklik analizi",
+          "Adres, temsil, ortaklık veya sermaye işleminin kapsamının belirlenmesi."
+        ],
+        [
+          "Belge hazırlığı",
+          "Karar, başvuru ve destekleyici belgelerin koordinasyonu."
+        ],
+        [
+          "Sicil takibi",
+          "İlgili MERSİS, tescil ve ilan adımlarının planlanması."
+        ]
+      ],
+      "prepare": [
+        "Değişiklik analizi: Adres, temsil, ortaklık veya sermaye işleminin kapsamının belirlenmesi.",
+        "Belge hazırlığı: Karar, başvuru ve destekleyici belgelerin koordinasyonu.",
+        "Sicil takibi: İlgili MERSİS, tescil ve ilan adımlarının planlanması."
+      ],
+      "sourceKeys": [
+        "registry"
+      ],
+      "faqs": [],
+      "seoTitle": "Ticaret Sicil İşlemleri | Boraden",
+      "description": "Ticaret Sicil İşlemleri kapsamında değişiklik analizi, belge hazırlığı, sicil takibi. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "Ticaret sicil işlemleri; adres, temsil, ortaklık veya sermaye değişiklikleri için karar, belge, MERSİS, tescil ve ilan adımlarını düzenler.",
+      "output": "İlgili MERSİS, tescil ve ilan adımlarının planlanması.",
+      "needs": [
+        "Temsil veya adres değişince",
+        "Sermaye işlemlerinde",
+        "Tescil ve ilan hazırlığında"
+      ]
+    },
+    {
+      "id": "raporlama",
+      "title": "Yönetim ve Finansal Raporlama",
+      "group": "danismanlik",
+      "lead": "Karar anında ihtiyaç duyduğunuz bilgiyi, anlaşılır bir raporlama düzeninde buluşturun.",
+      "scope": [
+        [
+          "İhtiyaç haritası",
+          "Yönetim kararları için gerekli göstergelerin belirlenmesi."
+        ],
+        [
+          "Veri düzeni",
+          "Kaynakların, dönemlerin ve sorumluların eşleştirilmesi."
+        ],
+        [
+          "Rapor tasarımı",
+          "Bütçe, gerçekleşen ve dönem karşılaştırmalarının sunulması."
+        ]
+      ],
+      "prepare": [
+        "İhtiyaç haritası: Yönetim kararları için gerekli göstergelerin belirlenmesi.",
+        "Veri düzeni: Kaynakların, dönemlerin ve sorumluların eşleştirilmesi.",
+        "Rapor tasarımı: Bütçe, gerçekleşen ve dönem karşılaştırmalarının sunulması."
+      ],
+      "faqs": [],
+      "seoTitle": "Yönetim ve Finansal Raporlama | Boraden",
+      "description": "Yönetim ve Finansal Raporlama kapsamında ihtiyaç haritası, veri düzeni, rapor tasarımı. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "Yönetim ve finansal raporlama; gerekli göstergeleri, veri kaynaklarını ve dönem karşılaştırmalarını karar ihtiyacına uygun biçimde bir araya getirir.",
+      "output": "Bütçe, gerçekleşen ve dönem karşılaştırmalarının sunulması.",
+      "needs": [
+        "Bütçe ile gerçekleşen ayrışınca",
+        "Karar verisi dağınıkken",
+        "Düzenli yönetim raporunda"
+      ]
+    },
+    {
+      "id": "yonetim-danismanligi",
+      "title": "Yönetim Danışmanlığı",
+      "group": "danismanlik",
+      "lead": "Planlama, organizasyon ve kontrol süreçlerinizi işinizin bir sonraki aşamasına hazırlayın.",
+      "scope": [
+        [
+          "Mevcut durum",
+          "Organizasyon ve karar süreçlerinin değerlendirilmesi."
+        ],
+        [
+          "Yol haritası",
+          "Hedeflerin uygulanabilir öncelik ve sorumluluklara dönüştürülmesi."
+        ],
+        [
+          "İzleme",
+          "Yönetim göstergeleri ve takip ritminin oluşturulması."
+        ]
+      ],
+      "prepare": [
+        "Organizasyon ve görev dağılımı",
+        "Mevcut plan, toplantı ve rapor düzeni",
+        "Öncelikli sorunlar ve hedeflenen kararlar"
+      ],
+      "faqs": [],
+      "seoTitle": "Yönetim Danışmanlığı | Boraden",
+      "description": "Yönetim Danışmanlığı kapsamında mevcut durum, yol haritası, izleme. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "Yönetim danışmanlığı, organizasyonun karar alma, planlama ve kontrol süreçlerini işletmenin hedefleriyle birlikte ele alır.",
+      "explanation": "Öncelikler, sorumlular ve takip göstergeleri aynı yapıda tanımlanır. Amaç, çok sayıda rapor üretmekten önce hangi kararın hangi bilgiyle, kim tarafından alınacağını açıklığa kavuşturmaktır.",
+      "output": "Hedef, sorumlu ve takip adımları belli bir çalışma yol haritası.",
+      "needs": [
+        "Organizasyon büyürken",
+        "Karar yetkileri değişirken",
+        "Öncelikleri uygulamaya taşırken"
+      ]
+    },
+    {
+      "id": "mali-danismanlik",
+      "title": "Mali Danışmanlık",
+      "group": "danismanlik",
+      "lead": "İşletmenin mali yapısını, nakit ihtiyaçlarını ve karar seçeneklerini bütünsel değerlendirin.",
+      "scope": [
+        [
+          "Mali analiz",
+          "Gelir, maliyet ve işletme sermayesi yapısının anlaşılması."
+        ],
+        [
+          "Planlama",
+          "Nakit akışı, bütçe ve senaryoların birlikte incelenmesi."
+        ],
+        [
+          "Karar desteği",
+          "Seçeneklerin varsayım ve riskleriyle yönetime sunulması."
+        ]
+      ],
+      "prepare": [
+        "Finansal tablolar ve nakit akışları",
+        "Alacak, borç ve stok vadeleri",
+        "Bütçe, yatırım ve finansman beklentileri"
+      ],
+      "faqs": [],
+      "seoTitle": "Mali Danışmanlık | Boraden",
+      "description": "Mali Danışmanlık kapsamında mali analiz, planlama, karar desteği. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "Mali danışmanlık, işletmenin nakit akışı, işletme sermayesi ve finansal planlama ihtiyaçlarını karar seçenekleriyle birlikte değerlendirir.",
+      "explanation": "Kârlı görünen bir faaliyet döneminde de nakit ihtiyacı oluşabilir. Tahsilat, ödeme, stok ve yatırım zamanlamasını birlikte görmek; finansman ihtiyacının nedenini anlamaya yardımcı olur. Çalışma, belgelendirilen varsayımlar ve alternatif senaryolar üzerinden ilerler.",
+      "output": "Varsayımları açık bir mali değerlendirme ve karar çerçevesi.",
+      "needs": [
+        "Nakit akışı planlanırken",
+        "İşletme sermayesi ihtiyacında",
+        "Bütçe senaryolarında"
+      ]
+    },
+    {
+      "id": "muhasebe-sistemleri",
+      "title": "Muhasebe Sistemlerinin Kurulması ve Sürdürülmesi",
+      "group": "sistem",
+      "lead": "Kayıt düzenini işletmenizin işleyişine bağlayan, sürdürülebilir bir muhasebe altyapısı.",
+      "scope": [
+        [
+          "Süreç tasarımı",
+          "Belge akışı, hesap planı ve görev dağılımının kurgulanması."
+        ],
+        [
+          "Geçiş planı",
+          "Açılış kayıtları, mevcut veriler ve kontrol noktalarının değerlendirilmesi."
+        ],
+        [
+          "Devamlılık",
+          "Dönem kapanışı ve raporlama işleyişinin düzenlenmesi."
+        ]
+      ],
+      "prepare": [
+        "Mevcut hesap planı ve sistem bilgisi",
+        "Belge akışı ve kapanış örnekleri",
+        "Görev dağılımı ve yönetim raporları"
+      ],
+      "faqs": [],
+      "seoTitle": "Muhasebe Sistemlerinin Kurulması ve Sürdürülmesi | Boraden",
+      "description": "Muhasebe Sistemlerinin Kurulması ve Sürdürülmesi kapsamında süreç tasarımı, geçiş planı, devamlılık. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "Muhasebe sistemi kurma çalışması, hesap planını, belge akışını ve dönem kapanışını işletmenin günlük işleyişiyle ilişkilendirir.",
+      "explanation": "Bir yazılım seçmek bu çalışmanın yalnızca bir parçası olabilir. Kimin hangi belgeyi ne zaman hazırladığı, kaydın nasıl kontrol edildiği ve kapanışta hangi mutabakatların yapıldığı da belirlenmelidir.",
+      "output": "Belge, kayıt, kontrol ve raporlama adımları birbiriyle bağlantılı muhasebe düzeni.",
+      "needs": [
+        "Yeni sistem kurarken",
+        "Kayıt düzeni değişirken",
+        "Kapanış akışını iyileştirirken"
+      ]
+    },
+    {
+      "id": "veri-analiz-sistemleri",
+      "title": "Veri Analiz Sistemleri",
+      "group": "sistem",
+      "lead": "Veriyi biriktirmenin ötesine geçin; kararlarınız için okunabilir hâle getirin.",
+      "scope": [
+        [
+          "Veri haritası",
+          "Farklı sistemlerdeki bilgi kaynaklarının ve tanımlarının belirlenmesi."
+        ],
+        [
+          "Kalite kontrolü",
+          "Eksik, tekrarlı veya uyumsuz verilerin tespiti."
+        ],
+        [
+          "Analiz düzeni",
+          "Yönetim ihtiyacına uygun gösterge ve raporların tasarlanması."
+        ]
+      ],
+      "prepare": [
+        "Mevcut sistemler ve veri kaynakları",
+        "Kullanılan rapor ve gösterge örnekleri",
+        "Karar soruları, dönemler ve erişim sorumluları"
+      ],
+      "faqs": [],
+      "seoTitle": "Veri Analiz Sistemleri | Boraden",
+      "description": "Veri Analiz Sistemleri kapsamında veri haritası, kalite kontrolü, analiz düzeni. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "Veri analiz sistemleri, farklı kaynaklardaki bilgiyi ortak tanımlar ve kontrol adımlarıyla yönetim kararlarında kullanılabilir hâle getiren yapıdır.",
+      "explanation": "Bir göstergenin yararlı olması için kaynağı, hesaplama yöntemi, dönemi ve sorumlusu bilinmelidir. Önce verinin niteliği incelenir; sonra işletmenin ihtiyaç duyduğu rapor ve izleme düzeni tasarlanır.",
+      "output": "Kaynağı ve tanımı belli göstergeler için bir veri ve raporlama çerçevesi.",
+      "needs": [
+        "Veri farklı sistemlerdeyken",
+        "Göstergeler uyuşmadığında",
+        "Yönetim raporu tasarlarken"
+      ]
+    },
+    {
+      "id": "cozum-prosedurleri",
+      "title": "Çözüm Prosedürleri",
+      "group": "sistem",
+      "lead": "İşin kişilere bağımlılığını azaltan açık süreçler, sorumluluklar ve kontrol adımları.",
+      "scope": [
+        [
+          "İş akışı",
+          "Mevcut uygulamaların ve karar noktalarının haritalanması."
+        ],
+        [
+          "Sorumluluk",
+          "Görev ve onay ilişkilerinin belirlenmesi."
+        ],
+        [
+          "Uygulama",
+          "Prosedürlerin kontrol ve raporlama düzeniyle ilişkilendirilmesi."
+        ]
+      ],
+      "prepare": [
+        "İş akışı: Mevcut uygulamaların ve karar noktalarının haritalanması.",
+        "Sorumluluk: Görev ve onay ilişkilerinin belirlenmesi.",
+        "Uygulama: Prosedürlerin kontrol ve raporlama düzeniyle ilişkilendirilmesi."
+      ],
+      "faqs": [],
+      "seoTitle": "Çözüm Prosedürleri | Boraden",
+      "description": "Çözüm Prosedürleri kapsamında iş akışı, sorumluluk, uygulama. Boraden ile işletmenize uygun çalışma kapsamını belirleyin.",
+      "definition": "Çözüm prosedürleri; iş akışlarını, görev ve onay ilişkilerini, kontrol noktalarını ve raporlama düzenini açık biçimde tanımlar.",
+      "output": "Prosedürlerin kontrol ve raporlama düzeniyle ilişkilendirilmesi.",
+      "needs": [
+        "İş akışı kişilere bağlıyken",
+        "Onay adımları belirsizken",
+        "Kontrol düzeni kurarken"
+      ]
+    },
+    {
+      "id": "muhasebe-ve-vergi",
+      "title": "Muhasebe ve Vergi Eğitimi",
+      "group": "akademi",
+      "lead": "Muhasebe kayıtları, vergi uygulamaları ve beyan kontrolleri için kurumunuza uygun bir öğrenme çerçevesi.",
+      "scope": [
+        [
+          "Kayıt ve belge düzeni",
+          "Kayıt ve belge düzeni."
+        ],
+        [
+          "Dönemsel vergi uygulamaları",
+          "Dönemsel vergi uygulamaları."
+        ],
+        [
+          "Beyan ve kontrol yaklaşımı",
+          "Beyan ve kontrol yaklaşımı."
+        ]
+      ],
+      "prepare": [
+        "01 / Öğrenme alanı: Kayıt ve belge düzeni.",
+        "02 / Öğrenme alanı: Dönemsel vergi uygulamaları.",
+        "03 / Öğrenme alanı: Beyan ve kontrol yaklaşımı."
+      ],
+      "note": "Bu sayfada açık bir eğitim tarihi veya kayıt programı ilan edilmemiştir. İçerik ve planlama için bizimle iletişime geçebilirsiniz.",
+      "faqs": [],
+      "seoTitle": "Muhasebe ve Vergi Eğitimi | Boraden",
+      "description": "Muhasebe kayıtları, vergi uygulamaları ve beyan kontrolleri için kurumunuza uygun bir öğrenme çerçevesi. İçerik ve planlama için Boraden ile görüşün.",
+      "definition": "Muhasebe kayıtları, vergi uygulamaları ve beyan kontrolleri için kurumunuza uygun bir öğrenme çerçevesi.",
+      "output": "Kurumunuzun ihtiyacına göre planlanan eğitim içeriği.",
+      "needs": [
+        "Yeni ekip yetiştirirken",
+        "Kayıt bilgisini güncellerken",
+        "Uygulama birliği ararken"
+      ]
+    },
+    {
+      "id": "ufrs",
+      "title": "UFRS / TFRS Eğitimi",
+      "group": "akademi",
+      "lead": "Finansal tablo, muhasebe politikası ve dipnot yaklaşımını anlamak için kurumsal UFRS/TFRS eğitimi.",
+      "scope": [
+        [
+          "Finansal tablo seti",
+          "Finansal tablo seti."
+        ],
+        [
+          "Muhasebe politikaları",
+          "Muhasebe politikaları."
+        ],
+        [
+          "Dipnot ve açıklama yaklaşımı",
+          "Dipnot ve açıklama yaklaşımı."
+        ]
+      ],
+      "prepare": [
+        "01 / Öğrenme alanı: Finansal tablo seti.",
+        "02 / Öğrenme alanı: Muhasebe politikaları.",
+        "03 / Öğrenme alanı: Dipnot ve açıklama yaklaşımı."
+      ],
+      "note": "Bu sayfada açık bir eğitim tarihi veya kayıt programı ilan edilmemiştir. İçerik ve planlama için bizimle iletişime geçebilirsiniz.",
+      "faqs": [],
+      "seoTitle": "UFRS / TFRS Eğitimi | Boraden",
+      "description": "Finansal tablo, muhasebe politikası ve dipnot yaklaşımını anlamak için kurumsal UFRS/TFRS eğitimi. İçerik ve planlama için Boraden ile görüşün.",
+      "definition": "Finansal tablo, muhasebe politikası ve dipnot yaklaşımını anlamak için kurumsal UFRS/TFRS eğitimi.",
+      "output": "Kurumunuzun ihtiyacına göre planlanan eğitim içeriği.",
+      "needs": [
+        "Standartlara girişte",
+        "Dönüşüm ekibi hazırlanırken",
+        "Dipnot yaklaşımı öğrenilirken"
+      ]
+    },
+    {
+      "id": "finansal-analiz",
+      "title": "Finansal Analiz Eğitimi",
+      "group": "akademi",
+      "lead": "Finansal tabloları, oranları ve bütçe ilişkilerini birlikte okumaya yönelik bir eğitim başlığı.",
+      "scope": [
+        [
+          "Tablo okuma ve yorumlama",
+          "Tablo okuma ve yorumlama."
+        ],
+        [
+          "Oran ve eğilim analizi",
+          "Oran ve eğilim analizi."
+        ],
+        [
+          "Bütçe ve finansal planlama",
+          "Bütçe ve finansal planlama."
+        ]
+      ],
+      "prepare": [
+        "01 / Öğrenme alanı: Tablo okuma ve yorumlama.",
+        "02 / Öğrenme alanı: Oran ve eğilim analizi.",
+        "03 / Öğrenme alanı: Bütçe ve finansal planlama."
+      ],
+      "note": "Bu sayfada açık bir eğitim tarihi veya kayıt programı ilan edilmemiştir. İçerik ve planlama için bizimle iletişime geçebilirsiniz.",
+      "faqs": [],
+      "seoTitle": "Finansal Analiz Eğitimi | Boraden",
+      "description": "Finansal tabloları, oranları ve bütçe ilişkilerini birlikte okumaya yönelik bir eğitim başlığı. İçerik ve planlama için Boraden ile görüşün.",
+      "definition": "Finansal tabloları, oranları ve bütçe ilişkilerini birlikte okumaya yönelik bir eğitim başlığı.",
+      "output": "Kurumunuzun ihtiyacına göre planlanan eğitim içeriği.",
+      "needs": [
+        "Tablo okuma becerisinde",
+        "Oranları yorumlarken",
+        "Bütçe bilgisi geliştirilirken"
+      ]
+    },
+    {
+      "id": "ic-denetim",
+      "title": "İç Denetim Eğitimi",
+      "group": "akademi",
+      "lead": "Risk değerlendirmesi, saha çalışması ve bulgu raporlaması etrafında iç denetim eğitimi.",
+      "scope": [
+        [
+          "Risk ve denetim planlaması",
+          "Risk ve denetim planlaması."
+        ],
+        [
+          "Saha çalışması",
+          "Saha çalışması."
+        ],
+        [
+          "Bulgu raporlama ve izleme",
+          "Bulgu raporlama ve izleme."
+        ]
+      ],
+      "prepare": [
+        "01 / Öğrenme alanı: Risk ve denetim planlaması.",
+        "02 / Öğrenme alanı: Saha çalışması.",
+        "03 / Öğrenme alanı: Bulgu raporlama ve izleme."
+      ],
+      "note": "Bu sayfada açık bir eğitim tarihi veya kayıt programı ilan edilmemiştir. İçerik ve planlama için bizimle iletişime geçebilirsiniz.",
+      "faqs": [],
+      "seoTitle": "İç Denetim Eğitimi | Boraden",
+      "description": "Risk değerlendirmesi, saha çalışması ve bulgu raporlaması etrafında iç denetim eğitimi. İçerik ve planlama için Boraden ile görüşün.",
+      "definition": "Risk değerlendirmesi, saha çalışması ve bulgu raporlaması etrafında iç denetim eğitimi.",
+      "output": "Kurumunuzun ihtiyacına göre planlanan eğitim içeriği.",
+      "needs": [
+        "Denetim ekibi hazırlanırken",
+        "Risk yaklaşımı öğrenilirken",
+        "Bulgu yazımı geliştirilirken"
+      ]
+    },
+    {
+      "id": "insan-kiymetleri-egitimi",
+      "title": "İnsan Kaynakları Eğitimi",
+      "group": "akademi",
+      "lead": "Özlük, ücret ve çalışan süreçlerini açık sorumluluklarla ele alan insan kaynakları eğitimi.",
+      "scope": [
+        [
+          "Özlük ve çalışan süreçleri",
+          "Özlük ve çalışan süreçleri."
+        ],
+        [
+          "Ücret ve bordro düzeni",
+          "Ücret ve bordro düzeni."
+        ],
+        [
+          "Performans ve görev yaklaşımı",
+          "Performans ve görev yaklaşımı."
+        ]
+      ],
+      "prepare": [
+        "01 / Öğrenme alanı: Özlük ve çalışan süreçleri.",
+        "02 / Öğrenme alanı: Ücret ve bordro düzeni.",
+        "03 / Öğrenme alanı: Performans ve görev yaklaşımı."
+      ],
+      "note": "Bu sayfada açık bir eğitim tarihi veya kayıt programı ilan edilmemiştir. İçerik ve planlama için bizimle iletişime geçebilirsiniz.",
+      "faqs": [],
+      "seoTitle": "İnsan Kaynakları Eğitimi | Boraden",
+      "description": "Özlük, ücret ve çalışan süreçlerini açık sorumluluklarla ele alan insan kaynakları eğitimi. İçerik ve planlama için Boraden ile görüşün.",
+      "definition": "Özlük, ücret ve çalışan süreçlerini açık sorumluluklarla ele alan insan kaynakları eğitimi.",
+      "output": "Kurumunuzun ihtiyacına göre planlanan eğitim içeriği.",
+      "needs": [
+        "İK ekibi gelişiminde",
+        "Özlük süreçleri öğrenilirken",
+        "Bordro bilgisi güncellenirken"
+      ]
+    }
+  ],
+  "contact": {
+    "email": "info@boraden.com.tr",
+    "phone": "+90 (212) 483 26 11",
+    "phoneHref": "+902124832611",
+    "whatsapp": "905532380335",
+    "street": "Maltepe Mahallesi, Yedikule Çırpıcı Yolu Sokak, Avrupa Kale Ofis Blok, No: 2, Kat: 2, Daire: 5",
+    "postcode": "34010",
+    "district": "Zeytinburnu",
+    "city": "İstanbul",
+    "country": "Türkiye"
+  },
+  "world": {
+    "title": "Yerel birikim. Dünya perspektifi.",
+    "orbist": "ORBIST",
+    "country": "İngiltere",
+    "origin": "Türkiye",
+    "note": "Türkiye–İngiltere çizgisi temsilidir; şube ağını veya kesin ofis adreslerini göstermez.",
+    "textureSource": "https://science.nasa.gov/earth/earth-observatory/earth-at-night/maps/"
+  },
+  "perspectives": [
+    {
+      "id": "warren-buffett-deger-ve-fiyat",
+      "title": "Fiyatı görmek. Değeri anlamak.",
+      "topic": "DEĞER & UZUN VADE",
+      "summary": "Warren Buffett’ın 1989 mektubundan, şirket değerlemesinde daha iyi sorular sormaya uzanan bir okuma.",
+      "intro": "Bir fiyat teklifini görmek kolaydır. O teklifin dayandığı işletmeyi, nakit üretme kapasitesini ve belirsizlikleri anlamak ise daha dikkatli bir bakış ister.",
+      "sections": [
+        [
+          "İşletmeniz için hangi soruya dönüşür?",
+          "Bir ortaklık görüşmesinde ilk soru, teklif edilen tutarın hangi pay ve hakları kapsadığıdır. Şirketin faaliyetleri, finansmanı ve işlem yapısı aynı hesapta karıştırılırsa aynı rakama farklı anlamlar yüklenebilir. Bu nedenle önce değerleme tarihi, amaç ve pay kapsamı yazılı hâle getirilmelidir."
+        ],
+        [
+          "Rakamın arkasını görün",
+          "Son dönem finansal tabloları ile iş planı arasında bir bağ arayın. Satış beklentisi hangi müşterilere, maliyet öngörüsü hangi sözleşmelere, yatırım ihtiyacı hangi kapasiteye dayanıyor? Bir varsayımın kaynağını gösterebilmek, yalnızca ayrıntılı bir hesap tablosu hazırlamaktan daha işe yarar bir başlangıçtır."
+        ],
+        [
+          "Tek sonuç yerine açıklanabilir çerçeve",
+          "Sonuç değiştiğinde hangi varsayımın etkili olduğunu görebilmek gerekir. Borç, nakit, işletme sermayesi ve faaliyet dışı kalemlerin nasıl ele alındığını açıkça sormak; değerleme görüşüyle pazarlık sonucunu birbirinden ayırmaya yardımcı olur."
+        ]
+      ],
+      "sourceTitle": "Berkshire Hathaway · 1989 hissedar mektubu",
+      "source": "https://www.berkshirehathaway.com/letters/1989.html",
+      "sourceSummary": "Mektup, bir işletmeyi değerlendirirken bilançodaki tutarın tek başına yeterli olmadığını anlatır. Gelecekteki nakit giriş ve çıkışlarıyla işletmenin ekonomik özellikleri birlikte düşünülür. Buffett, geçmişteki yüksek büyüme hızının gelecekte aynı ölçüde sürmeyebileceğini de açıkça belirtir.",
+      "takeaway": "Bir rakamı tartışmadan önce, o rakamın hangi soruya cevap verdiğini netleştirin.",
+      "questions": [
+        "Değerleme hangi tarih ve işlem için yapılıyor?",
+        "Varsayımlar hangi veriyle destekleniyor?",
+        "Şirket değeri ile pay değeri nasıl ilişkilendiriliyor?"
+      ],
+      "service": "sirket-degerlemesi",
+      "sourceDate": "1990-03-02",
+      "sourceDateVerified": true
+    },
+    {
+      "id": "daniel-kahneman-karar-ve-belirsizlik",
+      "title": "İyi karar, iyi bir soruyla başlar.",
+      "topic": "KARAR & BELİRSİZLİK",
+      "summary": "Daniel Kahneman’ın karar verme çalışmalarından, yönetim toplantılarında varsayımları görünür kılmaya uzanan Türkçe bir perspektif.",
+      "intro": "Aynı tabloya bakan iki kişi farklı sonuçlara ulaşabilir. Verinin yanında, o veriyi nasıl seçtiğimiz ve nasıl yorumladığımız da kararın parçasıdır.",
+      "sections": [
+        [
+          "Toplantıya bir sonuçla değil, bir çerçeveyle gelin",
+          "Yönetim raporunu hazırlarken karar verilecek konuyu ilk sayfada yazmak işe yarar. “Satışlar arttı” bilgisi ile “Yeni kapasiteye yatırım yapmalı mıyız?” sorusu aynı şey değildir. Kararın gerektirdiği veri, dönem ve alternatifler baştan belirlenirse toplantının odağı daha kolay korunur."
+        ],
+        [
+          "Varsayımı, gözlemden ayırın",
+          "Gerçekleşen satış, tahmin edilen satış ve hedeflenen satış raporda ayrı gösterilmelidir. Bir yönetici tahmini veri gibi okursa, hesapların doğru olması tek başına yeterli olmaz. Kaynak ve tarih etiketleri, bu ayrımı görünür kılmanın basit yollarıdır."
+        ],
+        [
+          "Karşı görüş için yer açın",
+          "Karar notuna “Hangi bilgi bu görüşümüzü değiştirirdi?” sorusunu eklemek, alternatiflerin konuşulmasına alan açar. Bu bir başarı garantisi veya bilimsel ölçüm iddiası değildir; farklı ekiplerin aynı veriyi tartışabilmesi için önerilen bir çalışma alışkanlığıdır."
+        ]
+      ],
+      "sourceTitle": "NobelPrize.org · 2002 ekonomi bilimleri ödül duyurusu",
+      "source": "https://www.nobelprize.org/prizes/economic-sciences/2002/press-release/",
+      "sourceSummary": "Ödül duyurusu, Kahneman’ın psikoloji ile ekonomik karar verme arasındaki ilişkiye katkısını açıklar. Belirsizlik altındaki yargılarda kullanılan zihinsel kestirmeler, her zaman standart ekonomik modellerin öngördüğü sonuçlara götürmez. Metin, deneysel ekonomi çalışmalarıyla ödülü paylaşan Vernon L. Smith’in katkısını ayrıca ele alır.",
+      "takeaway": "Gözlem, varsayım ve kararı aynı sütuna yazmayın.",
+      "questions": [
+        "Neyi biliyoruz?",
+        "Neyi varsayıyoruz?",
+        "Hangi yeni bilgi kararımızı değiştirir?"
+      ],
+      "service": "yonetim-danismanligi"
+    },
+    {
+      "id": "richard-thaler-insan-ve-sistem",
+      "title": "Sistemi insanla birlikte düşünün.",
+      "topic": "İNSAN & DAVRANIŞ",
+      "summary": "Richard Thaler’ın davranışsal ekonomi çalışmalarından, daha anlaşılır iş akışları tasarlamaya uzanan Türkçe bir okuma.",
+      "intro": "Bir sürecin kâğıt üzerinde doğru olması, günlük hayatta kolay uygulanacağı anlamına gelmez. İyi bir işleyiş, insanların karar verirken karşılaştığı koşulları da dikkate alır.",
+      "sections": [
+        [
+          "Sorumluluğu görünür hâle getirin",
+          "Bir bordro döngüsünde veriyi hazırlayan, kontrol eden ve onaylayan kişinin belli olması gerekir. “İnsan kaynakları gönderir” gibi genel bir ifade yerine sorumlu rol, teslim tarihi ve gerekli belgeyi birlikte tanımlamak, işin nerede beklediğini görmeyi kolaylaştırır."
+        ],
+        [
+          "Doğru adımı anlaşılır kılın",
+          "Bir onay ekranında hangi dönemin incelendiği, nelerin değiştiği ve sonraki adımın ne olduğu açık olmalıdır. Bu yaklaşım, kişiyi farkında olmadığı bir seçime yönlendirmek için kullanılmamalıdır. Amaç, bilgiye dayalı ve izlenebilir bir karar ortamı oluşturmaktır."
+        ],
+        [
+          "Süreci yalnızca hızla ölçmeyin",
+          "İşin ne kadar sürede tamamlandığına ek olarak geri dönen kayıtları, eksik verinin nedenini ve tekrar yapılan kontrolleri de izleyebilirsiniz. Burada önerilen göstergeler Boraden’e ait performans verisi değildir; işletmenizin kendi başlangıç ölçümünü tasarlaması için örnek bir çerçevedir."
+        ]
+      ],
+      "sourceTitle": "NobelPrize.org · 2017 ekonomi bilimleri ödül duyurusu",
+      "source": "https://www.nobelprize.org/prizes/economic-sciences/2017/press-release/",
+      "sourceSummary": "Ödül duyurusunda sınırlı rasyonellik, sosyal tercihler ve öz denetim gibi insani özelliklerin ekonomik kararlara etkisi anlatılır. Zihinsel muhasebe, insanların kararları bütün etkileri yerine ayrı hesaplar içinde değerlendirmesini açıklayan katkılarından biridir.",
+      "takeaway": "Bir süreci tasarlarken yalnızca adımları değil, o adımları uygulayan insanı da düşünün.",
+      "questions": [
+        "Bir sonraki adım açık mı?",
+        "Kimin onay vereceği belli mi?",
+        "Hata veya eksik bilgi geri bildirimi anlaşılır mı?"
+      ],
+      "service": "insan-kaynaklari-ve-bordro"
+    },
+    {
+      "id": "claudia-goldin-emek-ve-firsat",
+      "title": "Yeteneğe alan açmak.",
+      "topic": "İNSAN & FIRSAT",
+      "summary": "Bir insan kaynakları raporunda yalnız toplam çalışan sayısını görmek yeterli olmayabilir. İşe giriş, eğitim, terfi ve ayrılma aşamalarını ayrı izlemek; ekibin deneyimini daha iyi anlamaya yardımcı olur.",
+      "intro": "Çalışma hayatındaki sonuçları anlamak için, insanların karşılaştığı koşulları da görünür kılmak gerekir.",
+      "sections": [
+        [
+          "Sayıların arkasındaki yolculuk",
+          "Bir insan kaynakları raporunda yalnız toplam çalışan sayısını görmek yeterli olmayabilir. İşe giriş, eğitim, terfi ve ayrılma aşamalarını ayrı izlemek; ekibin deneyimini daha iyi anlamaya yardımcı olur."
+        ],
+        [
+          "Karşılaştırmanın kapsamını belirleyin",
+          "Aynı unvan her zaman aynı sorumluluk anlamına gelmez. Ücret veya gelişim fırsatlarını değerlendirirken görev, kıdem ve çalışma koşullarını açıklayın. Tek bir ortalamadan şirket hakkında kesin sonuç çıkarmayın."
+        ]
+      ],
+      "sourceTitle": "NobelPrize.org · 2023 ekonomi bilimleri ödülü, kamuoyu bilgisi",
+      "source": "https://www.nobelprize.org/uploads/2023/10/popular-economicsciencesprize2023.pdf",
+      "sourceSummary": "Goldin’in tarihsel araştırmaları, kadınların çalışma hayatını eğitim, aile sorumlulukları, ekonomik dönüşüm ve toplumsal koşullarla birlikte inceler.",
+      "takeaway": "Yeteneği konuşurken, fırsatlara erişimi de konuşun.",
+      "questions": [
+        "Hangi aşamada farklılık oluşuyor?",
+        "Karşılaştırılan roller gerçekten benzer mi?",
+        "Veriler hangi dönemi kapsıyor?"
+      ],
+      "service": "insan-kaynaklari-ve-bordro"
+    },
+    {
+      "id": "elinor-ostrom-ortak-sorumluluk",
+      "title": "Ortak işin, ortak kuralları.",
+      "topic": "YÖNETİŞİM & SORUMLULUK",
+      "summary": "Ortak bir raporda veriyi hazırlayan, kontrol eden ve onaylayan roller belirsizse iş herkesin sorumluluğu gibi görünür. Oysa günlük kullanımda görev sınırlarını açıkça yazmak gerekir.",
+      "intro": "Birlikte kullanılan kaynaklar, birlikte anlaşılmış sorumluluklar gerektirir.",
+      "sections": [
+        [
+          "Bir dosyanın sahibi kim?",
+          "Ortak bir raporda veriyi hazırlayan, kontrol eden ve onaylayan roller belirsizse iş herkesin sorumluluğu gibi görünür. Oysa günlük kullanımda görev sınırlarını açıkça yazmak gerekir."
+        ],
+        [
+          "Kuralları uygulayanları dinleyin",
+          "Yeni bir onay akışını kâğıt üzerinde bitirmeden önce onu her gün kullanacak ekiple değerlendirin. Hangi adımın neden bulunduğunu açıklayın; işe yaramayan tekrarları görünür hâle getirin."
+        ]
+      ],
+      "sourceTitle": "NobelPrize.org · 2009 ekonomi bilimleri ödülü, kamuoyu bilgisi",
+      "source": "https://www.nobelprize.org/uploads/2018/06/popular-economicsciences2009.pdf",
+      "sourceSummary": "Ostrom’un araştırmaları, ortak kaynakları kullanan toplulukların kurallar, katılım ve izleme yoluyla kendi yönetim düzenlerini oluşturabildiğini gösterir.",
+      "takeaway": "İş birliği, açık kurallarla güçlenir.",
+      "questions": [
+        "Hangi kaynak ortak kullanılıyor?",
+        "Sorumluluklar açık mı?",
+        "Geri bildirim nasıl toplanıyor?"
+      ],
+      "service": "yonetim-danismanligi"
+    },
+    {
+      "id": "amartya-sen-insan-ve-olcum",
+      "title": "Bir göstergeden daha fazlası.",
+      "topic": "ÖLÇÜM & İNSAN",
+      "summary": "Bir bölümün ortalama iş yükü makul görünürken bazı çalışanlar çok farklı bir deneyim yaşayabilir. Dağılımları ve istisnaları görmek, tek sayıyla yetinmemeyi sağlar.",
+      "intro": "Ne ölçtüğümüz kadar, ölçümün dışında ne kaldığı da önemlidir.",
+      "sections": [
+        [
+          "Ortalamanın gizlediklerine bakın",
+          "Bir bölümün ortalama iş yükü makul görünürken bazı çalışanlar çok farklı bir deneyim yaşayabilir. Dağılımları ve istisnaları görmek, tek sayıyla yetinmemeyi sağlar."
+        ],
+        [
+          "Göstergeyi amacıyla birlikte okuyun",
+          "Bir metriği rapora eklerken hangi kararı desteklediğini yazın. Her bilgi tek puana indirgenmek zorunda değildir. Açıklayıcı notlar bazen yeni bir sayıdan daha değerlidir."
+        ]
+      ],
+      "sourceTitle": "NobelPrize.org · 1998 ekonomi bilimleri ödül duyurusu",
+      "source": "https://www.nobelprize.org/prizes/economic-sciences/1998/press-release/?app=true",
+      "sourceSummary": "Sen’in çalışmaları sosyal seçim, refahın dağılımı ve yoksulluğun ölçülmesi gibi konuları ele alır; değerlendirmelerin hangi bilgiyi içerdiği önem taşır.",
+      "takeaway": "Ölçüyü seçmeden önce, amacı netleştirin.",
+      "questions": [
+        "Gösterge neyi dışarıda bırakıyor?",
+        "Dağılımı görüyor muyuz?",
+        "Bu bilgi hangi karara yardımcı olacak?"
+      ],
+      "service": "yonetim-danismanligi"
+    },
+    {
+      "id": "joseph-stiglitz-bilgi-ve-guven",
+      "title": "Bilgi eşit dağılmadığında.",
+      "topic": "BİLGİ & ŞEFFAFLIK",
+      "summary": "Bir iş ortaklığı görüşmesinde yalnız sunulan dosyayı okumakla kalmayın. Karar için gereken fakat henüz paylaşılmayan bilgiyi de listeleyin.",
+      "intro": "Bir işlemi anlamak, tarafların hangi bilgilere sahip olduğunu anlamakla başlar.",
+      "sections": [
+        [
+          "Sorulacak soruları hazırlayın",
+          "Bir iş ortaklığı görüşmesinde yalnız sunulan dosyayı okumakla kalmayın. Karar için gereken fakat henüz paylaşılmayan bilgiyi de listeleyin."
+        ],
+        [
+          "Belirsizliği açıkça kaydedin",
+          "Eksik bir veriyi tahminle doldurmak gerekiyorsa bunu gerçek bilgi gibi sunmayın. Varsayımı, kaynağını ve sonuç üzerindeki olası etkisini ayrı belirtin."
+        ]
+      ],
+      "sourceTitle": "NobelPrize.org · 2001, asimetrik bilgi üzerine kamuoyu bilgisi",
+      "source": "https://www.nobelprize.org/prizes/economic-sciences/2001/popular-information/",
+      "sourceSummary": "Stiglitz’in katkıları, daha az bilgiye sahip tarafın sözleşme seçenekleri gibi düzeneklerle bilgiyi ortaya çıkarmasını inceler.",
+      "takeaway": "Bilgi boşluklarını görünür kılın.",
+      "questions": [
+        "Hangi bilgi kimde?",
+        "Eksik veri sonucu nasıl etkiliyor?",
+        "Açıklamayı ne destekliyor?"
+      ],
+      "service": "bagimsiz-denetim"
+    },
+    {
+      "id": "george-akerlof-kalite-ve-kanit",
+      "title": "Güveni görünür kılan kanıt.",
+      "topic": "KALİTE & KANIT",
+      "summary": "Bir sunumdaki her önemli açıklamanın hangi kayıt, sözleşme veya dönem bilgisine dayandığını belirleyin. Görsel olarak iyi hazırlanmış bir tablo, kendi başına doğrulama sağlamaz.",
+      "intro": "Kalite hakkında söylenenle, kaliteyi destekleyen kanıt aynı şey değildir.",
+      "sections": [
+        [
+          "İddia ile dayanağı eşleştirin",
+          "Bir sunumdaki her önemli açıklamanın hangi kayıt, sözleşme veya dönem bilgisine dayandığını belirleyin. Görsel olarak iyi hazırlanmış bir tablo, kendi başına doğrulama sağlamaz."
+        ],
+        [
+          "İzlenebilir bir dosya oluşturun",
+          "Bir tutarın ana kaydından rapora kadar izlenebilmesi görüşmeyi kolaylaştırır. Belge tarihleri ve sürümlerin açık olması, farklı dosyaların karıştırılmasını azaltır."
+        ]
+      ],
+      "sourceTitle": "NobelPrize.org · 2001, asimetrik bilgi üzerine kamuoyu bilgisi",
+      "source": "https://www.nobelprize.org/prizes/economic-sciences/2001/popular-information/",
+      "sourceSummary": "Akerlof, satıcı ile alıcının kalite hakkında farklı bilgiye sahip olmasının piyasa sonuçlarını nasıl etkileyebildiğini açıklar.",
+      "takeaway": "Güçlü bir açıklama, izlenebilir dayanak ister.",
+      "questions": [
+        "Bu iddianın dayanağı nedir?",
+        "Kayıttan rapora iz sürebiliyor muyuz?",
+        "Belge güncel mi?"
+      ],
+      "service": "bagimsiz-denetim"
+    },
+    {
+      "id": "michael-spence-anlamli-sinyaller",
+      "title": "Ne söylediğiniz, ne gösterdiğiniz.",
+      "topic": "İLETİŞİM & SİNYAL",
+      "summary": "Bir yatırım görüşmesinde iyi tasarlanmış sunum kadar bilgilerin tutarlılığı da önemlidir. Sunum, finansal kayıt ve iş planı arasındaki farklılıkları görüşmeden önce açıklayın.",
+      "intro": "Bir işaretin anlamı, onu destekleyen koşullarla birlikte değerlendirilir.",
+      "sections": [
+        [
+          "Sunumun arkasındaki yapıyı gösterin",
+          "Bir yatırım görüşmesinde iyi tasarlanmış sunum kadar bilgilerin tutarlılığı da önemlidir. Sunum, finansal kayıt ve iş planı arasındaki farklılıkları görüşmeden önce açıklayın."
+        ],
+        [
+          "Beklentiyi ölçülü kurun",
+          "Bir yetkinliği ifade ederken kapsamını belirtin. Bir belge veya unvan, her iş için aynı anlamı taşımaz. Karşı tarafın hangi sorusunu yanıtladığınızı düşünün."
+        ]
+      ],
+      "sourceTitle": "NobelPrize.org · 2001, asimetrik bilgi üzerine kamuoyu bilgisi",
+      "source": "https://www.nobelprize.org/prizes/economic-sciences/2001/popular-information/",
+      "sourceSummary": "Spence’in sinyal teorisi, daha bilgili tarafın bazı koşullarda özel bilgisini diğer tarafa aktarabilmesini inceler.",
+      "takeaway": "İletişimi, doğrulanabilir bilgiyle destekleyin.",
+      "questions": [
+        "Bu işaret ne anlatıyor?",
+        "Dayanak bilgisi paylaşılabiliyor mu?",
+        "Kapsam doğru anlaşılıyor mu?"
+      ],
+      "service": "sirket-degerlemesi"
+    },
+    {
+      "id": "ronald-coase-koordinasyon",
+      "title": "İşin görünmeyen maliyeti.",
+      "topic": "KURUM & KOORDİNASYON",
+      "summary": "Bir işi içeride yürütmekle dışarıdan almak arasında karar verirken teslim, kontrol ve iletişim ihtiyaçlarını yazın. Birim ücret, kararın yalnızca bir parçasıdır.",
+      "intro": "Bir işin maliyeti, yalnız faturadaki tutardan oluşmaz.",
+      "sections": [
+        [
+          "Koordinasyonu da hesaba katın",
+          "Bir işi içeride yürütmekle dışarıdan almak arasında karar verirken teslim, kontrol ve iletişim ihtiyaçlarını yazın. Birim ücret, kararın yalnızca bir parçasıdır."
+        ],
+        [
+          "Sorumlulukların sınırını çizin",
+          "Hangi çıktı ne zaman teslim edilecek ve kim kabul edecek? Bu sorular net değilse küçük bir işlem çok sayıda görüşme ve düzeltme gerektirebilir."
+        ]
+      ],
+      "sourceTitle": "NobelPrize.org · Ronald Coase, 1991 ödül konuşması",
+      "source": "https://www.nobelprize.org/prizes/economic-sciences/1991/coase/lecture/",
+      "sourceSummary": "Coase, fiyatı öğrenmek, anlaşmak, sözleşme hazırlamak ve kontrol etmek gibi işlemlerin maliyetlerini firma ve piyasa düzeniyle ilişkilendirir.",
+      "takeaway": "Fiyatın yanında, işleyişin maliyetini görün.",
+      "questions": [
+        "Koordinasyon için ne gerekiyor?",
+        "Teslimin tanımı açık mı?",
+        "Kontrol sorumluluğu kimde?"
+      ],
+      "service": "yonetim-danismanligi"
+    },
+    {
+      "id": "herbert-simon-karar-cercevesi",
+      "title": "Karara yer açın.",
+      "topic": "KARAR & ORGANİZASYON",
+      "summary": "Önce toplantıda hangi kararın alınacağını yazın. Ardından seçenekleri karşılaştırmak için gereken bilgileri seçin. Her veri aynı anda ana ekranda olmak zorunda değildir.",
+      "intro": "Karar için daha çok bilgi kadar, iyi düzenlenmiş bilgi de gerekir.",
+      "sections": [
+        [
+          "Raporu karardan başlayarak kurun",
+          "Önce toplantıda hangi kararın alınacağını yazın. Ardından seçenekleri karşılaştırmak için gereken bilgileri seçin. Her veri aynı anda ana ekranda olmak zorunda değildir."
+        ],
+        [
+          "Ayrıntıya erişimi koruyun",
+          "Kısa bir yönetim özeti hazırlarken dayanak kayıtları kaybetmeyin. Özet ile detay arasında açık bağlantı kurmak, farklı rollerin aynı raporu kullanmasını kolaylaştırır."
+        ]
+      ],
+      "sourceTitle": "NobelPrize.org · Herbert Simon, Rational Decision-Making in Business Organizations",
+      "source": "https://www.nobelprize.org/uploads/2018/06/simon-lecture.pdf",
+      "sourceSummary": "Simon’ın konuşması, işletmelerde karar vermeyi ve muhasebe bilgilerinin karar süreçlerindeki kullanımını ele alır.",
+      "takeaway": "Bilgiyi, kararın etrafında düzenleyin.",
+      "questions": [
+        "Hangi karar alınacak?",
+        "Seçenekler karşılaştırılabiliyor mu?",
+        "Ayrıntıya nasıl ulaşılır?"
+      ],
+      "service": "yonetim-danismanligi"
+    },
+    {
+      "id": "paul-romer-bilgi-ve-yenilik",
+      "title": "Bilgi, kullanıldıkça çoğalır.",
+      "topic": "BİLGİ & YENİLİK",
+      "summary": "Bir yöntemin yalnız onu geliştiren kişinin bilgisinde kalması kurumsal öğrenmeyi sınırlar. Tanımlar, örnekler ve kullanım notları yöntemi başkalarının da değerlendirmesini sağlar.",
+      "intro": "Bir fikrin değeri, onu işleyişe dönüştürebildiğinizde görünür olur.",
+      "sections": [
+        [
+          "Bilgiyi kişiden sürece taşıyın",
+          "Bir yöntemin yalnız onu geliştiren kişinin bilgisinde kalması kurumsal öğrenmeyi sınırlar. Tanımlar, örnekler ve kullanım notları yöntemi başkalarının da değerlendirmesini sağlar."
+        ],
+        [
+          "Yeni aracı eski soruyla ölçün",
+          "Bir teknoloji yatırımı öncesinde çözülecek ihtiyacı belirleyin. Daha fazla ekran veya otomasyon, tek başına daha iyi karar anlamına gelmez. Başlangıç durumunu ve beklenen çıktıyı kaydedin."
+        ]
+      ],
+      "sourceTitle": "NobelPrize.org · 2018 ekonomi bilimleri ödülü tanıtım metni",
+      "source": "https://www.nobelprize.org/uploads/2018/09/SpeakersManuscript_EconomicSciences_2018-1.pdf",
+      "sourceSummary": "Romer’in araştırmaları, teknolojik yeniliğin piyasa talebi ve düzenlemelerle ilişkisini ekonomik büyüme analizine taşır.",
+      "takeaway": "Yeniliği, somut bir iş ihtiyacına bağlayın.",
+      "questions": [
+        "Hangi bilgi tekrar kullanılabilir?",
+        "Hangi ihtiyaç çözülüyor?",
+        "Sonuç nasıl izlenecek?"
+      ],
+      "service": "yonetim-danismanligi"
+    },
+    {
+      "id": "robert-solow-buyume-ve-verimlilik",
+      "title": "Daha fazla. Daha verimli.",
+      "topic": "BÜYÜME & VERİMLİLİK",
+      "summary": "Daha yüksek satış, tek başına daha verimli bir işleyiş göstermez. İş yükü, kapasite, maliyet ve çıktı tanımlarını aynı dönemde karşılaştırın.",
+      "intro": "Büyümeyi anlamak için, kullanılan kaynaklarla ortaya çıkan sonucu birlikte okuyun.",
+      "sections": [
+        [
+          "Hacimle verimliliği ayırın",
+          "Daha yüksek satış, tek başına daha verimli bir işleyiş göstermez. İş yükü, kapasite, maliyet ve çıktı tanımlarını aynı dönemde karşılaştırın."
+        ],
+        [
+          "Ölçüm tanımını sabit tutun",
+          "Dönemler arasında gösterge hesabı değişirse görülen farkın bir bölümü yöntemden kaynaklanabilir. Değişikliği raporda açıklayın; eski ve yeni seriyi sessizce birleştirmeyin."
+        ]
+      ],
+      "sourceTitle": "NobelPrize.org · Robert Solow, 1987 ödül konuşması",
+      "source": "https://www.nobelprize.org/prizes/economic-sciences/1987/solow/lecture/",
+      "sourceSummary": "Solow’un büyüme çalışmaları, üretimin zaman içindeki gelişimini ve üretim kaynaklarının bu gelişimdeki rolünü inceleyen bir çerçeve sunar.",
+      "takeaway": "Sonucun yanında, onu üreten kaynakları da okuyun.",
+      "questions": [
+        "Çıktı nasıl tanımlanıyor?",
+        "Kaynak kullanımı nasıl değişti?",
+        "Dönemler karşılaştırılabilir mi?"
+      ],
+      "service": "yonetim-danismanligi"
+    },
+    {
+      "id": "douglass-north-kurumlar-ve-sureklilik",
+      "title": "İyi işleyiş, zamanla kurulur.",
+      "topic": "KURUMSAL HAFIZA",
+      "summary": "Bir prosedürün varlığı, uygulamanın aynı şekilde yürüdüğünü göstermez. İşin gerçek akışını ilgili ekiplerle konuşun; istisnaları ve nedenlerini kaydedin.",
+      "intro": "Kurallar kadar, zaman içinde oluşan alışkanlıklar da işleyişi biçimlendirir.",
+      "sections": [
+        [
+          "Yazılı süreçle günlük işi karşılaştırın",
+          "Bir prosedürün varlığı, uygulamanın aynı şekilde yürüdüğünü göstermez. İşin gerçek akışını ilgili ekiplerle konuşun; istisnaları ve nedenlerini kaydedin."
+        ],
+        [
+          "Deneyimi kurumsal hafızaya dönüştürün",
+          "Bir ekip değiştiğinde bilgi kaybolmaması için önemli kararların gerekçelerini saklayın. Yalnız sonucun değil, o sonuca neden varıldığının da izlenebilmesi önemlidir."
+        ]
+      ],
+      "sourceTitle": "NobelPrize.org · Douglass North, 1993 ödül konuşması",
+      "source": "https://www.nobelprize.org/prizes/economic-sciences/1993/north/lecture/",
+      "sourceSummary": "North’un konuşması kurumları, teşvikleri ve zaman içinde biriken öğrenmeyi ekonomik değişimin anlaşılmasında birlikte ele alır.",
+      "takeaway": "Deneyimi, paylaşılabilir bir çalışma düzenine dönüştürün.",
+      "questions": [
+        "Yazılı düzenle uygulama örtüşüyor mu?",
+        "İstisnalar neden oluşuyor?",
+        "Kararın gerekçesi kaydediliyor mu?"
+      ],
+      "service": "yonetim-danismanligi"
+    }
+  ]
+}

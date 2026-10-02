@@ -1,0 +1,95 @@
+<header class="hdr on-dark" id="hdr" data-hdr>
+  <div class="hdr__bar container">
+    {% include "partials/logo.njk" %}
+
+    <nav class="nav" aria-label="Ana menü">
+      <ul class="nav__list">
+        {% for item in site.nav %}
+        <li class="nav__item">
+          <a class="nav__link{% if page.url.startsWith(item.url) and item.url !== '/' %} is-active{% endif %}"
+             href="{{ item.url }}"
+             {% if item.panel %}data-panel="{{ item.panel }}" aria-haspopup="true" aria-expanded="false" aria-controls="mega-{{ item.panel }}"{% endif %}
+             {% if page.url.startsWith(item.url) and item.url !== '/' %}aria-current="true"{% endif %}>{{ item.label }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </nav>
+
+    <div class="hdr__actions">
+      <a class="hdr__icon" href="/arama/" aria-label="Sitede ara">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+      </a>
+      <a class="btn btn--sm hdr__cta" href="{{ site.cta.url }}">{{ site.cta.label }} <span class="arr" aria-hidden="true">→</span></a>
+      <button class="hdr__burger" type="button" aria-label="Menüyü aç" aria-expanded="false" aria-controls="mnav"><span></span><span></span></button>
+    </div>
+  </div>
+
+  {# Hizmetler mega paneli #}
+  <div class="mega mega--services" id="mega-services" data-mega="services">
+    <div class="container mega__inner">
+      <div class="mega__grid">
+        {% for g in groups %}
+        <div class="mega__col">
+          <h3><span>{{ g.number }}</span> {{ g.short }}</h3>
+          {% for s in g.services | limit(5) %}
+          <a href="{{ s.url }}">{{ s.title }}</a>
+          {% endfor %}
+          <a class="all" href="{{ g.url }}">Tüm {{ g.short | lower_tr }} hizmetleri →</a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  {# Bilgi merkezi mega paneli #}
+  <div class="mega mega--insights" id="mega-insights" data-mega="insights">
+    <div class="container mega__inner">
+      <div class="mega__grid">
+        {% for chunk in [site.insights.slice(0, 3), site.insights.slice(3, 6), site.insights.slice(6, 9)] %}
+        <div class="mega__col">
+          {% for it in chunk %}
+          <a href="{{ it.url }}">{{ it.label }}<small>{{ it.desc }}</small></a>
+          {% endfor %}
+        </div>
+        {% endfor %}
+        <div class="mega__col">
+          <a href="/bilgi-merkezi/"><strong>Bilgi merkezine git</strong><small>Tüm yayınlar, arşiv ve araçlar</small></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+{# Mobil menü #}
+<nav class="mnav on-dark" id="mnav" aria-label="Mobil menü">
+  <div class="mnav__inner">
+    <ul class="mnav__list">
+      <li>
+        <details>
+          <summary>Hizmetler</summary>
+          <div class="mnav__sub">
+            {% for g in groups %}<a href="{{ g.url }}">{{ g.number }} — {{ g.name }}</a>{% endfor %}
+            <a href="/hizmetler/"><strong>Tüm hizmetler</strong></a>
+          </div>
+        </details>
+      </li>
+      <li><a href="/sektorler/">Sektörler</a></li>
+      <li>
+        <details>
+          <summary>Bilgi Merkezi</summary>
+          <div class="mnav__sub">
+            {% for it in site.insights %}<a href="{{ it.url }}">{{ it.label }}</a>{% endfor %}
+          </div>
+        </details>
+      </li>
+      <li><a href="/hesaplayicilar/">Hesaplayıcılar</a></li>
+      <li><a href="/hakkimizda/">Hakkımızda</a></li>
+      <li><a href="/kariyer/">Kariyer</a></li>
+    </ul>
+    <div class="mnav__foot">
+      <a class="btn" href="{{ site.cta.url }}">{{ site.cta.label }} <span class="arr" aria-hidden="true">→</span></a>
+      <a href="tel:{{ contact.phoneHref }}">{{ contact.phone }}</a>
+      <a href="mailto:{{ contact.email }}">{{ contact.email }}</a>
+    </div>
+  </div>
+</nav>

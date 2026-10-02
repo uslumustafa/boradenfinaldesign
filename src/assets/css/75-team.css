@@ -1,0 +1,881 @@
+/* ═══════════════════════════════════════════════════════════════
+   EKİP — kişi kutusu (avatar), Ekibimiz sayfası, kişi profili ve
+   sektör / alan / hizmet sayfalarının altındaki «İlgili ekip» bandı.
+   Fotoğraf yoksa baş harfli, marka vurgulu kutu; izinli portre
+   eklenince (photos.json) aynı yerde fotoğraf görünür.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Kişi kutusu: baş harfler ya da portre */
+.avatar {
+  --av: 64px;
+  --ac: var(--b-blue-2);
+  position: relative;
+  display: block;
+  flex: none;
+  width: var(--av);
+  aspect-ratio: 1;
+  overflow: hidden;
+  isolation: isolate;
+  background: linear-gradient(158deg, var(--navy-700) 0%, var(--navy-900) 56%, var(--navy-950) 100%);
+  color: var(--on-dark);
+}
+.avatar[data-accent='r'] {
+  --ac: var(--b-red-2);
+}
+.avatar[data-accent='g'] {
+  --ac: var(--b-green-2);
+}
+/* nokta ızgarası: köşeden köşeye silinir */
+.avatar::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  z-index: -1;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.17) 1px, transparent 1.6px);
+  background-size: 12px 12px;
+  -webkit-mask-image: linear-gradient(205deg, #000 6%, transparent 78%);
+  mask-image: linear-gradient(205deg, #000 6%, transparent 78%);
+  transition: transform 900ms var(--ease-out);
+}
+/* marka vurgusu: alt-sol köşede kısa çizgi */
+.avatar::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 42%;
+  height: 3px;
+  background: var(--ac);
+}
+.avatar__ini {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--f-display);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-size: calc(var(--av) * 0.42);
+  color: rgba(255, 255, 255, 0.94);
+}
+.avatar--xs {
+  --av: 28px;
+}
+.avatar--xs::after {
+  height: 2px;
+}
+.avatar--xs .avatar__ini {
+  font-family: var(--f-sans);
+  font-weight: 600;
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+}
+.avatar--sm {
+  --av: 44px;
+}
+.avatar--sm .avatar__ini {
+  font-weight: 400;
+  font-size: 1.05rem;
+}
+.avatar--md {
+  --av: 72px;
+}
+.avatar--lg {
+  --av: 96px;
+}
+.avatar--xl {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+}
+.avatar--xl::after {
+  width: 34%;
+  height: 4px;
+}
+.avatar--xl .avatar__ini {
+  font-size: clamp(3.4rem, 5.4vw, 5.2rem);
+}
+.avatar.has-photo::before {
+  display: none;
+}
+.avatar__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 18%;
+}
+
+/* ── Ekibimiz sayfası */
+.tm-head {
+  row-gap: 1.2rem;
+  align-items: start;
+  margin-bottom: clamp(2rem, 4vw, 3.4rem);
+}
+.tm-head__t {
+  max-width: 60ch;
+  font-family: var(--f-display);
+  font-weight: 300;
+  font-size: var(--fs-3);
+  line-height: 1.4;
+  color: var(--ink-2);
+}
+.tm-roster,
+.who {
+  scroll-margin-top: calc(var(--hdr) + 1.5rem);
+}
+.tm-grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16.5rem), 1fr));
+  gap: clamp(2rem, 3.4vw, 3rem) clamp(1.2rem, 2vw, 2rem);
+}
+.tm-grid > li {
+  display: flex;
+}
+.pcard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.pcard__media {
+  display: block;
+  margin-bottom: 1.3rem;
+}
+.pcard:hover .avatar::before {
+  transform: translate(7px, -7px);
+}
+.pcard__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+.pcard__name {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: var(--fs-3);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+}
+.pcard__name a {
+  color: inherit;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0 1px;
+  transition: background-size 520ms var(--ease-out);
+}
+.pcard:hover .pcard__name a {
+  background-size: 100% 1px;
+}
+/* tüm kart tıklanır; içteki çipler ve bağlantı üstte kalır */
+.pcard__name a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+.pcard__name a:focus-visible {
+  outline: none;
+}
+.pcard__name a:focus-visible::after {
+  outline: 2px solid var(--focus);
+  outline-offset: 6px;
+}
+.pcard__role {
+  margin-top: 0.55rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--ink);
+}
+.pcard__titles {
+  margin-top: 0.4rem;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: var(--ink-3);
+}
+.pcard__sum {
+  margin-top: 0.9rem;
+  font-size: 0.93rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.pcard__areas {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 1rem;
+}
+.pcard__areas a {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.7rem;
+  padding: 0.15rem 0.65rem;
+  border: 1px solid var(--line-strong);
+  font-family: var(--f-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  transition: border-color var(--t-fast), color var(--t-fast), background var(--t-fast);
+}
+.pcard__areas a:hover {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #fff;
+}
+.pcard__act {
+  margin-top: auto;
+  padding-top: 1.3rem;
+}
+
+/* ── Kimle görüşmeli? (alan ve sektöre göre dizin) */
+.who {
+  margin-top: clamp(3.4rem, 7vw, 6rem);
+  padding-top: clamp(3rem, 6vw, 5rem);
+  border-top: 1px solid var(--line);
+}
+.who__cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(2.4rem, 4vw, 4rem);
+  align-items: start;
+}
+.who__h {
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--ink);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.who__list {
+  list-style: none;
+}
+.who__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem 1rem;
+  padding: 0.95rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.who__n {
+  flex: none;
+  width: 1.7rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--ink-3);
+}
+.who__t {
+  flex: 1 1 11rem;
+  min-width: 0;
+  font-weight: 500;
+  font-size: 0.98rem;
+  line-height: 1.35;
+  color: var(--ink);
+}
+.who__t:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+.who__tag {
+  margin-left: 0.6rem;
+  padding: 0.12rem 0.45rem;
+  border: 1px solid var(--line-strong);
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  vertical-align: 0.1em;
+}
+.who__p {
+  flex: 0 1 auto;
+  margin-left: auto;
+  padding-left: 2.7rem;
+}
+.who__none {
+  font-size: 0.88rem;
+  color: var(--ink-3);
+}
+.who__none:hover {
+  color: var(--ink);
+}
+.pinline {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.45rem 1rem;
+}
+.pinline a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  color: var(--ink-2);
+  transition: color var(--t-fast);
+}
+.pinline a:hover {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+
+/* ── Ekip fotoğrafı (Hakkımızdaki fotoğraf arasıyla aynı bileşen) */
+.ab-band--team .ab-band__img {
+  object-position: 50% 68%;
+}
+.ab-band--team::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 36%;
+  background: linear-gradient(to top, rgba(5, 12, 26, 0.7), transparent);
+  pointer-events: none;
+  z-index: 2;
+}
+.ab-band__cap {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: 1.3rem;
+  z-index: 3;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.88);
+  text-shadow: 0 1px 14px rgba(3, 8, 20, 0.7);
+}
+
+/* ── Kariyer yönlendirmesi */
+.tm-join {
+  position: relative;
+  z-index: 2;
+  padding-block: var(--sec);
+}
+.tm-join__t {
+  max-width: 21em;
+  font-family: var(--f-display);
+  font-weight: 300;
+  font-size: var(--fs-5);
+  line-height: 1.12;
+  letter-spacing: -0.022em;
+}
+.tm-join__t .w {
+  opacity: 0.16;
+  transition: opacity 0.5s var(--ease-out);
+}
+.tm-join__t .w.on {
+  opacity: 1;
+}
+html[data-fx='off'] .tm-join__t .w {
+  opacity: 1;
+}
+.tm-join__go {
+  margin-top: clamp(1.6rem, 3vw, 2.4rem);
+}
+
+/* ── Sayfa altı «İlgili ekip» bandı (sektör, alan, hizmet) */
+.pband {
+  position: relative;
+  z-index: 2;
+  padding-block: clamp(3.4rem, 6vw, 6rem);
+  scroll-margin-top: calc(var(--hdr) + 1rem);
+}
+.pband__head {
+  row-gap: 1.1rem;
+  align-items: start;
+  margin-bottom: clamp(2rem, 4vw, 3.2rem);
+}
+.pband__t {
+  max-width: 18em;
+  font-family: var(--f-display);
+  font-weight: 300;
+  font-size: var(--fs-5);
+  line-height: 1.1;
+  letter-spacing: -0.022em;
+}
+.pband__lead {
+  max-width: 56ch;
+  margin-top: 1.2rem;
+  font-size: var(--fs-2);
+  color: var(--ink-2);
+}
+.pband__list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 23rem), 1fr));
+  gap: clamp(1rem, 2vw, 1.6rem);
+}
+.pband__list > li {
+  display: flex;
+}
+.pband__list--1 {
+  grid-template-columns: minmax(0, 46rem);
+}
+.pband__foot {
+  margin-top: clamp(1.6rem, 3vw, 2.4rem);
+  font-size: 0.95rem;
+  color: var(--ink-2);
+}
+
+/* kişi kartı (orta boy) */
+.pp {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-content: start;
+  gap: 1.4rem;
+  width: 100%;
+  padding: clamp(1.2rem, 2vw, 1.8rem);
+  background: #fff;
+  border: 1px solid var(--line);
+  transition: transform var(--t-med) var(--ease-out), border-color var(--t-med), box-shadow var(--t-med);
+}
+.pp:hover {
+  transform: translateY(-3px);
+  border-color: var(--ink);
+  box-shadow: 0 26px 50px -34px rgba(10, 23, 48, 0.5);
+}
+.pp__media {
+  display: block;
+}
+.pp__role {
+  font-family: var(--f-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  line-height: 1.55;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.pp__name {
+  margin-top: 0.35rem;
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: var(--fs-3);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+}
+.pp__name a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+.pp__titles {
+  margin-top: 0.45rem;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: var(--ink-3);
+}
+.pp__topics {
+  margin-top: 1.1rem;
+  padding-top: 0.95rem;
+  border-top: 1px solid var(--line);
+}
+.pp__k {
+  margin-bottom: 0.55rem;
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.pp__topics ul {
+  list-style: none;
+  display: grid;
+  gap: 0.3rem;
+}
+.pp__topics a {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--ink-2);
+}
+.pp__topics a:hover {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+.pp__more {
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+}
+.pp__act {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem 1.3rem;
+  margin-top: 1.3rem;
+}
+.pp__act .btn {
+  white-space: normal;
+}
+
+/* küçük satır: avatar + ad + görev */
+.pmini {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 1.1rem 0.8rem 0.8rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  transition: border-color var(--t-med);
+}
+.pmini:hover {
+  border-color: var(--ink);
+}
+.pmini__t {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+.pmini__t b {
+  font-weight: 500;
+  font-size: 0.98rem;
+  color: var(--ink);
+}
+.pmini__t small {
+  font-size: 0.8rem;
+  line-height: 1.35;
+  color: var(--ink-3);
+}
+.pmini__go {
+  margin-left: auto;
+  color: var(--ink-3);
+  transition: transform var(--t-med) var(--ease-out), color var(--t-med);
+}
+.pmini:hover .pmini__go {
+  transform: translateX(4px);
+  color: var(--ink);
+}
+
+/* ── Kişi profili */
+.pf-card {
+  display: grid;
+  gap: 1.5rem;
+}
+.pf-facts {
+  display: grid;
+  border-top: 1px solid var(--ink);
+}
+.pf-facts > div {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.pf-facts dt {
+  margin-bottom: 0.35rem;
+  font-family: var(--f-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.pf-facts dd {
+  font-size: 0.93rem;
+  line-height: 1.45;
+  color: var(--ink);
+}
+.pf-facts ul {
+  list-style: none;
+  display: grid;
+  gap: 0.3rem;
+}
+.pf-facts ul.pf-facts__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.pf-facts__chips a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.7rem;
+  padding: 0.15rem 0.65rem;
+  border: 1px solid var(--line-strong);
+  font-family: var(--f-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  transition: border-color var(--t-fast), color var(--t-fast), background var(--t-fast);
+}
+.pf-facts__chips a:hover {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #fff;
+}
+.pf-contact {
+  list-style: none;
+  display: grid;
+  gap: 0.45rem;
+  font-size: 0.92rem;
+}
+.pf-contact a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+.pf-card__cta {
+  width: 100%;
+  justify-content: space-between;
+  white-space: normal;
+  text-align: left;
+}
+.pf-bio {
+  display: grid;
+  gap: 1.3rem;
+  max-width: 64ch;
+}
+.pf-bio p {
+  font-size: var(--fs-2);
+  line-height: 1.65;
+  color: var(--ink-2);
+}
+.pf-bio p:first-child {
+  color: var(--ink);
+}
+.pf-exp {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 2.4rem;
+  border-top: 1px solid var(--ink);
+}
+.pf-exp li {
+  position: relative;
+  padding: 0.95rem 0 0.95rem 1.5rem;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.98rem;
+  line-height: 1.45;
+  color: var(--ink-2);
+}
+.pf-exp li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 1.5rem;
+  width: 0.6rem;
+  height: 2px;
+  background: var(--accent);
+}
+.pf-edu {
+  list-style: none;
+  border-top: 1px solid var(--ink);
+}
+.pf-edu li {
+  display: grid;
+  grid-template-columns: 8rem minmax(0, 1fr);
+  gap: 1.2rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.pf-edu__y {
+  padding-top: 0.2rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+}
+.pf-edu__t {
+  font-size: 1rem;
+  line-height: 1.45;
+  color: var(--ink);
+}
+.pf-svcs {
+  display: grid;
+  gap: 2.2rem;
+}
+.pf-svcgrp__h {
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--ink);
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: var(--fs-3);
+  line-height: 1.15;
+  letter-spacing: -0.012em;
+}
+.pf-svcgrp__h a {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+}
+.pf-svcgrp__h .mono {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--ink-3);
+}
+.pf-svcgrp__h a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+}
+.pf-svcgrp__l,
+.pf-secs {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.pf-svcgrp__l {
+  margin-top: 1.1rem;
+}
+.pf-svcgrp__l a,
+.pf-secs a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.3rem;
+  padding: 0.3rem 0.95rem;
+  border: 1px solid var(--line-strong);
+  font-size: 0.9rem;
+  line-height: 1.3;
+  color: var(--ink-2);
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+}
+.pf-svcgrp__l a:hover,
+.pf-secs a:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+.pf-others {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: 0.8rem;
+}
+
+/* ── Hakkımızda: ekip özeti */
+.ab-team {
+  margin-top: clamp(4.5rem, 9vw, 8rem);
+  row-gap: 1.4rem;
+  align-items: start;
+  scroll-margin-top: calc(var(--hdr) + 1.5rem);
+}
+.ab-team__t {
+  max-width: 34ch;
+  font-family: var(--f-display);
+  font-weight: 300;
+  font-size: var(--fs-4);
+  line-height: 1.2;
+  letter-spacing: -0.018em;
+  color: var(--ink);
+}
+.ab-team__list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+  gap: 0.8rem;
+  margin-top: clamp(1.8rem, 3vw, 2.6rem);
+}
+.ab-team__go {
+  margin-top: clamp(1.6rem, 3vw, 2.4rem);
+}
+
+/* ── Küçük ekranlar */
+@media (max-width: 1100px) {
+  .who__cols {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 900px) {
+  .pf-exp {
+    grid-template-columns: 1fr;
+  }
+  .pf-card {
+    grid-template-columns: 1fr;
+  }
+  .pf-card .avatar--xl {
+    width: min(100%, 15rem);
+  }
+}
+/* tek sütun: kart yatay (küçük kutu solda, metin sağda) — telefonda her kişi bir ekranı kaplamasın */
+@media (max-width: 579px) {
+  .pcard {
+    display: grid;
+    grid-template-columns: 6.2rem minmax(0, 1fr);
+    column-gap: 1.1rem;
+    align-items: start;
+  }
+  .pcard__media {
+    margin-bottom: 0;
+  }
+  .pcard .avatar--xl {
+    aspect-ratio: 1;
+  }
+  .pcard .avatar--xl .avatar__ini {
+    font-size: 2.1rem;
+  }
+  .pcard .avatar--xl::after {
+    height: 3px;
+  }
+  .pcard__name {
+    font-size: 1.35rem;
+  }
+  .pcard__sum {
+    -webkit-line-clamp: 5;
+  }
+}
+@media (max-width: 560px) {
+  .pp {
+    gap: 1.1rem;
+  }
+  .pp .avatar--lg {
+    --av: 72px;
+  }
+  .pf-edu li {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+  .who__p {
+    flex-basis: 100%;
+    margin-left: 0;
+    padding-left: 2.7rem;
+  }
+  .pinline {
+    justify-content: flex-start;
+  }
+}
+html[data-fx='off'] .pcard:hover .avatar::before {
+  transform: none;
+}
+
+@media print {
+  .pf-card__cta,
+  .pp__act,
+  .pband__foot {
+    display: none;
+  }
+  .tm-join__t .w {
+    opacity: 1;
+  }
+}
+
+/* ── Dokunma hedefleri (WCAG 2.5.8): ad ve hizmet bağlantıları en az 24 px yüksek.
+   İç boşluk, eksi dış boşlukla dengelendiği için satır düzeni aynı kalır; yalnızca
+   bağlantının kendi kutusu büyür (tests/audit.mjs bunu 390 px'te denetler). */
+.pcard__name a,
+.pp__name a,
+.pp__topics a,
+.who__t,
+.who__none {
+  display: inline-block;
+  padding-block: 0.3rem;
+  margin-block: -0.3rem;
+  background-origin: content-box;
+}
+.pf-svcgrp__h a {
+  padding-block: 0.3rem;
+  margin-block: -0.3rem;
+}

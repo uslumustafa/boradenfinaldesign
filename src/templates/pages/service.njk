@@ -1,0 +1,205 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+{% import "partials/people.njk" as pp %}
+{% import "partials/blocks.njk" as bk %}
+
+{% block head_extra %}
+<script type="application/ld+json">{{ ld | json_script }}</script>
+{% endblock %}
+
+{# Hizmet sayfası. Wagtail karşılığı: ServicePage (StreamField bölümleri: kısaca, kapsam, süreç, çıktı, not, SSS, kaynaklar;
+   photo = görsel seçici; ilgili içerik ve künye ALANLARI HESAPLANIR — scripts/relations.mjs; genel SSS = FaqItem.show_on_services;
+   «Çalışma biçimimiz» bandı = site ayarı). Bölümler veri yoksa hiç çizilmez ve «Bu sayfada» menüsünden de düşer. #}
+{% block main %}
+{% set nOwnFaq = service.faqs | length %}
+{% set nFaq = nOwnFaq + (model.generalFaq | length) %}
+{% set nSteps = service.steps | length %}
+{% set nScope = service.scopeItems | length %}
+{{ m.phero(page, service.title, service.lead, group.name ~ " · " ~ group.number, group.scene) }}
+
+<div class="sheet sec--paper">
+  <div class="container">
+
+    {{ bk.kunye(service.ref, [
+      { k: "Alan", v: group.name, href: group.url },
+      { k: "Kapsam", v: nScope ~ " başlık" },
+      { k: "Süreç", v: (nSteps ~ " adım") if nSteps else "" },
+      { k: "Dayanak", v: ((service.srcList | length) ~ " kaynak") if (service.srcList | length) else "" }
+    ], { label: "Hizmet künyesi" }) }}
+
+    <div class="svc g12">
+
+      <aside class="svc__side gc" style="--gc: 1 / span 3">
+        <nav class="toc" data-toc aria-label="Bu sayfada">
+          <p class="toc__h mono">Bu sayfada</p>
+          <ol>
+            <li><a href="#kisaca">Kısaca</a></li>
+            <li><a href="#kapsam">Kapsam</a></li>
+            {% if nSteps %}<li><a href="#surec">Süreç</a></li>{% endif %}
+            <li><a href="#cikti">Çıktı{% if service.prepareList | length %} ve hazırlık{% endif %}</a></li>
+            {% if service.note %}<li><a href="#not">Not</a></li>{% endif %}
+            {% if nFaq %}<li><a href="#sss">Sık sorulanlar</a></li>{% endif %}
+            {% if service.srcList | length %}<li><a href="#kaynaklar">Kaynaklar</a></li>{% endif %}
+            {% if service.related.total %}<li><a href="#ilgili">İlgili içerik</a></li>{% endif %}
+            {% if service.people | length %}<li><a href="#ekip">İlgili ekip</a></li>{% endif %}
+          </ol>
+          <a class="btn toc__cta" href="/iletisim/?hizmet={{ service.id }}">Bu hizmet için görüşelim {{ m.arrow() }}</a>
+        </nav>
+      </aside>
+
+      <div class="svc__main gc" style="--gc: 4 / -1">
+
+        <section class="svc__sec" id="kisaca">
+          <h2 class="svc__label mono" data-reveal>Kısaca</h2>
+          <p class="svc__def" data-lit>{{ service.definition }}</p>
+          {% if service.needs | length %}
+          <div class="needs" data-reveal>
+            <p class="needs__h mono">Şu durumlarda</p>
+            <ul class="needs__list">
+              {% for n in service.needs %}<li>{{ n }}</li>{% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+        </section>
+
+        <section class="svc__sec" id="kapsam">
+          <h2 class="svc__label mono" data-reveal>Kapsam</h2>
+          {% if service.intro %}<p class="svc__lead" data-reveal>{{ service.intro }}</p>{% endif %}
+          <ol class="sgrid sgrid--{{ nScope }}">
+            {% for it in service.scopeItems %}
+            <li class="sc sc--{{ ['b', 'r', 'g'][loop.index0 % 3] }}" data-reveal data-reveal-delay="{{ loop.index0 }}">
+              <span class="sc__n mono tnum">{{ loop.index | pad2 }}</span>
+              <h3 class="sc__t">{{ it.title }}</h3>
+              {% if it.text %}<p class="sc__d">{{ it.text }}</p>{% endif %}
+            </li>
+            {% endfor %}
+          </ol>
+          {% if service.explanation %}<p class="svc__more" data-reveal>{{ service.explanation }}</p>{% endif %}
+          {{ bk.figure(service.photo) }}
+        </section>
+
+        {% if nSteps %}
+        <section class="svc__sec" id="surec">
+          <h2 class="svc__label mono" data-reveal>Süreç</h2>
+          <ol class="flow flow--{{ nSteps }}" data-steps style="--n: {{ nSteps }}">
+            {% for st in service.steps %}
+            <li class="flow__i" style="--i: {{ loop.index0 }}" data-reveal data-reveal-delay="{{ loop.index0 }}">
+              <span class="flow__n mono tnum">{{ loop.index | pad2 }}</span>
+              <h3 class="flow__t">{{ st[0] }}</h3>
+              <p class="flow__d">{{ st[1] }}</p>
+            </li>
+            {% endfor %}
+          </ol>
+        </section>
+        {% endif %}
+
+        <section class="svc__sec" id="cikti">
+          <h2 class="svc__label mono" data-reveal>Çıktı{% if service.prepareList | length %} ve hazırlık{% endif %}</h2>
+          <div class="deliver{% if service.prepareList | length %} deliver--2{% endif %}">
+            <div class="dcard dcard--dark" data-reveal>
+              <p class="deliver__k mono">Ne elde edilir</p>
+              <p class="deliver__v">{{ service.output }}</p>
+            </div>
+            {% if service.prepareList | length %}
+            <div class="dcard" data-reveal data-reveal-delay="1">
+              <p class="deliver__k mono">Başlangıç için hazırlık</p>
+              <ul class="ticklist">
+                {% for p in service.prepareList %}<li>{{ p }}</li>{% endfor %}
+              </ul>
+            </div>
+            {% endif %}
+          </div>
+        </section>
+
+        {% if service.note %}
+        <section class="svc__sec" id="not">
+          <h2 class="svc__label mono" data-reveal>Not</h2>
+          <div class="notice" data-reveal><p>{{ service.note }}</p></div>
+        </section>
+        {% endif %}
+
+        {% if nFaq %}
+        <section class="svc__sec" id="sss">
+          <h2 class="svc__label mono" data-reveal>Sık sorulanlar</h2>
+          {% if nOwnFaq %}
+          <div class="faq" data-reveal>
+            {% for f in service.faqs %}
+            <details>
+              <summary>{{ f[0] }}</summary>
+              <div class="faq__a"><p>{{ f[1] }}</p></div>
+            </details>
+            {% endfor %}
+          </div>
+          {% endif %}
+          {% if model.generalFaq | length %}
+          {% if nOwnFaq %}<p class="svc__sub mono" data-reveal>Çalışma biçimimiz hakkında</p>{% endif %}
+          <div class="faq" data-reveal>
+            {% for f in model.generalFaq %}
+            <details>
+              <summary>{{ f.q }}</summary>
+              <div class="faq__a">{{ f.a | paras_rich }}</div>
+            </details>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </section>
+        {% endif %}
+
+        {% if service.srcList | length %}
+        <section class="svc__sec" id="kaynaklar">
+          <h2 class="svc__label mono" data-reveal>Kaynaklar</h2>
+          <ul class="srclist" data-reveal>
+            {% for src in service.srcList %}
+            <li><a class="srclink" href="{{ src.url }}" target="_blank" rel="noopener noreferrer"><span>{{ src.label }}</span><span class="srclink__go" aria-hidden="true">↗</span><span class="sr-only"> (yeni sekmede açılır)</span></a></li>
+            {% endfor %}
+          </ul>
+        </section>
+        {% endif %}
+
+        {% if service.related.total %}
+        <section class="svc__sec" id="ilgili">
+          <h2 class="svc__label mono" data-reveal>İlgili içerik</h2>
+          {{ bk.related(service.related) }}
+        </section>
+        {% endif %}
+
+      </div>
+    </div>
+
+    <nav class="svcnav" aria-label="Komşu hizmetler">
+      {% if prev %}
+      <a class="svcnav__a svcnav__a--prev" href="{{ prev.url }}" rel="prev">
+        <span class="svcnav__k mono">← Önceki</span>
+        <span class="svcnav__t">{{ prev.title }}</span>
+      </a>
+      {% else %}<span></span>{% endif %}
+      {% if next %}
+      <a class="svcnav__a svcnav__a--next" href="{{ next.url }}" rel="next">
+        <span class="svcnav__k mono">Sonraki →</span>
+        <span class="svcnav__t">{{ next.title }}</span>
+      </a>
+      {% else %}<span></span>{% endif %}
+    </nav>
+
+    <p class="svcback"><a class="textlink" href="{{ group.url }}">{{ group.name }} alanındaki tüm hizmetler {{ m.arrow() }}</a></p>
+
+    <div class="notice" style="margin-top: clamp(3rem, 6vw, 5rem)" data-legal-review="BDY m.22">
+      <p><strong>Bağımsızlık ilkesi.</strong> {{ site.independenceNote }}</p>
+    </div>
+  </div>
+</div>
+
+{# ── Çalışma biçimimiz: koyu bant; arkada alanın 3B sahnesi (veri: approach.json) #}
+{{ bk.method(model.approach, { scene: group.scene, href: "/iletisim/?hizmet=" ~ service.id }) }}
+
+{# ── Alt bölüm: bu hizmetle ilgilenen kişiler (açık atama + hizmetin alan sorumluları — scripts/team.mjs) #}
+{{ pp.band(service.people, {
+  id: "ekip",
+  title: "Bu hizmetle ilgilenen ekip.",
+  lead: service.title ~ " hizmetini yürüten ekip arkadaşlarımız. Konunuzu kısaca yazarak doğrudan görüşme talep edebilirsiniz.",
+  query: "&hizmet=" ~ service.id
+}) }}
+
+{% set cta_href = "/iletisim/?hizmet=" ~ service.id %}
+{% include "partials/cta.njk" %}
+{% endblock %}

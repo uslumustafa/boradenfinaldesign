@@ -1,0 +1,97 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+
+{% block head_extra %}
+<script type="application/ld+json">{{ ld | json_script }}</script>
+{% endblock %}
+
+{# Sirkülerler + PDF arşivi. Wagtail karşılığı: CircularIndexPage — üstte yayımlanan sirkülerler (PublicationPage, tür = sirküler),
+   altta ArchiveCircular snippet'leri (number, title, date, document → wagtaildocs). Süzme/arama/sayfalama istemcide listing.js ile;
+   kayıt sayısı büyürse Wagtail'de aynı URL parametreleriyle (?yil=&q=&p=) sunucu tarafı süzgece geçilebilir. #}
+{% block main %}
+{{ m.phero(page, type.title, type.lead, "Bilgi merkezi · Sirküler", 1, [
+  (arc.total ~ " arşiv PDF’i"),
+  arc.range,
+  ((items | length) ~ " güncel sirküler") if (items | length) else ""
+]) }}
+
+<div class="sheet sec--paper">
+  <div class="container">
+    {% include "pages/insights/_type-tabs.njk" %}
+
+    {% if items | length %}
+    <section class="arc-pub" aria-labelledby="yayimlanan-h">
+      <h2 class="svc__label mono" data-reveal id="yayimlanan-h">Yayımlanan sirkülerler</h2>
+      <ul class="pub-cards">
+        {% for p in items %}
+        <li data-reveal data-reveal-delay="{{ loop.index0 if loop.index0 < 5 else 4 }}">
+          <a class="pub-card" href="{{ p.url }}">
+            <span class="pub-card__meta mono"><span>{{ p.category }}</span><time datetime="{{ p.date }}">{{ p.date | date_tr }}</time></span>
+            <h3 class="pub-card__t">{{ p.title }}</h3>
+            <p class="pub-card__s">{{ p.summary }}</p>
+            <span class="pub-card__foot"><span class="mono">{{ p.sourceList | length }} kaynak</span><span class="pub-card__go">Okuyun {{ m.arrow() }}</span></span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+
+    {% if arc.total %}
+    <section class="arc" id="arsiv" data-listing="arsiv" data-per-page="20" data-module="archive" aria-labelledby="arsiv-h">
+      <header class="g12 arc__head">
+        <div class="gc arc__intro" style="--gc: 1 / span 6">
+          <p class="eyebrow" data-reveal>Arşiv · {{ arc.range }}</p>
+          <h2 id="arsiv-h" data-reveal data-reveal-delay="1">Sirküler arşivi</h2>
+          <p class="arc__lead" data-reveal data-reveal-delay="2"><span class="tnum">{{ arc.total }}</span> sirküler PDF olarak saklanır; yıla, numaraya ve başlığa göre aranabilir. Her kayıt yeni sekmede açılır.</p>
+        </div>
+        <div class="gc" style="--gc: 8 / -1">
+          <div class="notice notice--warn" data-reveal data-reveal-delay="3">
+            <p><strong>Arşiv notu.</strong> Arşiv sirkülerleri yayımlandıkları tarihteki mevzuata göre hazırlanmıştır; güncel durum için ilgili kurum kaynağına bakınız. Bu bir bilgilendirmedir, tavsiye değildir.</p>
+          </div>
+        </div>
+      </header>
+
+      <div class="arc__bar">
+        <div class="arc__years" role="group" aria-label="Yıla göre süz" data-filter-by="yil">
+          <button class="arc__yr is-on" type="button" data-filter="all" aria-pressed="true" aria-label="Tüm yıllar: {{ arc.total }} sirküler">
+            <span class="arc__yh arc__yh--all" aria-hidden="true">{% for y in arc.years %}<i style="--v: {{ y.ratio }}"></i>{% endfor %}</span>
+            <span class="arc__yl">Tümü</span><span class="arc__yc tnum">{{ arc.total }}</span>
+          </button>
+          {% for y in arc.years %}
+          <button class="arc__yr" type="button" data-filter="{{ y.year }}" aria-pressed="false" aria-label="{{ y.year }}: {{ y.count }} sirküler">
+            <span class="arc__yh" aria-hidden="true"><i style="--v: {{ y.ratio }}"></i></span>
+            <span class="arc__yl tnum">{{ y.year }}</span><span class="arc__yc tnum">{{ y.count }}</span>
+          </button>
+          {% endfor %}
+        </div>
+        <label class="searchbox arc__search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+          <span class="sr-only">Arşivde ara (başlık veya sirküler numarası)</span>
+          <input type="search" placeholder="Başlık veya numara ara (ör. 2021/215)" data-search autocomplete="off" enterkeyhint="search">
+        </label>
+      </div>
+      <p class="arc__count mono" data-result-count aria-live="polite"></p>
+
+      <div class="arc__list">
+        {% for g in arc.groups %}
+        <section class="arc__grp" data-group="{{ g.year }}" aria-labelledby="arc-y{{ g.year }}">
+          <h3 class="arc__gy" id="arc-y{{ g.year }}"><span class="arc__gyn tnum">{{ g.year }}</span><span class="arc__gyc mono tnum">{{ g.items | length }} sirküler</span></h3>
+          <ol class="arc__rows">
+            {% for a in g.items %}
+            <li class="arc__row" data-item data-yil="{{ g.year }}"><span class="arc__no mono tnum">{% if a.number %}{{ a.number }}{% else %}<span aria-hidden="true">—</span><span class="sr-only">Numarasız</span>{% endif %}</span>{% if a.date %}<time class="arc__date mono tnum" datetime="{{ a.date }}">{{ a.date | date_short }}</time>{% else %}<span class="arc__date mono">Tarihsiz</span>{% endif %}<a class="arc__t" href="{{ a.file }}" target="_blank" rel="noopener" data-no-swap>{{ a.title }}<span class="sr-only"> (PDF, {{ a.size }}; yeni sekmede açılır)</span></a><span class="arc__sz mono tnum">{{ a.size }}</span><span class="arc__pdf mono" aria-hidden="true">PDF<span>↗</span></span></li>
+            {% endfor %}
+          </ol>
+        </section>
+        {% endfor %}
+      </div>
+
+      <p class="empty" data-empty hidden>Aramanızla eşleşen sirküler bulunamadı. Yıl süzgecini «Tümü» yapmayı ya da daha kısa bir ifade denemeyi düşünebilirsiniz.</p>
+      <nav class="pager arc__pager" data-pager aria-label="Arşiv sayfaları" hidden></nav>
+    </section>
+    {% endif %}
+  </div>
+</div>
+
+{% include "partials/cta.njk" %}
+{% endblock %}

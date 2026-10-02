@@ -1,0 +1,641 @@
+[
+  {
+    "slug": "kdv-hesaplama",
+    "order": 5,
+    "title": "KDV Hesaplama",
+    "short": "KDV hariç tutardan dahil toplamı, dahil tutardan matrahı ve KDV'yi hesaplar; kısmi tevkifatı gösterir.",
+    "group": "vergi",
+    "description": "KDV hariç ve KDV dahil tutardan matrahı ve KDV tutarını hesaplayın; genel ve indirimli oranlar ile kısmi tevkifat desteklenir.",
+    "lead": "Tutarı ve KDV oranını seçin; matrah, KDV tutarı ve KDV dahil toplam anında hesaplanır.",
+    "engine": "vat",
+    "params": "vergi",
+    "inputs": [
+      {
+        "id": "mode",
+        "label": "Hesaplama yönü",
+        "type": "segment",
+        "default": "haric",
+        "options": [
+          { "value": "haric", "label": "KDV hariç → dahil" },
+          { "value": "dahil", "label": "KDV dahil → hariç" },
+          { "value": "kdv", "label": "KDV'den matrah" }
+        ],
+        "help": "Elinizdeki tutarın hangisi olduğunu seçin: KDV hariç tutar, KDV dahil tutar veya yalnızca KDV tutarı."
+      },
+      {
+        "id": "amount",
+        "label": "Tutar",
+        "type": "money",
+        "default": 10000,
+        "min": 0,
+        "max": 100000000000,
+        "step": 0.01,
+        "unit": "₺",
+        "help": "Seçtiğiniz yöne göre KDV hariç tutar, KDV dahil tutar veya KDV tutarıdır."
+      },
+      {
+        "id": "rate",
+        "label": "KDV oranı",
+        "type": "select",
+        "default": "genel",
+        "options": [
+          { "value": "genel", "label": "%20 — genel oran" },
+          { "value": "indirimli", "label": "%10 — indirimli oran" },
+          { "value": "cokIndirimli", "label": "%1 — indirimli oran" },
+          { "value": "sifir", "label": "%0 — KDV'siz (istisna vb.)" }
+        ],
+        "help": "Oran, mal veya hizmetin KDV Kanunu ve Cumhurbaşkanı Kararı listelerindeki durumuna göre belirlenir."
+      },
+      {
+        "id": "tevkifat",
+        "label": "Kısmi KDV tevkifatı",
+        "type": "select",
+        "default": "yok",
+        "group": "Gelişmiş seçenekler",
+        "options": [
+          { "value": "yok", "label": "Uygulanmaz" },
+          { "value": "9/10", "label": "9/10 — danışmanlık, denetim, etüt, plan-proje ve benzeri hizmetler" }
+        ],
+        "help": "Yalnızca belirlenen alıcılara karşı uygulanır; alıcı listesi ve tutar sınırı burada denetlenmez."
+      },
+      {
+        "id": "date",
+        "label": "İşlem tarihi",
+        "type": "date",
+        "default": "today",
+        "group": "Gelişmiş seçenekler",
+        "help": "Oran bu tarihte yürürlükteki orana göre seçilir; 10.07.2023 öncesi için eski oranlar kullanılır."
+      }
+    ],
+    "presets": [
+      { "label": "1.000 ₺ + %20 KDV", "values": { "mode": "haric", "amount": 1000, "rate": "genel", "tevkifat": "yok" } },
+      { "label": "1.200 ₺ KDV dahil", "values": { "mode": "dahil", "amount": 1200, "rate": "genel", "tevkifat": "yok" } },
+      { "label": "Danışmanlıkta 9/10 tevkifat", "values": { "mode": "haric", "amount": 10000, "rate": "genel", "tevkifat": "9/10" } }
+    ],
+    "explain": [
+      {
+        "heading": "Nasıl hesaplanır?",
+        "paragraphs": [
+          "KDV hariç tutardan başlıyorsanız KDV, matrahın oranla çarpılmasıyla bulunur; KDV dahil toplam, matrah ile KDV'nin toplamıdır.",
+          "KDV dahil tutardan başlıyorsanız matrah, tutarın (1 + oran) değerine bölünmesiyle bulunur; KDV ise dahil tutar ile matrah arasındaki farktır. Yalnızca KDV tutarı belliyse matrah, KDV'nin orana bölünmesiyle bulunur.",
+          "Tutarlar kuruşa yarım yukarı yuvarlanır. KDV her zaman dahil tutar ile matrah arasındaki fark olarak alındığından parçaların toplamı tutarla birebir tutar."
+        ]
+      },
+      {
+        "heading": "Oranlar",
+        "paragraphs": [
+          "Genel oran %20'dir; indirimli oranlar %10 ve %1'dir. Bir mal veya hizmetin hangi oranla vergilendirileceği KDV Kanunu ve Cumhurbaşkanı Kararı ekindeki listelere göre belirlenir; araç, seçtiğiniz oranı uygular."
+        ]
+      },
+      {
+        "heading": "Kısmi tevkifat",
+        "paragraphs": [
+          "Kısmi tevkifatta alıcı, satıcının hesapladığı KDV'nin belirli bir kısmını satıcıya ödemez; bu kısmı sorumlu sıfatıyla kendisi beyan eder. Danışmanlık, denetim ve benzeri hizmetlerde bu pay 9/10'dur.",
+          "Satıcıya ödenecek KDV, hesaplanan KDV ile tevkif edilen KDV arasındaki farktır. Uygulama yalnızca mevzuatta belirlenen alıcılar için ve belirli bir tutar sınırının üzerindeki işlemlerde söz konusudur."
+        ]
+      }
+    ],
+    "assumptions": [
+      "Oranlar 01.10.2026'da doğrulanmıştır: genel %20, indirimli %10 ve %1 (10.07.2023'ten itibaren). Sonraki bir oran değişikliği Resmî Gazete'den takip edilmelidir.",
+      "Mal ve hizmetlerin hangi oran listesine girdiği araç tarafından belirlenmez; oranı siz seçersiniz.",
+      "Yalnızca 9/10 kısmi tevkifat payı desteklenir; diğer paylar, alıcı listesi ve tutar sınırı (kaynaklarda 2.000 TL ve 12.000 TL olarak farklı verilmektedir) hesaba katılmaz.",
+      "10.07.2023 öncesi işlemler için eski oranlar (genel %18, indirimli %8) yalnızca bilgi olarak tanımlıdır; bu oranların başlangıç tarihleri doğrulanmamıştır.",
+      "KDV iadesi, istisna ve ihracat gibi özel rejimler ile ÖTV ve damga vergisi kapsam dışıdır."
+    ],
+    "faq": [
+      ["KDV dahil tutardan KDV nasıl ayrıştırılır?", "Dahil tutar (1 + KDV oranı) değerine bölünür; bulunan tutar matrahtır, aradaki fark KDV'dir. Örneğin 1.200 TL dahil tutarda %20 oranıyla matrah 1.000 TL, KDV 200 TL'dir."],
+      ["Hangi KDV oranını seçmeliyim?", "Oran, mal veya hizmetin KDV Kanunu ve ilgili Cumhurbaşkanı Kararı listelerindeki durumuna göre belirlenir. Emin değilseniz faturayı düzenleyen tarafın veya mali müşavirinizin görüşünü alın."],
+      ["Kısmi tevkifat ne zaman uygulanır?", "Tevkifat yalnızca KDV Genel Uygulama Tebliği'nde belirtilen hizmetlerde ve belirlenen alıcılara karşı uygulanır; ayrıca bir tutar sınırı vardır. Araç tevkifatın etkisini gösterir, uygulanıp uygulanmayacağını denetlemez."],
+      ["Sonuçta kuruş farkı çıkabilir mi?", "Tutarlar kuruşa yarım yukarı yuvarlandığı için kendi muhasebe yazılımınızla kuruşluk fark olabilir. KDV her zaman dahil tutar ile matrah arasındaki fark olarak bulunur."]
+    ],
+    "sources": [
+      ["PwC Türkiye — KDV oranlarında değişiklik (7346 sayılı Cumhurbaşkanı Kararı)", "https://www.pwc.com.tr/tr/hizmetlerimiz/vergi/dolayli-vergi/bultenler/kdv-otv-bultenleri/2023/kdv-oranlarinda-degisiklik.html"],
+      ["GİB — Danışmanlık hizmetlerinde KDV tevkifatı özelgesi (03.02.2023)", "https://www.gib.gov.tr/node/168110/pdf"]
+    ],
+    "related": ["serbest-meslek-makbuzu-hesaplama", "kurumlar-vergisi-hesaplama", "gecikme-zammi-hesaplama"],
+    "relatedServices": ["mali-musavirlik-ve-muhasebe", "diger-dolayli-vergiler", "kdv-iade-islemleri"],
+    "disclaimer": "KDV hesabı seçtiğiniz orana ve girdiğiniz tutara dayanır; faturanın hukuki durumu, uygulanacak oran ve tevkifat koşulları için mevzuat ve mali müşavirinizin görüşü esas alınmalıdır.",
+    "updated": "2026-10-01"
+  },
+  {
+    "slug": "kurumlar-vergisi-hesaplama",
+    "order": 6,
+    "title": "Kurumlar Vergisi Hesaplama",
+    "short": "Ticari kârdan mali kâra, matrahtan ödenecek vergiye; geçici vergi mahsubu ve asgari vergi karşılaştırmasıyla.",
+    "group": "vergi",
+    "description": "Ticari kârdan kurumlar vergisi matrahını, hesaplanan vergiyi ve geçici vergi mahsubu sonrası ödenecek tutarı adım adım hesaplayın.",
+    "lead": "Ticari kârınızdan başlayarak mali kârı, matrahı ve ödenecek kurumlar vergisini adım adım görün.",
+    "engine": "corpTax",
+    "params": "vergi",
+    "inputs": [
+      {
+        "id": "rateClass",
+        "label": "Oran türü",
+        "type": "select",
+        "default": "genel",
+        "options": [
+          { "value": "genel", "label": "%25 — genel oran" },
+          { "value": "finans", "label": "%30 — finans grubu" },
+          { "value": "imalat", "label": "%24 — imalat kazancı" },
+          { "value": "ihracat", "label": "%20 — ihracat kazancı" },
+          { "value": "halkaArz", "label": "%23 — halka arz indirimli oranı" },
+          { "value": "uretim", "label": "%12,5 — üretim kazancı (2027 ve sonrası)" }
+        ],
+        "help": "İndirimli oranlar yalnızca ilgili kazanç kısmına uygulanır; karma kazançlarda matrahı ayırıp ayrı hesaplayın."
+      },
+      {
+        "id": "profit",
+        "label": "Ticari bilanço kârı",
+        "type": "money",
+        "default": 5000000,
+        "min": -100000000000,
+        "max": 100000000000,
+        "step": 0.01,
+        "unit": "₺",
+        "help": "Dönem sonu bilanço ve gelir tablosundaki kâr; zarar için eksi değer girin."
+      },
+      {
+        "id": "kkeg",
+        "label": "Kanunen kabul edilmeyen giderler (KKEG)",
+        "type": "money",
+        "default": 250000,
+        "min": 0,
+        "max": 100000000000,
+        "step": 0.01,
+        "unit": "₺",
+        "help": "Kurum kazancının tespitinde indirilemeyen giderler; kâra eklenir."
+      },
+      {
+        "id": "exempt",
+        "label": "İstisna ve indirimler",
+        "type": "money",
+        "default": 0,
+        "min": 0,
+        "max": 100000000000,
+        "step": 0.01,
+        "unit": "₺",
+        "help": "İştirak kazancı gibi istisna kazançlar ve mevzuattaki indirimlerin toplamı; kârdan düşülür."
+      },
+      {
+        "id": "priorLoss",
+        "label": "Geçmiş yıl zararları",
+        "type": "money",
+        "default": 0,
+        "min": 0,
+        "max": 100000000000,
+        "step": 0.01,
+        "unit": "₺",
+        "help": "Bu dönemde indirilecek zarar tutarı; yalnızca pozitif mali kârı aşmayacak kadarı düşülür."
+      },
+      {
+        "id": "provisional",
+        "label": "Mahsup edilecek geçici vergi",
+        "type": "money",
+        "default": 1000000,
+        "min": 0,
+        "max": 100000000000,
+        "step": 0.01,
+        "unit": "₺",
+        "help": "Dönem içinde ödenen geçici vergilerin toplamı."
+      },
+      {
+        "id": "date",
+        "label": "Vergilendirme dönemi (yıl içinden bir tarih)",
+        "type": "date",
+        "default": "today",
+        "group": "Gelişmiş seçenekler",
+        "help": "Oranlar bu tarihin ait olduğu hesap dönemine göre seçilir; 01.01.2025 ve sonrası desteklenir."
+      },
+      {
+        "id": "minTax",
+        "label": "Yurt içi asgari kurumlar vergisiyle karşılaştır",
+        "type": "checkbox",
+        "default": false,
+        "group": "Gelişmiş seçenekler",
+        "help": "Hesaplanan vergi, indirim ve istisnalar düşülmeden önceki kurum kazancının %10'undan az olamaz (KVK m.32/C)."
+      },
+      {
+        "id": "minBase",
+        "label": "Asgari vergi matrahı",
+        "type": "money",
+        "default": 5000000,
+        "min": 0,
+        "max": 100000000000,
+        "step": 0.01,
+        "unit": "₺",
+        "group": "Gelişmiş seçenekler",
+        "showIf": { "id": "minTax", "truthy": true },
+        "help": "İndirim ve istisnalar düşülmeden önceki kurum kazancı; içeriği araç tarafından denetlenmez."
+      }
+    ],
+    "presets": [
+      { "label": "Kârlı dönem", "values": { "rateClass": "genel", "profit": 5000000, "kkeg": 250000, "exempt": 0, "priorLoss": 0, "provisional": 1000000, "minTax": false } },
+      { "label": "Geçmiş yıl zararlı", "values": { "rateClass": "genel", "profit": 2000000, "kkeg": 100000, "exempt": 0, "priorLoss": 800000, "provisional": 0, "minTax": false } },
+      { "label": "Mali zarar", "values": { "rateClass": "genel", "profit": -500000, "kkeg": 0, "exempt": 0, "priorLoss": 0, "provisional": 0, "minTax": false } },
+      { "label": "Asgari vergi örneği", "values": { "rateClass": "genel", "profit": 2000000, "kkeg": 0, "exempt": 0, "priorLoss": 0, "provisional": 0, "minTax": true, "minBase": 10000000 } }
+    ],
+    "explain": [
+      {
+        "heading": "Nasıl hesaplanır?",
+        "paragraphs": [
+          "Hesap, ticari bilanço kârıyla başlar. Kanunen kabul edilmeyen giderler eklenir, istisna ve indirimler düşülerek mali kâra ulaşılır; geçmiş yıl zararları bu kârdan indirilir ve kalan tutar kurumlar vergisi matrahıdır.",
+          "Matrah, mükellef türüne göre belirlenen oranla çarpılır; bulunan tutardan dönem içinde ödenen geçici vergi düşülür. Sonuç pozitifse ödenecek kurumlar vergisi, negatifse mahsup edilemeyen geçici vergidir."
+        ]
+      },
+      {
+        "heading": "Oranlar",
+        "paragraphs": [
+          "Genel oran %25'tir. Bankalar, sigorta ve emeklilik şirketleri, finansal kiralama, faktoring ve finansman şirketleri gibi finans grubunda oran %30'dur. İhracat kazançlarına 5 puan, imalat kazançlarına 1 puan, halka arz edilen şirketlerin kazancına 2 puan indirimli oran uygulanır; bu indirimler yalnızca ilgili kazanç kısmı içindir.",
+          "7582 sayılı Kanun ile 2027 vergilendirme döneminden itibaren üretim kazançları için %12,5 oranı getirilmiştir; bu oran 2026 için geçerli değildir ve mevcut indirimli oranlarla ilişkisi doğrulanmamıştır."
+        ]
+      },
+      {
+        "heading": "Yurt içi asgari kurumlar vergisi",
+        "paragraphs": [
+          "Hesaplanan kurumlar vergisi, indirim ve istisnalar düşülmeden önceki kurum kazancının %10'undan az olamaz (KVK m.32/C; 2025 dönemlerinden itibaren). Karşılaştırmayı açıp asgari vergi matrahını kendiniz girebilirsiniz; araç bu matrahın kapsamını denetlemez."
+        ]
+      }
+    ],
+    "assumptions": [
+      "Oranlar 01.10.2026'da doğrulanmıştır; araç 01.01.2025 ve sonrası vergilendirme dönemleri içindir.",
+      "İndirimli oranlarda kazancın paylaştırılması hesaplanmaz; karma kazançlarda matrahı ayırıp her kazanç türü için ayrı hesaplayın.",
+      "2025, 2026 ve 2027 hesap dönemlerinde enflasyon düzeltmesi yapılmaz (7571 sayılı Kanun); kârı düzeltme yapılmamış finansal tablolara göre girin.",
+      "Geçmiş yıl zararı, girdiğiniz tutar kadar ve pozitif mali kârı aşmayacak şekilde düşülür; zararın süre ve koşulları denetlenmez.",
+      "Asgari kurumlar vergisi matrahının kapsamı (7582 değişikliği dahil) doğrulanmamıştır; yeni kurulan şirketler ve istisna kapsamındaki kurumlar için ayrı kurallar vardır.",
+      "Yerel ve küresel asgari tamamlayıcı vergi, Ar-Ge ve yatırım indirimleri gibi özel kalemler ile vergi cezaları kapsam dışıdır."
+    ],
+    "faq": [
+      ["Mali kâr ile ticari kâr arasındaki fark nedir?", "Ticari kâr, bilanço ve gelir tablosundaki dönem kârıdır. Mali kâr; kanunen kabul edilmeyen giderlerin eklenmesi, istisna ve indirimlerin düşülmesiyle bulunur ve vergi hesabının esasını oluşturur."],
+      ["Geçici vergi nasıl mahsup edilir?", "Dönem içinde ödenen geçici vergiler, yıllık beyannamede hesaplanan kurumlar vergisinden düşülür. Geçici vergi fazlaysa fark, mevzuattaki usullere göre iade edilir veya sonraki dönemlere mahsup edilir."],
+      ["Beyanname ne zaman verilir?", "Kurumlar vergisi beyannamesi, hesap döneminin kapandığı ayı izleyen dördüncü ayın birinci günü ile son günü arasında verilir; takvim yılı hesap dönemi için 1–30 Nisan'dır. 2026 dönemi için son gün 30 Nisan 2027 Cuma'dır."],
+      ["Yurt içi asgari kurumlar vergisi nedir?", "Hesaplanan kurumlar vergisinin, indirim ve istisnalar düşülmeden önceki kurum kazancının %10'undan düşük olmamasını sağlayan düzenlemedir. Matrahın kapsamı için mali müşavirinize danışın."]
+    ],
+    "sources": [
+      ["GİB — Kurumlar Vergisinde Oran Uygulamaları (Mart 2026, Yayın No 605)", "https://cdn.gib.gov.tr/api/gibportal-file/file/getFile?objectKey=DUYURU%2FUNIVERSAL%2F2026%2F2026_KurumlarVergisiOran.pdf"],
+      ["GİB — Kurumlar Vergisi Oranları", "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2Fkurumlar-vergisi-oranlari.pdf"],
+      ["GİB — Beyanname Verme ve Ödeme Süreleri", "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf"],
+      ["PwC Türkiye — 7582 sayılı Kanun bülteni", "https://www.pwc.com.tr/tr/Hizmetlerimiz/vergi/vergi-bultenleri/2026/7582-sayili-kanun-resmi-gazetede-yayimlandi.pdf"]
+    ],
+    "related": ["gecici-vergi-hesaplama", "gecikme-zammi-hesaplama", "kdv-hesaplama"],
+    "relatedServices": ["kurumlar-vergisi-denetim-ve-tasdik", "mali-musavirlik-ve-muhasebe", "tam-tasdik-islemleri"],
+    "disclaimer": "Kurumlar vergisi matrahı, mevzuattaki istisna, indirim ve düzeltme kalemlerine göre şirkete özgü belirlenir; bu hesap yalnızca girdiğiniz tutarlara dayanır ve beyan yerine geçmez.",
+    "updated": "2026-10-01"
+  },
+  {
+    "slug": "gecici-vergi-hesaplama",
+    "order": 7,
+    "title": "Geçici Vergi Hesaplama",
+    "short": "Kümülatif dönem kârından ödenecek geçici vergiyi ve beyan-ödeme son gününü hesaplar.",
+    "group": "vergi",
+    "description": "Kümülatif dönem kârı ve önceki dönemlerde ödenen geçici vergiden, bu dönemde ödenecek geçici vergiyi ve son beyan tarihini hesaplayın.",
+    "lead": "Dönemi ve kümülatif kârı girin; bu dönemde ödenecek geçici vergiyi ve beyan-ödeme son gününü görün.",
+    "engine": "provisionalTax",
+    "params": "vergi",
+    "inputs": [
+      {
+        "id": "taxpayer",
+        "label": "Mükellef türü",
+        "type": "segment",
+        "default": "kurum",
+        "options": [
+          { "value": "kurum", "label": "Kurumlar vergisi mükellefi" },
+          { "value": "gelir", "label": "Gelir vergisi mükellefi" }
+        ],
+        "help": "Kurumlarda oran türüne göre, gelir vergisi mükelleflerinde %15 oranıyla hesaplanır."
+      },
+      {
+        "id": "period",
+        "label": "Geçici vergi dönemi",
+        "type": "select",
+        "default": "3",
+        "options": [
+          { "value": "1", "label": "1. dönem (Ocak–Mart)" },
+          { "value": "2", "label": "2. dönem (Ocak–Haziran, kümülatif)" },
+          { "value": "3", "label": "3. dönem (Ocak–Eylül, kümülatif)" },
+          { "value": "4", "label": "4. dönem (Ocak–Aralık, kümülatif)" }
+        ],
+        "help": "Beyan ve ödeme son günü, dönemi izleyen ikinci ayın 17'sidir; hafta sonu ve tatilde izleyen iş günüdür."
+      },
+      {
+        "id": "cumProfit",
+        "label": "Kümülatif dönem kârı (matrah)",
+        "type": "money",
+        "default": 3000000,
+        "min": -100000000000,
+        "max": 100000000000,
+        "step": 0.01,
+        "unit": "₺",
+        "help": "Yıl başından seçilen dönem sonuna kadar toplam kâr; zarar için eksi değer girin, vergi sıfır çıkar."
+      },
+      {
+        "id": "paid",
+        "label": "Önceki dönemlerde ödenen geçici vergi",
+        "type": "money",
+        "default": 500000,
+        "min": 0,
+        "max": 100000000000,
+        "step": 0.01,
+        "unit": "₺",
+        "help": "Aynı yıl içinde önceki geçici vergi dönemleri için ödediğiniz toplam tutar."
+      },
+      {
+        "id": "rateClass",
+        "label": "Oran türü",
+        "type": "select",
+        "default": "genel",
+        "group": "Gelişmiş seçenekler",
+        "showIf": { "id": "taxpayer", "eq": "kurum" },
+        "options": [
+          { "value": "genel", "label": "%25 — genel oran" },
+          { "value": "finans", "label": "%30 — finans grubu" },
+          { "value": "imalat", "label": "%24 — imalat kazancı" },
+          { "value": "ihracat", "label": "%20 — ihracat kazancı" },
+          { "value": "halkaArz", "label": "%23 — halka arz indirimli oranı" }
+        ],
+        "help": "İndirimli oranlar yalnızca ilgili kazanç kısmına uygulanır; karma kazançlarda matrahı ayırıp ayrı hesaplayın."
+      },
+      {
+        "id": "date",
+        "label": "Dönemin ait olduğu yıl (yıl içinden bir tarih)",
+        "type": "date",
+        "default": "today",
+        "group": "Gelişmiş seçenekler",
+        "help": "Dönem sonu, oran ve son gün bu tarihin yılına göre belirlenir; 2025 ve sonrası desteklenir."
+      }
+    ],
+    "presets": [
+      { "label": "3. dönem örneği", "values": { "taxpayer": "kurum", "period": "3", "cumProfit": 3000000, "paid": 500000, "rateClass": "genel" } },
+      { "label": "Fazla ödenmiş geçici vergi", "values": { "taxpayer": "kurum", "period": "3", "cumProfit": 1000000, "paid": 400000, "rateClass": "genel" } },
+      { "label": "4. dönem (yıl sonu)", "values": { "taxpayer": "kurum", "period": "4", "cumProfit": 8000000, "paid": 1500000, "rateClass": "genel" } },
+      { "label": "Gelir vergisi mükellefi", "values": { "taxpayer": "gelir", "period": "3", "cumProfit": 600000, "paid": 0 } }
+    ],
+    "explain": [
+      {
+        "heading": "Nasıl hesaplanır?",
+        "paragraphs": [
+          "Geçici vergi, yıl başından dönem sonuna kadar elde edilen kümülatif kâr (matrah) üzerinden hesaplanır. Kümülatif matrah oranla çarpılır; önceki dönemlerde ödenen geçici vergi bu tutardan düşülür ve kalan fark o dönemde ödenir.",
+          "Dönem sonuna kadar hesaplanan vergi önceki dönemlerde ödenenden düşükse bu dönemde ödenecek tutar sıfırdır; fark mevzuattaki usullerle sonraki dönemlerde veya yıllık beyannamede mahsup konusu olur. Tutarlar kuruşa yarım yukarı yuvarlanır."
+        ]
+      },
+      {
+        "heading": "Oranlar",
+        "paragraphs": [
+          "Kurumlar vergisi mükellefleri için geçici vergi oranı, ilgili dönemin kurumlar vergisi oranıyla aynıdır: genel oran %25, finans grubunda %30'dur. İhracat (%20), imalat (%24) ve halka arz (%23) indirimli oranları yalnızca ilgili kazanç kısmına uygulanır.",
+          "Gelir vergisi mükellefleri için geçici vergi oranı %15'tir. Araç yalnızca bu oranı uygular; yıllık gelir vergisi tarifeye göre ayrıca hesaplanır (Gelir Vergisi Hesaplama aracına bakın)."
+        ]
+      },
+      {
+        "heading": "Beyan ve ödeme günleri",
+        "paragraphs": [
+          "Geçici vergi beyannamesi, dönemi izleyen ikinci ayın 17. günü akşamına kadar verilir ve vergi aynı süre içinde ödenir: 17 Mayıs, 17 Ağustos, 17 Kasım ve 17 Şubat. Son gün hafta sonuna veya tam gün resmî tatile rastlarsa izleyen ilk iş günüdür.",
+          "Sonuç tablosunda seçilen yıl için dört dönemin son günleri ayrıca gösterilir."
+        ]
+      }
+    ],
+    "assumptions": [
+      "Oranlar 01.10.2026'da doğrulanmıştır; araç 2025 ve sonrası dönemleri destekler. Enflasyon düzeltmesi 2025–2027 dönemlerinde yapılmaz (7571 sayılı Kanun); kârı düzeltme yapılmamış finansal tablolara göre girin.",
+      "Kümülatif matrahı siz girersiniz; kanunen kabul edilmeyen giderler, istisna ve indirimler ile geçmiş yıl zararı gibi düzeltmeler bu araçta yapılmaz.",
+      "4. geçici vergi dönemi, 7566 sayılı Kanunla 2025 ve sonrası dönemler için yeniden getirilmiştir; kurumlar bakımından kapsamı ikincil kaynaklara dayanır ve GİB duyurularından teyit edilmelidir.",
+      "Yurt içi asgari kurumlar vergisinin geçici vergi dönemlerinde de hesaplandığı ikincil kaynaklarda belirtilmektedir; araç yalnızca normal hesabı yapar.",
+      "Gelir vergisi mükellefi için yalnızca %15 geçici vergi oranı uygulanır; yıllık vergi için Gelir Vergisi Hesaplama aracını kullanın.",
+      "Tatil listesi yalnızca 01.10.2026–31.03.2027 arası için tanımlıdır; bu aralığın dışındaki son günlerde yalnızca hafta sonu kaydırması uygulanır ve uyarı verilir."
+    ],
+    "faq": [
+      ["Geçici vergi nasıl hesaplanır?", "Yıl başından dönem sonuna kadar elde edilen kümülatif kâr, geçici vergi oranıyla çarpılır; önceki dönemlerde ödenen geçici vergi bu tutardan düşülür. Kalan tutar o dönemin ödenecek geçici vergisidir."],
+      ["Geçici vergi ne zaman ödenir?", "Dönemi izleyen ikinci ayın 17. günü akşamına kadar: 17 Mayıs, 17 Ağustos, 17 Kasım ve 17 Şubat. Son gün hafta sonuna veya tam gün resmî tatile rastlarsa izleyen ilk iş günüdür."],
+      ["Ödenen geçici vergi yıllık beyannamede ne olur?", "Dönem içinde ödenen geçici vergiler, yıllık beyannamede hesaplanan vergiden mahsup edilir. Fazla kalan tutar mevzuattaki usullere göre iade edilir veya sonraki dönemlere devreder."],
+      ["4. geçici vergi dönemi nedir?", "Ocak–Aralık dönemini kapsayan ve izleyen yılın 17 Şubat'ında beyan edilen dördüncü geçici vergi dönemidir; 7566 sayılı Kanunla 2025 ve sonrası dönemler için yeniden getirilmiştir. Şirketler bakımından kapsamı konusunda kaynaklar farklı yorumlar içerdiğinden mali müşavirinize danışın."]
+    ],
+    "sources": [
+      ["GİB — Geçici Vergi Oranları", "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2Fgecici-vergi-oranlari.pdf"],
+      ["GİB — Beyanname Verme ve Ödeme Süreleri", "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2FBeyannameVermeveOdemeSureleri.pdf"],
+      ["KPMG — 7566 sayılı Kanun (4. geçici vergi dönemi)", "https://kpmgvergi.com/yayinlar/mali-bultenler/vergi/7566-sayili-kanun-resmi-gazete-de-yayimlandi/3316"]
+    ],
+    "related": ["kurumlar-vergisi-hesaplama", "gelir-vergisi-hesaplama", "gecikme-zammi-hesaplama"],
+    "relatedServices": ["mali-musavirlik-ve-muhasebe", "kurumlar-vergisi-denetim-ve-tasdik"],
+    "disclaimer": "Geçici vergi matrahı, dönem içi kayıtlara ve mevzuattaki düzeltmelere göre mükellefe özgü belirlenir; bu hesap girdiğiniz kümülatif kâra dayanır ve beyan yerine geçmez.",
+    "updated": "2026-10-01"
+  },
+  {
+    "slug": "serbest-meslek-makbuzu-hesaplama",
+    "order": 8,
+    "title": "Serbest Meslek Makbuzu Hesaplama",
+    "short": "Brüt, net veya tahsil edilecek tutardan stopajı, KDV'yi ve tevkifatı gösteren makbuz dökümünü hesaplar.",
+    "group": "vergi",
+    "description": "Serbest meslek makbuzunda brüt ve net ücreti, stopajı, KDV'yi ve tahsil edilecek tutarı hesaplayın; KDV tevkifatı desteklenir.",
+    "lead": "Elinizdeki tutarı seçin; stopaj, KDV ve tahsil edilecek tutar makbuz dökümü olarak hesaplanır.",
+    "engine": "smm",
+    "params": "vergi",
+    "inputs": [
+      {
+        "id": "mode",
+        "label": "Elinizdeki tutar",
+        "type": "select",
+        "default": "brut",
+        "options": [
+          { "value": "brut", "label": "Brüt ücret (KDV hariç)" },
+          { "value": "net", "label": "Net ücret (stopaj sonrası, KDV hariç)" },
+          { "value": "tahsilat", "label": "Tahsil edilecek tutar" },
+          { "value": "kdvDahil", "label": "KDV dahil tutar (brüt + KDV)" }
+        ],
+        "help": "Tutarın makbuzdaki hangi kalem olduğunu seçin; diğer kalemler buna göre hesaplanır."
+      },
+      {
+        "id": "amount",
+        "label": "Tutar",
+        "type": "money",
+        "default": 10000,
+        "min": 0,
+        "max": 100000000000,
+        "step": 0.01,
+        "unit": "₺",
+        "help": "Yukarıda seçtiğiniz kaleme ait tutar."
+      },
+      {
+        "id": "stopaj",
+        "label": "Gelir vergisi stopajı",
+        "type": "select",
+        "default": "standart",
+        "options": [
+          { "value": "standart", "label": "%20 — standart stopaj" },
+          { "value": "gvk18", "label": "%17 — GVK m.18 kapsamındaki işler" },
+          { "value": "yok", "label": "Stopaj yok" }
+        ],
+        "help": "Stopaj yalnızca ödemeyi yapan stopaj sorumlusu ise kesilir; stopaj yapılmayan makbuz için \"Stopaj yok\" seçin."
+      },
+      {
+        "id": "kdv",
+        "label": "KDV oranı",
+        "type": "select",
+        "default": "genel",
+        "options": [
+          { "value": "genel", "label": "%20 — genel oran" },
+          { "value": "indirimli", "label": "%10 — indirimli oran" },
+          { "value": "cokIndirimli", "label": "%1 — indirimli oran" },
+          { "value": "sifir", "label": "%0 — KDV'siz" }
+        ],
+        "help": "Serbest meslek hizmetlerinde genel oran uygulanır; farklı bir oran gerekiyorsa mevzuata göre seçin."
+      },
+      {
+        "id": "tevkifat",
+        "label": "Kısmi KDV tevkifatı",
+        "type": "select",
+        "default": "yok",
+        "group": "Gelişmiş seçenekler",
+        "options": [
+          { "value": "yok", "label": "Uygulanmaz" },
+          { "value": "9/10", "label": "9/10 — danışmanlık, denetim, etüt, plan-proje ve benzeri hizmetler" }
+        ],
+        "help": "Yalnızca belirlenen alıcılara karşı uygulanır; alıcı listesi ve tutar sınırı burada denetlenmez."
+      },
+      {
+        "id": "date",
+        "label": "İşlem tarihi",
+        "type": "date",
+        "default": "today",
+        "group": "Gelişmiş seçenekler",
+        "help": "KDV oranı bu tarihte yürürlükteki orana göre seçilir."
+      }
+    ],
+    "presets": [
+      { "label": "10.000 ₺ brüt, %20 stopaj", "values": { "mode": "brut", "amount": 10000, "stopaj": "standart", "kdv": "genel", "tevkifat": "yok" } },
+      { "label": "Net 8.000 ₺ için brüt", "values": { "mode": "net", "amount": 8000, "stopaj": "standart", "kdv": "genel", "tevkifat": "yok" } },
+      { "label": "Stopajsız makbuz", "values": { "mode": "brut", "amount": 10000, "stopaj": "yok", "kdv": "genel", "tevkifat": "yok" } },
+      { "label": "9/10 KDV tevkifatlı", "values": { "mode": "brut", "amount": 10000, "stopaj": "standart", "kdv": "genel", "tevkifat": "9/10" } }
+    ],
+    "explain": [
+      {
+        "heading": "Makbuz nasıl hesaplanır?",
+        "paragraphs": [
+          "Serbest meslek makbuzunda stopaj ve KDV, KDV hariç brüt ücret üzerinden hesaplanır. Net ücret, brüt ücretten stopaj düşülerek bulunur; tahsil edilecek tutar ise net ücrete KDV eklenerek, kısmi tevkifat varsa tevkif edilen KDV düşülerek bulunur.",
+          "Tahsil edilecek tutar = brüt ücret − stopaj + KDV − tevkif edilen KDV. Tutarlar kuruşa yarım yukarı yuvarlanır."
+        ]
+      },
+      {
+        "heading": "Tutardan geriye doğru hesap",
+        "paragraphs": [
+          "Net ücret biliniyorsa brüt ücret, net ücretin (1 − stopaj oranı) değerine bölünmesiyle bulunur. Tahsil edilecek tutar biliniyorsa brüt ücret, tutarın (1 − stopaj oranı + KDV oranı) değerine bölünmesiyle bulunur; tevkifat varsa KDV oranı, tevkif edilmeyen pay kadar hesaba katılır.",
+          "KDV dahil tutar biliniyorsa brüt ücret, tutarın (1 + KDV oranı) değerine bölünür. Kuruş yuvarlamaları nedeniyle girilen tutarla birebir tutan bir brüt tutar yoksa en yakın sonuç gösterilir ve fark notta belirtilir."
+        ]
+      },
+      {
+        "heading": "Stopaj ve KDV tevkifatı",
+        "paragraphs": [
+          "Gelir vergisi stopajı genel olarak %20'dir; Gelir Vergisi Kanunu'nun 18. maddesi kapsamındaki işlerde %17 uygulanır. Stopaj, ödemeyi yapan kişi stopaj sorumlusu ise makbuz bedelinden kesilir ve alıcı tarafından beyan edilip ödenir.",
+          "Kısmi KDV tevkifatı yalnızca KDV Genel Uygulama Tebliği'nde belirtilen hizmetlerde ve belirlenen alıcılara karşı uygulanır; alıcı, tevkif ettiği KDV'yi sorumlu sıfatıyla kendisi beyan eder."
+        ]
+      }
+    ],
+    "assumptions": [
+      "Oranlar 01.10.2026'da doğrulanmıştır: gelir vergisi stopajı %20 (GVK m.94/2-b), KDV genel oranı %20.",
+      "%17 stopaj seçeneği yalnızca GVK m.18 kapsamındaki işler içindir; hangi işlerin bu kapsama girdiği araştırmada incelenmemiştir ve doğrulanmamıştır.",
+      "Alıcının stopaj sorumlusu olup olmadığı araç tarafından denetlenmez; stopaj uygulanmayan makbuzlar için \"Stopaj yok\" seçeneğini kullanın.",
+      "KDV tevkifatında yalnızca 9/10 payı desteklenir; alıcı listesi ve tutar sınırı denetlenmez.",
+      "Yıllık gelir vergisi beyanı, damga vergisi ve prim kesintileri gibi makbuz dışındaki hesaplar kapsam dışıdır.",
+      "Vergiden muaf olmayan serbest meslek erbabı makbuzu 01.06.2020'den itibaren elektronik (e-SMM) düzenler; araç belge düzenlemez, yalnızca tutarları hesaplar."
+    ],
+    "faq": [
+      ["Serbest meslek makbuzunda stopaj nasıl hesaplanır?", "Stopaj, KDV hariç brüt ücret üzerinden hesaplanır; standart oran %20'dir. Örneğin 10.000 TL brüt ücrette stopaj 2.000 TL, net ücret 8.000 TL'dir."],
+      ["Tahsil edilecek tutar neden brüt ücretten farklı olabilir?", "Brüt ücretten stopaj düşülür, KDV eklenir; kısmi tevkifat varsa tevkif edilen KDV de düşülür. Stopaj ve KDV oranları eşit olduğunda (ör. %20 ve %20) tahsil edilecek tutar brüt ücretle aynı çıkar."],
+      ["Net ücretten brüt ücret nasıl bulunur?", "Net ücret, (1 − stopaj oranı) değerine bölünür. Örneğin %20 stopajda 8.000 TL net ücret için brüt ücret 8.000 ÷ 0,80 = 10.000 TL'dir."],
+      ["Stopaj her makbuzda kesilir mi?", "Hayır. Stopaj yalnızca ödemeyi yapan kişi veya kurum stopaj yapmakla sorumluysa kesilir. Stopaj sorumlusu olup olmadığınızdan emin değilseniz mali müşavirinize danışın."]
+    ],
+    "sources": [
+      ["GİB — Serbest Meslek Vergi Rehberi (Şubat 2025; TÜRMOB arşivi)", "https://www.turmob.org.tr/arsiv/mbs/resmigazete/-2025_serbestmeslek.pdf"],
+      ["İSMMMO — GVK m.94 stopaj oranları", "https://ismmmo.org.tr/Mevzuat/Gelir-Vergisi-Stopaj-Oranlari-GVK-Md-94---421"],
+      ["GİB — Danışmanlık hizmetlerinde KDV tevkifatı özelgesi (03.02.2023)", "https://www.gib.gov.tr/node/168110/pdf"]
+    ],
+    "related": ["kdv-hesaplama", "gelir-vergisi-hesaplama", "kurumlar-vergisi-hesaplama"],
+    "relatedServices": ["mali-musavirlik-ve-muhasebe", "bireysel-danismanlik-hizmetleri"],
+    "disclaimer": "Makbuz hesabı seçtiğiniz stopaj ve KDV koşullarına dayanır; stopaj sorumluluğu ve tevkifat uygulaması için mevzuat ve mali müşavirinizin görüşü esas alınmalıdır.",
+    "updated": "2026-10-01"
+  },
+  {
+    "slug": "gecikme-zammi-hesaplama",
+    "order": 11,
+    "title": "Gecikme Zammı Hesaplama",
+    "short": "Vadesinde ödenmeyen amme alacağı için gecikme zammını aylık oranlarla dönem dönem hesaplar.",
+    "group": "vergi",
+    "description": "Vergi ve diğer amme alacaklarında vade tarihinden ödeme tarihine kadar gecikme zammını aylık oranla dönem dönem hesaplayın.",
+    "lead": "Gecikmiş tutarı, vade ve ödeme tarihini girin; gecikme zammını ve ödenecek toplamı dönem dönem görün.",
+    "engine": "lateFee",
+    "params": "vergi",
+    "inputs": [
+      {
+        "id": "principal",
+        "label": "Gecikmiş tutar (anapara)",
+        "type": "money",
+        "default": 100000,
+        "min": 0,
+        "max": 100000000000,
+        "step": 0.01,
+        "unit": "₺",
+        "help": "Vadesinde ödenmeyen vergi veya diğer amme alacağının tutarı."
+      },
+      {
+        "id": "dueDate",
+        "label": "Vade tarihi",
+        "type": "date",
+        "default": "today-3m",
+        "help": "Amme alacağının son ödeme günü; gecikme süresi bu tarihten başlayarak sayılır (21.05.2024 ve sonrası)."
+      },
+      {
+        "id": "payDate",
+        "label": "Ödeme tarihi",
+        "type": "date",
+        "default": "today",
+        "help": "Ödemeyi yaptığınız veya yapmayı planladığınız tarih; vade tarihinden önce olamaz."
+      }
+    ],
+    "presets": [
+      { "label": "3 ay 5 gün gecikme", "values": { "principal": 10000, "dueDate": "2025-12-01", "payDate": "2026-03-06" } },
+      { "label": "6 ay gecikme", "values": { "principal": 250000, "dueDate": "2026-01-15", "payDate": "2026-07-15" } },
+      { "label": "1 günlük gecikme", "values": { "principal": 100000, "dueDate": "2026-09-30", "payDate": "2026-10-01" } }
+    ],
+    "explain": [
+      {
+        "heading": "Nasıl hesaplanır?",
+        "paragraphs": [
+          "Gecikme zammı, vadesinde ödenmeyen amme alacağı için vade tarihinden ödeme tarihine kadar her ay için ayrı ayrı aylık oranla hesaplanır (6183 sayılı Kanun m.51). Tam aylar için aylık oranın tamamı, ay kesri için aylık oranın otuzda biri günlük olarak uygulanır.",
+          "Gecikme zammı = anapara × aylık oran × tam ay sayısı + anapara × aylık oran ÷ 30 × kalan gün sayısı. Dönem dönem tabloda her ayın zammı, birikmiş toplam kuruşa yarım yukarı yuvarlanarak gösterilir; satırların toplamı toplam gecikme zammına eşittir."
+        ]
+      },
+      {
+        "heading": "Oranlar",
+        "paragraphs": [
+          "Aylık gecikme zammı oranı 21.05.2024–12.11.2025 arasında %4,5, 13.11.2025'ten itibaren %3,7'dir (Cumhurbaşkanı Kararı 10556). Gecikme süresi boyunca oran değişmişse her ay için o dönemin oranı kullanılır.",
+          "Oranın değiştiği tarih bir ayın ortasına denk gelirse iki oran gün esasına göre ağırlıklandırılır ve araç bunu uyarıyla belirtir; sonuç bu durumda yaklaşık kabul edilmelidir."
+        ]
+      },
+      {
+        "heading": "Kapsam dışı hesaplar",
+        "paragraphs": [
+          "Gecikme faizi (VUK m.112), pişmanlık zammı (VUK m.371) ve tecil faizi bu araçta hesaplanmaz; bunlar ayrı oran ve hesap kurallarına sahiptir."
+        ]
+      }
+    ],
+    "assumptions": [
+      "Aylık oranlar 01.10.2026'da ikincil kaynaklardan (Cumhurbaşkanı Kararı 10556 duyuruları) doğrulanmıştır; Resmî Gazete nüshası doğrulanamamıştır. 21.05.2024 ve sonrası vadeler desteklenir.",
+      "Gecikme süresi vade tarihinden başlayarak tam takvim ayları ve kalan günler olarak sayılır; vade günü bulunmayan aylarda ayın son günü esas alınır. Bu sayım, ay sonuna yakın vadelerde sonucu bir iki günlük zam tutarı kadar etkileyebilir.",
+      "Ay kesri hesabında bir ay 30 gün kabul edilir (aylık oranın otuzda biri).",
+      "Gecikme, oranın değiştiği 13.11.2025 tarihini kapsıyorsa o aydaki iki oran gün esasına göre ağırlıklandırılır; kaynaklarda aylık ve günlük esaslı iki farklı uygulama anlatıldığından sonuç yaklaşık kabul edilmelidir.",
+      "Gecikme faizi, pişmanlık zammı ve tecil faizi hesaplanmaz; ay kesri kuralları ve tecil faizi hesabı doğrulanamamıştır.",
+      "Ödeme tarihi oranların doğrulandığı tarihten sonraysa aylık oran değişmiş olabilir; araç bu durumda uyarı verir."
+    ],
+    "faq": [
+      ["Gecikme zammı nedir?", "Vadesinde ödenmeyen vergi ve diğer amme alacakları için, 6183 sayılı Kanunun 51. maddesi uyarınca vade tarihinden ödeme tarihine kadar uygulanan aylık oranlı zamdır. Oran Cumhurbaşkanı Kararı ile belirlenir."],
+      ["Aylık gecikme zammı oranı kaçtır?", "13.11.2025'ten itibaren aylık %3,7'dir (Cumhurbaşkanı Kararı 10556); 21.05.2024–12.11.2025 arasında %4,5 idi. Güncel oranı Resmî Gazete'den teyit edin."],
+      ["Birkaç günlük gecikme için zam nasıl hesaplanır?", "Tam ayı doldurmayan süre için aylık oranın otuzda biri gecikilen gün sayısıyla çarpılır. Örneğin 100.000 TL için bir günlük gecikmede %3,7 ÷ 30 oranıyla 123,33 TL zam işler."],
+      ["Gecikme zammı ile gecikme faizi aynı şey midir?", "Hayır. Gecikme zammı 6183 sayılı Kanun kapsamında vadesinde ödenmeyen amme alacakları için uygulanır; gecikme faizi (VUK m.112) ve pişmanlık zammı (VUK m.371) Vergi Usul Kanunu'nda düzenlenen ayrı müesseselerdir. Bu araç yalnızca gecikme zammını hesaplar."]
+    ],
+    "sources": [
+      ["TBB — Gecikme zammı oranı duyurusu (Cumhurbaşkanı Kararı 10556)", "https://www.tbb.gov.tr/tr/mevzuat-duyurulari/6183-sayili-amme-alacaklarinin-tahsil-usulu-hakkinda-kanunun-51-inci-maddesinin-birinci-fikrasinda-yer-alan-gecikme-zammi-oraninin-her-ay"],
+      ["KPMG — Gecikme zammı oranı %3,7 olarak yeniden belirlendi (10556)", "https://kpmgvergi.com/yayinlar/mali-bultenler/vergi/10556-sayili-cumhurbaskani-karariyla-gecikme-zammi-orani-3-7-olarak-yeniden-belirlendi/3295"],
+      ["T24 — Gecikme zammı oranı nasıl uygulanacak? (M. Batı)", "https://t24.com.tr/yazarlar/murat-bati/vergide-zam-ve-faizler-dusuruldu-gecikme-zammi-orani-nasil-uygulanacak,52375"]
+    ],
+    "related": ["gecici-vergi-hesaplama", "kdv-hesaplama", "kurumlar-vergisi-hesaplama"],
+    "relatedServices": ["mali-musavirlik-ve-muhasebe", "diger-dolayli-vergiler"],
+    "disclaimer": "Gecikme zammı hesabı girdiğiniz tarihlere ve ikincil kaynaklardan doğrulanan aylık oranlara dayanır; kesin tutar için ilgili idarenin tahakkuk ve ödeme bildirimi esas alınmalıdır.",
+    "updated": "2026-10-01"
+  }
+]

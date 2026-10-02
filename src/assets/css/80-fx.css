@@ -1,0 +1,64 @@
+
+/* ── Etkileşim efektleri: mıknatıslı düğmeler, sayfa geçişi (3B noktalar akar), «BORADEN» anı.
+      Hepsi yalnızca Tam/Hafif katmanda etkindir; «Kapalı»da ve hareket azaltmada yoktur. */
+
+/* Mıknatıslı düğmeler: konumu pointer-fx.js yazar (satır içi translate/scale; düzeni ve diğer dönüşümleri bozmaz).
+   İç ok simgesi, düğmeden biraz daha fazla kayarak derinlik hissi verir. */
+@media (hover: hover) and (pointer: fine) {
+  html:not([data-fx='off']) :is(.btn, [data-magnetic]).is-mag {
+    will-change: translate, scale;
+  }
+  html:not([data-fx='off']) .btn.is-mag .arr {
+    translate: calc(var(--mx, 0px) * 0.45) calc(var(--my, 0px) * 0.45);
+  }
+}
+
+/* Sayfa geçişi (router.js + world.surge): içerik solar → 3B noktalar tıklanan noktadan dışarı akar →
+   yeni sayfada noktalar şekle oturur, içerik yükselerek belirir. Perde/panel yoktur. */
+html.is-leaving :is(#main, #footer) {
+  opacity: 0;
+  transform: translateY(-12px);
+  transition: opacity 0.24s ease-in, transform 0.24s ease-in;
+  pointer-events: none;
+}
+html.is-leaving .hud,
+html.is-leaving .prog,
+html.is-leaving .mega {
+  opacity: 0 !important;
+  transition: opacity 0.2s ease-in;
+}
+/* belirme: opaklık hızlı (açık zeminli bölümler gri bir ara hâlde kalmasın), yükselme daha yavaş */
+html.is-entering :is(#main, #footer) {
+  animation: page-in-o 0.4s ease-out both, page-in-t 0.85s var(--ease-out) both;
+}
+@keyframes page-in-o {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes page-in-t {
+  from {
+    transform: translateY(24px);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* «BORADEN» anı: kahraman metni çekilir, noktalar kelimeyi oluşturur (swipe-word.js) */
+html.is-word .hero__inner,
+html.is-word .hero__scroll {
+  opacity: 0.04 !important;
+  pointer-events: none;
+  transition: opacity 0.45s var(--ease-out);
+}
+html.is-word-out .hero__inner,
+html.is-word-out .hero__scroll {
+  transition: opacity 0.9s var(--ease-out);
+}
+html.is-word .hud {
+  opacity: 0.25;
+}

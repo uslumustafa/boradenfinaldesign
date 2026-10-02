@@ -1,0 +1,1449 @@
+{
+  "meta": {
+    "title": "Turkiye 2026 payroll and income-tax parameters for the Boraden calculators",
+    "prepared": "2026-10-01",
+    "currency": "TRY",
+    "confidence_legend": {
+      "verified-official": "value read on an official domain (csgb.gov.tr, sgk.gov.tr, gib.gov.tr, hmb.gov.tr, iskur.gov.tr) or in an official table",
+      "cross-checked": "two or more independent secondary sources (TÜRMOB, Big-4, large TR consultancies, reputable news) agree, and/or an independent computation reproduces the figure",
+      "single-secondary-source": "one secondary source only",
+      "unverified": "no source or sources conflict"
+    },
+    "reading_limits": "Pages were read as summaries rather than raw text; resmigazete.gov.tr, mevzuat.gov.tr, ikanun and (WAF-protected) verginet could not be accessed, and cdn.gib.gov.tr blocked direct download. Numbers read this way were therefore cross-validated arithmetically and by independent computation. No law or Resmi Gazete text was read verbatim.",
+    "key_changes": [
+      "SGK PEK ust sinir is 9 x alt sinir = 297.270 (not 7,5 x = 247.725) from 1.1.2026 (7566 sayili Kanun).",
+      "Isveren SGK payi before incentives is 21,75% (+2% issizlik); incentive is 2 puan (19,75) for non-manufacturing and 5 puan (16,75) only for imalat until 31.12.2026. The 15,5% rate seen in older material is a 2025-era figure.",
+      "No mid-year (July 2026) asgari ucret change: single period 1.1.2026-31.12.2026.",
+      "Ucret tarifesi limits: 190.000 / 400.000 / 1.500.000 / 5.300.000 (ucret disi 3rd limit 1.000.000).",
+      "Asgari ucret destegi 2026 = 42,33 TL/gun (1.269,90 for 30 days; announced as 1.270)."
+    ]
+  },
+  "parameters": {
+    "yeniden_degerleme_orani_2026": {
+      "value": 25.49,
+      "unit": "percent",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "source_url": "https://ms.hmb.gov.tr/uploads/2026/01/Ek-4-BKS_2026_YDO_GUNCEL.TUTARLAR-5d367d135f56b5e2.pdf",
+      "source_title": "HMB - 2026 Yili Guncel Tutarlar (cites VUK Genel Tebligi Sira No: 585, RG 27.11.2025 sayi 33090)",
+      "accessed": "2026-10-01",
+      "confidence": "verified-official",
+      "notes": "Rate determined for 2025 and used for 2026 revaluations; announced by Vergi Usul Kanunu Genel Tebligi Sira No: 585 (RG 27.11.2025, sayi 33090) under VUK muk. md.298 (paragraph letter quoted inconsistently by sources, not verified). CAUTION: the 2026 GVK md.103 tarife limits are NOT a uniform x1.2549 uplift of the 2025 limits (e.g. 190.000 vs 158.000x1.2549=198.274; 2025 limits are from background knowledge, not re-verified). Hard-code the published 2026 limits; do not derive them from 25.49%.",
+      "cross_check_urls": [
+        "https://antalyaymmo.org.tr/mevzuatlar/178/2026-yilinda-uygulanacak-yeniden-degerleme-orani-aciklandi-turmob-sirkusu-30-11-2025",
+        "https://www.ey.com/tr_tr/insights/tax/yeniden-degerleme-orani-ve-2026-artislari",
+        "https://dengeakademi.com/Files/Circular/4359.pdf"
+      ]
+    },
+    "gelir_vergisi_tarifesi_ucret_2026": {
+      "value": [
+        {
+          "lower": 0,
+          "upper": 190000,
+          "rate": 0.15,
+          "cumulative_tax_at_upper": 28500
+        },
+        {
+          "lower": 190000,
+          "upper": 400000,
+          "rate": 0.2,
+          "cumulative_tax_at_upper": 70500
+        },
+        {
+          "lower": 400000,
+          "upper": 1500000,
+          "rate": 0.27,
+          "cumulative_tax_at_upper": 367500
+        },
+        {
+          "lower": 1500000,
+          "upper": 5300000,
+          "rate": 0.35,
+          "cumulative_tax_at_upper": 1697500
+        },
+        {
+          "lower": 5300000,
+          "upper": null,
+          "rate": 0.4,
+          "cumulative_tax_at_upper": null
+        }
+      ],
+      "unit": "TRY (annual cumulative matrah)",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2Fgelir-vergisi-tarifeleri%2Fgelir-vergisi-tarifesi-2026.pdf",
+      "source_title": "GIB - Gelir Vergisi Tarifesi 2026 (GVK md.103); announced by Gelir Vergisi Genel Tebligi Seri No: 332, RG 31.12.2025 sayi 33124 (5. Mukerrer)",
+      "accessed": "2026-10-01",
+      "confidence": "verified-official",
+      "notes": "Ucret gelirleri tarifesi. 3rd limit is 1.500.000 TL for ucret (35% above), unlike ucret disi (1.000.000). Primary documents (GIB PDF; Tebligi in RG) could only be read through secondary summaries / not at all (resmigazete.gov.tr and mevzuat.gov.tr were not accessible); figures are identical in GIB's PDF extraction, Deng Akademi circular 2025/294 (quotes the Tebligi), EY, PwC, Cott, Kolay IK, memurlar.net, and the base-tax figures (28.500 / 70.500 / 367.500 / 1.697.500) are arithmetically consistent with the brackets.",
+      "cross_check_urls": [
+        "https://dengeakademi.com/Files/Circular/4359.pdf",
+        "https://www.pwc.com.tr/gelir-vergisi-tarifesi",
+        "https://www.ey.com/tr_tr/insights/tax/yeniden-degerleme-orani-ve-2026-artislari",
+        "https://www.cottgroup.com/tr/mevzuat/item/2026-yili-icin-bordrodaki-yasal-kesintiler",
+        "https://www.memurlar.net/haber/1155986/2026-gelir-vergisi-dilimlerini-gosteren-teblig-r-g-de-yayimlandi.html",
+        "https://kolayik.com/blog/2026-bordro-parametreleri"
+      ]
+    },
+    "gelir_vergisi_tarifesi_ucret_disi_2026": {
+      "value": [
+        {
+          "lower": 0,
+          "upper": 190000,
+          "rate": 0.15,
+          "cumulative_tax_at_upper": 28500
+        },
+        {
+          "lower": 190000,
+          "upper": 400000,
+          "rate": 0.2,
+          "cumulative_tax_at_upper": 70500
+        },
+        {
+          "lower": 400000,
+          "upper": 1000000,
+          "rate": 0.27,
+          "cumulative_tax_at_upper": 232500
+        },
+        {
+          "lower": 1000000,
+          "upper": 5300000,
+          "rate": 0.35,
+          "cumulative_tax_at_upper": 1737500
+        },
+        {
+          "lower": 5300000,
+          "upper": null,
+          "rate": 0.4,
+          "cumulative_tax_at_upper": null
+        }
+      ],
+      "unit": "TRY (annual cumulative matrah)",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "source_url": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2Fgelir-vergisi-tarifeleri%2Fgelir-vergisi-tarifesi-2026.pdf",
+      "source_title": "GIB - Gelir Vergisi Tarifesi 2026 (GVK md.103), diger gelirler / ucret disi",
+      "accessed": "2026-10-01",
+      "confidence": "verified-official",
+      "notes": "Ucret disi tarife (kira, serbest meslek, ticari kazanc etc.) - NOT for payroll. 3rd limit 1.000.000 TL. Same provenance/caveats as the ucret tarifesi.",
+      "cross_check_urls": [
+        "https://dengeakademi.com/Files/Circular/4359.pdf",
+        "https://www.pwc.com.tr/gelir-vergisi-tarifesi",
+        "https://www.ey.com/tr_tr/insights/tax/yeniden-degerleme-orani-ve-2026-artislari",
+        "https://www.memurlar.net/haber/1155986/2026-gelir-vergisi-dilimlerini-gosteren-teblig-r-g-de-yayimlandi.html"
+      ]
+    },
+    "asgari_ucret_brut_aylik": {
+      "value": 33030.0,
+      "unit": "TRY/month",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "source_url": "https://www.csgb.gov.tr/haberler/2026-yilinda-gecerli-olacak-yeni-asgari-ucret-28-bin-75-lira-olarak-belirlendi/",
+      "source_title": "CSGB - 2026 Yilinda Gecerli Olacak Yeni Asgari Ucret 28 Bin 75 Lira Olarak Belirlendi",
+      "accessed": "2026-10-01",
+      "confidence": "verified-official",
+      "notes": "Single period for all 2026: ÇSGB e-bulletin (URL agustos-2026) lists 2026 asgari ucret brut 33.030,00 / net 28.075,50, yurulluk 01.01.2026-31.12.2026, no mid-year change. Asgari Ucret Tespit Komisyonu Karari No 2025/1 (karar 23.12.2025), published RG 26.12.2025 sayi 33119 (RG ref from Alomaliye - single secondary; sayi consistent with RG day-numbering). ÇSGB press text says '27% artis'.",
+      "cross_check_urls": [
+        "https://www.csgb.gov.tr/Media/gm2fekds/asgari-%C3%BCcret-2026.pdf",
+        "https://csgb.gov.tr/yayinlar/calisma-hayati-istatistikleri-e-bulteni/agustos-2026/ucret-ve-sendikal-istatistikler.html",
+        "https://www.alomaliye.com/2025/12/26/2026-yili-asgari-ucret-tespit-komisyonu-karari-2025-1/",
+        "https://www.ey.com/tr_tr/insights/tax/2026-asgari-ucret"
+      ]
+    },
+    "asgari_ucret_brut_gunluk": {
+      "value": 1101.0,
+      "unit": "TRY/day",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "source_url": "https://www.alomaliye.com/2025/12/26/2026-yili-asgari-ucret-tespit-komisyonu-karari-2025-1/",
+      "source_title": "Asgari Ucret Tespit Komisyonu Karari 2025/1 (via Alomaliye) ; SGK PEK page",
+      "accessed": "2026-10-01",
+      "confidence": "cross-checked",
+      "notes": "33.030/30. Also SGK alt sinir gunluk 1.101,00.",
+      "cross_check_urls": [
+        "https://www.sgk.gov.tr/Content/Post/2e0c9e1a-2cfe-4456-af10-49d3de0c58ba/Prime-Esas-Kazanc-Miktarlari-2026-01-14-10-35-39",
+        "https://www.ey.com/tr_tr/services/tax/sosyal-guvenlikte-gundem/sirkuler/2025/sirkuler-no-54"
+      ]
+    },
+    "asgari_ucret_net_aylik": {
+      "value": 28075.5,
+      "unit": "TRY/month",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "source_url": "https://www.csgb.gov.tr/haberler/2026-yilinda-gecerli-olacak-yeni-asgari-ucret-28-bin-75-lira-olarak-belirlendi/",
+      "source_title": "CSGB - 2026 Yilinda Gecerli Olacak Yeni Asgari Ucret 28 Bin 75 Lira Olarak Belirlendi",
+      "accessed": "2026-10-01",
+      "confidence": "verified-official",
+      "notes": "= brut - SGK isci 4.624,20 - issizlik 330,30; GV and DV fully exempt (net equals 85% of brut), so no AGI is included.",
+      "cross_check_urls": [
+        "https://www.csgb.gov.tr/Media/gm2fekds/asgari-%C3%BCcret-2026.pdf",
+        "https://csgb.gov.tr/yayinlar/calisma-hayati-istatistikleri-e-bulteni/agustos-2026/ucret-ve-sendikal-istatistikler.html",
+        "https://www.ey.com/tr_tr/insights/tax/2026-asgari-ucret"
+      ]
+    },
+    "asgari_ucret_isveren_maliyeti_aylik": {
+      "value": {
+        "tesviksiz": 40874.63,
+        "imalat_disi_2_puan": 40214.03,
+        "imalat_5_puan": 39223.13,
+        "components_tesviksiz": {
+          "sgk_isveren_pct": 21.75,
+          "sgk_isveren": 7184.03,
+          "issizlik_isveren_pct": 2.0,
+          "issizlik_isveren": 660.6
+        },
+        "components_imalat_disi": {
+          "sgk_isveren_pct": 19.75,
+          "sgk_isveren": 6523.43
+        },
+        "components_imalat": {
+          "sgk_isveren_pct": 16.75,
+          "sgk_isveren": 5532.53
+        },
+        "asgari_ucret_destegi_not_deducted": 1270.0
+      },
+      "unit": "TRY/month",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "source_url": "https://www.csgb.gov.tr/Media/gm2fekds/asgari-%C3%BCcret-2026.pdf",
+      "source_title": "CSGB - asgari-ucret-2026.pdf (employer cost by incentive scenario)",
+      "accessed": "2026-10-01",
+      "confidence": "verified-official",
+      "notes": "ÇSGB table labelled 'HESAPLAMALAR BILGI IÇINDIR'. All three totals reproduced to the kurus by payroll_check.py. Asgari ucret destegi (42,33 TL/gun) is NOT deducted in these totals.",
+      "cross_check_urls": [
+        "https://www.ey.com/tr_tr/services/tax/sosyal-guvenlikte-gundem/sirkuler/2025/sirkuler-no-54",
+        "https://www.ey.com/tr_tr/insights/tax/2026-asgari-ucret",
+        "https://csgb.gov.tr/yayinlar/calisma-hayati-istatistikleri-e-bulteni/agustos-2026/ucret-ve-sendikal-istatistikler.html"
+      ]
+    },
+    "asgari_ucret_mid_year_adjustment": {
+      "value": {
+        "happened": false,
+        "periods": [
+          {
+            "from": "2026-01-01",
+            "to": "2026-12-31",
+            "brut": 33030.0,
+            "net": 28075.5
+          }
+        ]
+      },
+      "unit": "n/a",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "source_url": "https://csgb.gov.tr/yayinlar/calisma-hayati-istatistikleri-e-bulteni/agustos-2026/ucret-ve-sendikal-istatistikler.html",
+      "source_title": "CSGB Calisma Hayati Istatistikleri E-Bulteni (URL path agustos-2026; page title says 'Mayis 2026') - Ucret ve Sendikal Istatistikler",
+      "accessed": "2026-10-01",
+      "confidence": "cross-checked",
+      "notes": "No July-2026 (or any mid-year) adjustment found; one period 01.01.2026-31.12.2026. Evidence: (1) ÇSGB e-bulletin lists 2026 brut 33.030,00 / net 28.075,50, yurulluk 01.01.2026-31.12.2026, no second period (edition label ambiguous: URL says agustos-2026, title says Mayis 2026); (2) press: Hurriyet 06.07.2026 (Bakanlik has no plan for a July increase), Haberturk and Bursadabugun 19.08.2026 (no official decision/statement on an ara zam; commission to meet in December for 2027); (3) SGK PEK page (valid 1/1-31/12/2026, 33.030/297.270) and an Alomaliye page (URL dated 2026/07/18, cites an SGK presentation updated 4 Aug 2026) still quote 297.270. Labelled cross-checked, not verified-official, because this is a negative claim and the newest evidence is 19 Aug 2026: a change between 20 Aug and 1 Oct 2026 is not independently excluded (very unlikely: would need a new commission decision/legislation).",
+      "cross_check_urls": [
+        "https://www.hurriyet.com.tr/bilgi/galeri/asgari-ucrete-ara-zam-var-mi-2026-asgari-ucret-temmuz-ayinda-artacak-mi-43225266",
+        "https://www.haberturk.com/bilgi/foto/asgari-ucret-ara-zammi-son-durum-2026-asgari-ucrete-ek-zam-gelecek-mi-2027-asgari-ucret-ne-kadar-olacak-3906665",
+        "https://www.bursadabugun.com/haber/asgari-ucrete-ara-zam-yok-2026-da-net-28-075-tl-gecerli-1943038.html",
+        "https://www.sgk.gov.tr/Content/Post/2e0c9e1a-2cfe-4456-af10-49d3de0c58ba/Prime-Esas-Kazanc-Miktarlari-2026-01-14-10-35-39",
+        "https://www.alomaliye.com/2026/07/18/5510-sayili-kanun-2-puan-5-puan-indirim-tesviki-2026/"
+      ]
+    },
+    "sgk_pek_alt_sinir_aylik": {
+      "value": {
+        "aylik": 33030.0,
+        "gunluk": 1101.0
+      },
+      "unit": "TRY",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "source_url": "https://www.sgk.gov.tr/Content/Post/2e0c9e1a-2cfe-4456-af10-49d3de0c58ba/Prime-Esas-Kazanc-Miktarlari-2026-01-14-10-35-39",
+      "source_title": "SGK - Prime Esas Kazanc Miktarlari (2026), ozel sektor 4/a",
+      "accessed": "2026-10-01",
+      "confidence": "verified-official",
+      "notes": "No change by period in 2026 (validity 1/1/2026-31/12/2026). SGK Genelge 2026/2 dated 07.01.2026 (via EY sirkuler 2026/7).",
+      "cross_check_urls": [
+        "https://www.ey.com/tr_tr/services/tax/sosyal-guvenlikte-gundem/sirkuler/2026/sirkuler-no-7",
+        "https://www.cottgroup.com/tr/mevzuat/item/2026-yili-icin-bordrodaki-yasal-kesintiler",
+        "https://kolayik.com/blog/2026-bordro-parametreleri"
+      ]
+    },
+    "sgk_pek_ust_sinir_aylik": {
+      "value": {
+        "aylik": 297270.0,
+        "gunluk": 9909.0,
+        "multiple_of_alt_sinir": 9
+      },
+      "unit": "TRY",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "source_url": "https://www.sgk.gov.tr/Content/Post/2e0c9e1a-2cfe-4456-af10-49d3de0c58ba/Prime-Esas-Kazanc-Miktarlari-2026-01-14-10-35-39",
+      "source_title": "SGK - Prime Esas Kazanc Miktarlari (2026), ozel sektor 4/a",
+      "accessed": "2026-10-01",
+      "confidence": "verified-official",
+      "notes": "CHANGE vs earlier years: ceiling is now 9x the alt sinir (was 7.5x => would be 247.725). Legal basis: 7566 sayili Kanun md.24 amending 5510 md.82 (RG 19.12.2025 sayi 33112), effective 01.01.2026 (SGK duyuru of 22.12.2025 as reproduced by ISMMMO; EY sirkuler 2026/7 quotes '9 kati'). The older assumption of 7.5x is outdated.",
+      "cross_check_urls": [
+        "https://ismmmo.org.tr/dosya/5782/Mevzuat-Dosya/22122025-sgk-duyuru.pdf",
+        "https://www.ey.com/tr_tr/services/tax/sosyal-guvenlikte-gundem/sirkuler/2026/sirkuler-no-7",
+        "https://www.cottgroup.com/tr/mevzuat/item/2026-yili-icin-bordrodaki-yasal-kesintiler",
+        "https://kolayik.com/blog/2026-bordro-parametreleri"
+      ]
+    },
+    "sgk_isci_payi": {
+      "value": {
+        "sgk_pct": 14.0,
+        "issizlik_pct": 1.0,
+        "components": "9% MYO + 5% GSS; 1% issizlik"
+      },
+      "unit": "percent of PEK (<= tavan)",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "source_url": "https://www.csgb.gov.tr/Media/gm2fekds/asgari-%C3%BCcret-2026.pdf",
+      "source_title": "CSGB asgari-ucret-2026.pdf",
+      "accessed": "2026-10-01",
+      "confidence": "verified-official",
+      "notes": "Unchanged. Employee MYO stays 9% although the total MYO rate rose to 21% (the extra point is the employer's).",
+      "cross_check_urls": [
+        "https://www.csgb.gov.tr/haberler/2026-yilinda-gecerli-olacak-yeni-asgari-ucret-28-bin-75-lira-olarak-belirlendi/",
+        "https://www.ey.com/tr_tr/insights/tax/2026-asgari-ucret",
+        "https://kolayik.com/blog/2026-bordro-parametreleri"
+      ]
+    },
+    "sgk_isveren_payi": {
+      "value": {
+        "sgk_pct_before_incentive": 21.75,
+        "issizlik_pct": 2.0,
+        "total_pct_before_incentive": 23.75,
+        "components_sgk": {
+          "MYO": 12.0,
+          "GSS": 7.5,
+          "kisa_vadeli_standard": 2.25
+        }
+      },
+      "unit": "percent of PEK (<= tavan)",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "source_url": "https://www.csgb.gov.tr/Media/gm2fekds/asgari-%C3%BCcret-2026.pdf",
+      "source_title": "CSGB asgari-ucret-2026.pdf (isveren SGK % 21,75 + issizlik % 2)",
+      "accessed": "2026-10-01",
+      "confidence": "verified-official",
+      "notes": "Totals 21,75 / 2 / 23,75 are official (ÇSGB table, SGK teşvik document 'toplam 38,75%' = 15 + 23,75). The split 12 + 7,5 + 2,25 is from Kolay IK + Lebib Yalkin only (cross-checked, not primary); the kisa vadeli (is kazasi/meslek hastaligi) rate really depends on the workplace's tehlike sinifi, so keep it as an input defaulting to 2,25. The older 'SGK 15,5%' is the pre-2026 post-5-puan figure (20,5-5) and is outdated: 2026 equivalents are 19,75 (2 puan) and 16,75 (5 puan, imalat).",
+      "cross_check_urls": [
+        "https://www.ey.com/tr_tr/services/tax/sosyal-guvenlikte-gundem/sirkuler/2025/sirkuler-no-54",
+        "https://www.alomaliye.com/2026/07/18/5510-sayili-kanun-2-puan-5-puan-indirim-tesviki-2026/",
+        "https://kolayik.com/blog/2026-bordro-parametreleri",
+        "https://lebibyalkin.com.tr/makale/2026-yili-ucretlerinin-hesaplanisi-ve-sosyal-guvenlik-destek-primine-tabi-asgari-ucret-ile-calisanlarin-durumu",
+        "https://www.sgk.gov.tr/Download/DownloadFile?d=de85036d-ef64-49f1-834c-916a79f1a923&amp=&f=c94c643d-2190-4d85-9b14-a8c7c5d241e8.pdf"
+      ]
+    },
+    "myo_prim_orani_artisi_7566": {
+      "value": {
+        "myo_total_pct": 21.0,
+        "isci_pct": 9.0,
+        "isveren_pct": 12.0,
+        "previous_total_pct": 20.0,
+        "previous_isveren_pct": 11.0
+      },
+      "unit": "percent",
+      "effective_from": "2026-01-01",
+      "effective_to": null,
+      "source_url": "https://ismmmo.org.tr/dosya/5782/Mevzuat-Dosya/22122025-sgk-duyuru.pdf",
+      "source_title": "ISMMMO - SGK duyurusu (22.12.2025): 7566 sayili Kanun degisiklikleri",
+      "accessed": "2026-10-01",
+      "confidence": "cross-checked",
+      "notes": "MYO (malullük, yaşlılık, ölüm) rate +1 puan, employer share 11%->12%, effective 01.01.2026 (7566 sayili Kanun, RG 19.12.2025 sayi 33112). Consistent with the official 21,75% total. Exact article number of 7566 for this change not verified.",
+      "cross_check_urls": [
+        "https://kolayik.com/blog/2026-bordro-parametreleri",
+        "https://www.ey.com/tr_tr/insights/tax/2026-asgari-ucret"
+      ]
+    },
+    "sgk_isveren_indirim_imalat_disi_2_puan": {
+      "value": {
+        "puan": 2,
+        "effective_sgk_isveren_pct": 19.75,
+        "effective_total_isveren_pct_with_issizlik": 21.75,
+        "max_monthly_discount": 5945.4
+      },
+      "unit": "percentage points of PEK",
+      "effective_from": "2026-01-01",
+      "effective_to": null,
+      "source_url": "https://www.sgk.gov.tr/Download/DownloadFile?d=de85036d-ef64-49f1-834c-916a79f1a923&amp=&f=c94c643d-2190-4d85-9b14-a8c7c5d241e8.pdf",
+      "source_title": "SGK - Sigorta Primi Tesvikleri 2026 (Sigorta Primleri Genel Mudurlugu)",
+      "accessed": "2026-10-01",
+      "confidence": "verified-official",
+      "notes": "Legal basis: 5510 sayili Kanun md.81/1-(ı), as amended by 7566 sayili Kanun (RG 19.12.2025; Alomaliye cites md.23 and md.27 - single secondary). Before 2026 all eligible private employers got 5 puan; from 1.1.2026 non-manufacturing employers get 2 puan. No sunset date found. Conditions (Alomaliye/SGK): Muhtasar ve Prim Hizmet Beyannamesi on time, remaining premium paid on time, no overdue SGK premium debt anywhere in Turkiye (restructured debts paid regularly). Not applicable to SGDP (emekli) staff. Max monthly discount = 2% x tavan 297.270 = 5.945,40.",
+      "cross_check_urls": [
+        "https://ismmmo.org.tr/dosya/5782/Mevzuat-Dosya/22122025-sgk-duyuru.pdf",
+        "https://www.alomaliye.com/2026/07/18/5510-sayili-kanun-2-puan-5-puan-indirim-tesviki-2026/",
+        "https://www.ey.com/tr_tr/insights/tax/2026-asgari-ucret",
+        "https://www.csgb.gov.tr/Media/gm2fekds/asgari-%C3%BCcret-2026.pdf"
+      ]
+    },
+    "sgk_isveren_indirim_imalat_5_puan": {
+      "value": {
+        "puan": 5,
+        "effective_sgk_isveren_pct": 16.75,
+        "effective_total_isveren_pct_with_issizlik": 18.75,
+        "max_monthly_discount": 14863.5,
+        "sector": "NACE Rev.2.1 'C - Imalat' (actual activity AND SGK isyeri registration)"
+      },
+      "unit": "percentage points of PEK",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "source_url": "https://www.sgk.gov.tr/Download/DownloadFile?d=de85036d-ef64-49f1-834c-916a79f1a923&amp=&f=c94c643d-2190-4d85-9b14-a8c7c5d241e8.pdf",
+      "source_title": "SGK - Sigorta Primi Tesvikleri 2026",
+      "accessed": "2026-10-01",
+      "confidence": "verified-official",
+      "notes": "Same article 5510 md.81/1-(ı) (+ geçici md.108 per Alomaliye - single secondary). 5 puan continues for imalat only until 31.12.2026; behaviour from 1.1.2027 is UNKNOWN (extension not found) - a calculator used in 2027 must re-check. Max monthly discount = 5% x 297.270 = 14.863,50.",
+      "cross_check_urls": [
+        "https://ismmmo.org.tr/dosya/5782/Mevzuat-Dosya/22122025-sgk-duyuru.pdf",
+        "https://www.alomaliye.com/2026/07/18/5510-sayili-kanun-2-puan-5-puan-indirim-tesviki-2026/",
+        "https://www.csgb.gov.tr/Media/gm2fekds/asgari-%C3%BCcret-2026.pdf"
+      ]
+    },
+    "sgdp_emekli_calisan": {
+      "value": {
+        "isci_pct": 7.5,
+        "isveren_pct": 24.75,
+        "isveren_components": "22.5 SGDP + 2.25 kisa vadeli",
+        "toplam_pct": 32.25,
+        "issizlik": "not applicable",
+        "incentive_2_5_puan": "not applicable"
+      },
+      "unit": "percent of PEK",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "source_url": "https://lebibyalkin.com.tr/makale/2026-yili-ucretlerinin-hesaplanisi-ve-sosyal-guvenlik-destek-primine-tabi-asgari-ucret-ile-calisanlarin-durumu",
+      "source_title": "Lebib Yalkin - 2026 Yili Ucretlerinin Hesaplanisi ve SGDP'ye Tabi Asgari Ucret ile Calisanlarin Durumu",
+      "accessed": "2026-10-01",
+      "confidence": "cross-checked",
+      "notes": "Two secondary sources (Lebib Yalkin SMMM article, Kolay IK: 'emekli: 24,75% employer, no issizlik'). Primary SGK text for SGDP not read. Ucret GV/DV and asgari-ucret istisnalari apply as usual. Lebib's printed worked example contains a transposition error (see test_vectors SGDP-ASGARI). SGDP ceiling presumed same tavan (not stated).",
+      "cross_check_urls": [
+        "https://kolayik.com/blog/2026-bordro-parametreleri"
+      ]
+    },
+    "gelir_vergisi_istisnasi_asgari_ucret_aylik": {
+      "value": {
+        "by_month": {
+          "01": 4211.33,
+          "02": 4211.33,
+          "03": 4211.33,
+          "04": 4211.33,
+          "05": 4211.33,
+          "06": 4211.33,
+          "07": 4537.75,
+          "08": 5615.1,
+          "09": 5615.1,
+          "10": 5615.1,
+          "11": 5615.1,
+          "12": 5615.1
+        },
+        "summary": "Jan-Jun 4.211,33; Jul 4.537,75; Aug-Dec 5.615,10"
+      },
+      "unit": "TRY/month",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "source_url": "https://blog.ozkansoft.com/2026-yilinda-uygulanacak-gelir-ve-damga-vergisi-istisnalari/",
+      "source_title": "Ozkansoft - 2026 Yilinda Uygulanacak Gelir ve Damga Vergisi Istisnalari ; Cott Group 2026 Bordrodaki Yasal Kesintiler",
+      "accessed": "2026-10-01",
+      "confidence": "cross-checked",
+      "notes": "Legal basis (Ozkansoft, single secondary for article numbers): GVK md.23/1-(18) added by 7349 sayili Kanun md.2, applies to ucret payments from 1.1.2022. Mechanics: exemption = income tax on the asgari ucret's own cumulative matrah (33.030 - 4.624,20 - 330,30 = 28.075,50 per month, cumulative, 15% until 190.000 cum, then 20%); month-7 crossing gives 4.537,75; exemption cannot exceed the GV actually calculated; applied to the highest wage when several employers. Amounts match EY/Cott/Ozkansoft AND an independent computation to the kurus (exact-difference rounding method; a rounded-cumulative method would give 4.211,32 in Feb/Apr/Jun).",
+      "cross_check_urls": [
+        "https://www.cottgroup.com/tr/mevzuat/item/2026-yili-icin-bordrodaki-yasal-kesintiler",
+        "https://www.ey.com/tr_tr/insights/tax/2026-asgari-ucret"
+      ]
+    },
+    "damga_vergisi_istisnasi_asgari_ucret_aylik": {
+      "value": 250.7,
+      "unit": "TRY/month",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "source_url": "https://blog.ozkansoft.com/2026-yilinda-uygulanacak-gelir-ve-damga-vergisi-istisnalari/",
+      "source_title": "Ozkansoft - 2026 Yilinda Uygulanacak Gelir ve Damga Vergisi Istisnalari",
+      "accessed": "2026-10-01",
+      "confidence": "cross-checked",
+      "notes": "= round(33.030 x 0,00759). Flat every month; cannot exceed the DV actually calculated. Legal basis (single secondary): DVK (2) sayili tablo, IV. bolum, (34) numarali fikra, added by 7349 sayili Kanun md.4 (verify article numbers).",
+      "cross_check_urls": [
+        "https://www.cottgroup.com/tr/mevzuat/item/2026-yili-icin-bordrodaki-yasal-kesintiler",
+        "https://www.ey.com/tr_tr/insights/tax/2026-asgari-ucret",
+        "https://kolayik.com/blog/brutten-nete-maas-nasil-hesaplanir"
+      ]
+    },
+    "damga_vergisi_orani_ucret": {
+      "value": {
+        "rate": 0.00759,
+        "per_mille": 7.59,
+        "base": "brut ucret (not matrah, not capped at SGK tavan)"
+      },
+      "unit": "ratio",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "source_url": "https://www.cottgroup.com/tr/mevzuat/item/2026-yili-icin-bordrodaki-yasal-kesintiler",
+      "source_title": "Cott Group - 2026 Yili Icin Bordrodaki Yasal Kesintiler",
+      "accessed": "2026-10-01",
+      "confidence": "cross-checked",
+      "notes": "binde 7,59; no 2026 change found. Confirmed by Kolay IK, EY (DV 250,70 at asgari ucret) and by every sourced worked example (e.g. 50.000 x 0,00759 = 379,50). Primary DVK (2) sayili tablo text not read.",
+      "cross_check_urls": [
+        "https://kolayik.com/blog/2026-bordro-parametreleri",
+        "https://kolayik.com/blog/brutten-nete-maas-nasil-hesaplanir",
+        "https://www.ey.com/tr_tr/insights/tax/2026-asgari-ucret"
+      ]
+    },
+    "asgari_gecim_indirimi_agi": {
+      "value": {
+        "applied": false,
+        "abolished_from": "2022-01-01"
+      },
+      "unit": "n/a",
+      "effective_from": "2022-01-01",
+      "effective_to": null,
+      "source_url": "https://www.muhasebetr.com/asgari-gecim-indirimi-agi/",
+      "source_title": "muhasebeTR - Asgari Gecim Indirimi (AGI)",
+      "accessed": "2026-10-01",
+      "confidence": "cross-checked",
+      "notes": "AGI not applied since 1.1.2022 (7349 sayili Kanun - muhasebeTR says md.3; Ozkansoft confirms abolition, article number single-source). Replaced by the asgari ucret GV+DV istisnasi. No source found for any 2026 re-introduction; ÇSGB's own 2026 net (28.075,50 = 85% of brut) contains no AGI. Absence-of-change claim for 2026 rests on that and on all 2026 payroll sources computing without AGI.",
+      "cross_check_urls": [
+        "https://blog.ozkansoft.com/2026-yilinda-uygulanacak-gelir-ve-damga-vergisi-istisnalari/",
+        "https://www.csgb.gov.tr/Media/gm2fekds/asgari-%C3%BCcret-2026.pdf"
+      ]
+    },
+    "asgari_ucret_destegi": {
+      "value": {
+        "gunluk": 42.33,
+        "aylik_30_gun": 1269.9,
+        "aylik_published": 1270.0,
+        "formula": "prim odeme gun sayisi x 42,33 TL (30 gun => 1.269,90; announcements round to 1.270)",
+        "previous_year": 1000.0
+      },
+      "unit": "TRY per insured per day / month",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "source_url": "https://www.sgk.gov.tr/Download/DownloadFile?d=de85036d-ef64-49f1-834c-916a79f1a923&amp=&f=c94c643d-2190-4d85-9b14-a8c7c5d241e8.pdf",
+      "source_title": "SGK - Sigorta Primi Tesvikleri 2026; SGK Genelge 2026/8 (05.03.2026) via PwC Turkiye",
+      "accessed": "2026-10-01",
+      "confidence": "verified-official",
+      "notes": "Legal basis: 5510 sayili Kanun gecici md.112 (SGK PDF, PwC, Cott, egetelgraf). Law/RG that fixed the 2026 amount: Cott says RG 29.01.2026 sayi 33152 (by RG day-numbering 33152 = 28.01.2026: one-day inconsistency, verify); a secondary source names '7573 sayili Kanun' (not opened, unverified). ÇSGB Karar 2025/1 'recommended continuing 1.270 TL'. Paid to private-sector employers for 4/a insured subject to long-term insurance branches; netted against SGK premium debts of the following month(s), financed from the Issizlik Sigortasi Fonu; no application needed. Eligibility (secondary sources): workplace and insured with daily PEK in the same month of 2025 below 1.300 TL (2.600 TL for collective-agreement workplaces; 3.467 TL for coal/underground); excluded: unpaid premiums/administrative fines, reduced headcount, undeclared workers; public-sector workplaces (mahiyet kodu 1/3) excluded. Not part of ÇSGB employer-cost totals.",
+      "cross_check_urls": [
+        "https://www.pwc.com.tr/tr/hizmetlerimiz/insan-yonetimi-ve-organizasyon-danismanligi/sosyal-guvenlik-hizmetleri/bultenler/2026/2026-yili-asgari-ucret-destegi-ile-ilgili-sgk-genelgesi.html",
+        "https://www.cottgroup.com/tr/mevzuat/item/2026-yili-asgari-ucret-destegine-iliskin-duzenleme",
+        "https://www.iskur.gov.tr/isveren/tesvikler/asgari-ucret-destegi/",
+        "https://egetelgraf.com/asgari-ucret-prim-destegi-artti-resmi-gazetede-yayimlandi-hangi-isyerleri-yararlanacak",
+        "https://www.csgb.gov.tr/haberler/2026-yilinda-gecerli-olacak-yeni-asgari-ucret-28-bin-75-lira-olarak-belirlendi/"
+      ]
+    },
+    "rounding_and_order_of_deductions": {
+      "value": {
+        "order": "brut -> SGK isci (14% x min(brut,tavan)) -> issizlik isci (1%) -> GV matrah -> cumulative matrah -> GV = tarife(cum) - tarife(prev cum), minus asgari ucret GV istisnasi (monthly schedule, capped at GV) -> DV = 0,00759 x brut minus 250,70 (capped at DV) -> net",
+        "rounding": "Decimal, ROUND_HALF_UP to 2 dp on each SGK/issizlik/GV/DV/istisna amount; GV = difference of UNROUNDED cumulative taxes, then rounded"
+      },
+      "unit": "n/a",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "source_url": null,
+      "source_title": "own reverse-engineering (payroll_check.py) validated against sourced vectors",
+      "accessed": "2026-10-01",
+      "confidence": "cross-checked",
+      "notes": "Reproduces 30 sourced data points to the kurus (see test_vectors). Behaviour on 1-kurus rounding edge cases for salaries whose 15/20/27/35% taxes end in half-kurus cannot be validated: no sourced vector covers them."
+    },
+    "other_observed_out_of_scope": {
+      "note": "Noted during research; outside the scope of this file; unverified, do not publish without checking.",
+      "items": [
+        {
+          "item": "Yemek bedeli istisnasi change: Kolay IK says Law 7577 effective 17.04.2026: cash 300 TL/day, meal card 330 TL/day",
+          "confidence": "single-secondary-source",
+          "source_url": "https://kolayik.com/blog/2026-bordro-parametreleri"
+        },
+        {
+          "item": "SGK yemek parasi prim istisnasi 158,00 TL/gun; cocuk zammi 660,60; aile zammi 3.303,00 (SGK Genelge 2026/2)",
+          "confidence": "cross-checked",
+          "source_url": "https://www.ey.com/tr_tr/services/tax/sosyal-guvenlikte-gundem/sirkuler/2026/sirkuler-no-7"
+        },
+        {
+          "item": "Kidem tazminati tavani 64.948,77 (1.1-30.6.2026) / 73.729,87 (1.7-31.12.2026)",
+          "confidence": "single-secondary-source",
+          "source_url": "https://kolayik.com/blog/2026-bordro-parametreleri"
+        }
+      ]
+    }
+  },
+  "test_vectors": [
+    {
+      "id": "TV-01",
+      "description": "Asgari ucret, all 12 months (official)",
+      "input": {
+        "brut_monthly": 33030.0,
+        "months": "1-12",
+        "cumulative_start": 0,
+        "regime": "ucret tarifesi 2026"
+      },
+      "expected_output": {
+        "net_each_month": 28075.5,
+        "sgk_isci": 4624.2,
+        "issizlik_isci": 330.3,
+        "gelir_vergisi": 0.0,
+        "damga_vergisi": 0.0
+      },
+      "computed_output": {
+        "net_each_month": [
+          28075.5
+        ],
+        "sgk_isci": 4624.2,
+        "issizlik_isci": 330.3,
+        "gv_all_months": [
+          0.0
+        ],
+        "dv_all_months": [
+          0.0
+        ]
+      },
+      "match": true,
+      "source_url": "https://www.csgb.gov.tr/haberler/2026-yilinda-gecerli-olacak-yeni-asgari-ucret-28-bin-75-lira-olarak-belirlendi/",
+      "source_title": "CSGB press release + asgari-ucret-2026.pdf",
+      "confidence": "verified-official",
+      "notes": "Also in EY, Kolay IK, ikyardim, Lebib. GV istisnasi fully offsets GV every month incl. July/August step-ups."
+    },
+    {
+      "id": "TV-02",
+      "description": "Asgari ucret employer cost, three incentive scenarios (official)",
+      "input": {
+        "brut_monthly": 33030.0,
+        "scenarios": [
+          "tesviksiz",
+          "2 puan (imalat disi)",
+          "5 puan (imalat)"
+        ]
+      },
+      "expected_output": {
+        "tesviksiz": {
+          "sgk_isveren": 7184.03,
+          "issizlik_isveren": 660.6,
+          "toplam": 40874.63
+        },
+        "imalat_disi_2_puan": {
+          "sgk_isveren": 6523.43,
+          "issizlik_isveren": 660.6,
+          "toplam": 40214.03
+        },
+        "imalat_5_puan": {
+          "sgk_isveren": 5532.53,
+          "issizlik_isveren": 660.6,
+          "toplam": 39223.13
+        }
+      },
+      "computed_output": {
+        "tesviksiz": {
+          "sgk_isveren": 7184.03,
+          "issizlik_isveren": 660.6,
+          "toplam": 40874.63
+        },
+        "imalat_disi_2_puan": {
+          "sgk_isveren": 6523.43,
+          "issizlik_isveren": 660.6,
+          "toplam": 40214.03
+        },
+        "imalat_5_puan": {
+          "sgk_isveren": 5532.53,
+          "issizlik_isveren": 660.6,
+          "toplam": 39223.13
+        }
+      },
+      "match": true,
+      "source_url": "https://www.csgb.gov.tr/Media/gm2fekds/asgari-%C3%BCcret-2026.pdf",
+      "source_title": "CSGB asgari-ucret-2026.pdf",
+      "confidence": "verified-official",
+      "notes": "Rounding: each amount rounded half-up separately (e.g. 33.030 x 0,1975 = 6.523,425 -> 6.523,43)."
+    },
+    {
+      "id": "TV-03",
+      "description": "Brut 50.000, January, line by line",
+      "input": {
+        "brut_monthly": 50000,
+        "month": 1,
+        "cumulative_start": 0
+      },
+      "expected_output": {
+        "sgk": 7000.0,
+        "issizlik": 500.0,
+        "gv_matrah": 42500.0,
+        "gv_before_istisna": 6375.0,
+        "gv_istisna": 4211.33,
+        "gv": 2163.67,
+        "dv_before_istisna": 379.5,
+        "dv_istisna": 250.7,
+        "dv": 128.8,
+        "net": 40207.53
+      },
+      "computed_output": {
+        "sgk": 7000.0,
+        "issizlik": 500.0,
+        "gv_matrah": 42500.0,
+        "cum_matrah": 42500.0,
+        "gv_before_istisna": 6375.0,
+        "gv_istisna": 4211.33,
+        "gv": 2163.67,
+        "dv_before_istisna": 379.5,
+        "dv": 128.8,
+        "net": 40207.53
+      },
+      "match": true,
+      "source_url": "https://kolayik.com/blog/brutten-nete-maas-nasil-hesaplanir",
+      "source_title": "Kolay IK - Brutten nete maas nasil hesaplanir (2026 example)",
+      "confidence": "cross-checked",
+      "notes": "Same net 40.207,53 in ikyardim and eleman.net."
+    },
+    {
+      "id": "TV-04",
+      "description": "Brut 33,030 January snapshot",
+      "input": {
+        "brut_monthly": 33030,
+        "month": 1,
+        "cumulative_start": 0,
+        "isveren_incentive": "none"
+      },
+      "expected_output": {
+        "sgk_plus_issizlik": 4954.5,
+        "gv": 0.0,
+        "dv": 0.0,
+        "net": 28075.5,
+        "isveren_maliyeti_tesviksiz": 40874.63
+      },
+      "computed_output": {
+        "sgk_plus_issizlik": 4954.5,
+        "gv": 0.0,
+        "dv": 0.0,
+        "net": 28075.5,
+        "isveren_maliyeti_tesviksiz": 40874.63
+      },
+      "match": true,
+      "source_url": "https://www.ikyardim.com/hesaplamalar/brutten-nete-hesaplama",
+      "source_title": "ikyardim.com - Sik Aranan Brut Maas Tutarlari (2026, month 1, cum matrah 0)",
+      "confidence": "cross-checked",
+      "notes": "Vendor table (single month). Reproduced independently to the kurus."
+    },
+    {
+      "id": "TV-05",
+      "description": "Brut 40,000 January snapshot",
+      "input": {
+        "brut_monthly": 40000,
+        "month": 1,
+        "cumulative_start": 0,
+        "isveren_incentive": "none"
+      },
+      "expected_output": {
+        "sgk_plus_issizlik": 6000.0,
+        "gv": 888.67,
+        "dv": 52.9,
+        "net": 33058.43,
+        "isveren_maliyeti_tesviksiz": 49500.0
+      },
+      "computed_output": {
+        "sgk_plus_issizlik": 6000.0,
+        "gv": 888.67,
+        "dv": 52.9,
+        "net": 33058.43,
+        "isveren_maliyeti_tesviksiz": 49500.0
+      },
+      "match": true,
+      "source_url": "https://www.ikyardim.com/hesaplamalar/brutten-nete-hesaplama",
+      "source_title": "ikyardim.com - Sik Aranan Brut Maas Tutarlari (2026, month 1, cum matrah 0)",
+      "confidence": "single-secondary-source",
+      "notes": "Vendor table (single month). Reproduced independently to the kurus."
+    },
+    {
+      "id": "TV-06",
+      "description": "Brut 45,000 January snapshot",
+      "input": {
+        "brut_monthly": 45000,
+        "month": 1,
+        "cumulative_start": 0,
+        "isveren_incentive": "none"
+      },
+      "expected_output": {
+        "sgk_plus_issizlik": 6750.0,
+        "gv": 1526.17,
+        "dv": 90.85,
+        "net": 36632.98,
+        "isveren_maliyeti_tesviksiz": 55687.5
+      },
+      "computed_output": {
+        "sgk_plus_issizlik": 6750.0,
+        "gv": 1526.17,
+        "dv": 90.85,
+        "net": 36632.98,
+        "isveren_maliyeti_tesviksiz": 55687.5
+      },
+      "match": true,
+      "source_url": "https://www.ikyardim.com/hesaplamalar/brutten-nete-hesaplama",
+      "source_title": "ikyardim.com - Sik Aranan Brut Maas Tutarlari (2026, month 1, cum matrah 0)",
+      "confidence": "single-secondary-source",
+      "notes": "Vendor table (single month). Reproduced independently to the kurus."
+    },
+    {
+      "id": "TV-07",
+      "description": "Brut 50,000 January snapshot",
+      "input": {
+        "brut_monthly": 50000,
+        "month": 1,
+        "cumulative_start": 0,
+        "isveren_incentive": "none"
+      },
+      "expected_output": {
+        "sgk_plus_issizlik": 7500.0,
+        "gv": 2163.67,
+        "dv": 128.8,
+        "net": 40207.53,
+        "isveren_maliyeti_tesviksiz": 61875.0
+      },
+      "computed_output": {
+        "sgk_plus_issizlik": 7500.0,
+        "gv": 2163.67,
+        "dv": 128.8,
+        "net": 40207.53,
+        "isveren_maliyeti_tesviksiz": 61875.0
+      },
+      "match": true,
+      "source_url": "https://www.ikyardim.com/hesaplamalar/brutten-nete-hesaplama",
+      "source_title": "ikyardim.com - Sik Aranan Brut Maas Tutarlari (2026, month 1, cum matrah 0)",
+      "confidence": "cross-checked",
+      "notes": "Vendor table (single month). Reproduced independently to the kurus."
+    },
+    {
+      "id": "TV-08",
+      "description": "Brut 60,000 January snapshot",
+      "input": {
+        "brut_monthly": 60000,
+        "month": 1,
+        "cumulative_start": 0,
+        "isveren_incentive": "none"
+      },
+      "expected_output": {
+        "sgk_plus_issizlik": 9000.0,
+        "gv": 3438.67,
+        "dv": 204.7,
+        "net": 47356.63,
+        "isveren_maliyeti_tesviksiz": 74250.0
+      },
+      "computed_output": {
+        "sgk_plus_issizlik": 9000.0,
+        "gv": 3438.67,
+        "dv": 204.7,
+        "net": 47356.63,
+        "isveren_maliyeti_tesviksiz": 74250.0
+      },
+      "match": true,
+      "source_url": "https://www.ikyardim.com/hesaplamalar/brutten-nete-hesaplama",
+      "source_title": "ikyardim.com - Sik Aranan Brut Maas Tutarlari (2026, month 1, cum matrah 0)",
+      "confidence": "single-secondary-source",
+      "notes": "Vendor table (single month). Reproduced independently to the kurus."
+    },
+    {
+      "id": "TV-09",
+      "description": "Brut 70,000 January snapshot",
+      "input": {
+        "brut_monthly": 70000,
+        "month": 1,
+        "cumulative_start": 0,
+        "isveren_incentive": "none"
+      },
+      "expected_output": {
+        "sgk_plus_issizlik": 10500.0,
+        "gv": 4713.67,
+        "dv": 280.6,
+        "net": 54505.73,
+        "isveren_maliyeti_tesviksiz": 86625.0
+      },
+      "computed_output": {
+        "sgk_plus_issizlik": 10500.0,
+        "gv": 4713.67,
+        "dv": 280.6,
+        "net": 54505.73,
+        "isveren_maliyeti_tesviksiz": 86625.0
+      },
+      "match": true,
+      "source_url": "https://www.ikyardim.com/hesaplamalar/brutten-nete-hesaplama",
+      "source_title": "ikyardim.com - Sik Aranan Brut Maas Tutarlari (2026, month 1, cum matrah 0)",
+      "confidence": "single-secondary-source",
+      "notes": "Vendor table (single month). Reproduced independently to the kurus."
+    },
+    {
+      "id": "TV-10",
+      "description": "Brut 80,000 January snapshot",
+      "input": {
+        "brut_monthly": 80000,
+        "month": 1,
+        "cumulative_start": 0,
+        "isveren_incentive": "none"
+      },
+      "expected_output": {
+        "sgk_plus_issizlik": 12000.0,
+        "gv": 5988.67,
+        "dv": 356.5,
+        "net": 61654.83,
+        "isveren_maliyeti_tesviksiz": 99000.0
+      },
+      "computed_output": {
+        "sgk_plus_issizlik": 12000.0,
+        "gv": 5988.67,
+        "dv": 356.5,
+        "net": 61654.83,
+        "isveren_maliyeti_tesviksiz": 99000.0
+      },
+      "match": true,
+      "source_url": "https://www.ikyardim.com/hesaplamalar/brutten-nete-hesaplama",
+      "source_title": "ikyardim.com - Sik Aranan Brut Maas Tutarlari (2026, month 1, cum matrah 0)",
+      "confidence": "single-secondary-source",
+      "notes": "Vendor table (single month). Reproduced independently to the kurus."
+    },
+    {
+      "id": "TV-11",
+      "description": "Brut 90,000 January snapshot",
+      "input": {
+        "brut_monthly": 90000,
+        "month": 1,
+        "cumulative_start": 0,
+        "isveren_incentive": "none"
+      },
+      "expected_output": {
+        "sgk_plus_issizlik": 13500.0,
+        "gv": 7263.67,
+        "dv": 432.4,
+        "net": 68803.93,
+        "isveren_maliyeti_tesviksiz": 111375.0
+      },
+      "computed_output": {
+        "sgk_plus_issizlik": 13500.0,
+        "gv": 7263.67,
+        "dv": 432.4,
+        "net": 68803.93,
+        "isveren_maliyeti_tesviksiz": 111375.0
+      },
+      "match": true,
+      "source_url": "https://www.ikyardim.com/hesaplamalar/brutten-nete-hesaplama",
+      "source_title": "ikyardim.com - Sik Aranan Brut Maas Tutarlari (2026, month 1, cum matrah 0)",
+      "confidence": "single-secondary-source",
+      "notes": "Vendor table (single month). Reproduced independently to the kurus."
+    },
+    {
+      "id": "TV-12",
+      "description": "Brut 100,000 January snapshot",
+      "input": {
+        "brut_monthly": 100000,
+        "month": 1,
+        "cumulative_start": 0,
+        "isveren_incentive": "none"
+      },
+      "expected_output": {
+        "sgk_plus_issizlik": 15000.0,
+        "gv": 8538.67,
+        "dv": 508.3,
+        "net": 75953.03,
+        "isveren_maliyeti_tesviksiz": 123750.0
+      },
+      "computed_output": {
+        "sgk_plus_issizlik": 15000.0,
+        "gv": 8538.67,
+        "dv": 508.3,
+        "net": 75953.03,
+        "isveren_maliyeti_tesviksiz": 123750.0
+      },
+      "match": true,
+      "source_url": "https://www.ikyardim.com/hesaplamalar/brutten-nete-hesaplama",
+      "source_title": "ikyardim.com - Sik Aranan Brut Maas Tutarlari (2026, month 1, cum matrah 0)",
+      "confidence": "single-secondary-source",
+      "notes": "Vendor table (single month). Reproduced independently to the kurus."
+    },
+    {
+      "id": "TV-13",
+      "description": "Brut 120,000 January snapshot",
+      "input": {
+        "brut_monthly": 120000,
+        "month": 1,
+        "cumulative_start": 0,
+        "isveren_incentive": "none"
+      },
+      "expected_output": {
+        "sgk_plus_issizlik": 18000.0,
+        "gv": 11088.67,
+        "dv": 660.1,
+        "net": 90251.23,
+        "isveren_maliyeti_tesviksiz": 148500.0
+      },
+      "computed_output": {
+        "sgk_plus_issizlik": 18000.0,
+        "gv": 11088.67,
+        "dv": 660.1,
+        "net": 90251.23,
+        "isveren_maliyeti_tesviksiz": 148500.0
+      },
+      "match": true,
+      "source_url": "https://www.ikyardim.com/hesaplamalar/brutten-nete-hesaplama",
+      "source_title": "ikyardim.com - Sik Aranan Brut Maas Tutarlari (2026, month 1, cum matrah 0)",
+      "confidence": "single-secondary-source",
+      "notes": "Vendor table (single month). Reproduced independently to the kurus."
+    },
+    {
+      "id": "TV-14",
+      "description": "Brut 150,000 January snapshot",
+      "input": {
+        "brut_monthly": 150000,
+        "month": 1,
+        "cumulative_start": 0,
+        "isveren_incentive": "none"
+      },
+      "expected_output": {
+        "sgk_plus_issizlik": 22500.0,
+        "gv": 14913.67,
+        "dv": 887.8,
+        "net": 111698.53,
+        "isveren_maliyeti_tesviksiz": 185625.0
+      },
+      "computed_output": {
+        "sgk_plus_issizlik": 22500.0,
+        "gv": 14913.67,
+        "dv": 887.8,
+        "net": 111698.53,
+        "isveren_maliyeti_tesviksiz": 185625.0
+      },
+      "match": true,
+      "source_url": "https://www.ikyardim.com/hesaplamalar/brutten-nete-hesaplama",
+      "source_title": "ikyardim.com - Sik Aranan Brut Maas Tutarlari (2026, month 1, cum matrah 0)",
+      "confidence": "single-secondary-source",
+      "notes": "Vendor table (single month). Reproduced independently to the kurus."
+    },
+    {
+      "id": "TV-15",
+      "description": "Brut 175,000 January snapshot",
+      "input": {
+        "brut_monthly": 175000,
+        "month": 1,
+        "cumulative_start": 0,
+        "isveren_incentive": "none"
+      },
+      "expected_output": {
+        "sgk_plus_issizlik": 26250.0,
+        "gv": 18101.17,
+        "dv": 1077.55,
+        "net": 129571.28,
+        "isveren_maliyeti_tesviksiz": 216562.5
+      },
+      "computed_output": {
+        "sgk_plus_issizlik": 26250.0,
+        "gv": 18101.17,
+        "dv": 1077.55,
+        "net": 129571.28,
+        "isveren_maliyeti_tesviksiz": 216562.5
+      },
+      "match": true,
+      "source_url": "https://www.ikyardim.com/hesaplamalar/brutten-nete-hesaplama",
+      "source_title": "ikyardim.com - Sik Aranan Brut Maas Tutarlari (2026, month 1, cum matrah 0)",
+      "confidence": "single-secondary-source",
+      "notes": "Vendor table (single month). Reproduced independently to the kurus."
+    },
+    {
+      "id": "TV-16",
+      "description": "Brut 200,000 January snapshot",
+      "input": {
+        "brut_monthly": 200000,
+        "month": 1,
+        "cumulative_start": 0,
+        "isveren_incentive": "none"
+      },
+      "expected_output": {
+        "sgk_plus_issizlik": 30000.0,
+        "gv": 21288.67,
+        "dv": 1267.3,
+        "net": 147444.03,
+        "isveren_maliyeti_tesviksiz": 247500.0
+      },
+      "computed_output": {
+        "sgk_plus_issizlik": 30000.0,
+        "gv": 21288.67,
+        "dv": 1267.3,
+        "net": 147444.03,
+        "isveren_maliyeti_tesviksiz": 247500.0
+      },
+      "match": true,
+      "source_url": "https://www.ikyardim.com/hesaplamalar/brutten-nete-hesaplama",
+      "source_title": "ikyardim.com - Sik Aranan Brut Maas Tutarlari (2026, month 1, cum matrah 0)",
+      "confidence": "single-secondary-source",
+      "notes": "Vendor table (single month). Reproduced independently to the kurus."
+    },
+    {
+      "id": "TV-17",
+      "description": "Brut 250,000 January snapshot",
+      "input": {
+        "brut_monthly": 250000,
+        "month": 1,
+        "cumulative_start": 0,
+        "isveren_incentive": "none"
+      },
+      "expected_output": {
+        "sgk_plus_issizlik": 37500.0,
+        "gv": 28788.67,
+        "dv": 1646.8,
+        "net": 182064.53,
+        "isveren_maliyeti_tesviksiz": 309375.0
+      },
+      "computed_output": {
+        "sgk_plus_issizlik": 37500.0,
+        "gv": 28788.67,
+        "dv": 1646.8,
+        "net": 182064.53,
+        "isveren_maliyeti_tesviksiz": 309375.0
+      },
+      "match": true,
+      "source_url": "https://www.ikyardim.com/hesaplamalar/brutten-nete-hesaplama",
+      "source_title": "ikyardim.com - Sik Aranan Brut Maas Tutarlari (2026, month 1, cum matrah 0)",
+      "confidence": "single-secondary-source",
+      "notes": "Vendor table (single month). Reproduced independently to the kurus."
+    },
+    {
+      "id": "TV-18",
+      "description": "Brut 300,000 January snapshot (ABOVE SGK TAVAN 297.270 -> SGK base capped)",
+      "input": {
+        "brut_monthly": 300000,
+        "month": 1,
+        "cumulative_start": 0,
+        "isveren_incentive": "none"
+      },
+      "expected_output": {
+        "sgk_plus_issizlik": 44590.5,
+        "gv": 37370.57,
+        "dv": 2026.3,
+        "net": 216012.63,
+        "isveren_maliyeti_tesviksiz": 370601.63
+      },
+      "computed_output": {
+        "sgk_plus_issizlik": 44590.5,
+        "gv": 37370.57,
+        "dv": 2026.3,
+        "net": 216012.63,
+        "isveren_maliyeti_tesviksiz": 370601.63
+      },
+      "match": true,
+      "source_url": "https://www.ikyardim.com/hesaplamalar/brutten-nete-hesaplama",
+      "source_title": "ikyardim.com - Sik Aranan Brut Maas Tutarlari (2026, month 1, cum matrah 0)",
+      "confidence": "single-secondary-source",
+      "notes": "Vendor table (single month). Reproduced independently to the kurus."
+    },
+    {
+      "id": "TV-19",
+      "description": "Brut 50.000, 12 months: crosses the 190.000 limit in May and the 400.000 limit in October",
+      "input": {
+        "brut_monthly": 50000,
+        "months": "1-12",
+        "cumulative_start": 0,
+        "regime": "ucret tarifesi 2026"
+      },
+      "expected_output": {
+        "vendor_gv_by_month": [
+          2163.67,
+          2163.67,
+          2163.67,
+          2163.67,
+          3288.67,
+          4288.67,
+          3962.25,
+          2884.9,
+          2884.9,
+          4634.9,
+          5859.9,
+          5859.9
+        ],
+        "vendor_net_by_month": [
+          40207.53,
+          40207.53,
+          40207.53,
+          40207.53,
+          39082.53,
+          38082.53,
+          38408.95,
+          39486.3,
+          39486.3,
+          37736.3,
+          36511.3,
+          36511.3
+        ],
+        "vendor_avg_net": 38844.64
+      },
+      "computed_output": {
+        "official_gv_by_month": [
+          2163.67,
+          2163.67,
+          2163.67,
+          2163.67,
+          3288.67,
+          4288.67,
+          3962.25,
+          2884.9,
+          2884.9,
+          4634.9,
+          5859.9,
+          5859.9
+        ],
+        "official_net_by_month": [
+          40207.53,
+          40207.53,
+          40207.53,
+          40207.53,
+          39082.53,
+          38082.53,
+          38408.95,
+          39486.3,
+          39486.3,
+          37736.3,
+          36511.3,
+          36511.3
+        ],
+        "official_total_net": 466135.63
+      },
+      "match": true,
+      "months_differing": [],
+      "source_url": "https://www.eleman.net/hesaplama/maas-hesaplama?maas=50.000",
+      "source_title": "eleman.net - 50.000 TL Brut Maasin Neti (2026)",
+      "confidence": "single-secondary-source",
+      "notes": "Matches to the kurus in all months. Vendor GV column = GV after asgari ucret istisna."
+    },
+    {
+      "id": "TV-20",
+      "description": "Brut 100.000, 12 months: crosses 190k in March, 400k in May; cumulative matrah 1.020.000 in December",
+      "input": {
+        "brut_monthly": 100000,
+        "months": "1-12",
+        "cumulative_start": 0,
+        "regime": "ucret tarifesi 2026"
+      },
+      "expected_output": {
+        "vendor_gv_by_month": [
+          8538.67,
+          8538.67,
+          11788.67,
+          12788.67,
+          14538.67,
+          18738.67,
+          18412.25,
+          17334.9,
+          17334.9,
+          17334.9,
+          17334.9,
+          18934.9
+        ],
+        "vendor_net_by_month": [
+          75953.03,
+          75953.03,
+          72703.03,
+          71703.03,
+          69953.03,
+          65753.03,
+          66079.45,
+          67156.8,
+          67156.8,
+          67156.8,
+          67156.8,
+          65556.8
+        ]
+      },
+      "computed_output": {
+        "official_gv_by_month": [
+          8538.67,
+          8538.67,
+          11788.67,
+          12788.67,
+          14538.67,
+          18738.67,
+          18412.25,
+          17334.9,
+          17334.9,
+          17334.9,
+          17334.9,
+          17334.9
+        ],
+        "official_net_by_month": [
+          75953.03,
+          75953.03,
+          72703.03,
+          71703.03,
+          69953.03,
+          65753.03,
+          66079.45,
+          67156.8,
+          67156.8,
+          67156.8,
+          67156.8,
+          67156.8
+        ],
+        "official_total_net": 833881.63
+      },
+      "match": false,
+      "months_differing": [
+        12
+      ],
+      "source_url": "https://www.eleman.net/hesaplama/maas-hesaplama?maas=100.000",
+      "source_title": "eleman.net - 100.000 TL Brut Maasin Neti (2026)",
+      "confidence": "single-secondary-source",
+      "notes": "Vendor differs from the OFFICIAL ucret tarifesi in months [12] because it applies the 1.000.000 TL 27%->35% limit (the ucret DISI limit) instead of 1.500.000 TL for ucret; re-running the calculation with the 1.000.000 limit reproduces the vendor table to the kurus. Treat vendor values in those months as WRONG, official-tarife values (computed_output) as correct. Vendor GV column = GV after asgari ucret istisna."
+    },
+    {
+      "id": "TV-21",
+      "description": "Brut 250.000, 12 months: cumulative matrah passes 400k in Feb, 1.000.000 in May and 1.500.000 in August",
+      "input": {
+        "brut_monthly": 250000,
+        "months": "1-12",
+        "cumulative_start": 0,
+        "regime": "ucret tarifesi 2026"
+      },
+      "expected_output": {
+        "vendor_gv_by_month": [
+          28788.67,
+          40038.67,
+          53163.67,
+          53163.67,
+          58163.67,
+          70163.67,
+          69837.25,
+          68759.9,
+          68759.9,
+          68759.9,
+          68759.9,
+          68759.9
+        ],
+        "vendor_net_by_month": [
+          182064.53,
+          170814.53,
+          157689.53,
+          157689.53,
+          152689.53,
+          140689.53,
+          141015.95,
+          142093.3,
+          142093.3,
+          142093.3,
+          142093.3,
+          142093.3
+        ],
+        "vendor_total_net": 1813119.63
+      },
+      "computed_output": {
+        "official_gv_by_month": [
+          28788.67,
+          40038.67,
+          53163.67,
+          53163.67,
+          53163.67,
+          53163.67,
+          52837.25,
+          67759.9,
+          68759.9,
+          68759.9,
+          68759.9,
+          68759.9
+        ],
+        "official_net_by_month": [
+          182064.53,
+          170814.53,
+          157689.53,
+          157689.53,
+          157689.53,
+          157689.53,
+          158015.95,
+          143093.3,
+          142093.3,
+          142093.3,
+          142093.3,
+          142093.3
+        ],
+        "official_total_net": 1853119.63
+      },
+      "match": false,
+      "months_differing": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "source_url": "https://www.eleman.net/hesaplama/maas-hesaplama?maas=350.000",
+      "source_title": "eleman.net - 250.000 TL Brut Maasin Neti (2026) (page returned for ?maas=350.000)",
+      "confidence": "single-secondary-source",
+      "notes": "Vendor differs from the OFFICIAL ucret tarifesi in months [5, 6, 7, 8] because it applies the 1.000.000 TL 27%->35% limit (the ucret DISI limit) instead of 1.500.000 TL for ucret; re-running the calculation with the 1.000.000 limit reproduces the vendor table to the kurus. Treat vendor values in those months as WRONG, official-tarife values (computed_output) as correct. Vendor GV column = GV after asgari ucret istisna."
+    },
+    {
+      "id": "TV-22",
+      "description": "SGDP (emekli calisan) at asgari ucret, January",
+      "input": {
+        "brut_monthly": 33030,
+        "month": 1,
+        "sgdp_isci_pct": 7.5,
+        "issizlik": 0,
+        "cumulative_start": 0
+      },
+      "expected_output": {
+        "sgdp": 2477.25,
+        "gv_matrah": 30552.75,
+        "gv_before_istisna": 4582.91,
+        "gv_istisna": 4211.33,
+        "printed_kesilecek_gv": 317.58,
+        "printed_net": 30235.17,
+        "arithmetic_check": "4.582,91 - 4.211,33 = 371,58 (source prints 317,58)"
+      },
+      "computed_output": {
+        "sgdp": 2477.25,
+        "gv_matrah": 30552.75,
+        "gv_before_istisna": 4582.91,
+        "gv_istisna": 4211.33,
+        "gv": 371.58,
+        "dv": 0.0,
+        "net": 30181.17
+      },
+      "match": false,
+      "source_url": "https://lebibyalkin.com.tr/makale/2026-yili-ucretlerinin-hesaplanisi-ve-sosyal-guvenlik-destek-primine-tabi-asgari-ucret-ile-calisanlarin-durumu",
+      "source_title": "Lebib Yalkin - 2026 Yili Ucretlerinin Hesaplanisi ve SGDP ... Article, section 6",
+      "confidence": "single-secondary-source",
+      "notes": "Source's own arithmetic is inconsistent (digit transposition 317,58 vs 371,58). Correct net = 30.181,17. Do not use 30.235,17."
+    },
+    {
+      "id": "TV-23",
+      "description": "Brut 350.000 (above SGK tavan), 12 months - OWN COMPUTATION ONLY, no external source",
+      "input": {
+        "brut_monthly": 350000,
+        "months": "1-12",
+        "cumulative_start": 0,
+        "sgk_base_cap": 297270.0
+      },
+      "expected_output": null,
+      "computed_output": {
+        "net_by_month": [
+          255633.13,
+          231375.8,
+          224754.46,
+          224754.46,
+          222590.66,
+          200321.7,
+          200648.12,
+          201725.47,
+          201725.47,
+          201725.47,
+          201725.47,
+          201725.47
+        ],
+        "gv_by_month": [
+          47370.57,
+          71627.9,
+          78249.24,
+          78249.24,
+          80413.04,
+          102682.0,
+          102355.58,
+          101278.23,
+          101278.23,
+          101278.23,
+          101278.23,
+          101278.23
+        ],
+        "sgk_isci_each_month": 41617.8,
+        "issizlik_each_month": 2972.7,
+        "dv_each_month": 2405.8,
+        "total_net": 2568705.68
+      },
+      "match": null,
+      "source_url": null,
+      "source_title": null,
+      "confidence": "unverified",
+      "notes": "No sourced 12-month vector with brut above the 297.270 tavan was found (ikyardim 300.000 January snapshot, TV above, is the only sourced tavan data point). Includes cumulative matrah crossing 1.500.000 TL in May (35% bracket)."
+    }
+  ]
+}

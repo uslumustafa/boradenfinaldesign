@@ -1,0 +1,232 @@
+{
+  "_note": "Ekip verisi. Wagtail karşılığı: TeamIndexPage (title, lead, intro) + TeamMemberPage (her üye bir sayfa). Başlangıç içeriği eski sitedeki (boraden.com.tr/ekibimiz/...) herkese açık özgeçmiş metinlerinden DERLENDİ; yalnızca orada yazan olgular kullanıldı. needsVerification: true = yayından önce kişiyle/kurumla doğrulanmalı (unvan, tarih, görev). Fotoğraf: yalnızca yazılı izinle (KVKK) ve photos.json anahtarıyla eklenir; yoksa baş harfli tasarımlı kutu gösterilir. İletişim bilgileri (contact) yalnızca showContact: true ise yayımlanır; aksi hâlde kartlardaki «Görüşme talep edin» düğmesi iletişim formuna gider (?kisi=<slug>). Atama (areas/services/sectors): alan sorumlusu = areas, ek sahiplik = services, açık sektör ataması = sectors; sectors boşsa sektör sayfasındaki kişiler o sektörün hizmetlerinin sahiplerinden TÜRETİLİR (scripts/team.mjs). status: published | draft.",
+  "title": "Ekibimiz",
+  "lead": "Hizmetlerimizi yürüten yönetici ve uzmanlarımız: unvanları, eğitimleri ve uzmanlık alanlarıyla.",
+  "intro": "Bir konuda kiminle görüşmeniz gerektiğinden emin değilseniz iletişim formunu kullanabilirsiniz. Her kişinin unvanı, eğitimi ve çalıştığı alanlar profil sayfasında yer alır.",
+  "photoCaption": "Boraden ekibi, giriş lobisinde (arşiv fotoğrafı)",
+  "members": [
+    {
+      "slug": "cengiz-turmaz",
+      "name": "Cengiz Turmaz",
+      "role": "Kurucu",
+      "titles": [
+        "Serbest Muhasebeci Mali Müşavir (TÜRMOB)",
+        "Bağımsız Denetçi (Kamu Gözetim Kurumu)",
+        "Bilirkişi (İstanbul Adli Yargı İlk Derece Mahkemesi Adalet Komisyonu Başkanlığı)"
+      ],
+      "summary": "Muhasebe ve finans alanında 1990'lardan bu yana çalışmaktadır; Boraden Bağımsız Denetim ve Danışmanlık A.Ş.'yi kurmuştur.",
+      "bio": [
+        "Çalışma hayatına 1991 yılında, Lüleburgaz'a bağlı Büyükkarıştıran Belediyesi Mali Hizmetler Müdürlüğü'nde lise stajyeri olarak başladı. 1992 yılında belediye meclisince kabul edilen 1993–1995 yıllarına ait belediye bütçe çalışmalarına katılarak profesyonel anlamdaki ilk iş deneyimini edindi.",
+        "1993–2002 yılları arasında özel sektörde, faaliyet alanlarında lider kuruluşların muhasebe ve finans departmanlarında görev, sorumluluk ve yetki aldı. 2003 yılında işletmelerin muhasebe ve mali müşavirlik hizmetlerini karşılamak üzere kendi çalışma ofisini kurdu.",
+        "2018 yılından itibaren, kurduğu Boraden Bağımsız Denetim ve Danışmanlık A.Ş. bünyesinde tüm çalışma ekibiyle birlikte profesyonel danışmanlık hizmeti vermektedir."
+      ],
+      "expertise": [],
+      "education": [
+        [
+          "Yüksek öğrenim — İşletme, Eskişehir Anadolu Üniversitesi",
+          "2001–2005"
+        ],
+        [
+          "Serbest Muhasebeci Mali Müşavir — TÜRMOB",
+          "2007"
+        ],
+        [
+          "Bağımsız Adli Muhasebe Uzmanı — İSMMMO Akademi",
+          "2012"
+        ],
+        [
+          "Bağımsız Denetçi — Kamu Gözetim Kurumu",
+          "2014"
+        ],
+        [
+          "İkinci yüksek öğrenim — Adalet, Eskişehir Anadolu Üniversitesi",
+          "2015–2017"
+        ],
+        [
+          "Bilirkişilik — İstanbul Adli Yargı İlk Derece Mahkemesi Adalet Komisyonu Başkanlığı",
+          "2016"
+        ]
+      ],
+      "areas": [
+        "vergi"
+      ],
+      "services": [
+        "mali-musavirlik-ve-muhasebe",
+        "bagimsiz-denetim"
+      ],
+      "sectors": [],
+      "photo": null,
+      "contact": {
+        "email": "",
+        "phone": "",
+        "linkedin": ""
+      },
+      "showContact": false,
+      "status": "published",
+      "needsVerification": true,
+      "source": "Eski site: boraden.com.tr/ekibimiz/cengiz-turmaz"
+    },
+    {
+      "slug": "adem-baser",
+      "name": "Adem Başer",
+      "role": "Denetim Departmanı Yöneticisi",
+      "titles": [
+        "Serbest Muhasebeci Mali Müşavir (TÜRMOB)"
+      ],
+      "summary": "2011'den bu yana Boraden'de denetim departmanının yöneticiliğini üstlenmektedir; KDV iadesi, tam tasdik ve vergi denetimi alanlarında deneyimlidir.",
+      "bio": [
+        "Profesyonel iş hayatına 2007–2011 yılları arasında yeminli mali müşavirlik faaliyetlerinde hizmet veren bir firmada başladı. Bu yıllarda işletmelerin KDV iade işlemleri, tam tasdik süreçleri ve denetim alanında çalıştı.",
+        "Kariyerine 2011 yılından itibaren Boraden'de Denetim Departmanı'nın yöneticiliğinden sorumlu olarak devam etmektedir."
+      ],
+      "expertise": [
+        "Bilanço okuma teknikleri",
+        "Vergi denetimi",
+        "Özvarlık tespiti",
+        "Şirket birleşme, bölünme ve değerleme işlemleri",
+        "KDV iade işlemleri",
+        "Muhasebe denetimi",
+        "Bilgisayarlı veri analizi ve yorumlanması"
+      ],
+      "education": [
+        [
+          "Lisans — İktisat Fakültesi, Anadolu Üniversitesi",
+          "1991–1995"
+        ],
+        [
+          "Serbest Muhasebeci Mali Müşavir — TÜRMOB",
+          "2002"
+        ]
+      ],
+      "areas": [
+        "denetim"
+      ],
+      "services": [
+        "kdv-iade-islemleri",
+        "tam-tasdik-islemleri",
+        "kurumlar-vergisi-denetim-ve-tasdik",
+        "sirket-degerlemesi",
+        "veri-analiz-sistemleri"
+      ],
+      "sectors": [],
+      "photo": null,
+      "contact": {
+        "email": "",
+        "phone": "",
+        "linkedin": ""
+      },
+      "showContact": false,
+      "status": "published",
+      "needsVerification": true,
+      "source": "Eski site: boraden.com.tr/ekibimiz/adem-baser"
+    },
+    {
+      "slug": "aysenur-kansiz",
+      "name": "Ayşenur Kansız",
+      "role": "Sosyal Güvenlik ve İnsan Kaynakları Yöneticisi",
+      "titles": [],
+      "summary": "Muhasebe sektöründe 2014'te başladığı kariyerini sosyal güvenlik ve insan kaynakları alanında sürdürmektedir.",
+      "bio": [
+        "Kariyerine 2014 yılında muhasebe sektöründe başladı ve 2015 yılına kadar sosyal güvenlik departmanında uzman yardımcısı olarak çalıştı. 2015 yılından sonra departmanda yönetici statüsüne yükselerek sosyal güvenlik ve insan kaynakları alanında uzmanlaştı.",
+        "2015'ten bu yana yönetici statüsünde birçok eğitim almış; müşterilerimizin sosyal güvenlik ve insan kaynakları süreçlerini kapsamlı biçimde yürütmektedir."
+      ],
+      "expertise": [
+        "SGK süreçleri",
+        "Personel özlük işlemleri",
+        "Bordro hesaplama",
+        "Borçlanma işlemleri",
+        "Emeklilik işlemleri",
+        "Yabancı çalışma izinleri"
+      ],
+      "education": [
+        [
+          "Lisans — İşletme Bölümü, Düzce Üniversitesi",
+          "2013"
+        ],
+        [
+          "İnsan Kaynakları Yönetici Sertifikası — İstanbul Üniversitesi",
+          "2017"
+        ],
+        [
+          "Özlük İşlemleri ve Bordrolama Sertifikası — Bahçeşehir Üniversitesi",
+          "2018"
+        ]
+      ],
+      "areas": [
+        "insan"
+      ],
+      "services": [],
+      "sectors": [],
+      "photo": null,
+      "contact": {
+        "email": "",
+        "phone": "",
+        "linkedin": ""
+      },
+      "showContact": false,
+      "status": "published",
+      "needsVerification": true,
+      "source": "Eski site: boraden.com.tr/ekibimiz/aysenur-kansiz"
+    },
+    {
+      "slug": "murat-demirtas",
+      "name": "Murat Demirtaş",
+      "role": "Türk Ticaret Kanunu Departmanı Yöneticisi",
+      "titles": [],
+      "summary": "Şirket kuruluş, değişiklik, birleşme ve bölünme gibi Türk Ticaret Kanunu işlemlerini yürüten departmanın yöneticisidir.",
+      "bio": [
+        "Profesyonel iş hayatına 2012 yılında vergi ve muhasebe alanında sorumlu olarak başladı; Boraden'de Türk Ticaret Kanunu departman sorumlusu olarak yükseldi ve 2013 yılında yönetici pozisyonuna terfi etti.",
+        "Türk Ticaret Kanunu hükümlerine ve Gümrük ve Ticaret Bakanlığı MERSİS uygulamaları mevzuatına uygun olarak şirket kuruluş, değişiklik, kapanış ve diğer işlemlerin ilgili kuruluşlara yasal sürelerinde bildirilmesini; TTK 376. madde uyarınca şirketlerin teknik iflas ve özvarlık durumlarının tespitini ve alınacak önlemleri hem kuruma hem müşterilere yönelik çalışmalarında ele almaktadır."
+      ],
+      "expertise": [
+        "Anonim, limited, kollektif, komandit ve kooperatif şirketler ile adi ortaklık ve şahıs şirketi kuruluş işlemleri",
+        "Değişiklik işlemleri",
+        "Genel kurul işlemleri",
+        "Birleşme işlemleri",
+        "Bölünme işlemleri",
+        "Tür (nev'i) değişikliği"
+      ],
+      "education": [
+        [
+          "Yeni Türk Ticaret Kanunu Eğitim Sertifikası",
+          "2012"
+        ],
+        [
+          "Etkili Office Programları Eğitim Sertifikası",
+          "2012"
+        ],
+        [
+          "Ticaret Sicil İşlemleri (MERSİS Projesi) Semineri",
+          "2012"
+        ],
+        [
+          "Birleşme, Bölünme ve Tür Değişikliği Semineri",
+          "2013"
+        ],
+        [
+          "Bilgisayar Programcılığı Sertifikası — İşletme Bölümü, Anadolu Üniversitesi",
+          "2015"
+        ],
+        [
+          "Yabancı Dil (İngilizce) Eğitimi",
+          "2018"
+        ]
+      ],
+      "areas": [],
+      "services": [
+        "sirket-kurulus-danismanligi",
+        "ticaret-sicil-islemleri"
+      ],
+      "sectors": [],
+      "photo": null,
+      "contact": {
+        "email": "",
+        "phone": "",
+        "linkedin": ""
+      },
+      "showContact": false,
+      "status": "published",
+      "needsVerification": true,
+      "source": "Eski site: boraden.com.tr/ekibimiz/murat-demirtas"
+    }
+  ]
+}

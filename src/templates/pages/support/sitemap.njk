@@ -1,0 +1,64 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+
+{% block head_extra %}
+<script type="application/ld+json">{{ ld | json_script }}</script>
+{% endblock %}
+
+{# HTML site haritası. Wagtail karşılığı: SitemapPage — bölümler sayfa ağacından (Page.get_children / specific) üretilir;
+   burada scripts/routes/support.mjs → sitemapTree(model) kurar (her adres bir kez, ilk göründüğü bölümde sayılır). #}
+{% block main %}
+{{ m.phero(page, copy.title, copy.lead, "Gezinme", 0, [total ~ " sayfa", (sections | length) ~ " bölüm"]) }}
+
+<div class="sheet sec--paper">
+  <div class="container">
+
+    <div class="g12 sm-summary">
+      <div class="gc sm-summary__count" style="--gc: 1 / span 4">
+        <p class="eyebrow" data-reveal>Toplam</p>
+        <p class="sm-total" data-reveal data-reveal-delay="1"><span class="sm-total__n tnum" data-count="{{ total }}">{{ total }}</span><span class="sm-total__u mono">sayfa</span></p>
+      </div>
+      <div class="gc sm-summary__dist" style="--gc: 5 / -1">
+        <p class="sm-dist__h mono" data-reveal>Bölümlere göre dağılım</p>
+        <div class="sm-bar" data-reveal data-reveal-delay="1" aria-hidden="true">
+          {% for s in sections %}<span class="sm-bar__seg sm-tone-{{ loop.index }}" style="--w: {{ s.count }}; --i: {{ loop.index0 }}"></span>{% endfor %}
+        </div>
+        <ol class="sm-legend" aria-label="Bölümler">
+          {% for s in sections %}
+          <li data-reveal data-reveal-delay="{{ loop.index0 % 3 + 1 }}">
+            <a href="#{{ s.id }}"><i class="sm-sw sm-tone-{{ loop.index }}" aria-hidden="true"></i><span class="sm-legend__t">{{ s.title }}</span><span class="sm-legend__c mono tnum">{{ s.count }}</span></a>
+          </li>
+          {% endfor %}
+        </ol>
+      </div>
+    </div>
+
+    {% for s in sections %}
+    <section class="sm-sec" id="{{ s.id }}" aria-labelledby="{{ s.id }}-h">
+      <header class="sm-sec__head">
+        <span class="sm-sec__n mono tnum"><i class="sm-sw sm-tone-{{ loop.index }}" aria-hidden="true"></i>{{ s.n }} / {{ sections | length | pad2 }}</span>
+        <h2 id="{{ s.id }}-h">{% if s.url %}<a href="{{ s.url }}">{{ s.title }}</a>{% else %}{{ s.title }}{% endif %}</h2>
+        <span class="sm-sec__c mono tnum">{{ s.count }} sayfa</span>
+      </header>
+      <div class="sm-groups">
+        {% for g in s.groups %}
+        <div class="sm-grp" data-reveal data-reveal-delay="{{ loop.index0 % 3 }}">
+          <h3 class="sm-grp__h">{% if g.url %}<a href="{{ g.url }}">{{ g.title }}<span class="sm-grp__go" aria-hidden="true">→</span></a>{% else %}{{ g.title }}{% endif %}</h3>
+          {% if g.note %}<p class="sm-grp__note mono">{{ g.note }}</p>{% endif %}
+          {% if g.items.length %}
+          <ul class="sm-list">
+            {% for it in g.items %}<li><a href="{{ it.url }}">{% if it.meta %}<span class="sm-list__m mono">{{ it.meta }}</span>{% endif %}{{ it.title }}</a></li>{% endfor %}
+          </ul>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+    {% endfor %}
+
+    <p class="sm-foot" data-reveal>Makine tarafından okunabilir liste için <a href="/sitemap.xml" data-no-swap>sitemap.xml</a>. Belirli bir konuyu arıyorsanız <a href="/arama/">site içi aramayı</a> kullanabilirsiniz.</p>
+  </div>
+</div>
+
+{% include "partials/cta.njk" %}
+{% endblock %}

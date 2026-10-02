@@ -1,0 +1,119 @@
+{
+  "meta": {
+    "id": "2026-vergi",
+    "year": 2026,
+    "verifiedOn": "2026-10-01",
+    "notes": "Vergi hesaplayıcıları (KDV, kurumlar vergisi, geçici vergi, serbest meslek makbuzu, gecikme zammı) ve takvim mantığı için parametreler. Kaynak: docs/research/other-params-2026.json (2026-10-01'de resmî ve ikincil kaynaklardan derlendi; Resmî Gazete ve mevzuat.gov.tr metinleri doğrudan okunamadı). Oranlar kesirdir (0.20 = %20). Tarih-etkili dizilerde from/to dahildir. needsVerification işaretli kayıtlar sonuçta uyarı üretir (warn alanı)."
+  },
+  "kdv": {
+    "tiers": [
+      { "id": "genel", "label": "Genel oran", "rates": [ { "to": "2023-07-09", "rate": 0.18 }, { "from": "2023-07-10", "rate": 0.20 } ] },
+      { "id": "indirimli", "label": "İndirimli oran", "rates": [ { "to": "2023-07-09", "rate": 0.08 }, { "from": "2023-07-10", "rate": 0.10 } ] },
+      { "id": "cokIndirimli", "label": "Düşük indirimli oran", "rates": [ { "rate": 0.01 } ] },
+      { "id": "sifir", "label": "KDV'siz (istisna veya %0)", "rates": [ { "rate": 0 } ] }
+    ],
+    "verifiedFrom": "2023-07-10",
+    "beforeVerifiedWarn": "10.07.2023 öncesi işlemler için genel %18 ve indirimli %8 oranları yalnızca geçiş bilgisi olarak yer alır; bu oranların başlangıç tarihleri araştırmada doğrulanmamıştır.",
+    "tevkifat": [
+      {
+        "id": "9/10",
+        "num": 9,
+        "den": 10,
+        "label": "9/10 — danışmanlık, denetim, etüt, plan-proje ve benzeri hizmetler",
+        "source": "https://www.gib.gov.tr/node/168110/pdf",
+        "confidence": "secondary",
+        "needsVerification": true,
+        "warn": "Kısmi KDV tevkifatı yalnızca KDV Genel Uygulama Tebliği'nde sayılan alıcılara karşı ve tutar sınırının aşılması halinde uygulanır; sınır tutarı (KDV dahil 2.000 TL veya 12.000 TL) kaynaklarda farklıdır ve burada uygulanmamıştır."
+      }
+    ],
+    "source": "https://www.pwc.com.tr/tr/hizmetlerimiz/vergi/dolayli-vergi/bultenler/kdv-otv-bultenleri/2023/kdv-oranlarinda-degisiklik.html",
+    "confidence": "secondary"
+  },
+  "corpTax": {
+    "supportedFrom": "2025-01-01",
+    "classes": [
+      { "id": "genel", "label": "Genel oran", "rates": [ { "from": "2025-01-01", "rate": 0.25 } ], "provisional": true },
+      { "id": "finans", "label": "Finans grubu oranı", "rates": [ { "from": "2025-01-01", "rate": 0.30 } ], "provisional": true },
+      { "id": "imalat", "label": "İmalat kazancı oranı", "rates": [ { "from": "2025-01-01", "rate": 0.24 } ], "partial": true, "provisional": true },
+      { "id": "ihracat", "label": "İhracat kazancı oranı", "rates": [ { "from": "2025-01-01", "rate": 0.20 } ], "partial": true, "provisional": true },
+      { "id": "halkaArz", "label": "Halka arz indirimli oranı", "rates": [ { "from": "2025-01-01", "rate": 0.23 } ], "partial": true, "provisional": true },
+      {
+        "id": "uretim",
+        "label": "Üretim kazancı oranı (7582)",
+        "rates": [ { "from": "2027-01-01", "rate": 0.125 } ],
+        "partial": true,
+        "provisional": false,
+        "confidence": "secondary",
+        "needsVerification": true,
+        "warn": "%12,5 oranı 7582 sayılı Kanun'la 2027 vergilendirme döneminden itibaren getirilmiştir; mevcut indirimli oranlarla ilişkisi ve karma kazançlarda paylaştırma kuralı doğrulanmamıştır."
+      }
+    ],
+    "minTax": {
+      "rates": [ { "from": "2025-01-01", "rate": 0.10 } ],
+      "source": "https://www.ey.com/tr_tr/insights/tax/yurt-ici-asgari-kurumlar-vergisi",
+      "confidence": "secondary",
+      "needsVerification": true,
+      "warn": "Yurt içi asgari kurumlar vergisinin matrahına dahil edilecek ve düşülecek kalemlerin tam listesi (7582 değişikliği dahil) ile geçmiş yıl zararlarının düşülüp düşülemeyeceği doğrulanmamıştır; matrahı siz belirlersiniz. Yeni kurulan şirketler ve istisna kapsamındaki kurumlar için ayrı kurallar vardır."
+    },
+    "source": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFile?objectKey=DUYURU%2FUNIVERSAL%2F2026%2F2026_KurumlarVergisiOran.pdf",
+    "confidence": "verified-official"
+  },
+  "provisional": {
+    "gelirRates": [ { "from": "2025-01-01", "rate": 0.15 } ],
+    "periods": [
+      { "n": 1, "label": "1. dönem (Ocak–Mart)", "endMonth": 3, "dueMonth": 5, "dueDay": 17, "dueYearOffset": 0 },
+      { "n": 2, "label": "2. dönem (Ocak–Haziran, kümülatif)", "endMonth": 6, "dueMonth": 8, "dueDay": 17, "dueYearOffset": 0 },
+      { "n": 3, "label": "3. dönem (Ocak–Eylül, kümülatif)", "endMonth": 9, "dueMonth": 11, "dueDay": 17, "dueYearOffset": 0 },
+      {
+        "n": 4,
+        "label": "4. dönem (Ocak–Aralık, kümülatif)",
+        "endMonth": 12,
+        "dueMonth": 2,
+        "dueDay": 17,
+        "dueYearOffset": 1,
+        "from": "2025-01-01",
+        "confidence": "secondary",
+        "needsVerification": true,
+        "warn": "4. geçici vergi dönemi 7566 sayılı Kanun'la 2025 ve sonrası dönemler için yeniden getirilmiştir; kurumlar vergisi mükellefleri bakımından kapsamı ikincil kaynaklara dayanır, GİB duyurularından teyit edin."
+      }
+    ],
+    "source": "https://cdn.gib.gov.tr/api/gibportal-file/file/getFileResources?objectKey=arsiv%2Fyardim-kaynaklar%2Fyararli-bilgiler%2Fgecici-vergi-oranlari.pdf",
+    "confidence": "verified-official"
+  },
+  "holidays": {
+    "coveredFrom": "2026-10-01",
+    "coveredThrough": "2027-03-31",
+    "fullDay": [ "2026-10-29", "2027-01-01", "2027-03-09", "2027-03-10", "2027-03-11" ],
+    "halfDay": [ "2026-10-28", "2027-03-08" ],
+    "outsideWarn": "Resmî tatil listesi 01.10.2026–31.03.2027 arasını kapsar; bu aralığın dışındaki tarihlerde yalnızca hafta sonu kaydırması uygulanmıştır, bayram ve tatil günlerini ayrıca kontrol edin.",
+    "source": "https://www.milligazete.com.tr/cumhuriyet-bayrami-2026-kac-gun-tatil-28-ekim-ogleden-sonra-tatil-mi-29-ekim-okullar-kapali-mi-30-ekim-ders-var-mi",
+    "confidence": "secondary"
+  },
+  "smm": {
+    "stopaj": [
+      { "id": "standart", "label": "Standart stopaj (GVK m.94/2-b)", "rate": 0.20 },
+      {
+        "id": "gvk18",
+        "label": "GVK m.18 kapsamındaki işler (GVK m.94/2-a)",
+        "rate": 0.17,
+        "needsVerification": true,
+        "warn": "%17 stopaj yalnızca GVK m.18 kapsamına giren serbest meslek işleri için geçerlidir; hangi işlerin bu kapsamda olduğu araştırmada incelenmemiştir."
+      },
+      { "id": "yok", "label": "Stopaj yok", "rate": 0 }
+    ],
+    "defaultKdvTier": "genel",
+    "source": "https://www.turmob.org.tr/arsiv/mbs/resmigazete/-2025_serbestmeslek.pdf",
+    "confidence": "verified-official"
+  },
+  "lateFee": {
+    "supportedFrom": "2024-05-21",
+    "daysPerMonth": 30,
+    "monthlyRates": [
+      { "from": "2024-05-21", "to": "2025-11-12", "rate": 0.045, "instrument": "Cumhurbaşkanı Kararı 8484 (RG 21.05.2024, sayı 32552)" },
+      { "from": "2025-11-13", "rate": 0.037, "instrument": "Cumhurbaşkanı Kararı 10556 (RG 13.11.2025, sayı 33076)" }
+    ],
+    "straddleWarn": "Gecikme, aylık oranın değiştiği 13.11.2025 tarihini kapsıyor: bu aydaki iki oran gün esasına göre ağırlıklandırıldı; kaynaklarda aylık ve günlük esaslı iki farklı uygulama anlatıldığından sonuç yaklaşıktır (doğrulanmadı).",
+    "source": "https://www.tbb.gov.tr/tr/mevzuat-duyurulari/6183-sayili-amme-alacaklarinin-tahsil-usulu-hakkinda-kanunun-51-inci-maddesinin-birinci-fikrasinda-yer-alan-gecikme-zammi-oraninin-her-ay",
+    "confidence": "secondary"
+  }
+}

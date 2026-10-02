@@ -1,0 +1,149 @@
+[
+  {
+    "id": "calisma-bicimi",
+    "title": "Çalışma biçimi",
+    "intro": "Boraden ile çalışmanın genel çerçevesi: hizmet alanları, kapsamın belirlenmesi ve sürecin işleyişi.",
+    "items": [
+      {
+        "q": "Boraden hangi alanlarda hizmet veriyor?",
+        "a": "Temelleri 1993 yılında atılan Boraden; kamu kurum ve kuruluşlarına, özel sektöre, gerçek ve tüzel kişilere hizmet verir. Faaliyetler; bağımsız denetim ve yeminli mali müşavirlik, vergi ve muhasebe, mali, hukuki ve yönetim danışmanlığı, insan kaynakları ve bordro, muhasebe ve veri analiz sistemleri ile mesleki eğitim alanlarını kapsar.\n\nAyrıntılı bilgi için [hizmetler](/hizmetler/) sayfasına bakabilirsiniz. Alanlara doğrudan şu bağlantılardan ulaşılır: [Vergi](/hizmetler/vergi/), [Denetim](/hizmetler/denetim/), [Danışmanlık](/hizmetler/danismanlik/), [İnsan Kaynakları](/hizmetler/insan-kaynaklari/), [Sistemler](/hizmetler/sistemler/) ve [Akademi](/hizmetler/akademi/)."
+      },
+      {
+        "q": "Bir hizmet için süreç nasıl başlar?",
+        "a": "İhtiyacınızı [iletişim](/iletisim/) kanallarından (e-posta, telefon veya WhatsApp) kısaca iletmeniz yeterlidir. Ardından bir kapsam görüşmesi yapılır; kuruluşun faaliyetleri, mevcut süreçleri ve ihtiyaçları değerlendirilerek çalışmanın çerçevesi belirlenir.\n\nİlgili uzmanlık alanları bu kapsam doğrultusunda birlikte ele alınır."
+      },
+      {
+        "q": "Çalışmanın kapsamı nasıl belirlenir?",
+        "a": "Kapsam; kurumun faaliyetleri, mevcut süreçleri ve ihtiyaçları değerlendirilerek belirlenir. Aynı alandaki iki çalışma bile kuruluşun yapısına, işlem hacmine ve beklenen çıktıya göre farklı kapsamlarda olabilir.\n\nBazı hizmetlerde kapsam ayrıca mevzuat veya meslek kurallarıyla da çerçevelenir; bu durumda söz konusu çerçeve esas alınır."
+      },
+      {
+        "q": "Başlamadan önce hangi bilgi ve belgeleri hazırlamalıyım?",
+        "a": "Gerekli bilgi hizmetin türüne göre değişir. Örneğin bağımsız denetimde denetlenecek dönem, finansal tablo seti ve muhasebe kayıtları; bordroda puantaj ve ücret verileri; değerlemede son dönem finansal tabloları ile borç, nakit ve işletme sermayesi bilgileri gündeme gelir.\n\nAyrıntılı liste kapsam görüşmesinde netleştirilir; genel çerçeve için ilgili [hizmet sayfasına](/hizmetler/) da bakılabilir.",
+        "onServices": true
+      },
+      {
+        "q": "Çalışma ne kadar sürer?",
+        "a": "Süre; işin niteliğine, kapsamına, dönem takvimine ve bilgi ile belgelerin hazır olma düzeyine bağlıdır. Bu nedenle önceden sabit bir süre taahhüt edilmez; çalışma takvimi kapsam görüşmesinde netleştirilir.\n\nDönemsel işlerde (örneğin bordro veya beyan hazırlığı) takvim çoğunlukla yasal sürelerle belirlenir.",
+        "onServices": true
+      },
+      {
+        "q": "Birden fazla hizmeti birlikte alabilir miyim?",
+        "a": "Kapsam doğrultusunda ilgili uzmanlık alanları birlikte ele alınabilir. Ancak bağımsız denetim hizmeti verilen kuruluşlara, bağımsızlık kurallarının izin vermediği hizmetler sunulmaz. Bir hizmetin kapsamı, ilgili mevzuat ve meslek kuralları çerçevesinde görev başında ayrıca değerlendirilir.\n\nBu sınırlama bağımsız denetim ilişkisi bulunan kuruluşlar içindir; diğer çalışmalarda kapsam işin niteliğine göre belirlenir. Daha fazla bilgi için “Gizlilik ve bağımsızlık” başlığındaki sorulara bakabilirsiniz.",
+        "onServices": true
+      }
+    ]
+  },
+  {
+    "id": "ucret-ve-kapsam",
+    "title": "Ücret ve kapsam",
+    "intro": "Ücretlendirme ve kapsam konusunda genel bilgiler. Cevaplar genel çerçeveyi anlatır; her çalışma ayrıca değerlendirilir.",
+    "items": [
+      {
+        "q": "Hizmet ücretleri nasıl belirlenir?",
+        "a": "Ücret; çalışmanın kapsamına, niteliğine, gerektirdiği uzmanlık ve emek düzeyine ve ilgili mevzuat ile meslek kurallarına göre belirlenir. Bu nedenle sitede sabit bir fiyat listesi yer almaz.\n\nÜcret ve çalışma koşulları, kapsam netleştikten sonra taraflarca kararlaştırılır.",
+        "onServices": true
+      },
+      {
+        "q": "Fiyat bilgisini nasıl alabilirim?",
+        "a": "İhtiyacınızı [iletişim](/iletisim/) kanallarından kısaca iletmeniz yeterlidir. Kapsam görüşmesinin ardından ücretlendirme, çalışmanın niteliğine göre ele alınır.\n\nTalebinizde kuruluşunuzun türünü, ihtiyaç duyduğunuz hizmeti ve varsa ilgili dönemi belirtmeniz, kapsamın daha kolay netleşmesine yardımcı olur."
+      },
+      {
+        "q": "Ücret neden kuruluştan kuruluşa farklı olabilir?",
+        "a": "Faaliyet hacmi, işlem sayısı, kayıt düzeni, kuruluşun yapısı, mevcut süreçlerin durumu ve istenen çıktıların niteliği çalışmanın kapsamını ve yoğunluğunu etkiler. Benzer görünen hizmetlerde bile bu nedenle kapsam, süre ve ücret farklılaşabilir."
+      },
+      {
+        "q": "Ücrete hangi işler dahildir? Kapsam dışı ek talepler olur mu?",
+        "a": "Ücret, kararlaştırılan kapsamdaki işleri karşılar. Kapsam dışında kalan veya sonradan ortaya çıkan talepler (örneğin ek dönem, ek rapor ya da mevzuat değişikliğinden doğan ek çalışma) ayrıca değerlendirilir.\n\nKapsamın başlangıçta açık biçimde belirlenmesi, beklentilerin ve sorumlulukların net olmasına yardımcı olur."
+      },
+      {
+        "q": "Muhasebe ve bordro gibi işler sürekli bir hizmet olarak mı alınır?",
+        "a": "Muhasebe, bordro ve dönemsel beyan gibi işler düzenli bir takvime bağlı olduğundan çoğunlukla sürekli bir hizmet olarak planlanır. Şirket değerlemesi veya belirli bir proje kapsamındaki danışmanlık gibi işler ise belirli bir amaca yönelik, tek seferlik bir çalışma olarak kurgulanabilir.\n\nHangisinin uygun olduğu ihtiyaca ve kapsam görüşmesinin sonucuna göre belirlenir."
+      }
+    ]
+  },
+  {
+    "id": "gizlilik-ve-bagimsizlik",
+    "title": "Gizlilik ve bağımsızlık",
+    "intro": "Bilgilerin korunması ve bağımsızlık ilkesine ilişkin genel çerçeve.",
+    "items": [
+      {
+        "q": "Paylaştığım bilgiler gizli tutulur mu?",
+        "a": "Çalışma sırasında edinilen kuruluşa ve kişilere ait bilgiler gizli kabul edilir. Bu bilgiler yalnızca çalışmanın gerektirdiği ölçüde ve yetkili kişilerle paylaşılır; paylaşım ilgili mevzuat ile meslek kuralları çerçevesinde yapılır.\n\nKanunların açıkça öngördüğü hâllerde yetkili makamlara bilgi verme yükümlülüğü doğabilir; bu istisnalar da mevzuatla belirlenir."
+      },
+      {
+        "q": "Kişisel verilerim nasıl işlenir?",
+        "a": "Bu web sitesi üzerinden iletilen bilgilerin nasıl işlendiği [KVKK Aydınlatma Metni](/yasal/kvkk-aydinlatma-metni/) ve [Gizlilik Politikası](/yasal/gizlilik-politikasi/) sayfalarında açıklanır. Sitenin tarayıcıda neleri sakladığı ise [Çerez Politikası](/yasal/cerez-politikasi/) sayfasında yer alır.\n\nHizmet kapsamında edinilen kişisel veriler, ilgili mevzuat çerçevesinde ve hizmetin amacıyla sınırlı olarak işlenir."
+      },
+      {
+        "q": "Bağımsızlık ilkesi ne anlama gelir?",
+        "a": "Bağımsız denetimde denetçinin görüşünü, denetlenen kuruluşla çıkar ilişkilerinden ve dış etkilerden uzak, tarafsız biçimde oluşturabilmesi gerekir. Bu çerçeve bağımsız denetime ilişkin mevzuat ve meslek kurallarıyla belirlenir.\n\nKavramın açıklaması için sözlükteki [“Denetçi bağımsızlığı” maddesine](/bilgi-merkezi/sozluk/#bagimsizlik) bakılabilir."
+      },
+      {
+        "q": "Bağımsız denetim hizmeti verilen bir kuruluşa başka hizmetler de sunulur mu?",
+        "a": "Bağımsız denetim hizmeti verilen kuruluşlara, bağımsızlık kurallarının izin vermediği hizmetler sunulmaz. Bir hizmetin kapsamı, ilgili mevzuat ve meslek kuralları çerçevesinde görev başında ayrıca değerlendirilir.\n\nDeğerlendirme, hizmetin bağımsızlığı zedeleyip zedelemeyeceğine göre yapıldığından, aynı kuruluş için hangi hizmetlerin birlikte alınabileceği önceden genel bir listeyle belirtilemez."
+      },
+      {
+        "q": "Denetim ücreti denetim görüşünü etkiler mi?",
+        "a": "Etkilememelidir. Denetim görüşü; toplanan denetim kanıtlarına ve uygulanan standartlara dayanır. Ücretin denetim sonucuna bağlı olarak belirlenmesi bağımsızlık ilkesiyle bağdaşmaz."
+      }
+    ]
+  },
+  {
+    "id": "hesaplayicilar-ve-bilgi-merkezi",
+    "title": "Hesaplayıcılar ve bilgi merkezi",
+    "intro": "Sitedeki hesaplama araçları ve bilgi içerikleri hakkında genel bilgiler.",
+    "items": [
+      {
+        "q": "Hesaplayıcıların sonuçları bağlayıcı mıdır?",
+        "a": "Hayır. Hesaplayıcılar bilgilendirme amaçlıdır ve tahmini sonuç verir; mali, hukuki veya vergisel tavsiye niteliği taşımaz. Bir bordronun, beyannamenin veya resmî hesabın yerine geçmez.\n\nİşleminize ilişkin nihai tutar için güncel mevzuat, ilgili kurum açıklamaları ve işleminizin özel koşulları esas alınmalıdır."
+      },
+      {
+        "q": "Hangi hesaplayıcılar var?",
+        "a": "[Hesaplayıcılar](/hesaplayicilar/) sayfasında şu araçlar yer alır: [maaş (brüt-net)](/hesaplayicilar/maas-hesaplama/), [işveren maliyeti](/hesaplayicilar/isveren-maliyeti-hesaplama/), [asgari ücret](/hesaplayicilar/asgari-ucret-hesaplama/), [gelir vergisi](/hesaplayicilar/gelir-vergisi-hesaplama/), [KDV](/hesaplayicilar/kdv-hesaplama/), [kurumlar vergisi](/hesaplayicilar/kurumlar-vergisi-hesaplama/), [geçici vergi](/hesaplayicilar/gecici-vergi-hesaplama/), [serbest meslek makbuzu](/hesaplayicilar/serbest-meslek-makbuzu-hesaplama/), [kıdem tazminatı](/hesaplayicilar/kidem-tazminati-hesaplama/), [ihbar tazminatı](/hesaplayicilar/ihbar-tazminati-hesaplama/) ve [gecikme zammı](/hesaplayicilar/gecikme-zammi-hesaplama/)."
+      },
+      {
+        "q": "Hesaplayıcılardaki oran ve tutarlar güncel mi?",
+        "a": "Oranlar, haddler ve tarihler mevzuata göre değişebilir. Hesaplayıcıların varsayımları ve dayanak aldığı resmî kaynaklar ilgili hesaplayıcı sayfasında yer alır.\n\nSonucu işleminizin tarihine ilişkin güncel düzenlemeyle karşılaştırmanız gerekir; bir değerin güncel olduğundan emin olamıyorsanız ilgili kurumun açıklamalarına başvurun."
+      },
+      {
+        "q": "Vergi takvimindeki tarihler resmî midir?",
+        "a": "[Vergi takvimi](/vergi-takvimi/), beyan ve ödeme tarihlerini bilgilendirme amacıyla derler. Tarihler mevzuat, tebliğ ve resmî duyurulara göre değişebilir; süre uzatımı gibi gelişmeler takvime yansımamış olabilir.\n\nKendi yükümlülük tarihleriniz için Gelir İdaresi Başkanlığı ve ilgili kurumların güncel duyurularını esas alın."
+      },
+      {
+        "q": "Bilgi merkezinde neler yer alıyor?",
+        "a": "[Bilgi merkezi](/bilgi-merkezi/); mevzuat ve uygulama değişikliklerini izleyen [sirkülerleri](/bilgi-merkezi/sirkulerler/), [duyuruları](/bilgi-merkezi/duyurular/), konu odaklı [blog](/bilgi-merkezi/blog/) yazılarını, güncel [haberleri](/bilgi-merkezi/haberler/), sektör bazlı [raporları](/bilgi-merkezi/sektor-raporlari/) ve denetim, vergi ile bordro terimlerini açıklayan [sözlüğü](/bilgi-merkezi/sozluk/) bir araya getirir.\n\nBu içerikler genel bilgilendirme amaçlıdır; tarihli yayınlar, yayımlandıkları tarihteki mevzuat durumunu yansıtır."
+      }
+    ]
+  },
+  {
+    "id": "iletisim",
+    "title": "İletişim",
+    "intro": "Boraden’e ulaşma kanalları ve talep iletirken dikkat edilecek noktalar.",
+    "items": [
+      {
+        "q": "Boraden’e nasıl ulaşabilirim?",
+        "a": "Boraden’e e-posta ile info@boraden.com.tr adresinden, telefonla +90 (212) 483 26 11 numarasından ulaşabilir ya da [WhatsApp](https://wa.me/905532380335) üzerinden yazabilirsiniz. Tüm iletişim bilgileri [İletişim](/iletisim/) sayfasında yer alır."
+      },
+      {
+        "q": "Boraden’in adresi nedir?",
+        "a": "Maltepe Mahallesi, Yedikule Çırpıcı Yolu Sokak, Avrupa Kale Ofis Blok, No: 2, Kat: 2, Daire: 5, 34010 Zeytinburnu, İstanbul, Türkiye.\n\nZiyaret planlıyorsanız, görüşmenin planlanabilmesi için önceden telefon veya e-posta ile iletişime geçmeniz yararlı olur."
+      },
+      {
+        "q": "Talebimi iletirken hangi bilgileri yazmalıyım?",
+        "a": "Kısa bir ön bilgi yeterlidir: kuruluşunuzun türü (şirket, kamu kurumu, birey vb.), ihtiyaç duyduğunuz hizmet, varsa ilgili dönem veya tarih ve size ulaşılabilecek iletişim bilgisi.\n\nİlk yazışmada ayrıntılı finansal belge veya yoğun kişisel veri içeren dosyalar göndermeyin; gerekli belgeler kapsam netleştikten sonra konuşulur."
+      },
+      {
+        "q": "Talebime ne zaman dönüş yapılır?",
+        "a": "Dönüş süresi talebin niteliğine ve yoğunluğa göre değişebilir; bu nedenle sabit bir süre taahhüt edilmez. Zamana duyarlı bir konunuz varsa bunu talebinizde belirtmeniz ve telefonla da ulaşmanız yararlı olur."
+      },
+      {
+        "q": "Kariyer ve başvuru sorularım için ne yapmalıyım?",
+        "a": "İş başvurularına ilişkin bilgiler [Kariyer](/kariyer/) sayfasında yer alır; başvurularda o sayfadaki bilgileri esas almanız önerilir. Sorularınız için info@boraden.com.tr adresine de yazabilirsiniz."
+      },
+      {
+        "q": "Sitede güncel olmayan bir bilgi veya hata görürsem nasıl bildirebilirim?",
+        "a": "Konuyu, ilgili sayfanın bağlantısıyla birlikte info@boraden.com.tr adresine iletebilirsiniz. Mevzuat içerikleri ve hesaplayıcı parametreleri zamanla değişebileceğinden, bu tür bildirimler içeriklerin gözden geçirilmesine yardımcı olur."
+      }
+    ]
+  }
+]

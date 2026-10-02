@@ -1,0 +1,130 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+
+{% block head_extra %}
+<script type="application/ld+json">{{ ld | json_script }}</script>
+{% endblock %}
+
+{# Okuma notu. Wagtail karşılığı: ReadingNotePage — alanlar: topic, title, summary, intro, sections (StreamField: başlık + paragraf),
+   takeaway, questions (ListBlock), source_title, source_url, source_summary, source_date + source_date_verified (tarih yalnızca
+   doğrulanmışsa gösterilir), related_service (ServicePage'e ForeignKey). Sayfa: kâğıt (giriş + bölümler) → koyu bant
+   (önemli nokta) → kâğıt (sorular, kaynak, ilgili hizmet) → çağrı bandı. #}
+{% block main %}
+{{ m.phero(page, note.title, note.summary, note.topic, 6, ["Okuma notu " ~ (note.n | pad2) ~ " / " ~ (total | pad2)]) }}
+
+<div class="sheet sec--paper">
+  <div class="container">
+    <div class="svc g12 rn-doc">
+      <aside class="svc__side gc" style="--gc: 1 / span 3">
+        <nav class="toc" data-toc aria-label="Bu notta">
+          <p class="toc__h mono">Bu notta</p>
+          <ol>
+            <li><a href="#giris">Giriş</a></li>
+            {% for s in note.secs %}<li><a href="#{{ s.id }}">{{ s.title }}</a></li>{% endfor %}
+            <li><a href="#onemli-nokta">Önemli nokta</a></li>
+            {% if note.questions.length %}<li><a href="#sorular">Sorular</a></li>{% endif %}
+            <li><a href="#kaynak">Kaynak</a></li>
+          </ol>
+          {% if note.svc %}<a class="btn toc__cta" href="/iletisim/?hizmet={{ note.svc.id }}">Bu konuyu görüşelim {{ m.arrow() }}</a>{% endif %}
+        </nav>
+      </aside>
+
+      <div class="svc__main gc rn-main" style="--gc: 4 / span 8">
+        <section class="rn-intro-wrap" id="giris" aria-labelledby="giris-h">
+          <h2 class="rn-label mono" id="giris-h">Giriş</h2>
+          {# kelime kelime yanan metin görsel bir katmandır; ekran okuyucular düz kopyayı okur #}
+          <p class="sr-only">{{ note.intro }}</p>
+          <p class="rn-intro" data-lit aria-hidden="true">{{ note.intro }}</p>
+        </section>
+
+        {% for s in note.secs %}
+        <section class="rn-sec" id="{{ s.id }}" aria-labelledby="{{ s.id }}-h">
+          <p class="rn-label mono tnum" aria-hidden="true">{{ loop.index | pad2 }}</p>
+          <h2 class="rn-sec__h" id="{{ s.id }}-h" data-reveal>{{ s.title }}</h2>
+          <p class="rn-sec__p" data-reveal data-reveal-delay="1">{{ s.text }}</p>
+        </section>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="rn-band sec--dark" id="onemli-nokta" data-world="6" aria-labelledby="onemli-nokta-h">
+  <div class="container">
+    <div class="g12 rn-band__grid">
+      <h2 class="eyebrow gc rn-band__k" style="--gc: 1 / span 3" id="onemli-nokta-h" data-reveal>Önemli nokta</h2>
+      <div class="gc" style="--gc: 4 / span 8">
+        <span class="rn-band__rule" aria-hidden="true" data-reveal></span>
+        <p class="rn-band__q" data-reveal data-reveal-delay="1">{{ note.takeaway }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="sheet sec--paper rn-after">
+  <div class="container">
+    {% if note.questions.length %}
+    <section class="g12 rn-row2" id="sorular" aria-labelledby="sorular-h">
+      <h2 class="eyebrow gc" style="--gc: 1 / span 3" id="sorular-h" data-reveal>Konuşmaya başlamak için sorular</h2>
+      <ul class="gc ticklist rn-qs" style="--gc: 4 / span 8">
+        {% for q in note.questions %}<li data-reveal data-reveal-delay="{{ loop.index0 }}">{{ q }}</li>{% endfor %}
+      </ul>
+    </section>
+    {% endif %}
+
+    <section class="g12 rn-row2" id="kaynak" aria-labelledby="kaynak-h">
+      <h2 class="eyebrow gc" style="--gc: 1 / span 3" id="kaynak-h" data-reveal>Kaynak</h2>
+      <div class="gc rn-src" style="--gc: 4 / span 8" data-reveal>
+        <p class="rn-src__k mono">Kaynak metin</p>
+        <p class="rn-src__t">{{ note.sourceTitle }}</p>
+        {% if note.sourceDateShown %}<p class="rn-src__d mono">Kaynak tarihi: <time datetime="{{ note.sourceDateShown }}">{{ note.sourceDateShown | date_tr }}</time></p>{% endif %}
+        <p class="rn-src__s">{{ note.sourceSummary }}</p>
+        <p class="rn-src__go">
+          <a class="btn btn--ghost" href="{{ note.source }}" target="_blank" rel="noopener noreferrer">Kaynak metni açın{% if note.sourceIsPdf %} (PDF){% endif %} <span aria-hidden="true">↗</span><span class="sr-only"> (yeni sekmede açılır)</span></a>
+          {% if note.sourceHost %}<span class="rn-src__host mono">{{ note.sourceHost }}</span>{% endif %}
+        </p>
+      </div>
+    </section>
+
+    {% if note.svc %}
+    <section class="g12 rn-row2" aria-labelledby="ilgili-hizmet-h">
+      <h2 class="eyebrow gc" style="--gc: 1 / span 3" id="ilgili-hizmet-h" data-reveal>İlgili hizmet</h2>
+      <div class="gc" style="--gc: 4 / span 8" data-reveal>
+        <a class="card rn-svc" href="{{ note.svc.url }}">
+          <span class="card__meta"><span>{{ note.svc.groupName }}</span></span>
+          <span class="rn-svc__t">{{ note.svc.title }}</span>
+          <span class="rn-svc__d">{{ note.svc.lead | truncate_words(28) }}</span>
+          <span class="card__go textlink">Hizmeti inceleyin {{ m.arrow() }}</span>
+        </a>
+      </div>
+    </section>
+    {% endif %}
+
+    <div class="g12">
+      <div class="gc notice rn-disc" style="--gc: 4 / span 8" data-reveal>
+        <p><strong>Not.</strong> {{ disclaimer }}</p>
+      </div>
+    </div>
+
+    <nav class="svcnav" aria-label="Komşu okuma notları">
+      {% if prev %}
+      <a class="svcnav__a svcnav__a--prev" href="{{ prev.url }}" rel="prev">
+        <span class="svcnav__k mono">← Önceki not</span>
+        <span class="svcnav__t">{{ prev.title }}</span>
+      </a>
+      {% else %}<span></span>{% endif %}
+      {% if next %}
+      <a class="svcnav__a svcnav__a--next" href="{{ next.url }}" rel="next">
+        <span class="svcnav__k mono">Sonraki not →</span>
+        <span class="svcnav__t">{{ next.title }}</span>
+      </a>
+      {% else %}<span></span>{% endif %}
+    </nav>
+    <p class="svcback"><a class="textlink" href="{{ indexUrl }}">Tüm okuma notları {{ m.arrow() }}</a></p>
+  </div>
+</div>
+
+{% set cta_title = "Sorunuzu konuşalım." %}
+{% set cta_text = "Bu notun şirketinizdeki karşılığını birlikte değerlendirelim." %}
+{% include "partials/cta.njk" %}
+{% endblock %}

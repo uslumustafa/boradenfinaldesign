@@ -1,0 +1,134 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+{% import "partials/people.njk" as pp %}
+{% import "partials/blocks.njk" as bk %}
+
+{% block head_extra %}
+<script type="application/ld+json">{{ ld | json_script }}</script>
+{% endblock %}
+
+{# Hizmet alanı sayfası. Wagtail karşılığı: ServiceAreaPage (alt sayfalar: ServicePage; photo = görsel seçici).
+   Hizmet kartları alt sayfalardan, SSS toplamı ve ilgili sektör/hesaplayıcılar ilişkilerden HESAPLANIR (scripts/relations.mjs);
+   genel SSS = FaqItem.show_on_services. Bölümler veri yoksa çizilmez; HUD bölüm noktaları data-chapter'dan gelir. #}
+{% block main %}
+{% set rel = group.related %}
+{% set nSvc = group.services | length %}
+{% set nFaq = (rel.faq | length) + (model.generalFaq | length) %}
+{% set hasRel = (rel.sectors | length) or (rel.calculators | length) %}
+{{ m.phero(page, group.name, group.description, "Hizmet alanı · " ~ group.number, group.scene, [nSvc ~ " hizmet başlığı"]) }}
+
+<div class="sheet sec--paper">
+  <div class="container">
+
+    {{ bk.kunye(group.number, [
+      { k: "Hizmet", v: nSvc ~ " başlık" },
+      { k: "Sektör", v: ((rel.sectors | length) ~ " sektör sayfasında") if (rel.sectors | length) else "" },
+      { k: "Hesaplayıcı", v: ((rel.calculators | length) ~ " ilgili araç") if (rel.calculators | length) else "" }
+    ], { label: "Hizmet alanı künyesi" }) }}
+
+    <div class="g12 areahead">
+      <p class="eyebrow gc" style="--gc: 1 / span 4" data-reveal>Kapsam</p>
+      <p class="areahead__text gc" style="--gc: 5 / -1" data-lit>{{ group.scope }}</p>
+    </div>
+
+    {{ bk.figure(group.photo, { cls: "sfig--wide areaband", sizes: "(min-width: 1100px) 1300px, 100vw" }) }}
+
+    <section class="areasec" id="hizmetler" data-chapter="Hizmetler" aria-labelledby="areasvc-h">
+      <h2 class="svc__label mono" id="areasvc-h" data-reveal>Hizmet başlıkları</h2>
+      <ol class="acards">
+        {% for s in group.services %}
+        <li data-reveal data-reveal-delay="{{ loop.index0 % 2 }}">
+          <a class="acard acard--{{ ['b', 'r', 'g'][loop.index0 % 3] }}" href="{{ s.url }}">
+            <span class="acard__n mono tnum">{{ s.ref }}</span>
+            <span class="acard__t">{{ s.title }}</span>
+            <span class="acard__d">{{ s.lead }}</span>
+            {% if s.scopeItems | length %}
+            <span class="acard__scope">
+              {% for it in s.scopeItems %}<span>{{ it.title }}</span>{% endfor %}
+            </span>
+            {% endif %}
+            <span class="acard__go">Hizmeti inceleyin {{ m.arrow() }}</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ol>
+    </section>
+
+    {% if nFaq %}
+    <section class="areasec areafaq" id="sss" data-chapter="Sorular" aria-labelledby="areafaq-h">
+      <div class="g12">
+        <div class="gc" style="--gc: 1 / span 4">
+          <h2 class="svc__label mono" id="areafaq-h" data-reveal>Sık sorulanlar</h2>
+        </div>
+        <div class="gc" style="--gc: 5 / -1">
+          <div class="faq" data-reveal>
+            {% for f in rel.faq %}
+            <details>
+              <summary>{{ f.q }}</summary>
+              <div class="faq__a">
+                <p>{{ f.a }}</p>
+                <p class="faq__from"><a class="textlink" href="{{ f.serviceUrl }}">{{ f.serviceTitle }} {{ m.arrow() }}</a></p>
+              </div>
+            </details>
+            {% endfor %}
+            {% for f in model.generalFaq %}
+            <details>
+              <summary>{{ f.q }}</summary>
+              <div class="faq__a">{{ f.a | paras_rich }}</div>
+            </details>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+    {% endif %}
+
+    {% if hasRel %}
+    <section class="areasec arearel" id="ilgili" data-chapter="İlgili" aria-labelledby="arearel-h">
+      <div class="g12">
+        <div class="gc" style="--gc: 1 / span 4">
+          <h2 class="svc__label mono" id="arearel-h" data-reveal>İlgili içerik</h2>
+        </div>
+        <div class="gc" style="--gc: 5 / -1">
+          {{ bk.related({ sectors: rel.sectors, calculators: rel.calculators, terms: [], posts: [] }, { maxSectors: 10, maxCalcs: 6, showCount: true }) }}
+        </div>
+      </div>
+    </section>
+    {% endif %}
+
+    <div class="g12 areaother">
+      <div class="gc" style="--gc: 1 / span 4">
+        <p class="eyebrow" data-reveal>Diğer hizmet alanları</p>
+      </div>
+      <ul class="gc areaother__list" style="--gc: 5 / -1">
+        {% for g in groups %}{% if g.id != group.id %}
+        <li data-reveal>
+          <a class="arow" href="{{ g.url }}">
+            <span class="arow__n mono tnum">{{ g.number }}</span>
+            <span class="arow__t">{{ g.name }}</span>
+            <span class="arow__go" aria-hidden="true">→</span>
+          </a>
+        </li>
+        {% endif %}{% endfor %}
+      </ul>
+    </div>
+
+    <div class="notice" style="margin-top: clamp(3rem, 6vw, 5rem)" data-legal-review="BDY m.22">
+      <p><strong>Bağımsızlık ilkesi.</strong> {{ site.independenceNote }}</p>
+    </div>
+  </div>
+</div>
+
+{# ── Çalışma biçimimiz: koyu bant; arkada alanın 3B sahnesi (veri: approach.json) #}
+{{ bk.method(model.approach, { scene: group.scene }) }}
+
+{# ── Alt bölüm: bu alanla ilgilenen kişiler (alan sorumluları + alandaki hizmetlere atananlar — scripts/team.mjs) #}
+{{ pp.band(group.people, {
+  id: "ekip",
+  title: "Bu alanda sizinle ilgilenecek ekip.",
+  lead: group.name ~ " alanındaki hizmetleri yürüten ekip arkadaşlarımız. Konunuza uygun kişiyle doğrudan görüşme talep edebilirsiniz.",
+  label: "Bu alandaki hizmetleri"
+}) }}
+
+{% include "partials/cta.njk" %}
+{% endblock %}

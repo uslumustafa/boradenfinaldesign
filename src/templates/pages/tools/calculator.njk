@@ -1,0 +1,148 @@
+{% extends "layouts/base.njk" %}
+{% import "partials/macros.njk" as m %}
+
+{% block head_extra %}
+<script type="application/ld+json">{{ ld | json_script }}</script>
+{% endblock %}
+
+{# Hesaplayıcı sayfası. Wagtail karşılığı: CalculatorPage (girdi alanları, açıklama blokları, SSS, kaynaklar = StreamField/InlinePanel).
+   Form ve sonuç tarayıcıda src/assets/js/calc-ui.js ile, [data-calc-def] içindeki tanımdan üretilir. #}
+{% block main %}
+{{ m.phero(page, calc.title, calc.lead, "Hesaplayıcı · " ~ calc.groupLabel, calc.scene, [
+  (calc.paramsYear ~ " yılı parametreleri") if calc.paramsYear else "",
+  ("Doğrulama: " ~ (calc.paramsVerifiedOn | date_tr)) if calc.paramsVerifiedOn else ""
+]) }}
+
+<div class="sheet sec--paper">
+  <div class="container">
+
+    <section class="calc" data-calc aria-busy="true" aria-label="{{ calc.title }}">
+      <script type="application/json" data-calc-def>{{ def | json_script }}</script>
+      <div class="calc__grid">
+        <div class="calc__in">
+          <p class="calc__lab mono">Girdiler</p>
+          <form class="calc__form" data-calc-form onsubmit="return false" aria-label="Hesaplama girdileri">
+            <p class="calc__loading mono">Hesaplayıcı yükleniyor…</p>
+            <noscript><p class="notice notice--warn">Bu hesaplayıcının çalışması için tarayıcınızda JavaScript etkin olmalıdır.</p></noscript>
+          </form>
+        </div>
+        <div class="calc__out" data-calc-res>
+          <div class="calc__sum calc__sum--idle"><dl class="calc__main"><div><dt>Sonuç</dt><dd class="tnum">—</dd></div></dl></div>
+        </div>
+      </div>
+      <div class="calc__detail" data-calc-detail></div>
+      <p class="sr-only" data-calc-live role="status" aria-live="polite"></p>
+    </section>
+
+    <div class="svc g12 calcdoc">
+      <aside class="svc__side gc" style="--gc: 1 / span 3">
+        <nav class="toc" data-toc aria-label="Bu sayfada">
+          <p class="toc__h mono">Bu sayfada</p>
+          <ol>
+            {% if calc.explain | length %}<li><a href="#nasil">Nasıl hesaplanır</a></li>{% endif %}
+            {% if calc.assumptions | length %}<li><a href="#varsayimlar">Varsayımlar ve sınırlar</a></li>{% endif %}
+            {% if calc.faq | length %}<li><a href="#sss">Sık sorulanlar</a></li>{% endif %}
+            {% if calc.sources | length %}<li><a href="#kaynaklar">Kaynaklar</a></li>{% endif %}
+            {% if (calc.relatedCalcs | length) or (calc.relatedSvc | length) %}<li><a href="#ilgili">İlgili araçlar ve hizmetler</a></li>{% endif %}
+          </ol>
+        </nav>
+      </aside>
+
+      <div class="svc__main gc" style="--gc: 4 / -1">
+
+        {% if calc.explain | length %}
+        <section class="svc__sec" id="nasil">
+          <h2 class="svc__label mono" data-reveal>Nasıl hesaplanır</h2>
+          <div class="calcdoc__blocks">
+            {% for b in calc.explain %}
+            <div class="calcdoc__block" data-reveal>
+              <h3>{{ b.heading }}</h3>
+              {% for p in b.paragraphs %}<p>{{ p | rich }}</p>{% endfor %}
+            </div>
+            {% endfor %}
+          </div>
+        </section>
+        {% endif %}
+
+        {% if calc.assumptions | length %}
+        <section class="svc__sec" id="varsayimlar">
+          <h2 class="svc__label mono" data-reveal>Varsayımlar ve sınırlar</h2>
+          <ul class="ticklist" data-reveal>
+            {% for a in calc.assumptions %}<li>{{ a | rich }}</li>{% endfor %}
+          </ul>
+        </section>
+        {% endif %}
+
+        {% if calc.faq | length %}
+        <section class="svc__sec" id="sss">
+          <h2 class="svc__label mono" data-reveal>Sık sorulanlar</h2>
+          <div class="faq" data-reveal>
+            {% for f in calc.faq %}
+            <details>
+              <summary>{{ f[0] }}</summary>
+              <div class="faq__a"><p>{{ f[1] | rich }}</p></div>
+            </details>
+            {% endfor %}
+          </div>
+        </section>
+        {% endif %}
+
+        {% if calc.sources | length %}
+        <section class="svc__sec" id="kaynaklar">
+          <h2 class="svc__label mono" data-reveal>Kaynaklar</h2>
+          <ul class="srclist" data-reveal>
+            {% for s in calc.sources %}
+            <li><a class="srclink" href="{{ s[1] }}" target="_blank" rel="noopener noreferrer"><span>{{ s[0] }}</span><span class="srclink__go" aria-hidden="true">↗</span><span class="sr-only"> (yeni sekmede açılır)</span></a></li>
+            {% endfor %}
+          </ul>
+          <p class="calcdoc__upd mono" data-reveal>Son güncelleme: {{ calc.updated | date_tr }}{% if calc.paramsYear %} · {{ calc.paramsYear }} yılı parametreleri{% endif %}</p>
+        </section>
+        {% endif %}
+
+        {% if (calc.relatedCalcs | length) or (calc.relatedSvc | length) %}
+        <section class="svc__sec" id="ilgili">
+          <h2 class="svc__label mono" data-reveal>İlgili araçlar ve hizmetler</h2>
+          {% if calc.relatedCalcs | length %}
+          <p class="needs__h mono" data-reveal>Diğer hesaplayıcılar</p>
+          <ul class="svclist" data-reveal>
+            {% for r in calc.relatedCalcs %}
+            <li>
+              <a class="svcrow" href="{{ r.url }}">
+                <span class="svcrow__t">{{ r.title }}</span>
+                <span class="svcrow__d">{{ r.short }}</span>
+                <span class="svcrow__go" aria-hidden="true">→</span>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+          {% if calc.relatedSvc | length %}
+          <p class="needs__h mono" style="margin-top: 2.6rem" data-reveal>Bu konuda destek veren hizmetler</p>
+          <ul class="areaother__list" data-reveal>
+            {% for s in calc.relatedSvc %}
+            <li>
+              <a class="arow" href="{{ s.url }}">
+                <span class="arow__n mono tnum">{{ s.groupNumber }}</span>
+                <span class="arow__t">{{ s.title }}</span>
+                <span class="arow__go" aria-hidden="true">→</span>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </section>
+        {% endif %}
+
+      </div>
+    </div>
+
+    <div class="notice notice--warn" style="margin-top: clamp(2rem, 5vw, 4rem)" data-reveal>
+      <p><strong>Önemli.</strong> {{ (calc.disclaimer or site.disclaimer) | rich }}</p>
+    </div>
+  </div>
+</div>
+
+{% set cta_title = "Hesabın ötesinde bir sorunuz mu var?" %}
+{% set cta_text = "Sonuçlar tahminidir. Kendi durumunuz için kesin tutarı birlikte netleştirelim." %}
+{% include "partials/cta.njk" %}
+{% endblock %}

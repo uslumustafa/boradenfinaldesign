@@ -1,0 +1,135 @@
+{# Hizmet / hizmet alanı sayfalarının ortak blokları. Hepsi var olan veriden beslenir; hiçbir blokta elle yazılmış bilgi yoktur.
+   Wagtail karşılığı: includes/*.html — StreamField blokları ve sayfa get_context() içinde hesaplanan ilişkili sayfa kartları
+   (bkz. WAGTAIL_MAP.md › «Hizmet sayfası bileşenleri»). Blok açılıp kapatılır: veri yoksa hiçbir şey çizilmez. #}
+{% import "partials/macros.njk" as m %}
+
+{# Çalışma kâğıdı künyesi: denetçilerin çalışma kâğıdı başlığından esinlenen bir özet şeridi.
+   ref: «01.03» gibi alan.sıra kodu (yalnızca gezinme etiketi) · cells: [{ k, v, href? }] — v boşsa hücre çizilmez. #}
+{% macro kunye(ref, cells, o={}) %}
+{% set shown = [] %}
+{% for c in cells %}{% if c and c.v %}{% set _ = shown.push(c) %}{% endif %}{% endfor %}
+<dl class="kunye" style="--cols: {{ (shown | length) + 1 }}" data-reveal aria-label="{{ o.label or 'Künye' }}">
+  <div class="kunye__ref"><dt>Ref.</dt><dd class="tnum">{{ ref }}</dd></div>
+  {% for c in shown %}
+  <div><dt>{{ c.k }}</dt><dd>{% if c.href %}<a href="{{ c.href }}">{{ c.v }}</a>{% else %}{{ c.v }}{% endif %}</dd></div>
+  {% endfor %}
+</dl>
+{% endmacro %}
+
+{# Fotoğraf arası: arşiv karesi, görününce açılır (data-parallax → --pp). Süs amaçlıdır (alt=""): metin bilgisi taşımaz.
+   Wagtail karşılığı: ServicePage.photo / ServiceAreaPage.photo (görsel seçici). #}
+{% macro figure(key, o={}) %}
+{% if key and data.photos[key] %}
+<figure class="sfig{% if o.cls %} {{ o.cls }}{% endif %}" data-reveal>
+  <div class="sfig__media" data-parallax="0.12">
+    {{ m.photo(key, o.sizes or "(min-width: 900px) 780px, 100vw", "sfig__img", false, "") }}
+  </div>
+  <figcaption class="sfig__cap mono" aria-hidden="true">Boraden arşivi</figcaption>
+</figure>
+{% endif %}
+{% endmacro %}
+
+{# İlgili içerik: sektör · hesaplayıcı · sözlük · yazı. rel: service.related / group.related (scripts/relations.mjs).
+   Yalnızca dolu satırlar çizilir. o: { maxSectors, maxCalcs, maxTerms, maxPosts, showCount } — showCount: sektör çipinde x.n (alan sayfası). #}
+{% macro related(rel, o={}) %}
+{% set nSec = o.maxSectors or 6 %}
+{% set nCalc = o.maxCalcs or 3 %}
+{% set nTerm = o.maxTerms or 8 %}
+{% set nPost = o.maxPosts or 2 %}
+<dl class="rel" data-reveal>
+  {% if rel.sectors | length %}
+  <div class="rel__row rel__row--sector">
+    <dt class="rel__k mono">Sektörler</dt>
+    <dd class="rel__v">
+      <ul class="rel__chips">
+        {% for x in rel.sectors | limit(nSec) %}<li><a class="chip chip--link" href="{{ x.url }}">{{ x.name }}{% if o.showCount and x.n %}<span class="chip__n tnum" aria-hidden="true">{{ x.n }}</span><span class="sr-only"> ({{ x.n }} hizmet başlığı)</span>{% endif %}</a></li>{% endfor %}
+      </ul>
+      {% if rel.sectors | length > nSec %}<p class="rel__more"><a class="textlink" href="/sektorler/">Tüm sektörler {{ m.arrow() }}</a></p>{% endif %}
+    </dd>
+  </div>
+  {% endif %}
+  {% if rel.calculators | length %}
+  <div class="rel__row rel__row--calc">
+    <dt class="rel__k mono">Hesaplayıcılar</dt>
+    <dd class="rel__v">
+      <ul class="rel__list">
+        {% for x in rel.calculators | limit(nCalc) %}
+        <li><a class="rel__a" href="{{ x.url }}"><span class="rel__t">{{ x.title }}</span>{% if x.short %}<span class="rel__d">{{ x.short | truncate_words(15) }}</span>{% endif %}<span class="rel__go" aria-hidden="true">→</span></a></li>
+        {% endfor %}
+      </ul>
+      {% if rel.calculators | length > nCalc %}<p class="rel__more"><a class="textlink" href="/hesaplayicilar/">Tüm hesaplayıcılar {{ m.arrow() }}</a></p>{% endif %}
+    </dd>
+  </div>
+  {% endif %}
+  {% if rel.terms | length %}
+  <div class="rel__row rel__row--term">
+    <dt class="rel__k mono">Sözlük</dt>
+    <dd class="rel__v">
+      <ul class="rel__chips">
+        {% for x in rel.terms | limit(nTerm) %}<li><a class="chip chip--link" href="{{ x.url }}">{{ x.term }}</a></li>{% endfor %}
+      </ul>
+      {% if rel.terms | length > nTerm %}<p class="rel__more"><a class="textlink" href="/bilgi-merkezi/sozluk/">Sözlüğün tamamı {{ m.arrow() }}</a></p>{% endif %}
+    </dd>
+  </div>
+  {% endif %}
+  {% if rel.posts | length %}
+  <div class="rel__row rel__row--post">
+    <dt class="rel__k mono">Yazılar</dt>
+    <dd class="rel__v">
+      <ul class="rel__list">
+        {% for x in rel.posts | limit(nPost) %}
+        <li><a class="rel__a" href="{{ x.url }}"><span class="rel__t">{{ x.title }}</span><span class="rel__d">{{ x.typeLabel }} · {{ x.date | date_long }}</span><span class="rel__go" aria-hidden="true">→</span></a></li>
+        {% endfor %}
+      </ul>
+    </dd>
+  </div>
+  {% endif %}
+</dl>
+{% endmacro %}
+
+{# «Çalışma biçimimiz» bandı: her hizmet ve hizmet alanı sayfasının sonunda (veri: approach.json + about.principles).
+   Hakkımızda sayfasındaki «Yaklaşım» bandıyla aynı görsel dil (.ab-method / .ab-princ). Adımlar görününce tiklenir.
+   o: { scene, href } — href: «talep edin» düğmesinin adresi (hizmet sayfasında ?hizmet=…). #}
+{% macro method(ap, o={}) %}
+{% if ap and ap.steps | length %}
+{% set scene = o.scene if (o.scene or o.scene === 0) else 6 %}
+<section class="ab-method mth sec--dark" data-world="{{ scene }}" aria-labelledby="mth-h">
+  <div class="container">
+    <div class="g12">
+      <div class="gc" style="--gc: 1 / span 4">
+        <h2 class="eyebrow" id="mth-h" data-reveal>{{ ap.eyebrow }}</h2>
+      </div>
+      <div class="gc" style="--gc: 5 / -1">
+        <p class="ab-method__t" data-lit>{{ ap.title }}</p>
+        <p class="mth__cta" data-reveal>
+          <a class="btn" href="{{ o.href or '/iletisim/' }}">{{ ap.ctaLabel or 'Görüşme talep edin' }} {{ m.arrow() }}</a>
+          {% if ap.linkUrl %}<a class="textlink" href="{{ ap.linkUrl }}">{{ ap.linkLabel }} {{ m.arrow() }}</a>{% endif %}
+        </p>
+      </div>
+    </div>
+
+    <div class="ab-princ mth__steps">
+      <p class="ab-princ__k mono" data-reveal>{{ ap.stepsLabel }}</p>
+      <ol class="ab-princ__list mth__list">
+        {% for s in ap.steps %}
+        <li class="ab-princ__i mth__i ab-princ__i--{{ ['b', 'r', 'g'][loop.index0 % 3] }}" data-reveal data-reveal-delay="{{ loop.index0 + 1 }}">
+          <span class="ab-princ__n mono tnum">{{ loop.index | pad2 }}</span>
+          <h3>{{ s.title }}</h3>
+          <p>{{ s.text }}</p>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+
+    {% if ap.principles | length %}
+    <div class="mth__foot g12">
+      <p class="gc ab-princ__k mono" style="--gc: 1 / span 4" data-reveal>{{ ap.principlesLabel }}</p>
+      <ul class="gc mth__princ" style="--gc: 5 / -1">
+        {% for p in ap.principles %}<li data-reveal data-reveal-delay="{{ loop.index0 }}"><b>{{ p.title }}</b><span>{{ p.text }}</span></li>{% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endif %}
+{% endmacro %}
