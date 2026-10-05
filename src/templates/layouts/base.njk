@@ -66,7 +66,8 @@
   <div class="prog" aria-hidden="true"><div class="prog__fill"></div></div>
 
   <main id="main" tabindex="-1"
-        data-scene="{{ page.scene if page.scene !== null else '' }}"
+        data-scene="{{ page.scene if page.scene !== null else '' }}"{% if page.fig %}
+        data-shapes="{{ page.fig }}"{% endif %}
         data-url="{{ page.url }}"
         data-title="{{ page.titleFull }}"
         data-body-class="{{ page.bodyClass }}">

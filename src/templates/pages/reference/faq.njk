@@ -9,7 +9,7 @@
    Arama: listing.js; «Tümünü aç/kapat», aramada eşleşenleri açma, #soru çapası ve grup içindekiler izleme: modules/faq-tools.js.
    Her soru kalıcı kimlik taşır (<grup-id>-<sıra>) ve arama dizinine ayrı kayıt olarak girer. #}
 {% block main %}
-{{ m.phero(page, "Sık Sorulan Sorular", "Boraden ile çalışmanın çerçevesi, ücret ve kapsam, gizlilik ve bağımsızlık, hesaplayıcılar ve iletişim hakkında genel yanıtlar.", "Bilgi merkezi · SSS", 0, [(faq | length) ~ " başlık", qCount ~ " soru"]) }}
+{{ m.phero(page, "Sık Sorulan Sorular", "Boraden ile çalışmanın çerçevesi, ücret ve kapsam, gizlilik ve bağımsızlık, hesaplayıcılar ve iletişim hakkında genel yanıtlar.", "Bilgi merkezi · SSS", page.scene, [(faq | length) ~ " başlık", qCount ~ " soru"]) }}
 
 <div class="sheet sec--paper">
   <div class="container" data-listing="faq" data-module="faq-tools">
@@ -35,11 +35,12 @@
             {% endfor %}
           </ol>
         </nav>
+        {{ m.fig("side", faq[0].shape) }}
       </aside>
 
       <div class="gc qa-main" style="--gc: 4 / -1">
         {% for g in faq %}
-        <section class="qa-grp" id="{{ g.id }}" data-group="{{ g.id }}" aria-labelledby="{{ g.id }}-h">
+        <section class="qa-grp" id="{{ g.id }}" data-group="{{ g.id }}" aria-labelledby="{{ g.id }}-h"{% if g.shape and not loop.first %} data-shape-at="{{ g.shape }}"{% endif %}>
           <header class="qa-grp__head" data-reveal>
             <span class="qa-grp__no mono tnum">{{ g.number }} / {{ faq | length | pad2 }}</span>
             <h2 id="{{ g.id }}-h">{{ g.title }}</h2>
@@ -70,7 +71,7 @@
         <p data-reveal data-reveal-delay="2">Sorunuzu kısa bir notla iletebilirsiniz; konunun kapsamı ilk görüşmede birlikte netleştirilir.</p>
         <p class="qa-help__btns" data-reveal data-reveal-delay="3">
           <a class="btn" href="/iletisim/">İletişim sayfası {{ m.arrow() }}</a>
-          <a class="btn btn--ghost" href="tel:{{ contact.phoneHref }}">{{ contact.phone }}</a>
+          <a class="btn btn--ghost" href="tel:{{ contact.phoneHref }}">{{ contact.phone | phone }}</a>
         </p>
       </div>
       <div class="qa-help__side">

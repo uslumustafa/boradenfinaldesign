@@ -4,7 +4,6 @@ import { createScroll } from './scroll.js';
 import { initChrome } from './chrome.js';
 import { initRouter } from './router.js';
 import { createBehaviors } from './behaviors.js';
-import { initPointerFx } from './pointer-fx.js';
 
 window.__boraden = true;
 const html = document.documentElement;
@@ -54,7 +53,6 @@ const world = {
 
 const behaviors = createBehaviors({ fx, scroll, world });
 const chrome = initChrome(fx);
-initPointerFx(fx);
 behaviors.mount(mainEl);
 initRouter({ fx, world, mount: behaviors.mount, unmount: behaviors.unmount, onNavigate: chrome.onNavigate });
 chrome.onNavigate(location.pathname);

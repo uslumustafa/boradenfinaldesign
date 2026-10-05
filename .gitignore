@@ -7,6 +7,7 @@ tests/shots/
 docs/research/__pycache__/
 *.log
 .DS_Store
+.vercel/
 
 # NOT: src/assets/documents (≈156 MB, 247 PDF) depoda tutulur; Git LFS / harici depolama kararı için bkz. docs/HANDOFF.md §7.
 

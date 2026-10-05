@@ -36,7 +36,7 @@ function harness({ delayFirstCreation = false } = {}) {
   };
   const context = vm.createContext({
     initFx: () => fx, createScroll: () => ({}), initChrome: () => ({ onNavigate() {} }),
-    createBehaviors: () => ({ mount() {}, refreshMotion() {} }), initPointerFx() {}, initRouter() {},
+    createBehaviors: () => ({ mount() {}, refreshMotion() {} }), initRouter() {},
     window: {}, location: { pathname: '/' }, document: { documentElement: { classList: {
       contains: (name) => classes.has(name), add: (name) => classes.add(name), remove: (name) => classes.delete(name),
     } }, getElementById: () => ({}) },

@@ -19,9 +19,9 @@ tek vurgu (marka üç rengi yalnızca ince çizgi/nokta); parçacık alanı «an
 | Açılış perdesi | `.open` | — | yalnızca ilk gelişte; bkz. §3 |
 | Kahraman | `#giris` | 0 «Ufuk» (veri arazisi) | «Tam ✓ doğru ✓ zamanında ✓» (satırlar sloganın öbeklerinden; tikler §7); alt kenarda sis; imleç mercek etkisi |
 | Tanıtım | `#hakkimizda` | 0 | kuruluş yılı/6 alan/47 hizmet/11 araç (modelden); 4 adımlık çalışma akışı |
-| Hizmet alanları | `#alanlar` | 1–6 (`data-world-range`) | tek sabit sahne; her alan bir şekil: defter yaprakları, örnekleme kafesi, yapı ağacı, yıl halkası, veri katmanları, sütunlar |
+| Hizmet alanları | `#alanlar` | 1–6 (`data-world-range`) | tek sabit sahne; her alan bir şekil: defter ve beyan yaprakları, denetim dosyası (tablo + büyüteç + denetçi tikleri), yapı ağacı, yıl halkası, veri katmanları, sütunlar |
 | Film | `#film` | — | kaydırdıkça açılan çerçeve; ofis görüntüsü (§4) |
-| Sektörler | `#sektorler` | 5 (solda, `data-world-side="-1"`) | 8 sektörlük liste; üzerine gelince kısa tanım solda belirir |
+| Sektörler | `#sektorler` | `matris` = 31 (solda, `data-world-side="-1"`; 2026-10-05'e kadar 5 «veri katmanları» idi — Sistemler alanıyla aynı şekil tekrarlanıyordu) | 8 sektörlük liste; üzerine gelince kısa tanım solda belirir |
 | Araçlar | `#araclar` | — (açık zemin) | 4 hesaplayıcı çipi + mini KDV |
 | Bilgi | `#bilgi` | — | öne çıkan + son 3 yayın + arşiv satırı |
 | Kariyer | `#kariyer` | — | alan çipleri → `/kariyer/?alan=…` (açık pozisyon iddiası yok) |
@@ -45,7 +45,7 @@ Oynatma: otomatik yalnızca «Tam» katmanda, ≥ 900 px'te, veri tasarrufu kapa
 
 ## 5. Parçacık dünyası — ayar rehberi (`src/assets/js/world/`)
 
-- `formations.js` → `POSES[i]`: kamera `pos/look/fov/bright`. Formasyon x=0'dadır; kamera sola kayar (`x` negatif → şekil sağda). `lx` (sol yerleşimde kaydırma kazancı) ve `ls` (sol yerleşimde uzaklık çarpanı) yalnızca `data-world-side="-1"` bölümlerinde (sektörler, poz 5) etkilidir.
+- `formations.js` → `POSES[i]`: kamera `pos/look/fov/bright`. Formasyon x=0'dadır; kamera sola kayar (`x` negatif → şekil sağda). `lx` (sol yerleşimde kaydırma kazancı) ve `ls` (sol yerleşimde uzaklık çarpanı) yalnızca `data-world-side="-1"` bölümlerinde (sektörler: `matris`, poz 31; eski `katman` poz 5 de aynı değerleri taşır) etkilidir.
 - `world.js` → `pose()`: `k0` = dar ekranda (en-boy < 1,6) formasyonu ortaya çeker ve soldurur; ≥ 1,6'da `k0 = en-boy × 0,5` (formasyon merkezi genişliğin ≈ %68'inde kalır). Mobil: `uBright × 0,5`.
 - Shader: `uIntro` (açılışta dağınıktan toplanma), `uWave` (kahraman arazisi dalgası + alt sis), `uAspect`/`uPtr` (imleç merceği), `gl_PointSize` en az 1,9 px. Tam: 26 000 nokta (`fx.js`), Hafif: 9 000; uyarlanabilir düşürme 34 ms'de.
 - Yerleşim kuralı (1440×900): sol metin sütunu ≈ 600 px'te biter → şekil 620–1360 px aralığında (merkez ≈ 985 px). Bir pozu değiştirince 1440×900, 1920×1080 ve 1280×720'de bakın:
@@ -65,6 +65,6 @@ Ana sayfa v2.1'den sonra siteye yayılan etkileşim katmanları ana sayfada da �
 - **Header:** büyütüldü; aşağı kaydırınca kendiliğinden saklanır, yukarı kaydırma / üst kenar / fare / odak ile geri gelir; üstte ince ilerleme çizgisi (`chrome.js`, `.prog`). Açılış perdesi sırasında header perdenin üstünde kalır (§3).
 - **Bölüm noktaları (HUD):** ana sayfada elle işaretli `[data-chapter]` bölümlerinden (bölüm adı belirir); diğer uzun sayfalarda «Bu sayfada» menüsünden otomatik (`behaviors.js`). Beliren bölüm adı yarı saydam bir «hap» zemin üzerindedir (koyu/açık ton otomatik; içeriğin üstüne binse de okunur). «Kapalı» katmanda ve mobilde görünmez.
 - **Başlıkta denetçi tikleri:** «Tam, doğru, zamanında.» başlığındaki üç renkli noktalama, denetçilerin çalışma kâğıdına attığı kontrol işaretiyle (tik) değiştirildi — logodaki üç çizginin dili; mavi → kırmızı → yeşil sırayla «çizilir» (açılışta ≈ 1–2,3 sn). Başlık satırları `site.tagline`dan (`tagline_words` süzgeci) türer; okunan metin `h1[aria-label]`; tik süstür. «Kapalı»/hareket azaltma/JS yokken tikler hazır durur. CSS: `50-home.css › .hero__title .p`; test: `tests/hero.e2e.mjs`. **Eski görünüme dönmek için:** `50-home.css` içindeki `.hero__title .p` kurallarını kaldırıp `home.njk` başlığındaki `<i class="p" …></i>` yerine noktalama yazmak yeter.
-- **Mıknatıslı düğmeler** (`pointer-fx.js`; yalnızca hassas işaretçide, Tam/Hafif) ve **sayfa geçişi «3B noktalar akar»** (`router.js › world.surge`; Kapalı'da yok).
+- **Sayfa geçişi «3B noktalar akar»** (`router.js › world.surge`; Kapalı'da yok). Düğmeler fareye çekilmez (mıknatıs efekti kaldırıldı); «Tam»da yalnızca imleç ucunda küçük bir fare lensi vardır (`world.js › LENS`).
 - **BORADEN yazısı:** ana sayfa kahramanında fare hızlıca sağa-sola sallanınca parçacıklardan oluşur (`modules/swipe-word.js`; kelime logodan değil site yazı tipinden üretilir; Kapalı'da yok).
 - Sözleşme ve Wagtail karşılığı: `WAGTAIL_MAP.md` §7.

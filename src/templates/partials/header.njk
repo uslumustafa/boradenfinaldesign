@@ -88,7 +88,7 @@
     </ul>
     <div class="mnav__foot">
       <a class="btn" href="{{ site.cta.url }}">{{ site.cta.label }} <span class="arr" aria-hidden="true">→</span></a>
-      <a href="tel:{{ contact.phoneHref }}">{{ contact.phone }}</a>
+      <a href="tel:{{ contact.phoneHref }}">{{ contact.phone | phone }}</a>
       <a href="mailto:{{ contact.email }}">{{ contact.email }}</a>
     </div>
   </div>

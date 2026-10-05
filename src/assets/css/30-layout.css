@@ -287,6 +287,7 @@ html.hdr-hidden .hdr {
 }
 .mega__col h3 span {
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   color: var(--accent-dark);
 }
 .mega__col a {
@@ -389,6 +390,7 @@ html.hdr-hidden .prog {
 .mnav__list summary::after {
   content: '+';
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 1.2rem;
   color: var(--on-dark-3);
 }
@@ -454,11 +456,18 @@ html.hdr-hidden .prog {
 .phero > .container {
   position: relative;
 }
+@media (max-width: 900px) {
+  /* dar ekranda yazı tüm genişliği kaplar: degrade yandan değil aşağıdan koyulaşır (şekil üstte görünür, başlık/öz okunur kalır) */
+  .phero::before {
+    background: linear-gradient(180deg, rgba(8, 19, 42, 0.18) 0%, rgba(8, 19, 42, 0.62) 38%, rgba(8, 19, 42, 0.86) 70%, rgba(8, 19, 42, 0.9) 100%);
+  }
+}
 .crumbs {
   display: flex;
   flex-wrap: wrap;
   gap: 0.35rem 0.7rem;
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--fs-0);
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -474,8 +483,12 @@ html.hdr-hidden .prog {
   opacity: 0.6;
 }
 .phero h1 {
-  font-size: var(--fs-6);
-  max-width: 16ch;
+  /* Uzun başlık sağdaki parçacık şekline taşmasın: kutu ≈ 12,5ch (8 × fs-6), iki-üç satıra kırılır.
+     --lw (şablondan: en uzun kelimenin harf sayısı) 12'yi aşarsa yazı orantılı küçülür (8 × fs-6 ÷ 0,66em/harf ≈ 12,1 harf); böylece «Telekomünikasyon» gibi
+     uzun bir kelime kutuya sığar, harf ortasından bölünmez. Kutu genişliği yazı boyundan değil fs-6'dan türer. */
+  font-size: calc(var(--fs-6) * min(1, 12.1 / max(var(--lw, 1), 1)));
+  max-width: min(100%, calc(var(--fs-6) * 8));
+  text-wrap: balance;
 }
 .phero__lead {
   margin-top: clamp(1.2rem, 2.4vw, 2rem);
@@ -533,6 +546,7 @@ html.hdr-hidden .prog {
 }
 .ftr__cols h2 {
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.74rem;
   font-weight: 500;
   letter-spacing: 0.14em;
@@ -576,6 +590,7 @@ html.hdr-hidden .prog {
   align-items: center;
   gap: 0.8rem;
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.72rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -617,8 +632,11 @@ html.hdr-hidden .prog {
   color: #fff;
 }
 .cta h2 {
-  font-size: var(--fs-6);
-  max-width: 14ch;
+  /* --lw: en uzun kelimenin harf sayısı (şablondan). Yazı, o kelime sütuna sığacak kadar küçülür (geniş harfli kelimelerde ≈0,62em/harf; pay: 0,66);
+     «Kiminle görüşeceğinizden …» gibi başlıklar harf ortasından bölünmez. Kısa başlıklar fs-6'da kalır. */
+  font-size: min(var(--fs-6), calc(100cqi / (max(var(--lw, 1), 1) * 0.66)));
+  max-width: max(14ch, calc(var(--lw, 1) * 0.66em));
+  text-wrap: balance;
 }
 .cta__row {
   display: grid;
@@ -630,20 +648,39 @@ html.hdr-hidden .prog {
 }
 .cta__main {
   grid-area: main;
+  container-type: inline-size; /* başlık boyu sütun genişliğine göre (cqi) */
 }
 .cta__side {
   grid-area: side;
   padding-top: 1.5rem;
   border-top: 1px solid var(--line-dark-2);
   color: var(--on-dark-2);
+  container-type: inline-size; /* adres · e-posta · telefon düzeni kutunun kendi genişliğine göre (aşağıda) */
 }
 .cta__side dl {
   display: grid;
-  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1.2fr) minmax(0, 1fr);
+  /* telefon sütunu numaranın kendi genişliğinden dar olmaz (numara tek satırda kalır) */
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1.2fr) minmax(max-content, 1fr);
   gap: 1rem 2.4rem;
+}
+/* Dar kutuda (≈ 1500 px'in altındaki masaüstü, telefon) üç sütun sıkışıyordu: adres 10 satıra, e-posta adresi ikiye bölünüyordu.
+   Adres tam satır, altında e-posta | telefon; çok dar kutuda tek sütun. */
+@container (max-width: 42rem) {
+  .cta__side dl {
+    grid-template-columns: minmax(0, 1fr) max-content;
+  }
+  .cta__side dl > div:first-child {
+    grid-column: 1 / -1;
+  }
+}
+@container (max-width: 23rem) {
+  .cta__side dl {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 .cta__side dt {
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.72rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -678,8 +715,5 @@ html.hdr-hidden .prog {
   .cta__row {
     grid-template-columns: 1fr;
     grid-template-areas: 'main' 'side';
-  }
-  .cta__side dl {
-    grid-template-columns: 1fr;
   }
 }

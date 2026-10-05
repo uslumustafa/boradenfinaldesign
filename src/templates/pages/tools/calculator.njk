@@ -8,7 +8,7 @@
 {# Hesaplayıcı sayfası. Wagtail karşılığı: CalculatorPage (girdi alanları, açıklama blokları, SSS, kaynaklar = StreamField/InlinePanel).
    Form ve sonuç tarayıcıda src/assets/js/calc-ui.js ile, [data-calc-def] içindeki tanımdan üretilir. #}
 {% block main %}
-{{ m.phero(page, calc.title, calc.lead, "Hesaplayıcı · " ~ calc.groupLabel, calc.scene, [
+{{ m.phero(page, calc.title, calc.lead, "Hesaplayıcı · " ~ calc.groupLabel, page.scene, [
   (calc.paramsYear ~ " yılı parametreleri") if calc.paramsYear else "",
   ("Doğrulama: " ~ (calc.paramsVerifiedOn | date_tr)) if calc.paramsVerifiedOn else ""
 ]) }}
@@ -46,6 +46,7 @@
             {% if (calc.relatedCalcs | length) or (calc.relatedSvc | length) %}<li><a href="#ilgili">İlgili araçlar ve hizmetler</a></li>{% endif %}
           </ol>
         </nav>
+        {{ m.fig("side") }}
       </aside>
 
       <div class="svc__main gc" style="--gc: 4 / -1">

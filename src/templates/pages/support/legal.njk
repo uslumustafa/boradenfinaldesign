@@ -10,7 +10,7 @@
    Metindeki **kalın**, [etiket](/yol) ve [[Yer tutucu]] işaretlemesi `rich` süzgeciyle sunulur; şablonda hukuki metin yazılmaz.
    "Doldurulacak alanlar" ve "Hukuki inceleme notları" yalnızca durum Taslak iken görünür (yayımlanınca kendiliğinden kalkar). #}
 {% block main %}
-<section class="phero lg-hero sec--dark" data-world="0">
+<section class="phero lg-hero sec--dark" data-world="{{ page.scene }}">
   <div class="container">
     <nav aria-label="Sayfa yolu">
       <ol class="crumbs">
@@ -61,6 +61,7 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 9V3.5h10V9"/><rect x="3.5" y="9" width="17" height="8" rx="1"/><path d="M7 14h10v6.5H7z"/></svg>
           Yazdır
         </button>
+        {{ m.fig("side") }}
       </aside>
 
       <article class="svc__main gc lg-main" style="--gc: 4 / span 8">

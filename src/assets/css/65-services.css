@@ -63,6 +63,7 @@
 .kunye dt {
   margin-bottom: 0.4rem;
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.68rem;
   font-weight: 500;
   letter-spacing: 0.14em;
@@ -92,6 +93,7 @@
   align-items: center;
   gap: 0.55rem;
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-weight: 500;
   letter-spacing: 0.06em;
 }
@@ -149,6 +151,7 @@
   min-height: 11.5rem;
   padding: 1.5rem 1.35rem 1.55rem;
   background: var(--paper-2);
+  container-type: inline-size; /* .sc__t yazı boyu kart genişliğine göre (cqi) */
 }
 .sc--r {
   --c: var(--b-red);
@@ -179,7 +182,9 @@
   color: var(--ink-3);
 }
 .sc__t {
-  font-size: var(--fs-3);
+  /* --lw: ızgaradaki en uzun kelime (şablondan, tüm kartlar için ortak). «Dokümantasyon», «değerlendirilmesi» gibi kelimeler
+     dar kartta harf ortasından bölünmez; o ızgaranın başlıkları birlikte biraz küçülür. */
+  font-size: min(var(--fs-3), calc(100cqi / (max(var(--lw, 1), 1) * 0.66)));
   line-height: 1.15;
   letter-spacing: -0.012em;
 }
@@ -356,7 +361,8 @@
 .rel__row {
   --k: var(--b-blue);
   display: grid;
-  grid-template-columns: minmax(7.5rem, 1fr) minmax(0, 4fr);
+  /* en az «HESAPLAYICILAR» genişliği: etiket harf ortasından bölünmesin, satırlar arasında sütun hizası korunsun */
+  grid-template-columns: minmax(9.6rem, 1fr) minmax(0, 4fr);
   gap: 0.8rem clamp(1rem, 3vw, 2.4rem);
   align-items: start;
   padding: 1.35rem 0;
@@ -771,6 +777,7 @@
   padding-left: 0.55rem;
   border-left: 1px solid var(--line-strong);
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.72rem;
   font-weight: 500;
   color: var(--ink-3);

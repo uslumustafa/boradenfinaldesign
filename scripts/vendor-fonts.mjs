@@ -14,10 +14,9 @@ const FAMILIES = [
   { pkg: 'montserrat', variants: ['300', '300-italic', '400', '400-italic', '500', '600', '600-italic', '700'] },
   { pkg: 'open-sans', variants: ['300', '400', '400-italic', '500', '600', '700'] },
   { pkg: 'asap', variants: ['400', '500', '600', '700'] },
-  { pkg: 'ibm-plex-mono', variants: ['400', '500'] },
 ];
 
-let css = '/* Otomatik üretildi: scripts/vendor-fonts.mjs — Montserrat, Open Sans, Asap, IBM Plex Mono (SIL OFL) */\n';
+let css = '/* Otomatik üretildi: scripts/vendor-fonts.mjs — Montserrat, Open Sans, Asap (SIL OFL) — boraden.com.tr yazı tipi ailesi */\n';
 for (const fam of FAMILIES) {
   fs.copyFileSync(path.join(NM, fam.pkg, 'LICENSE'), path.join(OUT_FONTS, `${fam.pkg}.LICENSE`));
   for (const v of fam.variants) {

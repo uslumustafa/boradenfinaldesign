@@ -10,7 +10,7 @@
    Davranış modules/search.js'tedir: Türkçe harf katlama, VE mantığı, puanlama, türe göre gruplama, vurgulama, ?q= eşitlemesi,
    klavye (↑/↓, Enter, Esc). JS yokken önerilen yollar ve site haritası bağlantısı kullanılabilir. #}
 {% block main %}
-<section class="phero sr-hero sec--dark" data-world="0">
+<section class="phero sr-hero sec--dark" data-world="{{ page.scene }}">
   <div class="container">
     <nav aria-label="Sayfa yolu">
       <ol class="crumbs">
@@ -46,6 +46,7 @@
           <p class="toc__h mono">Türe göre</p>
           <div class="sr-chips" role="group" aria-label="Sonuçları türe göre süzün" data-sr-chips></div>
         </div>
+        {{ m.fig("side") }}
       </aside>
 
       <div class="gc sr-main" style="--gc: 4 / -1">

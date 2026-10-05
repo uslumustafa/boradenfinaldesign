@@ -168,6 +168,7 @@ p {
 }
 .mono {
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
 }
 .tnum {
   font-variant-numeric: tabular-nums;

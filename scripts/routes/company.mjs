@@ -5,6 +5,7 @@
 //   ServicePage → ContactTopic ilişkisinden üretilir).
 // Formlar statik sürümde yalnızca ön yüzdür: geçerli gönderim bir mailto: taslağı hazırlar, ağ isteği yoktur.
 import { baseOf, breadcrumbLd, graph, webPageLd } from '../ld.mjs';
+import { PAGE, ABOUT_SHAPE, sceneOf } from '../scenes.mjs';
 import { plainInline } from '../filters.mjs';
 
 const KIND = 'Kurumsal';
@@ -58,7 +59,9 @@ export function registerCompany({ add, model, site, home }) {
   const orgId = { '@id': `${baseOf(site)}/#organization` };
 
   // ——— Hakkımızda
-  const ap = model.aboutPage;
+  const ap0 = model.aboutPage;
+  // bölüm şekilleri (scenes.mjs › ABOUT_SHAPE): ilki sayfanın ikinci beyaz bölümünün açılış şekli, diğerleri bölüm işareti
+  const ap = ap0 && { ...ap0, sections: (ap0.sections || []).map((s) => ({ ...s, shape: ABOUT_SHAPE[s.id] ? (sceneOf(ABOUT_SHAPE[s.id]), ABOUT_SHAPE[s.id]) : null })) };
   if (ap) {
     const url = '/hakkimizda/';
     const title = ap.title || 'Hakkımızda';
@@ -74,7 +77,7 @@ export function registerCompany({ add, model, site, home }) {
       template: 'pages/company/about.njk',
       title,
       description: model.about?.foundation || site.description,
-      scene: 3,
+      ...PAGE.about,
       kind: KIND,
       crumbs,
       ctx: {
@@ -105,7 +108,7 @@ export function registerCompany({ add, model, site, home }) {
       template: 'pages/company/careers.njk',
       title,
       description: cr.lead,
-      scene: 7,
+      ...PAGE.careers,
       kind: KIND,
       crumbs,
       ctx: {
@@ -149,7 +152,7 @@ export function registerCompany({ add, model, site, home }) {
       template: 'pages/company/contact.njk',
       title,
       description: cp.lead,
-      scene: 7,
+      ...PAGE.contact,
       kind: KIND,
       crumbs,
       ctx: {

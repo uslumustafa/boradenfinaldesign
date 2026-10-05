@@ -103,7 +103,10 @@ export function initChrome(fx) {
     hdr.before(hot);
     let lastY = scrollY;
     let hidden = false;
+    let leaveT = 0;
     const setHidden = (v) => {
+      // header geri geldiyse bekleyen «fare çekildi → gizle» zamanlayıcısı iptal (yoksa üst kenardan çağrılan header 0,7 sn sonra kaçar)
+      if (!v) clearTimeout(leaveT);
       if (v === hidden) return;
       hidden = v;
       html.classList.toggle('hdr-hidden', v);
@@ -126,7 +129,8 @@ export function initChrome(fx) {
     hdr.addEventListener('focusin', () => setHidden(false));
     // fare gelince açılan header, fare çekilince (ve kaydırma aşağıdaysa) tekrar kaybolur
     hdr.addEventListener('mouseleave', () => {
-      if (scrollY >= 120 && !pinned()) setTimeout(() => !pinned() && !hdr.matches(':hover') && scrollY >= 120 && setHidden(true), 700);
+      clearTimeout(leaveT);
+      if (scrollY >= 120 && !pinned()) leaveT = setTimeout(() => !pinned() && !hdr.matches(':hover') && !hot.matches(':hover') && scrollY >= 120 && setHidden(true), 700);
     });
   }
 

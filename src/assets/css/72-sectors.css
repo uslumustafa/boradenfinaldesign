@@ -182,6 +182,7 @@
   cursor: pointer;
   list-style: none;
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.12em;
@@ -363,6 +364,7 @@
   padding-bottom: 1.1rem;
   border-bottom: 1px solid var(--line-dark-2);
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.12em;
@@ -385,6 +387,7 @@
 }
 .sx-mx__no {
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.68rem;
   letter-spacing: 0.12em;
   color: var(--accent-dark);
@@ -393,6 +396,7 @@
   padding: 1.6rem 0 0.6rem;
   text-align: left;
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.68rem;
   font-weight: 500;
   letter-spacing: 0.14em;
@@ -451,6 +455,7 @@
 }
 .sx-mx__sum {
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   color: var(--on-dark-2);
 }
 .sx-mx thead th.sx-mx__sum {
@@ -465,6 +470,7 @@
   border-bottom: 0;
   border-top: 1px solid var(--line-dark-2);
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.8rem;
   color: var(--on-dark-2);
 }
@@ -505,6 +511,14 @@
 .sx-dots i:nth-child(n + 6) {
   --k: 5;
 }
+/* Dar sütunlarda alan adları («DANIŞMANLIK») yatay sığmıyor ve harf ortasından bölünüyordu: dikey yazılır */
+@media (max-width: 1240px) {
+  .sx-mx__lbl {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    white-space: nowrap;
+  }
+}
 @media (max-width: 720px) {
   .sx-mx {
     font-size: 0.8rem;
@@ -514,23 +528,19 @@
     padding: 0.7rem 0.1rem;
   }
   .sx-mx thead th {
-    width: 10%;
+    width: 9.3%;
     letter-spacing: 0.06em;
   }
   .sx-mx thead th.sx-mx__corner {
-    width: 30%;
-  }
-  .sx-mx__lbl {
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    white-space: nowrap;
+    /* sektör adının en uzun kelimesi («Telekomünikasyon») tek satıra sığsın (yazı boyu da aşağıda vw ile sınırlı) */
+    width: 36%;
   }
   .sx-mx thead .sx-mx__no {
     display: none;
   }
   .sx-mx tbody th[scope='row'] a {
     display: block;
-    font-size: 0.86rem;
+    font-size: min(0.86rem, 3.15vw);
   }
   .sx-mx tbody th[scope='row'] .sx-mx__no {
     display: none;
@@ -590,6 +600,7 @@ html[data-fx='off'] .sx-ov__lead .w {
 }
 .sx-facts dt {
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.68rem;
   font-weight: 500;
   letter-spacing: 0.14em;
@@ -980,6 +991,7 @@ a.sx-mini__a:focus-visible {
 }
 .gl-stats dt {
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.14em;
@@ -1099,6 +1111,7 @@ a.sx-mini__a:focus-visible {
 }
 .gl-letter__n {
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--fs-0);
   letter-spacing: 0.14em;
   color: var(--ink-3);
@@ -1167,6 +1180,7 @@ a.sx-mini__a:focus-visible {
   width: 2.4rem;
   height: 2.4rem;
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.95rem;
   color: var(--ink-3);
   opacity: 0;
@@ -1196,6 +1210,7 @@ a.sx-mini__a:focus-visible {
   cursor: pointer;
   list-style: none;
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.12em;

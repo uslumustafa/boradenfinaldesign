@@ -3,6 +3,7 @@
 //   inceleme notları), SearchPage (istemci tarafı dizin; ileride wagtail.search), SitemapPage (sayfa ağacından üretilir).
 // Bu modül yalnızca türetilmiş alanları hesaplar (bölüm numaraları, kısa açıklama, site ağacı, sayaçlar).
 import { baseOf, breadcrumbLd, graph, webPageLd } from '../ld.mjs';
+import { PAGE } from '../scenes.mjs';
 import { plainInline } from '../filters.mjs';
 import { PUB_TYPES } from '../model.mjs';
 import { NOTES_URL, REPORTS_URL, notesModel } from './reading.mjs';
@@ -140,7 +141,7 @@ export function registerSupport(ctx) {
       template: 'pages/support/legal.njk',
       title: l.title,
       description,
-      scene: 0,
+      ...PAGE.legal,
       kind: 'Yasal',
       crumbs,
       // taslak metin arama motorlarına ve sitemap.xml'e girmez; site içi aramada bulunur (aşağıdaki kayıt)
@@ -175,7 +176,7 @@ export function registerSupport(ctx) {
     template: 'pages/support/search.njk',
     title: SEARCH_COPY.title,
     description: SEARCH_COPY.description,
-    scene: 0,
+    ...PAGE.search,
     kind: 'Sayfa',
     crumbs: [home],
     noindex: true,
@@ -200,7 +201,7 @@ export function registerSupport(ctx) {
     template: 'pages/support/sitemap.njk',
     title: SITEMAP_COPY.title,
     description: SITEMAP_COPY.description,
-    scene: 0,
+    ...PAGE.sitemap,
     kind: 'Sayfa',
     crumbs: [home],
     ctx: {

@@ -178,6 +178,7 @@ export async function build({ prod = false, quiet = false } = {}) {
       titleFull: r.titleFull || `${r.title} — ${data.site.name}`,
       description: r.description || data.site.description,
       scene: r.scene,
+      fig: r.fig || null,
       kind: r.kind,
       crumbs: r.crumbs,
       bodyClass: r.bodyClass || '',

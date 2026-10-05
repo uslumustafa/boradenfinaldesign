@@ -4,8 +4,16 @@
 // Görünürlük (v3): iri, parıltılı noktalar; ufuk arazisinde yavaş dalga; «Tam» katmanda fare lensi (ekran uzayında itme + parlama);
 // açılışta (opts.intro) noktalar dağınık hâlden formasyona toplanır — assemble() ile başlatılır.
 import { WebGLRenderer, Scene, PerspectiveCamera, BufferGeometry, BufferAttribute, Points, ShaderMaterial, AdditiveBlending, Sphere, Vector2, Vector3 } from 'three';
-import { buildFormations, mulberry32 } from './formations.js';
+import { lazyFormations, mulberry32, POSES, SPIN, SWAY, FORMATION_COUNT } from './formations.js';
 import { clamp, smoothstep } from '../util.js';
+
+// Fare lensi (yalnızca «Tam» katman): imlecin hemen çevresindeki noktalar hafifçe itilir, biraz büyür ve parlar.
+// Bilerek küçük ve ince tutulur — yalnızca imleç ucunda küçük bir parıltı; model okunur kalır. Hepsi buradan ayarlanır:
+//   falloff — düşüş sertliği; etki yarıçapı (%10 şiddet) ≈ √(2,3 / falloff) × ekran yüksekliğinin yarısı (120 → ≈ %14 → 900 px'te ≈ 62 px)
+//   push    — merkezde en fazla itme, NDC birimi (0,022 → 900 px'te ≈ 10 px)
+//   grow    — merkezde nokta boyutu artışı (katsayı)      glow — merkezde parlaklık artışı (katsayı)
+const LENS = { falloff: 120, push: 0.022, grow: 0.6, glow: 0.7 };
+const glf = (n) => n.toFixed(3); // GLSL ondalık sabiti
 
 const VERT = /* glsl */ `
   attribute vec3 aB;
@@ -71,8 +79,8 @@ const VERT = /* glsl */ `
           + vec2(sin(uTime * 1.3 + s * 40.0), cos(uTime * 1.1 + s * 31.0)) * 0.004 * wt;
     }
     vec2 d = (ndc - uPtr.xy) * vec2(uAspect, 1.0);
-    float push = exp(-dot(d, d) * 8.0) * uPtr.z;
-    ndc += normalize(d + vec2(1e-4)) * push * 0.085 / vec2(uAspect, 1.0);
+    float push = exp(-dot(d, d) * ${glf(LENS.falloff)}) * uPtr.z;
+    ndc += normalize(d + vec2(1e-4)) * push * ${glf(LENS.push)} / vec2(uAspect, 1.0);
 
     // sayfa geçişi: noktalar tıklanan noktadan dışarı akar (uSurge 0→1); yeni sayfada içeri akıp şekle oturur (1→0).
     // Ekran uzayında ölçekleme + uzayan parıltı (hız çizgisi); noktaya özgü hız → derinlik hissi.
@@ -95,12 +103,12 @@ const VERT = /* glsl */ `
     float dist = max(1.0, -mv.z);
     float size = mix(aSA.x, aSB.x, t);
     float tn = t < 0.5 ? aSA.y : aSB.y;
-    float psz = max(1.9, size * uPx * (96.0 / dist) * (1.0 + w * 0.5 + push * 1.3));
+    float psz = max(1.9, size * uPx * (96.0 / dist) * (1.0 + w * 0.5 + push * ${glf(LENS.grow)}));
     gl_PointSize = mix(psz, max(2.2, 2.6 * uPx), wt);
     gl_PointSize = min(gl_PointSize * (1.0 + sg * (1.3 + 2.0 * sp)), 110.0);
     float tw = 0.74 + 0.26 * sin(uTime * (0.6 + fract(s * 13.7)) + s * 50.0);
-    vA = (0.58 + 0.42 * fract(s * 7.31)) * tw * smoothstep(170.0, 12.0, dist) * uBright * uFade * (1.0 + push * 1.5) * smoothstep(0.0, 0.22, it);
-    vA = mix(vA, 0.95 * uFade * (1.0 + push * 1.2), wt);
+    vA = (0.58 + 0.42 * fract(s * 7.31)) * tw * smoothstep(170.0, 12.0, dist) * uBright * uFade * (1.0 + push * ${glf(LENS.glow)}) * smoothstep(0.0, 0.22, it);
+    vA = mix(vA, 0.95 * uFade * (1.0 + push * ${glf(LENS.glow * 0.8)}), wt);
     vA *= (1.0 + sg * 1.5) * (1.0 - smoothstep(0.95, 1.0, uSurge));
     // kahraman (uWave>0): ekranın alt kısmı sakinleşir → alt bilgi metni ve düğmeler okunur kalır
     vA *= 1.0 - uWave * 0.9 * (1.0 - smoothstep(-0.85, -0.25, ndc.y));
@@ -124,7 +132,7 @@ const FRAG = /* glsl */ `
   }
 `;
 
-const SPIN = [0, 1, 1, 1, 1, 1, 0.8, 0]; // Kapanış kemerinde sürekli dönüş yerine sınırlı salınım kullanılır.
+const LAST = FORMATION_COUNT - 1; // son sahne sırası
 const INTRO_S = 2.2; // toplanma süresi (sn)
 
 export async function createWorld({ fx, canvas, intro = false }) {
@@ -140,7 +148,7 @@ export async function createWorld({ fx, canvas, intro = false }) {
   renderer.setClearColor(0x000000, 0);
 
   const N = P.points;
-  const F = buildFormations(N);
+  const F = lazyFormations(N); // formasyonlar ilk erişimde üretilir (şekillerin tamamı açılışta değil)
   const scene = new Scene();
   const camera = new PerspectiveCamera(48, 1, 0.1, 400);
 
@@ -288,8 +296,8 @@ export async function createWorld({ fx, canvas, intro = false }) {
 
   function pose(a, b, f) {
     const e = smoothstep(0, 1, f);
-    const PA = F[a].pose;
-    const PB = F[b].pose;
+    const PA = POSES[a];
+    const PB = POSES[b];
     const k0 = twoCol ? aspect * 0.5 : clamp((aspect - 1.0) / 0.75); // iki sütunda formasyon genişliğin sabit oranında (≈ %68) durur; dar ekranda ortalanır ve metnin arkasında söner
     const k = k0 * (side < 0 ? side * (PA.lx ?? 1) * (1 - e) + side * (PB.lx ?? 1) * e : side); // side<0 → solda (lx: sol yerleşim kazancı)
     const L = (u, v) => u + (v - u) * e;
@@ -312,7 +320,8 @@ export async function createWorld({ fx, canvas, intro = false }) {
       camera.updateProjectionMatrix();
     }
     material.uniforms.uBright.value = L(PA.bright, PB.bright) * (0.5 + 0.5 * Math.min(1, k0));
-    const turn = scene => scene === 7 ? Math.sin(time * 0.24) * 0.2 + pointer.x * 0.1 : (SPIN[scene] ?? 1) * (time * 0.035 + pointer.x * 0.1);
+    // SWAY > 0: sürekli dönmek yerine ±SWAY rad salınır (kapı, düzlemsel şekiller); aksi hâlde SPIN çarpanıyla yavaş dönüş
+    const turn = (scene) => (SWAY[scene] > 0 ? Math.sin(time * 0.24) * SWAY[scene] + pointer.x * 0.1 : (SPIN[scene] ?? 1) * (time * 0.035 + pointer.x * 0.1));
     points.rotation.y = L(turn(a), turn(b));
   }
 
@@ -400,13 +409,14 @@ export async function createWorld({ fx, canvas, intro = false }) {
     } else if (Math.abs(sTarget - s) > 1.6) {
       dissolve = { phase: 'out', v: 1 };
     } else {
-      s += (sTarget - s) * (1 - Math.exp(-dt * 3.4));
+      s += (sTarget - s) * (1 - Math.exp(-dt * 2.6)); // süzülme: hızlı kaydırmada da geçiş ~1 sn sürer
       if (Math.abs(sTarget - s) < 0.0005) s = sTarget;
     }
 
-    const a = clamp(Math.floor(s), 0, 7);
-    const b = clamp(a + 1, 0, 7);
-    const f = a === 7 ? 0 : s - a;
+    const a = clamp(Math.floor(s), 0, LAST);
+    const f = a === LAST ? 0 : s - a;
+    // tam sayı sahnede B ikinci kez üretilmez (f = 0 → yalnızca A görünür)
+    const b = f === 0 ? a : clamp(a + 1, 0, LAST);
     fillPair(a, b);
     material.uniforms.uMix.value = f;
     material.uniforms.uTime.value = time;
@@ -530,7 +540,7 @@ export async function createWorld({ fx, canvas, intro = false }) {
 
   return {
     target(v, l = 0, sd = 1) {
-      sTarget = clamp(v, 0, 7);
+      sTarget = clamp(v, 0, LAST);
       liftT = clamp(l, -0.45, 0.45);
       sideT = sd < 0 ? -1 : 1;
       // noktalar ekran dışındayken (sayfa geçişi) yeni sahne çözülmeden/süzülmeden doğrudan oturur

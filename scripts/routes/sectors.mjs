@@ -4,6 +4,7 @@
 //   (glossary.json; related = kendine M2M, services = M2M ServicePage), FaqPage + FaqGroup/FaqItem (faq.json; InlinePanel).
 // Türetilmiş veri (sayılar, ilgi matrisi, harf grupları, ters bağlantılar) burada hesaplanır; şablonlar yalnızca sunar.
 import { baseOf, breadcrumbLd, faqLd, graph, listLd, orgRef, webPageLd } from '../ld.mjs';
+import { PAGE, FAQ_SHAPE, sceneOf } from '../scenes.mjs';
 import { plainInline, slugify } from '../filters.mjs';
 
 const pad2 = (n) => String(n).padStart(2, '0');
@@ -67,7 +68,7 @@ export function registerSectors({ add, data, model, site, home }) {
       template: 'pages/sectors/index.njk',
       title: 'Sektörler',
       description: `${industries.length} sektör ve ${segments.length} müşteri segmenti için denetim, vergi ve danışmanlık gündemi: öne çıkan konular, ilgili hizmetler, hesaplayıcılar ve sık sorulan sorular.`,
-      scene: 0,
+      ...PAGE.sectors,
       kind: 'Sektör',
       crumbs: [home],
       ctx: {
@@ -86,7 +87,8 @@ export function registerSectors({ add, data, model, site, home }) {
         title: s.name,
         titleFull: `${s.name}: Denetim, Vergi ve Danışmanlık Gündemi — ${site.name}`,
         description: s.lead,
-        scene: 0,
+        scene: s.shape,
+        fig: [s.shape],
         kind: s.kindLabel,
         crumbs,
         ctx: {
@@ -130,7 +132,7 @@ export function registerSectors({ add, data, model, site, home }) {
       title: 'Sözlük',
       titleFull: `Sözlük: Denetim, Vergi ve Bordro Terimleri — ${site.name}`,
       description: `Denetim, vergi, bordro, şirketler, değerleme, raporlama ve veri alanlarından ${terms.length} terimin kısa ve ayrıntılı açıklaması; ilgili hizmetler ve resmî kaynaklarıyla.`,
-      scene: 6,
+      ...PAGE.glossary,
       kind: 'Sözlük',
       crumbs: [home, kmCrumb],
       ctx: {
@@ -166,6 +168,7 @@ export function registerSectors({ add, data, model, site, home }) {
   const faq = (model.faq || []).map((g, i) => ({
     ...g,
     number: pad2(i + 1),
+    shape: FAQ_SHAPE[g.id] ? (sceneOf(FAQ_SHAPE[g.id]), FAQ_SHAPE[g.id]) : null, // bölüm işareti (data-fig-at)
     items: (g.items || []).map((it, k) => ({ ...it, id: `${g.id}-${k + 1}` })),
   }));
   if (faq.length) {
@@ -176,7 +179,7 @@ export function registerSectors({ add, data, model, site, home }) {
       template: 'pages/reference/faq.njk',
       title: 'Sık Sorulan Sorular',
       description: 'Çalışma biçimi, ücret ve kapsam, gizlilik ve bağımsızlık, hesaplayıcılar ve iletişim hakkında sık sorulan sorular ve genel yanıtları.',
-      scene: 0,
+      ...PAGE.faq,
       kind: 'SSS',
       crumbs: [home, kmCrumb],
       ctx: {

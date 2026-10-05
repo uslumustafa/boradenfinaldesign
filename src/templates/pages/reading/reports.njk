@@ -9,7 +9,7 @@
    (boş olabilir), url (dış), report_url?, announcement_url?, summary, kind (İstatistik/Rapor/Araştırma), checked_at.
    Süzme ve arama: listing.js (data-listing). Satırlar #id çapasıyla site içi aramadan doğrudan açılır. #}
 {% block main %}
-{{ m.phero(page, copy.title, copy.lead, "Bilgi merkezi · Kaynaklar", 5, [(reports | length) ~ " kaynak", kindsLabel, ("Son kontrol " ~ (lastChecked | date_tr)) if lastChecked else null]) }}
+{{ m.phero(page, copy.title, copy.lead, "Bilgi merkezi · Kaynaklar", page.scene, [(reports | length) ~ " kaynak", kindsLabel, ("Son kontrol " ~ (lastChecked | date_tr)) if lastChecked else null]) }}
 
 <div class="sheet sec--paper">
   <div class="container" data-listing="reports">

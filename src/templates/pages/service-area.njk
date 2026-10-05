@@ -15,7 +15,7 @@
 {% set nSvc = group.services | length %}
 {% set nFaq = (rel.faq | length) + (model.generalFaq | length) %}
 {% set hasRel = (rel.sectors | length) or (rel.calculators | length) %}
-{{ m.phero(page, group.name, group.description, "Hizmet alanı · " ~ group.number, group.scene, [nSvc ~ " hizmet başlığı"]) }}
+{{ m.phero(page, group.name, group.description, "Hizmet alanı · " ~ group.number, page.scene, [nSvc ~ " hizmet başlığı"]) }}
 
 <div class="sheet sec--paper">
   <div class="container">
@@ -35,9 +35,11 @@
 
     <section class="areasec" id="hizmetler" data-chapter="Hizmetler" aria-labelledby="areasvc-h">
       <h2 class="svc__label mono" id="areasvc-h" data-reveal>Hizmet başlıkları</h2>
-      <ol class="acards">
+      <div class="g12 areasvc">
+      <div class="gc areasvc__fig" style="--gc: 1 / span 4">{{ m.fig("pv", group.shape) }}</div>
+      <ol class="acards gc" style="--gc: 5 / -1">
         {% for s in group.services %}
-        <li data-reveal data-reveal-delay="{{ loop.index0 % 2 }}">
+        <li data-reveal data-reveal-delay="{{ loop.index0 % 2 }}" data-shape-hover="{{ s.shape }}">
           <a class="acard acard--{{ ['b', 'r', 'g'][loop.index0 % 3] }}" href="{{ s.url }}">
             <span class="acard__n mono tnum">{{ s.ref }}</span>
             <span class="acard__t">{{ s.title }}</span>
@@ -52,6 +54,7 @@
         </li>
         {% endfor %}
       </ol>
+      </div>
     </section>
 
     {% if nFaq %}

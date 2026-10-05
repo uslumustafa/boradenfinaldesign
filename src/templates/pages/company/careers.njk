@@ -10,14 +10,17 @@
 {% endblock %}
 
 {% block main %}
-{{ m.phero(page, cr.title, cr.lead, "Kurumsal", 7, [(cr.areas | length) ~ " çalışma alanı", "Genel başvuru"]) }}
+{{ m.phero(page, cr.title, cr.lead, "Kurumsal", page.scene, [(cr.areas | length) ~ " çalışma alanı", "Genel başvuru"]) }}
 
 <div class="sheet sec--paper">
   <div class="container">
 
     {# ── Giriş #}
     <div class="g12 cr-intro">
-      <p class="eyebrow gc" style="--gc: 1 / span 4" data-reveal>Kariyer</p>
+      <div class="gc cr-intro__side" style="--gc: 1 / span 4">
+        <p class="eyebrow" data-reveal>Kariyer</p>
+        {{ m.fig("lead", "basvuru") }}
+      </div>
       <div class="gc cr-intro__body" style="--gc: 5 / -1">
         {% for p in cr.intro %}
         <p class="{{ 'cr-intro__lead' if loop.first else 'cr-intro__p' }}" data-reveal{% if not loop.first %} data-reveal-delay="1"{% endif %}>{{ p | rich }}</p>

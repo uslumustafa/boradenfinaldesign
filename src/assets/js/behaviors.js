@@ -270,6 +270,14 @@ export function createBehaviors({ fx, scroll, world }) {
       '</ol>';
     document.body.appendChild(nav);
     const links = qsa('a', nav);
+    // etiketin içerikle çakışmadan sığacağı boşluk: ekranın sağ kenarı ile sayfa kabının sağ kenarı arası
+    const hudRoom = (a) => {
+      const box = root.querySelector('.container');
+      const label = a && a.querySelector('.hud__label');
+      if (!box || !label) return false;
+      const free = innerWidth - box.getBoundingClientRect().right;
+      return free > label.scrollWidth + 56;
+    };
     let cur = -1;
     let flashT = 0;
     let away = false;
@@ -294,8 +302,9 @@ export function createBehaviors({ fx, scroll, world }) {
         if (i === idx) l.setAttribute('aria-current', 'location');
         else l.removeAttribute('aria-current');
       });
-      // bölüm adı yalnızca değişimde kısa süre görünür (içeriğin üstüne binmesin)
-      if (!quiet) {
+      // bölüm adı yalnızca değişimde kısa süre görünür; sağ kenarda etiket kadar boş yer yoksa hiç görünmez (içeriğin üstüne binmesin —
+      // ör. 1440 px'te içerik sağ kenara kadar uzanır). Üzerine gelince / odaklanınca her zaman görünür.
+      if (!quiet && hudRoom(links[idx])) {
         nav.classList.add('is-flash');
         clearTimeout(flashT);
         flashT = setTimeout(() => nav.classList.remove('is-flash'), 1700);
@@ -409,6 +418,34 @@ export function createBehaviors({ fx, scroll, world }) {
     on(off);
   }
 
+  /* ── Şekil kutuları: figure.fig[data-shapes] alanlarına mürekkeple formasyon (modules/figure.js — ayrı parça, yalnızca sayfada kutu varsa yüklenir).
+        Şekil yazının arkasına değil, kendi yerine çizilir. «Kapalı» katmanda hareketsiz tek kare; katman değişince yeniden kurulur. */
+  function figures(root) {
+    const figs = qsa('figure.fig[data-shapes]', root);
+    if (!figs.length) return;
+    let dead = false;
+    const stops = [];
+    on(() => {
+      dead = true;
+      stops.forEach((stop) => {
+        try {
+          stop();
+        } catch (e) {
+          /* yoksay */
+        }
+      });
+    });
+    import('./modules/figure.js')
+      .then((m) => {
+        if (dead) return;
+        for (const el of figs) {
+          const stop = m.mount(el, { fx, main: root });
+          if (typeof stop === 'function') stops.push(stop);
+        }
+      })
+      .catch((err) => console.warn('[şekil] yüklenemedi:', err));
+  }
+
   /* ── Sayfa modülleri: <… data-module="ad"> → modules/ad.js (yalnızca gerektiğinde, ayrı parça olarak yüklenir).
         Modül `export function mount(el, ctx)` verir; ctx = { fx, scroll, on, root }. mount bir temizlik işlevi döndürebilir
         ya da ctx.on(temizlik) kaydedebilir; sayfa değişince çağrılır. Hareket tercihini izleyen modüller fx.onChange kullanır.
@@ -459,6 +496,7 @@ export function createBehaviors({ fx, scroll, world }) {
     hud(root);
     toc(root);
     director(root);
+    figures(root);
     scroll.refresh();
   }
   function clearMotion() {

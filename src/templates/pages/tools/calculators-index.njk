@@ -8,7 +8,7 @@
 {# Hesaplayıcı dizini. Wagtail karşılığı: CalculatorIndexPage (alt sayfalar: CalculatorPage) #}
 {% block main %}
 {% set yr = model.paramsLatest.bordro.year if model.paramsLatest.bordro else (model.paramsLatest.vergi.year if model.paramsLatest.vergi else '') %}
-{{ m.phero(page, "Hesaplayıcılar", "Ücret, maliyet, tazminat ve vergi hesapları; her sonuçta hesap adımları, varsayımlar ve kullanılan parametreler açıkça görünür.", "Araçlar", 5, [(model.calculators | length) ~ " hesaplayıcı", (yr ~ " yılı parametreleri") if yr else "Güncel parametreler"]) }}
+{{ m.phero(page, "Hesaplayıcılar", "Ücret, maliyet, tazminat ve vergi hesapları; her sonuçta hesap adımları, varsayımlar ve kullanılan parametreler açıkça görünür.", "Araçlar", page.scene, [(model.calculators | length) ~ " hesaplayıcı", (yr ~ " yılı parametreleri") if yr else "Güncel parametreler"]) }}
 
 <div class="sheet sec--paper">
   <div class="container" data-listing="calculators">
@@ -25,8 +25,11 @@
       </label>
     </div>
 
+    {# Liste solda; sağda yapışkan şekil: bölüme göre grubun şekli, satırın üzerine gelince hesaplayıcının şekli #}
+    <div class="g12 sidx">
+    <div class="gc sidx__list" style="--gc: 1 / span 8">
     {% for g in model.calcGroups %}
-    <section class="grp" data-group="{{ g.id }}" id="{{ g.id }}">
+    <section class="grp" data-group="{{ g.id }}" id="{{ g.id }}"{% if not loop.first %} data-shape-at="{{ g.shape }}"{% endif %}>
       <header class="grp__head">
         <div>
           <span class="grp__no mono tnum">{{ loop.index | pad2 }} / {{ (model.calcGroups | length + (1 if model.calendar else 0)) | pad2 }}</span>
@@ -37,7 +40,7 @@
       </header>
       <ul class="svclist">
         {% for c in g.items %}
-        <li data-item data-text="{{ (c.title ~ ' ' ~ c.short ~ ' ' ~ c.description) | lower_tr }}">
+        <li data-item data-text="{{ (c.title ~ ' ' ~ c.short ~ ' ' ~ c.description) | lower_tr }}" data-shape-hover="{{ c.shape }}">
           <a class="svcrow" href="{{ c.url }}">
             <span class="svcrow__t">{{ c.title }}</span>
             <span class="svcrow__d">{{ c.short }}</span>
@@ -50,7 +53,7 @@
     {% endfor %}
 
     {% if model.calendar %}
-    <section class="grp" data-group="takvim" id="takvim">
+    <section class="grp" data-group="takvim" id="takvim" data-shape-at="takvim">
       <header class="grp__head">
         <div>
           <span class="grp__no mono tnum">{{ (model.calcGroups | length + 1) | pad2 }} / {{ (model.calcGroups | length + 1) | pad2 }}</span>
@@ -72,6 +75,9 @@
     {% endif %}
 
     <p class="empty" data-empty hidden>Aramanızla eşleşen hesaplayıcı bulunamadı.</p>
+    </div>
+    <div class="gc sidx__fig" style="--gc: 9 / -1">{{ m.fig("pv", model.calcGroups[0].shape) }}</div>
+    </div>
 
     <div class="g12 toolsmeta">
       <p class="eyebrow gc" style="--gc: 1 / span 4" data-reveal>Parametreler</p>

@@ -2,6 +2,7 @@
 // Wagtail karşılığı: Page/Snippet modelleri + queryset'ler (bkz. WAGTAIL_MAP.md).
 import { buildTeam } from './team.mjs';
 import { buildRelations, pickGeneralFaq } from './relations.mjs';
+import { AREA_SHAPE, CALC_GROUP_SHAPE, sceneOf, figureOf, shapeOfArea, shapeOfService, shapeOfSector, shapeOfCalc } from './scenes.mjs';
 
 export const GROUP_SLUG = {
   vergi: 'vergi',
@@ -12,18 +13,10 @@ export const GROUP_SLUG = {
   akademi: 'akademi',
 };
 
-// Hizmet alanları için 3B sahne dizini (world.js içindeki formasyonlarla eşleşir)
-export const GROUP_SCENE = { vergi: 1, denetim: 2, danismanlik: 3, insan: 4, sistem: 5, akademi: 6 };
-
-// 3B sahnelerin şekil alt yazıları (Wagtail: ServiceAreaPage.figure_caption)
-export const GROUP_FIGURE = {
-  vergi: 'Defter yaprakları — kayıt ve beyan düzeni',
-  denetim: 'Örnekleme kafesi — kanıt ve seçilen örnekler',
-  danismanlik: 'Yapı ağacı — karar ve organizasyon yapısı',
-  insan: 'Yıl halkası — on iki aylık bordro döngüsü',
-  sistem: 'Veri katmanları — sistem ve raporlama',
-  akademi: 'Sütunlar — bilgi ve öğrenme',
-};
+// Hizmet alanlarının 3B sahnesi ve şekil alt yazısı: şekil kimliği scenes.mjs › AREA_SHAPE'te, sıra numarası ve açıklama formations.js'ten gelir
+// (Wagtail: ServiceAreaPage.scene + figure_caption). Ana sayfa, hizmet sayfalarının «çalışma biçimimiz» bandı ve alan sayfası bunu kullanır.
+export const GROUP_SCENE = Object.fromEntries(Object.entries(AREA_SHAPE).map(([id, shape]) => [id, sceneOf(shape)]));
+export const GROUP_FIGURE = Object.fromEntries(Object.entries(AREA_SHAPE).map(([id, shape]) => [id, figureOf(shape)]));
 
 // Hizmet alanı fotoğrafları: photos.json anahtarları (yalnızca gerçek arşiv kareleri; tek kişilik portre yok). İlk kare alan kartı/bandı,
 // tamamı hizmet sayfalarında sırayla kullanılır (aynı alandaki hizmetler farklı kare görür). Hizmet kaydında `photo` varsa o kullanılır.
@@ -44,13 +37,12 @@ export const PUB_TYPES = {
   news: { slug: 'haberler', label: 'Haber' },
 };
 
-// Hesaplayıcı grupları (dizin sayfası, süzgeç ve 3B sahne eşlemesi). Wagtail karşılığı: CalculatorCategory snippet'i.
+// Hesaplayıcı grupları (dizin sayfası ve süzgeç). Sahne/şekil eşlemesi: scenes.mjs › CALC_SHAPE. Wagtail karşılığı: CalculatorCategory snippet'i.
 export const CALC_GROUPS = [
   { id: 'bordro', label: 'Bordro ve maliyet', short: 'Bordro', blurb: 'Brüt–net ücret, işveren maliyeti ve asgari ücret hesapları.' },
   { id: 'vergi', label: 'Vergi', short: 'Vergi', blurb: 'Gelir vergisi, KDV, kurumlar vergisi, geçici vergi, serbest meslek makbuzu ve gecikme zammı.' },
   { id: 'tazminat', label: 'Tazminat', short: 'Tazminat', blurb: 'Kıdem ve ihbar tazminatı hesapları.' },
 ];
-export const CALC_SCENE = { bordro: 4, vergi: 1, tazminat: 4 };
 
 const MONTHS_TR = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
 const LEGAL_ORDER = ['kvkk-aydinlatma-metni', 'gizlilik-politikasi', 'cerez-politikasi', 'kullanim-kosullari'];
@@ -74,7 +66,8 @@ export function buildModel(data) {
     slug: GROUP_SLUG[g.id] || g.id,
     url: `/hizmetler/${GROUP_SLUG[g.id] || g.id}/`,
     index: i,
-    scene: GROUP_SCENE[g.id] ?? i + 1,
+    shape: shapeOfArea(g.id), // şekil kimliği (data-field işaretlerinde kullanılır)
+    scene: GROUP_SCENE[g.id],
     figure: GROUP_FIGURE[g.id] || '',
     scope: c.about?.scope?.[g.id] || '',
   }));
@@ -95,7 +88,10 @@ export function buildModel(data) {
       groupName: g.name,
       groupShort: g.short,
       groupNumber: g.number,
-      scene: g.scene,
+      groupShape: g.shape,
+      scene: g.scene, // alanın sahnesi (sayfa altındaki «çalışma biçimimiz» bandı)
+      // hizmetin kendi şekli: kahraman sahnesi + beyaz sayfa alanının açılışı (scenes.mjs › SERVICE_SHAPE)
+      shape: shapeOfService(s.id, s.group),
       url: `${g.url}${s.id}/`,
     };
   });
@@ -132,23 +128,25 @@ export function buildModel(data) {
 
   const archive = (data.archive || []).slice().sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')) || String(b.year || '').localeCompare(String(a.year || '')));
   const years = [...new Set(archive.map((a) => a.year))].sort((a, b) => b - a);
-  const sectors = (data.sectors || []).map((s) => ({ ...s, url: `/sektorler/${s.slug}/` }));
+  const sectors = (data.sectors || []).map((s) => ({ ...s, url: `/sektorler/${s.slug}/`, shape: shapeOfSector(s.slug) }));
 
   // ——— Ekip: kişiler + alan/hizmet/sektör ilişkileri (groups/services/sectors üzerine `people` yazılır; bkz. scripts/team.mjs)
   const team = buildTeam(data.team, { groups, services, sectors, photos });
 
   // ——— Hesaplayıcılar (bordro + vergi dosyaları birleştirilir)
   const latestParams = pickLatestParams(data.params);
-  const calcGroups = CALC_GROUPS.map((g) => ({ ...g }));
+  const calcGroups = CALC_GROUPS.map((g) => ({ ...g, shape: CALC_GROUP_SHAPE[g.id] }));
   const calculators = [...(data['calculators-bordro'] || []), ...(data['calculators-vergi'] || [])]
     .sort((a, b) => (a.order || 99) - (b.order || 99))
     .map((cl) => {
       const lp = latestParams[cl.params];
       const meta = lp ? data.params[lp.key]?.meta : null;
+      const shape = shapeOfCalc(cl.slug, cl.group);
       return {
         ...cl,
         url: `/hesaplayicilar/${cl.slug}/`,
-        scene: CALC_SCENE[cl.group] ?? 5,
+        shape,
+        scene: sceneOf(shape),
         groupLabel: CALC_GROUPS.find((g) => g.id === cl.group)?.label || cl.group,
         paramsKey: lp ? lp.key : null,
         paramsYear: lp ? lp.year : null,

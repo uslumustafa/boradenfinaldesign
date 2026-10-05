@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block main %}
-{{ m.phero(page, ap.title, ap.lead, "Kurumsal", 3) }}
+{{ m.phero(page, ap.title, ap.lead, "Kurumsal", page.scene) }}
 
 <div class="sheet sec--paper">
   <div class="container">
@@ -29,6 +29,7 @@
     <section class="ab-found g12" aria-labelledby="ab-found-h">
       <div class="gc" style="--gc: 1 / span 4">
         <h2 class="eyebrow" id="ab-found-h" data-reveal>Kuruluş ve kapsam</h2>
+        {{ m.fig("lead", "yazit") }}
       </div>
       <div class="gc" style="--gc: 5 / -1">
         <p class="ab-statement" data-lit>{{ about.foundation }}</p>
@@ -122,11 +123,12 @@
             {% for s in ap.sections %}<li><a href="#{{ s.id }}">{{ s.eyebrow }}</a></li>{% endfor %}
           </ol>
         </nav>
+        {{ m.fig("side", ap.sections[0].shape) }}
       </aside>
 
       <div class="ab-doc__main gc" style="--gc: 5 / -1">
         {% for s in ap.sections %}
-        <section class="ab-sec" id="{{ s.id }}" aria-labelledby="{{ s.id }}-h">
+        <section class="ab-sec" id="{{ s.id }}" aria-labelledby="{{ s.id }}-h"{% if s.shape and not loop.first %} data-shape-at="{{ s.shape }}"{% endif %}>
           <p class="ab-sec__k mono" data-reveal><span class="tnum">{{ loop.index | pad2 }}</span>{{ s.eyebrow }}</p>
           <h2 class="ab-sec__h" id="{{ s.id }}-h" data-reveal data-reveal-delay="1">{{ s.heading }}</h2>
           <div class="ab-sec__body">

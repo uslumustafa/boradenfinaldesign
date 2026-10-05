@@ -41,6 +41,7 @@ td > a:not([class]):hover {
   border: 1px solid var(--line-strong);
   background: #fff;
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.1em;
@@ -195,6 +196,7 @@ td > a:not([class]):hover {
   cursor: pointer;
   list-style: none;
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.74rem;
   font-weight: 500;
   letter-spacing: 0.12em;
@@ -270,6 +272,7 @@ td > a:not([class]):hover {
 .calc__main dt {
   margin-bottom: 0.7rem;
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.14em;
@@ -324,6 +327,7 @@ td > a:not([class]):hover {
   flex: none;
   max-width: 100%;
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.96rem;
   text-align: right;
   white-space: nowrap;
@@ -389,6 +393,7 @@ td > a:not([class]):hover {
   gap: 0.9rem;
   margin-bottom: 1.2rem;
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--fs-0);
   font-weight: 500;
   letter-spacing: 0.14em;
@@ -432,6 +437,7 @@ td > a:not([class]):hover {
   display: block;
   margin-top: 0.25rem;
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-style: normal;
   font-size: 0.8rem;
   color: var(--ink-3);
@@ -439,6 +445,7 @@ td > a:not([class]):hover {
 }
 .calc__steps strong {
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-weight: 500;
   white-space: nowrap;
 }
@@ -550,6 +557,7 @@ td > a:not([class]):hover {
   grid-column: 1 / -1;
   padding: 1rem 0 0;
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--fs-0);
   font-weight: 500;
   letter-spacing: 0.14em;
@@ -570,6 +578,7 @@ td > a:not([class]):hover {
 }
 .cal__nxd {
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.72rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -748,6 +757,7 @@ td > a:not([class]):hover {
   align-items: center;
   gap: 0.6rem;
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.72rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -795,6 +805,7 @@ td > a:not([class]):hover {
   content: counter(rule, decimal-leading-zero);
   padding-top: 0.15rem;
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--fs-0);
   letter-spacing: 0.12em;
   color: var(--ink-3);
@@ -878,6 +889,7 @@ td > a:not([class]):hover {
   .calc__recap dd {
     margin: 0;
     font-family: var(--f-mono);
+    font-variant-numeric: tabular-nums;
   }
   .calc__fields {
     display: none;

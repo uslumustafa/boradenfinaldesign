@@ -1,6 +1,7 @@
 // Ana sayfa + hizmet alanları + hizmet sayfaları.
 // Wagtail karşılığı: HomePage, ServiceIndexPage, ServiceAreaPage, ServicePage.
 import { breadcrumbLd, faqLd, graph, listLd, orgRef, baseOf } from '../ld.mjs';
+import { PAGE } from '../scenes.mjs';
 
 const SITE_TITLE = 'Boraden';
 
@@ -40,7 +41,7 @@ export function registerCore({ add, model, site, home }) {
     template: 'pages/services-index.njk',
     title: 'Hizmetler',
     description: 'Vergi, denetim, danışmanlık, insan kaynakları, sistemler ve eğitim alanlarında 47 hizmet başlığı.',
-    scene: 1,
+    ...PAGE.services,
     kind: 'Hizmet',
     crumbs: [home],
   });
@@ -51,7 +52,8 @@ export function registerCore({ add, model, site, home }) {
       template: 'pages/service-area.njk',
       title: g.name,
       description: g.description,
-      scene: g.scene,
+      scene: g.shape,
+      fig: [g.shape],
       kind: 'Hizmet alanı',
       crumbs: areaCrumbs,
       ctx: {
@@ -69,7 +71,8 @@ export function registerCore({ add, model, site, home }) {
         title: s.title,
         titleFull: s.seoTitle || `${s.title} — ${SITE_TITLE}`,
         description: s.description || s.lead,
-        scene: g.scene,
+        scene: s.shape,
+        fig: [s.shape],
         kind: 'Hizmet',
         crumbs,
         ctx: {

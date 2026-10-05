@@ -1,17 +1,7 @@
 
-/* ── Etkileşim efektleri: mıknatıslı düğmeler, sayfa geçişi (3B noktalar akar), «BORADEN» anı.
-      Hepsi yalnızca Tam/Hafif katmanda etkindir; «Kapalı»da ve hareket azaltmada yoktur. */
-
-/* Mıknatıslı düğmeler: konumu pointer-fx.js yazar (satır içi translate/scale; düzeni ve diğer dönüşümleri bozmaz).
-   İç ok simgesi, düğmeden biraz daha fazla kayarak derinlik hissi verir. */
-@media (hover: hover) and (pointer: fine) {
-  html:not([data-fx='off']) :is(.btn, [data-magnetic]).is-mag {
-    will-change: translate, scale;
-  }
-  html:not([data-fx='off']) .btn.is-mag .arr {
-    translate: calc(var(--mx, 0px) * 0.45) calc(var(--my, 0px) * 0.45);
-  }
-}
+/* ── Etkileşim efektleri: sayfa geçişi (3B noktalar akar), «BORADEN» anı.
+      Hepsi yalnızca Tam/Hafif katmanda etkindir; «Kapalı»da ve hareket azaltmada yoktur.
+      (Düğmeler fareye çekilmez — «mıknatıs» efekti kaldırıldı; düğmeler yalnızca kendi :hover durumuyla tepki verir.) */
 
 /* Sayfa geçişi (router.js + world.surge): içerik solar → 3B noktalar tıklanan noktadan dışarı akar →
    yeni sayfada noktalar şekle oturur, içerik yükselerek belirir. Perde/panel yoktur. */
@@ -61,4 +51,100 @@ html.is-word-out .hero__scroll {
 }
 html.is-word .hud {
   opacity: 0.25;
+}
+
+/* ── Şekil kutusu (js/modules/figure.js): beyaz sayfalarda formasyonun KENDİ yeri — yazının, kartın, fotoğrafın arkasına değil, yanına.
+      Koyu kahramandaki 3B dünyanın beyaz sayfadaki karşılığı: aynı şekil üreticileri, açık zeminde 2B tuval, mürekkep renkleri.
+      .fig--side  yapışkan yan sütunda «Bu sayfada» menüsünün altında (yüksekliği JS kalan boşluğa göre verir; yer yoksa .is-off)
+      .fig--pv    dizin sayfalarının yapışkan önizleme sütunu (üzerine gelinen hizmetin/sektörün şekli)
+      .fig--lead  bölüm içinde metnin yanında duran şekil
+      Not: «.field» sınıfı form alanlarınındır (form-kit); şekil bileşeni bilerek «.fig» adını taşır. */
+.fig {
+  position: relative;
+  margin: 0;
+}
+.fig__cv {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  max-height: calc(100vh - var(--hdr) - 9rem);
+}
+.fig__cap {
+  min-height: 3em;
+  margin: 0.8rem 0 0;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--line);
+  font-family: var(--f-action);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1.5;
+  color: var(--ink-3);
+}
+.fig__cap:empty {
+  visibility: hidden;
+}
+.fig__cap.is-in {
+  animation: fig-cap 800ms var(--ease-out) both;
+}
+@keyframes fig-cap {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.fig--side {
+  margin-top: 2.2rem;
+}
+.fig--side .fig__cv {
+  aspect-ratio: auto;
+  height: var(--fig-h, 280px);
+  max-height: none;
+}
+.fig--side.is-off {
+  display: none;
+}
+.fig--pv {
+  position: sticky;
+  top: calc(var(--hdr) + 2rem);
+}
+.fig--lead {
+  margin-top: clamp(1.6rem, 3vw, 2.4rem);
+}
+/* liste + yapışkan şekil sütunu (hizmetler ve hesaplayıcılar dizini, alan sayfasının hizmet kartları) */
+.sidx__fig,
+.areasvc__fig {
+  align-self: stretch; /* yapışkan şekil, listenin boyu kadar uzayan hücrede kayar */
+}
+.sidx__fig {
+  padding-top: clamp(3rem, 6vw, 5.5rem);
+}
+.areasvc__fig {
+  padding-top: clamp(1.6rem, 3vw, 2.4rem);
+}
+@media (max-width: 900px) {
+  .fig--side,
+  .fig--pv,
+  .sidx__fig,
+  .areasvc__fig {
+    display: none;
+  }
+  .fig--lead .fig__cv {
+    aspect-ratio: 4 / 3;
+    max-height: 70vw;
+  }
+}
+html:not(.js) .fig {
+  display: none;
+}
+@media (prefers-contrast: more), print {
+  .fig {
+    display: none !important;
+  }
 }

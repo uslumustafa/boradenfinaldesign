@@ -1,6 +1,7 @@
 # Boraden web sitesi — UX denetimi ve zenginleştirme planı
 
 Tarih: 2 Ekim 2026 · Kapsam: tüm sayfa tipleri (masaüstü 1440 px ve mobil 390 px ekran görüntüleri üzerinden) · Durum: **uygulandı** (ayrıntı §6); bu belge «neden böyle yaptık» kaydıdır.
+**Son değerlendirme: 5 Ekim 2026 — §7** (eklenecek / çıkarılacak / güncellenecek listesi).
 
 Bu belge iki soruyu yanıtlar: (1) Siteye ziyaretçi gözüyle baktığımızda neyi düzeltmeliyiz? (2) Hizmet, alan ve diğer «düz» sayfalar, **hiçbir bilgi uydurmadan** nasıl zenginleşir?
 
@@ -8,7 +9,7 @@ Bu belge iki soruyu yanıtlar: (1) Siteye ziyaretçi gözüyle baktığımızda 
 
 ## 1. Genel değerlendirme
 
-**Güçlü olanlar.** Tipografi (Newsreader başlık, IBM Plex gövde) ve renk disiplini (lacivert zemin + mavi/kırmızı/yeşil üç vurgu) tutarlı. Kalıcı 3B nokta «dünyası», sayfa geçişi, mıknatıslı düğmeler, ilerleme çizgisi ve gerçek arşiv fotoğrafları kurumsal ama canlı bir ton veriyor. Menü, arama, form, erişilebilirlik (atlama bağlantısı, odak yönetimi, azaltılmış hareket) ve hız (statik çıktı) sağlam.
+**Güçlü olanlar.** Tipografi (o tarihte Newsreader başlık, IBM Plex gövde; 5 Ekim'den beri boraden.com.tr ailesi — Montserrat, Open Sans, Asap; bkz. §7) ve renk disiplini (lacivert zemin + mavi/kırmızı/yeşil üç vurgu) tutarlı. Kalıcı 3B nokta «dünyası», sayfa geçişi, ilerleme çizgisi ve gerçek arşiv fotoğrafları kurumsal ama canlı bir ton veriyor. Menü, arama, form, erişilebilirlik (atlama bağlantısı, odak yönetimi, azaltılmış hareket) ve hız (statik çıktı) sağlam.
 
 **Ana sorun: «düzlük».** Hizmet ve hizmet alanı sayfalarında bölümler birbirinin aynısı: beyaz zemin, ince çizgi, 1–2 cümlelik metin, bölümler arası ~150–200 px boşluk. Ziyaretçi 47 hizmet sayfasından birini açtığında «ilginç bir şey olacak» hissini yaşamıyor; bir sonraki bölüme geçmek için görsel bir ödül yok. Kısa sayfa içeriği (az metin) bu düzlükte daha da boş görünüyor. Müşterinin dediği «düz yazı, boş gelecek» uyarısı doğru.
 
@@ -99,8 +100,71 @@ Plan, bu belgedeki sırayla uygulandı. Her bileşen mevcut alanlardan beslenir 
 - **Ana sayfa başlığında tikler:** «Tam ✓ doğru ✓ zamanında ✓» — slogandaki üç noktalama yerine denetçi tikleri (mavi · kırmızı · yeşil, sırayla çizilir). Sunumda şöyle anlatılabilir: denetçinin çalışma kâğıdında «eksiksiz mi, doğru mu, zamanında mı?» diye tek tek işaretlediği kontrolü hatırlatır. Metin uydurulmadı, yalnızca işaret eklendi. `tests/hero.e2e.mjs`.
 - **Ekip:** `/hakkimizda/ekibimiz/`, kişi profil sayfaları, her sektör/alan/hizmet sayfasının altında «İlgili ekip» kartı, iletişim formunda `?kisi=`.
 - **Fotoğraf politikası:** ekranında eski logo görünen kareler `photos.json` içinde `logo: true` ile işaretlidir ve hiçbir yerde seçilemez (`tests/logo.test.mjs`, `tests/relations.test.mjs`).
-- **Etkileşim cilası:** büyütülmüş ve kaydırınca kendiliğinden saklanan üst çubuk, üstte ince ilerleme çizgisi, mıknatıslı düğmeler, «3B noktalar akar» sayfa geçişi, ana sayfada hızlı fare sallamayla beliren BORADEN yazısı.
+- **Etkileşim cilası:** büyütülmüş ve kaydırınca kendiliğinden saklanan üst çubuk, üstte ince ilerleme çizgisi, «3B noktalar akar» sayfa geçişi, ana sayfada hızlı fare sallamayla beliren BORADEN yazısı.
 - **Dokunma hedefleri:** 390 px taramasında ekip bileşenlerinde ve künyede 20–22 px'lik bağlantılar bulundu (62 sayfa); iç boşluk/eksi dış boşlukla ≥ 24 px'e çıkarıldı, görünüm değişmedi (`75-team.css` sonu, `65-services.css › .kunye dd a`). `tests/audit.mjs` ve `services.e2e.mjs › mobile` korur.
 - **Bölüm adı etiketi:** sağ kenardaki noktalarda bölüm değişince beliren ad, içeriğin üstüne bindiğinde (ör. Ekibimiz'de sağ sütun) okunmuyordu; yarı saydam «hap» zemin eklendi (koyu bölümde lacivert, açık bölümde beyaz; `50-home.css › .hud__label`). `tests/hud.e2e.mjs` geçer.
 
 **Hâlâ açık.** Yazar kartı (veri yok); ekip biyografileri ve alan ↔ kişi eşleşmeleri «doğrulanacak»; portre fotoğrafı yalnızca yazılı rıza (KVKK) ile; fotoğraf ↔ alan eşleşmesi (`GROUP_PHOTOS`, `model.mjs`) ve «yaklaşım» metni (`approach.json`) müşteri onayı bekliyor.
+
+---
+
+## 7. Son değerlendirme (2026-10-05): eklenecek · çıkarılacak · güncellenecek
+
+**Kapsam.** Parçacık formasyonları ve beyaz sayfalardaki «Şekil» kutuları, yazı tipi değişikliği (Montserrat / Open Sans / Asap), ana sayfa «Hizmet alanları» ayarı ve Hakkımızda yazıtından sonra tüm sayfa tiplerine yeniden bakıldı: 1920 / 1440 / 1280 / 1024 / 390 px ekran görüntüleri (Tam, Hafif, Kapalı), kesilen/taşan yazı taraması (31 sayfa × 8 ekran boyu, sayfalar baştan sona kaydırılarak ≈ 5 200 kare) ve **sitedeki 125 sayfanın tamamında** kelime bölünmesi taraması (7 genişlik). Bu bölüm uzman değerlendirmesidir; kullanıcı araştırması ya da analitik veri yoktur.
+
+### 7.1 Kısa sonuç
+
+Site tutarlı ve kurumsal bir dile oturdu: koyu «dünya» bantları ile beyaz kâğıt sayfaların ritmi, her sayfada o sayfanın içeriğinden türeyen tek bir parçacık şekli (koyu kahramanda 3B, beyaz sayfada kendi kutusunda), boraden.com.tr yazı ailesi ve denetçi tikleri. Bu turda bulunan yerleşim hataları düzeltildi; büyük bir tasarım sorunu kalmadı. **Kalan işlerin çoğu tasarım değil, içerik ve onay işidir** (ekip bilgileri, İK hizmet kapsamları, yasal metinler, site simgesi ve paylaşım görseli, güncel fotoğraflar).
+
+### 7.2 Bu turda bulunan ve düzeltilenler
+
+| Bulgu | Neden | Düzeltme |
+|---|---|---|
+| Kelimeler harf ortasından bölünüyordu (32 yer): maaş tablosunda «Ocak» → O/c/a/k, vergi takviminde gün adları, Ekibimiz kapanış başlığında «görüşeceğinizde/n», sektör matrisinde «DANIŞMAN/LIK», mobilde «Telekomünikasyon», kapsam kartlarında «Dokümantasyon», Bilgi Merkezi'nde «Hesaplayıcıla/r» | Gövdedeki `overflow-wrap: anywhere` (200 % metin büyütmede taşmayı önlemek için eklenmişti) dar sütun ve tablo hücrelerini harf genişliğine kadar daraltıyor | Tablolarda kelime bölünmez, sığmazsa tablo yatay kayar (`40-components.css › .table`). Büyük başlıklar (sayfa başlığı, kapanış bandı, kapsam kartları) **en uzun kelimeye göre** gerekirse biraz küçülür: şablon `--lw` değişkenini `longest_word` süzgeciyle yazar, CSS kutuya sığacak boyu hesaplar. Matris etiketleri ≤ 1240 px'te dikey; «Koleksiyonlar» başlıkları sütun genişliğine göre (`cqi`); ilgili içerik ve rapor künyesi etiketleri daralmaz; tarihi teyit bekleyen yayın etiketi künye diliyle ve daha geniş sütunda. Gövdedeki genel ayar bilerek korundu (büyütülmüş metin testleri ona dayanıyor). |
+| Gizlilik politikasında yan şeklin alt yazısı kutusundan 17 px taşıyordu (1920 × 1080) | Yan sütunun öğe aralığı ve kendi yükseklik sınırı hesaba katılmıyordu | `modules/figure.js › fitSide` |
+| Kapanış bandındaki iletişim satırı 900–1500 px arasında sıkışıyordu: adres 6–12 satıra, e-posta adresi ikiye bölünüyor, telefon «483 26 / 11» diye kırılıyordu | Üç sütun her genişlikte sabit oranlıydı | Kutunun kendi genişliğine göre (container query): dar kutuda adres tam satır, altında e-posta \| telefon; telefonda tek sütun. Telefon numaralarında rakam grupları bölünmez boşlukla bağlı (`phone` süzgeci): numara en çok alan kodundan sonra kırılır, «483 26 / 11» olmaz; büyütülmüş metinde yine taşmaz |
+| Koyu bantlarda «düğümler» düz, ağır beyaz disklere dönüşüyordu (Ekibimiz, Sektörler, terazi, abaküs…) | Çok noktalı katmanda düğüme yüzlerce nokta düşüyor, toplamalı karışımda doyuyordu | Düğüm başına nokta tavanı (`world/draw.js › node`); artan pay çizgilere gider — ana sayfadaki «Yapı ağacı» gibi seyrek, parlak noktalar |
+| Ana sayfa «Sektörler» bandı, iki bölüm yukarıdaki «Sistemler» alanıyla aynı şekli (veri katmanı) tekrarlıyordu | Eski sahne numarası | Sektör × hizmet alanı matrisi (`data-world="{{ 'matris' \| scene }}"`) |
+| (Müşteri geri bildirimi) «Vergi ve Mali Müşavirlik» şeklinde yapraklar seçilmiyordu; «Denetim ve Raporlama»daki küp anlaşılmıyordu | Altı yaprak aynı yerde üst üste duruyor, üstten bakışta tek kutuya dönüşüyordu; örnekleme kafesi soyut kalıyordu | Vergi: yelpaze gibi açılmış dört yaprak, kameraya eğik; üstteki defter sayfasında mavi satırlar, kırmızı tutar sütunları, yeşil toplam, kıvrık köşe. Denetim: öndeki finansal tablo ve arkasındaki yaprak, örneklenen satırlarda mavi · kırmızı · yeşil denetçi tikleri, altta rapor çubukları ve üstünde büyüteç (merceğin içinde satır büyür, kontrol tiki). Üst üste binen kâğıtlarda arkadaki çizgiler çizilmez (`draw.js › lineVis`) |
+| Bilgi Merkezi «Koleksiyonlar» bandında şekil, sayı/metin ızgarasının arkasına düşüyordu | Şekil sağda, ızgara da sağda | Sakin ufuk arazisi (yazının arkasında şekil yok) |
+| (Aynı gün, önceki tur) form alanlarının kaybolması, ana sayfa alan listesinin şişip başlığın kesilmesi, üst çubuğun yeniden kaçması, bölüm etiketinin içeriğe binmesi | Sınıf/öznitelik çakışmaları, zamanlayıcı yarışı | Düzeltildi; bkz. `docs/HANDOFF.md` |
+
+Tarama aracı: `npm run test:text` (varsayılan 20 sayfa × 4 ekran), `--full` (31 × 8), `--all --sizes=…` (tüm sayfalar, kaydırmalı) ve `npm run test:words` (site haritasındaki tüm sayfalar × 7 genişlik, ≈ 5 dk). Yeni bir şablon ya da uzun başlıklı içerik eklendiğinde `test:words` çalıştırılmalı. Son durum: 31 sayfa × 8 ekranda (5 219 kare), sitedeki 125 sayfanın tamamında 1440 ve 390 px'te baştan sona kaydırarak (4 753 kare) ve 125 sayfa × 7 genişlikte kelime bölünmesi açısından sorun yok.
+
+### 7.3 Eklenecekler
+
+| Öncelik | Ne | Neden | Ne gerekiyor |
+|---|---|---|---|
+| Yüksek | **Site simgesi** (favicon) + Apple dokunma simgesi + web manifest | Şu an boş (`<link rel="icon" href="data:,">`): sekmede, yer imlerinde ve telefonun ana ekranında simge yok | Resmî logodaki tik işaretinden, logo dosyasına dokunmadan ayrı simge dosyaları; marka sahibinin onayı |
+| Yüksek | **Paylaşım görseli** (1200 × 630) | `og:image` şu an 211 × 48 px logo; LinkedIn/WhatsApp önizlemesi küçük ve boş görünür | Arşivden bir ofis fotoğrafı + logo; onay sonrası `site.shareImage` |
+| Orta | Makale **yazar kartı** | Yazının kimden geldiği güven verir; kişi bileşenleri (`partials/people.njk`) hazır, eksik olan veri | Hangi yazıyı kimin yazdığı bilgisi |
+| Orta | **Ekip portreleri** | Dört büyük lacivert monogram kutusu sayfayı ağırlaştırıyor | Yazılı rıza (KVKK). Portre gelmeyecekse kutu oranı küçültülmeli (bkz. 7.5) |
+| Orta | Mobilde **tablo kaydırma ipucu** | Maaş tablosu dar ekranda artık bölünmeden yatay kayıyor; kaydırılabildiği görünür olmalı | **Yapıldı:** kayan tablonun sağ kenarı yumuşakça söner, sona gelince söner kalkar (kaydırma zaman çizelgesi; desteklemeyen tarayıcıda tablo yine kayar). Telefonda tablolar biraz sıkılaştı: takvimdeki tatiller tablosu artık kaymadan sığıyor |
+| Orta (test) | Ana sayfada **hızlı görev kısayolları** (Hizmet bul · Hesapla · Kaynak ara · İletişim) | Hızlı bir iş için gelen ziyaretçi uzun kaydırmaya bağlı kalmaz | Mevcut bağlantıların yeniden düzeni; 5–8 kişilik görev testiyle karşılaştırılmalı |
+| Düşük | Sirküler/duyuru **e-posta bildirimi** | Müşterinin mevzuat takibini kolaylaştırır | Arka uç (Wagtail) ve açık rıza; tasarım onayından sonra |
+| Düşük | **İngilizce sürüm** | Transfer fiyatlandırması, yabancı uyruklu ikamet/çalışma izni, yurtdışına işçi gönderimi gibi hizmetler yabancı ziyaretçiye de hitap ediyor | İş kararı ve çeviri; Wagtail'de `wagtail-localize` |
+
+### 7.4 Çıkarılacaklar
+
+| Ne | Durum |
+|---|---|
+| Kullanılmayan yazı tipi dosyaları (Newsreader, IBM Plex Sans — 18 dosya, ≈ 376 KB; yayın paketine kopyalanıyordu) ve `@fontsource/{ibm-plex-mono, ibm-plex-sans, newsreader}` paketleri | **Yapıldı:** dosyalar `_to_delete/fonts/` altında, paketler `package.json` ve kilit dosyasından çıkarıldı |
+| `_to_delete/` klasörü (eski `field.js`, `pointer-fx.js`, eski yazı tipleri) | Depoya girmez; gözden geçirip silebilirsiniz |
+| **İK hizmetlerinde tekrar eden genel kapsam maddeleri** — 15 İK hizmetinin 14'ünde aynı üç madde («İhtiyacı belirleme · Süreç hazırlığı · Kontrol ve takip») | Hizmete özgü maddelerle değişmeli (içerik işi). Gelene kadar alan sayfasındaki kartlarda bu üç satırın gizlenmesi daha az «boş» görünür — karar sizin |
+| Koyu bantlarda yazının arkasına düşen şekiller | Bu turda Bilgi Merkezi «Koleksiyonlar» bandında kaldırıldı; diğer bantlarda şekil metnin yanında |
+
+### 7.5 Güncellenecekler
+
+| Öncelik | Ne | Neden / öneri |
+|---|---|---|
+| Yüksek (içerik) | Ekip biyografileri (4 kişi `needsVerification`), yasal metinler (taslak), üç blog yazısının yayın tarihi | Yayın öncesi kişilerin, hukuk müşavirinin ve editörün onayı |
+| Yüksek (içerik) | İK hizmet kapsamları | Yukarıda (7.4) |
+| Orta | Yıllık güncelleme: hesaplayıcı parametreleri (`src/data/params/2027-*.json`) ve vergi takvimi | Sayfalar «2026 yılı parametreleri · Doğrulama: 1 Ekim 2026» gösteriyor; Ocak 2027'de yeni yıl dosyaları eklenmeli |
+| Orta | Ekibimiz monogram kutuları | Portre gelmeyecekse 4:5 oranı 1:1'e indirilebilir; kartlar hafifler |
+| Düşük (test) | Mobilde iletişim ve Ekibimiz kahramanı | Kahraman en az ekranın %64'ü (şekil üstte, metin altta): iletişim bilgileri ilk ekranın altında kalıyor. Görev sayfaları için kısa kahraman varyantı denenebilir |
+| Düşük | Mobil SSS kahramanı | Şekil metnin arkasında; koyulaştırıldı, okunuyor. İstenirse mobilde şekil başlığın üstüne alınır |
+| Düşük | Kısa blog yazıları | Kısa metne göre büyük kahraman: «kısa başlık + üç temel nokta + kaynaklar» düzeni (bkz. depo dışı `SITE_AUDIT_REPORT.md` §G) |
+
+### 7.6 Bilerek korunanlar
+
+Koyu bant + beyaz kâğıt ritmi; şekillerin yazının arkasına değil kendi yerine çizilmesi; tek H1; Tam / Hafif / Kapalı kademeleri ve «hareket azaltma»; gerçek arşiv fotoğrafları; fotoğrafsız uzmanlarda monogram; formların «taslak hazırlanır» dürüstlüğü; resmî logoya dokunulmaması; hiçbir bilginin uydurulmaması.

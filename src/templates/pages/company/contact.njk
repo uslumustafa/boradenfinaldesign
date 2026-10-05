@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block main %}
-{{ m.phero(page, cp.title, cp.lead, "Kurumsal", 7) }}
+{{ m.phero(page, cp.title, cp.lead, "Kurumsal", page.scene) }}
 
 <div class="sheet sec--paper">
   <div class="container">
@@ -27,13 +27,14 @@
             <a class="ct-channel" href="{{ ch.href }}"{% if ext %} target="_blank" rel="noopener noreferrer"{% endif %}>
               <span class="ct-channel__ic">{{ kit.icon(ch.id) }}</span>
               <span class="ct-channel__k mono">{{ ch.label }}</span>
-              <span class="ct-channel__v tnum">{{ ch.value }}</span>
+              <span class="ct-channel__v tnum">{{ (ch.value | phone) if ch.value.startsWith("+") else ch.value }}</span>
               <span class="ct-channel__go" aria-hidden="true">{{ "↗" if ext else "→" }}</span>
               {% if ext %}<span class="sr-only"> (yeni sekmede açılır)</span>{% endif %}
             </a>
           </li>
           {% endfor %}
         </ul>
+        {{ m.fig("lead") }}
       </section>
 
       {# ── Form (modules/contact-form.js) #}

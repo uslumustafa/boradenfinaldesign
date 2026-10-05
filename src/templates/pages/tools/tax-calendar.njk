@@ -9,7 +9,7 @@
    Geçmiş/sıradaki işaretleme, kalan gün ve .ics dışa aktarma tarayıcıda calc-ui.js ile yapılır. #}
 {% block main %}
 {% set cal = model.calendar %}
-{{ m.phero(page, "Vergi Takvimi", "Beyanname, ödeme ve bildirim günleri. Hafta sonu ve resmî tatil kaymaları işlenmiştir; her kaydın kaynağı yanındadır.", "Araçlar · Takvim", 1, [
+{{ m.phero(page, "Vergi Takvimi", "Beyanname, ödeme ve bildirim günleri. Hafta sonu ve resmî tatil kaymaları işlenmiştir; her kaydın kaynağı yanındadır.", "Araçlar · Takvim", page.scene, [
   (cal.count ~ " kayıt"),
   (cal.meta.from | date_short) ~ " – " ~ (cal.meta.to | date_short),
   "Doğrulama: " ~ (cal.meta.verifiedOn | date_tr)

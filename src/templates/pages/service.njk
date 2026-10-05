@@ -15,7 +15,7 @@
 {% set nFaq = nOwnFaq + (model.generalFaq | length) %}
 {% set nSteps = service.steps | length %}
 {% set nScope = service.scopeItems | length %}
-{{ m.phero(page, service.title, service.lead, group.name ~ " · " ~ group.number, group.scene) }}
+{{ m.phero(page, service.title, service.lead, group.name ~ " · " ~ group.number, page.scene) }}
 
 <div class="sheet sec--paper">
   <div class="container">
@@ -45,6 +45,7 @@
           </ol>
           <a class="btn toc__cta" href="/iletisim/?hizmet={{ service.id }}">Bu hizmet için görüşelim {{ m.arrow() }}</a>
         </nav>
+        {{ m.fig("side") }}
       </aside>
 
       <div class="svc__main gc" style="--gc: 4 / -1">
@@ -72,7 +73,7 @@
         <section class="svc__sec" id="kapsam">
           <h2 class="svc__label mono" data-reveal>Kapsam</h2>
           {% if service.intro %}<p class="svc__lead" data-reveal>{{ service.intro }}</p>{% endif %}
-          <ol class="sgrid sgrid--{{ nScope }}">
+          <ol class="sgrid sgrid--{{ nScope }}" style="--lw:{{ service.scopeItems | longest_word('title') }}">
             {% for it in service.scopeItems %}
             <li class="sc sc--{{ ['b', 'r', 'g'][loop.index0 % 3] }}" data-reveal data-reveal-delay="{{ loop.index0 }}">
               <span class="sc__n mono tnum">{{ loop.index | pad2 }}</span>
@@ -86,7 +87,7 @@
         </section>
 
         {% if nSteps %}
-        <section class="svc__sec" id="surec">
+        <section class="svc__sec" id="surec" data-shape-at="akis">
           <h2 class="svc__label mono" data-reveal>Süreç</h2>
           <ol class="flow flow--{{ nSteps }}" data-steps style="--n: {{ nSteps }}">
             {% for st in service.steps %}
@@ -173,7 +174,7 @@
       </div>
     </div>
 
-    <nav class="svcnav" aria-label="Komşu hizmetler">
+    <nav class="svcnav" aria-label="Komşu hizmetler" data-shape-at="{{ group.shape }}">
       {% if prev %}
       <a class="svcnav__a svcnav__a--prev" href="{{ prev.url }}" rel="prev">
         <span class="svcnav__k mono">← Önceki</span>

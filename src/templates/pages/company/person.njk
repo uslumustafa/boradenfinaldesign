@@ -12,7 +12,7 @@
 
 {% block main %}
 {% set p = person %}
-{{ m.phero(page, p.name, p.summary, p.role, 3, p.titlesShort) }}
+{{ m.phero(page, p.name, p.summary, p.role, page.scene, p.titlesShort) }}
 
 <div class="sheet sec--paper">
   <div class="container">
@@ -33,12 +33,13 @@
           {% if p.contact %}
           <ul class="pf-contact">
             {% if p.contact.email %}<li><a href="mailto:{{ p.contact.email }}">{{ p.contact.email }}</a></li>{% endif %}
-            {% if p.contact.phone %}<li><a href="tel:{{ p.contact.phone | replace(' ', '') }}">{{ p.contact.phone }}</a></li>{% endif %}
+            {% if p.contact.phone %}<li><a href="tel:{{ p.contact.phone | replace(' ', '') }}">{{ p.contact.phone | phone }}</a></li>{% endif %}
             {% if p.contact.linkedin %}<li><a href="{{ p.contact.linkedin }}" target="_blank" rel="noopener noreferrer">LinkedIn <span aria-hidden="true">↗</span><span class="sr-only"> (yeni sekmede açılır)</span></a></li>{% endif %}
           </ul>
           {% endif %}
           <a class="btn pf-card__cta" href="/iletisim/?kisi={{ p.slug }}">Görüşme talep edin {{ m.arrow() }}</a>
         </div>
+        {{ m.fig("side") }}
       </aside>
 
       <div class="svc__main gc" style="--gc: 4 / -1">

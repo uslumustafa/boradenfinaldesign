@@ -2,6 +2,7 @@
 // Wagtail karşılığı: TeamIndexPage (HakkımızdaPage'in alt sayfası) → TeamMemberPage (bkz. scripts/team.mjs, WAGTAIL_MAP.md «Ekip»).
 // Kişi–alan/hizmet/sektör ilişkileri model aşamasında kurulur (model.team; groups/services/sectors üzerinde `people`).
 import { baseOf, breadcrumbLd, graph, listLd, orgRef, webPageLd } from '../ld.mjs';
+import { PAGE } from '../scenes.mjs';
 import { plainInline } from '../filters.mjs';
 
 const KIND = 'Ekip';
@@ -24,7 +25,7 @@ export function registerTeam({ add, model, site, home }) {
     title: team.title,
     titleFull: `${team.title}: Yönetici ve Uzmanlarımız — ${site.name}`,
     description: team.lead,
-    scene: 3,
+    ...PAGE.team,
     kind: 'Kurumsal',
     crumbs: [home, aboutCrumb],
     ctx: {
@@ -58,7 +59,7 @@ export function registerTeam({ add, model, site, home }) {
       title: p.name,
       titleFull: `${p.name} — ${p.role} — ${site.name}`,
       description: p.summary,
-      scene: 3,
+      ...PAGE.person,
       kind: KIND,
       crumbs,
       ctx: {

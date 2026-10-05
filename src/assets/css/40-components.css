@@ -46,6 +46,7 @@
 }
 .field__label {
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.12em;
@@ -102,6 +103,7 @@
   padding-right: 1rem;
   color: var(--ink-3);
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.9rem;
 }
 .field__help {
@@ -252,6 +254,7 @@ a.card:hover,
 }
 .card__meta {
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.72rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -288,6 +291,7 @@ a.card:hover,
   padding: 0.25rem 0.8rem;
   border: 1px solid var(--line-strong);
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.72rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -362,6 +366,29 @@ a.chip:hover {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
+/* Dar ekranda yatay kayan tablo: sağ kenar yumuşakça söner (kaydırılabildiği belli olsun), sona gelince söner kalkar.
+   Tablo sığıyorsa kaydırma zaman çizelgesi etkin değildir → maske yok. Desteklemeyen tarayıcıda tablo yine kayar, yalnızca ipucu çıkmaz. */
+@property --tw-fade {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+@supports (animation-timeline: scroll()) {
+  .table-wrap {
+    -webkit-mask-image: linear-gradient(to left, transparent, #000 var(--tw-fade));
+    mask-image: linear-gradient(to left, transparent, #000 var(--tw-fade));
+    animation: tw-fade linear both;
+    animation-timeline: scroll(self inline);
+  }
+  @keyframes tw-fade {
+    from {
+      --tw-fade: 3.2rem;
+    }
+    to {
+      --tw-fade: 0px;
+    }
+  }
+}
 .table {
   min-width: 100%;
   font-size: 0.93rem;
@@ -373,9 +400,13 @@ a.chip:hover {
   text-align: left;
   border-bottom: 1px solid var(--line);
   vertical-align: top;
+  /* gövdedeki «anywhere» tabloda sütunu harf genişliğine kadar daraltıyordu (Ocak → O/c/a/k). Hücrede kelime bölünmez;
+     tablo sığmazsa .table-wrap içinde yatay kayar. */
+  overflow-wrap: break-word;
 }
 .table th {
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.12em;
@@ -395,6 +426,16 @@ a.chip:hover {
   font-weight: 600;
   border-top: 1px solid var(--ink);
   border-bottom: 0;
+}
+@media (max-width: 480px) {
+  /* telefonda biraz sıkı: kısa tablolar (ör. takvimdeki tatiller) kaymadan sığar */
+  .table {
+    font-size: 0.86rem;
+  }
+  .table th,
+  .table td {
+    padding-right: 0.75rem;
+  }
 }
 
 /* ── Bildirim kutusu */
@@ -462,6 +503,7 @@ a.chip:hover {
   padding: 0 0.8rem;
   border: 1px solid var(--line-strong);
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.82rem;
 }
 .pager button:hover {

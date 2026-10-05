@@ -42,9 +42,18 @@
     </nav>
     {% endif %}
     {% if eyebrow %}<p class="eyebrow" data-reveal>{{ eyebrow }}</p>{% endif %}
-    <h1 style="margin-top:1.2rem" data-reveal data-reveal-delay="1">{{ title }}</h1>
+    <h1 style="margin-top:1.2rem;--lw:{{ title | longest_word }}" data-reveal data-reveal-delay="1">{{ title }}</h1>
     {% if lead %}<p class="phero__lead" data-reveal data-reveal-delay="2">{{ lead }}</p>{% endif %}
     {% if chips and chips.length %}<div class="phero__meta" data-reveal data-reveal-delay="3">{% for c in chips %}{% if c %}<span class="chip">{{ c }}</span>{% endif %}{% endfor %}</div>{% endif %}
   </div>
 </section>
+{% endmacro %}
+
+{# Şekil kutusu (js/modules/figure.js): sayfanın parçacık şekli KENDİ yerinde çizilir — yazının, kartın arkasında değil.
+   kind: "side" (yapışkan yan sütunda menünün altında; boş yer yoksa kendini gizler) · "pv" (dizinlerde yapışkan önizleme sütunu)
+         · "lead" (bölüm içinde metnin yanında).  shapes: boşlukla ayrılmış formasyon kimlikleri; boşsa sayfanın varsayılanı
+   (main[data-shapes]). Bölüm işaretleri [data-shape-at] ve üzerine gelme şekilleri [data-shape-hover] aynı beyaz bölümde (.sheet) aranır.
+   Süs öğesidir (aria-hidden); JS yoksa, yazdırmada ve yüksek karşıtlıkta görünmez. Wagtail: şablon parçası, veri gerekmez. #}
+{% macro fig(kind="side", shapes="") %}
+<figure class="fig fig--{{ kind }}" data-shapes="{{ shapes }}" aria-hidden="true"><canvas class="fig__cv"></canvas><figcaption class="fig__cap"></figcaption></figure>
 {% endmacro %}

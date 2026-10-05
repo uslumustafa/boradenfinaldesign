@@ -7,7 +7,7 @@
         <address class="ftr__addr">
           {{ contact.street }}<br>
           {{ contact.postcode }} {{ contact.district }} / {{ contact.city }}<br>
-          <a href="tel:{{ contact.phoneHref }}">{{ contact.phone }}</a> ·
+          <a href="tel:{{ contact.phoneHref }}">{{ contact.phone | phone }}</a> ·
           <a href="mailto:{{ contact.email }}">{{ contact.email }}</a>
         </address>
       </div>

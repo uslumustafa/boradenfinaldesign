@@ -10,7 +10,7 @@
    Mobilde her satır <details> ile açılır. İlgi matrisi rota modülünde sectors.json listelerinden sayılır (uydurma değer yok). #}
 
 {% macro row(s) %}
-<li class="sx-row" data-sx-row="{{ s.slug }}">
+<li class="sx-row" data-sx-row="{{ s.slug }}" data-shape-hover="{{ s.shape }}">
   <a class="sx-row__a" href="{{ s.url }}">
     <span class="sx-row__n mono tnum">{{ s.number }}</span>
     <span class="sx-row__name">{{ s.name }}</span>
@@ -31,7 +31,7 @@
 {% endmacro %}
 
 {% block main %}
-{{ m.phero(page, "Sektörler", "Denetim, vergi ve danışmanlık gündemi sektörden sektöre değişir. Her sayfa; öne çıkan konuları, ilgili hizmet başlıklarını, hesaplayıcıları ve sık sorulan soruları bir araya getirir.", "Sektörler ve müşteri segmentleri", 0, [(industries | length) ~ " sektör", (segments | length) ~ " müşteri segmenti"]) }}
+{{ m.phero(page, "Sektörler", "Denetim, vergi ve danışmanlık gündemi sektörden sektöre değişir. Her sayfa; öne çıkan konuları, ilgili hizmet başlıklarını, hesaplayıcıları ve sık sorulan soruları bir araya getirir.", "Sektörler ve müşteri segmentleri", page.scene, [(industries | length) ~ " sektör", (segments | length) ~ " müşteri segmenti"]) }}
 
 <div class="sheet sec--paper">
   <div class="container" data-module="sector-index">
@@ -64,6 +64,7 @@
       </div>
 
       <div class="gc sx-dir__side" style="--gc: 9 / span 4" aria-hidden="true">
+        {{ m.fig("side", sectors[0].shape) }}
         <div class="sx-pv" data-sx-pv>
           {% for s in sectors %}
           <div class="sx-pv__card{% if loop.first %} is-on{% endif %}" data-sx-card="{{ s.slug }}">

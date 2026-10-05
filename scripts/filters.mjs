@@ -1,5 +1,6 @@
 // Nunjucks süzgeçleri — Django şablon süzgeçleriyle bire bir karşılık gelecek şekilde adlandırıldı.
 import nunjucks from 'nunjucks';
+import { sceneOf } from './scenes.mjs';
 
 const MONTHS = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
 const SHORT = ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara'];
@@ -50,6 +51,27 @@ export function taglineWords(s, max = 4) {
   if (parts.length < 2) parts = String(s ?? '').split(/\s+/).map(clean).filter(Boolean);
   if (parts.length > max) parts = [...parts.slice(0, max - 1), parts.slice(max - 1).join(' ')];
   return parts;
+}
+
+// En uzun kelimenin harf sayısı (noktalama ve satır içi işaretleme hariç; tire, eğik çizgi ve uzun çizgi kelime ayırır).
+// Büyük başlıklar yazı boyunu buna göre sınırlar (style="--lw: …"): «görüşeceğinizden», «Telekomünikasyon» gibi uzun Türkçe
+// kelimeler dar sütunda harf ortasından bölünmez, başlık biraz küçülür. Wagtail karşılığı: boraden_tags › longest_word.
+export function longestWord(s) {
+  let max = 0;
+  for (const w of plainInline(String(s ?? '')).split(/[\s\u2010-\u2015/-]+/)) {
+    const n = [...w.replace(/[^\p{L}\p{N}]/gu, '')].length;
+    if (n > max) max = n;
+  }
+  return max;
+}
+
+// Telefon numarası: rakam grupları arasında bölünmez boşluk (U+00A0); satır yalnızca alan kodundan sonra kırılabilir.
+// «+90 (212) 483 26 11» → «+90 (212)» | «483 26 11» — «483 26 / 11» gibi kırılmaz; büyütülmüş metinde (200 %) yine taşmaz.
+export function phoneNbsp(s) {
+  const t = String(s ?? '').trim().replace(/\s+/g, ' ');
+  const nb = (x) => x.replace(/ /g, '\u00a0');
+  const m = t.match(/^(.*?\))\s+(\S.*)$/);
+  return m ? `${nb(m[1])} ${nb(m[2])}` : nb(t);
 }
 
 export function makeFilters() {
@@ -123,6 +145,11 @@ export function makeFilters() {
     },
     strip_tags: (s) => String(s || '').replace(/<[^>]*>/g, ''),
     tagline_words: (s, max) => taglineWords(s, max),
+    phone: (s) => phoneNbsp(s),
+    // dizi verilirse en uzunu (key: öğe alanı) — ör. kart ızgarasında ortak yazı boyu: {{ items | longest_word('title') }}
+    // formasyon kimliği → 3B dünya sahne numarası (koyu bantlarda): data-world="{{ 'matris' | scene }}"; bilinmeyen kimlik derlemeyi durdurur
+    scene: (id) => sceneOf(id),
+    longest_word: (s, key) => (Array.isArray(s) ? Math.max(0, ...s.map((x) => longestWord(key ? x && x[key] : x))) : longestWord(s)),
     truncate_words: (s, n = 24) => {
       const w = String(s || '').split(/\s+/);
       return w.length <= n ? w.join(' ') : w.slice(0, n).join(' ') + '…';

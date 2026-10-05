@@ -9,7 +9,7 @@
    altta ArchiveCircular snippet'leri (number, title, date, document → wagtaildocs). Süzme/arama/sayfalama istemcide listing.js ile;
    kayıt sayısı büyürse Wagtail'de aynı URL parametreleriyle (?yil=&q=&p=) sunucu tarafı süzgece geçilebilir. #}
 {% block main %}
-{{ m.phero(page, type.title, type.lead, "Bilgi merkezi · Sirküler", 1, [
+{{ m.phero(page, type.title, type.lead, "Bilgi merkezi · Sirküler", page.scene, [
   (arc.total ~ " arşiv PDF’i"),
   arc.range,
   ((items | length) ~ " güncel sirküler") if (items | length) else ""

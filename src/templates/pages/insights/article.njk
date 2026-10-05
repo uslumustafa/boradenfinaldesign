@@ -10,7 +10,7 @@
    sources (ListBlock [etiket, url]), service (FK → ServicePage),
    source_date, editorial_type. Okuma ilerlemesi modules/insights-article.js ile (JS yoksa ilerleme göstergesi görünmez). #}
 {% block main %}
-{{ m.phero(page, pub.title, pub.summary, pub.editorialType or type.title, 6, [type.label, pub.category, pub.date | date_tr]) }}
+{{ m.phero(page, pub.title, pub.summary, pub.editorialType or type.title, page.scene, [type.label, pub.category, pub.date | date_tr]) }}
 
 <div class="sheet sec--paper">
   <div class="container">
@@ -33,6 +33,7 @@
           </div>
           <a class="textlink art__all" href="{{ type.url }}">{{ type.all }} {{ m.arrow() }}</a>
         </div>
+        {{ m.fig("side") }}
       </aside>
 
       <div class="art__main gc" style="--gc: 5 / span 7">
@@ -41,7 +42,7 @@
             {% if pub.questions %}{% for para in pub.body %}
             <p>{{ para | rich }}</p>
             {% if loop.first %}
-            <section class="art__questions" id="bes-soru" aria-labelledby="bes-soru-h">
+            <section class="art__questions" id="bes-soru" aria-labelledby="bes-soru-h" data-shape-at="soru">
               <h2 class="svc__label mono" data-reveal id="bes-soru-h">{{ pub.questions.title }}</h2>
               <ol class="art__question-list" role="list">
                 {% for q in pub.questions.items %}

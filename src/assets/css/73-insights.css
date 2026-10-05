@@ -35,6 +35,7 @@
 .ic-stat dt {
   order: 2;
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.7rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -400,6 +401,7 @@
   gap: 0.45rem;
   height: 100%;
   padding: 1.2rem 1.2rem 1.7rem;
+  container-type: inline-size; /* .ic-col__t yazı boyu sütun genişliğine göre (cqi) */
   transition: background-color var(--t-med);
 }
 .ic-col__n {
@@ -419,7 +421,8 @@
 .ic-col__t {
   margin-top: 0.9rem;
   font-family: var(--f-display);
-  font-size: var(--fs-3);
+  /* sütun daraldıkça küçülür: en uzun ad («Hesaplayıcılar») tek satırda kalır, harf ortasından bölünmez */
+  font-size: min(var(--fs-3), 11.2cqi);
   line-height: 1.1;
   letter-spacing: -0.01em;
 }
@@ -523,6 +526,7 @@
 }
 .ic-bar__n small {
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.66rem;
   letter-spacing: 0.06em;
   color: var(--ink-3);
@@ -901,6 +905,16 @@
   line-height: 0.9;
   letter-spacing: -0.03em;
 }
+/* tarihi teyit edilmemiş yayın: tarih yerine kısa durum etiketi (künye dili) */
+.pub-row__d--tbd {
+  padding-top: 0.2rem;
+  font-size: 0.68rem;
+  line-height: 1.4;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  overflow-wrap: break-word;
+}
 .pub-row__my,
 .pub-row__meta,
 .pub-row__src {
@@ -960,7 +974,8 @@
 }
 @media (max-width: 720px) {
   .pub-row {
-    grid-template-columns: 3.2rem minmax(0, 1fr) 1.4rem;
+    /* tarih sütunu «EYL 2026» ve «TARİH TEYİT BEKLİYOR» etiketini harf ortasından bölmeden taşır */
+    grid-template-columns: 4.3rem minmax(0, 1fr) 1.4rem;
   }
   .pub-row__day {
     font-size: var(--fs-4);
@@ -1066,12 +1081,14 @@
 }
 .arc__yl {
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.78rem;
   letter-spacing: 0.04em;
   color: var(--ink);
 }
 .arc__yc {
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.7rem;
   color: var(--ink-3);
 }
@@ -1306,6 +1323,7 @@
 }
 .art__dl dt {
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.64rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;

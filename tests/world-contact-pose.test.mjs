@@ -4,11 +4,10 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import vm from 'node:vm';
 import { Euler, PerspectiveCamera, Vector3 } from 'three';
-import { buildFormations } from '../src/assets/js/world/formations.js';
+import { buildFormations, POSES, SPIN, SWAY } from '../src/assets/js/world/formations.js';
 import { clamp, smoothstep } from '../src/assets/js/util.js';
 
 const source = await readFile(new URL('../src/assets/js/world/world.js', import.meta.url), 'utf8');
-const spin = source.match(/const SPIN = [^;]+;/)[0];
 const pose = source.slice(source.indexOf('  function pose('), source.indexOf('  function frame('));
 const F = buildFormations(500);
 
@@ -17,11 +16,11 @@ for (const [width, height] of [[1512, 715], [354, 780]]) {
     const camera = new PerspectiveCamera(48, width / height, 0.1, 400);
     const points = { rotation: new Euler() };
     const context = vm.createContext({
-      F, clamp, smoothstep, camera, points, aspect: width / height, twoCol: width > 900,
+      F, POSES, SPIN, SWAY, clamp, smoothstep, camera, points, aspect: width / height, twoCol: width > 900,
       side: 1, lift: 0, pointer: { x: 0, y: 0 }, time: 5,
       camPos: new Vector3(), camLook: new Vector3(), material: { uniforms: { uBright: { value: 1 } } },
     });
-    vm.runInContext(spin + '\n' + pose + '\nglobalThis.drawPose = () => pose(7, 7, 0);', context);
+    vm.runInContext(pose + '\nglobalThis.drawPose = () => pose(7, 7, 0);', context);
     const archWidth = time => {
       context.time = time;
       context.drawPose();

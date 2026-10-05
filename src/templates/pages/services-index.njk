@@ -2,7 +2,7 @@
 {% import "partials/macros.njk" as m %}
 
 {% block main %}
-{{ m.phero(page, "Hizmetler", "Altı hizmet alanında " ~ (services | length) ~ " başlık: vergi, denetim, danışmanlık, insan kaynakları, sistemler ve eğitim.", "Hizmet alanları", 1) }}
+{{ m.phero(page, "Hizmetler", "Altı hizmet alanında " ~ (services | length) ~ " başlık: vergi, denetim, danışmanlık, insan kaynakları, sistemler ve eğitim.", "Hizmet alanları", page.scene) }}
 
 <div class="sheet sec--paper">
   <div class="container" data-listing="services">
@@ -36,8 +36,11 @@
       </label>
     </div>
 
+    {# Liste solda; sağda yapışkan şekil: bölüme göre alanın şekli, satırın üzerine gelince hizmetin şekli #}
+    <div class="g12 sidx">
+    <div class="gc sidx__list" style="--gc: 1 / span 8">
     {% for g in groups %}
-    <section class="grp" data-group="{{ g.id }}" id="{{ g.slug }}">
+    <section class="grp" data-group="{{ g.id }}" id="{{ g.slug }}"{% if not loop.first %} data-shape-at="{{ g.shape }}"{% endif %}>
       <header class="grp__head">
         <div>
           <span class="grp__no mono tnum">{{ g.number }} / {{ groups | length | pad2 }}</span>
@@ -48,7 +51,7 @@
       </header>
       <ul class="svclist">
         {% for s in g.services %}
-        <li data-item data-text="{{ (s.title ~ ' ' ~ s.lead) | lower_tr }}">
+        <li data-item data-text="{{ (s.title ~ ' ' ~ s.lead) | lower_tr }}" data-shape-hover="{{ s.shape }}">
           <a class="svcrow" href="{{ s.url }}">
             <span class="svcrow__t">{{ s.title }}</span>
             <span class="svcrow__d">{{ s.lead | truncate_words(18) }}</span>
@@ -61,6 +64,9 @@
     {% endfor %}
 
     <p class="empty" data-empty hidden>Aramanızla eşleşen hizmet bulunamadı.</p>
+    </div>
+    <div class="gc sidx__fig" style="--gc: 9 / -1">{{ m.fig("pv", groups[0].shape) }}</div>
+    </div>
 
     <div class="notice" style="margin-top:4rem" data-legal-review="BDY m.22">
       <p><strong>Bağımsızlık ilkesi.</strong> {{ site.independenceNote }}</p>

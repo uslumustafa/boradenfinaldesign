@@ -48,7 +48,9 @@
   --f-display: 'Montserrat', 'Segoe UI', Arial, sans-serif;
   --f-sans: 'Open Sans', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
   --f-action: 'Asap', 'Open Sans', Arial, sans-serif;
-  --f-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  /* etiket yazı tipi (bölüm etiketleri, numaralar, künye): boraden.com.tr ailesindeki Asap, eşit genişlikli rakamlarla.
+     Ad tarihseldir (eskiden IBM Plex Mono); Wagtail şablonlarında da aynı belirteç kullanılır. */
+  --f-mono: 'Asap', 'Open Sans', Arial, sans-serif;
 
   --fs-0: clamp(0.78rem, 0.76rem + 0.1vw, 0.84rem);
   --fs-1: clamp(0.94rem, 0.92rem + 0.15vw, 1.02rem);

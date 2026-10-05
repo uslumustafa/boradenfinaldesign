@@ -28,6 +28,7 @@
 .ab-fact dt {
   order: 2;
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.72rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -48,8 +49,9 @@
   display: flex;
   align-items: flex-end;
   min-height: var(--fs-6);
-  font-size: var(--fs-5);
+  font-size: min(var(--fs-5), 7.2vw); /* dar ekranda iki sütuna sığsın; kelime harf ortasından kırılmasın */
   letter-spacing: -0.025em;
+  overflow-wrap: normal;
 }
 
 /* ── Kuruluş ve kapsam */
@@ -1223,6 +1225,7 @@ fieldset.ct-field > legend {
   border-radius: var(--radius);
   background: var(--paper-2);
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.1em;
@@ -1418,6 +1421,7 @@ fieldset.ct-field > legend {
 .ct-done__mail dt {
   padding-top: 0.2rem;
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.68rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -1435,6 +1439,7 @@ fieldset.ct-field > legend {
   margin: 0;
   overflow: auto;
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.8rem;
   line-height: 1.6;
   white-space: pre-wrap;

@@ -222,6 +222,7 @@
   padding: 0.15rem 0.65rem;
   border: 1px solid var(--line-strong);
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.66rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -455,6 +456,7 @@ html[data-fx='off'] .tm-join__t .w {
 }
 .pp__role {
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.68rem;
   letter-spacing: 0.1em;
   line-height: 1.55;
@@ -578,6 +580,7 @@ html[data-fx='off'] .tm-join__t .w {
 .pf-facts dt {
   margin-bottom: 0.35rem;
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.68rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -605,6 +608,7 @@ html[data-fx='off'] .tm-join__t .w {
   padding: 0.15rem 0.65rem;
   border: 1px solid var(--line-strong);
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.66rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;

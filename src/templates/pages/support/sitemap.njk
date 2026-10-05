@@ -8,7 +8,7 @@
 {# HTML site haritası. Wagtail karşılığı: SitemapPage — bölümler sayfa ağacından (Page.get_children / specific) üretilir;
    burada scripts/routes/support.mjs → sitemapTree(model) kurar (her adres bir kez, ilk göründüğü bölümde sayılır). #}
 {% block main %}
-{{ m.phero(page, copy.title, copy.lead, "Gezinme", 0, [total ~ " sayfa", (sections | length) ~ " bölüm"]) }}
+{{ m.phero(page, copy.title, copy.lead, "Gezinme", page.scene, [total ~ " sayfa", (sections | length) ~ " bölüm"]) }}
 
 <div class="sheet sec--paper">
   <div class="container">

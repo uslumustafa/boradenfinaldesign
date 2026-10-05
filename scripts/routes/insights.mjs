@@ -7,6 +7,7 @@
 //                                   service: FK → ServicePage, source_date, editorial_type)
 // Sektör raporları, okuma notları, sözlük ve SSS başka modüllerdedir; burada yalnızca bağlantı verilir.
 import { PUB_TYPES } from '../model.mjs';
+import { PAGE } from '../scenes.mjs';
 import { makeFilters } from '../filters.mjs';
 import { baseOf, breadcrumbLd, graph, listLd, orgRef } from '../ld.mjs';
 
@@ -170,7 +171,7 @@ export function registerInsights({ add, model, site, home }) {
     title: 'Bilgi Merkezi',
     titleFull: `Bilgi Merkezi: Sirkülerler, Yayınlar ve Araçlar — ${site.name}`,
     description: hubDesc,
-    scene: 6,
+    ...PAGE.hub,
     kind: 'Bilgi merkezi',
     crumbs: [home],
     ctx: { latest: hubList, total: latest.length, types: hubTypes, collections, collectionCount, arc, ld: hubLd },
@@ -187,7 +188,7 @@ export function registerInsights({ add, model, site, home }) {
     title: circ.title,
     titleFull: `Sirkülerler ve Sirküler Arşivi (${yearRange}) — ${site.name}`,
     description: `${circ.lead} Arşivde ${archive.length} sirküler (${yearRange}), yıla, numaraya ve başlığa göre aranabilir.`,
-    scene: 1,
+    ...PAGE.circulars,
     kind: 'Bilgi merkezi',
     crumbs: [home, HUB],
     ctx: { type: circ, items: circItems, arc, types, ld: circLd },
@@ -225,7 +226,7 @@ export function registerInsights({ add, model, site, home }) {
       title: t.title,
       titleFull: `${t.title} — Bilgi Merkezi — ${site.name}`,
       description: t.lead,
-      scene: 6,
+      ...PAGE.pubs,
       kind: 'Bilgi merkezi',
       crumbs,
       ctx: {
@@ -252,7 +253,7 @@ export function registerInsights({ add, model, site, home }) {
         title: p.title,
         titleFull: `${stripDot(p.title)} — ${site.name}`,
         description: p.summary,
-        scene: 6,
+        ...PAGE.article,
         kind: t.label,
         crumbs,
         ctx: {

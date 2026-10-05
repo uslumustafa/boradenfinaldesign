@@ -4,6 +4,7 @@
 // Bu modül yalnızca türetilmiş alanları hesaplar (sıra numarası, tür sayıları, komşu notlar, ilgili hizmet, alan adı);
 // metinler veriden gelir, şablonlar yalnızca sunar.
 import { baseOf, breadcrumbLd, graph, orgRef, webPageLd } from '../ld.mjs';
+import { PAGE } from '../scenes.mjs';
 import { slugify } from '../filters.mjs';
 
 export const HUB = { label: 'Bilgi Merkezi', url: '/bilgi-merkezi/' };
@@ -101,7 +102,7 @@ export function registerReading({ add, model, site, home }) {
     template: 'pages/reading/reports.njk',
     title: REPORTS_COPY.title,
     description: REPORTS_COPY.description,
-    scene: 5,
+    ...PAGE.reports,
     kind: 'Bilgi merkezi',
     crumbs: repCrumbs,
     ctx: {
@@ -131,7 +132,7 @@ export function registerReading({ add, model, site, home }) {
     template: 'pages/reading/notes-index.njk',
     title: NOTES_COPY.title,
     description: NOTES_COPY.description,
-    scene: 6,
+    ...PAGE.notes,
     kind: 'Bilgi merkezi',
     crumbs: noteCrumbs,
     ctx: {
@@ -169,7 +170,7 @@ export function registerReading({ add, model, site, home }) {
       title: n.title,
       titleFull: `${n.title} — Okuma notu — ${site.name}`,
       description: n.summary,
-      scene: 6,
+      ...PAGE.note,
       kind: 'Okuma notu',
       crumbs,
       ctx: {

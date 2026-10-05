@@ -8,7 +8,7 @@
 {# Okuma notları dizini. Wagtail karşılığı: ReadingNoteIndexPage (alt sayfalar: ReadingNotePage; alanlar: topic, title, summary,
    takeaway, related_service). Süzme: listing.js — ilgili hizmete göre (data-svc). Satırın üzerine gelince "Önemli nokta" açılır. #}
 {% block main %}
-{{ m.phero(page, copy.title, copy.lead, "Bilgi merkezi", 6, [(notes | length) ~ " not", "Her notta kaynak bağlantısı"]) }}
+{{ m.phero(page, copy.title, copy.lead, "Bilgi merkezi", page.scene, [(notes | length) ~ " not", "Her notta kaynak bağlantısı"]) }}
 
 <div class="sheet sec--paper">
   <div class="container" data-listing="notes">
@@ -25,6 +25,7 @@
         </div>
         {% endif %}
         <p class="rn-idx__res mono" data-result-count aria-live="polite"></p>
+        {{ m.fig("side") }}
       </aside>
 
       <div class="gc rn-idx__main" style="--gc: 5 / -1">

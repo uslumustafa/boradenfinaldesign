@@ -96,7 +96,7 @@ export function initRouter({ fx, world, mount, unmount, onNavigate }) {
     document.head.querySelectorAll(PAGE_HEAD).forEach((el) => el.remove());
     doc.head.querySelectorAll(PAGE_HEAD).forEach((el) => document.head.append(el.cloneNode(true)));
     document.body.className = next.dataset.bodyClass || '';
-    for (const a of ['data-scene', 'data-url', 'data-title', 'data-body-class']) {
+    for (const a of ['data-scene', 'data-shapes', 'data-url', 'data-title', 'data-body-class']) {
       if (next.hasAttribute(a)) main.setAttribute(a, next.getAttribute(a));
       else main.removeAttribute(a);
     }

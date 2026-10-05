@@ -216,6 +216,7 @@
   content: counter(lgnote, decimal-leading-zero);
   padding-top: 0.15rem;
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.74rem;
   letter-spacing: 0.1em;
   color: var(--ink-3);
@@ -291,6 +292,7 @@
     cursor: pointer;
     list-style: none;
     font-family: var(--f-mono);
+    font-variant-numeric: tabular-nums;
     font-size: 0.74rem;
     font-weight: 500;
     letter-spacing: 0.12em;
@@ -460,6 +462,7 @@
   border: 1px solid var(--line-dark-2);
   border-radius: var(--radius);
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.7rem;
   color: var(--on-dark-2);
 }
@@ -693,6 +696,7 @@
 }
 .sr-path__n small {
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.7rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1268,7 +1272,9 @@
   border-bottom: 1px solid var(--line);
 }
 .rp-meta dt {
+  flex: none; /* etiket daralıp harf harf bölünmesin (değer uzunsa değer satır atlar) */
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.66rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1803,6 +1809,7 @@ html[data-fx='off'] .rn-intro .w {
   .lg-printhead__org,
   .lg-printhead__m {
     font-family: var(--f-mono);
+    font-variant-numeric: tabular-nums;
     font-size: 8pt;
     letter-spacing: 0.06em;
   }

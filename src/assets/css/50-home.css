@@ -57,6 +57,7 @@ html.is-opening .open.is-out {
 }
 .open__lab {
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.74rem;
   letter-spacing: 0.24em;
   text-transform: uppercase;
@@ -74,6 +75,7 @@ html.is-opening .open__skip {
   border: 1px solid var(--line-dark-2);
   color: var(--on-dark-2);
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.72rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -212,6 +214,7 @@ html.is-opening .hud {
   align-items: center;
   gap: 0.9rem;
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.72rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -352,6 +355,7 @@ html.is-opening .hud {
 .figure dt {
   order: 2;
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.72rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -461,7 +465,7 @@ html.is-opening .hud {
   }
 }
 
-/* ── 3 · Hizmet alanları: sabit sahne (≈2,1 ekran; her alan kısa bir kaydırma adımı) */
+/* ── 3 · Hizmet alanları: sabit sahne (≈2,8 ekran; her alan ≈0,3 ekranlık kaydırma — şekil geçişi aceleye gelmesin) */
 .areas {
   position: relative;
   color: #fff;
@@ -478,7 +482,7 @@ html.is-opening .hud {
   position: relative;
 }
 .areas__track {
-  height: calc(var(--n, 6) * 19vh + 100vh);
+  height: calc(var(--n, 6) * 30vh + 100vh);
 }
 .areas__stage {
   position: sticky;
@@ -486,6 +490,7 @@ html.is-opening .hud {
   height: 100svh;
   display: flex;
   align-items: center;
+  align-items: safe center; /* içerik ekrandan uzunsa üstten taşmasın (başlık bir önceki bölümün altında kesilmesin) */
   padding-top: var(--hdr);
 }
 .areas__grid {
@@ -496,6 +501,7 @@ html.is-opening .hud {
   row-gap: clamp(1rem, 3vh, 2rem);
   align-items: start;
   align-content: center;
+  align-content: safe center;
   width: 100%;
   max-height: calc(100svh - var(--hdr));
 }
@@ -504,7 +510,7 @@ html.is-opening .hud {
 }
 .areas__head h2 {
   margin-top: 1rem;
-  font-size: clamp(2rem, 1.2rem + 3.2vw, 4.2rem);
+  font-size: min(clamp(2rem, 1.2rem + 3.2vw, 4.2rem), 7svh); /* kısa ekranda yüksekliğe göre küçülür */
   line-height: 1;
 }
 .areas__head h2 em {
@@ -529,6 +535,7 @@ html.is-opening .hud {
   flex: none;
   width: 2.2rem;
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.78rem;
   letter-spacing: 0.08em;
 }
@@ -536,7 +543,7 @@ html.is-opening .hud {
   flex: 1;
   font-family: var(--f-display);
   font-weight: 300;
-  font-size: clamp(1.4rem, 0.9rem + 1.6vw, 2.4rem);
+  font-size: min(clamp(1.4rem, 0.9rem + 1.6vw, 2.4rem), 3.9svh);
   line-height: 1.1;
   letter-spacing: -0.015em;
 }
@@ -622,10 +629,13 @@ html.is-opening .hud {
   color: #fff;
   font-weight: 500;
 }
-@media (max-height: 760px) and (min-width: 901px) {
+/* dizüstü ekranlar (≤940 px yükseklik): sahne tek ekrana sığsın diye alanın hizmet listesi gizlenir (alan sayfasında var) */
+@media (max-height: 940px) and (min-width: 901px) {
   .area__services {
     display: none;
   }
+}
+@media (max-height: 760px) and (min-width: 901px) {
   .areas__head h2 {
     font-size: clamp(1.8rem, 1rem + 2.4vw, 3rem);
   }
@@ -1168,6 +1178,7 @@ html.is-opening .hud {
   gap: 0.8rem;
   height: 1.2rem;
   font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 0.66rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;

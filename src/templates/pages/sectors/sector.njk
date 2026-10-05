@@ -13,7 +13,7 @@
 {% block main %}
 {% set s = sector %}
 {% set unit = "segment" if s.segment else "sektör" %}
-{{ m.phero(page, s.name, s.lead, s.kindLabel ~ " · " ~ s.number, 0, [
+{{ m.phero(page, s.name, s.lead, s.kindLabel ~ " · " ~ s.number, page.scene, [
   (s.topics | length) ~ " gündem başlığı",
   (s.svcList | length) ~ " hizmet başlığı",
   ((s.calcList | length) ~ " hesaplayıcı") if (s.calcList | length) else "",
@@ -40,6 +40,7 @@
           </ol>
           <a class="btn toc__cta" href="/iletisim/?sektor={{ s.slug }}">Bu {{ unit }} için görüşelim {{ m.arrow() }}</a>
         </nav>
+        {{ m.fig("side") }}
       </aside>
 
       <div class="svc__main gc" style="--gc: 4 / -1">
@@ -75,7 +76,7 @@
         {% endif %}
 
         {% if s.svcList | length %}
-        <section class="svc__sec" id="hizmetler">
+        <section class="svc__sec" id="hizmetler" data-shape-at="petek">
           <h2 class="svc__label mono" data-reveal>İlgili hizmetler</h2>
           <ul class="sx-svcs">
             {% for x in s.svcList %}
@@ -127,7 +128,7 @@
         {% endif %}
 
         {% if s.questions | length %}
-        <section class="svc__sec" id="sss">
+        <section class="svc__sec" id="sss" data-shape-at="soru">
           <h2 class="svc__label mono" data-reveal>Sık sorulan sorular</h2>
           <div class="faq sx-faq" data-reveal>
             {% for q in s.questions %}
@@ -153,7 +154,7 @@
         </section>
         {% endif %}
 
-        <section class="svc__sec" id="diger-sektorler">
+        <section class="svc__sec" id="diger-sektorler" data-shape-at="matris">
           <h2 class="svc__label mono" data-reveal>Diğer sektörler</h2>
           <ol class="sx-mini">
             {% for o in sectors %}

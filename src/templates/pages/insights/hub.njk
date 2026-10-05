@@ -10,7 +10,7 @@
    Kahraman, phero makrosunun yapısını izler; ek olarak sayaç satırı taşır. #}
 {% block main %}
 {% set feat = latest[0] %}
-<section class="phero sec--dark ic-hero" data-world="6" id="giris" data-chapter="Bilgi merkezi">
+<section class="phero sec--dark ic-hero" data-world="{{ page.scene }}" id="giris" data-chapter="Bilgi merkezi">
   <div class="container">
     <nav aria-label="Sayfa yolu">
       <ol class="crumbs">
@@ -84,8 +84,8 @@
   </section>
 </div>
 
-{# Koleksiyonlar: koyu bölüm, 3B dünya arkada (katman çubukları) #}
-<section class="ic-cols sec sec--dark" data-world="5" id="koleksiyonlar" data-chapter="Koleksiyonlar" aria-labelledby="koleksiyonlar-h">
+{# Koleksiyonlar: koyu bölüm; sık sayı/metin ızgarası olduğu için arkada sakin ufuk arazisi (şekil yazının arkasına düşmesin) #}
+<section class="ic-cols sec sec--dark" data-world="{{ 'ufuk' | scene }}" id="koleksiyonlar" data-chapter="Koleksiyonlar" aria-labelledby="koleksiyonlar-h">
   <div class="container">
     <div class="g12 ic-cols__head">
       <header class="sechead gc" style="--gc: 1 / span 7">

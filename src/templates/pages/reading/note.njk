@@ -10,7 +10,7 @@
    doğrulanmışsa gösterilir), related_service (ServicePage'e ForeignKey). Sayfa: kâğıt (giriş + bölümler) → koyu bant
    (önemli nokta) → kâğıt (sorular, kaynak, ilgili hizmet) → çağrı bandı. #}
 {% block main %}
-{{ m.phero(page, note.title, note.summary, note.topic, 6, ["Okuma notu " ~ (note.n | pad2) ~ " / " ~ (total | pad2)]) }}
+{{ m.phero(page, note.title, note.summary, note.topic, page.scene, ["Okuma notu " ~ (note.n | pad2) ~ " / " ~ (total | pad2)]) }}
 
 <div class="sheet sec--paper">
   <div class="container">
@@ -27,6 +27,7 @@
           </ol>
           {% if note.svc %}<a class="btn toc__cta" href="/iletisim/?hizmet={{ note.svc.id }}">Bu konuyu görüşelim {{ m.arrow() }}</a>{% endif %}
         </nav>
+        {{ m.fig("side") }}
       </aside>
 
       <div class="svc__main gc rn-main" style="--gc: 4 / span 8">
