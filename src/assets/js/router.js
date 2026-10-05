@@ -5,6 +5,7 @@
 import { clamp, qs } from './util.js';
 
 const SKIP_EXT = /\.(pdf|xlsx?|docx?|zip|xml|json|txt|jpg|jpeg|png|webp|svg|mp4)$/i;
+const PAGE_HEAD = 'meta[name="description"],meta[name="robots"],link[rel="canonical"],meta[property^="og:"],meta[name^="twitter:"],script[type="application/ld+json"]';
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -16,10 +17,13 @@ export function initRouter({ fx, world, mount, unmount, onNavigate }) {
   const cache = new Map();
   let nav = 0; // geçerli gezinme kimliği (yarışlara karşı)
   let shown = location.pathname + location.search; // şu an gösterilen sayfa (hash hariç)
+  const positions = new Map();
+  let shownEntry = history.state?.boradenEntry ?? 0;
+  let entrySeq = shownEntry;
   let hoverTimer = 0;
 
   history.scrollRestoration = 'manual';
-  history.replaceState({ y: scrollY }, '');
+  history.replaceState({ ...history.state, boradenEntry: shownEntry, y: scrollY }, '');
 
   // Sayfa içi bağlantıda («İçeriğe geç», içindekiler, #çapa) tarayıcı odağı da hedefe taşır; kaydırmayı biz
   // yönettiğimiz için (yumuşak kaydırma) odağı da biz taşırız. Odaklanamayan hedefe (başlık) tabindex=-1 verilir.
@@ -83,21 +87,24 @@ export function initRouter({ fx, world, mount, unmount, onNavigate }) {
     world?.surge(false);
   }
 
-  function applyDocument(doc, url, { push, y }) {
+  function applyDocument(doc, url, { push, y, entry }) {
     const next = doc.querySelector('#main');
     if (!next) throw new Error('main yok');
     unmount();
     document.title = doc.title;
-    const desc = doc.querySelector('meta[name="description"]');
-    const cur = document.querySelector('meta[name="description"]');
-    if (desc && cur) cur.setAttribute('content', desc.getAttribute('content'));
+    // Sayfaya ait head verisini değiştir; kalıcı CSS ve çalıştırılabilir betikler kabukta kalır.
+    document.head.querySelectorAll(PAGE_HEAD).forEach((el) => el.remove());
+    doc.head.querySelectorAll(PAGE_HEAD).forEach((el) => document.head.append(el.cloneNode(true)));
     document.body.className = next.dataset.bodyClass || '';
     for (const a of ['data-scene', 'data-url', 'data-title', 'data-body-class']) {
       if (next.hasAttribute(a)) main.setAttribute(a, next.getAttribute(a));
       else main.removeAttribute(a);
     }
     main.innerHTML = next.innerHTML;
-    if (push) history.pushState({ y: 0 }, '', url);
+    shownEntry = push ? ++entrySeq : entry ?? ++entrySeq;
+    entrySeq = Math.max(entrySeq, shownEntry);
+    if (push) history.pushState({ boradenEntry: shownEntry, y: 0 }, '', url);
+    else if (entry == null) history.replaceState({ ...history.state, boradenEntry: shownEntry, y }, '');
     shown = location.pathname + location.search;
     window.scrollTo(0, push ? 0 : y || 0);
     onNavigate(new URL(url, location.href).pathname);
@@ -123,17 +130,19 @@ export function initRouter({ fx, world, mount, unmount, onNavigate }) {
     if (live) live.textContent = doc.title;
   }
 
-  async function go(url, { push = true, y = 0, from = null } = {}) {
+  async function go(url, { push = true, y = 0, entry, from = null } = {}) {
     const id = ++nav;
-    // geçerli sayfanın kaydırma konumunu sakla
-    history.replaceState({ y: scrollY }, '');
+    // popstate sırasında adres artık hedef kayda aittir; gösterilen sayfanın konumunu ayrı sakla.
+    positions.set(shownEntry, scrollY);
+    if (push && history.state?.boradenEntry === shownEntry) history.replaceState({ ...history.state, y: scrollY }, '');
     try {
       const [res] = await Promise.all([fetchPage(url), wait(leave(from))]);
       if (id !== nav) return; // daha yeni bir gezinme başladı (o, geçişi kendisi sürdürür)
       const doc = new DOMParser().parseFromString(res.text, 'text/html');
-      applyDocument(doc, url, { push, y });
+      applyDocument(doc, url, { push, y, entry });
       enter();
     } catch (err) {
+      if (id !== nav) return; // eski isteğin hatası yeni gezinmeyi iptal edemez
       abort();
       console.warn('[router] tam sayfa yüklemeye dönülüyor:', err.message);
       location.href = url;
@@ -167,13 +176,22 @@ export function initRouter({ fx, world, mount, unmount, onNavigate }) {
   });
 
   addEventListener('popstate', (e) => {
+    positions.set(shownEntry, scrollY);
+    const entry = e.state?.boradenEntry;
+    const y = positions.get(entry) ?? e.state?.y ?? 0;
     const next = location.pathname + location.search;
     if (next === shown) {
+      ++nav;
+      abort();
+      shownEntry = entry ?? ++entrySeq;
+      entrySeq = Math.max(entrySeq, shownEntry);
+      if (entry == null) history.replaceState({ ...history.state, boradenEntry: shownEntry, y }, '');
       // aynı sayfa: yalnızca hash/kaydırma değişti
       if (location.hash) document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView();
+      else window.scrollTo(0, y);
       return;
     }
-    go(next, { push: false, y: e.state?.y || 0 });
+    go(next, { push: false, y, entry });
   });
 
   // Üzerine gelince önceden getir

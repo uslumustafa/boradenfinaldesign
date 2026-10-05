@@ -12,3 +12,8 @@ docs/research/__pycache__/
 
 # taşınan/silinecek geçici dosyalar (kullanıcı onayıyla silinir)
 _to_delete/
+
+# Local verification and experiment records
+/research/
+/audit-evidence/
+/SITE_AUDIT_REPORT.md

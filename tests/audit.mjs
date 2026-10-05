@@ -23,7 +23,7 @@ const w = +(args.w || 390);
 const h = +(args.h || 844);
 const mobile = !!args.mobile || w < 700;
 const dist = path.resolve(root, args.dist || process.env.BORADEN_DIST || 'dist');
-const outDir = path.join(here, 'shots');
+const outDir = args.out ? path.resolve(root, args.out) : path.join(here, 'shots');
 fs.mkdirSync(outDir, { recursive: true });
 
 function walk(dir, out = []) {

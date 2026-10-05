@@ -18,6 +18,7 @@ const MSG = {
   tel: 'Geçerli bir telefon numarası yazın (ör. 0 212 000 00 00).',
   short: 'Lütfen en az 2 karakter yazın.',
   min: (n, cur) => `En az ${n} karakter yazın (şu an ${cur}).`,
+  max: (n) => `En fazla ${n} karakter yazın.`,
   consent: "Devam etmek için KVKK Aydınlatma Metni'ni okuduğunuzu onaylayın.",
   fileType: (list) => `Yalnızca ${list} biçiminde bir dosya seçebilirsiniz.`,
   fileSize: (max, cur) => `Dosya en fazla ${max} MB olabilir (seçilen: ${cur} MB).`,
@@ -42,7 +43,16 @@ export function composeMail({ to, subject, header, message, messageLabel = 'Mesa
   const fullBody = join(message);
   const full = `Alıcı: ${to}\nKonu: ${subject}\n\n${fullBody}`;
   if (fullBody.length <= max) return { body: fullBody, full, cut: false };
-  const note = '\n\n[Metnin devamı, e-posta bağlantısının uzunluk sınırı nedeniyle kısaltıldı. Tam metni formdaki «kopyala» düğmesiyle alabilirsiniz.]';
+  if (max < 1) return { body: '', full, cut: true };
+  const note = '\n\n[Metnin devamı, e-posta bağlantısının uzunluk sınırı nedeniyle kısaltıldı. Tam metni formdaki «kopyala» düğmesiyle alabilirsiniz.]'.slice(0, max - 1);
+  if (join('…').length + note.length > max) {
+    let part = '';
+    for (const ch of fullBody) {
+      if (part.length + ch.length > Math.max(0, max - note.length - 1)) break;
+      part += ch;
+    }
+    return { body: part.trimEnd() + '…' + note, full, cut: true };
+  }
   const room = Math.max(0, max - join('x').length - note.length - 2);
   // kod noktası kod noktası ekle (vekil çiftleri bölünmez), uzunluğu UTF-16 birimiyle ölç
   let part = '';
@@ -56,6 +66,7 @@ export function composeMail({ to, subject, header, message, messageLabel = 'Mesa
 }
 
 export async function copyText(text) {
+  if (!text) return false;
   try {
     if (navigator.clipboard && window.isSecureContext) {
       await navigator.clipboard.writeText(text);
@@ -154,6 +165,7 @@ export function createFormKit(wrap, { fx, onValid, onReset } = {}) {
     }
     const v = String(c.value || '').trim();
     if (!v) return c.required ? (type === 'select' ? MSG.select : MSG.required) : '';
+    if (c.maxLength >= 0 && v.length > c.maxLength) return MSG.max(c.maxLength);
     if (type === 'email' && !EMAIL_RE.test(v)) return MSG.email;
     if (type === 'tel') {
       const digits = v.replace(/\D/g, '').length;

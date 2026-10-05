@@ -258,7 +258,7 @@
       {% set feat = model.latest[0] %}
       {% if feat %}
       <a class="feat" href="{{ feat.url }}" data-reveal>
-        <span class="feat__meta mono"><span>{{ feat.typeLabel }}</span><span>{{ feat.category }}</span><time datetime="{{ feat.date }}">{{ feat.date | date_tr }}</time></span>
+        <span class="feat__meta mono"><span>{{ feat.typeLabel }}</span><span>{{ feat.category }}</span>{{ m.pubdate(feat, "tr") }}</span>
         <h3 class="feat__t">{{ feat.title }}</h3>
         <p class="feat__s">{{ feat.summary }}</p>
         <span class="feat__go textlink">Okuyun {{ m.arrow() }}</span>
@@ -269,7 +269,7 @@
         {% for p in model.latest.slice(1, 4) %}
         <li data-reveal data-reveal-delay="{{ loop.index0 }}">
           <a class="news" href="{{ p.url }}">
-            <span class="news__meta mono"><span>{{ p.typeLabel }}</span><time datetime="{{ p.date }}">{{ p.date | date_short }}</time></span>
+            <span class="news__meta mono"><span>{{ p.typeLabel }}</span>{{ m.pubdate(p) }}</span>
             <span class="news__t">{{ p.title }}</span>
           </a>
         </li>

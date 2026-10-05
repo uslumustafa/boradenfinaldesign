@@ -3,7 +3,7 @@
    (landing) bölümü. Statik sürümde gönderim modules/form-kit.js ile bir mailto: taslağına dönüşür; ağ isteği yoktur. #}
 
 {# Tek alan. f: { id, label, type(text|email|tel|select|radio|textarea|file), required, autocomplete, help,
-   options[{ value, label, desc? }], minLength, accept, maxSizeMb, wide, hasDesc } · uid: sayfadaki form öneki #}
+   options[{ value, label, desc? }], minLength, maxLength, accept, maxSizeMb, wide, hasDesc } · uid: sayfadaki form öneki #}
 {% macro field(f, uid) %}
 {% set fid = uid ~ "-" ~ f.id %}
 {% set desc = (fid ~ "-h " if f.help else "") ~ (fid ~ "-d " if f.hasDesc else "") ~ fid ~ "-e" %}
@@ -35,7 +35,8 @@
     <span class="ct-file__btn mono" aria-hidden="true">Dosya seçin</span>
     <span class="ct-file__name" data-fk-filename aria-hidden="true">Dosya seçilmedi</span>
   {% else %}
-    <input id="{{ fid }}" name="{{ f.id }}" type="{{ f.type }}"{% if f.autocomplete %} autocomplete="{{ f.autocomplete }}"{% endif %}{% if f.type == "email" %} inputmode="email" spellcheck="false"{% elif f.type == "tel" %} inputmode="tel"{% endif %}{% if f.required %} required{% endif %} aria-describedby="{{ desc }}">
+    {% set limit = f.maxLength or 160 %}{% if not f.maxLength and f.type == 'email' %}{% set limit = 254 %}{% elif not f.maxLength and f.type == 'tel' %}{% set limit = 32 %}{% endif %}
+    <input id="{{ fid }}" name="{{ f.id }}" type="{{ f.type }}" maxlength="{{ limit }}"{% if f.autocomplete %} autocomplete="{{ f.autocomplete }}"{% endif %}{% if f.type == "email" %} inputmode="email" spellcheck="false"{% elif f.type == "tel" %} inputmode="tel"{% endif %}{% if f.required %} required{% endif %} aria-describedby="{{ desc }}">
   {% endif %}
   </span>
   {% if f.hasDesc %}<p class="ct-optdesc" id="{{ fid }}-d" data-fk-desc hidden></p>{% endif %}

@@ -31,16 +31,25 @@ const TYPES = {
 };
 
 export function serve({ root = process.env.BORADEN_DIST ? path.resolve(process.env.BORADEN_DIST) : path.join(ROOT, 'dist'), port = Number(process.env.PORT) || 4181, quiet = false } = {}) {
+  root = fs.realpathSync(path.resolve(root));
+  const outside = (file) => {
+    const rel = path.relative(root, file);
+    return rel === '..' || rel.startsWith('..' + path.sep) || path.isAbsolute(rel);
+  };
   const server = http.createServer((req, res) => {
     try {
       const u = new URL(req.url, 'http://x');
       let p = decodeURIComponent(u.pathname);
       let file = path.join(root, p);
-      if (!file.startsWith(root)) {
+      if (outside(file)) {
         res.writeHead(403);
         return res.end('403');
       }
       let stat = fs.existsSync(file) ? fs.statSync(file) : null;
+      if (stat && outside(fs.realpathSync(file))) {
+        res.writeHead(403);
+        return res.end('403');
+      }
       if (stat && stat.isDirectory()) {
         if (!p.endsWith('/')) {
           res.writeHead(301, { Location: p + '/' + u.search });
@@ -60,6 +69,10 @@ export function serve({ root = process.env.BORADEN_DIST ? path.resolve(process.e
           res.writeHead(404);
           return res.end('404');
         }
+      }
+      if (outside(fs.realpathSync(file))) {
+        res.writeHead(403);
+        return res.end('403');
       }
       const size = stat.size;
       const type = TYPES[path.extname(file).toLowerCase()] || 'application/octet-stream';

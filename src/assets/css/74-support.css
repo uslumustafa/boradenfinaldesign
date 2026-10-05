@@ -1573,8 +1573,8 @@
 }
 .rn-intro {
   max-width: 28em;
-  font-family: var(--f-display);
-  font-weight: 300;
+  font-family: var(--f-sans);
+  font-weight: 400;
   font-size: var(--fs-4);
   line-height: 1.22;
   letter-spacing: -0.016em;
@@ -1603,6 +1603,33 @@ html[data-fx='off'] .rn-intro .w {
   font-size: var(--fs-2);
   line-height: 1.7;
   color: var(--ink-2);
+}
+.rn-compare {
+  width: 100%;
+  margin-top: 1.8rem;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: var(--fs-2);
+  line-height: 1.5;
+}
+.rn-compare caption {
+  padding-bottom: 0.9rem;
+  text-align: left;
+  font-weight: 500;
+}
+.rn-compare th,
+.rn-compare td {
+  padding: 1rem 0.5rem;
+  border-bottom: 1px solid var(--line-strong);
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+.rn-compare th:first-child {
+  width: 45%;
+}
+.rn-compare thead {
+  background: var(--paper-2);
 }
 
 /* Önemli nokta: koyu bant, 3B dünya arkada */

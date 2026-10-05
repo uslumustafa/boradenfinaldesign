@@ -11,13 +11,15 @@ const OUT_CSS = path.join(ROOT, 'src/assets/css/00-fonts.css');
 fs.mkdirSync(OUT_FONTS, { recursive: true });
 
 const FAMILIES = [
-  { pkg: 'newsreader', variants: ['300', '300-italic', '400', '400-italic', '500'] },
-  { pkg: 'ibm-plex-sans', variants: ['300', '400', '500', '600'] },
+  { pkg: 'montserrat', variants: ['300', '300-italic', '400', '400-italic', '500', '600', '600-italic', '700'] },
+  { pkg: 'open-sans', variants: ['300', '400', '400-italic', '500', '600', '700'] },
+  { pkg: 'asap', variants: ['400', '500', '600', '700'] },
   { pkg: 'ibm-plex-mono', variants: ['400', '500'] },
 ];
 
-let css = '/* Otomatik üretildi: scripts/vendor-fonts.mjs — Newsreader, IBM Plex Sans, IBM Plex Mono (SIL OFL) */\n';
+let css = '/* Otomatik üretildi: scripts/vendor-fonts.mjs — Montserrat, Open Sans, Asap, IBM Plex Mono (SIL OFL) */\n';
 for (const fam of FAMILIES) {
+  fs.copyFileSync(path.join(NM, fam.pkg, 'LICENSE'), path.join(OUT_FONTS, `${fam.pkg}.LICENSE`));
   for (const v of fam.variants) {
     const src = fs.readFileSync(path.join(NM, fam.pkg, `${v}.css`), 'utf8');
     const rules = src.match(/@font-face\s*\{[^}]*\}/g) || [];

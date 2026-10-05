@@ -43,6 +43,12 @@ export function loadData() {
   return data;
 }
 
+export function sitemapXML(routes, base) {
+  // Bu statik modelde güvenilir içerik revision tarihi yok; build günü lastmod değildir.
+  const urls = routes.filter((r) => !r.noindex && !r.searchOnly).map((r) => `  <url><loc>${base}${r.url}</loc></url>`);
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join('\n')}\n</urlset>\n`;
+}
+
 function copyDir(src, dest, skip = []) {
   if (!fs.existsSync(src)) return;
   fs.mkdirSync(dest, { recursive: true });
@@ -135,6 +141,7 @@ export async function build({ prod = false, quiet = false } = {}) {
   env.addGlobal('build_id', buildId);
   env.addGlobal('data', data);
   env.addGlobal('site', data.site);
+  env.addGlobal('share_image', { ...data.site.shareImage, url: new URL(data.site.shareImage.path, data.site.url).href });
   env.addGlobal('model', model);
   env.addGlobal('groups', model.groups);
   env.addGlobal('services', model.services);
@@ -203,16 +210,7 @@ export async function build({ prod = false, quiet = false } = {}) {
 
   // sitemap, robots, arama dizini
   const base = data.site.url.replace(/\/$/, '');
-  const today = new Date().toISOString().slice(0, 10);
-  write(
-    path.join(DIST, 'sitemap.xml'),
-    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
-      routes
-        .filter((r) => !r.noindex && !r.searchOnly)
-        .map((r) => `  <url><loc>${base}${r.url}</loc><lastmod>${today}</lastmod></url>`)
-        .join('\n') +
-      `\n</urlset>\n`
-  );
+  write(path.join(DIST, 'sitemap.xml'), sitemapXML(routes, base));
   write(path.join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${base}/sitemap.xml\n`);
   write(path.join(DIST, 'assets/data/search-index.json'), JSON.stringify(search));
 

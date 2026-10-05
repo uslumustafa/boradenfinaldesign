@@ -87,11 +87,18 @@ if (opening) {
   requestAnimationFrame(() => requestAnimationFrame(ready));
 }
 
+let worldBoot = 0;
 async function bootWorld() {
   if (fx.tier === 'off' || world.impl) return;
+  const id = ++worldBoot;
   try {
     const mod = await import('./world/world.js');
+    if (id !== worldBoot || fx.tier === 'off') return;
     const impl = await mod.createWorld({ fx, canvas: document.getElementById('world-canvas'), intro: introWanted });
+    if (id !== worldBoot || fx.tier === 'off') {
+      impl?.destroy();
+      return;
+    }
     introWanted = false;
     if (!impl) {
       fx.set('off');
@@ -102,6 +109,7 @@ async function bootWorld() {
     impl.setVisible(world._visible);
     if (world._assemble) impl.assemble?.();
   } catch (err) {
+    if (id !== worldBoot || fx.tier === 'off') return;
     console.warn('[dünya] başlatılamadı, efektler kapatıldı:', err);
     fx.set('off');
   }
@@ -110,9 +118,10 @@ bootWorld();
 
 fx.onChange((tier) => {
   // katman değişince dünyayı yeni parametrelerle yeniden kur
+  ++worldBoot;
   world.impl?.destroy();
   world.impl = null;
   html.classList.remove('fx-live');
   if (tier !== 'off') bootWorld();
-  behaviors.mount(document.getElementById('main'));
+  behaviors.refreshMotion(document.getElementById('main'));
 });

@@ -6,7 +6,8 @@
 {% endblock %}
 
 {# Yayın sayfası (sirküler · duyuru · blog · haber). Wagtail karşılığı: PublicationPage — date, category, summary,
-   body (StreamField paragraf blokları; satır içi işaretleme `rich`), sources (ListBlock [etiket, url]), service (FK → ServicePage),
+   body (StreamField paragraf blokları; satır içi işaretleme `rich`), questions (ilk paragraftan sonra isteğe bağlı soru listesi),
+   sources (ListBlock [etiket, url]), service (FK → ServicePage),
    source_date, editorial_type. Okuma ilerlemesi modules/insights-article.js ile (JS yoksa ilerleme göstergesi görünmez). #}
 {% block main %}
 {{ m.phero(page, pub.title, pub.summary, pub.editorialType or type.title, 6, [type.label, pub.category, pub.date | date_tr]) }}
@@ -20,7 +21,7 @@
           <dl class="art__dl">
             <div><dt>Tür</dt><dd>{{ type.label }}</dd></div>
             <div><dt>Kategori</dt><dd>{{ pub.category }}</dd></div>
-            <div><dt>Yayın tarihi</dt><dd><time datetime="{{ pub.date }}">{{ pub.date | date_tr }}</time></dd></div>
+            <div><dt>Yayın tarihi</dt><dd>{{ m.pubdate(pub, "tr") }}</dd></div>
             {% if pub.sourceDate %}<div><dt>Kaynak tarihi</dt><dd><time datetime="{{ pub.sourceDate }}">{{ pub.sourceDate | date_tr }}</time></dd></div>{% endif %}
             <div><dt>Okuma süresi</dt><dd>≈ {{ minutes }} dk <span class="art__words mono tnum">· {{ words }} kelime</span></dd></div>
             {% if pub.sourceList | length %}<div><dt>Kaynaklar</dt><dd><a class="art__jump" href="#kaynaklar">{{ pub.sourceList | length }} bağlantı ↓</a></dd></div>{% endif %}
@@ -37,7 +38,22 @@
       <div class="art__main gc" style="--gc: 5 / span 7">
         <div class="art__read" data-art-body>
           <div class="art__body">
-            {% for para in pub.body %}<p>{{ para | rich }}</p>{% endfor %}
+            {% if pub.questions %}{% for para in pub.body %}
+            <p>{{ para | rich }}</p>
+            {% if loop.first %}
+            <section class="art__questions" id="bes-soru" aria-labelledby="bes-soru-h">
+              <h2 class="svc__label mono" data-reveal id="bes-soru-h">{{ pub.questions.title }}</h2>
+              <ol class="art__question-list" role="list">
+                {% for q in pub.questions.items %}
+                <li class="art__question">
+                  <span class="art__question-n mono tnum" aria-hidden="true">{{ loop.index | pad2 }}</span>
+                  <div><h3>{{ q.title }}</h3><p>{{ q.text }}</p></div>
+                </li>
+                {% endfor %}
+              </ol>
+            </section>
+            {% endif %}
+            {% endfor %}{% else %}{% for para in pub.body %}<p>{{ para | rich }}</p>{% endfor %}{% endif %}
           </div>
 
           {% if pub.sourceList | length %}
@@ -104,7 +120,7 @@
           <a class="pub-card" href="{{ p.url }}">
             <span class="pub-card__meta mono"><span>{{ p.typeLabel }}</span><span>{{ p.category }}</span></span>
             <h3 class="pub-card__t">{{ p.title }}</h3>
-            <span class="pub-card__foot"><time class="mono" datetime="{{ p.date }}">{{ p.date | date_short }}</time><span class="pub-card__go">Okuyun {{ m.arrow() }}</span></span>
+            <span class="pub-card__foot">{{ m.pubdate(p, "short", "mono") }}<span class="pub-card__go">Okuyun {{ m.arrow() }}</span></span>
           </a>
         </li>
         {% endfor %}

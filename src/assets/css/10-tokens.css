@@ -26,7 +26,7 @@
   --paper-3: #e9edf3;
   --ink: #0a1730;
   --ink-2: #39465f;
-  --ink-3: #66728a;
+  --ink-3: #626e86;
   --line: #dde2ea;
   --line-strong: #c3cbd8;
 
@@ -45,8 +45,9 @@
   --warn-bg: #fbf4e4;
 
   /* Tipografi */
-  --f-display: 'Newsreader', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
-  --f-sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --f-display: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+  --f-sans: 'Open Sans', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --f-action: 'Asap', 'Open Sans', Arial, sans-serif;
   --f-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
   --fs-0: clamp(0.78rem, 0.76rem + 0.1vw, 0.84rem);

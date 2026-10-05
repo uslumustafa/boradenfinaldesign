@@ -127,11 +127,11 @@ html.is-opening .hud {
   font-weight: 300;
   line-height: 0.9;
   letter-spacing: -0.04em;
-  text-wrap: nowrap;
+  overflow-wrap: anywhere;
 }
 .hero__title .line {
   display: block;
-  overflow: hidden;
+  overflow: visible;
   padding: 0.04em 0 0.14em;
   margin-bottom: -0.1em;
 }
@@ -191,14 +191,16 @@ html.is-opening .hud {
 }
 .hero__text {
   max-width: 46ch;
-  font-family: var(--f-display);
+  font-family: var(--f-sans);
   font-size: var(--fs-3);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.34;
   color: var(--on-dark-2);
 }
 .hero__btns {
   display: flex;
+  min-width: 0;
+  max-width: 100%;
   flex-wrap: wrap;
   gap: 0.7rem;
 }
@@ -268,8 +270,8 @@ html.is-opening .hud {
 .js-anim [data-hero-in] {
   opacity: 0;
   transform: translate3d(0, 22px, 0);
-  transition: opacity 1.1s var(--ease-out), transform 1.2s var(--ease-out);
-  transition-delay: calc(var(--hd, 0) * 1ms);
+  transition: opacity 0.45s var(--ease-out), transform 0.55s var(--ease-out);
+  transition-delay: calc(var(--hd, 0) * 0.3ms);
 }
 .js-anim .hero__title [data-hero-in] {
   transform: translate3d(0, 108%, 0);

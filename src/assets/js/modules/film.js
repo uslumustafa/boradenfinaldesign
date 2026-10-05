@@ -18,7 +18,7 @@ export function mount(el, { fx, scroll, on }) {
 
   // ── çerçeve genişlemesi (--e: 0 → 1)
   if (fx.tier === 'off') el.style.setProperty('--e', '1');
-  else on(scroll.add(el, 'enter', (p) => el.style.setProperty('--e', smoothstep(0.06, 0.42, p).toFixed(4))));
+  on(scroll.add(el, 'enter', (p) => el.style.setProperty('--e', fx.tier === 'off' ? '1' : smoothstep(0.06, 0.42, p).toFixed(4))));
 
   const saveData = !!navigator.connection?.saveData;
   const wide = matchMedia('(min-width: 900px)');
@@ -86,10 +86,17 @@ export function mount(el, { fx, scroll, on }) {
     }
   };
   ctl.addEventListener('click', onClick);
+  const offFx = fx.onChange(() => {
+    wantPlay = fx.tier === 'full' && !saveData && wide.matches;
+    if (fx.tier === 'off') el.style.setProperty('--e', '1');
+    if (inView && wantPlay && !userPaused) play();
+    else video.pause();
+  });
   ui(false);
   ctl.hidden = false;
 
   return () => {
+    offFx();
     io.disconnect();
     document.removeEventListener('visibilitychange', onVis);
     ctl.removeEventListener('click', onClick);

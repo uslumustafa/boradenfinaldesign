@@ -4,6 +4,12 @@
   "tagline": "Tam, doğru, zamanında.",
   "description": "Boraden; 1993'ten bu yana kamu kurumlarına, özel sektöre ve bireylere bağımsız denetim, vergi, muhasebe, insan kaynakları ve danışmanlık hizmetleri sunar.",
   "url": "https://www.boraden.com.tr",
+  "shareImage": {
+    "path": "/assets/img/boraden-logo.png",
+    "alt": "Boraden",
+    "width": 211,
+    "height": 48
+  },
   "founded": 1993,
   "year": 2026,
   "nav": [

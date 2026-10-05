@@ -326,6 +326,9 @@
 .dcard .deliver__v {
   max-width: none;
 }
+.svc-output__go {
+  margin-top: 1.2rem;
+}
 .dcard--dark .deliver__v {
   color: #fff;
 }

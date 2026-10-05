@@ -42,6 +42,16 @@
           <p class="rn-label mono tnum" aria-hidden="true">{{ loop.index | pad2 }}</p>
           <h2 class="rn-sec__h" id="{{ s.id }}-h" data-reveal>{{ s.title }}</h2>
           <p class="rn-sec__p" data-reveal data-reveal-delay="1">{{ s.text }}</p>
+          {% if note.id == 'warren-buffett-deger-ve-fiyat' and loop.first %}
+          <table class="rn-compare" data-reveal>
+            <caption>Görüşmede netleştirilecek çerçeve</caption>
+            <thead><tr><th scope="col">Kavram</th><th scope="col">Netleştirilecek soru</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Fiyat teklifi</th><td>Teklif edilen tutar hangi pay ve hakları kapsıyor?</td></tr>
+              <tr><th scope="row">Değerleme çerçevesi</th><td>Hangi tarih, amaç ve pay kapsamı için çalışılıyor?</td></tr>
+            </tbody>
+          </table>
+          {% endif %}
         </section>
         {% endfor %}
       </div>

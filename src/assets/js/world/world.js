@@ -124,7 +124,7 @@ const FRAG = /* glsl */ `
   }
 `;
 
-const SPIN = [0, 1, 1, 1, 1, 1, 0.8, 0.25];
+const SPIN = [0, 1, 1, 1, 1, 1, 0.8, 0]; // Kapanış kemerinde sürekli dönüş yerine sınırlı salınım kullanılır.
 const INTRO_S = 2.2; // toplanma süresi (sn)
 
 export async function createWorld({ fx, canvas, intro = false }) {
@@ -312,7 +312,8 @@ export async function createWorld({ fx, canvas, intro = false }) {
       camera.updateProjectionMatrix();
     }
     material.uniforms.uBright.value = L(PA.bright, PB.bright) * (0.5 + 0.5 * Math.min(1, k0));
-    points.rotation.y = L(SPIN[a] ?? 1, SPIN[b] ?? 1) * (time * 0.035 + pointer.x * 0.1);
+    const turn = scene => scene === 7 ? Math.sin(time * 0.24) * 0.2 + pointer.x * 0.1 : (SPIN[scene] ?? 1) * (time * 0.035 + pointer.x * 0.1);
+    points.rotation.y = L(turn(a), turn(b));
   }
 
   function frame(now) {
@@ -453,10 +454,11 @@ export async function createWorld({ fx, canvas, intro = false }) {
   // Kelimeyi site yazı tipiyle (resmî logo görseli/harfleri KULLANILMAZ) 2B tuvale çizip piksellerinden hedef noktalar üretir.
   // Koordinat: yükseklik birimi (y ∈ [-1,1], x ∈ [-aspect, aspect]); genişlik ekranın ≈ %62'si.
   async function buildWord(text) {
+    const family = getComputedStyle(html).getPropertyValue('--f-display').trim() || "'Montserrat', 'Segoe UI', Arial, sans-serif";
     try {
-      await document.fonts?.load?.("400 220px 'Newsreader'");
+      await document.fonts?.load?.(`400 220px ${family}`);
     } catch (e) {
-      /* yazı tipi yoksa yedek serif */
+      /* yazı tipi yoksa sistem fontu */
     }
     const CW = 1600;
     const CH = 420;
@@ -464,7 +466,6 @@ export async function createWorld({ fx, canvas, intro = false }) {
     cv.width = CW;
     cv.height = CH;
     const g = cv.getContext('2d', { willReadFrequently: true });
-    const family = "'Newsreader', 'Times New Roman', serif";
     const track = 0.2; // harf aralığı (em)
     const fs0 = 300;
     g.font = `400 ${fs0}px ${family}`;
@@ -560,6 +561,7 @@ export async function createWorld({ fx, canvas, intro = false }) {
     assemble,
     word,
     destroy() {
+      ++wordReq; // bekleyen font/kelime hazırlığı dispose edilmiş renderer'ı yeniden başlatmasın
       clearTimeout(failsafe);
       stop();
       ro.disconnect();
@@ -569,7 +571,7 @@ export async function createWorld({ fx, canvas, intro = false }) {
       geo.dispose();
       material.dispose();
       renderer.dispose();
-      renderer.forceContextLoss?.();
+      // Aynı kalıcı tuval sonraki FX kademesinde yeniden kurulur; GPU kaynaklarını temizle, bağlamı kaybetme.
       html.classList.remove('fx-live');
     },
   };

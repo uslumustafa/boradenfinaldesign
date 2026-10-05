@@ -18,7 +18,7 @@ export const brief = {
   sector: (s) => ({ slug: s.slug, name: s.name, short: s.short, url: s.url, segment: !!s.segment }),
   calculator: (c) => ({ slug: c.slug, title: c.title, short: c.short || '', lead: c.lead || '', url: c.url, groupLabel: c.groupLabel || '' }),
   term: (t) => ({ slug: t.slug, term: t.term, short: t.short, category: t.category, url: t.url }),
-  post: (p) => ({ id: p.id, title: p.title, summary: p.summary, category: p.category, date: p.date, typeLabel: p.typeLabel, url: p.url }),
+  post: (p) => ({ id: p.id, title: p.title, summary: p.summary, category: p.category, date: p.date, dateStatus: p.dateStatus, typeLabel: p.typeLabel, url: p.url }),
 };
 
 // SSS grupları (faq.json) → hizmet sayfalarında gösterilecek genel sorular ({ q, a, from }) — `onServices: true` işaretli öğeler, veri sırasıyla

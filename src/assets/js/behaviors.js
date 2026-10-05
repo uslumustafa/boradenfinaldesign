@@ -8,7 +8,9 @@ const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>'
 
 export function createBehaviors({ fx, scroll, world }) {
   let cleanups = [];
+  let pageCleanups = [];
   const on = (fn) => cleanups.push(fn);
+  const onPage = (fn) => pageCleanups.push(fn);
 
   /* ── Giriş animasyonları */
   function reveal(root) {
@@ -40,6 +42,7 @@ export function createBehaviors({ fx, scroll, world }) {
     qsa('[data-count]', root).forEach((el) => {
       const target = Number(el.dataset.count);
       if (!Number.isFinite(target) || fx.tier === 'off') return;
+      let raf = 0;
       el.textContent = '0';
       const io = new IntersectionObserver(
         ([en]) => {
@@ -50,14 +53,18 @@ export function createBehaviors({ fx, scroll, world }) {
           const step = (now) => {
             const k = clamp((now - t0) / dur);
             el.textContent = String(Math.round(target * easeOutExpo(k)));
-            if (k < 1) requestAnimationFrame(step);
+            if (k < 1) raf = requestAnimationFrame(step);
           };
-          requestAnimationFrame(step);
+          raf = requestAnimationFrame(step);
         },
         { threshold: 0.6 }
       );
       io.observe(el);
-      on(() => io.disconnect());
+      on(() => {
+        io.disconnect();
+        cancelAnimationFrame(raf);
+        el.textContent = String(target);
+      });
     });
   }
 
@@ -65,6 +72,7 @@ export function createBehaviors({ fx, scroll, world }) {
   function lit(root) {
     qsa('[data-lit]', root).forEach((el) => {
       const text = el.textContent.trim();
+      on(() => { el.textContent = text; });
       // ekran okuyucu için düz metin (sr-only); kelime kelime yanan kopya aria-hidden
       el.innerHTML =
         `<span class="sr-only">${esc(text)}</span><span aria-hidden="true">` +
@@ -158,7 +166,9 @@ export function createBehaviors({ fx, scroll, world }) {
       // tıklama/odak ile elle seçim (klavye erişimi)
       items.forEach((it, i) => {
         const link = qs('.area__link', it);
-        link.addEventListener('focus', () => !mq.matches && setActive(i));
+        const focus = () => !mq.matches && setActive(i);
+        link.addEventListener('focus', focus);
+        on(() => link.removeEventListener('focus', focus));
       });
       setActive(0);
     });
@@ -215,9 +225,15 @@ export function createBehaviors({ fx, scroll, world }) {
       };
       form.addEventListener('input', calc);
       form.addEventListener('change', calc);
-      amount.addEventListener('blur', () => {
+      const blur = () => {
         const a = parseTR(amount.value);
         if (Number.isFinite(a)) amount.value = fmtTR(a, a % 1 ? 2 : 0);
+      };
+      amount.addEventListener('blur', blur);
+      onPage(() => {
+        form.removeEventListener('input', calc);
+        form.removeEventListener('change', calc);
+        amount.removeEventListener('blur', blur);
       });
       calc();
     });
@@ -395,14 +411,14 @@ export function createBehaviors({ fx, scroll, world }) {
 
   /* ── Sayfa modülleri: <… data-module="ad"> → modules/ad.js (yalnızca gerektiğinde, ayrı parça olarak yüklenir).
         Modül `export function mount(el, ctx)` verir; ctx = { fx, scroll, on, root }. mount bir temizlik işlevi döndürebilir
-        ya da ctx.on(temizlik) kaydedebilir; sayfa değişince/efekt kademesi değişince çağrılır.
+        ya da ctx.on(temizlik) kaydedebilir; sayfa değişince çağrılır. Hareket tercihini izleyen modüller fx.onChange kullanır.
         Birden çok modül boşlukla ayrılır: data-module="a b". */
   function modules(root) {
     qsa('[data-module]', root).forEach((el) => {
       for (const name of (el.dataset.module || '').split(/[\s,]+/).filter((n) => /^[a-z0-9-]+$/.test(n) && !n.startsWith('_'))) {
         let dead = false;
         let cleanup = null;
-        on(() => {
+        onPage(() => {
           dead = true;
           try {
             if (typeof cleanup === 'function') cleanup();
@@ -414,7 +430,7 @@ export function createBehaviors({ fx, scroll, world }) {
           .then((m) => {
             if (dead) return;
             const fn = m.mount || m.default;
-            if (typeof fn === 'function') cleanup = fn(el, { fx, scroll, on, root, world });
+            if (typeof fn === 'function') cleanup = fn(el, { fx, scroll, on: onPage, root, world });
           })
           .catch((err) => console.warn(`[modül:${name}] yüklenemedi:`, err));
       }
@@ -423,6 +439,15 @@ export function createBehaviors({ fx, scroll, world }) {
 
   function mount(root) {
     unmount();
+    mini(root);
+    initCalculators(root, { fx, scroll, on: onPage });
+    initListing(root, { on: onPage });
+    modules(root);
+    refreshMotion(root);
+  }
+  // Hareket değişimi form/taslak, hesaplayıcı ve filtre durumunu yeniden başlatmaz.
+  function refreshMotion(root) {
+    clearMotion();
     reveal(root);
     counters(root);
     lit(root);
@@ -431,16 +456,12 @@ export function createBehaviors({ fx, scroll, world }) {
     stack(root);
     areas(root);
     sectors(root);
-    mini(root);
     hud(root);
     toc(root);
     director(root);
-    initCalculators(root, { fx, scroll, on });
-    initListing(root, { on });
-    modules(root);
     scroll.refresh();
   }
-  function unmount() {
+  function clearMotion() {
     cleanups.forEach((f) => {
       try {
         f();
@@ -449,7 +470,12 @@ export function createBehaviors({ fx, scroll, world }) {
       }
     });
     cleanups = [];
+  }
+  function unmount() {
+    clearMotion();
+    pageCleanups.forEach((fn) => fn());
+    pageCleanups = [];
     scroll.clear();
   }
-  return { mount, unmount };
+  return { mount, unmount, refreshMotion };
 }

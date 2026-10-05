@@ -79,7 +79,7 @@ test('logo bileşeni: tek <img>, resmî dosya, doğal en-boy oranı, süs yok', 
   assert.doesNotMatch(html, /<svg\b|<canvas\b|<picture\b|<source\b|srcset=/i, 'alternatif çizim/kaynak yok');
 });
 
-test('logo dosyası yalnızca partials/logo.njk içinde anılır; diğer her yer bileşeni include eder', () => {
+test('görünür logo yalnızca partials/logo.njk içinde; paylaşım metadata aynı özgün dosyayı kullanır', () => {
   const scan = [
     ...walk(path.join(root, 'src/templates'), (p) => p.endsWith('.njk')),
     ...walk(path.join(root, 'src/assets/css'), (p) => p.endsWith('.css')),
@@ -87,7 +87,10 @@ test('logo dosyası yalnızca partials/logo.njk içinde anılır; diğer her yer
     ...walk(path.join(root, 'scripts'), (p) => p.endsWith('.mjs')),
     ...walk(path.join(root, 'src/data'), (p) => p.endsWith('.json')),
   ];
-  const offenders = scan.filter((p) => path.relative(root, p) !== PARTIAL && /boraden-logo/i.test(fs.readFileSync(p, 'utf8')));
+  const metadata = 'src/data/site.json';
+  const share = JSON.parse(read(metadata)).shareImage;
+  assert.deepEqual(share, { path: '/assets/img/boraden-logo.png', alt: 'Boraden', width: OFFICIAL_SIZE.w, height: OFFICIAL_SIZE.h });
+  const offenders = scan.filter((p) => ![PARTIAL, metadata].includes(path.relative(root, p)) && /boraden-logo/i.test(fs.readFileSync(p, 'utf8')));
   assert.deepEqual(
     offenders.map((p) => path.relative(root, p)),
     [],

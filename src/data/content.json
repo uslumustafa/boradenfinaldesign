@@ -146,10 +146,18 @@
         "summary": "Şirket değerlemesine hazırlanırken amaç, tarih, veri, varsayım ve karar ilişkisini birlikte düşünmek.",
         "body": [
           "Değerleme görüşmesini “Şirketimiz ne kadar eder?” sorusuyla açmak doğaldır. Ancak kullanılabilir bir sonuç için önce o rakamın hangi kararı destekleyeceğini açıklamak gerekir. Pay devri, yeni ortak veya iç planlama farklı çalışma çerçeveleri gerektirebilir.",
-          "İlk soru amaçtır: Sonucu kim, hangi işlemde kullanacak? İkincisi tarihtir: Değer hangi günün koşullarını yansıtacak? Üçüncüsü veridir: Finansal tablolar, borçlar, nakit ve işletme sermayesi ne kadar tutarlı?",
-          "Dördüncü soru varsayımlardır: Büyüme beklentisi, yatırım ihtiyacı ve kârlılık hangi dayanaklarla kuruluyor? Son soru belirsizliktir: Bu varsayımlar değiştiğinde sonuç ne kadar değişiyor?",
           "İlk görüşmede son dönem finansal tablolarını, borç ve nakit dökümünü, iş planını ve çalışmanın amacını paylaşmak iyi bir başlangıçtır. Yöntem ve rapor kapsamı, bu bilgilerin ışığında belirlenir. Değerleme görüşü ile gerçekleşecek satış fiyatı aynı olmak zorunda değildir."
         ],
+        "questions": {
+          "title": "Beş temel soru",
+          "items": [
+            { "title": "Amaç", "text": "Sonucu kim, hangi işlemde kullanacak?" },
+            { "title": "Tarih", "text": "Değer hangi günün koşullarını yansıtacak?" },
+            { "title": "Veri", "text": "Finansal tablolar, borçlar, nakit ve işletme sermayesi ne kadar tutarlı?" },
+            { "title": "Varsayımlar", "text": "Büyüme beklentisi, yatırım ihtiyacı ve kârlılık hangi dayanaklarla kuruluyor?" },
+            { "title": "Belirsizlik", "text": "Bu varsayımlar değiştiğinde sonuç ne kadar değişiyor?" }
+          ]
+        },
         "service": "sirket-degerlemesi",
         "sources": [
           [

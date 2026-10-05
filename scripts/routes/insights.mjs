@@ -67,7 +67,6 @@ function articleLd(site, p, type, svc, trail) {
     '@type': type,
     headline: p.title.length > 110 ? p.title.slice(0, 109) + '…' : p.title,
     description: p.summary,
-    datePublished: p.date,
     inLanguage: 'tr-TR',
     articleSection: p.category,
     url,
@@ -76,6 +75,7 @@ function articleLd(site, p, type, svc, trail) {
     author: orgRef(site),
     publisher: orgRef(site),
   };
+  if (p.date) node.datePublished = p.date;
   if (p.sources && p.sources.length) node.citation = p.sources.map(([name, u]) => ({ '@type': 'CreativeWork', name, url: u }));
   if (svc) node.about = { '@type': 'Service', name: svc.title, url: base + svc.url };
   return graph(node, breadcrumbLd(site, trail));
@@ -245,7 +245,7 @@ export function registerInsights({ add, model, site, home }) {
     list.forEach((p, i) => {
       const crumbs = [home, HUB, { label: t.title, url: t.url }];
       const svc = p.service ? model.servicesById[p.service] || null : null;
-      const words = countWords(p.body);
+      const words = countWords([...(p.body || []), p.questions?.title || '', ...(p.questions?.items || []).flatMap(q => [q.title, q.text])]);
       add({
         url: p.url,
         template: 'pages/insights/article.njk',

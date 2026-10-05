@@ -8,7 +8,7 @@
         <li class="nav__item">
           <a class="nav__link{% if page.url.startsWith(item.url) and item.url !== '/' %} is-active{% endif %}"
              href="{{ item.url }}"
-             {% if item.panel %}data-panel="{{ item.panel }}" aria-haspopup="true" aria-expanded="false" aria-controls="mega-{{ item.panel }}"{% endif %}
+             {% if item.panel %}data-panel="{{ item.panel }}" aria-expanded="false" aria-controls="mega-{{ item.panel }}"{% endif %}
              {% if page.url.startsWith(item.url) and item.url !== '/' %}aria-current="true"{% endif %}>{{ item.label }}</a>
         </li>
         {% endfor %}

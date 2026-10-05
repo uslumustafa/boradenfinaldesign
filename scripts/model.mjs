@@ -123,12 +123,12 @@ export function buildModel(data) {
   for (const [type, meta] of Object.entries(PUB_TYPES)) {
     const items = (c.publications?.[type] || [])
       .filter((p) => (p.status || 'published') === 'published')
-      .map((p) => ({ ...p, type, typeLabel: meta.label, typeSlug: meta.slug, url: `/bilgi-merkezi/${meta.slug}/${p.id}/` }))
-      .sort((a, b) => String(b.date).localeCompare(String(a.date)));
+      .map((p) => ({ ...p, date: p.publicationDateVerified === false ? null : p.date || null, dateStatus: p.publicationDateVerified === false ? 'Tarih teyit bekliyor' : 'Tarih belirtilmedi', type, typeLabel: meta.label, typeSlug: meta.slug, url: `/bilgi-merkezi/${meta.slug}/${p.id}/` }))
+      .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
     publications[type] = items;
     pubsAll.push(...items);
   }
-  pubsAll.sort((a, b) => String(b.date).localeCompare(String(a.date)));
+  pubsAll.sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
 
   const archive = (data.archive || []).slice().sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')) || String(b.year || '').localeCompare(String(a.year || '')));
   const years = [...new Set(archive.map((a) => a.year))].sort((a, b) => b - a);

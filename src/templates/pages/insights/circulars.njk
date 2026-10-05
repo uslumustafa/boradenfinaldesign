@@ -26,7 +26,7 @@
         {% for p in items %}
         <li data-reveal data-reveal-delay="{{ loop.index0 if loop.index0 < 5 else 4 }}">
           <a class="pub-card" href="{{ p.url }}">
-            <span class="pub-card__meta mono"><span>{{ p.category }}</span><time datetime="{{ p.date }}">{{ p.date | date_tr }}</time></span>
+            <span class="pub-card__meta mono"><span>{{ p.category }}</span>{{ m.pubdate(p, "tr") }}</span>
             <h3 class="pub-card__t">{{ p.title }}</h3>
             <p class="pub-card__s">{{ p.summary }}</p>
             <span class="pub-card__foot"><span class="mono">{{ p.sourceList | length }} kaynak</span><span class="pub-card__go">Okuyun {{ m.arrow() }}</span></span>

@@ -1,0 +1,43 @@
+name: Site checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - run: npm run build:prod
+      - run: npm test
+      - run: npm run links
+      - name: Browser checks when runner Chrome is installed
+        shell: bash
+        run: |
+          if ! command -v google-chrome >/dev/null 2>&1; then
+            echo "::notice::Google Chrome is unavailable; browser checks skipped. Build, unit and link checks ran."
+            exit 0
+          fi
+          node scripts/serve.mjs &
+          preview_pid=$!
+          trap 'kill "$preview_pid" 2>/dev/null || true' EXIT
+          for attempt in {1..30}; do
+            if curl --silent --fail http://127.0.0.1:4181/ >/dev/null; then
+              npm run test:e2e
+              exit $?
+            fi
+            sleep 1
+          done
+          echo "::error::Preview did not become ready within 30 seconds."
+          exit 1

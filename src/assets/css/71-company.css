@@ -1031,6 +1031,20 @@ html[data-fx='off'] .ab-method__t .w {
   color: var(--on-dark-3);
   transition: transform var(--t-med) var(--ease-out), color var(--t-fast);
 }
+@media (max-width: 40em) {
+  .ct-more__a {
+    grid-template-columns: minmax(0, 1fr) 1.6rem;
+  }
+  .ct-more__v {
+    grid-column: 1;
+    grid-row: 2;
+    white-space: normal;
+  }
+  .ct-more__go {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
 .ct-more__a:hover .ct-more__go {
   transform: translateX(5px);
   color: #fff;

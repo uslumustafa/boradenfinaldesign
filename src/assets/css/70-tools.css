@@ -303,6 +303,7 @@ td > a:not([class]):hover {
 }
 .calc__rows > div {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: baseline;
   gap: 1.2rem;
@@ -321,6 +322,7 @@ td > a:not([class]):hover {
 }
 .calc__rows dd {
   flex: none;
+  max-width: 100%;
   font-family: var(--f-mono);
   font-size: 0.96rem;
   text-align: right;
@@ -439,6 +441,15 @@ td > a:not([class]):hover {
   font-family: var(--f-mono);
   font-weight: 500;
   white-space: nowrap;
+}
+@media (max-width: 40em) {
+  .calc__steps li {
+    grid-template-columns: 3rem minmax(0, 1fr);
+  }
+  .calc__steps strong {
+    grid-column: 2;
+    white-space: normal;
+  }
 }
 .calc__params {
   border-top: 1px solid var(--ink);

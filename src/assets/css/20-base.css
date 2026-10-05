@@ -20,6 +20,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  overflow-wrap: anywhere;
   font-feature-settings: 'kern', 'liga';
   overflow-x: clip;
 }
@@ -96,7 +97,7 @@ h3 {
 h4,
 h5,
 h6 {
-  font-family: var(--f-sans);
+  font-family: var(--f-display);
   font-weight: 500;
   letter-spacing: -0.005em;
   line-height: 1.25;
@@ -129,9 +130,11 @@ p {
 /* Etiket (eyebrow) — mono, ince çizgili */
 .eyebrow {
   display: inline-flex;
+  max-width: 100%;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.9rem;
-  font-family: var(--f-mono);
+  font-family: var(--f-action);
   font-size: var(--fs-0);
   font-weight: 500;
   text-transform: uppercase;
@@ -151,8 +154,8 @@ p {
   color: var(--on-dark-3);
 }
 .lead {
-  font-family: var(--f-display);
-  font-weight: 300;
+  font-family: var(--f-sans);
+  font-weight: 400;
   font-size: var(--fs-3);
   line-height: 1.38;
   letter-spacing: -0.008em;
@@ -274,15 +277,18 @@ p {
   justify-content: center;
   gap: 0.8rem;
   min-height: 3.2rem;
-  padding: 0 1.7rem;
+  padding: 0.65rem 1.7rem;
   border: 1px solid var(--bd);
   border-radius: var(--radius);
   background: var(--bg);
   color: var(--fg);
+  font-family: var(--f-action);
   font-weight: 500;
   font-size: 0.95rem;
   letter-spacing: 0.005em;
-  white-space: nowrap;
+  white-space: normal;
+  max-width: 100%;
+  text-align: center;
   overflow: hidden;
   isolation: isolate;
   transition: color var(--t-med) var(--ease-out), border-color var(--t-med) var(--ease-out);

@@ -52,6 +52,13 @@
         <section class="svc__sec" id="kisaca">
           <h2 class="svc__label mono" data-reveal>Kısaca</h2>
           <p class="svc__def" data-lit>{{ service.definition }}</p>
+          {% if service.id == 'kdv-iade-islemleri' %}
+          <div class="needs dcard" data-reveal>
+            <h3 class="deliver__k mono">Ne elde edilir</h3>
+            <p class="deliver__v">{{ service.output }}</p>
+            <p class="svc-output__go"><a class="textlink" href="#cikti">Çıktı ve hazırlığı inceleyin {{ m.arrow() }}</a></p>
+          </div>
+          {% endif %}
           {% if service.needs | length %}
           <div class="needs" data-reveal>
             <p class="needs__h mono">Şu durumlarda</p>

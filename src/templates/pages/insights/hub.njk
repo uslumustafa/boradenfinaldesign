@@ -52,8 +52,8 @@
       <ol class="ic-list">
         {% for p in latest %}
         <li class="ic-li" data-item data-tur="{{ p.typeSlug }}" data-text="{{ (p.title ~ ' ' ~ p.summary ~ ' ' ~ p.category ~ ' ' ~ p.typeLabel) | lower_tr }}" data-reveal{% if loop.index0 < 5 %} data-reveal-delay="{{ loop.index0 }}"{% endif %}>
-          <a class="ic-row" href="{{ p.url }}" data-ic-row data-type="{{ p.typeLabel }}" data-cat="{{ p.category }}" data-date="{{ p.date | date_tr }}" data-src="{{ p.sourceList | length }} kaynak">
-            <span class="ic-row__meta mono"><span class="ic-row__type">{{ p.typeLabel }}</span><time datetime="{{ p.date }}">{{ p.date | date_short }}</time></span>
+          <a class="ic-row" href="{{ p.url }}" data-ic-row data-type="{{ p.typeLabel }}" data-cat="{{ p.category }}" data-date="{{ (p.date | date_tr) or p.dateStatus }}" data-src="{{ p.sourceList | length }} kaynak">
+            <span class="ic-row__meta mono"><span class="ic-row__type">{{ p.typeLabel }}</span>{{ m.pubdate(p) }}</span>
             <div class="ic-row__main">
               <h3 class="ic-row__t">{{ p.title }}</h3>
               <p class="ic-row__s">{{ p.summary }}</p>
@@ -70,7 +70,7 @@
         <a class="ic-prev" href="{{ feat.url }}" tabindex="-1" aria-hidden="true" data-ic-panel>
           <span class="ic-prev__rail" aria-hidden="true"><i></i><i></i><i></i></span>
           <span class="ic-prev__in" data-ic-in>
-            <span class="ic-prev__meta mono"><span data-p="type">{{ feat.typeLabel }}</span><span data-p="cat">{{ feat.category }}</span><span data-p="date">{{ feat.date | date_tr }}</span></span>
+            <span class="ic-prev__meta mono"><span data-p="type">{{ feat.typeLabel }}</span><span data-p="cat">{{ feat.category }}</span><span data-p="date">{{ (feat.date | date_tr) or feat.dateStatus }}</span></span>
             <span class="ic-prev__t" data-p="title">{{ feat.title }}</span>
             <span class="ic-prev__s" data-p="sum">{{ feat.summary }}</span>
             <span class="ic-prev__foot"><span class="mono" data-p="src">{{ feat.sourceList | length }} kaynak</span><span class="ic-prev__go">Okuyun <span class="arr">→</span></span></span>

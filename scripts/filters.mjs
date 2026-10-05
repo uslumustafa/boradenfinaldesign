@@ -54,6 +54,7 @@ export function taglineWords(s, max = 4) {
 
 export function makeFilters() {
   const dateParts = (iso) => {
+    if (!iso) return null;
     const d = new Date(iso);
     return Number.isNaN(d.getTime()) ? null : d;
   };

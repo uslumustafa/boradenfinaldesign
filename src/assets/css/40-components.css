@@ -54,6 +54,8 @@
 }
 .field__box {
   position: relative;
+  min-width: 0;
+  max-width: 100%;
   display: flex;
   align-items: center;
   min-height: 3.3rem;
@@ -158,6 +160,9 @@
   color: var(--ink-2);
   cursor: pointer;
 }
+.check > span {
+  min-width: 0;
+}
 .check input {
   margin-top: 0.25rem;
   width: 1.1rem;
@@ -180,7 +185,7 @@
 }
 .mini__row {
   display: grid;
-  grid-template-columns: 1.6fr 1fr;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
   gap: 1rem;
 }
 .mini__out {
@@ -191,6 +196,7 @@
 }
 .mini__out > div {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: baseline;
   gap: 1rem;
@@ -220,6 +226,11 @@
 .mini__note {
   font-size: 0.8rem;
   color: var(--ink-3);
+}
+@media (max-width: 30em) {
+  .mini__row {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 /* ── Kartlar */
@@ -421,11 +432,13 @@ a.chip:hover {
   align-items: center;
   gap: 0.7rem;
   min-width: min(100%, 22rem);
+  max-width: 100%;
   border-bottom: 1px solid var(--ink);
   padding: 0.35rem 0;
 }
 .searchbox input {
   flex: 1;
+  min-width: 0;
   border: 0;
   outline: 0;
   background: transparent;

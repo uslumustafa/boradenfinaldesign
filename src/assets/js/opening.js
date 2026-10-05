@@ -1,5 +1,5 @@
 // Açılış sahnesi (yalnızca ana sayfaya ilk gelişte; başlangıç kararı base.njk'deki erken betikte verilir → html.is-opening).
-//   ~2,2 sn: koyu perde üstünde kuruluş yılı sayaçla belirir, ardından perde ortadan dışa doğru PİKSEL PİKSEL çözülür ve
+//   ~0,9 sn: koyu perde üstünde kuruluş yılı sayaçla belirir, ardından perde ortadan dışa doğru PİKSEL PİKSEL çözülür ve
 //   altındaki ana sahne (parçacık alanı + başlık) açılır. Her zaman atlanabilir: tıklama, Esc/Enter/Boşluk, kaydırma, «Girişi atla».
 // İçerik asla bu sahneye bağlı değildir: perde yalnızca üstte durur; JS gelmezse base.njk'deki güvenlik ağı onu kaldırır.
 // Depolama yok (çerez, localStorage, sessionStorage kullanılmaz); «bir kez» kararı gezinti türü + yönlendirenle verilir.
@@ -52,9 +52,9 @@ export function playOpening({ onReveal, onDone }) {
   const yearEl = root.querySelector('[data-open-year]');
   const ctx = cv.getContext('2d');
   const YEAR = Number(yearEl?.dataset.year) || 1993;
-  const T_ROLL = 950; // sayaç (ms)
-  const T_HOLD = 1280; // perde çözülmeye başlar
-  const T_DISS = 1000; // çözülme süresi
+  const T_ROLL = 320; // sayaç (ms)
+  const T_HOLD = 420; // perde çözülmeye başlar
+  const T_DISS = 400; // çözülme süresi
   const T_END = T_HOLD + T_DISS + 80;
 
   let W = 0;

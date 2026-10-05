@@ -15,6 +15,11 @@
 {# Küçük ok simgesi (metin okunabilirliği için aria-hidden) #}
 {% macro arrow() %}<span class="arr" aria-hidden="true">→</span>{% endmacro %}
 
+{# Model tarih doğrulanmadığında date=null verir; UI hiçbir yerde kesin tarih ileri sürmez. #}
+{% macro pubdate(pub, format="short", cls="") %}
+{% if pub.date %}<time{% if cls %} class="{{ cls }}"{% endif %} datetime="{{ pub.date }}">{% if format == "tr" %}{{ pub.date | date_tr }}{% elif format == "long" %}{{ pub.date | date_long }}{% else %}{{ pub.date | date_short }}{% endif %}</time>{% else %}<span{% if cls %} class="{{ cls }}"{% endif %}>{{ pub.dateStatus }}</span>{% endif %}
+{% endmacro %}
+
 {# Bölüm başlığı: etiket + başlık + (isteğe bağlı) açıklama #}
 {% macro head(eyebrow, title, lead="", cls="") %}
 <header class="sechead {{ cls }}">

@@ -1402,8 +1402,8 @@
   margin-top: 1.15em;
 }
 .art__body > p:first-child {
-  font-family: var(--f-display);
-  font-weight: 300;
+  font-family: var(--f-sans);
+  font-weight: 400;
   font-size: var(--fs-3);
   line-height: 1.45;
   letter-spacing: -0.008em;
@@ -1412,6 +1412,37 @@
 .art__sec {
   padding-top: clamp(2.6rem, 5vw, 4rem);
   scroll-margin-top: calc(var(--hdr) + 1.5rem);
+}
+.art__questions {
+  margin-block: 2rem;
+  scroll-margin-top: calc(var(--hdr) + 1.5rem);
+}
+.art__question-list {
+  margin-top: 1rem;
+  list-style: none;
+}
+.art__question {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: 1rem;
+  padding-block: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+.art__question-n {
+  padding-top: 0.25rem;
+  color: var(--ink-2);
+  font-size: 0.85rem;
+}
+.art__question h3 {
+  font-size: var(--fs-3);
+  font-weight: 300;
+  line-height: 1.2;
+}
+.art__question p {
+  margin-top: 0.4rem;
+  color: var(--ink-2);
+  font-size: var(--fs-2);
+  line-height: 1.6;
 }
 .art__srclink {
   justify-content: flex-start;
@@ -1509,6 +1540,13 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 1.4rem;
   }
+}
+
+/* Kısa yayın pilotu: başlık ve özet korunur, yazı daha erken başlar. */
+main[data-url="/bilgi-merkezi/blog/degerleme-oncesi-bes-soru/"] .phero {
+  min-height: 0;
+  padding-top: calc(var(--hdr) + clamp(1.2rem, 3vw, 2rem));
+  padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
 }
 
 /* Dokunmatik: süzgeç çipleri ve sayfalama en az 44 px */

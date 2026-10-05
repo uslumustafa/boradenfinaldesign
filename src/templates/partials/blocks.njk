@@ -78,7 +78,7 @@
     <dd class="rel__v">
       <ul class="rel__list">
         {% for x in rel.posts | limit(nPost) %}
-        <li><a class="rel__a" href="{{ x.url }}"><span class="rel__t">{{ x.title }}</span><span class="rel__d">{{ x.typeLabel }} · {{ x.date | date_long }}</span><span class="rel__go" aria-hidden="true">→</span></a></li>
+        <li><a class="rel__a" href="{{ x.url }}"><span class="rel__t">{{ x.title }}</span><span class="rel__d">{{ x.typeLabel }} · {{ m.pubdate(x, "long") }}</span><span class="rel__go" aria-hidden="true">→</span></a></li>
         {% endfor %}
       </ul>
     </dd>

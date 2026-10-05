@@ -67,9 +67,13 @@ main {
   column-gap: clamp(1rem, 2vw, 2rem);
 }
 .gc {
+  min-width: 0;
   grid-column: var(--gc, 1 / -1);
 }
 @media (max-width: 900px) {
+  .g12 {
+    grid-template-columns: minmax(0, 1fr);
+  }
   .gc {
     grid-column: 1 / -1;
   }
@@ -165,7 +169,8 @@ html.hdr-hidden .hdr {
   height: 100%;
   padding-inline: 0.35rem;
   font-size: 1.04rem;
-  font-weight: 500;
+  font-family: var(--f-display);
+  font-weight: 600;
   color: var(--on-dark-2);
   transition: color var(--t-fast);
 }
@@ -200,8 +205,8 @@ html.hdr-hidden .hdr {
 .hdr__icon {
   display: inline-grid;
   place-items: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 44px;
+  height: 44px;
   color: var(--on-dark-2);
   transition: color var(--t-fast);
 }
@@ -217,29 +222,29 @@ html.hdr-hidden .hdr {
 .hdr__burger {
   display: none;
   position: relative;
-  width: 2.6rem;
-  height: 2.6rem;
+  width: 44px;
+  height: 44px;
 }
 .hdr__burger span {
   position: absolute;
-  left: 0.7rem;
-  right: 0.7rem;
+  left: 12px;
+  right: 12px;
   height: 1.5px;
   background: #fff;
   transition: transform var(--t-med) var(--ease-out), top var(--t-med) var(--ease-out);
 }
 .hdr__burger span:nth-child(1) {
-  top: 1.05rem;
+  top: 18px;
 }
 .hdr__burger span:nth-child(2) {
-  top: 1.55rem;
+  top: 26px;
 }
 .hdr__burger[aria-expanded='true'] span:nth-child(1) {
-  top: 1.3rem;
+  top: 22px;
   transform: rotate(45deg);
 }
 .hdr__burger[aria-expanded='true'] span:nth-child(2) {
-  top: 1.3rem;
+  top: 22px;
   transform: rotate(-45deg);
 }
 
@@ -408,7 +413,11 @@ html.hdr-hidden .prog {
   font-size: 0.95rem;
 }
 
-@media (max-width: 1080px) {
+@media (max-width: 67.5em) {
+  .hdr__bar {
+    padding-inline: min(var(--gutter), 3vw);
+    gap: 0.5rem;
+  }
   .nav,
   .hdr__cta {
     display: none;
@@ -420,7 +429,7 @@ html.hdr-hidden .prog {
     display: none;
   }
 }
-@media (min-width: 1081px) {
+@media (min-width: 67.501em) {
   .mnav {
     display: none;
   }
@@ -471,8 +480,8 @@ html.hdr-hidden .prog {
 .phero__lead {
   margin-top: clamp(1.2rem, 2.4vw, 2rem);
   max-width: 38ch; /* sağdaki parçacık şekline taşmasın */
-  font-family: var(--f-display);
-  font-weight: 300;
+  font-family: var(--f-sans);
+  font-weight: 400;
   font-size: var(--fs-3);
   line-height: 1.38;
   color: var(--on-dark-2);
@@ -562,6 +571,8 @@ html.hdr-hidden .prog {
 }
 .fxswitch {
   display: inline-flex;
+  flex-wrap: wrap;
+  max-width: 100%;
   align-items: center;
   gap: 0.8rem;
   font-family: var(--f-mono);
@@ -571,6 +582,8 @@ html.hdr-hidden .prog {
 }
 .fxswitch__opts {
   display: inline-flex;
+  flex-wrap: wrap;
+  max-width: 100%;
   border: 1px solid var(--line-dark-2);
 }
 .fxswitch button {

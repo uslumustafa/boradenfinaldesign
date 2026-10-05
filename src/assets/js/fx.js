@@ -30,13 +30,14 @@ export function initFx() {
     // kalıcı=true: kullanıcı seçimi (saklanır). false: otomatik düşürme.
     set(tier, persist = false) {
       if (!['full', 'lite', 'off'].includes(tier)) return;
+      const changed = fx.tier !== tier;
       fx.tier = tier;
       if (persist) {
         fx.auto = false;
         store(KEY, tier);
       }
       apply();
-      listeners.forEach((fn) => fn(tier));
+      if (changed) listeners.forEach((fn) => fn(tier));
     },
     downgrade() {
       if (fx.tier === 'full') fx.set('lite');

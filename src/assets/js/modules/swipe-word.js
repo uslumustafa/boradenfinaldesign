@@ -5,7 +5,7 @@
 //   • Tetik: ~0,9 sn içinde ekran genişliğinin ≥ %20'si kadar en az 3 yatay kulaç + az dikey hareket. Bekleme: 6 sn.
 //   • Her şey vazgeçilebilir: tıklama, tekerlek/kaydırma, klavye, imlecin kahraman dışına çıkması kelimeyi çözer.
 export function mount(el, { fx, on, world }) {
-  if (fx.tier === 'off' || !matchMedia('(hover: hover) and (pointer: fine)').matches) return undefined;
+  if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return undefined;
   const html = document.documentElement;
   const WINDOW = 900; // ms
   const HOLD = 3600; // kelime ekranda kalma süresi (ms)
@@ -66,7 +66,7 @@ export function mount(el, { fx, on, world }) {
   }
 
   const onMove = (e) => {
-    if (e.pointerType !== 'mouse' || e.buttons) return;
+    if (fx.tier === 'off' || e.pointerType !== 'mouse' || e.buttons) return;
     const now = performance.now();
     if (active) {
       // kahraman dışına çıkılırsa kelime çözülür
@@ -90,12 +90,14 @@ export function mount(el, { fx, on, world }) {
   const cancel = () => active && hide();
   const onScroll = () => active && Math.abs(scrollY - y0) > 40 && hide();
   const onKey = () => cancel();
+  const offFx = fx.onChange(() => cancel());
 
   addEventListener('pointermove', onMove, { passive: true });
   addEventListener('pointerdown', cancel, { passive: true });
   addEventListener('scroll', onScroll, { passive: true });
   addEventListener('keydown', onKey);
   const unmount = () => {
+    offFx();
     removeEventListener('pointermove', onMove);
     removeEventListener('pointerdown', cancel);
     removeEventListener('scroll', onScroll);
