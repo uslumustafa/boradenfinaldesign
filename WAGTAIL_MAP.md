@@ -89,8 +89,8 @@ Statik sürümde üretilen ek dosyalar: `sitemap.xml`, `robots.txt`, `/assets/da
 | `pages/tools/calculator.njk` | `tools.mjs` | `CalculatorPage` — `engine` (seçim), `params` (→ `ParameterSet`), girdiler/ön ayarlar/açıklama/varsayımlar/SSS/kaynaklar StreamField | `calculators-bordro.json`, `calculators-vergi.json` |
 | `pages/tools/tax-calendar.njk` | `tools.mjs` | `TaxCalendarPage` + `CalendarItem` snippet | `calendar.json` (`meta, categories, rules, holidays, items`) |
 | `pages/company/about.njk` | `routes/company.mjs` | `AboutPage` | `aboutpage.json`: `title, lead, sections[], facts[], closing` |
-| `pages/company/team.njk` | `routes/team.mjs` | `TeamIndexPage` (AboutPage'in alt sayfası) + `TeamDepartment` (sıralı bölümler: `id`, `name`; InlinePanel) | `team.json`: `title, lead, intro, departments[]` |
-| `pages/company/person.njk` | `team.mjs` | `TeamMemberPage` — `role, titles, summary, bio, education, expertise`, `department` (FK → `TeamDepartment`), `has_profile`, `areas/services/sectors` (ParentalManyToManyField), `photo` (FK Image + yazılı izin onayı), `contact` + `show_contact`, `status`, `needs_verification` + `verify_note` (editoryal; sitede gösterilmez) | `team.json › members[]` |
+| `pages/company/team.njk` | `routes/team.mjs` | `TeamIndexPage` (AboutPage'in alt sayfası) + `TeamDepartment` (sıralı bölümler: `id`, `name`, `areas` → `ServiceAreaPage` (ParentalManyToManyField); InlinePanel) | `team.json`: `title, lead, intro, departments[]` |
+| `pages/company/person.njk` | `team.mjs` | `TeamMemberPage` — `role, titles, summary, bio, education, expertise`, `department` (FK → `TeamDepartment`), `has_profile`, `areas/services/sectors` (ParentalManyToManyField), `photo` (FK Image + kişinin izni (KVKK) onayı), `contact` + `show_contact`, `status`, `needs_verification` + `verify_note` (editoryal; sitede gösterilmez) | `team.json › members[]` |
 | `pages/company/careers.njk` | `company.mjs` | `CareersPage` (+ `JobPosting` snippet, form) | `careers.json` |
 | `pages/company/contact.njk` | `company.mjs` | `ContactPage` (`AbstractEmailForm`; konular = `ContactTopic` snippet) | `contactpage.json` |
 | `pages/company/kit.njk` | — | form alanı şablonu (`field_type` dalları) | — |
@@ -250,7 +250,7 @@ Mantık `longestWord()`; noktalama ve `**…**`/`[…](…)` işaretlemesi sayı
 - **Okuma notları** gerçek kişi adlarını (iktisatçılar) anar → editoryal/hukuki gözden geçirme; **blog** için `publicationDateVerified: false`.
 - **Arşiv:** 4 kaydın tarihi, 2 kaydın numarası yok (`null`); gerçek belge üst verisinden tamamlanmalı.
 - **Fotoğraflar** 2022 tarihli yer tutucudur. Ekranda logo görünen dört toplantı odası karesi (`meeting-logo`, `meeting-wide`, `handshake-group`, `handshake-group-2`) `photos.json` içinde `logo: true` ile işaretlidir → sitede hiçbir yerde kullanılmaz (`model.mjs` seçmez, `tests/logo.test.mjs` korur).
-- **Ekip:** 25 kişi (3'ünün özgeçmişi eski siteden, 22'si kurum şemasından yalnızca ad/unvan/bölümle); hepsi `needsVerification: true`; kimin hangi alan/hizmet/sektörde görüşmeye çıkacağı **öneridir** (yeni 22 kişiye atama yapılmadı) — müşteri onayı. Portre fotoğrafı: 6 kişi için arşivden etiketle eşleştirildi; yazılı izin (KVKK) doğrulanmalı, kalan kişiler baş harf avatarıyla görünür.
+- **Ekip:** 25 kişi (3'ünün özgeçmişi eski siteden, 22'si kurum şemasından yalnızca ad/unvan/bölümle); hepsi `needsVerification: true`; kişiler hizmet alanlarına bölümleri üzerinden bağlıdır (`departments[].areas`); görev adından türetilen 8 açık hizmet ataması ve kimin hangi alan/hizmet/sektörde görüşmeye çıkacağı **öneridir** — müşteri onayı. Portre fotoğrafı: 6 kişi için arşivden etiketle eşleştirildi (çalışanların isteğiyle — proje sahibi bildirdi); kalan kişiler baş harf avatarıyla görünür.
 - **Hizmet alanı fotoğraf eşleştirmesi** (`GROUP_PHOTOS`, `scripts/model.mjs`) ve **«Çalışma biçimimiz» metni** (`approach.json`) müşteri onayına tabidir.
 - **Büyük dosyalar:** `src/assets/documents` ≈ 156 MB ve `dist` ≈ 181 MB → depoya eklemeden önce `.gitignore`/LFS veya harici depolama kararı.
 
@@ -300,11 +300,11 @@ süreç adımlarındaki tikler kaydırdıkça dolar (`[data-steps]` → `--p`). 
 ### 12.5 Ekip: bileşenler ve atama kuralları
 
 `team.json` → `TeamIndexPage` + `TeamMemberPage` (§3). Atama kuralları kodla değil **veriyle** yönetilir (`scripts/team.mjs` başlık yorumu; Wagtail'de model yöntemi olarak aynen kurulur):
-hizmet kişileri = hizmete açıkça atananlar + hizmetin alanının sorumluları (en çok 3); alan kişileri = alan sorumluları + alandaki hizmetlerin en az ikisine atananlar (en çok 3, en az 2'ye tamamlanır);
-sektör kişileri = sektöre açıkça atananlar (en çok 4); yoksa sektörün hizmetlerini üstlenenlerden türetilir. Atama olmayan alanda («Akademi» gibi) ekip bandı çizilmez. Bağlantılar iletişim formunu `?kisi=<slug>` ile açar.
+hizmet kişileri = hizmete açıkça atananlar + hizmetin alanının sorumluları + bölümü o alana bağlı kişiler (en çok 3); alan kişileri = alan sorumluları + alandaki hizmetlerin en az ikisine atananlar + bölümü o alana bağlı kişiler (en çok 4, en az 2'ye tamamlanır); bölüm bağıyla gelenler bölümler arasında dönüşümlü sıralanır (her bölümün ilk kişisi önce);
+sektör kişileri = sektöre açıkça atananlar (en çok 4); yoksa sektörün hizmetlerini üstlenenlerden türetilir. Kimsesi olmayan alanda ekip bandı çizilmez. Bağlantılar iletişim formunu `?kisi=<slug>` ile açar.
 Yayın durumu üye başına (`status`); `needsVerification` olan kayıtlar yönetim panelinde sarı uyarıyla gösterilmelidir (`verify_note` yalnızca editörde görünür).
 Ekibimiz sayfası `departments` sırasıyla (sıra = listedeki sıra) bölüm başlıkları altında kompakt kişi satırlarıdır (`.tm-dept` / `.prow`); `has_profile: false` kişinin kendi sayfası/URL'si yoktur (`/hakkimizda/ekibimiz/#<slug>`), Wagtail'de `serve()` bu kişiler için dizin sayfasına yönlendirir; site haritası, JSON-LD listesi ve önceki/sonraki gezinmesi yalnızca profil sayfası olanları kullanır (`team.profiles`).
-«İlgili ekip» bandı yalnızca ataması olan kişilerden oluşur; kimsenin atanmadığı alan/hizmette («İnsan Kaynakları», «Akademi» — 2026-10-06 itibarıyla) bant çizilmez, «Kimle görüşmeli?» listesinde «İletişim formu» bağlantısı görünür.
+«İlgili ekip» bandı yalnızca ataması ya da bölüm bağı olan kişilerden oluşur; kimsesi olmayan alan/hizmette bant çizilmez, «Kimle görüşmeli?» listesinde «İletişim formu» bağlantısı görünür (2026-10-06 itibarıyla her alanda en az bir kişi var). Ekibimiz sayfasında bölüm başlığının altında bağlı hizmet alanının bağlantısı yer alır (`TeamDepartment.areas`).
 
 ### 12.6 Blog yazıları nasıl yayınlanır (editör akışı)
 

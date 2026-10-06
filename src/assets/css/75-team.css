@@ -150,6 +150,43 @@
   text-transform: uppercase;
   color: var(--ink-3);
 }
+/* Bölümün bağlı olduğu hizmet alanı (team.json › departments[].areas) */
+.tm-dept__a {
+  margin-top: 1.05rem;
+  display: grid;
+  justify-items: start;
+  gap: 0.4rem;
+}
+.tm-dept__ak {
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.tm-dept__a a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding-block: 0.3rem; /* dokunma hedefi ≥ 24 px */
+  margin-block: -0.3rem;
+  font-size: 0.92rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  text-decoration-color: var(--line-strong);
+}
+.tm-dept__a a:hover {
+  text-decoration-color: currentColor;
+}
+.tm-dept__a .arr {
+  transition: transform var(--t-med) var(--ease-out);
+}
+.tm-dept__a a:hover .arr {
+  transform: translateX(3px);
+}
 .tm-staff {
   list-style: none;
   display: grid;
@@ -391,6 +428,10 @@ html[data-fx='off'] .tm-join__t .w {
 }
 .pband__list--1 {
   grid-template-columns: minmax(0, 46rem);
+}
+/* dört kart (alan sayfası): en çok iki sütun — 3 + 1 dağılımı olmasın */
+.pband__list--4 {
+  grid-template-columns: repeat(auto-fit, minmax(max(min(100%, 23rem), calc(50% - 0.8rem)), 1fr));
 }
 .pband__foot {
   margin-top: clamp(1.6rem, 3vw, 2.4rem);

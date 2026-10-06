@@ -137,6 +137,41 @@ test('bölüm tanımı yoksa tek, adsız grup; profile: false olan üyenin adres
   assert.deepEqual(t.profiles.map((m) => m.slug), ['a']);
 });
 
+test('bölüm → alan bağı: bölümdeki herkes alanın ve hizmetlerinin ekibinde; açık atamalar önce, bölümler dönüşümlü; profil ve sektör genişlemez', () => {
+  const ctx = mk();
+  const raw = {
+    departments: [{ id: 'd1', name: 'Bir', areas: ['a'] }, { id: 'd2', name: 'İki', areas: ['a'] }, { id: 'd3', name: 'Üç' }],
+    members: [
+      person('p1', { department: 'd1' }),
+      person('p2', { department: 'd1' }),
+      person('p3', { department: 'd2' }),
+      person('p4', { department: 'd2', services: ['s2'] }),
+      person('p5', { department: 'd3', services: ['s1'] }),
+    ],
+  };
+  const t = buildTeam(raw, ctx);
+  assert.deepEqual(t.issues, []);
+  const byId = Object.fromEntries(ctx.services.map((s) => [s.id, s]));
+  const [a, b] = ctx.groups;
+  // hizmet: açık atanan önce, sonra bölüm bağıyla gelenler dönüşümlü (d1'in ilki, d2'nin ilki, …) — en çok 3
+  assert.deepEqual(byId.s1.people.map((p) => [p.slug, p.via]), [['p5', 'service'], ['p1', 'department'], ['p3', 'department']]);
+  assert.deepEqual(byId.s2.people.map((p) => [p.slug, p.via]), [['p4', 'service'], ['p1', 'department'], ['p3', 'department']]);
+  assert.deepEqual(byId.s3.people, []);
+  // alan: bölüm bağıyla dönüşümlü, en çok 4; kişinin alandaki açık hizmetleri kartta konu olarak kalır
+  assert.deepEqual(a.people.map((p) => [p.slug, p.via]), [['p1', 'department'], ['p3', 'department'], ['p2', 'department'], ['p4', 'department']]);
+  assert.deepEqual(a.people[3].topics.map((x) => x.id), ['s2']);
+  assert.deepEqual(b.people, []);
+  // bölüm bağı profil hizmet listesini ve sektör türetmesini genişletmez
+  assert.deepEqual(t.bySlug.p1.svcGroups, []);
+  assert.deepEqual(ctx.sectors[0].people.map((p) => p.slug), ['p4', 'p5']);
+  // bölüm kaydı bağlı alanları taşır (Ekibimiz'de bölüm başlığının altında bağlantı)
+  assert.deepEqual(t.departments.map((d) => [d.id, d.areas.map((g) => g.id)]), [['d1', ['a']], ['d2', ['a']], ['d3', []]]);
+  // bilinmeyen alan kimliği hata listesine yazılır ve bağlanmaz
+  const bad = buildTeam({ departments: [{ id: 'd', name: 'D', areas: ['yok'] }], members: [person('k', { department: 'd' })] }, mk());
+  assert.ok(bad.issues.join('\n').includes('bölüm «d»: bilinmeyen hizmet alanı «yok»'), bad.issues.join('\n'));
+  assert.deepEqual(bad.bySlug.k.deptAreaIds, []);
+});
+
 test('doğrulama notu ve kaynak üst veridir: kişi kaydına geçmez, yalnızca verifyNotes listesine yazılır', () => {
   const t = buildTeam({ members: [person('a', { needsVerification: true, verifyNote: 'Soyadı doğrulanmalı', source: 'Şema' }), person('b')] }, mk());
   assert.deepEqual(t.verifyNotes, [{ slug: 'a', note: 'Soyadı doğrulanmalı' }]);
@@ -194,8 +229,21 @@ test('gerçek veri: portre fotoğrafı yalnızca person: true kareler; her portr
 
 test('gerçek veri: her sektörde en az bir ilgili kişi var; kimsesiz hizmet sayfaları kart çizmez', () => {
   for (const s of model.sectors) assert.ok(s.people.length >= 1, `${s.slug}: ilgili kişi yok`);
-  for (const g of model.groups) for (const p of g.people) assert.ok(['area', 'service'].includes(p.via));
+  for (const g of model.groups) for (const p of g.people) assert.ok(['area', 'service', 'department'].includes(p.via));
   for (const s of model.services) assert.ok(s.people.length <= 3, `${s.id}: en çok 3 kişi`);
+});
+
+test('gerçek veri: her hizmet alanında 1–4 kişi; bölüm bağı şemadaki bölümden gelir; profil sayfası genişlemez', () => {
+  for (const g of model.groups) assert.ok(g.people.length >= 1 && g.people.length <= 4, `${g.id}: alan ekibi 1–4 kişi olmalı (${g.people.length})`);
+  const deptAreas = Object.fromEntries(team.departments.map((d) => [d.id, d.areas.map((x) => x.id)]));
+  for (const g of model.groups) {
+    for (const p of g.people.filter((x) => x.via === 'department')) assert.ok(deptAreas[p.department].includes(g.id), `${p.slug} → ${g.id}: bölüm bu alana bağlı değil`);
+  }
+  const insan = model.groups.find((g) => g.id === 'insan');
+  assert.ok(insan.people.every((p) => p.department === 'is-ve-sosyal-guvenlik'), 'İK alanının ekibi İş ve Sosyal Güvenlik bölümünden gelmeli');
+  for (const m of team.profiles) {
+    for (const sg of m.svcGroups) for (const s of sg.items) assert.ok(m.svcIds.includes(s.id) || m.areaIds.includes(sg.group.id), `${m.slug}: ${s.id} kişinin kendi ataması değil`);
+  }
 });
 
 test('gerçek veri: gizli iletişim bilgisi ve kişisel e-posta metinlere sızmamış', () => {

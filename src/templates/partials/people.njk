@@ -24,7 +24,8 @@
 </article>
 {% endmacro %}
 
-{# Sayfa altı kişi kartı (sektör, alan, hizmet). o.label: «Bu alanda» etiketi · o.query: iletişim bağlantısına eklenen parametre (&sektor=…) #}
+{# Sayfa altı kişi kartı (sektör, alan, hizmet). o.label: «Bu alanda» etiketi · o.query: iletişim bağlantısına eklenen parametre (&sektor=…)
+   Kendi profil sayfası olmayan kişide «Profil» bağlantısı çizilmez; adı Ekibimiz sayfasındaki satırına gider. #}
 {% macro person(p, o={}) %}
 <article class="pp" data-accent="{{ p.accent }}">
   <a class="pp__media" href="{{ p.url }}" tabindex="-1" aria-hidden="true">{{ avatar(p, "lg") }}</a>
@@ -43,7 +44,7 @@
     {% endif %}
     <p class="pp__act">
       <a class="btn btn--sm" href="/iletisim/?kisi={{ p.slug }}{{ o.query or '' }}">Görüşme talep edin {{ m.arrow() }}</a>
-      <a class="textlink" href="{{ p.url }}">Profil</a>
+      {% if p.profile %}<a class="textlink" href="{{ p.url }}">Profil</a>{% endif %}
     </p>
   </div>
 </article>

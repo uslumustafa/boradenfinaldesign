@@ -1,7 +1,7 @@
-{# Ekibimiz. Wagtail karşılığı: TeamIndexPage (title, lead, intro) — bölümler = TeamDepartment (sıralı), kişiler = alt sayfalar
-   TeamMemberPage (has_profile=false olanın sayfası yoktur; satır olarak bölümü altında görünür; yayında/taslak = Wagtail yayın durumu).
-   «Kimle görüşmeli?» listeleri ServiceAreaPage ve SectorPage → team_members ilişkisinden üretilir (açık atama; yoksa hizmet sahiplerinden
-   türetilir — scripts/team.mjs). Kişi sayısı sabitlenmez. #}
+{# Ekibimiz. Wagtail karşılığı: TeamIndexPage (title, lead, intro) — bölümler = TeamDepartment (sıralı; areas = bağlı hizmet alanları),
+   kişiler = alt sayfalar TeamMemberPage (has_profile=false olanın sayfası yoktur; satır olarak bölümü altında görünür; yayında/taslak = Wagtail
+   yayın durumu). «Kimle görüşmeli?» listeleri açık atamalardan ve bölüm → alan bağından üretilir (sektörde açık atama yoksa hizmet
+   sahiplerinden türetilir — scripts/team.mjs). Kişi sayısı sabitlenmez. #}
 {% extends "layouts/base.njk" %}
 {% import "partials/macros.njk" as m %}
 {% import "partials/people.njk" as pp %}
@@ -31,6 +31,9 @@
           <header class="gc tm-dept__head" style="--gc: 1 / span 4">
             <h3 class="tm-dept__t" id="bolum-{{ d.id }}-h">{{ d.name }}</h3>
             <p class="tm-dept__n mono tnum">{{ d.members | length }} kişi</p>
+            {% if d.areas | length %}
+            <p class="tm-dept__a"><span class="tm-dept__ak mono">Hizmet alanı</span>{% for a in d.areas %}<a href="{{ a.url }}">{{ a.name }} {{ m.arrow() }}</a>{% endfor %}</p>
+            {% endif %}
           </header>
           {% endif %}
           <ul class="gc tm-staff" style="--gc: {{ '5 / -1' if d.name else '1 / -1' }}">

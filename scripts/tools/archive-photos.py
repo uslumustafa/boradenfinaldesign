@@ -37,11 +37,12 @@ SPECS = {
 }
 
 # ——— Ekip portreleri (yalnızca ekip sayfaları). Eşleştirme YALNIZCA klasör/dosya etiketiyle yapılır (yüz tanıma yok):
-#   Murat Demirtaş, Suat Bozkurt, Hazal Kesbiç → 4_Photoshoplu Fotoğraflar/FOTOĞRALAR VE ÜNVANLAR.xlsx (ad → dosya numarası)
-#   Cengiz Turmaz → 8_Aktif Çalışanların Fotoğrafları/Cengiz TURMAZ · Adem Başer, Çisem Güler → FOTOĞRAF_ 01.01.2021 altında aynı adlı klasör.
-#   (Arşivdeki «Çisem ESKİCİ» ve «Gönül ÖZTÜRK» klasörleri şemadaki «Çisem Güler» / «Gönül Ak» ile aynı kişi mi, müşteriden teyit gerekir;
-#    teyit gelmeden kullanılmadı.) box = (yatay merkez, üst, genişlik) — görüntü genişliğine oranlar; kırpma 4:5, baş-omuz.
-# Yayın şartı: kişinin yazılı rızası (KVKK) — photos.json'da person: true; team.json'da kişi kaydında doğrulama notu.
+#   Murat Demirtaş, Suat Bozkurt, Hazal Kesbiç, Çisem Güler → 4_Photoshoplu Fotoğraflar/FOTOĞRALAR VE ÜNVANLAR.xlsx (ad → dosya numarası;
+#   listedeki «ÇİSEM ESKİCİ — Yönetim Temsilcisi» şemadaki Çisem Güler'dir: proje sahibi bildirdi, 6 Ekim 2026).
+#   Cengiz Turmaz → 8_Aktif Çalışanların Fotoğrafları/Cengiz TURMAZ · Adem Başer → FOTOĞRAF_ 01.01.2021 altında aynı adlı klasör.
+#   (Arşivdeki «Gönül ÖZTÜRK» klasörünün şemadaki «Gönül Ak» olduğu teyit edilmedi; kullanılmadı.)
+#   box = (yatay merkez, üst, genişlik) — görüntü genişliğine oranlar; kırpma 4:5, baş-omuz.
+# Yayın şartı: kişinin izni (KVKK; çalışanların isteğiyle — proje sahibi bildirdi) — photos.json'da person: true; kaynak team.json › source.
 PORTRAIT_SIZES = [320, 640]
 PORTRAITS = {
     "person-cengiz-turmaz": dict(src=Y22 + "8_Aktif Çalışanların Fotoğrafları/Cengiz TURMAZ/DSC_9700.JPG", box=(0.50, 0.055, 0.52)),
@@ -49,7 +50,7 @@ PORTRAITS = {
     "person-suat-bozkurt": dict(src=Y22 + "4_Photoshoplu Fotoğraflar/DSC_8983.jpg", box=(0.50, 0.05, 0.52)),
     "person-hazal-kesbic": dict(src=Y22 + "4_Photoshoplu Fotoğraflar/DSC_9399.jpg", box=(0.50, 0.055, 0.52)),
     "person-adem-baser": dict(src="FOTOĞRAF_ 01.01.2021/Adem Başer/DSC_4935.JPG", box=(0.52, 0.10, 0.62)),
-    "person-cisem-guler": dict(src="FOTOĞRAF_ 01.01.2021/Çisem Güler/DSC_4019.JPG", box=(0.54, 0.185, 0.60)),
+    "person-cisem-guler": dict(src=Y22 + "4_Photoshoplu Fotoğraflar/DSC_9854.jpg", box=(0.51, 0.095, 0.52)),
 }
 NAMES = {
     "person-cengiz-turmaz": "Cengiz Turmaz", "person-murat-demirtas": "Murat Demirtaş", "person-suat-bozkurt": "Suat Bozkurt",

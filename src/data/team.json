@@ -1,56 +1,88 @@
 {
-  "_note": "Ekip verisi. Wagtail karşılığı: TeamIndexPage (title, lead, intro) + TeamDepartment (bölüm: id, ad; sıra = bu listedeki sıra) + TeamMemberPage (her üye bir sayfa; profile: false olan üyenin kendi sayfası yoktur, Ekibimiz sayfasında bölümü altında satır olarak görünür). Cengiz Turmaz, Adem Başer ve Murat Demirtaş'ın özgeçmişleri eski sitedeki (boraden.com.tr/ekibimiz/...) herkese açık metinlerden DERLENDİ; diğer kişiler müşterinin kurum şemasından (Ekim 2026) yalnızca ad, görev ve bölümle eklendi — özgeçmiş, eğitim ve uzmanlık uydurulmaz, yalnızca kaynakta yazan olgular kullanılır. needsVerification: true = yayından önce kişiyle/kurumla doğrulanmalı (ad yazımı, unvan, görev); verifyNote = neyin doğrulanacağı (sitede gösterilmez). Fotoğraf: yalnızca yazılı izinle (KVKK) ve photos.json anahtarıyla (person: true) eklenir; yoksa baş harfli tasarımlı kutu gösterilir. İletişim bilgileri (contact) yalnızca showContact: true ise yayımlanır; aksi hâlde kartlardaki «Görüşme talep edin» düğmesi iletişim formuna gider (?kisi=<slug>). Atama (areas/services/sectors): alan sorumlusu = areas, ek sahiplik = services, açık sektör ataması = sectors; sectors boşsa sektör sayfasındaki kişiler o sektörün hizmetlerinin sahiplerinden TÜRETİLİR (scripts/team.mjs). Şemadan eklenen kişilere hizmet/alan/sektör ataması yapılmadı (müşteri kararı). status: published | draft.",
+  "_note": "Ekip verisi. Wagtail karşılığı: TeamIndexPage (title, lead, intro) + TeamDepartment (bölüm: id, ad; sıra = bu listedeki sıra) + TeamMemberPage (her üye bir sayfa; profile: false olan üyenin kendi sayfası yoktur, Ekibimiz sayfasında bölümü altında satır olarak görünür). Cengiz Turmaz, Adem Başer ve Murat Demirtaş'ın özgeçmişleri eski sitedeki (boraden.com.tr/ekibimiz/...) herkese açık metinlerden DERLENDİ; diğer kişiler müşterinin kurum şemasından (Ekim 2026) yalnızca ad, görev ve bölümle eklendi — özgeçmiş, eğitim ve uzmanlık uydurulmaz, yalnızca kaynakta yazan olgular kullanılır. needsVerification: true = yayından önce kişiyle/kurumla doğrulanmalı (ad yazımı, unvan, görev); verifyNote = neyin doğrulanacağı (sitede gösterilmez). Fotoğraf: yalnızca kişinin izniyle (KVKK; izin kaydı müşteride saklanır) ve photos.json anahtarıyla (person: true) eklenir; yoksa baş harfli tasarımlı kutu gösterilir. İletişim bilgileri (contact) yalnızca showContact: true ise yayımlanır; aksi hâlde kartlardaki «Görüşme talep edin» düğmesi iletişim formuna gider (?kisi=<slug>). Atama (areas/services/sectors): alan sorumlusu = areas, ek sahiplik = services, açık sektör ataması = sectors; sectors boşsa sektör sayfasındaki kişiler o sektörün hizmetlerinin sahiplerinden TÜRETİLİR (scripts/team.mjs). Bölüm → alan bağı: departments[].areas — bölümdeki herkes o hizmet alanının ve alandaki hizmetlerin ekip listelerinde görünür (profil sayfasındaki hizmet listesini ve sektör türetmesini genişletmez). Şemadan eklenen kişilerde görev adında bir hizmetin adı açıkça geçiyorsa (ör. «Tam Tasdik ve İade Sorumlusu», «SGK İşlemleri Yöneticisi», «İnsan Kaynakları Uzmanı», «Bağımsız Denetim Uzmanı», «Muhasebe Vergi …») bölümünün alanındaki o hizmetlere services ile açık atama yapıldı; müşteriyle doğrulanmalı. Hukuk bölümü proje sahibinin kararıyla Kurumsal Danışmanlık alanına bağlandı; Yönetim ve İdari İşler bir alana bağlı değildir. status: published | draft.",
   "title": "Ekibimiz",
   "lead": "Hizmetlerimizi yürüten yönetici ve uzmanlarımız, çalıştıkları bölümlere göre.",
   "intro": "Ekibimiz bölümlerine göre listelenir; özgeçmişi yayımlanan kişilerin profil sayfasında unvanları, eğitimleri ve çalıştıkları alanlar yer alır. Bir konuda kiminle görüşmeniz gerektiğinden emin değilseniz iletişim formunu kullanabilirsiniz.",
   "departments": [
     {
       "id": "yonetim",
-      "name": "Yönetim"
+      "name": "Yönetim",
+      "areas": []
     },
     {
       "id": "muhasebe-ve-vergi",
-      "name": "Muhasebe ve Vergi"
+      "name": "Muhasebe ve Vergi",
+      "areas": [
+        "vergi"
+      ]
     },
     {
       "id": "vergi-denetim",
-      "name": "Vergi Denetim"
+      "name": "Vergi Denetim",
+      "areas": [
+        "vergi"
+      ]
     },
     {
       "id": "is-ve-sosyal-guvenlik",
-      "name": "İş ve Sosyal Güvenlik"
+      "name": "İş ve Sosyal Güvenlik",
+      "areas": [
+        "insan"
+      ]
     },
     {
       "id": "yeminli-mali-musavirlik",
-      "name": "Yeminli Mali Müşavirlik"
+      "name": "Yeminli Mali Müşavirlik",
+      "areas": [
+        "vergi"
+      ]
     },
     {
       "id": "ticaret-sicil",
-      "name": "Ticaret Sicil"
+      "name": "Ticaret Sicil",
+      "areas": [
+        "danismanlik"
+      ]
     },
     {
       "id": "bagimsiz-denetim",
-      "name": "Bağımsız Denetim"
+      "name": "Bağımsız Denetim",
+      "areas": [
+        "denetim"
+      ]
     },
     {
       "id": "danismanlik",
-      "name": "Danışmanlık"
+      "name": "Danışmanlık",
+      "areas": [
+        "danismanlik"
+      ]
     },
     {
       "id": "hukuk",
-      "name": "Hukuk"
+      "name": "Hukuk",
+      "areas": [
+        "danismanlik"
+      ]
     },
     {
       "id": "akademi",
-      "name": "Akademi"
+      "name": "Akademi",
+      "areas": [
+        "akademi"
+      ]
     },
     {
       "id": "idari-isler",
-      "name": "İdari İşler"
+      "name": "İdari İşler",
+      "areas": []
     },
     {
       "id": "bt-ve-yazilim-gelistirme",
-      "name": "BT ve Yazılım Geliştirme"
+      "name": "BT ve Yazılım Geliştirme",
+      "areas": [
+        "sistem"
+      ]
     }
   ],
   "members": [
@@ -115,8 +147,8 @@
       "showContact": false,
       "status": "published",
       "needsVerification": true,
-      "verifyNote": "Görev: eski sitede «Kurucu», kurum şemasında «Şirket Genel Müdürü» — ikisi birleştirildi, doğrulanmalı. Fotoğraf: arşiv (2022 çekimi, «Cengiz TURMAZ» klasörü); yazılı rıza (KVKK) doğrulanmalı.",
-      "source": "Eski site: boraden.com.tr/ekibimiz/cengiz-turmaz · görev: Kurum organizasyon şeması (müşteri, Ekim 2026)"
+      "verifyNote": "Görev: eski sitede «Kurucu», kurum şemasında «Şirket Genel Müdürü» — ikisi birleştirildi, doğrulanmalı.",
+      "source": "Eski site: boraden.com.tr/ekibimiz/cengiz-turmaz · görev: Kurum organizasyon şeması (müşteri, Ekim 2026) · fotoğraf: arşiv 2022 çekimi («Cengiz TURMAZ» klasörü); çalışanın isteğiyle yayımlanır (proje sahibi bildirdi, 6 Ekim 2026)"
     },
     {
       "slug": "cisem-guler",
@@ -141,8 +173,7 @@
       "showContact": false,
       "status": "published",
       "needsVerification": true,
-      "verifyNote": "Fotoğraf: arşiv (2021 çekimi, «Çisem Güler» klasörü); yazılı rıza (KVKK) doğrulanmalı. Arşivde aynı unvanla «Çisem ESKİCİ» klasörü (2022 çekimi) de var; aynı kişiyse o çekim kullanılabilir (müşteriden teyit).",
-      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
+      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026) · fotoğraf: arşiv 2022 çekimi («FOTOĞRALAR VE ÜNVANLAR» listesinde «ÇİSEM ESKİCİ — Yönetim Temsilcisi», DSC_9854; proje sahibi aynı kişi olduğunu bildirdi); çalışanın isteğiyle yayımlanır (proje sahibi bildirdi, 6 Ekim 2026)"
     },
     {
       "slug": "suat-bozkurt",
@@ -156,7 +187,9 @@
       "expertise": [],
       "education": [],
       "areas": [],
-      "services": [],
+      "services": [
+        "mali-musavirlik-ve-muhasebe"
+      ],
       "sectors": [],
       "photo": "person-suat-bozkurt",
       "contact": {
@@ -167,8 +200,7 @@
       "showContact": false,
       "status": "published",
       "needsVerification": true,
-      "verifyNote": "Fotoğraf: arşiv (2022 çekimi, «FOTOĞRALAR VE ÜNVANLAR» listesindeki ad–dosya eşleşmesi); yazılı rıza (KVKK) doğrulanmalı.",
-      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
+      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026) · fotoğraf: arşiv 2022 çekimi («FOTOĞRALAR VE ÜNVANLAR» listesi, DSC_8983); çalışanın isteğiyle yayımlanır (proje sahibi bildirdi, 6 Ekim 2026)"
     },
     {
       "slug": "hatice-koc",
@@ -182,7 +214,9 @@
       "expertise": [],
       "education": [],
       "areas": [],
-      "services": [],
+      "services": [
+        "mali-musavirlik-ve-muhasebe"
+      ],
       "sectors": [],
       "photo": null,
       "contact": {
@@ -218,7 +252,7 @@
       "showContact": false,
       "status": "published",
       "needsVerification": true,
-      "verifyNote": "Arşivde «Gönül ÖZTÜRK» klasörü (2022 çekimi) var; şemadaki «Gönül Ak» ile aynı kişi olup olmadığı müşteriden teyit edilmeli — teyide kadar fotoğraf eklenmedi.",
+      "verifyNote": "Arşivde «Gönül ÖZTÜRK» (2022 listesinde «Mali İşler Yöneticisi / S.M. Mali Müşavir») klasörü ve portresi var; şemadaki «Gönül Ak» ile aynı kişi olup olmadığı müşteriden teyit edilmeli (proje sahibi de emin değil, 6 Ekim 2026) — teyide kadar fotoğraf eklenmedi.",
       "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
     },
     {
@@ -274,8 +308,8 @@
       "showContact": false,
       "status": "published",
       "needsVerification": true,
-      "verifyNote": "Şemada «Vergi Denetim Sorumlusu» (bölüm yöneticisi: Gönül Ak); eski site özgeçmişinde «Denetim Departmanı Yöneticisi». Özet ve özgeçmiş metni güncel göreve göre doğrulanmalı. Fotoğraf: arşiv (2021 çekimi, «Adem Başer» klasörü); yazılı rıza (KVKK) doğrulanmalı.",
-      "source": "Eski site: boraden.com.tr/ekibimiz/adem-baser · görev: Kurum organizasyon şeması (müşteri, Ekim 2026)"
+      "verifyNote": "Şemada «Vergi Denetim Sorumlusu» (bölüm yöneticisi: Gönül Ak); eski site özgeçmişinde «Denetim Departmanı Yöneticisi». Özet ve özgeçmiş metni güncel göreve göre doğrulanmalı.",
+      "source": "Eski site: boraden.com.tr/ekibimiz/adem-baser · görev: Kurum organizasyon şeması (müşteri, Ekim 2026) · fotoğraf: arşiv 2021 çekimi («Adem Başer» klasörü); çalışanın isteğiyle yayımlanır (proje sahibi bildirdi, 6 Ekim 2026)"
     },
     {
       "slug": "volkan-turmaz",
@@ -364,7 +398,9 @@
       "expertise": [],
       "education": [],
       "areas": [],
-      "services": [],
+      "services": [
+        "mali-musavirlik-ve-muhasebe"
+      ],
       "sectors": [],
       "photo": null,
       "contact": {
@@ -414,7 +450,12 @@
       "expertise": [],
       "education": [],
       "areas": [],
-      "services": [],
+      "services": [
+        "sgk-dosya-acilisi",
+        "ev-hizmetlisi-sgk-dosya-acilisi",
+        "sgk-protokolu",
+        "sgk-dosya-kapanisi"
+      ],
       "sectors": [],
       "photo": null,
       "contact": {
@@ -440,7 +481,10 @@
       "expertise": [],
       "education": [],
       "areas": [],
-      "services": [],
+      "services": [
+        "insan-kaynaklari-ve-bordro",
+        "insan-kiymetleri-surec-yonetimi"
+      ],
       "sectors": [],
       "photo": null,
       "contact": {
@@ -465,7 +509,10 @@
       "expertise": [],
       "education": [],
       "areas": [],
-      "services": [],
+      "services": [
+        "insan-kaynaklari-ve-bordro",
+        "insan-kiymetleri-surec-yonetimi"
+      ],
       "sectors": [],
       "photo": null,
       "contact": {
@@ -516,7 +563,10 @@
       "expertise": [],
       "education": [],
       "areas": [],
-      "services": [],
+      "services": [
+        "tam-tasdik-islemleri",
+        "kdv-iade-islemleri"
+      ],
       "sectors": [],
       "photo": null,
       "contact": {
@@ -590,8 +640,8 @@
       "showContact": false,
       "status": "published",
       "needsVerification": true,
-      "verifyNote": "Görev şemadan alındı (eski sitede «Türk Ticaret Kanunu Departmanı Yöneticisi»); doğrulanmalı. Fotoğraf: arşiv (2022 çekimi, «FOTOĞRALAR VE ÜNVANLAR» listesindeki ad–dosya eşleşmesi); yazılı rıza (KVKK) doğrulanmalı.",
-      "source": "Eski site: boraden.com.tr/ekibimiz/murat-demirtas · görev: Kurum organizasyon şeması (müşteri, Ekim 2026)"
+      "verifyNote": "Görev şemadan alındı (eski sitede «Türk Ticaret Kanunu Departmanı Yöneticisi»); doğrulanmalı.",
+      "source": "Eski site: boraden.com.tr/ekibimiz/murat-demirtas · görev: Kurum organizasyon şeması (müşteri, Ekim 2026) · fotoğraf: arşiv 2022 çekimi («FOTOĞRALAR VE ÜNVANLAR» listesi, DSC_8747); çalışanın isteğiyle yayımlanır (proje sahibi bildirdi, 6 Ekim 2026)"
     },
     {
       "slug": "nilay-guven-otur",
@@ -605,7 +655,9 @@
       "expertise": [],
       "education": [],
       "areas": [],
-      "services": [],
+      "services": [
+        "bagimsiz-denetim"
+      ],
       "sectors": [],
       "photo": null,
       "contact": {
@@ -691,8 +743,7 @@
       "showContact": false,
       "status": "published",
       "needsVerification": true,
-      "verifyNote": "Fotoğraf: arşiv (2022 çekimi, «FOTOĞRALAR VE ÜNVANLAR» listesindeki ad–dosya eşleşmesi); yazılı rıza (KVKK) doğrulanmalı.",
-      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
+      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026) · fotoğraf: arşiv 2022 çekimi («FOTOĞRALAR VE ÜNVANLAR» listesi, DSC_9399); çalışanın isteğiyle yayımlanır (proje sahibi bildirdi, 6 Ekim 2026)"
     },
     {
       "slug": "nurettin-ozturk",

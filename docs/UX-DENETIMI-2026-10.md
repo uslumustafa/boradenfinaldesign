@@ -73,7 +73,7 @@ Her bileşen **zaten var olan alanlardan** beslenir; yeni bilgi yazılmaz. Wagta
 
 ## 5. Müşteriye sorulacaklar
 
-- Ekip: üç kişinin biyografisi eski siteden, 22 kişinin ad/unvan/bölümü müşteri şemasından (2026-10-06); hepsi «doğrulanacak» işaretli, yayından önce onay gerekiyor. Portre fotoğrafı yalnızca yazılı rıza (KVKK) ile eklenir (6 kişi için arşivden eklendi, rıza doğrulanmalı).
+- Ekip: üç kişinin biyografisi eski siteden, 22 kişinin ad/unvan/bölümü müşteri şemasından (2026-10-06); hepsi «doğrulanacak» işaretli, yayından önce onay gerekiyor. Portre fotoğrafı yalnızca kişinin izniyle (KVKK) eklenir (6 kişi için arşivden eklendi; proje sahibi çalışanların isteğiyle yayımlandığını bildirdi). Kişiler hizmet alanlarına bölümleri üzerinden bağlı (`departments[].areas`).
 - Alan/hizmet ↔ kişi eşleşmeleri **öneridir**; kimin hangi alanda görüşmeye çıkacağı müşteri tarafından onaylanmalı.
 - Fotoğraf eşleştirme önerisi (yukarıda) onay bekliyor.
 
@@ -104,7 +104,7 @@ Plan, bu belgedeki sırayla uygulandı. Her bileşen mevcut alanlardan beslenir 
 - **Dokunma hedefleri:** 390 px taramasında ekip bileşenlerinde ve künyede 20–22 px'lik bağlantılar bulundu (62 sayfa); iç boşluk/eksi dış boşlukla ≥ 24 px'e çıkarıldı, görünüm değişmedi (`75-team.css` sonu, `65-services.css › .kunye dd a`). `tests/audit.mjs` ve `services.e2e.mjs › mobile` korur.
 - **Bölüm adı etiketi:** sağ kenardaki noktalarda bölüm değişince beliren ad, içeriğin üstüne bindiğinde (ör. Ekibimiz'de sağ sütun) okunmuyordu; yarı saydam «hap» zemin eklendi (koyu bölümde lacivert, açık bölümde beyaz; `50-home.css › .hud__label`). `tests/hud.e2e.mjs` geçer.
 
-**Hâlâ açık.** Yazar kartı (veri yok); ekip biyografileri ve alan ↔ kişi eşleşmeleri «doğrulanacak»; portre fotoğrafı yalnızca yazılı rıza (KVKK) ile; fotoğraf ↔ alan eşleşmesi (`GROUP_PHOTOS`, `model.mjs`) ve «yaklaşım» metni (`approach.json`) müşteri onayı bekliyor.
+**Hâlâ açık.** Yazar kartı (veri yok); ekip biyografileri ve alan ↔ kişi eşleşmeleri «doğrulanacak»; portre fotoğrafı yalnızca kişinin izniyle (KVKK); fotoğraf ↔ alan eşleşmesi (`GROUP_PHOTOS`, `model.mjs`) ve «yaklaşım» metni (`approach.json`) müşteri onayı bekliyor.
 
 ---
 
@@ -138,7 +138,7 @@ Tarama aracı: `npm run test:text` (varsayılan 20 sayfa × 4 ekran), `--full` (
 | Yüksek | **Site simgesi** (favicon) + Apple dokunma simgesi + web manifest | Şu an boş (`<link rel="icon" href="data:,">`): sekmede, yer imlerinde ve telefonun ana ekranında simge yok | Resmî logodaki tik işaretinden, logo dosyasına dokunmadan ayrı simge dosyaları; marka sahibinin onayı |
 | Yüksek | **Paylaşım görseli** (1200 × 630) | `og:image` şu an 211 × 48 px logo; LinkedIn/WhatsApp önizlemesi küçük ve boş görünür | Arşivden bir ofis fotoğrafı + logo; onay sonrası `site.shareImage` |
 | Orta | Makale **yazar kartı** | Yazının kimden geldiği güven verir; kişi bileşenleri (`partials/people.njk`) hazır, eksik olan veri | Hangi yazıyı kimin yazdığı bilgisi |
-| Orta | **Ekip portreleri** | **Kısmen yapıldı (2026-10-06):** kartlar bölümlere göre kompakt satırlara çevrildi; arşivdeki etiketli karelerden 6 kişiye portre eklendi | Kalan 19 kişi için fotoğraf ve hepsi için yazılı rıza (KVKK) |
+| Orta | **Ekip portreleri** | **Kısmen yapıldı (2026-10-06):** kartlar bölümlere göre kompakt satırlara çevrildi; arşivdeki etiketli karelerden 6 kişiye portre eklendi | Kalan 19 kişi için fotoğraf (kişinin izniyle) |
 | Orta | Mobilde **tablo kaydırma ipucu** | Maaş tablosu dar ekranda artık bölünmeden yatay kayıyor; kaydırılabildiği görünür olmalı | **Yapıldı:** kayan tablonun sağ kenarı yumuşakça söner, sona gelince söner kalkar (kaydırma zaman çizelgesi; desteklemeyen tarayıcıda tablo yine kayar). Telefonda tablolar biraz sıkılaştı: takvimdeki tatiller tablosu artık kaymadan sığıyor |
 | Orta (test) | Ana sayfada **hızlı görev kısayolları** (Hizmet bul · Hesapla · Kaynak ara · İletişim) | Hızlı bir iş için gelen ziyaretçi uzun kaydırmaya bağlı kalmaz | Mevcut bağlantıların yeniden düzeni; 5–8 kişilik görev testiyle karşılaştırılmalı |
 | Düşük | Sirküler/duyuru **e-posta bildirimi** | Müşterinin mevzuat takibini kolaylaştırır | Arka uç (Wagtail) ve açık rıza; tasarım onayından sonra |

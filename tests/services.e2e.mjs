@@ -380,7 +380,7 @@ async function mobile() {
   ok(lg && lg.pos !== 'sticky' && lg.ovf !== 'auto', `/yasal/…: «İçindekiler» kutusu şeride dönüşmez (${lg && lg.pos}, taşma ${lg && lg.ovf})`);
 
   // dokunma hedefleri: ad / hizmet / künye bağlantıları ≥ 24 px (WCAG 2.5.8); yerleşim dengelendiği için görünüm aynı kalır
-  const TOUCH = '.prow__name a, .pp__name a, .pp__topics a, .who__t, .who__none, .pf-svcgrp__h a, .pf-svcgrp__l a, .pf-facts__chips a, .pinline a, .kunye dd a';
+  const TOUCH = '.prow__name a, .tm-dept__a a, .pp__name a, .pp__topics a, .who__t, .who__none, .pf-svcgrp__h a, .pf-svcgrp__l a, .pf-facts__chips a, .pinline a, .kunye dd a';
   let total = 0;
   const small = [];
   for (const url of [AREA, RICH, '/hizmetler/akademi/ufrs/', SECTOR_ODD, '/hakkimizda/', '/hakkimizda/ekibimiz/', person]) {
