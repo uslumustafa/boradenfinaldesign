@@ -125,41 +125,69 @@
 .who {
   scroll-margin-top: calc(var(--hdr) + 1.5rem);
 }
-.tm-grid {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16.5rem), 1fr));
-  gap: clamp(2rem, 3.4vw, 3rem) clamp(1.2rem, 2vw, 2rem);
+/* kadro: bölümlere göre (kurum şemasındaki sıra). Solda bölüm adı, sağda kişi satırları */
+.tm-depts {
+  border-top: 1px solid var(--ink);
 }
-.tm-grid > li {
-  display: flex;
+.tm-dept {
+  padding-block: clamp(1.7rem, 3vw, 2.6rem);
+  border-bottom: 1px solid var(--line);
+  row-gap: 1.2rem;
+  align-items: start;
+  scroll-margin-top: calc(var(--hdr) + 1.5rem);
 }
-.pcard {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-.pcard__media {
-  display: block;
-  margin-bottom: 1.3rem;
-}
-.pcard:hover .avatar::before {
-  transform: translate(7px, -7px);
-}
-.pcard__body {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-}
-.pcard__name {
+.tm-dept__t {
   font-family: var(--f-display);
   font-weight: 400;
   font-size: var(--fs-3);
-  line-height: 1.12;
+  line-height: 1.15;
   letter-spacing: -0.015em;
 }
-.pcard__name a {
+.tm-dept__n {
+  margin-top: 0.55rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.tm-staff {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 17.5rem), 1fr));
+  gap: 1.6rem clamp(1.4rem, 2.4vw, 2.4rem);
+}
+.prow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  min-width: 0;
+  scroll-margin-top: calc(var(--hdr) + 1.5rem);
+}
+.prow__media {
+  flex: none;
+}
+.prow__body {
+  min-width: 0;
+}
+.prow__name {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: 1.28rem;
+  line-height: 1.15;
+  letter-spacing: -0.012em;
+}
+.prow__role {
+  margin-top: 0.3rem;
+  font-size: 0.92rem;
+  line-height: 1.4;
+  color: var(--ink-2);
+}
+/* profil sayfası olan kişi: satırın tamamı tıklanır; ad ve «Profil →» etiketi bağlantıyı belirtir */
+.prow--link:hover .avatar::before {
+  transform: translate(7px, -7px);
+}
+.prow__name a {
   color: inherit;
   background-image: linear-gradient(currentColor, currentColor);
   background-repeat: no-repeat;
@@ -167,76 +195,38 @@
   background-size: 0 1px;
   transition: background-size 520ms var(--ease-out);
 }
-.pcard:hover .pcard__name a {
+.prow--link:hover .prow__name a {
   background-size: 100% 1px;
 }
-/* tüm kart tıklanır; içteki çipler ve bağlantı üstte kalır */
-.pcard__name a::after {
+.prow__name a::after {
   content: '';
   position: absolute;
-  inset: 0;
+  inset: -0.5rem -0.4rem;
 }
-.pcard__name a:focus-visible {
+.prow__name a:focus-visible {
   outline: none;
 }
-.pcard__name a:focus-visible::after {
+.prow__name a:focus-visible::after {
   outline: 2px solid var(--focus);
-  outline-offset: 6px;
+  outline-offset: 2px;
 }
-.pcard__role {
-  margin-top: 0.55rem;
-  font-size: 0.95rem;
-  font-weight: 500;
-  line-height: 1.4;
+.prow__act {
+  margin-top: 0.45rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  transition: color var(--t-med);
+}
+.prow__act .arr {
+  display: inline-block;
+  transition: transform var(--t-med) var(--ease-out);
+}
+.prow--link:hover .prow__act {
   color: var(--ink);
 }
-.pcard__titles {
-  margin-top: 0.4rem;
-  font-size: 0.84rem;
-  line-height: 1.5;
-  color: var(--ink-3);
-}
-.pcard__sum {
-  margin-top: 0.9rem;
-  font-size: 0.93rem;
-  line-height: 1.55;
-  color: var(--ink-2);
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.pcard__areas {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-top: 1rem;
-}
-.pcard__areas a {
-  position: relative;
-  z-index: 1;
-  display: inline-flex;
-  align-items: center;
-  min-height: 1.7rem;
-  padding: 0.15rem 0.65rem;
-  border: 1px solid var(--line-strong);
-  font-family: var(--f-mono);
-  font-variant-numeric: tabular-nums;
-  font-size: 0.66rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-2);
-  transition: border-color var(--t-fast), color var(--t-fast), background var(--t-fast);
-}
-.pcard__areas a:hover {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: #fff;
-}
-.pcard__act {
-  margin-top: auto;
-  padding-top: 1.3rem;
+.prow--link:hover .prow__act .arr {
+  transform: translateX(4px);
 }
 
 /* ── Kimle görüşmeli? (alan ve sektöre göre dizin) */
@@ -334,32 +324,6 @@
   text-decoration: underline;
   text-underline-offset: 0.2em;
   text-decoration-thickness: 1px;
-}
-
-/* ── Ekip fotoğrafı (Hakkımızdaki fotoğraf arasıyla aynı bileşen) */
-.ab-band--team .ab-band__img {
-  object-position: 50% 68%;
-}
-.ab-band--team::after {
-  content: '';
-  position: absolute;
-  inset: auto 0 0;
-  height: 36%;
-  background: linear-gradient(to top, rgba(5, 12, 26, 0.7), transparent);
-  pointer-events: none;
-  z-index: 2;
-}
-.ab-band__cap {
-  position: absolute;
-  left: var(--gutter);
-  right: var(--gutter);
-  bottom: 1.3rem;
-  z-index: 3;
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.88);
-  text-shadow: 0 1px 14px rgba(3, 8, 20, 0.7);
 }
 
 /* ── Kariyer yönlendirmesi */
@@ -804,33 +768,6 @@ html[data-fx='off'] .tm-join__t .w {
     width: min(100%, 15rem);
   }
 }
-/* tek sütun: kart yatay (küçük kutu solda, metin sağda) — telefonda her kişi bir ekranı kaplamasın */
-@media (max-width: 579px) {
-  .pcard {
-    display: grid;
-    grid-template-columns: 6.2rem minmax(0, 1fr);
-    column-gap: 1.1rem;
-    align-items: start;
-  }
-  .pcard__media {
-    margin-bottom: 0;
-  }
-  .pcard .avatar--xl {
-    aspect-ratio: 1;
-  }
-  .pcard .avatar--xl .avatar__ini {
-    font-size: 2.1rem;
-  }
-  .pcard .avatar--xl::after {
-    height: 3px;
-  }
-  .pcard__name {
-    font-size: 1.35rem;
-  }
-  .pcard__sum {
-    -webkit-line-clamp: 5;
-  }
-}
 @media (max-width: 560px) {
   .pp {
     gap: 1.1rem;
@@ -851,7 +788,8 @@ html[data-fx='off'] .tm-join__t .w {
     justify-content: flex-start;
   }
 }
-html[data-fx='off'] .pcard:hover .avatar::before {
+html[data-fx='off'] .prow--link:hover .avatar::before,
+html[data-fx='off'] .prow--link:hover .prow__act .arr {
   transform: none;
 }
 
@@ -869,7 +807,7 @@ html[data-fx='off'] .pcard:hover .avatar::before {
 /* ── Dokunma hedefleri (WCAG 2.5.8): ad ve hizmet bağlantıları en az 24 px yüksek.
    İç boşluk, eksi dış boşlukla dengelendiği için satır düzeni aynı kalır; yalnızca
    bağlantının kendi kutusu büyür (tests/audit.mjs bunu 390 px'te denetler). */
-.pcard__name a,
+.prow__name a,
 .pp__name a,
 .pp__topics a,
 .who__t,

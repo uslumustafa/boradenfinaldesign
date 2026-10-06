@@ -29,7 +29,7 @@ Page modellerine, `src/data/*.json` dosyaları snippet / StreamField / site ayar
 
 ---
 
-## 2. Sayfa ağacı ve URL'ler (128 sayfa)
+## 2. Sayfa ağacı ve URL'ler (127 sayfa)
 
 URL'ler Türkçe-ASCII, küçük harf, sonda `/`; **değişmez** (Wagtail'de `slug` aynen kullanılır). Kökte `HomePage`.
 
@@ -53,7 +53,7 @@ URL'ler Türkçe-ASCII, küçük harf, sonda `/`; **değişmez** (Wagtail'de `sl
 ├─ vergi-takvimi/                   TaxCalendarPage        (+ CalendarItem ×27 snippet)
 ├─ hakkimizda/                      AboutPage
 │  └─ ekibimiz/                     TeamIndexPage
-│     └─ <kisi>/                    TeamMemberPage         ×4   (başlangıç; her üye kendi sayfası, yayın durumu üye başına)
+│     └─ <kisi>/                    TeamMemberPage         ×3   (yalnızca özgeçmişi yayımlanan üyeler; diğer 22 kişi Ekibimiz'de bölümü altında satırdır: `has_profile` = false)
 ├─ kariyer/                         CareersPage
 ├─ iletisim/                        ContactPage            (AbstractEmailForm)
 ├─ arama/                           SearchPage
@@ -89,8 +89,8 @@ Statik sürümde üretilen ek dosyalar: `sitemap.xml`, `robots.txt`, `/assets/da
 | `pages/tools/calculator.njk` | `tools.mjs` | `CalculatorPage` — `engine` (seçim), `params` (→ `ParameterSet`), girdiler/ön ayarlar/açıklama/varsayımlar/SSS/kaynaklar StreamField | `calculators-bordro.json`, `calculators-vergi.json` |
 | `pages/tools/tax-calendar.njk` | `tools.mjs` | `TaxCalendarPage` + `CalendarItem` snippet | `calendar.json` (`meta, categories, rules, holidays, items`) |
 | `pages/company/about.njk` | `routes/company.mjs` | `AboutPage` | `aboutpage.json`: `title, lead, sections[], facts[], closing` |
-| `pages/company/team.njk` | `routes/team.mjs` | `TeamIndexPage` (AboutPage'in alt sayfası) | `team.json`: `title, lead, intro, photoCaption` |
-| `pages/company/person.njk` | `team.mjs` | `TeamMemberPage` — `role, titles, summary, bio, education, expertise`, `areas/services/sectors` (ParentalManyToManyField), `photo` (FK Image + yazılı izin onayı), `contact` + `show_contact`, `status`, `needs_verification` | `team.json › members[]` |
+| `pages/company/team.njk` | `routes/team.mjs` | `TeamIndexPage` (AboutPage'in alt sayfası) + `TeamDepartment` (sıralı bölümler: `id`, `name`; InlinePanel) | `team.json`: `title, lead, intro, departments[]` |
+| `pages/company/person.njk` | `team.mjs` | `TeamMemberPage` — `role, titles, summary, bio, education, expertise`, `department` (FK → `TeamDepartment`), `has_profile`, `areas/services/sectors` (ParentalManyToManyField), `photo` (FK Image + yazılı izin onayı), `contact` + `show_contact`, `status`, `needs_verification` + `verify_note` (editoryal; sitede gösterilmez) | `team.json › members[]` |
 | `pages/company/careers.njk` | `company.mjs` | `CareersPage` (+ `JobPosting` snippet, form) | `careers.json` |
 | `pages/company/contact.njk` | `company.mjs` | `ContactPage` (`AbstractEmailForm`; konular = `ContactTopic` snippet) | `contactpage.json` |
 | `pages/company/kit.njk` | — | form alanı şablonu (`field_type` dalları) | — |
@@ -122,7 +122,7 @@ Statik sürümde üretilen ek dosyalar: `sitemap.xml`, `robots.txt`, `/assets/da
 
 **Snippet'ler** (`register_snippet`, mümkünse `DraftStateMixin` + `RevisionMixin`): `ArchiveCircular`, `Report`, `GlossaryTerm`, `FaqGroup`/`FaqItem`,
 `CalendarItem`, `ContactTopic`, `JobPosting`, `ParameterSet`, `SourceList` (`content.json › sources`; hizmetlerin `sourceKeys` alanı buna bağlanır).
-Kişi snippet'i **yok**: her ekip üyesi bir **sayfadır** (`TeamMemberPage`, §12.5). Başlangıç içeriği eski sitedeki herkese açık özgeçmişlerden derlendi; tüm kayıtlar `needsVerification: true` (yayından önce kişiyle doğrulanmalı). Portre fotoğrafı yalnızca yazılı izinle (KVKK) eklenir; yoksa baş harfli kutu görünür.
+Kişi snippet'i **yok**: her ekip üyesi bir **sayfadır** (`TeamMemberPage`, §12.5). Başlangıç içeriği: üç kişi için eski sitedeki herkese açık özgeçmişler, 22 kişi için müşterinin kurum şeması (Ekim 2026; yalnızca ad/unvan/bölüm); tüm kayıtlar `needsVerification: true` (yayından önce kişiyle doğrulanmalı). Portre fotoğrafı yalnızca yazılı izinle (KVKK) eklenir (`photos.json › person: true`); yoksa baş harfli kutu görünür.
 
 **`ParameterSet`** (hesaplayıcı parametreleri, yıl başına): `params/2026-bordro.json`, `params/2026-vergi.json` →
 `id, year, verified_on, notes` + bölüm başına `source, confidence, needs_verification, warn`. Yönetim panelinde «doğrulanmadı» işaretli
@@ -186,7 +186,7 @@ Mantık `longestWord()`; noktalama ve `**…**`/`[…](…)` işaretlemesi sayı
 | Liste motoru `listing.js` | `[data-listing]`, `[data-filter-by]`/`[data-filter]`, `[data-search]`, `[data-item][data-text]`, `[data-group]`, `[data-empty]`, `[data-result-count]`, `[data-pager]`, `[data-per-page]`; URL eşitleme `?q= &key= &p=` | Sirküler arşivi (247), sözlük (60), sektör raporları, okuma notları, SSS bu motoru kullanır. Kayıt sayısı büyürse aynı parametrelerle sunucu tarafı süzgece geçilebilir; işaretleme aynı kalır |
 | Sayfa modülleri | `[data-module="ad"]` → `src/assets/js/modules/ad.js` (`export function mount(el, ctx)`); yeni modül eklemek için `main.js`'e dokunulmaz (glob dinamik içe aktarma) | Şablonda yalnızca `data-module` yazılır |
 | Hesaplayıcılar | `<script type="application/json" data-calc-def>{{ def\|json_safe }}</script>`; parametre dosyası `/assets/data/params/<yıl>-<alan>.json`; hesap çekirdeği `src/calc/*` (saf JS, pakete dahil) | `ParameterSet` → aynı yolda JSON uç noktası (önbellekli) ya da yayımlanınca statik dışa aktarma. Hesap motoru sunucuya taşınmaz |
-| Arama | `data-index="/assets/data/search-index.json"` → `[{t, u, d, k}]` (başlık, adres, açıklama, tür); 128 sayfa + 353 yalnızca-arama kaydı (sözlük, SSS soruları, rapor/arşiv/PDF, çapalar) | Görünüm: `Page.objects.live().public()` + snippet'lerden aynı dizini üretir (yayın sinyali ile önbelleğe alınır). İleride `wagtail.search` sunucu aramasına geçilebilir; `search.js` işaretlemesi aynı kalır. `noindex` (Taslak) sayfalar dizine girmez |
+| Arama | `data-index="/assets/data/search-index.json"` → `[{t, u, d, k}]` (başlık, adres, açıklama, tür); 127 sayfa + 353 yalnızca-arama kaydı (sözlük, SSS soruları, rapor/arşiv/PDF, çapalar) | Görünüm: `Page.objects.live().public()` + snippet'lerden aynı dizini üretir (yayın sinyali ile önbelleğe alınır). İleride `wagtail.search` sunucu aramasına geçilebilir; `search.js` işaretlemesi aynı kalır. `noindex` (Taslak) sayfalar dizine girmez |
 | Formlar (iletişim, kariyer) | `.ct-field[data-field][data-type]`, `form-kit.js` (doğrulama, mailto: taslağı), `contact-form.js`, `career-form.js`; `?hizmet=<id>` / `?konu=<id>` ön seçim | `AbstractEmailForm` + `FormField`'lar (alan kimlikleri JSON'daki `fields[].id`). **Yalnızca gönderim adımı değişir:** `form-kit.js` içindeki mailto: üretimi, form sayfasına `fetch` POST (CSRF belirteci + KVKK onayı) ile değiştirilir; başarı/hata metinleri `landing` alanlarından gelir. CV yükleme için dosya türü/boyut doğrulaması sunucuda tekrarlanmalı |
 | Efekt kademeleri | `html[data-fx="full\|lite\|off"]`; tek depolama `localStorage['boraden-fx']`; çerez yok | Değişmez. (Çerez politikası metni bu gerçeğe göre yazıldı — çerez/izleme eklenirse yeniden gözden geçirilmeli) |
 | 3B dünya | `[data-world]`, `data-chapter`, `world.js` + `formations.js` (three.js, tembel; 46 şekil) | Sayfa modelinde `scene` seçim alanı (formasyon **kimliği**, ör. `mutabakat`; şablonda sıra numarasına çevrilir); HTML'e `data-scene` olarak yazılır. Liste ve eşleme: `docs/FORMASYONLAR.md`, `scripts/scenes.mjs` |
@@ -211,7 +211,7 @@ Mantık `longestWord()`; noktalama ve `**…**`/`[…](…)` işaretlemesi sayı
   klavye ile kullanılabilir menü/arama/SSS, `prefers-reduced-motion` → efektler «Kapalı», `aria-live` duyuruları (`#live`).
   Satır içi olmayan bağlantılar (kart/kişi adı, liste bağlantısı) 24 px altında kalıyorsa kalıp: `display:inline-block; padding-block:.3rem; margin-block:-.3rem; background-origin:content-box` — satır düzeni değişmez, yalnızca dokunma alanı büyür (`75-team.css` sonu, `65-services.css › .kunye dd a`).
 - **Logo kuralı:** logo yalnızca `partials/logo.njk` ile (`logo.html`) gösterilir; resmî dosya değişmeden kullanılır. Vektörlü resmî dosya (SVG/PDF/Illustrator) geldiğinde yalnızca bu bileşen güncellenir.
-- **Fotoğraflar:** `photos.json` (anahtar → boyutlar, `alt`, `old`) → Wagtail Image. `old: true` olanlar 2022 tarihli yer tutucudur; yeni fotoğraflar gelince Image koleksiyonunda değiştirilir (portre/tek kişilik fotoğraf **kullanılmaz**).
+- **Fotoğraflar:** `photos.json` (anahtar → boyutlar, `alt`, `old`) → Wagtail Image. `old: true` olanlar 2022 tarihli yer tutucudur; yeni fotoğraflar gelince Image koleksiyonunda değiştirilir (hizmet/alan/sayfa görsellerinde **insan yüzü yoktur**; ekip portreleri `person: true` ile işaretlidir ve yalnızca ekip sayfalarında kullanılır → Wagtail'de ayrı «Ekip portreleri» Image koleksiyonu).
   `makros.photo` → `{% image %}` + `srcset` (640/1200/1800/2400).
 - **Çok dillilik:** TR öncelikli. EN ağacı için `wagtail-localize`; `hreflang` ve dil anahtarı ancak EN içerik hazır olunca açılmalı (ince/otomatik çeviri sayfa yayımlanmaz).
 
@@ -250,7 +250,7 @@ Mantık `longestWord()`; noktalama ve `**…**`/`[…](…)` işaretlemesi sayı
 - **Okuma notları** gerçek kişi adlarını (iktisatçılar) anar → editoryal/hukuki gözden geçirme; **blog** için `publicationDateVerified: false`.
 - **Arşiv:** 4 kaydın tarihi, 2 kaydın numarası yok (`null`); gerçek belge üst verisinden tamamlanmalı.
 - **Fotoğraflar** 2022 tarihli yer tutucudur. Ekranda logo görünen dört toplantı odası karesi (`meeting-logo`, `meeting-wide`, `handshake-group`, `handshake-group-2`) `photos.json` içinde `logo: true` ile işaretlidir → sitede hiçbir yerde kullanılmaz (`model.mjs` seçmez, `tests/logo.test.mjs` korur).
-- **Ekip:** 4 üyenin biyografi/unvan/atama bilgileri eski siteden derlendi, hepsi `needsVerification: true`; hangi kişinin hangi alan/hizmet/sektörde görüşmeye çıkacağı **öneridir** (müşteri onayı). Portre fotoğrafı yazılı izin (KVKK) gelince eklenir.
+- **Ekip:** 25 kişi (3'ünün özgeçmişi eski siteden, 22'si kurum şemasından yalnızca ad/unvan/bölümle); hepsi `needsVerification: true`; kimin hangi alan/hizmet/sektörde görüşmeye çıkacağı **öneridir** (yeni 22 kişiye atama yapılmadı) — müşteri onayı. Portre fotoğrafı: 6 kişi için arşivden etiketle eşleştirildi; yazılı izin (KVKK) doğrulanmalı, kalan kişiler baş harf avatarıyla görünür.
 - **Hizmet alanı fotoğraf eşleştirmesi** (`GROUP_PHOTOS`, `scripts/model.mjs`) ve **«Çalışma biçimimiz» metni** (`approach.json`) müşteri onayına tabidir.
 - **Büyük dosyalar:** `src/assets/documents` ≈ 156 MB ve `dist` ≈ 181 MB → depoya eklemeden önce `.gitignore`/LFS veya harici depolama kararı.
 
@@ -289,7 +289,7 @@ sayılar her zaman sorgudan gelir. Statik derlemede bilinmeyen bir hizmet kimli�
 
 Alan karesi ve hizmet karesi **arşiv fotoğraflarıdır** (süs amaçlı: `alt=""`, bilgi taşımaz; altyazı «Boraden arşivi»). Seçim sırası: hizmette açık `photo` → yoksa alanın havuzundan sırayla (`i % havuz`) (`GROUP_PHOTOS`, `scripts/model.mjs`).
 Wagtail'de: `ServiceAreaPage.photo` ve `ServicePage.photo` (görsel seçici, zorunlu değil); boşsa görünüm havuzdan seçer. Havuz eşleştirmesi bir **öneridir** (müşteri onayı). Ekranda logo görünen kareler (`photos.json › logo: true`) hiçbir koşulda seçilemez;
-Wagtail'de bunlar ayrı bir «Logolu kareler (kullanılmaz)» Image koleksiyonuna konmalı ve görsel seçici bu koleksiyonu dışlamalıdır. Tek kişilik/portre fotoğraf kullanılmaz.
+Wagtail'de bunlar ayrı bir «Logolu kareler (kullanılmaz)» Image koleksiyonuna konmalı ve görsel seçici bu koleksiyonu dışlamalıdır. Hizmet/alan görsellerinde insan yüzü bulunmaz; ekip portreleri (`photos.json › person: true`) alan/hizmet fotoğrafı olarak seçilemez (`model.mjs › photoOk`).
 
 ### 12.4 «Denetçi tiki» tasarım dili
 
@@ -302,7 +302,9 @@ süreç adımlarındaki tikler kaydırdıkça dolar (`[data-steps]` → `--p`). 
 `team.json` → `TeamIndexPage` + `TeamMemberPage` (§3). Atama kuralları kodla değil **veriyle** yönetilir (`scripts/team.mjs` başlık yorumu; Wagtail'de model yöntemi olarak aynen kurulur):
 hizmet kişileri = hizmete açıkça atananlar + hizmetin alanının sorumluları (en çok 3); alan kişileri = alan sorumluları + alandaki hizmetlerin en az ikisine atananlar (en çok 3, en az 2'ye tamamlanır);
 sektör kişileri = sektöre açıkça atananlar (en çok 4); yoksa sektörün hizmetlerini üstlenenlerden türetilir. Atama olmayan alanda («Akademi» gibi) ekip bandı çizilmez. Bağlantılar iletişim formunu `?kisi=<slug>` ile açar.
-Yayın durumu üye başına (`status`); `needsVerification` olan kayıtlar yönetim panelinde sarı uyarıyla gösterilmelidir.
+Yayın durumu üye başına (`status`); `needsVerification` olan kayıtlar yönetim panelinde sarı uyarıyla gösterilmelidir (`verify_note` yalnızca editörde görünür).
+Ekibimiz sayfası `departments` sırasıyla (sıra = listedeki sıra) bölüm başlıkları altında kompakt kişi satırlarıdır (`.tm-dept` / `.prow`); `has_profile: false` kişinin kendi sayfası/URL'si yoktur (`/hakkimizda/ekibimiz/#<slug>`), Wagtail'de `serve()` bu kişiler için dizin sayfasına yönlendirir; site haritası, JSON-LD listesi ve önceki/sonraki gezinmesi yalnızca profil sayfası olanları kullanır (`team.profiles`).
+«İlgili ekip» bandı yalnızca ataması olan kişilerden oluşur; kimsenin atanmadığı alan/hizmette («İnsan Kaynakları», «Akademi» — 2026-10-06 itibarıyla) bant çizilmez, «Kimle görüşmeli?» listesinde «İletişim formu» bağlantısı görünür.
 
 ### 12.6 Blog yazıları nasıl yayınlanır (editör akışı)
 

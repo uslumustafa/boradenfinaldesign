@@ -11,21 +11,15 @@
 </span>
 {% endmacro %}
 
-{# Ekibimiz sayfasındaki büyük kart #}
-{% macro card(p) %}
-<article class="pcard" data-accent="{{ p.accent }}">
-  <a class="pcard__media" href="{{ p.url }}" tabindex="-1" aria-hidden="true">{{ avatar(p, "xl") }}</a>
-  <div class="pcard__body">
-    <h3 class="pcard__name"><a href="{{ p.url }}">{{ p.name }}</a></h3>
-    <p class="pcard__role">{{ p.role }}</p>
-    {% if p.titlesShort | length %}<p class="pcard__titles">{{ p.titlesShort | join(" · ") }}</p>{% endif %}
-    {% if p.summary %}<p class="pcard__sum">{{ p.summary }}</p>{% endif %}
-    {% if p.groupList | length %}
-    <ul class="pcard__areas" aria-label="Çalışma alanları">
-      {% for g in p.groupList %}<li><a href="{{ g.url }}">{{ g.short }}</a></li>{% endfor %}
-    </ul>
-    {% endif %}
-    <p class="pcard__act"><a class="textlink" href="{{ p.url }}">Profili inceleyin {{ m.arrow() }}</a></p>
+{# Ekibimiz sayfasındaki kişi satırı (bölümün altında). Kendi profil sayfası olan kişide ad ve satırın tamamı bağlantıdır; diğerlerinde yalnızca
+   ad ve görev görünür (listelerdeki adresleri bu satırın #<slug> bağlantısıdır). Fotoğraf yoksa baş harfli kutu. #}
+{% macro row(p) %}
+<article class="prow{% if p.profile %} prow--link{% endif %}" id="{{ p.slug }}" data-accent="{{ p.accent }}">
+  <span class="prow__media" aria-hidden="true">{{ avatar(p, "md") }}</span>
+  <div class="prow__body">
+    <h4 class="prow__name">{% if p.profile %}<a href="{{ p.url }}">{{ p.name }}</a>{% else %}{{ p.name }}{% endif %}</h4>
+    <p class="prow__role">{{ p.role }}</p>
+    {% if p.profile %}<p class="prow__act mono" aria-hidden="true">Profil {{ m.arrow() }}</p>{% endif %}
   </div>
 </article>
 {% endmacro %}

@@ -1,7 +1,11 @@
-// Ekip modeli: team.json → kişi listesi + hizmet alanı / hizmet / sektör ilişkileri.
-// Wagtail karşılığı: TeamIndexPage (title, lead, intro, photo_caption) → TeamMemberPage (her üye bir sayfa; status = yayında/taslak;
+// Ekip modeli: team.json → kişi listesi + bölümler + hizmet alanı / hizmet / sektör ilişkileri.
+// Wagtail karşılığı: TeamIndexPage (title, lead, intro) → TeamMemberPage (status = yayında/taslak; department = TeamDepartment snippet'i (sıralı);
+//   has_profile = kendi sayfası var mı (false ise yalnızca Ekibimiz'de bölümü altında satırdır; adresi `/hakkimizda/ekibimiz/#<slug>`);
 //   areas / services / sectors = ParentalManyToManyField; photo = FK Image + yazılı izin onayı; contact = isteğe bağlı alanlar + show_contact).
 //   Aşağıdaki atama kuralları Wagtail'de aynen sayfa get_context() / model yöntemi olarak kurulur; veri değişince kural değişmez.
+//
+// BÖLÜMLER: team.json › departments (sıra = kurum şemasındaki sıra); her üye `department` ile birine bağlanır. Bölüm tanımı yoksa tek, adsız grup.
+// PROFİL: `profile: false` olan üyenin sayfası/JSON-LD'si yoktur; `profiles` yalnızca kendi sayfası olanları verir.
 //
 // ATAMA KURALLARI (kod değişmeden veriyle yönetilir)
 //   hizmet kişileri : o hizmete açıkça atananlar (services) + hizmetin alanının sorumluları (areas) — en çok 3
@@ -49,7 +53,18 @@ export function buildTeam(raw, { groups = [], services = [], sectors = [], photo
       return false;
     });
 
+  // Bölümler: { id, name } listesi (kurum şemasındaki sıra)
+  const rawDepts = Array.isArray(raw.departments) ? raw.departments : [];
+  const deptName = new Map();
+  for (const d of rawDepts) {
+    if (!d || !/^[a-z0-9-]+$/.test(d.id || '')) issues.push(`team.json › bölüm «${d?.id || d?.name || '?'}»: id küçük harf, rakam ve tireden oluşmalı`);
+    else if (deptName.has(d.id)) issues.push(`team.json › bölüm «${d.id}»: yinelenen id`);
+    if (!d?.name) issues.push(`team.json › bölüm «${d?.id || '?'}»: ad zorunludur`);
+    if (d?.id) deptName.set(d.id, d.name || '');
+  }
+
   const slugs = new Set();
+  const verifyNotes = []; // [{ slug, note }]: yayından önce neyin doğrulanacağı (derlemede uyarı olarak yazılır; sitede gösterilmez)
   const members = raw.members
     .filter((m) => (m.status || 'published') === 'published')
     .map((m, i) => {
@@ -59,10 +74,18 @@ export function buildTeam(raw, { groups = [], services = [], sectors = [], photo
       slugs.add(m.slug);
       if (!m.name || !m.role) issues.push(`team.json › ${who}: ad ve görev zorunludur`);
       if (m.photo && !photos[m.photo]) issues.push(`team.json › ${who}: photos.json içinde «${m.photo}» yok`);
+      if (rawDepts.length && !deptName.has(m.department)) issues.push(`team.json › ${who}: bilinmeyen bölüm «${m.department || ''}»`);
       const c = m.contact || {};
       const contact = m.showContact && (c.email || c.phone || c.linkedin) ? { email: c.email || '', phone: c.phone || '', linkedin: c.linkedin || '' } : null;
+      const profile = m.profile !== false; // varsayılan: kendi sayfası var
+      // `verifyNote` (neyin doğrulanacağı) ve `source` (kaynak) editoryal üst veridir; kişi kaydına/şablonlara taşınmaz
+      const { verifyNote, source: _source, ...pub } = m;
+      if (verifyNote) verifyNotes.push({ slug: m.slug, note: verifyNote });
       return {
-        ...m,
+        ...pub,
+        profile,
+        department: m.department || '',
+        departmentName: deptName.get(m.department) || '',
         titles: m.titles || [],
         titlesShort: (m.titles || []).map(shortTitle),
         bio: m.bio || [],
@@ -71,7 +94,8 @@ export function buildTeam(raw, { groups = [], services = [], sectors = [], photo
         areaIds: only(m.areas, groupById, 'hizmet alanı', who),
         svcIds: only(m.services, svcById, 'hizmet', who),
         sectorIds: only(m.sectors, sectorBySlug, 'sektör', who),
-        url: `${TEAM_URL}${m.slug}/`,
+        // kendi sayfası olmayan üyenin adresi: Ekibimiz sayfasındaki satırı (listelerdeki bağlantılar oraya gider)
+        url: profile ? `${TEAM_URL}${m.slug}/` : `${TEAM_URL}#${m.slug}`,
         number: pad2(i + 1),
         initials: initialsOf(m.name),
         accent: ACCENTS[i % ACCENTS.length],
@@ -139,16 +163,26 @@ export function buildTeam(raw, { groups = [], services = [], sectors = [], photo
       .filter((x) => x.items.length);
   }
 
+  // Bölümlere göre gruplama (bölüm sırası = team.json sırası; üye sırası = kayıt sırası). Bölüm tanımı yoksa tek, adsız grup.
+  const departments = (
+    rawDepts.length
+      ? rawDepts.filter((d) => d?.id).map((d, i) => ({ id: d.id, name: d.name || '', number: pad2(i + 1), members: members.filter((m) => m.department === d.id) }))
+      : [{ id: 'ekip', name: '', number: '01', members }]
+  ).filter((d) => d.members.length);
+
   return {
     title: raw.title || 'Ekibimiz',
     lead: raw.lead || '',
     intro: raw.intro || '',
-    photoCaption: raw.photoCaption || '',
     url: TEAM_URL,
     members,
+    // kendi profil sayfası olanlar (sayfa yolları, komşu profiller, Hakkımızda özeti, site haritası)
+    profiles: members.filter((m) => m.profile),
+    departments,
     bySlug: Object.fromEntries(members.map((m) => [m.slug, m])),
-    // yayından önce kişiyle doğrulanması gerekenler (derlemede uyarı olarak yazılır)
+    // yayından önce doğrulanması gerekenler (derlemede uyarı olarak yazılır)
     unverified: members.filter((m) => m.needsVerification).map((m) => m.slug),
+    verifyNotes,
     issues,
   };
 }

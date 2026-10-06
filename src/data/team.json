@@ -1,14 +1,65 @@
 {
-  "_note": "Ekip verisi. Wagtail karşılığı: TeamIndexPage (title, lead, intro) + TeamMemberPage (her üye bir sayfa). Başlangıç içeriği eski sitedeki (boraden.com.tr/ekibimiz/...) herkese açık özgeçmiş metinlerinden DERLENDİ; yalnızca orada yazan olgular kullanıldı. needsVerification: true = yayından önce kişiyle/kurumla doğrulanmalı (unvan, tarih, görev). Fotoğraf: yalnızca yazılı izinle (KVKK) ve photos.json anahtarıyla eklenir; yoksa baş harfli tasarımlı kutu gösterilir. İletişim bilgileri (contact) yalnızca showContact: true ise yayımlanır; aksi hâlde kartlardaki «Görüşme talep edin» düğmesi iletişim formuna gider (?kisi=<slug>). Atama (areas/services/sectors): alan sorumlusu = areas, ek sahiplik = services, açık sektör ataması = sectors; sectors boşsa sektör sayfasındaki kişiler o sektörün hizmetlerinin sahiplerinden TÜRETİLİR (scripts/team.mjs). status: published | draft.",
+  "_note": "Ekip verisi. Wagtail karşılığı: TeamIndexPage (title, lead, intro) + TeamDepartment (bölüm: id, ad; sıra = bu listedeki sıra) + TeamMemberPage (her üye bir sayfa; profile: false olan üyenin kendi sayfası yoktur, Ekibimiz sayfasında bölümü altında satır olarak görünür). Cengiz Turmaz, Adem Başer ve Murat Demirtaş'ın özgeçmişleri eski sitedeki (boraden.com.tr/ekibimiz/...) herkese açık metinlerden DERLENDİ; diğer kişiler müşterinin kurum şemasından (Ekim 2026) yalnızca ad, görev ve bölümle eklendi — özgeçmiş, eğitim ve uzmanlık uydurulmaz, yalnızca kaynakta yazan olgular kullanılır. needsVerification: true = yayından önce kişiyle/kurumla doğrulanmalı (ad yazımı, unvan, görev); verifyNote = neyin doğrulanacağı (sitede gösterilmez). Fotoğraf: yalnızca yazılı izinle (KVKK) ve photos.json anahtarıyla (person: true) eklenir; yoksa baş harfli tasarımlı kutu gösterilir. İletişim bilgileri (contact) yalnızca showContact: true ise yayımlanır; aksi hâlde kartlardaki «Görüşme talep edin» düğmesi iletişim formuna gider (?kisi=<slug>). Atama (areas/services/sectors): alan sorumlusu = areas, ek sahiplik = services, açık sektör ataması = sectors; sectors boşsa sektör sayfasındaki kişiler o sektörün hizmetlerinin sahiplerinden TÜRETİLİR (scripts/team.mjs). Şemadan eklenen kişilere hizmet/alan/sektör ataması yapılmadı (müşteri kararı). status: published | draft.",
   "title": "Ekibimiz",
-  "lead": "Hizmetlerimizi yürüten yönetici ve uzmanlarımız: unvanları, eğitimleri ve uzmanlık alanlarıyla.",
-  "intro": "Bir konuda kiminle görüşmeniz gerektiğinden emin değilseniz iletişim formunu kullanabilirsiniz. Her kişinin unvanı, eğitimi ve çalıştığı alanlar profil sayfasında yer alır.",
-  "photoCaption": "Boraden ekibi, giriş lobisinde (arşiv fotoğrafı)",
+  "lead": "Hizmetlerimizi yürüten yönetici ve uzmanlarımız, çalıştıkları bölümlere göre.",
+  "intro": "Ekibimiz bölümlerine göre listelenir; özgeçmişi yayımlanan kişilerin profil sayfasında unvanları, eğitimleri ve çalıştıkları alanlar yer alır. Bir konuda kiminle görüşmeniz gerektiğinden emin değilseniz iletişim formunu kullanabilirsiniz.",
+  "departments": [
+    {
+      "id": "yonetim",
+      "name": "Yönetim"
+    },
+    {
+      "id": "muhasebe-ve-vergi",
+      "name": "Muhasebe ve Vergi"
+    },
+    {
+      "id": "vergi-denetim",
+      "name": "Vergi Denetim"
+    },
+    {
+      "id": "is-ve-sosyal-guvenlik",
+      "name": "İş ve Sosyal Güvenlik"
+    },
+    {
+      "id": "yeminli-mali-musavirlik",
+      "name": "Yeminli Mali Müşavirlik"
+    },
+    {
+      "id": "ticaret-sicil",
+      "name": "Ticaret Sicil"
+    },
+    {
+      "id": "bagimsiz-denetim",
+      "name": "Bağımsız Denetim"
+    },
+    {
+      "id": "danismanlik",
+      "name": "Danışmanlık"
+    },
+    {
+      "id": "hukuk",
+      "name": "Hukuk"
+    },
+    {
+      "id": "akademi",
+      "name": "Akademi"
+    },
+    {
+      "id": "idari-isler",
+      "name": "İdari İşler"
+    },
+    {
+      "id": "bt-ve-yazilim-gelistirme",
+      "name": "BT ve Yazılım Geliştirme"
+    }
+  ],
   "members": [
     {
       "slug": "cengiz-turmaz",
       "name": "Cengiz Turmaz",
-      "role": "Kurucu",
+      "role": "Kurucu ve Genel Müdür",
+      "department": "yonetim",
+      "profile": true,
       "titles": [
         "Serbest Muhasebeci Mali Müşavir (TÜRMOB)",
         "Bağımsız Denetçi (Kamu Gözetim Kurumu)",
@@ -55,6 +106,84 @@
         "bagimsiz-denetim"
       ],
       "sectors": [],
+      "photo": "person-cengiz-turmaz",
+      "contact": {
+        "email": "",
+        "phone": "",
+        "linkedin": ""
+      },
+      "showContact": false,
+      "status": "published",
+      "needsVerification": true,
+      "verifyNote": "Görev: eski sitede «Kurucu», kurum şemasında «Şirket Genel Müdürü» — ikisi birleştirildi, doğrulanmalı. Fotoğraf: arşiv (2022 çekimi, «Cengiz TURMAZ» klasörü); yazılı rıza (KVKK) doğrulanmalı.",
+      "source": "Eski site: boraden.com.tr/ekibimiz/cengiz-turmaz · görev: Kurum organizasyon şeması (müşteri, Ekim 2026)"
+    },
+    {
+      "slug": "cisem-guler",
+      "name": "Çisem Güler",
+      "role": "Yönetim Temsilcisi",
+      "department": "yonetim",
+      "profile": false,
+      "titles": [],
+      "summary": "",
+      "bio": [],
+      "expertise": [],
+      "education": [],
+      "areas": [],
+      "services": [],
+      "sectors": [],
+      "photo": "person-cisem-guler",
+      "contact": {
+        "email": "",
+        "phone": "",
+        "linkedin": ""
+      },
+      "showContact": false,
+      "status": "published",
+      "needsVerification": true,
+      "verifyNote": "Fotoğraf: arşiv (2021 çekimi, «Çisem Güler» klasörü); yazılı rıza (KVKK) doğrulanmalı. Arşivde aynı unvanla «Çisem ESKİCİ» klasörü (2022 çekimi) de var; aynı kişiyse o çekim kullanılabilir (müşteriden teyit).",
+      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
+    },
+    {
+      "slug": "suat-bozkurt",
+      "name": "Suat Bozkurt",
+      "role": "Muhasebe Vergi Sorumlusu",
+      "department": "muhasebe-ve-vergi",
+      "profile": false,
+      "titles": [],
+      "summary": "",
+      "bio": [],
+      "expertise": [],
+      "education": [],
+      "areas": [],
+      "services": [],
+      "sectors": [],
+      "photo": "person-suat-bozkurt",
+      "contact": {
+        "email": "",
+        "phone": "",
+        "linkedin": ""
+      },
+      "showContact": false,
+      "status": "published",
+      "needsVerification": true,
+      "verifyNote": "Fotoğraf: arşiv (2022 çekimi, «FOTOĞRALAR VE ÜNVANLAR» listesindeki ad–dosya eşleşmesi); yazılı rıza (KVKK) doğrulanmalı.",
+      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
+    },
+    {
+      "slug": "hatice-koc",
+      "name": "Hatice Koç",
+      "role": "Muhasebe Vergi Uzmanı",
+      "department": "muhasebe-ve-vergi",
+      "profile": false,
+      "titles": [],
+      "summary": "",
+      "bio": [],
+      "expertise": [],
+      "education": [],
+      "areas": [],
+      "services": [],
+      "sectors": [],
       "photo": null,
       "contact": {
         "email": "",
@@ -64,12 +193,40 @@
       "showContact": false,
       "status": "published",
       "needsVerification": true,
-      "source": "Eski site: boraden.com.tr/ekibimiz/cengiz-turmaz"
+      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
+    },
+    {
+      "slug": "gonul-ak",
+      "name": "Gönül Ak",
+      "role": "Vergi Denetim Bölümü Yöneticisi",
+      "department": "vergi-denetim",
+      "profile": false,
+      "titles": [],
+      "summary": "",
+      "bio": [],
+      "expertise": [],
+      "education": [],
+      "areas": [],
+      "services": [],
+      "sectors": [],
+      "photo": null,
+      "contact": {
+        "email": "",
+        "phone": "",
+        "linkedin": ""
+      },
+      "showContact": false,
+      "status": "published",
+      "needsVerification": true,
+      "verifyNote": "Arşivde «Gönül ÖZTÜRK» klasörü (2022 çekimi) var; şemadaki «Gönül Ak» ile aynı kişi olup olmadığı müşteriden teyit edilmeli — teyide kadar fotoğraf eklenmedi.",
+      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
     },
     {
       "slug": "adem-baser",
       "name": "Adem Başer",
-      "role": "Denetim Departmanı Yöneticisi",
+      "role": "Vergi Denetim Sorumlusu",
+      "department": "vergi-denetim",
+      "profile": true,
       "titles": [
         "Serbest Muhasebeci Mali Müşavir (TÜRMOB)"
       ],
@@ -108,7 +265,7 @@
         "veri-analiz-sistemleri"
       ],
       "sectors": [],
-      "photo": null,
+      "photo": "person-adem-baser",
       "contact": {
         "email": "",
         "phone": "",
@@ -117,43 +274,21 @@
       "showContact": false,
       "status": "published",
       "needsVerification": true,
-      "source": "Eski site: boraden.com.tr/ekibimiz/adem-baser"
+      "verifyNote": "Şemada «Vergi Denetim Sorumlusu» (bölüm yöneticisi: Gönül Ak); eski site özgeçmişinde «Denetim Departmanı Yöneticisi». Özet ve özgeçmiş metni güncel göreve göre doğrulanmalı. Fotoğraf: arşiv (2021 çekimi, «Adem Başer» klasörü); yazılı rıza (KVKK) doğrulanmalı.",
+      "source": "Eski site: boraden.com.tr/ekibimiz/adem-baser · görev: Kurum organizasyon şeması (müşteri, Ekim 2026)"
     },
     {
-      "slug": "aysenur-kansiz",
-      "name": "Ayşenur Kansız",
-      "role": "Sosyal Güvenlik ve İnsan Kaynakları Yöneticisi",
+      "slug": "volkan-turmaz",
+      "name": "Volkan Turmaz",
+      "role": "Vergi Denetim Sorumlusu",
+      "department": "vergi-denetim",
+      "profile": false,
       "titles": [],
-      "summary": "Muhasebe sektöründe 2014'te başladığı kariyerini sosyal güvenlik ve insan kaynakları alanında sürdürmektedir.",
-      "bio": [
-        "Kariyerine 2014 yılında muhasebe sektöründe başladı ve 2015 yılına kadar sosyal güvenlik departmanında uzman yardımcısı olarak çalıştı. 2015 yılından sonra departmanda yönetici statüsüne yükselerek sosyal güvenlik ve insan kaynakları alanında uzmanlaştı.",
-        "2015'ten bu yana yönetici statüsünde birçok eğitim almış; müşterilerimizin sosyal güvenlik ve insan kaynakları süreçlerini kapsamlı biçimde yürütmektedir."
-      ],
-      "expertise": [
-        "SGK süreçleri",
-        "Personel özlük işlemleri",
-        "Bordro hesaplama",
-        "Borçlanma işlemleri",
-        "Emeklilik işlemleri",
-        "Yabancı çalışma izinleri"
-      ],
-      "education": [
-        [
-          "Lisans — İşletme Bölümü, Düzce Üniversitesi",
-          "2013"
-        ],
-        [
-          "İnsan Kaynakları Yönetici Sertifikası — İstanbul Üniversitesi",
-          "2017"
-        ],
-        [
-          "Özlük İşlemleri ve Bordrolama Sertifikası — Bahçeşehir Üniversitesi",
-          "2018"
-        ]
-      ],
-      "areas": [
-        "insan"
-      ],
+      "summary": "",
+      "bio": [],
+      "expertise": [],
+      "education": [],
+      "areas": [],
       "services": [],
       "sectors": [],
       "photo": null,
@@ -165,12 +300,241 @@
       "showContact": false,
       "status": "published",
       "needsVerification": true,
-      "source": "Eski site: boraden.com.tr/ekibimiz/aysenur-kansiz"
+      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
+    },
+    {
+      "slug": "yakup-kadri-tamci",
+      "name": "Yakup Kadri Tamcı",
+      "role": "Vergi Denetim Sorumlusu",
+      "department": "vergi-denetim",
+      "profile": false,
+      "titles": [],
+      "summary": "",
+      "bio": [],
+      "expertise": [],
+      "education": [],
+      "areas": [],
+      "services": [],
+      "sectors": [],
+      "photo": null,
+      "contact": {
+        "email": "",
+        "phone": "",
+        "linkedin": ""
+      },
+      "showContact": false,
+      "status": "published",
+      "needsVerification": true,
+      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
+    },
+    {
+      "slug": "sila-sangil",
+      "name": "Sıla Şangil",
+      "role": "Vergi Denetim Uzmanı",
+      "department": "vergi-denetim",
+      "profile": false,
+      "titles": [],
+      "summary": "",
+      "bio": [],
+      "expertise": [],
+      "education": [],
+      "areas": [],
+      "services": [],
+      "sectors": [],
+      "photo": null,
+      "contact": {
+        "email": "",
+        "phone": "",
+        "linkedin": ""
+      },
+      "showContact": false,
+      "status": "published",
+      "needsVerification": true,
+      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
+    },
+    {
+      "slug": "melih-baser",
+      "name": "Melih Başer",
+      "role": "Muhasebe Vergi Uzman Yardımcısı",
+      "department": "vergi-denetim",
+      "profile": false,
+      "titles": [],
+      "summary": "",
+      "bio": [],
+      "expertise": [],
+      "education": [],
+      "areas": [],
+      "services": [],
+      "sectors": [],
+      "photo": null,
+      "contact": {
+        "email": "",
+        "phone": "",
+        "linkedin": ""
+      },
+      "showContact": false,
+      "status": "published",
+      "needsVerification": true,
+      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
+    },
+    {
+      "slug": "serhat-bolat",
+      "name": "Serhat Bolat",
+      "role": "Vergi Denetim Uzman Yardımcısı",
+      "department": "vergi-denetim",
+      "profile": false,
+      "titles": [],
+      "summary": "",
+      "bio": [],
+      "expertise": [],
+      "education": [],
+      "areas": [],
+      "services": [],
+      "sectors": [],
+      "photo": null,
+      "contact": {
+        "email": "",
+        "phone": "",
+        "linkedin": ""
+      },
+      "showContact": false,
+      "status": "published",
+      "needsVerification": true,
+      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
+    },
+    {
+      "slug": "demet-demirelli",
+      "name": "Demet Demirelli",
+      "role": "SGK İşlemleri Yöneticisi",
+      "department": "is-ve-sosyal-guvenlik",
+      "profile": false,
+      "titles": [],
+      "summary": "",
+      "bio": [],
+      "expertise": [],
+      "education": [],
+      "areas": [],
+      "services": [],
+      "sectors": [],
+      "photo": null,
+      "contact": {
+        "email": "",
+        "phone": "",
+        "linkedin": ""
+      },
+      "showContact": false,
+      "status": "published",
+      "needsVerification": true,
+      "verifyNote": "Şemada unvan «SGK İşlemleri Yönetici» yazıyor; yazımı doğrulanmalı.",
+      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
+    },
+    {
+      "slug": "abdullah-demiroglu",
+      "name": "Abdullah Demiroğlu",
+      "role": "İnsan Kaynakları Sorumlusu",
+      "department": "is-ve-sosyal-guvenlik",
+      "profile": false,
+      "titles": [],
+      "summary": "",
+      "bio": [],
+      "expertise": [],
+      "education": [],
+      "areas": [],
+      "services": [],
+      "sectors": [],
+      "photo": null,
+      "contact": {
+        "email": "",
+        "phone": "",
+        "linkedin": ""
+      },
+      "showContact": false,
+      "status": "published",
+      "needsVerification": true,
+      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
+    },
+    {
+      "slug": "ayse-nur-tunc",
+      "name": "Ayşe Nur Tunç",
+      "role": "İnsan Kaynakları Uzmanı",
+      "department": "is-ve-sosyal-guvenlik",
+      "profile": false,
+      "titles": [],
+      "summary": "",
+      "bio": [],
+      "expertise": [],
+      "education": [],
+      "areas": [],
+      "services": [],
+      "sectors": [],
+      "photo": null,
+      "contact": {
+        "email": "",
+        "phone": "",
+        "linkedin": ""
+      },
+      "showContact": false,
+      "status": "published",
+      "needsVerification": true,
+      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
+    },
+    {
+      "slug": "emrah-ertargin",
+      "name": "Emrah Ertarğın",
+      "role": "İş ve Sosyal Güvenlik Uzman Yardımcısı",
+      "department": "is-ve-sosyal-guvenlik",
+      "profile": false,
+      "titles": [],
+      "summary": "",
+      "bio": [],
+      "expertise": [],
+      "education": [],
+      "areas": [],
+      "services": [],
+      "sectors": [],
+      "photo": null,
+      "contact": {
+        "email": "",
+        "phone": "",
+        "linkedin": ""
+      },
+      "showContact": false,
+      "status": "published",
+      "needsVerification": true,
+      "verifyNote": "Soyadı şemada bulanık okundu (Ertarğın / Ertargın); doğrulanmalı.",
+      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
+    },
+    {
+      "slug": "zeynep-akgun",
+      "name": "Zeynep Akgün",
+      "role": "Tam Tasdik ve İade Sorumlusu",
+      "department": "yeminli-mali-musavirlik",
+      "profile": false,
+      "titles": [],
+      "summary": "",
+      "bio": [],
+      "expertise": [],
+      "education": [],
+      "areas": [],
+      "services": [],
+      "sectors": [],
+      "photo": null,
+      "contact": {
+        "email": "",
+        "phone": "",
+        "linkedin": ""
+      },
+      "showContact": false,
+      "status": "published",
+      "needsVerification": true,
+      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
     },
     {
       "slug": "murat-demirtas",
       "name": "Murat Demirtaş",
-      "role": "Türk Ticaret Kanunu Departmanı Yöneticisi",
+      "role": "Ticaret Hukuku İşlemleri Yöneticisi",
+      "department": "ticaret-sicil",
+      "profile": true,
       "titles": [],
       "summary": "Şirket kuruluş, değişiklik, birleşme ve bölünme gibi Türk Ticaret Kanunu işlemlerini yürüten departmanın yöneticisidir.",
       "bio": [
@@ -217,6 +581,32 @@
         "ticaret-sicil-islemleri"
       ],
       "sectors": [],
+      "photo": "person-murat-demirtas",
+      "contact": {
+        "email": "",
+        "phone": "",
+        "linkedin": ""
+      },
+      "showContact": false,
+      "status": "published",
+      "needsVerification": true,
+      "verifyNote": "Görev şemadan alındı (eski sitede «Türk Ticaret Kanunu Departmanı Yöneticisi»); doğrulanmalı. Fotoğraf: arşiv (2022 çekimi, «FOTOĞRALAR VE ÜNVANLAR» listesindeki ad–dosya eşleşmesi); yazılı rıza (KVKK) doğrulanmalı.",
+      "source": "Eski site: boraden.com.tr/ekibimiz/murat-demirtas · görev: Kurum organizasyon şeması (müşteri, Ekim 2026)"
+    },
+    {
+      "slug": "nilay-guven-otur",
+      "name": "Nilay Güven Otur",
+      "role": "Bağımsız Denetim Uzmanı",
+      "department": "bagimsiz-denetim",
+      "profile": false,
+      "titles": [],
+      "summary": "",
+      "bio": [],
+      "expertise": [],
+      "education": [],
+      "areas": [],
+      "services": [],
+      "sectors": [],
       "photo": null,
       "contact": {
         "email": "",
@@ -226,7 +616,184 @@
       "showContact": false,
       "status": "published",
       "needsVerification": true,
-      "source": "Eski site: boraden.com.tr/ekibimiz/murat-demirtas"
+      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
+    },
+    {
+      "slug": "ali-erkmen",
+      "name": "Ali Erkmen",
+      "role": "Yurtdışı İlişkiler ve Müşteri Temsilcisi",
+      "department": "danismanlik",
+      "profile": false,
+      "titles": [],
+      "summary": "",
+      "bio": [],
+      "expertise": [],
+      "education": [],
+      "areas": [],
+      "services": [],
+      "sectors": [],
+      "photo": null,
+      "contact": {
+        "email": "",
+        "phone": "",
+        "linkedin": ""
+      },
+      "showContact": false,
+      "status": "published",
+      "needsVerification": true,
+      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
+    },
+    {
+      "slug": "orkun-harun-takaz",
+      "name": "Orkun Harun Takaz",
+      "role": "Avukat",
+      "department": "hukuk",
+      "profile": false,
+      "titles": [],
+      "summary": "",
+      "bio": [],
+      "expertise": [],
+      "education": [],
+      "areas": [],
+      "services": [],
+      "sectors": [],
+      "photo": null,
+      "contact": {
+        "email": "",
+        "phone": "",
+        "linkedin": ""
+      },
+      "showContact": false,
+      "status": "published",
+      "needsVerification": true,
+      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
+    },
+    {
+      "slug": "hazal-kesbic",
+      "name": "Hazal Kesbiç",
+      "role": "Avukat",
+      "department": "hukuk",
+      "profile": false,
+      "titles": [],
+      "summary": "",
+      "bio": [],
+      "expertise": [],
+      "education": [],
+      "areas": [],
+      "services": [],
+      "sectors": [],
+      "photo": "person-hazal-kesbic",
+      "contact": {
+        "email": "",
+        "phone": "",
+        "linkedin": ""
+      },
+      "showContact": false,
+      "status": "published",
+      "needsVerification": true,
+      "verifyNote": "Fotoğraf: arşiv (2022 çekimi, «FOTOĞRALAR VE ÜNVANLAR» listesindeki ad–dosya eşleşmesi); yazılı rıza (KVKK) doğrulanmalı.",
+      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
+    },
+    {
+      "slug": "nurettin-ozturk",
+      "name": "Nurettin Öztürk",
+      "role": "Eğitmen",
+      "department": "akademi",
+      "profile": false,
+      "titles": [],
+      "summary": "",
+      "bio": [],
+      "expertise": [],
+      "education": [],
+      "areas": [],
+      "services": [],
+      "sectors": [],
+      "photo": null,
+      "contact": {
+        "email": "",
+        "phone": "",
+        "linkedin": ""
+      },
+      "showContact": false,
+      "status": "published",
+      "needsVerification": true,
+      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
+    },
+    {
+      "slug": "gamze-gul-cokan-celik",
+      "name": "Gamze Gül Çokan Çelik",
+      "role": "Muhasebe Vergi Uzmanı",
+      "department": "idari-isler",
+      "profile": false,
+      "titles": [],
+      "summary": "",
+      "bio": [],
+      "expertise": [],
+      "education": [],
+      "areas": [],
+      "services": [],
+      "sectors": [],
+      "photo": null,
+      "contact": {
+        "email": "",
+        "phone": "",
+        "linkedin": ""
+      },
+      "showContact": false,
+      "status": "published",
+      "needsVerification": true,
+      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
+    },
+    {
+      "slug": "abdullah-arslan",
+      "name": "Abdullah Arslan",
+      "role": "Bilgisayar Mühendisi",
+      "department": "bt-ve-yazilim-gelistirme",
+      "profile": false,
+      "titles": [],
+      "summary": "",
+      "bio": [],
+      "expertise": [],
+      "education": [],
+      "areas": [],
+      "services": [],
+      "sectors": [],
+      "photo": null,
+      "contact": {
+        "email": "",
+        "phone": "",
+        "linkedin": ""
+      },
+      "showContact": false,
+      "status": "published",
+      "needsVerification": true,
+      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
+    },
+    {
+      "slug": "umut-kutlu",
+      "name": "Umut Kutlu",
+      "role": "IT Uzmanı",
+      "department": "bt-ve-yazilim-gelistirme",
+      "profile": false,
+      "titles": [],
+      "summary": "",
+      "bio": [],
+      "expertise": [],
+      "education": [],
+      "areas": [],
+      "services": [],
+      "sectors": [],
+      "photo": null,
+      "contact": {
+        "email": "",
+        "phone": "",
+        "linkedin": ""
+      },
+      "showContact": false,
+      "status": "published",
+      "needsVerification": true,
+      "verifyNote": "Şemada unvan yalnızca «IT» (kademe: Uzman); yazımı doğrulanmalı.",
+      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
     }
   ]
 }

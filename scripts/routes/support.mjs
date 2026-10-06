@@ -95,7 +95,7 @@ function sitemapTree({ model, site, data }) {
     title: 'Kurumsal',
     groups: [
       { title: 'Kurumsal sayfalar', items: corp.filter((x) => x.url !== SEARCH_URL && x.url !== SITEMAP_URL) },
-      model.team && model.team.members.length ? { title: 'Ekibimiz', url: model.team.url, items: model.team.members.map((p) => ({ ...L(p.name, p.url), meta: p.role })) } : null,
+      model.team && model.team.members.length ? { title: 'Ekibimiz', url: model.team.url, items: model.team.profiles.map((p) => ({ ...L(p.name, p.url), meta: p.role })) } : null,
       { title: 'Gezinme', items: nav },
     ].filter(Boolean),
   });

@@ -1,6 +1,7 @@
-{# Ekibimiz. Wagtail karşılığı: TeamIndexPage (title, lead, intro, photo_caption, fotoğraf = FK Image) — kartlar = alt sayfalar
-   TeamMemberPage (sıra = sayfa sırası; yayında/taslak = Wagtail yayın durumu). «Kimle görüşmeli?» listeleri ServiceAreaPage ve SectorPage
-   → team_members ilişkisinden üretilir (açık atama; yoksa hizmet sahiplerinden türetilir — scripts/team.mjs). Kişi sayısı sabitlenmez. #}
+{# Ekibimiz. Wagtail karşılığı: TeamIndexPage (title, lead, intro) — bölümler = TeamDepartment (sıralı), kişiler = alt sayfalar
+   TeamMemberPage (has_profile=false olanın sayfası yoktur; satır olarak bölümü altında görünür; yayında/taslak = Wagtail yayın durumu).
+   «Kimle görüşmeli?» listeleri ServiceAreaPage ve SectorPage → team_members ilişkisinden üretilir (açık atama; yoksa hizmet sahiplerinden
+   türetilir — scripts/team.mjs). Kişi sayısı sabitlenmez. #}
 {% extends "layouts/base.njk" %}
 {% import "partials/macros.njk" as m %}
 {% import "partials/people.njk" as pp %}
@@ -23,11 +24,21 @@
         </div>
         {% if team.intro %}<p class="gc tm-head__t" style="--gc: 5 / -1" data-reveal data-reveal-delay="1">{{ team.intro | rich }}</p>{% endif %}
       </div>
-      <ul class="tm-grid">
-        {% for p in team.members %}
-        <li data-reveal data-reveal-delay="{{ loop.index0 % 4 }}">{{ pp.card(p) }}</li>
+      <div class="tm-depts">
+        {% for d in team.departments %}
+        <section class="tm-dept g12"{% if d.name %} id="bolum-{{ d.id }}" aria-labelledby="bolum-{{ d.id }}-h"{% endif %} data-reveal>
+          {% if d.name %}
+          <header class="gc tm-dept__head" style="--gc: 1 / span 4">
+            <h3 class="tm-dept__t" id="bolum-{{ d.id }}-h">{{ d.name }}</h3>
+            <p class="tm-dept__n mono tnum">{{ d.members | length }} kişi</p>
+          </header>
+          {% endif %}
+          <ul class="gc tm-staff" style="--gc: {{ '5 / -1' if d.name else '1 / -1' }}">
+            {% for p in d.members %}<li>{{ pp.row(p) }}</li>{% endfor %}
+          </ul>
+        </section>
         {% endfor %}
-      </ul>
+      </div>
     </section>
 
     {# ── Kimle görüşmeli? Alan ve sektöre göre ilgilenen kişiler (hizmet/sektör sayfalarının altındaki kartlarla aynı atama) #}
@@ -72,14 +83,6 @@
 
   </div>
 </div>
-
-{# ── Ekip fotoğrafı (arşiv; kaydırdıkça açılır) #}
-<figure class="ab-band ab-band--team" id="ofis" data-chapter="Ekip fotoğrafı">
-  <div class="ab-band__media" data-parallax="0.18">
-    {{ m.photo("team-lobby", sizes="100vw", cls="ab-band__img") }}
-  </div>
-  {% if team.photoCaption %}<figcaption class="ab-band__cap mono">{{ team.photoCaption }}</figcaption>{% endif %}
-</figure>
 
 {# ── Kariyer yönlendirmesi #}
 <section class="tm-join sec--paper" id="kariyer" data-chapter="Kariyer" aria-labelledby="tm-join-h">

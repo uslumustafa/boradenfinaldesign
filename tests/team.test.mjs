@@ -27,7 +27,8 @@ test('baş harfler Türkçe büyük harf kuralıyla çıkar', () => {
   assert.equal(initialsOf('Cengiz Turmaz'), 'CT');
   assert.equal(initialsOf('ismail yılmaz'), 'İY');
   assert.equal(initialsOf('ışık şahin'), 'IŞ');
-  assert.equal(initialsOf('Ayşenur Kansız'), 'AK');
+  assert.equal(initialsOf('Çisem Güler'), 'ÇG');
+  assert.equal(initialsOf('Gamze Gül Çokan Çelik'), 'GÇ'); // ikiden çok parça: ilk ve son
   assert.equal(initialsOf('Madonna'), 'M');
   assert.equal(initialsOf(''), '');
 });
@@ -110,8 +111,43 @@ test('taslak kişiler yayımlanmaz; çevrimsel başvuru yok (JSON.stringify çal
   assert.doesNotThrow(() => JSON.stringify([t, ctx]));
 });
 
+test('bölümler: sıra team.json sırasıdır; bilinmeyen/yinelenen bölüm ve eksik ad hata listesine yazılır', () => {
+  const ctx = mk();
+  const raw = {
+    departments: [{ id: 'bir', name: 'Bir' }, { id: 'iki', name: 'İki' }, { id: 'bos', name: 'Boş' }],
+    members: [person('a', { department: 'iki' }), person('b', { department: 'bir' }), person('c', { department: 'iki' })],
+  };
+  const t = buildTeam(raw, ctx);
+  assert.deepEqual(t.issues, []);
+  assert.deepEqual(t.departments.map((d) => [d.id, d.name, d.members.map((m) => m.slug)]), [['bir', 'Bir', ['b']], ['iki', 'İki', ['a', 'c']]]); // boş bölüm çizilmez
+  assert.equal(t.bySlug.a.departmentName, 'İki');
+  const bad = buildTeam({ departments: [{ id: 'x', name: 'X' }, { id: 'x', name: '' }, { id: 'Kötü Id', name: 'Y' }], members: [person('a', { department: 'yok' }), person('b')] }, mk());
+  const text = bad.issues.join('\n');
+  for (const k of ['yinelenen', 'ad zorunludur', 'id küçük harf', 'bilinmeyen bölüm «yok»', 'bilinmeyen bölüm «»']) assert.ok(text.includes(k), `${k} için hata beklenirdi:\n${text}`);
+});
+
+test('bölüm tanımı yoksa tek, adsız grup; profile: false olan üyenin adresi Ekibimiz sayfasındaki satırıdır ve profiles listesine girmez', () => {
+  const t = buildTeam({ members: [person('a'), person('b', { profile: false })] }, mk());
+  assert.deepEqual(t.issues, []);
+  assert.equal(t.departments.length, 1);
+  assert.equal(t.departments[0].name, '');
+  assert.deepEqual(t.departments[0].members.map((m) => m.slug), ['a', 'b']);
+  assert.equal(t.bySlug.a.url, '/hakkimizda/ekibimiz/a/');
+  assert.equal(t.bySlug.b.url, '/hakkimizda/ekibimiz/#b');
+  assert.deepEqual(t.profiles.map((m) => m.slug), ['a']);
+});
+
+test('doğrulama notu ve kaynak üst veridir: kişi kaydına geçmez, yalnızca verifyNotes listesine yazılır', () => {
+  const t = buildTeam({ members: [person('a', { needsVerification: true, verifyNote: 'Soyadı doğrulanmalı', source: 'Şema' }), person('b')] }, mk());
+  assert.deepEqual(t.verifyNotes, [{ slug: 'a', note: 'Soyadı doğrulanmalı' }]);
+  assert.deepEqual(t.unverified, ['a']);
+  assert.ok(!('verifyNote' in t.bySlug.a) && !('source' in t.bySlug.a));
+  assert.ok(!JSON.stringify(t.members).includes('Soyadı doğrulanmalı'));
+});
+
 // ——— Gerçek veri: src/data/team.json + hizmetler + sektörler
-const model = buildModel(loadData());
+const data = loadData();
+const model = buildModel(data);
 const team = model.team;
 
 test('gerçek veri: team.json hatasız ve en az bir kişi içerir', () => {
@@ -120,10 +156,40 @@ test('gerçek veri: team.json hatasız ve en az bir kişi içerir', () => {
   assert.ok(team.members.length >= 1);
 });
 
-test('gerçek veri: adresler ve slug\'lar tektir; profil adresi /hakkimizda/ekibimiz/<slug>/', () => {
+test('gerçek veri: adresler ve slug\'lar tektir; profil adresi /hakkimizda/ekibimiz/<slug>/, profilsiz kişinin adresi #<slug>', () => {
   const urls = team.members.map((m) => m.url);
   assert.equal(new Set(urls).size, urls.length);
-  for (const m of team.members) assert.equal(m.url, `/hakkimizda/ekibimiz/${m.slug}/`);
+  assert.equal(new Set(team.members.map((m) => m.slug)).size, team.members.length);
+  for (const m of team.members) assert.equal(m.url, m.profile ? `/hakkimizda/ekibimiz/${m.slug}/` : `/hakkimizda/ekibimiz/#${m.slug}`);
+  assert.ok(team.members[0].profile, 'ilk kişinin profil sayfası olmalı (testler/e2e ilk kişiye gider)');
+});
+
+test('gerçek veri: kadro bölümlere göre; her kişi bir bölümde; profili olmayan kişiye özgeçmiş uydurulmaz', () => {
+  assert.ok(team.departments.length >= 2);
+  const inDept = team.departments.flatMap((d) => d.members.map((m) => m.slug));
+  assert.deepEqual([...inDept].sort(), team.members.map((m) => m.slug).sort(), 'her kişi tam bir bölümde olmalı');
+  for (const d of team.departments) {
+    assert.ok(d.name && d.members.length, `${d.id}: ad ve en az bir kişi`);
+    for (const m of d.members) assert.equal(m.departmentName, d.name);
+  }
+  assert.deepEqual(team.profiles.map((m) => m.slug), team.members.filter((m) => m.profile).map((m) => m.slug));
+  for (const m of team.members) {
+    if (m.profile) assert.ok(m.summary && m.bio.length, `${m.slug}: profil sayfası için özet ve özgeçmiş gerekir`);
+    else assert.ok(!m.summary && !m.bio.length && !m.education.length && !m.expertise.length, `${m.slug}: profili olmayan kişiye özgeçmiş bilgisi eklenmemeli`);
+  }
+});
+
+test('gerçek veri: ayrılan çalışan listede yok; çalışan kimlik numaraları (BRD-…) hiçbir kayıtta yok', () => {
+  assert.ok(!team.bySlug['aysenur-kansiz'], 'Ayşenur Kansız ayrıldı; ekipte olmamalı');
+  assert.ok(!/BRD-[A-Z]{2}-\d{3,}/.test(JSON.stringify(team)), 'sicil/kimlik numaraları yayımlanmaz');
+});
+
+test('gerçek veri: portre fotoğrafı yalnızca person: true kareler; her portre bir kişiye bağlı', () => {
+  const personKeys = Object.entries(data.photos).filter(([, v]) => v && typeof v === 'object' && v.person).map(([k]) => k);
+  const used = team.members.map((m) => m.photoKey).filter(Boolean);
+  for (const k of used) assert.ok(personKeys.includes(k), `${k} person: true olmalı`);
+  assert.equal(new Set(used).size, used.length, 'aynı portre iki kişiye bağlanmamış olmalı');
+  for (const k of personKeys) assert.ok(used.includes(k), `${k} portresi hiçbir kişiye bağlı değil`);
 });
 
 test('gerçek veri: her sektörde en az bir ilgili kişi var; kimsesiz hizmet sayfaları kart çizmez', () => {

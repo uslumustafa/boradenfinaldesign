@@ -73,7 +73,7 @@ Kaynak: [Sharable Links](https://vercel.com/docs/deployment-protection/methods-t
 
 - Formlar sunucuya bir şey göndermez; e-posta uygulamasında doldurulmuş bir taslak açar. Sunucu tarafı Wagtail aşamasında yazılacak.
 - Favicon ve paylaşım görseli yer tutucudur; resmî vektör logo bekleniyor.
-- 4 ekip profili, hukuki metinler ve bazı hesaplayıcı parametreleri onay/doğrulama bekliyor (ayrıntı: `docs/HANDOFF.md` §6).
+- 3 ekip profili, hukuki metinler ve bazı hesaplayıcı parametreleri onay/doğrulama bekliyor (ayrıntı: `docs/HANDOFF.md` §6).
 
 ## Canlıya geçiş notu
 

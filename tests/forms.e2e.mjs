@@ -185,7 +185,9 @@ async function contact() {
     await p2.waitForSelector('[data-fk-done]:not([hidden])', { timeout: 5000 });
     const km = decodeMailto(await p2.getAttribute('[data-fk-mailto]', 'href'));
     ok(km.to === 'info@boraden.com.tr', 'kişi/sektör bağlamında alıcı yine şirketin tek adresi');
-    ok(km.body.includes('Görüşmek istenen kişi: Adem Başer (Denetim Departmanı Yöneticisi)'), 'gövde: «Görüşmek istenen kişi» satırı (ad + unvan)');
+    // görev veriden okunur (ekip şeması değişince test kırılmasın): «Ad (görev)»
+    const adem = JSON.parse(fs.readFileSync(new URL('../src/data/team.json', import.meta.url), 'utf8')).members.find((m) => m.slug === 'adem-baser');
+    ok(km.body.includes(`Görüşmek istenen kişi: ${adem.name} (${adem.role})`), `gövde: «Görüşmek istenen kişi» satırı (ad + unvan: ${adem.role})`);
     ok(km.body.includes('İlgili sektör: Sağlık ve İlaç'), 'gövde: «İlgili sektör» satırı');
     const others = (km.body.match(/[\w.+-]+@[\w-]+\.[\w.-]+/g) || []).filter((a) => a !== 'ayse@ornek.com.tr');
     ok(others.length === 0, `gövdede başka e-posta adresi yok (${others.join(', ') || '—'})`);

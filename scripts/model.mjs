@@ -18,16 +18,17 @@ export const GROUP_SLUG = {
 export const GROUP_SCENE = Object.fromEntries(Object.entries(AREA_SHAPE).map(([id, shape]) => [id, sceneOf(shape)]));
 export const GROUP_FIGURE = Object.fromEntries(Object.entries(AREA_SHAPE).map(([id, shape]) => [id, figureOf(shape)]));
 
-// Hizmet alanı fotoğrafları: photos.json anahtarları (yalnızca gerçek arşiv kareleri; tek kişilik portre yok). İlk kare alan kartı/bandı,
-// tamamı hizmet sayfalarında sırayla kullanılır (aynı alandaki hizmetler farklı kare görür). Hizmet kaydında `photo` varsa o kullanılır.
-// Wagtail karşılığı: ServiceAreaPage.photo / ServicePage.photo (görsel seçici; boşsa alanın karesi). Seçim müşteri onayına tabidir.
+// Hizmet alanı fotoğrafları: photos.json anahtarları (yalnızca gerçek arşiv kareleri; insan yüzü görünen kare ve toplu ekip fotoğrafı yok —
+// müşteri geri bildirimi, Ekim 2026). İlk kare alan kartı/bandı, tamamı hizmet sayfalarında sırayla kullanılır (aynı alandaki hizmetler farklı
+// kare görür). Hizmet kaydında `photo` varsa o kullanılır. Wagtail karşılığı: ServiceAreaPage.photo / ServicePage.photo (görsel seçici; boşsa
+// alanın karesi). Seçim müşteri onayına tabidir. Kareler: scripts/tools/archive-photos.py.
 export const GROUP_PHOTOS = {
-  vergi: ['pen-closeup', 'office-0301', 'table-top-3'],
-  denetim: ['table-top-1', 'office-0313', 'table-top-3'],
-  danismanlik: ['handshake-close', 'table-top-2', 'office-0329'],
-  insan: ['team-lobby', 'office-0329', 'office-0313'],
-  sistem: ['office-0316', 'table-top-2', 'office-0313'],
-  akademi: ['table-top-2', 'handshake-close', 'office-0329'],
+  vergi: ['desk-calc-chart', 'pen-closeup', 'office-0301', 'table-top-3', 'desk-keyboard-chart'],
+  denetim: ['open-office-wide', 'table-top-1', 'open-office-slats', 'desk-keyboard-chart'],
+  danismanlik: ['meeting-room-long', 'table-top-2', 'meeting-room-glass', 'reception-lounge'],
+  insan: ['reading-coffee', 'reception-lounge', 'office-0301', 'pen-closeup', 'table-top-3'],
+  sistem: ['desk-monitor-top', 'open-office-desk', 'desk-keyboard-chart'],
+  akademi: ['table-top-2', 'reading-coffee', 'meeting-room-glass', 'open-office-slats', 'table-top-1'],
 };
 
 export const PUB_TYPES = {
@@ -96,8 +97,9 @@ export function buildModel(data) {
     };
   });
   const photos = data.photos || {};
-  // Ekranda logo görünen kareler (photos.json → logo: true) hiçbir koşulda seçilmez.
-  const photoOk = (k) => (k && photos[k] && !photos[k].logo && !String(k).startsWith('_') ? k : null);
+  // Ekranda logo görünen kareler (logo: true) ve tek kişilik ekip portreleri (person: true; yalnızca ekip sayfalarında) hiçbir koşulda
+  // alan/hizmet fotoğrafı olarak seçilmez.
+  const photoOk = (k) => (k && photos[k] && !photos[k].logo && !photos[k].person && !String(k).startsWith('_') ? k : null);
   for (const g of groups) {
     g.services = services.filter((s) => s.group === g.id);
     g.photoPool = (GROUP_PHOTOS[g.id] || []).filter(photoOk);

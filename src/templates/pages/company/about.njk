@@ -61,7 +61,7 @@
       </ol>
     </section>
 
-    {# ── Ekibimiz: kısa tanıtım + profillere bağlantı (veri: team.json → Wagtail'de TeamIndexPage alt sayfaları) #}
+    {# ── Ekibimiz: kısa tanıtım + profil sayfası olan kişilere bağlantı; tüm kadro Ekibimiz sayfasında (veri: team.json → Wagtail'de TeamIndexPage alt sayfaları) #}
     {% if model.team and (model.team.members | length) %}
     <section class="ab-team g12" id="ekip" aria-labelledby="ab-team-h">
       <div class="gc" style="--gc: 1 / span 4">
@@ -70,7 +70,7 @@
       <div class="gc" style="--gc: 5 / -1">
         <p class="ab-team__t" data-reveal data-reveal-delay="1">{{ model.team.lead }}</p>
         <ul class="ab-team__list">
-          {% for p in model.team.members %}<li data-reveal data-reveal-delay="{{ loop.index0 % 2 }}">{{ pp.mini(p) }}</li>{% endfor %}
+          {% for p in model.team.profiles %}<li data-reveal data-reveal-delay="{{ loop.index0 % 2 }}">{{ pp.mini(p) }}</li>{% endfor %}
         </ul>
         <p class="ab-team__go" data-reveal><a class="btn" href="{{ model.team.url }}">Ekibimizin tamamı {{ m.arrow() }}</a></p>
       </div>

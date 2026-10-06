@@ -121,9 +121,10 @@ export async function build({ prod = false, quiet = false } = {}) {
   const data = loadData();
   const model = buildModel(data);
   if (model.relationIssues?.length) throw new Error(`İlişki verisi hatalı:\n  - ${model.relationIssues.join('\n  - ')}`);
-  // Yayın öncesi uyarı: ekip profilleri eski siteden derlendi; müşteri onayı (needsVerification) kalkmadan yayına çıkmamalı
+  // Yayın öncesi uyarı: ekip kayıtları eski siteden ve kurum şemasından derlendi; müşteri onayı (needsVerification) kalkmadan yayına çıkmamalı
   if (prod && !quiet && model.team?.unverified?.length) {
-    console.warn(`⚠ Ekip: ${model.team.unverified.length} profil müşteri onayı bekliyor (src/data/team.json → needsVerification): ${model.team.unverified.join(', ')}`);
+    const noted = model.team.verifyNotes.map((n) => n.slug);
+    console.warn(`⚠ Ekip: ${model.team.unverified.length} kişi kaydı müşteri onayı bekliyor (src/data/team.json → needsVerification)${noted.length ? `; doğrulama notu (verifyNote) olanlar: ${noted.join(', ')}` : ''}`);
   }
   // Geliştirmede (lenient) bir alanın hatası diğer sayfaların derlenmesini engellemez; hata konsola ve ilgili sayfaya yazılır
   const lenient = !prod;

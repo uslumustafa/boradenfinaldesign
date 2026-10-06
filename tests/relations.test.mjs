@@ -159,10 +159,10 @@ test('gerçek veri: her alan ve her hizmetin fotoğrafı manifestte var; havuz d
 
 test('gerçek veri: hizmet kaydındaki açık photo havuza göre önceliklidir; geçersiz anahtar yok sayılır', () => {
   const d = structuredClone(data);
-  d.content.services[0].photo = 'office-0316';
+  d.content.services[0].photo = 'table-top-2';
   d.content.services[1].photo = 'bu-kare-yok';
   const m = buildModel(d);
-  assert.equal(m.services[0].photo, 'office-0316');
+  assert.equal(m.services[0].photo, 'table-top-2');
   const g = m.groups.find((x) => x.id === m.services[1].group);
   assert.ok(g.photoPool.includes(m.services[1].photo)); // geçersiz anahtar → havuz
 });
@@ -179,6 +179,21 @@ test('ekranda logo görünen kareler (logo: true) ne havuzlarda ne açık seçim
   for (const g of m.groups) {
     assert.ok(!logoKeys.includes(g.photo), `${g.id} alan karesi logolu`);
     for (const x of g.services) assert.ok(!logoKeys.includes(x.photo), `${x.id} karesi logolu`);
+  }
+});
+
+test('tek kişilik ekip portreleri (person: true) alan/hizmet fotoğrafı olarak seçilemez; havuzlarda yoktur', () => {
+  const personKeys = Object.entries(data.photos).filter(([, v]) => v && typeof v === 'object' && v.person).map(([k]) => k);
+  assert.ok(personKeys.length >= 1, 'portreler photos.json içinde person: true ile işaretli olmalı');
+  for (const k of Object.values(GROUP_PHOTOS).flat()) assert.ok(!personKeys.includes(k), `${k} portre, havuzda olmamalı`);
+  const d = structuredClone(data);
+  d.content.services[0].photo = personKeys[0]; // editör yanlışlıkla portre seçse bile kullanılmaz
+  d.content.groups[0].photo = personKeys[0];
+  const m = buildModel(d);
+  assert.ok(!personKeys.includes(m.services[0].photo));
+  for (const g of m.groups) {
+    assert.ok(!personKeys.includes(g.photo), `${g.id} alan karesi portre`);
+    for (const x of g.services) assert.ok(!personKeys.includes(x.photo), `${x.id} karesi portre`);
   }
 });
 

@@ -49,12 +49,12 @@ Her bileşen **zaten var olan alanlardan** beslenir; yeni bilgi yazılmaz. Wagta
 | **Çıktı / hazırlık** | Çıktılar + «sizden istediklerimiz» | İki kart, onay işaretli liste | `DeliverablesBlock` |
 | **İlgili şeridi** | Ters ilişkiler: aynı alandaki hizmetler, hizmeti anan sektörler, ilgili araç ve terimler | Alt alta değil, tek yatay «Bunlar da ilginizi çekebilir» şeridi | Otomatik (ilişki alanları) |
 | **Alan SSS toplamı** | Alandaki hizmetlerin SSS'lerinden tekrarsız ilk 4–6 soru | Alan sayfasında akordeon | Otomatik |
-| **Fotoğraf bandı** | `photos.json` içindeki **gerçek arşiv fotoğrafları** (toplantı, ofis, masa üstü, ekip; tek kişilik/portre kareler kullanılmaz) | Tam genişlik, kaydırırken hafif açılan görsel; alt yazı | `hero_photo` (görsel seçici) |
+| **Fotoğraf bandı** | `photos.json` içindeki **gerçek arşiv fotoğrafları** (masa üstü, ofis, toplantı odası, resepsiyon; insan yüzü içeren kareler kullanılmaz — müşteri talebi, 2026-10-06) | Tam genişlik, kaydırırken hafif açılan görsel; alt yazı | `hero_photo` (görsel seçici) |
 | **Kişi kartı** | Alanı/sektörü yürüten kişi | Yapıldı (sayfa altı bantları) | `TeamMemberPage` ilişkisi |
 | **Yazar kartı** | Makalenin yazarı = ekip üyesi | Makale sonunda kompakt kart + profil bağlantısı | `author` → `TeamMemberPage` |
 | **Boş durum** | İçerik yokken | «Bu koleksiyona yakında yayın eklenecek» yerine ilgili araç/hizmete yönlendirme | Şablon koşulu |
 
-**Fotoğraf eşleştirme önerisi (editör sonradan değiştirebilir).** Vergi ve muhasebe → defter/kalem yakın çekimi (`office-0301`, `pen-closeup`); Denetim → masa üstü (`table-top-*`); Danışmanlık → toplantı/el sıkışma (`meeting-*`, `handshake-*`); İnsan → ekip (`team-lobby`, `office-0329`); Sistemler → ekranlı ofis (`office-0313`, `office-0316`); Akademi → masa üstü + dizüstü (`table-top-2`). Sektörlerde fotoğraf **kullanılmaz** ya da yalnızca genel (sektöre özgü iddia taşımayan) kareler kullanılır.
+**Fotoğraf eşleştirme önerisi (editör sonradan değiştirebilir).** Vergi ve muhasebe → defter/hesap makinesi/kalem (`desk-calc-chart`, `pen-closeup`, `office-0301`, `table-top-3`, `desk-keyboard-chart`); Denetim → açık ofis ve masa üstü (`open-office-wide`, `table-top-1`, `open-office-slats`, `desk-keyboard-chart`); Danışmanlık → toplantı odası (`meeting-room-long`, `table-top-2`, `meeting-room-glass`, `reception-lounge`); İnsan Kaynakları → okuma/resepsiyon/detay (`reading-coffee`, `reception-lounge`, `office-0301`, `pen-closeup`, `table-top-3`); Sistemler → ekranlı masa (`desk-monitor-top`, `open-office-desk`, `desk-keyboard-chart`); Akademi → masa üstü ve okuma (`table-top-2`, `reading-coffee`, `meeting-room-glass`, `open-office-slats`, `table-top-1`) — güncel hâli `scripts/model.mjs › GROUP_PHOTOS` (2026-10-06'da yüzlü kareler çıkarıldı: `team-lobby`, `office-0313/0316/0329`, `handshake-close` vb.). Sektörlerde fotoğraf **kullanılmaz** ya da yalnızca genel (sektöre özgü iddia taşımayan) kareler kullanılır.
 
 ---
 
@@ -73,7 +73,7 @@ Her bileşen **zaten var olan alanlardan** beslenir; yeni bilgi yazılmaz. Wagta
 
 ## 5. Müşteriye sorulacaklar
 
-- Ekip biyografileri eski siteden derlendi ve «doğrulanacak» işaretli; yayından önce onay gerekiyor. Portre fotoğrafı yalnızca yazılı rıza (KVKK) ile eklenir.
+- Ekip: üç kişinin biyografisi eski siteden, 22 kişinin ad/unvan/bölümü müşteri şemasından (2026-10-06); hepsi «doğrulanacak» işaretli, yayından önce onay gerekiyor. Portre fotoğrafı yalnızca yazılı rıza (KVKK) ile eklenir (6 kişi için arşivden eklendi, rıza doğrulanmalı).
 - Alan/hizmet ↔ kişi eşleşmeleri **öneridir**; kimin hangi alanda görüşmeye çıkacağı müşteri tarafından onaylanmalı.
 - Fotoğraf eşleştirme önerisi (yukarıda) onay bekliyor.
 
@@ -98,7 +98,7 @@ Plan, bu belgedeki sırayla uygulandı. Her bileşen mevcut alanlardan beslenir 
 
 - **Denetçi tiki + çalışma kâğıdı künyesi** («firmaya yakışan, özgün bir şey» isteği): logonun üç çizgisine gönderme yapan tik, bölüm başlıklarında belirince çizilir, süreç adımlarında kaydırdıkça dolar; künye bir denetim çalışma kâğıdının üst bilgisini andırır. Resmî logoya dokunulmaz. Her `.svc__label` tik taşır (`data-reveal`; `tests/services.test.mjs` zorunlu kılar).
 - **Ana sayfa başlığında tikler:** «Tam ✓ doğru ✓ zamanında ✓» — slogandaki üç noktalama yerine denetçi tikleri (mavi · kırmızı · yeşil, sırayla çizilir). Sunumda şöyle anlatılabilir: denetçinin çalışma kâğıdında «eksiksiz mi, doğru mu, zamanında mı?» diye tek tek işaretlediği kontrolü hatırlatır. Metin uydurulmadı, yalnızca işaret eklendi. `tests/hero.e2e.mjs`.
-- **Ekip:** `/hakkimizda/ekibimiz/`, kişi profil sayfaları, her sektör/alan/hizmet sayfasının altında «İlgili ekip» kartı, iletişim formunda `?kisi=`.
+- **Ekip:** `/hakkimizda/ekibimiz/` (bölümlere göre dizin, 25 kişi), profil sayfası olan 3 kişi, her sektör/alan/hizmet sayfasının altında «İlgili ekip» kartı (yalnızca ataması olan kişiler), iletişim formunda `?kisi=`.
 - **Fotoğraf politikası:** ekranında eski logo görünen kareler `photos.json` içinde `logo: true` ile işaretlidir ve hiçbir yerde seçilemez (`tests/logo.test.mjs`, `tests/relations.test.mjs`).
 - **Etkileşim cilası:** büyütülmüş ve kaydırınca kendiliğinden saklanan üst çubuk, üstte ince ilerleme çizgisi, «3B noktalar akar» sayfa geçişi, ana sayfada hızlı fare sallamayla beliren BORADEN yazısı.
 - **Dokunma hedefleri:** 390 px taramasında ekip bileşenlerinde ve künyede 20–22 px'lik bağlantılar bulundu (62 sayfa); iç boşluk/eksi dış boşlukla ≥ 24 px'e çıkarıldı, görünüm değişmedi (`75-team.css` sonu, `65-services.css › .kunye dd a`). `tests/audit.mjs` ve `services.e2e.mjs › mobile` korur.
@@ -138,7 +138,7 @@ Tarama aracı: `npm run test:text` (varsayılan 20 sayfa × 4 ekran), `--full` (
 | Yüksek | **Site simgesi** (favicon) + Apple dokunma simgesi + web manifest | Şu an boş (`<link rel="icon" href="data:,">`): sekmede, yer imlerinde ve telefonun ana ekranında simge yok | Resmî logodaki tik işaretinden, logo dosyasına dokunmadan ayrı simge dosyaları; marka sahibinin onayı |
 | Yüksek | **Paylaşım görseli** (1200 × 630) | `og:image` şu an 211 × 48 px logo; LinkedIn/WhatsApp önizlemesi küçük ve boş görünür | Arşivden bir ofis fotoğrafı + logo; onay sonrası `site.shareImage` |
 | Orta | Makale **yazar kartı** | Yazının kimden geldiği güven verir; kişi bileşenleri (`partials/people.njk`) hazır, eksik olan veri | Hangi yazıyı kimin yazdığı bilgisi |
-| Orta | **Ekip portreleri** | Dört büyük lacivert monogram kutusu sayfayı ağırlaştırıyor | Yazılı rıza (KVKK). Portre gelmeyecekse kutu oranı küçültülmeli (bkz. 7.5) |
+| Orta | **Ekip portreleri** | **Kısmen yapıldı (2026-10-06):** kartlar bölümlere göre kompakt satırlara çevrildi; arşivdeki etiketli karelerden 6 kişiye portre eklendi | Kalan 19 kişi için fotoğraf ve hepsi için yazılı rıza (KVKK) |
 | Orta | Mobilde **tablo kaydırma ipucu** | Maaş tablosu dar ekranda artık bölünmeden yatay kayıyor; kaydırılabildiği görünür olmalı | **Yapıldı:** kayan tablonun sağ kenarı yumuşakça söner, sona gelince söner kalkar (kaydırma zaman çizelgesi; desteklemeyen tarayıcıda tablo yine kayar). Telefonda tablolar biraz sıkılaştı: takvimdeki tatiller tablosu artık kaymadan sığıyor |
 | Orta (test) | Ana sayfada **hızlı görev kısayolları** (Hizmet bul · Hesapla · Kaynak ara · İletişim) | Hızlı bir iş için gelen ziyaretçi uzun kaydırmaya bağlı kalmaz | Mevcut bağlantıların yeniden düzeni; 5–8 kişilik görev testiyle karşılaştırılmalı |
 | Düşük | Sirküler/duyuru **e-posta bildirimi** | Müşterinin mevzuat takibini kolaylaştırır | Arka uç (Wagtail) ve açık rıza; tasarım onayından sonra |
@@ -157,10 +157,10 @@ Tarama aracı: `npm run test:text` (varsayılan 20 sayfa × 4 ekran), `--full` (
 
 | Öncelik | Ne | Neden / öneri |
 |---|---|---|
-| Yüksek (içerik) | Ekip biyografileri (4 kişi `needsVerification`), yasal metinler (taslak), üç blog yazısının yayın tarihi | Yayın öncesi kişilerin, hukuk müşavirinin ve editörün onayı |
+| Yüksek (içerik) | Ekip bilgileri (25 kişi `needsVerification`; 22'sinin yalnızca ad/unvan/bölümü var), yasal metinler (taslak), üç blog yazısının yayın tarihi | Yayın öncesi kişilerin, hukuk müşavirinin ve editörün onayı |
 | Yüksek (içerik) | İK hizmet kapsamları | Yukarıda (7.4) |
 | Orta | Yıllık güncelleme: hesaplayıcı parametreleri (`src/data/params/2027-*.json`) ve vergi takvimi | Sayfalar «2026 yılı parametreleri · Doğrulama: 1 Ekim 2026» gösteriyor; Ocak 2027'de yeni yıl dosyaları eklenmeli |
-| Orta | Ekibimiz monogram kutuları | Portre gelmeyecekse 4:5 oranı 1:1'e indirilebilir; kartlar hafifler |
+| Orta | Ekibimiz monogram kutuları | **Yapıldı (2026-10-06):** büyük kartlar 72 px'lik satır avatarlarına indirildi; bölüm başına dizin |
 | Düşük (test) | Mobilde iletişim ve Ekibimiz kahramanı | Kahraman en az ekranın %64'ü (şekil üstte, metin altta): iletişim bilgileri ilk ekranın altında kalıyor. Görev sayfaları için kısa kahraman varyantı denenebilir |
 | Düşük | Mobil SSS kahramanı | Şekil metnin arkasında; koyulaştırıldı, okunuyor. İstenirse mobilde şekil başlığın üstüne alınır |
 | Düşük | Kısa blog yazıları | Kısa metne göre büyük kahraman: «kısa başlık + üç temel nokta + kaynaklar» düzeni (bkz. depo dışı `SITE_AUDIT_REPORT.md` §G) |

@@ -1,4 +1,5 @@
-// Ekibimiz + kişi profilleri: /hakkimizda/ekibimiz/ ve /hakkimizda/ekibimiz/<slug>/.
+// Ekibimiz + kişi profilleri: /hakkimizda/ekibimiz/ ve /hakkimizda/ekibimiz/<slug>/ (yalnızca team.json'da profile !== false olanlar;
+// diğer kişiler Ekibimiz sayfasında bölümleri altında satır olarak görünür, kendi sayfaları ve yapılandırılmış verileri yoktur).
 // Wagtail karşılığı: TeamIndexPage (HakkımızdaPage'in alt sayfası) → TeamMemberPage (bkz. scripts/team.mjs, WAGTAIL_MAP.md «Ekip»).
 // Kişi–alan/hizmet/sektör ilişkileri model aşamasında kurulur (model.team; groups/services/sectors üzerinde `people`).
 import { baseOf, breadcrumbLd, graph, listLd, orgRef, webPageLd } from '../ld.mjs';
@@ -31,12 +32,12 @@ export function registerTeam({ add, model, site, home }) {
     ctx: {
       team,
       sectorRows: model.sectors.map((s, i) => ({ ...s, number: pad2(i + 1) })),
-      ld: listLd(site, team.title, team.url, team.members.map((p) => ({ title: p.name, url: p.url })), [home, aboutCrumb, teamCrumb]),
+      ld: listLd(site, team.title, team.url, team.profiles.map((p) => ({ title: p.name, url: p.url })), [home, aboutCrumb, teamCrumb]),
     },
   });
 
   // ——— Kişi profilleri
-  team.members.forEach((p, i) => {
+  team.profiles.forEach((p, i) => {
     const crumbs = [home, aboutCrumb, teamCrumb];
     const personId = `${base}${p.url}#kisi`;
     const person = {
@@ -64,9 +65,9 @@ export function registerTeam({ add, model, site, home }) {
       crumbs,
       ctx: {
         person: p,
-        others: team.members.filter((x) => x.slug !== p.slug),
-        prev: team.members[i - 1] || null,
-        next: team.members[i + 1] || null,
+        others: team.profiles.filter((x) => x.slug !== p.slug),
+        prev: team.profiles[i - 1] || null,
+        next: team.profiles[i + 1] || null,
         ld: graph(
           { ...webPageLd(site, { name: p.name, url: p.url, description: plainInline(p.summary), type: 'ProfilePage' }), mainEntity: { '@id': personId } },
           person,

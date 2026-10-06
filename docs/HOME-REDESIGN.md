@@ -39,9 +39,9 @@ Elle denemek için yeni sekmede adresi yazıp açın (yönlendiren yok); site i�
 
 ## 4. Film (`modules/film.js`) ve video varlığı
 
-`src/assets/video/boraden-ofis.mp4` (4,17 MB, 22,4 sn, 1280×720, sessiz, döngü) + `boraden-ofis-poster.jpg`. Kurgu: 2022 arşivinden 3 klip (4K HEVC HLG → SDR), logosuz, tek kişilik yakın plansız; betik `scripts/tools/office-film.sh` (kaynak klipler kullanıcının Downloads klasöründe).
+`src/assets/video/boraden-ofis.mp4` (1,25 MB, 5,4 sn, 1280×720, sessiz, döngü; başta ve sonda 0,7 sn solma) + `boraden-ofis-poster.jpg`. Kurgu: 2022 arşivinden tek klip (IMG_0376, 4K HEVC HLG → SDR), girişteki ahşap çıtalı bölmeden bilgisayar başında sırtı dönük oturan çalışana kadar (kaynakta 8,0–10,1 sn), logosuz; 2,6 kat yavaşlatılıp hareket tahminli ara karelerle uzatılır. Arka plandaki kişilerin yüzü takip eden yumuşak bir bulanıklıkla kapatılır (kutular `scripts/tools/office-film-faces.json`); betik `scripts/tools/office-film.sh` (kaynak klip kullanıcının Downloads klasöründe). Poster: filmin 4,3. saniyesi.
 Oynatma: otomatik yalnızca «Tam» katmanda, ≥ 900 px'te, veri tasarrufu kapalıyken; görünür alan dışında durur; «Duraklat/Oynat» düğmesi her zaman vardır. Hafif/Kapalı/mobil/hareket azaltma/veri tasarrufu → yalnızca poster (video dosyası indirilmez) ve «Videoyu oynat» düğmesi.
-**Hukuki not:** görüntüde çalışanların yüzleri seçilebilir (2022 arşivi). Yayın öncesi çalışan rızası/KVKK aydınlatması netleşmeli; mümkünse yeni çekim önerilir. Duvarda eski logo varyantı bulunan kareler bilerek dışlandı.
+**Hukuki not:** müşteri geri bildirimi (Ekim 2026) gereği ayrılan çalışanların yüzü görünmemeli; filmde yüzler bulanıklaştırıldı ve kesit, sırtı dönük çalışanla bitiyor (sonrasında yüzü açık biri giriyor). Arşiv 2022'ye ait olduğundan yayın öncesi çalışan rızası/KVKK aydınlatması yine de netleşmeli; mümkünse yeni çekim önerilir. Duvarda eski logo varyantı bulunan kareler bilerek dışlandı.
 
 ## 5. Parçacık dünyası — ayar rehberi (`src/assets/js/world/`)
 
