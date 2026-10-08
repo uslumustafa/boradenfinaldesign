@@ -7,7 +7,6 @@ import { PAGE } from '../scenes.mjs';
 import { plainInline } from '../filters.mjs';
 
 const KIND = 'Ekip';
-const pad2 = (n) => String(n).padStart(2, '0');
 
 export function registerTeam({ add, model, site, home }) {
   const team = model.team;
@@ -31,7 +30,6 @@ export function registerTeam({ add, model, site, home }) {
     crumbs: [home, aboutCrumb],
     ctx: {
       team,
-      sectorRows: model.sectors.map((s, i) => ({ ...s, number: pad2(i + 1) })),
       ld: listLd(site, team.title, team.url, team.profiles.map((p) => ({ title: p.name, url: p.url })), [home, aboutCrumb, teamCrumb]),
     },
   });

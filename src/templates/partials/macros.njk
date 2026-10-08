@@ -55,5 +55,5 @@
    (main[data-shapes]). Bölüm işaretleri [data-shape-at] ve üzerine gelme şekilleri [data-shape-hover] aynı beyaz bölümde (.sheet) aranır.
    Süs öğesidir (aria-hidden); JS yoksa, yazdırmada ve yüksek karşıtlıkta görünmez. Wagtail: şablon parçası, veri gerekmez. #}
 {% macro fig(kind="side", shapes="") %}
-<figure class="fig fig--{{ kind }}" data-shapes="{{ shapes }}" aria-hidden="true"><canvas class="fig__cv"></canvas><figcaption class="fig__cap"></figcaption></figure>
+<figure class="fig fig--{{ kind }}" data-shapes="{{ shapes }}" aria-hidden="true"><canvas class="fig__cv"></canvas></figure>
 {% endmacro %}

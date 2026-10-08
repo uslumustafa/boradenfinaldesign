@@ -101,7 +101,7 @@ async function contact() {
   const href = await page.getAttribute('[data-fk-mailto]', 'href');
   const m = decodeMailto(href);
   ok(m.to === 'info@boraden.com.tr', 'mailto alıcısı');
-  ok(m.subject === '[Web sitesi] Vergi ve mali müşavirlik — Ayşe Yılmaz', `konu satırı: ${m.subject}`);
+  ok(m.subject === '[Web sitesi] Vergi denetim ve danışmanlık — Ayşe Yılmaz', `konu satırı: ${m.subject}`);
   ok(m.body.includes('İlgili hizmet: KDV İade İşlemleri') && m.body.includes('Şirket veya kurum: Örnek A.Ş.') && m.body.includes('Mesajınız:\nKDV iade'), 'gövde: alanlar + ilgili hizmet + mesaj');
   ok(href.includes('%0D%0A'), 'satır sonları %0D%0A');
   const wa = await page.getAttribute('[data-fk-wa]', 'href');
@@ -291,7 +291,7 @@ async function careers() {
   await page.click('#cr-form .ct-submit');
   await page.waitForSelector('#cr-form ~ [data-fk-done]:not([hidden])', { timeout: 5000 });
   const m = decodeMailto(await page.getAttribute('[data-fk-mailto]', 'href'));
-  ok(m.subject === '[Kariyer] Sistemler ve İş Zekâsı — Deniz Kaya', `konu satırı: ${m.subject}`);
+  ok(m.subject === '[Kariyer] Dijital Dönüşüm — Deniz Kaya', `konu satırı: ${m.subject}`);
   ok(m.body.includes('Deneyim düzeyi: 1–3 yıl') && m.body.includes('ozgecmis.pdf') && m.body.includes('ek olarak eklenecek'), 'gövde: deneyim + CV yönlendirmesi');
   ok(((await page.textContent('[data-fk-done]')) || '').includes("CV'nizi e-postaya ekleyin"), 'panelde «CV\'nizi e-postaya ekleyin»');
   ok(!/gönderildi/i.test(await page.textContent('[data-fk-done]')), '«gönderildi» denmiyor');

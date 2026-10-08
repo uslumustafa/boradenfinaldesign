@@ -1,5 +1,5 @@
 {
-  "_note": "Ekip verisi. Wagtail karşılığı: TeamIndexPage (title, lead, intro) + TeamDepartment (bölüm: id, ad; sıra = bu listedeki sıra) + TeamMemberPage (her üye bir sayfa; profile: false olan üyenin kendi sayfası yoktur, Ekibimiz sayfasında bölümü altında satır olarak görünür). Cengiz Turmaz, Adem Başer ve Murat Demirtaş'ın özgeçmişleri eski sitedeki (boraden.com.tr/ekibimiz/...) herkese açık metinlerden DERLENDİ; diğer kişiler müşterinin kurum şemasından (Ekim 2026) yalnızca ad, görev ve bölümle eklendi — özgeçmiş, eğitim ve uzmanlık uydurulmaz, yalnızca kaynakta yazan olgular kullanılır. needsVerification: true = yayından önce kişiyle/kurumla doğrulanmalı (ad yazımı, unvan, görev); verifyNote = neyin doğrulanacağı (sitede gösterilmez). Fotoğraf: yalnızca kişinin izniyle (KVKK; izin kaydı müşteride saklanır) ve photos.json anahtarıyla (person: true) eklenir; yoksa baş harfli tasarımlı kutu gösterilir. İletişim bilgileri (contact) yalnızca showContact: true ise yayımlanır; aksi hâlde kartlardaki «Görüşme talep edin» düğmesi iletişim formuna gider (?kisi=<slug>). Atama (areas/services/sectors): alan sorumlusu = areas, ek sahiplik = services, açık sektör ataması = sectors; sectors boşsa sektör sayfasındaki kişiler o sektörün hizmetlerinin sahiplerinden TÜRETİLİR (scripts/team.mjs). Bölüm → alan bağı: departments[].areas — bölümdeki herkes o hizmet alanının ve alandaki hizmetlerin ekip listelerinde görünür (profil sayfasındaki hizmet listesini ve sektör türetmesini genişletmez). Şemadan eklenen kişilerde görev adında bir hizmetin adı açıkça geçiyorsa (ör. «Tam Tasdik ve İade Sorumlusu», «SGK İşlemleri Yöneticisi», «İnsan Kaynakları Uzmanı», «Bağımsız Denetim Uzmanı», «Muhasebe Vergi …») bölümünün alanındaki o hizmetlere services ile açık atama yapıldı; müşteriyle doğrulanmalı. Hukuk bölümü proje sahibinin kararıyla Kurumsal Danışmanlık alanına bağlandı; Yönetim ve İdari İşler bir alana bağlı değildir. status: published | draft.",
+  "_note": "Ekip verisi. Wagtail karşılığı: TeamIndexPage (title, lead, intro) + TeamDepartment (bölüm: id, ad; sıra = bu listedeki sıra) + TeamMemberPage (her üye bir sayfa; profile: false olan üyenin kendi sayfası yoktur, Ekibimiz sayfasında bölümü altında satır olarak görünür). Cengiz Turmaz, Adem Başer ve Murat Demirtaş'ın özgeçmişleri eski sitedeki (boraden.com.tr/ekibimiz/...) herkese açık metinlerden DERLENDİ; diğer kişiler müşterinin kurum şemasından (Ekim 2026) yalnızca ad, görev ve bölümle eklendi — özgeçmiş, eğitim ve uzmanlık uydurulmaz, yalnızca kaynakta yazan olgular kullanılır. needsVerification: true = yayından önce kişiyle/kurumla doğrulanmalı (ad yazımı, unvan, görev); verifyNote = neyin doğrulanacağı (sitede gösterilmez). Fotoğraf: yalnızca kişinin izniyle (KVKK; izin kaydı müşteride saklanır) ve photos.json anahtarıyla (person: true) eklenir; yoksa baş harfli tasarımlı kutu gösterilir. İletişim bilgileri (contact) yalnızca showContact: true ise yayımlanır; aksi hâlde kartlardaki «Görüşme talep edin» düğmesi iletişim formuna gider (?kisi=<slug>). Atama (areas/services/sectors): alan sorumlusu = areas, ek sahiplik = services, açık sektör ataması = sectors; sectors boşsa sektör sayfasındaki kişiler o sektörün hizmetlerinin sahiplerinden TÜRETİLİR (scripts/team.mjs). Bölüm → alan bağı: departments[].areas — bölümdeki herkes o hizmet alanının ve alandaki hizmetlerin ekip listelerinde görünür (profil sayfasındaki hizmet listesini ve sektör türetmesini genişletmez). Şemadan eklenen kişilerde görev adında bir hizmetin adı açıkça geçiyorsa (ör. «Tam Tasdik ve İade Sorumlusu», «SGK İşlemleri Yöneticisi», «İnsan Kaynakları Uzmanı», «Bağımsız Denetim Uzmanı», «Muhasebe Vergi …») bölümünün alanındaki o hizmetlere services ile açık atama yapıldı; müşteriyle doğrulanmalı. Ekim 2026 yapısı (8 hizmet alanı): Hukuk ve Ticaret Sicil → Hukuk; İş ve Sosyal Güvenlik → Muhasebe, Bordro ve Finansal Raporlama; Teşvik birimi (proje sahibinin isteğiyle eklendi) → Teşvik, AB Projeleri ve Startup; BT → Dijital Dönüşüm; Yönetim ve İdari İşler bir alana bağlı değildir. status: published | draft.",
   "title": "Ekibimiz",
   "lead": "Hizmetlerimizi yürüten yönetici ve uzmanlarımız, çalıştıkları bölümlere göre.",
   "intro": "Ekibimiz bölümlerine göre listelenir; özgeçmişi yayımlanan kişilerin profil sayfasında unvanları, eğitimleri ve çalıştıkları alanlar yer alır. Bir konuda kiminle görüşmeniz gerektiğinden emin değilseniz iletişim formunu kullanabilirsiniz.",
@@ -13,6 +13,7 @@
       "id": "muhasebe-ve-vergi",
       "name": "Muhasebe ve Vergi",
       "areas": [
+        "muhasebe",
         "vergi"
       ]
     },
@@ -27,7 +28,7 @@
       "id": "is-ve-sosyal-guvenlik",
       "name": "İş ve Sosyal Güvenlik",
       "areas": [
-        "insan"
+        "muhasebe"
       ]
     },
     {
@@ -41,7 +42,7 @@
       "id": "ticaret-sicil",
       "name": "Ticaret Sicil",
       "areas": [
-        "danismanlik"
+        "hukuk"
       ]
     },
     {
@@ -59,10 +60,17 @@
       ]
     },
     {
+      "id": "tesvik",
+      "name": "Teşvik",
+      "areas": [
+        "tesvik"
+      ]
+    },
+    {
       "id": "hukuk",
       "name": "Hukuk",
       "areas": [
-        "danismanlik"
+        "hukuk"
       ]
     },
     {
@@ -696,6 +704,32 @@
       "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
     },
     {
+      "slug": "umut-kutlu",
+      "name": "Umut Kutlu",
+      "role": "IT Uzmanı",
+      "department": "tesvik",
+      "profile": false,
+      "titles": [],
+      "summary": "",
+      "bio": [],
+      "expertise": [],
+      "education": [],
+      "areas": [],
+      "services": [],
+      "sectors": [],
+      "photo": null,
+      "contact": {
+        "email": "",
+        "phone": "",
+        "linkedin": ""
+      },
+      "showContact": false,
+      "status": "published",
+      "needsVerification": true,
+      "verifyNote": "Proje sahibinin isteğiyle Teşvik birimine alındı (Ekim 2026); şemada BT bölümünde, unvan «IT». Birimdeki görev unvanı doğrulanmalı.",
+      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
+    },
+    {
       "slug": "orkun-harun-takaz",
       "name": "Orkun Harun Takaz",
       "role": "Avukat",
@@ -818,32 +852,6 @@
       "showContact": false,
       "status": "published",
       "needsVerification": true,
-      "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
-    },
-    {
-      "slug": "umut-kutlu",
-      "name": "Umut Kutlu",
-      "role": "IT Uzmanı",
-      "department": "bt-ve-yazilim-gelistirme",
-      "profile": false,
-      "titles": [],
-      "summary": "",
-      "bio": [],
-      "expertise": [],
-      "education": [],
-      "areas": [],
-      "services": [],
-      "sectors": [],
-      "photo": null,
-      "contact": {
-        "email": "",
-        "phone": "",
-        "linkedin": ""
-      },
-      "showContact": false,
-      "status": "published",
-      "needsVerification": true,
-      "verifyNote": "Şemada unvan yalnızca «IT» (kademe: Uzman); yazımı doğrulanmalı.",
       "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
     }
   ]

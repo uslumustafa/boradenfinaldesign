@@ -8,28 +8,38 @@
   "areas": [
     {
       "id": "denetim",
-      "title": "Denetim ve Raporlama",
-      "text": "Finansal tabloların, kontrollerin ve raporlama süreçlerinin bağımsız ve kanıta dayalı biçimde incelenmesi: finansal tablo denetimi, UFRS/TFRS raporlama, iç denetim ve iç kontrol. Muhasebe, finans veya denetim alanında eğitim almış; belgeye ve kanıta dayalı çalışmaya yatkın adaylar bu alanla ilgilenebilir."
+      "title": "Bağımsız Denetim",
+      "text": "Finansal tabloların, kontrollerin ve süreçlerin bağımsız ve kanıta dayalı biçimde incelenmesi: bağımsız denetim, finansal tablo denetimi, iç denetim ve iç kontrol. Muhasebe, finans veya denetim alanında eğitim almış; belgeye ve kanıta dayalı çalışmaya yatkın adaylar bu alanla ilgilenebilir."
     },
     {
       "id": "vergi",
-      "title": "Vergi ve Mali Müşavirlik",
-      "text": "Vergi, muhasebe ve tasdik süreçlerinin birlikte yürütüldüğü alan: yeminli mali müşavirlik ve tam tasdik, KDV iadesi, kurumlar vergisi, transfer fiyatlandırması ve Ar-Ge danışmanlığı. Vergi mevzuatını ve muhasebe uygulamalarını izlemeye ilgi duyan adaylar için uygun bir alandır."
+      "title": "Vergi Denetim ve Danışmanlık",
+      "text": "Vergi ve tasdik süreçlerinin birlikte yürütüldüğü alan: yeminli mali müşavirlik ve tam tasdik, KDV iadesi, kurumlar vergisi denetimi ve transfer fiyatlandırması. Vergi mevzuatını ve uygulamasını izlemeye ilgi duyan adaylar için uygun bir alandır."
     },
     {
       "id": "danismanlik",
-      "title": "Kurumsal Danışmanlık",
-      "text": "Şirket kuruluşu ve değerlemesi, ticaret sicil işlemleri, mali ve yönetim danışmanlığı; hukuki danışmanlık, sözleşme ve tahsilat süreçleri. Finans, işletme veya hukuk alanında eğitim almış; analiz yapmaya ve sonuçları raporlamaya ilgi duyan adaylar bu alanda çalışmak isteyebilir."
+      "title": "Kurumsal Finansman",
+      "text": "Şirket değerlemesi, birleşme ve devralma, finansal yeniden yapılandırma, mali ve yönetim danışmanlığı. Finans veya işletme alanında eğitim almış; analiz yapmaya ve sonuçları raporlamaya ilgi duyan adaylar bu alanda çalışmak isteyebilir."
     },
     {
-      "id": "insan",
-      "title": "İnsan Kaynakları ve Bordro",
-      "text": "Bordro, özlük ve SGK işlemleri, istihdam teşvikleri, emeklilik danışmanlığı ve çalışma izni süreçleri. Çalışma ve sosyal güvenlik mevzuatına ilgi duyan, titiz ve düzenli çalışan adaylar için uygun bir alandır."
+      "id": "tesvik",
+      "title": "Teşvik, AB Projeleri ve Startup",
+      "text": "Yatırım teşvik belgesi, kamu ve AB destek programları, Ar-Ge ve istihdam teşvikleri ile girişimlerin yatırım hazırlığı. Program koşullarını okumaya, bütçe ve belge düzeni kurmaya ilgi duyan adaylar bu alanla ilgilenebilir."
+    },
+    {
+      "id": "hukuk",
+      "title": "Hukuk",
+      "text": "Şirketler ve sözleşmeler hukuku, ticaret sicili, iş ve sosyal güvenlik hukuku, vergi uyuşmazlıkları, KVKK uyumu, alacak ve icra takibi. Hukuk fakültesi mezunu ya da stajyer avukat olan, ticari hayatın mali yönüne ilgi duyan adaylar bu alanla ilgilenebilir."
+    },
+    {
+      "id": "muhasebe",
+      "title": "Muhasebe, Bordro ve Finansal Raporlama",
+      "text": "Muhasebe ve finansal raporlama; bordro, özlük ve SGK işlemleri, emeklilik ve çalışma izni süreçleri. Muhasebe, çalışma ve sosyal güvenlik mevzuatına ilgi duyan, titiz ve düzenli çalışan adaylar için uygun bir alandır."
     },
     {
       "id": "sistem",
-      "title": "Sistemler ve İş Zekâsı",
-      "text": "Muhasebe sistemlerinin kurulması ve sürdürülmesi, veri analiz sistemleri, iş zekâsı ve çözüm prosedürleri. Yazılım, veri veya bilgi sistemleri alanında deneyimi olan ve muhasebe süreçlerini anlamaya ilgi duyan adaylar bu alanla ilgilenebilir."
+      "title": "Dijital Dönüşüm",
+      "text": "e-Fatura, e-Arşiv ve e-Defter geçişi, muhasebe sistemlerinin kurulması ve sürdürülmesi, veri analiz sistemleri ve çözüm prosedürleri. Yazılım, veri veya bilgi sistemleri alanında deneyimi olan ve muhasebe süreçlerini anlamaya ilgi duyan adaylar bu alanla ilgilenebilir."
     },
     {
       "id": "akademi",

@@ -5,17 +5,19 @@ import { Draw, X, Y, Z, TAU } from './draw.js';
 
 const FLOOR = -4.0;
 const smooth = (u) => u * u * (3 - 2 * u);
-// Hizmet alanı renkleri (sitedeki sırayla: vergi, denetim, danışmanlık, insan kaynakları, sistemler, akademi) — tüm sayfa şekillerinde aynı
-const AREA_TINT = [1, 0, 3, 2, 1, 3];
+// Hizmet alanı renkleri (sitedeki sırayla: vergi, bağımsız denetim, muhasebe-bordro-raporlama, kurumsal finansman, teşvik, hukuk,
+// dijital dönüşüm, akademi) — tüm sayfa şekillerinde aynı
+const AREA_TINT = [1, 0, 3, 2, 3, 1, 0, 2];
 
-/* ── Petek — Hizmetler: altı alan, her alan bir altıgen kule; kat sayısı = alandaki hizmet sayısı (10 · 8 · 6 · 15 · 3 · 5 = 47) */
+/* ── Petek — Hizmetler: sekiz alan merkezin çevresinde, her alan bir altıgen kule; kat sayısı = alandaki hizmet sayısı
+   (7 · 6 · 19 · 5 · 7 · 7 · 4 · 5 = 60; content.json) */
 export function petek(p, rnd, Nf) {
   const d = new Draw(p, rnd);
-  const R = 1.4;
-  const dist = R * Math.sqrt(3) * 1.14;
-  const counts = [10, 8, 6, 15, 3, 5]; // vergi, denetim, danışmanlık, insan kaynakları, sistemler, akademi (content.json)
+  const R = 1.12;
+  const dist = 3.55;
+  const counts = [7, 6, 19, 5, 7, 7, 4, 5]; // vergi, bağımsız denetim, muhasebe-bordro, kurumsal finansman, teşvik, hukuk, dijital, akademi
   const tints = AREA_TINT;
-  const kat = 0.23;
+  const kat = 0.17;
   const y0 = FLOOR + 0.25;
   const hex = (cx, y, cz, r) =>
     Array.from({ length: 6 }, (_, k) => {
@@ -33,7 +35,7 @@ export function petek(p, rnd, Nf) {
   hub0.forEach((q, k) => d.line(q, hub1[k], { s: 0.8, d: 0.7 }));
   d.node([0, y0 + 1.0, 0], 0.28, 24, { t: 0 });
   counts.forEach((n, i) => {
-    const a = (i * Math.PI) / 3;
+    const a = (i * TAU) / counts.length;
     const ca = Math.cos(a);
     const sa = Math.sin(a);
     const cx = ca * dist;
@@ -58,27 +60,27 @@ export function petek(p, rnd, Nf) {
 /* ── Matris — Sektörler: sütun = sektör, satır = hizmet alanı, yükseklik = o sektörde öne çıkan hizmet sayısı (sectors.json) */
 export function matris(p, rnd, Nf) {
   const d = new Draw(p, rnd);
-  // satırlar (hizmet alanları, sitedeki sırayla): vergi, denetim, danışmanlık, insan kaynakları, sistemler, akademi
+  // satırlar (hizmet alanları, sitedeki sırayla): vergi, bağımsız denetim, muhasebe-bordro, kurumsal finansman, teşvik, hukuk, dijital, akademi
   const M = [
-    [1, 5, 0, 0, 1, 0], // finansal hizmetler
-    [3, 1, 0, 1, 2, 0], // üretim ve sanayi
-    [2, 3, 2, 0, 0, 0], // enerji ve doğal kaynaklar
-    [3, 0, 0, 2, 2, 0], // perakende, tüketici ve gıda
-    [2, 1, 1, 1, 2, 0], // teknoloji, medya ve telekom
-    [1, 1, 0, 4, 1, 0], // sağlık ve ilaç
-    [2, 2, 2, 1, 0, 0], // inşaat, gayrimenkul ve altyapı
-    [2, 1, 0, 3, 1, 0], // turizm, ulaştırma ve lojistik
-    [1, 1, 5, 1, 0, 0], // aile şirketleri ve KOBİ'ler
-    [0, 3, 0, 2, 1, 1], // kamu ve sivil toplum
+    [1, 3, 2, 0, 0, 0, 1, 0], // finansal hizmetler
+    [2, 0, 1, 0, 2, 0, 2, 0], // üretim ve sanayi
+    [2, 1, 2, 2, 0, 0, 0, 0], // enerji ve doğal kaynaklar
+    [1, 0, 3, 0, 1, 0, 2, 0], // perakende, tüketici ve gıda
+    [1, 0, 1, 1, 2, 0, 2, 0], // teknoloji, medya ve telekom
+    [1, 1, 3, 0, 1, 0, 1, 0], // sağlık ve ilaç
+    [2, 1, 2, 2, 0, 0, 0, 0], // inşaat, gayrimenkul ve altyapı
+    [1, 0, 4, 0, 1, 0, 1, 0], // turizm, ulaştırma ve lojistik
+    [0, 1, 3, 3, 0, 1, 0, 0], // aile şirketleri ve KOBİ'ler
+    [0, 2, 3, 0, 0, 0, 1, 1], // kamu ve sivil toplum
   ];
   const rowTint = AREA_TINT;
   const sx = 1.2;
-  const sz = 1.02;
+  const sz = 0.78;
   const k = 0.6;
   M.forEach((col, i) =>
     col.forEach((n, j) => {
       const x = (i - 4.5) * sx;
-      const z = (j - 2.5) * sz;
+      const z = (j - (M[0].length - 1) / 2) * sz;
       if (n === 0) {
         d.node([x, FLOOR + 0.04, z], 0.07, 3, { t: 0, s: 1.4 });
         return;
@@ -89,39 +91,40 @@ export function matris(p, rnd, Nf) {
   );
   // zemin kafesi
   const W = 10 * sx + 0.5;
-  const D = 6 * sz + 0.4;
+  const D = M[0].length * sz + 0.4;
   d.rect([0, FLOOR - 0.04, 0], X, Z, W, D, { s: 1.0, d: 1.4 });
   for (let i = 1; i < 10; i++) d.line([(i - 5) * sx, FLOOR - 0.04, -D / 2], [(i - 5) * sx, FLOOR - 0.04, D / 2], { s: 0.65, d: 0.35 });
-  for (let j = 1; j < 6; j++) d.line([-W / 2, FLOOR - 0.04, (j - 3) * sz], [W / 2, FLOOR - 0.04, (j - 3) * sz], { s: 0.65, d: 0.35 });
+  for (let j = 1; j < M[0].length; j++) d.line([-W / 2, FLOOR - 0.04, (j - M[0].length / 2) * sz], [W / 2, FLOOR - 0.04, (j - M[0].length / 2) * sz], { s: 0.65, d: 0.35 });
   d.done(Nf);
 }
 
-/* ── Ağ — Ekibimiz: altı hizmet alanı halkada; kişiler içeride, çalıştıkları alanlara bağlı */
+/* ── Ağ — Ekibimiz: sekiz hizmet alanı halkada; kişiler içeride, çalıştıkları alanlara bağlı */
 export function ag(p, rnd, Nf) {
   const d = new Draw(p, rnd);
   const tints = AREA_TINT;
   const Rx = 5.2;
   const Ry = 3.4;
-  const A = Array.from({ length: 6 }, (_, k) => {
-    const a = Math.PI / 2 + (k * TAU) / 6;
+  const A = Array.from({ length: 8 }, (_, k) => {
+    const a = Math.PI / 2 + (k * TAU) / 8;
     return [Math.cos(a) * Rx, Math.sin(a) * Ry, Math.sin(k * 2.3 + 0.6) * 1.5];
   });
   d.curve((u) => [Math.cos(u * TAU) * Rx, Math.sin(u * TAU) * Ry, 0], { s: 0.8, d: 0.7 }, 140);
   A.forEach((q, k) => {
     const t = tints[k];
     d.node(q, 0.4, 34, { t });
-    d.circle(q, X, Y, 0.78, { t, s: 0.95, d: 1.2 });
-    d.cloud(q, 1.15, 15, { t, s: 0.8, d: 0.8 });
+    d.circle(q, X, Y, 0.66, { t, s: 0.95, d: 1.2 });
+    d.cloud(q, 0.95, 12, { t, s: 0.8, d: 0.8 });
   });
   // kişiler: konum, bağlı alanlar
   const people = [
     [[-1.7, 0.8, 0.9], [0, 1]],
     [[1.5, 1.4, -0.7], [1, 2]],
     [[-0.1, -0.2, 0.3], [0, 3, 5]],
-    [[2.4, -1.0, 0.8], [2, 3, 4]],
+    [[2.4, -1.0, 0.8], [2, 6, 7]],
     [[-2.5, -1.2, -0.8], [4, 5]],
     [[0.5, 2.2, 1.0], [0, 2]],
-    [[-0.6, -2.0, -0.4], [3, 4]],
+    [[-0.6, -2.0, -0.4], [3, 4, 6]],
+    [[1.2, -0.4, -1.0], [5, 7]],
   ];
   people.forEach(([q, links]) => {
     d.node(q, 0.26, 22, { t: 0 });

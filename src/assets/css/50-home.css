@@ -115,7 +115,9 @@ html.is-opening .hud {
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  /* içerik dikeyde ortalanır: dar/kısa pencerede ve mobilde başlığın üstünde boş alan kalmaz */
+  justify-content: center;
+  padding-top: clamp(1.2rem, 4vh, 3rem);
   gap: clamp(1.4rem, 3.6vh, 2.8rem);
   padding-bottom: clamp(2rem, 6vh, 4.5rem);
   opacity: calc(1 - var(--hp, 0) * 1.2);
@@ -125,7 +127,8 @@ html.is-opening .hud {
 }
 .hero__title {
   margin-top: 0.4rem;
-  font-size: var(--fs-7);
+  /* genişlik ve yüksekliğe orantılı (eskisi --fs-7, en çok 10,4rem): kısa ekranda da üç satır ekrana rahat sığar */
+  font-size: min(clamp(2.8rem, 1rem + 6vw, 7.4rem), 12.5svh);
   font-weight: 300;
   line-height: 0.9;
   letter-spacing: -0.04em;
@@ -250,22 +253,6 @@ html.is-opening .hud {
   60%,
   100% {
     transform: translateY(100%);
-  }
-}
-/* Şekil alt yazısı (hizmet alanı sahneleriyle aynı dil) */
-.hero__fig {
-  display: none;
-  position: absolute;
-  right: var(--gutter);
-  bottom: clamp(0.7rem, 2vh, 1.2rem);
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--on-dark-2);
-}
-@media (min-width: 1000px) {
-  .hero__fig {
-    display: block;
   }
 }
 
@@ -495,10 +482,10 @@ html.is-opening .hud {
 }
 .areas__grid {
   display: grid;
-  grid-template-columns: minmax(0, 5.2fr) minmax(0, 6.8fr);
+  grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); /* 8 alan: uzun adlar tek satıra sığsın diye liste sütunu geniş */
   grid-template-areas: 'head visual' 'list visual';
-  column-gap: clamp(2rem, 5vw, 6rem);
-  row-gap: clamp(1rem, 3vh, 2rem);
+  column-gap: clamp(2rem, 4vw, 5rem);
+  row-gap: clamp(0.8rem, 2.2vh, 1.6rem);
   align-items: start;
   align-content: center;
   align-content: safe center;
@@ -510,7 +497,7 @@ html.is-opening .hud {
 }
 .areas__head h2 {
   margin-top: 1rem;
-  font-size: min(clamp(2rem, 1.2rem + 3.2vw, 4.2rem), 7svh); /* kısa ekranda yüksekliğe göre küçülür */
+  font-size: min(clamp(1.9rem, 1rem + 2.5vw, 3.6rem), 6svh); /* kısa ekranda yüksekliğe göre küçülür; 8 alan + başlık tek ekrana sığar */
   line-height: 1;
 }
 .areas__head h2 em {
@@ -524,12 +511,25 @@ html.is-opening .hud {
   border-bottom: 1px solid var(--line-dark);
 }
 .area__link {
+  /* başlık bir düğme: tıklayınca alanı seçer (sayfaya gitmez); gitmek için alttaki "İncele" bağlantısı */
   display: flex;
   align-items: baseline;
   gap: 1.2rem;
-  padding: clamp(0.5rem, 1.3vh, 0.9rem) 0;
+  width: 100%;
+  min-height: 2.5rem; /* düğme dokunma hedefi ≥ 40 px (tests/audit.mjs) */
+  margin: 0;
+  padding: clamp(0.35rem, 0.9vh, 0.75rem) 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
   color: rgba(255, 255, 255, 0.46);
   transition: color 0.5s var(--ease-out);
+}
+.area__link:focus-visible {
+  outline: 2px solid var(--on-dark-2);
+  outline-offset: 2px;
 }
 .area__no {
   flex: none;
@@ -543,7 +543,7 @@ html.is-opening .hud {
   flex: 1;
   font-family: var(--f-display);
   font-weight: 300;
-  font-size: min(clamp(1.4rem, 0.9rem + 1.6vw, 2.4rem), 3.9svh);
+  font-size: min(clamp(1.15rem, 0.8rem + 1.05vw, 1.9rem), 3svh); /* 8 alan tek ekrana sığsın */
   line-height: 1.1;
   letter-spacing: -0.015em;
 }
@@ -604,46 +604,26 @@ html.is-opening .hud {
   align-self: stretch;
   min-height: 62vh;
 }
-.areas__cap {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: space-between;
-  padding-top: 1rem;
-  border-top: 1px solid var(--line-dark);
-  font-size: 0.74rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--on-dark-3);
-  gap: 1.5rem;
-}
-.areas__cap [data-areas-cap] {
-  transition: opacity 0.4s var(--ease-out);
-}
-.areas__count {
-  flex: none;
-}
-.areas__count b {
-  color: #fff;
-  font-weight: 500;
-}
 /* dizüstü ekranlar (≤940 px yükseklik): sahne tek ekrana sığsın diye alanın hizmet listesi gizlenir (alan sayfasında var) */
 @media (max-height: 940px) and (min-width: 901px) {
   .area__services {
     display: none;
   }
 }
-@media (max-height: 760px) and (min-width: 901px) {
-  .areas__head h2 {
-    font-size: clamp(1.8rem, 1rem + 2.4vw, 3rem);
+@media (max-height: 860px) and (min-width: 901px) {
+  /* kısa dizüstü ekran: etkin alanın açıklaması iki satırla sınırlanır (tamamı alan sayfasında) */
+  .area__desc {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    margin-bottom: 0.6rem;
   }
 }
 @media (max-width: 900px) {
   /* mobil: sabitleme yok; her alan kısa bir satır (ad + açıklama + bağlantı), hizmet listeleri alan sayfasında */
   .areas::before {
-    background: linear-gradient(180deg, rgba(8, 19, 42, 0.56), rgba(8, 19, 42, 0.7));
+    background: linear-gradient(180deg, rgba(8, 19, 42, 0.66), rgba(8, 19, 42, 0.8));
   }
   .areas__track {
     height: auto;
@@ -664,13 +644,13 @@ html.is-opening .hud {
   }
   .area__link {
     color: #fff;
+    cursor: default; /* mobilde tüm alanlar açık; başlık seçim yapmaz, gitmek için «İncele» */
   }
   .area__body {
     grid-template-rows: 1fr;
   }
   .area__go {
-    opacity: 1;
-    transform: none;
+    display: none;
   }
   .area__inner {
     padding-left: 3.4rem;
@@ -680,9 +660,12 @@ html.is-opening .hud {
     margin-bottom: 0.5rem;
     font-size: 0.93rem;
   }
-  .area__services,
-  .area__inner .textlink {
+  .area__services {
     display: none;
+  }
+  .area__inner .textlink {
+    margin-bottom: 0.4rem;
+    font-size: 0.9rem;
   }
 }
 

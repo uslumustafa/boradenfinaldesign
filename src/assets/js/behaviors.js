@@ -140,37 +140,58 @@ export function createBehaviors({ fx, scroll, world }) {
     });
   }
 
-  /* ── Hizmet alanları: sabit sahne */
+  /* ── Hizmet alanları: sabit sahne. Kaydırma alanı değiştirir; alan adına tıklamak (ya da klavyeyle odaklanmak) yalnızca o alanı seçer ve
+     sahneyi o alanın konumuna kaydırır (3B şekil de değişir). Alan sayfasına gitmek için gövdedeki «İncele» bağlantısı kullanılır. */
   function areas(root) {
     qsa('[data-areas]', root).forEach((sec) => {
       const items = qsa('.area', sec);
-      const cap = qs('[data-areas-cap]', sec);
-      const idxEl = qs('[data-areas-idx]', sec);
       const n = items.length;
       let active = -1;
-      const setActive = (i) => {
-        if (i === active) return;
-        active = i;
-        items.forEach((it, k) => it.classList.toggle('is-active', k === i));
-        const name = qs('.area__name', items[i])?.textContent || '';
-        if (cap) cap.textContent = items[i].dataset.fig || name;
-        if (idxEl) idxEl.textContent = String(i + 1).padStart(2, '0');
-      };
-      // mobilde (sabitlenmeyen düzen) otomatik geçiş yok
+      let holdUntil = 0; // tıklamayla başlayan kaydırma sürerken kaydırma seçimi devralmasın
+      // mobilde (sabitlenmeyen düzen) ve efektler kapalıyken tüm alanlar açık; otomatik geçiş yok
       const mq = matchMedia('(max-width: 900px)');
+      const pinned = () => !mq.matches && fx.tier !== 'off';
+      const setActive = (i, force = false) => {
+        if (i === active && !force) return;
+        active = i;
+        const open = !pinned();
+        items.forEach((it, k) => {
+          it.classList.toggle('is-active', k === i);
+          qs('.area__link', it)?.setAttribute('aria-expanded', open || k === i ? 'true' : 'false');
+        });
+      };
       const off = scroll.add(sec, 'pin', (p) => {
-        if (mq.matches || fx.tier === 'off') return;
+        if (!pinned() || performance.now() < holdUntil) return;
         setActive(Math.min(n - 1, Math.floor(p * n + 0.18)));
       });
       on(off);
-      // tıklama/odak ile elle seçim (klavye erişimi)
+      // seçilen alanın kaydırma konumu: ilerleme (i + 0,35) / n → sahne tam o alanın şeklinde durur
+      const goTo = (i) => {
+        const r = sec.getBoundingClientRect();
+        const span = Math.max(1, r.height - innerHeight);
+        const top = scrollY + r.top + ((i + 0.35) / n) * span;
+        holdUntil = performance.now() + 1200;
+        scrollTo({ top, behavior: fx.tier === 'off' ? 'auto' : 'smooth' });
+      };
       items.forEach((it, i) => {
-        const link = qs('.area__link', it);
-        const focus = () => !mq.matches && setActive(i);
-        link.addEventListener('focus', focus);
-        on(() => link.removeEventListener('focus', focus));
+        const btn = qs('.area__link', it);
+        if (!btn) return;
+        const click = () => {
+          setActive(i);
+          if (pinned()) goTo(i);
+        };
+        const focus = () => pinned() && setActive(i);
+        btn.addEventListener('click', click);
+        btn.addEventListener('focus', focus);
+        on(() => {
+          btn.removeEventListener('click', click);
+          btn.removeEventListener('focus', focus);
+        });
       });
-      setActive(0);
+      const mqChange = () => setActive(Math.max(0, active), true);
+      mq.addEventListener('change', mqChange);
+      on(() => mq.removeEventListener('change', mqChange));
+      setActive(0, true);
     });
   }
 

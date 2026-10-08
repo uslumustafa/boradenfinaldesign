@@ -38,16 +38,19 @@ export function figOf(list) {
 }
 
 // ——— Hizmet alanları (ana sayfadaki alan şekilleri; kimlikleri kalıcı) ————————————————————————————
+// Sıra, ana sayfadaki alan sırasıyla aynıdır ve formations.js'te 1…8. şekillerdir (alanlar bandında ardışık geçiş için).
 export const AREA_SHAPE = {
-  vergi: 'defter', // üst üste defter yaprakları — kayıt ve beyan düzeni
-  denetim: 'ornekleme', // örnekleme kafesi — kanıt ve seçilen örnekler
-  danismanlik: 'agac', // yapı ağacı — karar ve organizasyon yapısı
-  insan: 'halka', // on iki aylık bordro halkası
-  sistem: 'katman', // veri katmanları
-  akademi: 'sutunlar', // sütunlar — bilgi ve öğrenme
+  vergi: 'rakamlar', // beyan rakamları — oranlar, matrah ve tutarlar
+  denetim: 'ornekleme', // denetim dosyası — kanıt ve seçilen örnekler
+  muhasebe: 'defter', // defter ve beyan yaprakları — kayıt düzeni
+  danismanlik: 'agac', // karar ağacı — kurumsal finansman kararları
+  tesvik: 'tesvik', // destek basamakları — teşvik ve yatırım
+  hukuk: 'hukuk', // terazi ve paragraf işareti — hukuki çerçeve
+  sistem: 'katman', // veri katmanları — dijital dönüşüm
+  akademi: 'sutunlar', // antik okul binası — bilgi ve öğrenme
 };
 
-// ——— 47 hizmet: şekil, hizmetin kendi kapsamından (content.json › services: başlık, kapsam, çıktı) ———————————
+// ——— 60 hizmet: şekil, hizmetin kendi kapsamından (content.json › services: başlık, kapsam, çıktı) ———————————
 export const SERVICE_SHAPE = {
   // Vergi ve Mali Müşavirlik
   'mali-musavirlik-ve-muhasebe': 'defter', // kayıt düzeni, dönem kontrolü, beyan hazırlığı
@@ -60,6 +63,23 @@ export const SERVICE_SHAPE = {
   'transfer-fiyatlandirma': 'pay', // ilişkili taraflar: ortaklık ve kontrol bağı
   'cari-hesap-mutabakatlarinin-yapilmasi': 'mutabakat', // alacak/borç kayıtlarının eşleşmesi
   'otv-hizmetleri': 'dilimler', // ürün ve matrah kademelerine göre oran
+  // Teşvik, AB Projeleri ve Startup
+  'yatirim-tesvik-belgesi': 'tesvik', // belge, yatırım harcaması, kapanış
+  'tubitak-kosgeb-destekleri': 'akis', // başvuru → değerlendirme → raporlama adımları
+  'ab-hibe-projeleri': 'ag', // ortaklar ve iş paketleri
+  'ihracat-destekleri': 'sube', // merkezden pazarlara
+  'startup-danismanligi': 'pay', // pay yapısı ve yatırım turu
+  // Hukuk
+  'sirketler-ve-sozlesmeler-hukuku': 'hukuk',
+  'is-ve-sgk-hukuku': 'terazi', // taraflar arasında denge
+  'vergi-uyusmazliklari': 'hukuk',
+  'kvkk-uyum': 'gizlilik', // kişisel verinin korunması
+  'alacak-ve-icra-takibi': 'takvim', // süreler ve takip adımları
+  // Kurumsal Finansman
+  'birlesme-ve-devralma': 'pay', // iki yapının birleşmesi, pay dağılımı
+  'finansal-yeniden-yapilandirma': 'nakit', // nakit akışı ve borç yapısı
+  // Dijital Dönüşüm
+  'e-donusum': 'katman', // belge, defter, arşiv katmanları
   // Denetim ve Raporlama
   'bagimsiz-denetim': 'terazi', // bağımsızlık ve denge
   'kurumsal-raporlama': 'rasyo', // finansal sonuçların arkasındaki göstergeler
@@ -145,7 +165,7 @@ export const FAQ_SHAPE = {
 
 // ——— Hakkımızda bölümleri (aboutpage.json › sections[].id) —————————————————————————————————————————
 export const ABOUT_SHAPE = {
-  'kapsam-anlayisi': 'petek', // altı alan, kırk yedi başlık
+  'kapsam-anlayisi': 'petek', // sekiz alan, altmış başlık
   'bagimsizlik-ve-tarafsizlik': 'yazit', // taşa kazınmış ilke
   'gizlilik-ve-veri-guvenligi': 'gizlilik',
   'bilgi-paylasimi-ve-egitim': 'kitap',
@@ -156,7 +176,7 @@ export const ABOUT_SHAPE = {
 // Bölüm işaretleri ([data-fig-at]) ve üzerine gelme şekilleri ([data-fig-hover]) şablonlarda; burada yalnızca sayfanın açılış şekli yer alır.
 const one = (id, ...rest) => ({ scene: id, fig: [id, ...rest] });
 export const PAGE = {
-  services: one('petek'), // 6 alan × 47 başlık — alan bölümlerinde her alanın şekline döner
+  services: one('petek'), // 8 alan × 60 başlık — alan bölümlerinde her alanın şekline döner
   sectors: one('matris'), // sektör × hizmet alanı dağılımı — sektör satırlarında her sektörün şekline döner
   about: one('yazit'), // Orhun Abideleri tarzında dikili taş/yazıt; bölümlerde alan ve ekip şekilleri
   team: one('ag'), // kişiler ve çalıştıkları alanlar

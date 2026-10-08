@@ -18,8 +18,8 @@ tek vurgu (marka üç rengi yalnızca ince çizgi/nokta); parçacık alanı «an
 |---|---|---|---|
 | Açılış perdesi | `.open` | — | yalnızca ilk gelişte; bkz. §3 |
 | Kahraman | `#giris` | 0 «Ufuk» (veri arazisi) | «Tam ✓ doğru ✓ zamanında ✓» (satırlar sloganın öbeklerinden; tikler §7); alt kenarda sis; imleç mercek etkisi |
-| Tanıtım | `#hakkimizda` | 0 | kuruluş yılı/6 alan/47 hizmet/11 araç (modelden); 4 adımlık çalışma akışı |
-| Hizmet alanları | `#alanlar` | 1–6 (`data-world-range`) | tek sabit sahne; her alan bir şekil: defter ve beyan yaprakları, denetim dosyası (tablo + büyüteç + denetçi tikleri), yapı ağacı, yıl halkası, veri katmanları, sütunlar |
+| Tanıtım | `#hakkimizda` | 0 | kuruluş yılı/8 alan/60 hizmet/11 araç (modelden); 4 adımlık çalışma akışı |
+| Hizmet alanları | `#alanlar` | 1–8 (`data-world-range`) | tek sabit sahne; kaydırınca ya da alan başlığına tıklayınca alan seçilir (tıklama sayfaya gitmez; gitmek için «İncele»). Her alan bir şekil: beyan rakamları, denetim dosyası, defter yaprakları, karar ağacı, destek basamakları + AB yıldızları, § ve tokmak, veri katmanları, antik okul binası |
 | Film | `#film` | — | kaydırdıkça açılan çerçeve; ofis görüntüsü (§4) |
 | Sektörler | `#sektorler` | `matris` = 31 (solda, `data-world-side="-1"`; 2026-10-05'e kadar 5 «veri katmanları» idi — Sistemler alanıyla aynı şekil tekrarlanıyordu) | 8 sektörlük liste; üzerine gelince kısa tanım solda belirir |
 | Araçlar | `#araclar` | — (açık zemin) | 4 hesaplayıcı çipi + mini KDV |

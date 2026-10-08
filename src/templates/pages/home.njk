@@ -4,7 +4,7 @@
 {#
   ANA SAYFA (v3) — kısa, sahne tabanlı akış. Masaüstünde ≈9 ekran (eski sürüm ≈15,5), mobilde sabitleme yok.
     0  Açılış perdesi     yalnızca ilk gelişte görünür (html.is-opening; opening.js)
-    1  Kahraman           parçacık alanı (Şekil 00) + başlık          [dünya 0]
+    1  Kahraman           parçacık alanı (ufuk) + başlık          [dünya 0]
     2  Giriş sayfası      ifade + rakamlar + çalışma akışı (beyaz yaprak, kahramanın üstüne biner)
     3  Hizmet alanları    sabit sahne, kaydırdıkça 6 formasyon         [dünya 1–6]
     4  Film               ofis görüntüsü, kaydırdıkça genişleyen çerçeve (video yalnızca «Tam» katmanda, masaüstünde)
@@ -51,7 +51,6 @@
       </div>
 
       <a class="hero__scroll" href="#hakkimizda" data-hero-in="7"><span class="hero__scroll-line" aria-hidden="true"></span>Kaydırın</a>
-      <p class="hero__fig mono" aria-hidden="true" data-hero-in="7">Şekil 00 · Ufuk — veri arazisi</p>
     </div>
   </section>
 
@@ -111,57 +110,55 @@
   </section>
 </div>
 
-{# ───────── 3 · Hizmet alanları: sabitlenen sahne, scroll ile değişir ───────── #}
-<section class="areas sec--dark" id="alanlar" data-areas data-world-range="1,6" data-chapter="Hizmetler" style="--n: {{ groups | length }}">
+{# ───────── 3 · Hizmet alanları: sabitlenen sahne, scroll ile değişir; bir alana tıklamak yalnızca onu seçer (sahne o alana kayar),
+     alan sayfasına «İncele» bağlantısıyla gidilir (müşteri geri bildirimi, Ekim 2026). Alan şekilleri formations.js'te 1…n. sıradadır. ───────── #}
+{% set num_words = ['Sıfır', 'Bir', 'İki', 'Üç', 'Dört', 'Beş', 'Altı', 'Yedi', 'Sekiz', 'Dokuz', 'On'] %}
+<section class="areas sec--dark" id="alanlar" data-areas data-world-range="1,{{ groups | length }}" data-chapter="Hizmetler" style="--n: {{ groups | length }}">
   <div class="areas__track">
     <div class="areas__stage">
       <div class="container areas__grid">
         <header class="areas__head">
           <p class="eyebrow" data-reveal>Hizmet alanları</p>
-          <h2 data-reveal data-reveal-delay="1">Altı alan.<br><em>İhtiyaca göre kapsam.</em></h2>
+          <h2 data-reveal data-reveal-delay="1">{{ num_words[groups | length] or (groups | length) }} alan.<br><em>İhtiyaca göre kapsam.</em></h2>
         </header>
 
         <ol class="areas__list">
           {% for g in groups %}
-          <li class="area{% if loop.first %} is-active{% endif %}" data-area="{{ loop.index0 }}" data-fig="Şekil {{ g.number }} · {{ g.figure }}">
-            <a class="area__link" href="{{ g.url }}">
+          <li class="area{% if loop.first %} is-active{% endif %}" data-area="{{ loop.index0 }}">
+            <button class="area__link" type="button" aria-expanded="{{ 'true' if loop.first else 'false' }}" aria-controls="alan-{{ g.id }}">
               <span class="area__no tnum">{{ g.number }}</span>
               <span class="area__name">{{ g.name }}</span>
               <span class="area__go" aria-hidden="true">→</span>
-            </a>
-            <div class="area__body">
+            </button>
+            <div class="area__body" id="alan-{{ g.id }}">
               <div class="area__inner">
                 <p class="area__desc">{{ g.description }}</p>
                 <ul class="area__services">
                   {% for s in g.services | limit(4) %}<li><a href="{{ s.url }}">{{ s.title }}</a></li>{% endfor %}
                 </ul>
-                <a class="textlink" href="{{ g.url }}">Alana göz atın {{ m.arrow() }}</a>
+                <a class="textlink area__more" href="{{ g.url }}">İncele<span class="sr-only">: {{ g.name }}</span> {{ m.arrow() }}</a>
               </div>
             </div>
           </li>
           {% endfor %}
         </ol>
 
-        <div class="areas__visual" aria-hidden="true">
-          <div class="areas__cap mono">
-            <span data-areas-cap>Şekil {{ groups[0].number }} · {{ groups[0].figure }}</span>
-            <span class="areas__count tnum"><b data-areas-idx>01</b> / {{ groups | length | pad2 }}</span>
-          </div>
-        </div>
+        {# şeklin yeri (3B dünya bu sütunda çizilir); «Şekil NN · …» alt yazısı ve sayaç yok — müşteri isteği, Ekim 2026 #}
+        <div class="areas__visual" aria-hidden="true"></div>
       </div>
     </div>
   </div>
 </section>
 
 {# ───────── 4 · Film: ofis görüntüsü (arşiv). Video yalnızca «Tam» katmanda ve masaüstünde oynar; diğerlerinde poster + «Videoyu oynat» ───────── #}
-<section class="film sec--dark" id="film" data-chapter="Ofisimiz" data-module="film" aria-label="Ofisimizden kareler">
+<section class="film sec--dark" id="film" data-chapter="Ofisimiz" data-module="film" aria-label="Ofisimiz">
   <div class="film__frame" data-film-frame>
     <img class="film__poster" src="/assets/video/boraden-ofis-poster.jpg" width="1280" height="720" alt="Boraden ofisinin girişi: ahşap çıtalı bölme ve arkasındaki açık ofis" loading="lazy" decoding="async">
     <video class="film__video" muted loop playsinline preload="none" tabindex="-1" aria-hidden="true" data-src="/assets/video/boraden-ofis.mp4"></video>
     <div class="film__shade" aria-hidden="true"></div>
     <div class="film__cap container">
-      <p class="eyebrow" data-reveal>Ofisimiz</p>
-      <h2 class="film__title" data-reveal data-reveal-delay="1">Çalışma masasından<br><em>kareler.</em></h2>
+      <p class="eyebrow" data-reveal>Boraden'de bir gün</p>
+      <h2 class="film__title" data-reveal data-reveal-delay="1">Ofisimiz.<br><em>Kapımız size açık.</em></h2>
     </div>
     <p class="film__note mono">Arşiv görüntüsü · ses yok</p>
     <button class="film__ctl" type="button" data-film-ctl aria-label="Videoyu oynat" hidden>

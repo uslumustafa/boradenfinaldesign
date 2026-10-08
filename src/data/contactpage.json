@@ -16,15 +16,15 @@
     {
       "id": "bagimsiz-denetim",
       "label": "Bağımsız denetim",
-      "description": "Bağımsız denetim, finansal tablo denetimi, UFRS/TFRS raporlama, iç denetim, iç kontrol ve suistimal incelemeleri konuları.",
+      "description": "Bağımsız denetim, finansal tablo ve mali tablo denetimi, iç denetim, iç kontrol ve suistimal incelemeleri.",
       "groups": [
         "denetim"
       ]
     },
     {
       "id": "vergi-ve-mali-musavirlik",
-      "label": "Vergi ve mali müşavirlik",
-      "description": "Muhasebe, vergi, tam tasdik, KDV iadesi, transfer fiyatlandırması ve Ar-Ge danışmanlığı konuları.",
+      "label": "Vergi denetim ve danışmanlık",
+      "description": "Tam tasdik, KDV iadesi, kurumlar vergisi denetimi, transfer fiyatlandırması, dolaylı vergiler ve bireysel vergi danışmanlığı konuları.",
       "groups": [
         "vergi"
       ]
@@ -34,7 +34,7 @@
       "label": "Şirket kuruluşu",
       "description": "Şirket kuruluş süreçleri ve ticaret sicil işlemleri.",
       "groups": [
-        "danismanlik"
+        "hukuk"
       ],
       "services": [
         "sirket-kurulus-danismanligi",
@@ -43,8 +43,8 @@
     },
     {
       "id": "sirket-degerlemesi",
-      "label": "Şirket değerlemesi",
-      "description": "Şirket değerlemesi hizmeti ve değerleme sürecine ilişkin sorular.",
+      "label": "Kurumsal finansman",
+      "description": "Şirket değerlemesi, birleşme ve devralma, finansal yeniden yapılandırma, mali ve yönetim danışmanlığı.",
       "groups": [
         "danismanlik"
       ],
@@ -53,17 +53,33 @@
       ]
     },
     {
-      "id": "insan-kaynaklari-ve-bordro",
-      "label": "İnsan kaynakları ve bordro",
-      "description": "Bordro, özlük ve SGK işlemleri, istihdam teşvikleri, emeklilik ve çalışma izni süreçleri.",
+      "id": "tesvik-ve-ab-projeleri",
+      "label": "Teşvik, AB projeleri ve startup",
+      "description": "Yatırım teşvik belgesi, TÜBİTAK ve KOSGEB destekleri, AB hibe projeleri, Ar-Ge ve istihdam teşvikleri, ihracat destekleri ve startup yatırım hazırlığı.",
       "groups": [
-        "insan"
+        "tesvik"
+      ]
+    },
+    {
+      "id": "hukuk",
+      "label": "Hukuk",
+      "description": "Şirketler ve sözleşmeler hukuku, iş ve sosyal güvenlik hukuku, vergi uyuşmazlıkları, KVKK uyumu, alacak ve icra takibi.",
+      "groups": [
+        "hukuk"
+      ]
+    },
+    {
+      "id": "insan-kaynaklari-ve-bordro",
+      "label": "Muhasebe, bordro ve raporlama",
+      "description": "Muhasebe, cari hesap mutabakatı, finansal raporlama; bordro, özlük ve SGK işlemleri, emeklilik ve çalışma izni süreçleri.",
+      "groups": [
+        "muhasebe"
       ]
     },
     {
       "id": "muhasebe-ve-veri-sistemleri",
-      "label": "Muhasebe ve veri sistemleri",
-      "description": "Muhasebe sistemleri, veri analiz sistemleri, iş zekâsı ve çözüm prosedürleri.",
+      "label": "Dijital dönüşüm",
+      "description": "e-Fatura, e-Arşiv ve e-Defter geçişi, muhasebe sistemleri, veri analiz sistemleri ve çözüm prosedürleri.",
       "groups": [
         "sistem"
       ]

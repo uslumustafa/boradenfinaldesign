@@ -40,7 +40,7 @@ export function registerCore({ add, model, site, home }) {
     url: '/hizmetler/',
     template: 'pages/services-index.njk',
     title: 'Hizmetler',
-    description: 'Vergi, denetim, danışmanlık, insan kaynakları, sistemler ve eğitim alanlarında 47 hizmet başlığı.',
+    description: 'Vergi, bağımsız denetim, muhasebe ve bordro, kurumsal finansman, teşvik, hukuk, dijital dönüşüm ve eğitim alanlarında 60 hizmet başlığı.',
     ...PAGE.services,
     kind: 'Hizmet',
     crumbs: [home],

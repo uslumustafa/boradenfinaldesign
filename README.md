@@ -3,7 +3,7 @@
 Boraden Bağımsız Denetim ve Danışmanlık A.Ş. kurumsal web sitesinin ön yüzü.
 Statik üretim (Nunjucks + esbuild); şablon ve veri yapısı Wagtail'e birebir taşınabilecek biçimde kurulmuştur.
 
-- 127 sayfa: ana sayfa, 6 hizmet alanı + 47 hizmet, 10 sektör, ekip, bilgi merkezi, 11 hesaplayıcı, hakkımızda, kariyer, iletişim, arama.
+- 142 sayfa: ana sayfa, 8 hizmet alanı + 60 hizmet, 10 sektör, ekip, bilgi merkezi, 11 hesaplayıcı, hakkımızda, kariyer, iletişim, arama.
 - Kalıcı 3B parçacık «dünya» (three.js), sayfa geçişleri, efekt kademeleri (Tam / Hafif / Kapalı) ve erişilebilirlik kuralları.
 - Fotoğraflar yalnızca şirket arşivinden; resmî logo tek bileşenle gösterilir.
 

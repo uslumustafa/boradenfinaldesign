@@ -266,80 +266,118 @@
   transform: translateX(4px);
 }
 
-/* ── Kimle görüşmeli? (alan ve sektöre göre dizin) */
+/* ── Kimle görüşmeli? Kadro düzeniyle aynı: solda başlık, sağda iki sütun alan kartı (numara + alan + kişiler + bağlantı) */
 .who {
   margin-top: clamp(3.4rem, 7vw, 6rem);
   padding-top: clamp(3rem, 6vw, 5rem);
   border-top: 1px solid var(--line);
 }
-.who__cols {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(2.4rem, 4vw, 4rem);
+.who__wrap {
+  row-gap: 1.6rem;
   align-items: start;
 }
-.who__h {
-  padding-bottom: 0.9rem;
-  border-bottom: 1px solid var(--ink);
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-3);
+.who__head {
+  position: sticky;
+  top: calc(var(--hdr) + 2rem);
 }
-.who__list {
+.who__lead {
+  margin-top: 1.1rem;
+  max-width: 30ch;
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+.who__grid {
   list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(2.2rem, 3.4vw, 3rem) clamp(1.6rem, 3vw, 3rem);
 }
-.who__row {
+.who__card {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.55rem 1rem;
-  padding: 0.95rem 0;
-  border-bottom: 1px solid var(--line);
+  flex-direction: column;
+  min-width: 0;
+  padding-top: 1.05rem;
+  border-top: 1px solid var(--ink);
+}
+.who__top {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  margin-bottom: 1.05rem;
 }
 .who__n {
   flex: none;
-  width: 1.7rem;
   font-size: 0.72rem;
+  font-weight: 400;
   letter-spacing: 0.1em;
   color: var(--ink-3);
 }
 .who__t {
-  flex: 1 1 11rem;
-  min-width: 0;
-  font-weight: 500;
-  font-size: 0.98rem;
-  line-height: 1.35;
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: clamp(1.2rem, 1rem + 0.5vw, 1.45rem);
+  line-height: 1.2;
+  letter-spacing: -0.012em;
   color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  text-decoration-color: transparent;
+  transition: text-decoration-color var(--t-med);
 }
 .who__t:hover {
+  text-decoration-color: currentColor;
+}
+.who__ppl {
+  list-style: none;
+  display: grid;
+  gap: 0.75rem;
+}
+.who__pp {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  min-width: 0;
+  color: var(--ink);
+}
+.who__pt {
+  display: grid;
+  min-width: 0;
+  gap: 0.12rem;
+}
+.who__pt b {
+  font-weight: 500;
+  font-size: 0.95rem;
+  line-height: 1.25;
+}
+.who__pt small {
+  font-size: 0.8rem;
+  line-height: 1.35;
+  color: var(--ink-3);
+}
+.who__pp:hover b {
   text-decoration: underline;
   text-underline-offset: 0.2em;
   text-decoration-thickness: 1px;
 }
-.who__tag {
-  margin-left: 0.6rem;
-  padding: 0.12rem 0.45rem;
-  border: 1px solid var(--line-strong);
-  font-size: 0.6rem;
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  vertical-align: 0.1em;
+.who__pp .avatar::before {
+  transition: transform 900ms var(--ease-out);
 }
-.who__p {
-  flex: 0 1 auto;
-  margin-left: auto;
-  padding-left: 2.7rem;
+.who__pp:hover .avatar::before {
+  transform: translate(5px, -5px);
 }
 .who__none {
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   color: var(--ink-3);
 }
 .who__none:hover {
   color: var(--ink);
+}
+.who__go {
+  margin-top: auto;
+  padding-top: 1.2rem;
+  font-size: 0.88rem;
 }
 .pinline {
   list-style: none;
@@ -794,8 +832,8 @@ html[data-fx='off'] .tm-join__t .w {
 
 /* ── Küçük ekranlar */
 @media (max-width: 1100px) {
-  .who__cols {
-    grid-template-columns: 1fr;
+  .who__head {
+    position: static;
   }
 }
 @media (max-width: 900px) {
@@ -820,16 +858,15 @@ html[data-fx='off'] .tm-join__t .w {
     grid-template-columns: 1fr;
     gap: 0.25rem;
   }
-  .who__p {
-    flex-basis: 100%;
-    margin-left: 0;
-    padding-left: 2.7rem;
+  .who__grid {
+    grid-template-columns: 1fr;
   }
   .pinline {
     justify-content: flex-start;
   }
 }
 html[data-fx='off'] .prow--link:hover .avatar::before,
+html[data-fx='off'] .who__pp:hover .avatar::before,
 html[data-fx='off'] .prow--link:hover .prow__act .arr {
   transform: none;
 }

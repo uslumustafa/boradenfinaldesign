@@ -1,7 +1,7 @@
 {# Ekibimiz. Wagtail karşılığı: TeamIndexPage (title, lead, intro) — bölümler = TeamDepartment (sıralı; areas = bağlı hizmet alanları),
    kişiler = alt sayfalar TeamMemberPage (has_profile=false olanın sayfası yoktur; satır olarak bölümü altında görünür; yayında/taslak = Wagtail
-   yayın durumu). «Kimle görüşmeli?» listeleri açık atamalardan ve bölüm → alan bağından üretilir (sektörde açık atama yoksa hizmet
-   sahiplerinden türetilir — scripts/team.mjs). Kişi sayısı sabitlenmez. #}
+   yayın durumu). «Kimle görüşmeli?» kartları (hizmet alanına göre) açık atamalardan ve bölüm → alan bağından üretilir
+   (scripts/team.mjs). Kişi sayısı sabitlenmez. #}
 {% extends "layouts/base.njk" %}
 {% import "partials/macros.njk" as m %}
 {% import "partials/people.njk" as pp %}
@@ -44,43 +44,34 @@
       </div>
     </section>
 
-    {# ── Kimle görüşmeli? Alan ve sektöre göre ilgilenen kişiler (hizmet/sektör sayfalarının altındaki kartlarla aynı atama) #}
+    {# ── Kimle görüşmeli? Hizmet alanına göre ilgilenen kişiler (alan sayfalarının altındaki «İlgili ekip» kartlarıyla aynı atama).
+       Kadro bölümüyle aynı düzen: solda başlık, sağda alan kartları (alan adı + kişiler + alana bağlantı). #}
     <section class="who" id="konular" data-chapter="Kimle görüşmeli" aria-labelledby="who-h">
-      <div class="g12 tm-head">
-        <div class="gc" style="--gc: 1 / span 4">
+      <div class="g12 who__wrap">
+        <header class="gc who__head" style="--gc: 1 / span 4">
           <h2 class="eyebrow" id="who-h" data-reveal>Kimle görüşmeli?</h2>
-        </div>
-        <p class="gc tm-head__t" style="--gc: 5 / -1" data-reveal data-reveal-delay="1">Konunuza göre ilgilenen ekip arkadaşlarımız aşağıda; aynı kişiler ilgili hizmet ve sektör sayfalarının altında da yer alır.</p>
-      </div>
-      <div class="who__cols">
-        <div class="who__col">
-          <h3 class="who__h mono" data-reveal>Hizmet alanına göre</h3>
-          <ol class="who__list">
-            {% for g in groups %}
-            <li class="who__row" data-reveal>
+          <p class="who__lead" data-reveal data-reveal-delay="1">Konunuzun hizmet alanını seçin; o alanda ilgilenen ekip arkadaşlarımız aşağıda. Aynı kişiler alanın ve hizmetlerin sayfalarında da yer alır.</p>
+        </header>
+        <ol class="gc who__grid" style="--gc: 5 / -1">
+          {% for g in groups %}
+          <li class="who__card" data-reveal data-reveal-delay="{{ loop.index0 % 2 }}">
+            <h3 class="who__top">
               <span class="who__n mono tnum">{{ g.number }}</span>
               <a class="who__t" href="{{ g.url }}">{{ g.name }}</a>
-              <div class="who__p">
-                {% if g.people | length %}{{ pp.inline(g.people) }}{% else %}<a class="who__none" href="/iletisim/">İletişim formu {{ m.arrow() }}</a>{% endif %}
-              </div>
-            </li>
-            {% endfor %}
-          </ol>
-        </div>
-        <div class="who__col">
-          <h3 class="who__h mono" data-reveal>Sektöre göre</h3>
-          <ol class="who__list">
-            {% for s in sectorRows %}
-            <li class="who__row" data-reveal>
-              <span class="who__n mono tnum">{{ s.number }}</span>
-              <a class="who__t" href="{{ s.url }}">{{ s.name }}{% if s.segment %}<span class="who__tag mono">Segment</span>{% endif %}</a>
-              <div class="who__p">
-                {% if s.people | length %}{{ pp.inline(s.people) }}{% else %}<a class="who__none" href="/iletisim/">İletişim formu {{ m.arrow() }}</a>{% endif %}
-              </div>
-            </li>
-            {% endfor %}
-          </ol>
-        </div>
+            </h3>
+            {% if g.people | length %}
+            <ul class="who__ppl">
+              {% for p in g.people %}
+              <li><a class="who__pp" href="{{ p.url }}">{{ pp.avatar(p, "sm") }}<span class="who__pt"><b>{{ p.name }}</b><small>{{ p.role }}</small></span></a></li>
+              {% endfor %}
+            </ul>
+            {% else %}
+            <p class="who__ppl"><a class="who__none" href="/iletisim/">İletişim formu {{ m.arrow() }}</a></p>
+            {% endif %}
+            <p class="who__go"><a class="textlink" href="{{ g.url }}">Alanı inceleyin<span class="sr-only">: {{ g.name }}</span> {{ m.arrow() }}</a></p>
+          </li>
+          {% endfor %}
+        </ol>
       </div>
     </section>
 

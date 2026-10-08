@@ -151,7 +151,7 @@ export function initChrome(fx) {
   mnav?.addEventListener('click', (e) => {
     if (e.target.closest('a')) setMenu(false);
   });
-  matchMedia('(min-width: 67.501em)').addEventListener?.('change', (e) => e.matches && setMenu(false));
+  matchMedia('(min-width: 75.001em)').addEventListener?.('change', (e) => e.matches && setMenu(false));
 
   /* ── Efekt anahtarı */
   document.addEventListener('click', (e) => {

@@ -3,22 +3,26 @@
 // Saf hesaplama: DOM veya three bağımlılığı yok (Node'da test edilebilir).
 //
 // Bir formasyon = kayıt defterindeki (FORMATIONS) bir satır: kimlik, çizici işlev, kamera pozu, dönüş davranışı ve ekranda gösterilen kısa açıklama.
-// Sıra KALICIDIR: sayfalar sahneyi sıra numarasıyla (data-world) ya da kimlikle (SCENE) seçer; yeni şekiller yalnızca sona eklenir.
+// Sayfalar sahneyi kimlikle seçer (scripts/scenes.mjs › sceneOf; şablonlarda sceneNo('kimlik')): sıra numarası derlemede üretilir.
+// Tek kural: 1…8 ana sayfadaki hizmet alanlarıyla aynı sırada ve ardışıktır (alanlar bandı bu aralıkta kaydırmayla geçiş yapar).
 // Şekiller, sitenin yazdığı içerikle bağlantılıdır (hizmet, sektör ve sayfa metinleri); ilgisiz simgeler kullanılmaz. Ayrıntı: docs/FORMASYONLAR.md
 //
 //   0 Ufuk          — veri arazisi (açılış)
-//   1 Defter        — yelpaze gibi açılmış defter/beyan yaprakları (Vergi)
-//   2 Örnekleme     — denetim dosyası: tablo, büyüteç, denetçi tikleri (Denetim)
-//   3 Yapı ağacı    — dallanan organizasyon yapısı              (Danışmanlık)
-//   4 Ritim halkası — 12 aylık halka, artan sütunlar            (İK / Bordro)
-//   5 Veri katmanı  — çubuk şehri                               (Sistemler)
-//   6 Sütunlar      — iki sıra sütun + alınlık                  (Akademi)
-//   7 Kapı          — kemer ve ona uzanan yol                   (Kapanış)
-//   8… sektörler, hizmet kavramları ve sayfa türleri (bkz. FORMATIONS)
+//   1 Rakamlar      — beyanname: matrah × oran = vergi, ₺, oranlar  (Vergi Denetim ve Danışmanlık)
+//   2 Örnekleme     — denetim dosyası: tablo, büyüteç, denetçi tikleri (Bağımsız Denetim)
+//   3 Defter        — yelpaze gibi açılmış defter/beyan yaprakları   (Muhasebe, Bordro ve Finansal Raporlama)
+//   4 Karar ağacı   — kökler, gövde, dallar, taç                     (Kurumsal Finansman)
+//   5 Teşvik        — destek basamakları, yükselen ok, AB yıldızları (Teşvik, AB Projeleri ve Startup)
+//   6 Hukuk         — paragraf işareti ve tokmak                     (Hukuk)
+//   7 Veri katmanı  — çubuk şehri                                    (Dijital Dönüşüm)
+//   8 Okul binası   — kaide, sütunlar, kiriş, alınlık                (Akademi)
+//   9 Kapı          — kemer ve ona uzanan yol                        (Kapanış)
+//   10… bordro halkası, sektörler, hizmet kavramları ve sayfa türleri (bkz. FORMATIONS)
 import { Draw, v3, X, Y } from './draw.js';
 import { kayip, maliyet, varlik, sube, edim, alacak, hakedis, sezon, ucHalka, savunma } from './shapes-sector.js';
 import { terazi, bilanco, muhur, mutabakat, dilimler, kdvZinciri, nakit, rasyo, hile, kup, akis, pay, sure } from './shapes-service.js';
 import { petek, matris, ag, yayin, kitap, abakus, takvim, basvuru, yonlendirme, arama, arsiv, sozluk, gizlilik, soru, yazit } from './shapes-page.js';
+import { rakamlar, agac, tesvik, hukuk, okul } from './shapes-area.js';
 
 const TAU = Math.PI * 2;
 const clamp01 = (v) => Math.min(1, Math.max(0, v));
@@ -281,46 +285,6 @@ function sampling(p, rnd, Nf) {
   d.done(Nf);
 }
 
-function tree(p, rnd, Nf) {
-  const segs = [];
-  const nodes = [];
-  const norm = (v) => {
-    const l = Math.hypot(v[0], v[1], v[2]) || 1;
-    return [v[0] / l, v[1] / l, v[2] / l];
-  };
-  const grow = (a, dir, len, depth) => {
-    const b = [a[0] + dir[0] * len, a[1] + dir[1] * len, a[2] + dir[2] * len];
-    segs.push({ a, b, len, depth });
-    nodes.push(b);
-    if (depth >= 5) return;
-    const kids = depth < 2 ? 3 : 2;
-    for (let k = 0; k < kids; k++) {
-      const ang = (k / kids) * TAU + rnd() * 0.9;
-      const spread = depth < 2 ? 0.95 : 0.75;
-      const nd = norm([dir[0] + Math.cos(ang) * spread, dir[1] * 0.9 + 0.35, dir[2] + Math.sin(ang) * spread]);
-      grow(b, nd, len * 0.74, depth + 1);
-    }
-  };
-  grow([0, -4.2, 0], [0, 1, 0], 2.7, 0);
-  const total = segs.reduce((s, g) => s + g.len, 0);
-  const nNode = Math.min(nodes.length * 7, Math.floor(Nf * 0.18));
-  const nLine = Nf - nNode;
-  for (const g of segs) {
-    const n = Math.max(6, Math.round((g.len / total) * nLine));
-    for (let i = 0; i < n; i++) {
-      const u = (i + rnd()) / n;
-      p.add(g.a[0] + (g.b[0] - g.a[0]) * u + (rnd() - 0.5) * 0.04, g.a[1] + (g.b[1] - g.a[1]) * u, g.a[2] + (g.b[2] - g.a[2]) * u + (rnd() - 0.5) * 0.04, 0.8 + (5 - g.depth) * 0.1, 0);
-    }
-  }
-  for (let i = 0; i < nNode; i++) {
-    const c = nodes[i % nodes.length];
-    const r = Math.pow(rnd(), 0.6) * 0.22;
-    const a = rnd() * TAU;
-    const b = Math.acos(2 * rnd() - 1);
-    p.add(c[0] + r * Math.sin(b) * Math.cos(a), c[1] + r * Math.cos(b), c[2] + r * Math.sin(b) * Math.sin(a), 2.4, rnd() < 0.2 ? 1 + Math.floor(rnd() * 3) : 0);
-  }
-}
-
 function ring(p, rnd, Nf) {
   const R = 5.3;
   const gap = 0.07;
@@ -391,46 +355,6 @@ function strata(p, rnd, Nf) {
   while (p.n < Nf) p.add((rnd() - 0.5) * gx * sp, -4, (rnd() - 0.5) * gz * sp, 0.6, 0);
 }
 
-function colonnade(p, rnd, Nf) {
-  const cols = [];
-  for (let row = 0; row < 2; row++) for (let i = 0; i < 6; i++) cols.push({ x: -5.5 + i * 2.2, z: row ? 2.7 : -2.7 });
-  const H = 5;
-  const perCol = Math.floor((Nf * 0.72) / cols.length);
-  for (const c of cols) {
-    for (let i = 0; i < perCol; i++) {
-      const y = -4 + rnd() * H;
-      const a = rnd() * TAU;
-      const ring = rnd() < 0.45;
-      const rr = 0.42 + (y < -3.8 || y > 0.8 ? 0.08 : 0);
-      const flute = Math.round(a / (TAU / 10)) * (TAU / 10);
-      p.add(c.x + Math.cos(ring ? a : flute) * rr, ring ? Math.round(y * 3) / 3 : y, c.z + Math.sin(ring ? a : flute) * rr, 0.8 + rnd() * 0.4, 0);
-    }
-  }
-  // alınlık (kiriş) ve üçgen alın
-  const rest = Nf - p.n;
-  for (let i = 0; i < rest; i++) {
-    const f = rnd();
-    const zz = rnd() < 0.5 ? -2.7 : 2.7;
-    if (f < 0.55) p.add(-6.6 + rnd() * 13.2, 1.1 + rnd() * 0.45, zz + (rnd() - 0.5) * 0.7, 1.0, 0);
-    else if (f < 0.85) {
-      const side = rnd() < 0.5 ? -1 : 1;
-      const u = rnd();
-      p.add(side * 6.6 * (1 - u), 1.55 + u * 1.7, zz, 1.0, u > 0.97 ? 1 : 0);
-    } else {
-      const step = Math.floor(rnd() * 3);
-      const e = Math.floor(rnd() * 4);
-      const hw = 7.2 + step * 0.5;
-      const hd = 4 + step * 0.5;
-      const u = rnd();
-      const y = -4;
-      if (e === 0) p.add(-hw + u * 2 * hw, y, -hd, 0.8, 0);
-      else if (e === 1) p.add(-hw + u * 2 * hw, y, hd, 0.8, 0);
-      else if (e === 2) p.add(-hw, y, -hd + u * 2 * hd, 0.8, 0);
-      else p.add(hw, y, -hd + u * 2 * hd, 0.8, 0);
-    }
-  }
-}
-
 function gate(p, rnd, Nf) {
   const Ro = 5.4;
   const Ri = 4.0;
@@ -469,14 +393,17 @@ const POSE = ({ dx = 0, dy = 0, dz = 0, ly = 0, bright = 1.55 } = {}) => ({ pos:
 // view: mürekkep alanı (2B) için başlangıç bakışı — pitch: öne eğim (rad), yaw: sağa dönüş (rad), zoom: boyut çarpanı.
 export const FORMATIONS = [
   { id: 'ufuk', build: horizon, spin: 0, pose: { pos: [0, 2.2, 16.5], look: [0, -1.5, -14], fov: 48, bright: 1.45 }, figure: 'Ufuk — veri arazisi' },
-  { id: 'defter', build: ledger, spin: 0, sway: 0.35, pose: { pos: [-6.2, 8.2, 21.4], look: [-6.2, -0.1, 0], fov: 44, bright: 1.6 }, figure: 'Defter ve beyan yaprakları — kayıt düzeni, tutar sütunları', view: { pitch: 0.2, yaw: -0.2 } },
+  { id: 'rakamlar', build: rakamlar, spin: 0, sway: 0.4, pose: POSE({ dz: 0.6 }), figure: 'Beyan rakamları — matrah, oran ve hesaplanan vergi', view: { pitch: 0.06, yaw: -0.2 } },
   { id: 'ornekleme', build: sampling, spin: 0, sway: 0.4, pose: { pos: [-5.1, 2.2, 22.0], look: [-5.1, 0.2, 0], fov: 44, bright: 1.55 }, figure: 'Denetim dosyası — finansal tablo, büyüteç ve denetçi tikleri', view: { pitch: 0.06, yaw: -0.18 } },
-  { id: 'agac', build: tree, spin: 1, pose: { pos: [-5.8, 2.0, 19.6], look: [-5.8, 0.4, 0], fov: 44, bright: 1.55 }, figure: 'Yapı ağacı — karar ve organizasyon yapısı', view: { pitch: 0.1, yaw: 0 } },
-  { id: 'halka', build: ring, spin: 1, pose: { pos: [-5.1, 6.4, 17.9], look: [-5.1, -1.4, 0], fov: 44, bright: 1.55 }, figure: 'Yıl halkası — on iki aylık bordro döngüsü', view: { pitch: 0.45, yaw: 0 } },
+  { id: 'defter', build: ledger, spin: 0, sway: 0.35, pose: { pos: [-6.2, 8.2, 21.4], look: [-6.2, -0.1, 0], fov: 44, bright: 1.6 }, figure: 'Defter ve beyan yaprakları — kayıt düzeni, tutar sütunları', view: { pitch: 0.2, yaw: -0.2 } },
+  { id: 'agac', build: agac, spin: 0.6, pose: POSE({ dy: 0.4, dz: 0.8, ly: 0.3 }), figure: 'Karar ağacı — seçenekler, senaryolar ve sonuçlar', view: { pitch: 0.1, yaw: 0 } },
+  { id: 'tesvik', build: tesvik, spin: 0, sway: 0.45, pose: POSE({ dz: 0.6 }), figure: 'Destek basamakları — teşvik, hibe ve yatırım', view: { pitch: 0.08, yaw: -0.25 } },
+  { id: 'hukuk', build: hukuk, spin: 0, sway: 0.45, pose: POSE({ dz: 0.4 }), figure: 'Hukuki çerçeve — kanun maddesi ve karar', view: { pitch: 0.06, yaw: 0.2 } },
   // sektörlerde solda: lx = sol kaydırma kazancı, ls = sol uzaklık çarpanı
   { id: 'katman', build: strata, spin: 1, pose: { pos: [-6.4, 1.5, 23.5], look: [-6.4, -1.9, 0], fov: 44, bright: 1.6, lx: 1.5, ls: 1.12 }, figure: 'Veri katmanları — sistem ve raporlama', view: { pitch: 0.3, yaw: -0.35 } },
-  { id: 'sutunlar', build: colonnade, spin: 0.8, pose: { pos: [-7.0, 2.0, 22.6], look: [-7.0, -0.5, 0], fov: 44, bright: 1.6 }, figure: 'Sütunlar — bilgi ve öğrenme', view: { pitch: 0.14, yaw: -0.3 } },
+  { id: 'sutunlar', build: okul, spin: 0, sway: 0.5, pose: POSE({ dy: 0.6, dz: 1.4, ly: 0.2 }), figure: 'Akademi — antik okul binası: sütunlar, kiriş ve alınlık', view: { pitch: 0.12, yaw: -0.3 } },
   { id: 'kapi', build: gate, spin: 0, sway: 0.2, pose: { pos: [-8.0, -0.2, 19.5], look: [-8.0, -1.0, 0], fov: 48, bright: 1.45 }, figure: 'Kapı — görüşmeye açılan yol', view: { pitch: 0.12, yaw: -0.2 } },
+  { id: 'halka', build: ring, spin: 1, pose: { pos: [-5.1, 6.4, 17.9], look: [-5.1, -1.4, 0], fov: 44, bright: 1.55 }, figure: 'Yıl halkası — on iki aylık bordro döngüsü', view: { pitch: 0.45, yaw: 0 } },
   // ── sektörler (src/data/sectors.json › her sektörün ilk konu başlığı)
   { id: 'kayip', build: kayip, spin: 0, sway: 0.5, pose: POSE({ dy: 0.4 }), figure: 'Kayıp dağılımı — beklenen kredi zararı ve kuyruk riski', view: { pitch: 0.1, yaw: -0.25 } },
   { id: 'maliyet', build: maliyet, spin: 0, sway: 0.5, pose: POSE(), figure: 'Maliyet akışı — hammadde, işçilik ve genel üretim gideri', view: { pitch: 0.1, yaw: 0.2 } },

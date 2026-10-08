@@ -4,12 +4,13 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 import vm from 'node:vm';
 import { Euler, PerspectiveCamera, Vector3 } from 'three';
-import { buildFormations, POSES, SPIN, SWAY } from '../src/assets/js/world/formations.js';
+import { buildFormations, POSES, SPIN, SWAY, SCENE } from '../src/assets/js/world/formations.js';
 import { clamp, smoothstep } from '../src/assets/js/util.js';
 
 const source = await readFile(new URL('../src/assets/js/world/world.js', import.meta.url), 'utf8');
 const pose = source.slice(source.indexOf('  function pose('), source.indexOf('  function frame('));
 const F = buildFormations(500);
+const K = SCENE.kapi;
 
 for (const [width, height] of [[1512, 715], [354, 780]]) {
   test(`contact arch moves without collapsing over time at ${width}×${height}`, () => {
@@ -20,14 +21,14 @@ for (const [width, height] of [[1512, 715], [354, 780]]) {
       side: 1, lift: 0, pointer: { x: 0, y: 0 }, time: 5,
       camPos: new Vector3(), camLook: new Vector3(), material: { uniforms: { uBright: { value: 1 } } },
     });
-    vm.runInContext(pose + '\nglobalThis.drawPose = () => pose(7, 7, 0);', context);
+    vm.runInContext(pose + '\nglobalThis.drawPose = () => pose(' + K + ', ' + K + ', 0);', context);
     const archWidth = time => {
       context.time = time;
       context.drawPose();
       camera.updateMatrixWorld();
       const xs = [];
       for (let i = 0; i < 450; i++) {
-        const p = new Vector3().fromArray(F[7].pos, i * 3);
+        const p = new Vector3().fromArray(F[K].pos, i * 3);
         if (p.y < 0.6) continue; // arch crown; exclude the road and background dust
         p.applyEuler(points.rotation).project(camera);
         xs.push(p.x);

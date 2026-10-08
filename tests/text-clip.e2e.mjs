@@ -30,7 +30,7 @@ const PAGES = [
   '/hizmetler/',
   '/hizmetler/vergi/',
   '/hizmetler/vergi/kdv-iade-islemleri/',
-  '/hizmetler/insan-kaynaklari/emeklilik-danismanligi/',
+  '/hizmetler/muhasebe/emeklilik-danismanligi/',
   '/sektorler/',
   '/sektorler/insaat-gayrimenkul-ve-altyapi/',
   '/hakkimizda/',
@@ -50,7 +50,7 @@ const PAGES = [
 const MORE = [
   '/hizmetler/denetim/',
   '/hizmetler/denetim/bagimsiz-denetim/',
-  '/hizmetler/danismanlik/sirket-degerlemesi/',
+  '/hizmetler/kurumsal-finansman/sirket-degerlemesi/',
   '/sektorler/finansal-hizmetler/',
   '/sektorler/aile-sirketleri-ve-kobiler/',
   '/bilgi-merkezi/blog/',

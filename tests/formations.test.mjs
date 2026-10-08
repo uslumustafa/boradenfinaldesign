@@ -1,6 +1,6 @@
 // Formasyon kayıt defteri ve sayfa eşlemesi (birim testi):
 //   • her şekil üretilebilir, sonlu, sahne ölçüsünde ve tohumla tekrarlanabilir (aynı tohum → aynı noktalar)
-//   • kimlikler tekil, sıra kalıcı (ilk sekiz ana sayfa sahnesi yerinde), her içerik şeklinin «Şekil» açıklaması var
+//   • kimlikler tekil, sıra kalıcı (ufuk + sekiz hizmet alanı ardışık 1…8, ardından kapı), her içerik şeklinin «Şekil» açıklaması var
 //   • scripts/scenes.mjs içindeki her eşleme var olan bir şekle gider; Hakkımızda terazi değil yazıt kullanır
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -13,8 +13,9 @@ test('kimlikler tekil, sıra kalıcı', () => {
   const ids = FORMATIONS.map((f) => f.id);
   assert.equal(new Set(ids).size, ids.length, 'yinelenen formasyon kimliği');
   assert.equal(FORMATION_COUNT, ids.length);
-  // ana sayfa sahneleri sıra numarasıyla seçilir — yerleri değişmemeli (yeni şekiller yalnızca sona eklenir)
-  assert.deepEqual(ids.slice(0, 8), ['ufuk', 'defter', 'ornekleme', 'agac', 'halka', 'katman', 'sutunlar', 'kapi']);
+  // ana sayfa sahneleri sıra numarasıyla seçilir: alan şekilleri 1…8 ardışık olmalı (data-world-range iki komşu şekil arasında geçiş yapar)
+  assert.deepEqual(ids.slice(0, 10), ['ufuk', 'rakamlar', 'ornekleme', 'defter', 'agac', 'tesvik', 'hukuk', 'katman', 'sutunlar', 'kapi']);
+  assert.deepEqual(Object.values(AREA_SHAPE).map(sceneOf), [1, 2, 3, 4, 5, 6, 7, 8], 'alan şekilleri ana sayfa sırasında ardışık');
   ids.forEach((id, i) => assert.equal(SCENE[id], i));
   assert.equal(POSES.length, ids.length);
   assert.equal(SPIN.length, ids.length);
@@ -48,7 +49,7 @@ test('her şekil sonlu, sahne ölçüsünde ve tekrarlanabilir', () => {
       assert.ok(f.size[i] > 0.3 && f.size[i] < 4, `${id}: nokta boyutu ${f.size[i]}`);
       assert.ok([0, 1, 2, 3].includes(f.tint[i]), `${id}: renk ${f.tint[i]}`);
     }
-    if (k >= 8) {
+    if (k >= 1 && FORMATIONS[k].id !== 'kapi') {
       // içerik şekilleri aynı kamera pozuna ve «Şekil» kutusuna sığacak ölçüde kalır
       const span = hi.map((h, a) => h - lo[a]);
       assert.ok(Math.max(Math.abs(lo[0]), hi[0]) <= 7.5, `${id}: x taşıyor (${lo[0].toFixed(1)}..${hi[0].toFixed(1)})`);

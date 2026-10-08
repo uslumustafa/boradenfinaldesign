@@ -169,6 +169,7 @@ html.hdr-hidden .hdr {
   height: 100%;
   padding-inline: 0.35rem;
   font-size: 1.04rem;
+  white-space: nowrap; /* menü adı hiçbir genişlikte harf ortasından kırılmaz (sığmazsa ≤1200 px'te mobil menü) */
   font-family: var(--f-display);
   font-weight: 600;
   color: var(--on-dark-2);
@@ -415,7 +416,7 @@ html.hdr-hidden .prog {
   font-size: 0.95rem;
 }
 
-@media (max-width: 67.5em) {
+@media (max-width: 75em) {
   .hdr__bar {
     padding-inline: min(var(--gutter), 3vw);
     gap: 0.5rem;
@@ -431,7 +432,7 @@ html.hdr-hidden .prog {
     display: none;
   }
 }
-@media (min-width: 67.501em) {
+@media (min-width: 75.001em) {
   .mnav {
     display: none;
   }

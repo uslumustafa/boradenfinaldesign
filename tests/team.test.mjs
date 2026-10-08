@@ -239,8 +239,12 @@ test('gerçek veri: her hizmet alanında 1–4 kişi; bölüm bağı şemadaki b
   for (const g of model.groups) {
     for (const p of g.people.filter((x) => x.via === 'department')) assert.ok(deptAreas[p.department].includes(g.id), `${p.slug} → ${g.id}: bölüm bu alana bağlı değil`);
   }
-  const insan = model.groups.find((g) => g.id === 'insan');
-  assert.ok(insan.people.every((p) => p.department === 'is-ve-sosyal-guvenlik'), 'İK alanının ekibi İş ve Sosyal Güvenlik bölümünden gelmeli');
+  // Muhasebe, Bordro ve Finansal Raporlama: bordro/SGK hizmetleri İş ve Sosyal Güvenlik bölümünden kişilerle görünür
+  const muhasebe = model.groups.find((g) => g.id === 'muhasebe');
+  assert.ok(muhasebe.people.some((p) => p.department === 'is-ve-sosyal-guvenlik'), 'Muhasebe/Bordro alanında İş ve Sosyal Güvenlik bölümünden kişi olmalı');
+  // Teşvik birimi: Umut Kutlu bu alanda (proje sahibinin isteği, Ekim 2026)
+  const tesvik = model.groups.find((g) => g.id === 'tesvik');
+  assert.ok(tesvik.people.some((p) => p.slug === 'umut-kutlu' && p.department === 'tesvik'), 'Teşvik alanında Umut Kutlu olmalı');
   for (const m of team.profiles) {
     for (const sg of m.svcGroups) for (const s of sg.items) assert.ok(m.svcIds.includes(s.id) || m.areaIds.includes(sg.group.id), `${m.slug}: ${s.id} kişinin kendi ataması değil`);
   }

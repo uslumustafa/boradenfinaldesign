@@ -9,18 +9,198 @@
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Robots-Tag", "value": "noindex, nofollow" },
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()" }
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()"
+        }
       ]
     },
     {
       "source": "/assets/js/chunks/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/hizmetler/danismanlik/",
+      "destination": "/hizmetler/kurumsal-finansman/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/insan-kaynaklari/",
+      "destination": "/hizmetler/muhasebe/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/sistemler/",
+      "destination": "/hizmetler/dijital-donusum/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/vergi/mali-musavirlik-ve-muhasebe/",
+      "destination": "/hizmetler/muhasebe/mali-musavirlik-ve-muhasebe/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/vergi/cari-hesap-mutabakatlarinin-yapilmasi/",
+      "destination": "/hizmetler/muhasebe/cari-hesap-mutabakatlarinin-yapilmasi/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/denetim/kurumsal-raporlama/",
+      "destination": "/hizmetler/muhasebe/kurumsal-raporlama/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/denetim/ufrs-tfrs-raporlama/",
+      "destination": "/hizmetler/muhasebe/ufrs-tfrs-raporlama/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/danismanlik/raporlama/",
+      "destination": "/hizmetler/muhasebe/raporlama/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/insan-kaynaklari/insan-kaynaklari-ve-bordro/",
+      "destination": "/hizmetler/muhasebe/insan-kaynaklari-ve-bordro/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/insan-kaynaklari/bordrolama/",
+      "destination": "/hizmetler/muhasebe/bordrolama/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/insan-kaynaklari/sgk-dosya-acilisi/",
+      "destination": "/hizmetler/muhasebe/sgk-dosya-acilisi/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/insan-kaynaklari/ev-hizmetlisi-sgk-dosya-acilisi/",
+      "destination": "/hizmetler/muhasebe/ev-hizmetlisi-sgk-dosya-acilisi/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/insan-kaynaklari/sgk-protokolu/",
+      "destination": "/hizmetler/muhasebe/sgk-protokolu/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/insan-kaynaklari/asgari-iscilik-ve-ilisiksizlik-belgesi/",
+      "destination": "/hizmetler/muhasebe/asgari-iscilik-ve-ilisiksizlik-belgesi/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/insan-kaynaklari/borclanma-islemleri/",
+      "destination": "/hizmetler/muhasebe/borclanma-islemleri/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/insan-kaynaklari/emeklilik-danismanligi/",
+      "destination": "/hizmetler/muhasebe/emeklilik-danismanligi/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/insan-kaynaklari/insan-kiymetleri-surec-yonetimi/",
+      "destination": "/hizmetler/muhasebe/insan-kiymetleri-surec-yonetimi/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/insan-kaynaklari/yabanci-uyruklu-ikamet-izini/",
+      "destination": "/hizmetler/muhasebe/yabanci-uyruklu-ikamet-izini/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/insan-kaynaklari/calisma-izni-alma-ve-iptali/",
+      "destination": "/hizmetler/muhasebe/calisma-izni-alma-ve-iptali/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/insan-kaynaklari/yurtdisina-isci-gonderimi/",
+      "destination": "/hizmetler/muhasebe/yurtdisina-isci-gonderimi/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/insan-kaynaklari/isveren-denetimi-ve-raporlamasi/",
+      "destination": "/hizmetler/muhasebe/isveren-denetimi-ve-raporlamasi/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/insan-kaynaklari/sgk-dosya-kapanisi/",
+      "destination": "/hizmetler/muhasebe/sgk-dosya-kapanisi/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/danismanlik/sirket-degerlemesi/",
+      "destination": "/hizmetler/kurumsal-finansman/sirket-degerlemesi/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/danismanlik/mali-danismanlik/",
+      "destination": "/hizmetler/kurumsal-finansman/mali-danismanlik/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/danismanlik/yonetim-danismanligi/",
+      "destination": "/hizmetler/kurumsal-finansman/yonetim-danismanligi/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/vergi/ar-ge-hizmetleri/",
+      "destination": "/hizmetler/tesvik/ar-ge-hizmetleri/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/insan-kaynaklari/istihdam-tesvik/",
+      "destination": "/hizmetler/tesvik/istihdam-tesvik/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/danismanlik/sirket-kurulus-danismanligi/",
+      "destination": "/hizmetler/hukuk/sirket-kurulus-danismanligi/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/danismanlik/ticaret-sicil-islemleri/",
+      "destination": "/hizmetler/hukuk/ticaret-sicil-islemleri/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/sistemler/muhasebe-sistemleri/",
+      "destination": "/hizmetler/dijital-donusum/muhasebe-sistemleri/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/sistemler/veri-analiz-sistemleri/",
+      "destination": "/hizmetler/dijital-donusum/veri-analiz-sistemleri/",
+      "permanent": true
+    },
+    {
+      "source": "/hizmetler/sistemler/cozum-prosedurleri/",
+      "destination": "/hizmetler/dijital-donusum/cozum-prosedurleri/",
+      "permanent": true
     }
   ]
 }

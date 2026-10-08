@@ -28,7 +28,7 @@ const tocIds = (s) => [...toc(s).matchAll(/href="#([^"]+)"/g)].map((m) => m[1]);
 const kunyeRef = (s) => (s.match(/<div class="kunye__ref"><dt>Ref\.<\/dt><dd class="tnum">([^<]+)<\/dd>/) || [])[1];
 
 test('her hizmet sayfası: tek h1, benzersiz kimlikler, «Bu sayfada» menüsü bölümlerle birebir', () => {
-  assert.equal(model.services.length, 47);
+  assert.equal(model.services.length, 60);
   for (const s of model.services) {
     const h = page(s.url);
     assert.equal(count(h, /<h1[\s>]/g), 1, `${s.id}: tek h1 olmalı`);
@@ -79,7 +79,7 @@ test('hizmet sayfası: künye numarası modelle aynı, alan bağlantısı doğru
     const fig = h.match(/<figure class="sfig[\s\S]*?<\/figure>/)[0];
     assert.match(fig, /\salt=""/, `${s.id}: fotoğraf alt metni boş (süs) olmalı`);
     assert.ok(fig.includes(`/assets/img/photos/${s.photo}-`), `${s.id}: fotoğraf ${s.photo} kullanılmıyor`);
-    assert.match(fig, /aria-hidden="true">Boraden arşivi</);
+    assert.doesNotMatch(fig, /<figcaption/, `${s.id}: fotoğrafın altında yazı olmamalı (müşteri isteği)`);
   }
 });
 
@@ -94,7 +94,7 @@ test('«Çalışma biçimimiz» bandı: her hizmet ve alan sayfasında, alanın 
 });
 
 test('hizmet alanı sayfaları: kart sayısı hizmet sayısına eşit, künye alan numarası, ≥4 HUD bölümü', () => {
-  assert.equal(model.groups.length, 6);
+  assert.equal(model.groups.length, 8);
   for (const g of model.groups) {
     const h = page(g.url);
     assert.equal(count(h, /<h1[\s>]/g), 1, `${g.id}: tek h1`);
@@ -115,7 +115,7 @@ test('hizmet alanı sayfaları: kart sayısı hizmet sayısına eşit, künye al
   }
 });
 
-test('hizmetler dizini: altı alan kartı, her biri alan sayfasına ve fotoğrafa sahip', () => {
+test('hizmetler dizini: sekiz alan kartı, her biri alan sayfasına ve fotoğrafa sahip', () => {
   const h = page('/hizmetler/');
   assert.equal(count(h, /<h1[\s>]/g), 1);
   assert.equal(count(h, /class="agc agc--[brg]"/g), model.groups.length);
@@ -165,4 +165,19 @@ test('şablon sızıntısı yok: undefined, [object Object], NaN, süslü parant
     const t = visible(page(url));
     for (const re of [/\bundefined\b/, /\[object Object\]/, /\bNaN\b/, /\{\{|\}\}/, /\{%|%\}/]) assert.ok(!re.test(t), `${url}: ${re} bulundu`);
   }
+});
+
+test('şekillerin ve fotoğrafların altında «Şekil NN · …» ya da «Boraden arşivi» alt yazısı yok (müşteri isteği, Ekim 2026)', () => {
+  const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(path.join(d, e.name)) : e.name === 'index.html' ? [path.join(d, e.name)] : []));
+  const files = walk(dist);
+  assert.ok(files.length > 100, `derlenmiş sayfa sayısı ${files.length}`);
+  for (const f of files) {
+    const h = visible(fs.readFileSync(f, 'utf8'));
+    const rel = path.relative(dist, f);
+    assert.doesNotMatch(h, /class="(?:fig__cap|sfig__cap|areas__cap|hero__fig)\b/, `${rel}: şekil/fotoğraf alt yazısı öğesi`);
+    assert.doesNotMatch(h, /Şekil (?:\d{2} )?·/, `${rel}: «Şekil · …» yazısı`);
+    assert.doesNotMatch(h, />Boraden arşivi</, `${rel}: «Boraden arşivi» alt yazısı`);
+  }
+  const figJs = fs.readFileSync(path.join(root, 'src/assets/js/modules/figure.js'), 'utf8');
+  assert.ok(!figJs.includes('Şekil ·'), 'figure.js alt yazı üretmemeli');
 });

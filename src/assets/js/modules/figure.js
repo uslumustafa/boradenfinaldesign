@@ -71,7 +71,6 @@ export function mount(fig, ctx = {}) {
     canvas.className = 'fig__cv';
     fig.prepend(canvas);
   }
-  const cap = fig.querySelector('.fig__cap');
   const ink = createInk(canvas, { points: POINTS[kind][lite || still ? 1 : 0], strength: STRENGTH });
   const dprMax = lite ? 1 : Math.min(window.devicePixelRatio || 1, 2);
   const minDt = 1000 / (lite ? FPS.lite : FPS.full);
@@ -87,7 +86,6 @@ export function mount(fig, ctx = {}) {
   let last = 0;
   let prevT = -1;
   let introAt = -1;
-  let capShape = -1;
   let uS = null;
   let pS = null;
   let dead = false;
@@ -116,9 +114,8 @@ export function mount(fig, ctx = {}) {
     // yan sütunun kendi yükseklik sınırı varsa (ör. hukuki metinlerde kendi içinde kayan içindekiler) şekil o sınırın içinde kalır
     const maxH = parseFloat(cs.maxHeight);
     const floor = Number.isFinite(maxH) ? Math.min(innerHeight - 28, top + maxH - 8) : innerHeight - 28;
-    const capH = cap ? cap.getBoundingClientRect().height || 44 : 0;
     const w = fig.parentElement.getBoundingClientRect().width;
-    const avail = floor - top - used - gap - (parseFloat(figCs.marginTop) || 32) - capH;
+    const avail = floor - top - used - gap - (parseFloat(figCs.marginTop) || 32);
     const h = Math.min(Math.round(avail), Math.round(w * 1.05));
     if (h < 150) {
       fig.classList.add('is-off');
@@ -239,18 +236,7 @@ export function mount(fig, ctx = {}) {
       ptr: lens,
       alpha: still ? 1 : smoothstep(0.02, 0.35, vis),
     });
-    // açıklama: baskın şekle göre
-    const shown = mix < 0.5 ? a : b;
-    if (cap && shown !== capShape) {
-      capShape = shown;
-      const text = FORMATIONS[shown].figure || '';
-      cap.textContent = text ? `Şekil · ${text}` : '';
-      if (!still) {
-        cap.classList.remove('is-in');
-        void cap.offsetWidth; // animasyonu yeniden başlat
-        cap.classList.add('is-in');
-      }
-    }
+    // şeklin altında açıklama yazısı yok (müşteri isteği, Ekim 2026); açıklama yalnızca veride durur (formations.js › figure)
   }
   const inst = { frame };
 
@@ -366,7 +352,6 @@ export function mount(fig, ctx = {}) {
     scope.removeEventListener('focusout', onFocusOut);
     ink.dispose();
     delete fig.dataset.shapesLive;
-    if (cap) cap.textContent = '';
     const c2 = canvas.getContext('2d');
     c2 && c2.clearRect(0, 0, canvas.width, canvas.height);
   };

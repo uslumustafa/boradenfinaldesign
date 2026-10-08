@@ -4,12 +4,15 @@ import { buildTeam } from './team.mjs';
 import { buildRelations, pickGeneralFaq } from './relations.mjs';
 import { AREA_SHAPE, CALC_GROUP_SHAPE, sceneOf, figureOf, shapeOfArea, shapeOfService, shapeOfSector, shapeOfCalc } from './scenes.mjs';
 
+// Hizmet alanlarının adres parçası (kimlikler kalıcı; ad ve adres Ekim 2026 yapısına göre). Eski adresler vercel.json › redirects ile yönlenir.
 export const GROUP_SLUG = {
   vergi: 'vergi',
   denetim: 'denetim',
-  danismanlik: 'danismanlik',
-  insan: 'insan-kaynaklari',
-  sistem: 'sistemler',
+  muhasebe: 'muhasebe',
+  danismanlik: 'kurumsal-finansman',
+  tesvik: 'tesvik',
+  hukuk: 'hukuk',
+  sistem: 'dijital-donusum',
   akademi: 'akademi',
 };
 
@@ -23,10 +26,12 @@ export const GROUP_FIGURE = Object.fromEntries(Object.entries(AREA_SHAPE).map(([
 // kare görür). Hizmet kaydında `photo` varsa o kullanılır. Wagtail karşılığı: ServiceAreaPage.photo / ServicePage.photo (görsel seçici; boşsa
 // alanın karesi). Seçim müşteri onayına tabidir. Kareler: scripts/tools/archive-photos.py.
 export const GROUP_PHOTOS = {
-  vergi: ['desk-calc-chart', 'pen-closeup', 'office-0301', 'table-top-3', 'desk-keyboard-chart'],
+  vergi: ['desk-calc-chart', 'pen-closeup', 'table-top-3', 'desk-keyboard-chart'],
   denetim: ['open-office-wide', 'table-top-1', 'open-office-slats', 'desk-keyboard-chart'],
-  danismanlik: ['meeting-room-long', 'table-top-2', 'meeting-room-glass', 'reception-lounge'],
-  insan: ['reading-coffee', 'reception-lounge', 'office-0301', 'pen-closeup', 'table-top-3'],
+  muhasebe: ['office-0301', 'reading-coffee', 'desk-calc-chart', 'table-top-3', 'pen-closeup'],
+  danismanlik: ['meeting-room-long', 'table-top-2', 'meeting-room-glass'],
+  tesvik: ['reception-lounge', 'open-office-desk', 'table-top-2', 'meeting-room-glass'],
+  hukuk: ['meeting-room-glass', 'pen-closeup', 'meeting-room-long', 'reading-coffee'],
   sistem: ['desk-monitor-top', 'open-office-desk', 'desk-keyboard-chart'],
   akademi: ['table-top-2', 'reading-coffee', 'meeting-room-glass', 'open-office-slats', 'table-top-1'],
 };

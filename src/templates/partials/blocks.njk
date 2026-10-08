@@ -16,7 +16,7 @@
 </dl>
 {% endmacro %}
 
-{# Fotoğraf arası: arşiv karesi, görününce açılır (data-parallax → --pp). Süs amaçlıdır (alt=""): metin bilgisi taşımaz.
+{# Fotoğraf arası: arşiv karesi, görününce açılır (data-parallax → --pp). Süs amaçlıdır (alt=""): metin bilgisi taşımaz; alt yazı yok (müşteri isteği, Ekim 2026).
    Wagtail karşılığı: ServicePage.photo / ServiceAreaPage.photo (görsel seçici). #}
 {% macro figure(key, o={}) %}
 {% if key and data.photos[key] %}
@@ -24,7 +24,6 @@
   <div class="sfig__media" data-parallax="0.12">
     {{ m.photo(key, o.sizes or "(min-width: 900px) 780px, 100vw", "sfig__img", false, "") }}
   </div>
-  <figcaption class="sfig__cap mono" aria-hidden="true">Boraden arşivi</figcaption>
 </figure>
 {% endif %}
 {% endmacro %}
