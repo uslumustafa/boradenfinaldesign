@@ -10,11 +10,11 @@
 //   0 Ufuk          — veri arazisi (açılış)
 //   1 Rakamlar      — beyanname: matrah × oran = vergi, ₺, oranlar  (Vergi Denetim ve Danışmanlık)
 //   2 Örnekleme     — denetim dosyası: tablo, büyüteç, denetçi tikleri (Bağımsız Denetim)
-//   3 Defter        — yelpaze gibi açılmış defter/beyan yaprakları   (Muhasebe, Bordro ve Finansal Raporlama)
-//   4 Karar ağacı   — kökler, gövde, dallar, taç                     (Kurumsal Finansman)
+//   3 Defter        — yelpaze gibi açılmış yapraklar; üstte borç/alacak kayıtları ve toplam (Muhasebe, Bordro ve Finansal Raporlama)
+//   4 Karar ağacı   — kökler, gövde ve çatallanan çizgi dallar, uçlarda ışık düğümleri (Kurumsal Finansman)
 //   5 Teşvik        — destek basamakları, yükselen ok, AB yıldızları (Teşvik, AB Projeleri ve Startup)
 //   6 Hukuk         — paragraf işareti ve tokmak                     (Hukuk)
-//   7 Veri katmanı  — çubuk şehri                                    (Dijital Dönüşüm)
+//   7 Dijital       — kâğıt faturadan ekrandaki e-faturaya, verinin buluta akışı (Dijital Dönüşüm)
 //   8 Okul binası   — kaide, sütunlar, kiriş, alınlık                (Akademi)
 //   9 Kapı          — kemer ve ona uzanan yol                        (Kapanış)
 //   10… bordro halkası, sektörler, hizmet kavramları, sayfa türleri; sonda Hukuk ve Teşvik hizmet şekilleri (bkz. FORMATIONS)
@@ -22,7 +22,7 @@ import { Draw, v3, X, Y } from './draw.js';
 import { kayip, maliyet, varlik, sube, edim, alacak, hakedis, sezon, ucHalka, savunma } from './shapes-sector.js';
 import { terazi, bilanco, muhur, mutabakat, dilimler, kdvZinciri, nakit, rasyo, hile, kup, akis, pay, sure } from './shapes-service.js';
 import { petek, matris, ag, yayin, kitap, abakus, takvim, basvuru, yonlendirme, arama, arsiv, sozluk, gizlilik, soru, yazit } from './shapes-page.js';
-import { rakamlar, agac, tesvik, hukuk, okul } from './shapes-area.js';
+import { rakamlar, agac, tesvik, hukuk, dijital, okul } from './shapes-area.js';
 import { sozlesme, sicil, arabulucu, uyusmazlik, kvkk, icra, kurulus, belge, proje, arge, hibe, istihdam, ihracat } from './shapes-legal.js';
 
 const TAU = Math.PI * 2;
@@ -168,37 +168,46 @@ function ledger(p, rnd, Nf) {
     const e = { s: 1.25, d: 2.6 };
     d.poly([P(S, -W / 2, -D / 2), P(S, W / 2 - f, -D / 2), P(S, W / 2, -D / 2 + f), P(S, W / 2, D / 2), P(S, -W / 2, D / 2)], e, true);
     d.poly([P(S, W / 2 - f, -D / 2, 0.02), P(S, W / 2 - f + 0.08, -D / 2 + f - 0.08, 0.22), P(S, W / 2, -D / 2 + f, 0.02)], { s: 1.05, d: 2.2 });
-    // başlık: iki kalın çizgi
-    d.line(P(S, -W / 2 + 0.6, -D / 2 + 0.55), P(S, 0.6, -D / 2 + 0.55), { s: 1.15, d: 1.8 });
-    d.line(P(S, -W / 2 + 0.6, -D / 2 + 0.85), P(S, -0.6, -D / 2 + 0.85), { s: 0.95, d: 1.2 });
-    // kenar boşluğu (kırmızı) ve iki tutar sütunu (kırmızı) — muhasebe defteri
-    const zTop = -D / 2 + 1.25;
-    const zBot = D / 2 - 0.35;
-    d.line(P(S, -W / 2 + 1.05, zTop - 0.15), P(S, -W / 2 + 1.05, zBot), { t: 2, s: 0.95, d: 1.0 });
-    d.line(P(S, W / 2 - 2.5, zTop - 0.15), P(S, W / 2 - 2.5, zBot), { t: 2, s: 0.95, d: 1.0 });
-    d.line(P(S, W / 2 - 1.25, zTop - 0.15), P(S, W / 2 - 1.25, zBot), { t: 2, s: 0.95, d: 1.0 });
-    // satırlar (mavi) + tutarlar
-    const rows = 7;
-    for (let r = 0; r < rows; r++) {
-      const z = zTop + r * ((zBot - zTop) / (rows - 1));
-      d.line(P(S, -W / 2 + 0.4, z), P(S, W / 2 - 0.4, z), { t: 1, s: 0.85, d: 0.55 });
-      if (r < rows - 1) {
-        const zz = z + 0.32;
-        const len = 1.4 + ((r * 7) % 5) * 0.45;
-        d.line(P(S, -W / 2 + 1.35, zz, 0.01), P(S, -W / 2 + 1.35 + len, zz, 0.01), { s: 0.95, d: 0.65 });
-        if (r % 3 !== 2) d.line(P(S, W / 2 - 2.3, zz, 0.01), P(S, W / 2 - 1.45, zz, 0.01), { s: 1.0, d: 1.1 });
-        if (r % 2 === 0) d.line(P(S, W / 2 - 1.05, zz, 0.01), P(S, W / 2 - 0.55, zz, 0.01), { s: 1.0, d: 1.1 });
-      }
-    }
-    // toplam: tutar sütununda çift çizgi (yeşil)
-    const zSum = zBot - 0.12;
-    d.line(P(S, W / 2 - 2.3, zSum, 0.01), P(S, W / 2 - 0.3, zSum, 0.01), { t: 3, s: 1.05, d: 1.4 });
-    d.line(P(S, W / 2 - 2.3, zSum - 0.12, 0.01), P(S, W / 2 - 0.3, zSum - 0.12, 0.01), { t: 3, s: 1.05, d: 1.4 });
+    // yazı yönü: yaprağın x ekseni; «yukarısı» arka kenara doğru (kameradan bakınca dik okunur)
+    const tx = [S.cs, 0, S.sn];
+    const tup = [S.sn, 0, -S.cs];
+    const T = (str, x, z, size, o) => d.text(str, P(S, x, z, 0.01), tx, tup, size, o);
+    // mizan: hesap kodu (Tekdüzen hesap planı), borç ve alacak tutarları; toplamlar eşit. Rakamlar büyük yazılır ki
+    // nokta bulutunda okunsun (küçük tutarlar uzaktan tek bir lekeye dönüşüyordu).
+    const xC = -W / 2 + 0.4; // hesap kodlarının sol kenarı
+    const xB = 0.75; // borç tutarlarının sağ kenarı
+    const xA = W / 2 - 0.35; // alacak tutarlarının sağ kenarı
+    const zH = -D / 2 + 0.85; // başlık taban çizgisi
+    const zR = zH + 0.25; // ilk satırın üstü
+    const rh = 0.98;
+    const zT = zR + 3 * rh; // toplam çizgisi
+    const zEnd = D / 2 - 0.25;
+    // sütun çizgileri (kırmızı) ve başlıklar
+    d.line(P(S, -2.05, zH - 0.4), P(S, -2.05, zEnd), { t: 2, s: 0.95, d: 1.0 });
+    d.line(P(S, 1.1, zH - 0.4), P(S, 1.1, zEnd), { t: 2, s: 0.95, d: 1.0 });
+    T('HESAP', xC, zH, 0.36, { t: 2, s: 1.05, d: 2.0 });
+    T('BORÇ', (xB - 2.31 + xB) / 2, zH, 0.36, { align: 'center', t: 2, s: 1.05, d: 2.0 });
+    T('ALACAK', (xA - 2.31 + xA) / 2, zH, 0.36, { align: 'center', t: 2, s: 1.05, d: 2.0 });
+    // satır çizgileri (mavi)
+    for (let r = 0; r < 3; r++) d.line(P(S, -W / 2 + 0.3, zR + r * rh), P(S, W / 2 - 0.3, zR + r * rh), { t: 1, s: 0.85, d: 0.55 });
+    const mizan = [['100', '12.500', '8.200'], ['120', '8.200', '3.750'], ['320', '3.750', '12.500']];
+    mizan.forEach(([kod, b, a], r) => {
+      const zz = zR + r * rh + 0.8; // taban çizgisi
+      T(kod, xC, zz, 0.48, { t: 1, s: 1.05, d: 2.0 });
+      T(b, xB, zz, 0.55, { align: 'right', s: 1.1, d: 2.3 });
+      T(a, xA, zz, 0.55, { align: 'right', s: 1.1, d: 2.3 });
+    });
+    // toplam: çift çizgi (yeşil) ve eşit toplamlar
+    d.line(P(S, -W / 2 + 0.3, zT + 0.06, 0.01), P(S, W / 2 - 0.3, zT + 0.06, 0.01), { t: 3, s: 1.05, d: 1.3 });
+    d.line(P(S, -W / 2 + 0.3, zT + 0.16, 0.01), P(S, W / 2 - 0.3, zT + 0.16, 0.01), { t: 3, s: 1.05, d: 1.3 });
+    T('TOPLAM', xC, zT + 0.9, 0.3, { t: 3, s: 1.05, d: 1.8 });
+    T('24.450', xB, zT + 0.95, 0.55, { align: 'right', t: 3, s: 1.15, d: 2.5 });
+    T('24.450', xA, zT + 0.95, 0.55, { align: 'right', t: 3, s: 1.15, d: 2.5 });
   });
   d.done(Nf);
   // yapraklar kameraya doğru eğilir (X ekseni çevresinde): yüzeyleri üstten bakışta ince bir şeride dönüşmesin, satırlar okunsun
-  const ct = Math.cos(0.5);
-  const st = Math.sin(0.5);
+  const ct = Math.cos(0.6);
+  const st = Math.sin(0.6);
   for (let i = i0; i < p.n; i++) {
     const y = p.y[i];
     const z = p.z[i];
@@ -396,15 +405,16 @@ export const FORMATIONS = [
   { id: 'ufuk', build: horizon, spin: 0, pose: { pos: [0, 2.2, 16.5], look: [0, -1.5, -14], fov: 48, bright: 1.45 }, figure: 'Ufuk — veri arazisi' },
   { id: 'rakamlar', build: rakamlar, spin: 0, sway: 0.4, pose: POSE({ dz: 0.6 }), figure: 'Beyan rakamları — matrah, oran ve hesaplanan vergi', view: { pitch: 0.06, yaw: -0.2 } },
   { id: 'ornekleme', build: sampling, spin: 0, sway: 0.4, pose: { pos: [-5.1, 2.2, 22.0], look: [-5.1, 0.2, 0], fov: 44, bright: 1.55 }, figure: 'Denetim dosyası — finansal tablo, büyüteç ve denetçi tikleri', view: { pitch: 0.06, yaw: -0.18 } },
-  { id: 'defter', build: ledger, spin: 0, sway: 0.35, pose: { pos: [-6.2, 8.2, 21.4], look: [-6.2, -0.1, 0], fov: 44, bright: 1.6 }, figure: 'Defter ve beyan yaprakları — kayıt düzeni, tutar sütunları', view: { pitch: 0.2, yaw: -0.2 } },
-  { id: 'agac', build: agac, spin: 0.6, pose: POSE({ dy: 0.4, dz: 0.8, ly: 0.3 }), figure: 'Karar ağacı — seçenekler, senaryolar ve sonuçlar', view: { pitch: 0.1, yaw: 0 } },
+  { id: 'defter', build: ledger, spin: 0, sway: 0.25, pose: { pos: [-6.5, 9.6, 18.6], look: [-6.5, 0, 0], fov: 44, bright: 1.6 }, figure: 'Defter ve beyan yaprakları — borç/alacak kayıtları, tutar sütunları ve toplam', view: { pitch: 0.2, yaw: -0.2 } },
+  { id: 'agac', build: agac, spin: 0.6, pose: POSE({ dy: 0.4, dz: 0.8, ly: 0.3 }), figure: 'Karar ağacı — kökler, gövde, çatallanan seçenekler ve sonuçlar', view: { pitch: 0.1, yaw: 0, zoom: 0.85 } },
   { id: 'tesvik', build: tesvik, spin: 0, sway: 0.45, pose: POSE({ dz: 0.6 }), figure: 'Destek basamakları — teşvik, hibe ve yatırım', view: { pitch: 0.08, yaw: -0.25 } },
   { id: 'hukuk', build: hukuk, spin: 0, sway: 0.45, pose: POSE({ dz: 0.4 }), figure: 'Hukuki çerçeve — kanun maddesi ve karar', view: { pitch: 0.06, yaw: 0.2 } },
-  // sektörlerde solda: lx = sol kaydırma kazancı, ls = sol uzaklık çarpanı
-  { id: 'katman', build: strata, spin: 1, pose: { pos: [-6.4, 1.5, 23.5], look: [-6.4, -1.9, 0], fov: 44, bright: 1.6, lx: 1.5, ls: 1.12 }, figure: 'Veri katmanları — sistem ve raporlama', view: { pitch: 0.3, yaw: -0.35 } },
+  { id: 'dijital', build: dijital, spin: 0, sway: 0.25, pose: POSE({ dx: 0.9, dz: -1.6, ly: 0.7 }), figure: 'Dijital dönüşüm — kâğıt faturadan ekrandaki e-faturaya, verinin buluta akışı', view: { pitch: 0.06, yaw: -0.2 } },
   { id: 'sutunlar', build: okul, spin: 0, sway: 0.5, pose: POSE({ dy: 0.6, dz: 1.4, ly: 0.2 }), figure: 'Akademi — antik okul binası: sütunlar, kiriş ve alınlık', view: { pitch: 0.12, yaw: -0.3 } },
   { id: 'kapi', build: gate, spin: 0, sway: 0.2, pose: { pos: [-8.0, -0.2, 19.5], look: [-8.0, -1.0, 0], fov: 48, bright: 1.45 }, figure: 'Kapı — görüşmeye açılan yol', view: { pitch: 0.12, yaw: -0.2 } },
   { id: 'halka', build: ring, spin: 1, pose: { pos: [-5.1, 6.4, 17.9], look: [-5.1, -1.4, 0], fov: 44, bright: 1.55 }, figure: 'Yıl halkası — on iki aylık bordro döngüsü', view: { pitch: 0.45, yaw: 0 } },
+  // sektörlerde solda: lx = sol kaydırma kazancı, ls = sol uzaklık çarpanı
+  { id: 'katman', build: strata, spin: 1, pose: { pos: [-6.4, 1.5, 23.5], look: [-6.4, -1.9, 0], fov: 44, bright: 1.6, lx: 1.5, ls: 1.12 }, figure: 'Veri katmanları — sistem ve raporlama', view: { pitch: 0.3, yaw: -0.35 } },
   // ── sektörler (src/data/sectors.json › her sektörün ilk konu başlığı)
   { id: 'kayip', build: kayip, spin: 0, sway: 0.5, pose: POSE({ dy: 0.4 }), figure: 'Kayıp dağılımı — beklenen kredi zararı ve kuyruk riski', view: { pitch: 0.1, yaw: -0.25 } },
   { id: 'maliyet', build: maliyet, spin: 0, sway: 0.5, pose: POSE(), figure: 'Maliyet akışı — hammadde, işçilik ve genel üretim gideri', view: { pitch: 0.1, yaw: 0.2 } },

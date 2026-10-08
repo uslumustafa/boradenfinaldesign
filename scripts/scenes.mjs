@@ -42,11 +42,11 @@ export function figOf(list) {
 export const AREA_SHAPE = {
   vergi: 'rakamlar', // beyan rakamları — oranlar, matrah ve tutarlar
   denetim: 'ornekleme', // denetim dosyası — kanıt ve seçilen örnekler
-  muhasebe: 'defter', // defter ve beyan yaprakları — kayıt düzeni
-  danismanlik: 'agac', // karar ağacı — kurumsal finansman kararları
+  muhasebe: 'defter', // defter ve beyan yaprakları — mizan rakamları, borç/alacak
+  danismanlik: 'agac', // çizgi dallı karar ağacı — kurumsal finansman kararları
   tesvik: 'tesvik', // destek basamakları — teşvik ve yatırım
   hukuk: 'hukuk', // terazi ve paragraf işareti — hukuki çerçeve
-  sistem: 'katman', // veri katmanları — dijital dönüşüm
+  sistem: 'dijital', // kâğıttan ekrana: fatura → 0/1 → e-fatura, bulut
   akademi: 'sutunlar', // antik okul binası — bilgi ve öğrenme
 };
 
@@ -79,7 +79,7 @@ export const SERVICE_SHAPE = {
   'birlesme-ve-devralma': 'pay', // iki yapının birleşmesi, pay dağılımı
   'finansal-yeniden-yapilandirma': 'nakit', // nakit akışı ve borç yapısı
   // Dijital Dönüşüm
-  'e-donusum': 'katman', // belge, defter, arşiv katmanları
+  'e-donusum': 'dijital', // kâğıt fatura → e-fatura (e-fatura, e-arşiv, e-defter)
   // Denetim ve Raporlama
   'bagimsiz-denetim': 'terazi', // bağımsızlık ve denge
   'kurumsal-raporlama': 'rasyo', // finansal sonuçların arkasındaki göstergeler

@@ -55,72 +55,73 @@ Kural: sık metin/sayı ızgarası taşıyan bantta şekil yazının arkasına d
 
 ## Kayıt defteri
 
-`src/assets/js/world/formations.js › FORMATIONS`. Şablonlar sahneyi **kimlikle** seçer (`data-world="{{ 'kapi' | scene }}"`; sayı yazılmaz — Ekim 2026'da sıra değişti). Tek sıra kuralı: ana sayfa «Hizmet alanları» sahnesi `data-world-range="1,8"` iki komşu şekil arasında geçiş yaptığından **alan şekilleri 1…8 numarada, ana sayfa alan sırasıyla ardışık** durur (`tests/formations.test.mjs` denetler). Diğer yeni şekiller sona eklenir. Ekim 2026 sekiz alanlı yapı: `rakamlar` (Vergi), `tesvik`, `hukuk` eklendi; `agac` ve `sutunlar` (okul binası) yeniden çizildi; `halka` alan şekli olmaktan çıktı (bordro hizmetlerinde kullanılır). Aynı ay Hukuk ve Teşvik hizmetlerine kendi şekilleri verildi (`shapes-legal.js`: sözleşme, sicil gazetesi, arabuluculuk masası, uzlaşma/dava yolu, KVKK envanteri, icra takibi, şirket kuruluşu; teşvik belgesi, iş planı, Ar-Ge ampulü, AB hibesi, istihdam, ihracat). Yazılı şekillerde harfler `draw.js › GLYPHS` çizgi harfleridir (Türkçe harfler, €, /, : dahil); harf titreşimi boyla orantılıdır.
+`src/assets/js/world/formations.js › FORMATIONS`. Şablonlar sahneyi **kimlikle** seçer (`data-world="{{ 'kapi' | scene }}"`; sayı yazılmaz — Ekim 2026'da sıra değişti). Tek sıra kuralı: ana sayfa «Hizmet alanları» sahnesi `data-world-range="1,8"` iki komşu şekil arasında geçiş yaptığından **alan şekilleri 1…8 numarada, ana sayfa alan sırasıyla ardışık** durur (`tests/formations.test.mjs` denetler). Diğer yeni şekiller sona eklenir. Ekim 2026 sekiz alanlı yapı: `rakamlar` (Vergi), `tesvik`, `hukuk` eklendi; `agac` ve `sutunlar` (okul binası) yeniden çizildi; `halka` alan şekli olmaktan çıktı (bordro hizmetlerinde kullanılır). Aynı ay Hukuk ve Teşvik hizmetlerine kendi şekilleri verildi (`shapes-legal.js`: sözleşme, sicil gazetesi, arabuluculuk masası, uzlaşma/dava yolu, KVKK envanteri, icra takibi, şirket kuruluşu; teşvik belgesi, iş planı, Ar-Ge ampulü, AB hibesi, istihdam, ihracat). Yazılı şekillerde harfler `draw.js › GLYPHS` çizgi harfleridir (Türkçe harfler, €, /, : dahil); harf titreşimi boyla orantılıdır. Ekim 2026 sonu (müşteri geri bildirimi): Dijital Dönüşüm alanı yeni `dijital` şeklini aldı (`katman` alan dizisinden çıktı, `halka`dan sonraya taşındı); `agac` eski çizgi dallı biçimine döndü; `defter` üst sayfasına okunur mizan rakamları eklendi. `view.zoom` (2B mürekkep kutusunda şekle özgü küçültme) artık `ink.js` tarafından uygulanır.
 
 | # | Kimlik | Açıklama (`figure`; yalnızca veride — Ekim 2026'dan beri ekranda «Şekil NN · …» alt yazısı gösterilmez, müşteri isteği) |
 | --- | --- | --- |
 | 0 | `ufuk` | Ufuk — veri arazisi (ana sayfa açılışı) |
 | 1 | `rakamlar` | Beyan rakamları — matrah, oran ve hesaplanan vergi (Vergi; KDV beyannamesi üzerinde matrah × oran = vergi, ₺ ve oranlar — `draw.js › text` rakam glifleri) |
 | 2 | `ornekleme` | Denetim dosyası — finansal tablo, büyüteç ve denetçi tikleri (örneklenen satırlar mavi · kırmızı · yeşil tikle işaretli, merceğin içinde büyür; altta rapor çubukları). Kimlik tarihsel: 2026-10-05'e kadar 3B örnekleme kafesiydi |
-| 3 | `defter` | Defter ve beyan yaprakları — kayıt düzeni, tutar sütunları (yelpaze gibi açılmış yapraklar; üsttekinin altında kalan kenarlar çizilmez — `draw.js › lineVis`) |
-| 4 | `agac` | Karar ağacı — seçenekler, senaryolar ve sonuçlar (kurumsal finansman; yuvarlak taçlı ağaç: gövde, kökler, dallar ve ilk çatallarda karar düğümleri — Ekim 2026) |
+| 3 | `defter` | Defter ve beyan yaprakları — üstteki sayfada mizan: hesap kodları (100 · 120 · 320), borç/alacak tutarları ve eşit toplam (24.450). Yelpaze gibi açılmış yapraklar; üsttekinin altında kalan kenarlar çizilmez — `draw.js › lineVis`. Rakamlar nokta bulutunda okunacak boyda (Ekim 2026, müşteri isteği: «sayılar olacaktı, kâğıt yapısı devam edecekti») |
+| 4 | `agac` | Karar ağacı — kurumsal finansman; çizgi dallı ağaç: kökler, gövde, üçerli/ikişerli çatallanan dallar, çatallarda renkli karar düğümleri, uçlarda ışık kümeleri. Ekim 2026: yuvarlak taçlı sürüm beğenilmedi; eski çizgi biçimine dönüldü, daha büyük ve daha çok dallı. 2B kutuda `view.zoom: 0.85` (seyrek taç uçları kutudan taşmasın) |
 | 5 | `tesvik` | Destek basamakları — teşvik, hibe ve yatırım |
 | 6 | `hukuk` | Hukuki çerçeve — kanun maddesi ve karar |
-| 7 | `katman` | Veri katmanları — sistem ve raporlama |
+| 7 | `dijital` | Dijital dönüşüm — solda kâğıt fatura («FATURA», ₺ 12.500), ekrana yukarı doğru akan 0/1 şeritleri, ekranda aynı tutarla «E-FATURA», rapor çubukları ve onay işareti; üstte eşitleme bulutu (e-arşiv). Ekim 2026; önceki alan şekli `katman` (çubuk şehri) anlaşılmadı |
 | 8 | `sutunlar` | Akademi — antik okul binası: sütunlar, kiriş ve alınlık (Akademi; sütunlar tek bir antik okul binasında birleşir — Ekim 2026) |
 | 9 | `kapi` | Kapı — görüşmeye açılan yol (iletişim çağrısı) |
 | 10 | `halka` | Yıl halkası — on iki aylık bordro döngüsü |
-| 11 | `kayip` | Kayıp dağılımı — beklenen kredi zararı ve kuyruk riski |
-| 12 | `maliyet` | Maliyet akışı — hammadde, işçilik ve genel üretim gideri |
-| 13 | `varlik` | Varlık ömrü — aktifleştirme, amortisman ve değer düşüklüğü |
-| 14 | `sube` | Şube ağı — merkez kayda bağlanan çok noktalı yapı |
-| 15 | `edim` | Edimler — sözleşmenin zamana yayılan gelir dilimleri |
-| 16 | `alacak` | Alacak akışı — hasta, özel sigorta ve kurum gelirleri |
-| 17 | `hakedis` | Hakediş eğrisi — yıllara yaygın işte ilerleme |
-| 18 | `sezon` | Sezon eğrisi — aylık gelir ve sabit gider |
-| 19 | `uc-halka` | Üç halka — aile, mülkiyet ve işletme |
-| 20 | `savunma` | Üç savunma hattı — yönetim, risk ve uyum, iç denetim |
-| 21 | `terazi` | Terazi — bağımsızlık ve denge |
-| 22 | `bilanco` | Bilanço — aktif ile pasifin dengesi |
-| 23 | `muhur` | Mühür — tasdik ve onaylı belge |
-| 24 | `mutabakat` | Mutabakat — karşılıklı kayıtların eşleşmesi |
-| 25 | `dilimler` | Dilimler — kademeli oran ve hesap |
-| 26 | `kdv-zinciri` | KDV zinciri — yüklenilen ve hesaplanan vergi |
-| 27 | `nakit` | Akış şelalesi — başlangıçtan kapanışa kalem kalem değişim |
-| 28 | `rasyo` | Rasyo radarı — finansal oranların dengesi |
-| 29 | `hile` | Hile üçgeni — baskı, fırsat, gerekçelendirme |
-| 30 | `kup` | Veri küpü — boyutlara göre dilimlenen veri |
-| 31 | `akis` | Süreç akışı — adım, karar ve kontrol noktası |
-| 32 | `pay` | Pay dağılımı — ortaklık ve sermaye yapısı |
-| 33 | `petek` | Hizmet alanları — sekiz alan, altmış hizmet başlığı |
-| 34 | `matris` | Sektör ve hizmet alanı — her sektörde öne çıkan hizmetler |
-| 35 | `ag` | Uzmanlık ağı — kişiler ve çalıştıkları alanlar |
-| 36 | `yayin` | Yayınlar — sirküler, duyuru, blog ve haber |
-| 37 | `kitap` | Okuma notları — kitaplardan alınan notlar |
-| 38 | `abakus` | Abaküs — kalem kalem hesap |
-| 39 | `takvim` | Takvim — aylara yayılan beyan ve ödeme günleri |
-| 40 | `basvuru` | Başvuru yolu — adım adım daralan kapılar |
-| 41 | `yonlendirme` | Yönlendirme — mesajınız konuya göre ilgili alana ulaşır |
-| 42 | `arama` | Arama — sitedeki sayfalar arasında eşleşenler |
-| 43 | `arsiv` | Arşiv — yıllara göre sirküler dosyaları |
-| 44 | `sozluk` | Sözlük — birbirine bağlı terimler |
-| 45 | `gizlilik` | Gizlilik — kişisel verinin korunması |
-| 46 | `sure` | Hizmet süreleri — yıllara yayılan çalışma ve sigortalılık dönemleri |
-| 47 | `soru` | Sorular — başlıklara göre toplanan sorular ve yanıtlar |
-| 48 | `yazit` | Yazıt — Orhun Abideleri tarzında dikili taşlar |
-| 49 | `sozlesme` | Sözleşme — maddeler, imzalar ve kalem (`shapes-legal.js`; Ekim 2026) |
-| 50 | `sicil` | Ticaret sicili — gazete ilanı ve tescil mührü (`shapes-legal.js`; Ekim 2026) |
-| 51 | `arabulucu` | Arabuluculuk masası — taraflar, arabulucu ve iş kanunları (`shapes-legal.js`; Ekim 2026) |
-| 52 | `uyusmazlik` | Vergi uyuşmazlığı — ihbarnameden uzlaşma ya da dava yoluna (`shapes-legal.js`; Ekim 2026) |
-| 53 | `kvkk` | KVKK uyumu — veri envanteri ve koruma kalkanı (`shapes-legal.js`; Ekim 2026) |
-| 54 | `icra` | Alacak takibi — vadesi geçen fatura, ihtar, arabuluculuk, icra ve tahsil (`shapes-legal.js`; Ekim 2026) |
-| 55 | `kurulus` | Şirket kuruluşu — temel, katlar ve yerine inen «A.Ş.» (`shapes-legal.js`; Ekim 2026) |
-| 56 | `belge` | Yatırım teşvik belgesi — belge, mühür ve fabrika (`shapes-legal.js`; Ekim 2026) |
-| 57 | `proje` | Proje iş planı — iş paketleri, takvim ve kilometre taşları (`shapes-legal.js`; Ekim 2026) |
-| 58 | `arge` | Ar-Ge — fikir ampulü ve dişli (`shapes-legal.js`; Ekim 2026) |
-| 59 | `hibe` | AB hibesi — on iki yıldız, avro ve başvuru dosyası (`shapes-legal.js`; Ekim 2026) |
-| 60 | `istihdam` | İstihdam teşviki — yeni koltuklar ve prim desteği (`shapes-legal.js`; Ekim 2026) |
-| 61 | `ihracat` | İhracat — dünya, rota ve konteyner (`shapes-legal.js`; Ekim 2026) |
+| 11 | `katman` | Veri katmanları — sistem ve raporlama (Ekim 2026'dan beri alan şekli değil; «Muhasebe Sistemleri» hizmetinde) |
+| 12 | `kayip` | Kayıp dağılımı — beklenen kredi zararı ve kuyruk riski |
+| 13 | `maliyet` | Maliyet akışı — hammadde, işçilik ve genel üretim gideri |
+| 14 | `varlik` | Varlık ömrü — aktifleştirme, amortisman ve değer düşüklüğü |
+| 15 | `sube` | Şube ağı — merkez kayda bağlanan çok noktalı yapı |
+| 16 | `edim` | Edimler — sözleşmenin zamana yayılan gelir dilimleri |
+| 17 | `alacak` | Alacak akışı — hasta, özel sigorta ve kurum gelirleri |
+| 18 | `hakedis` | Hakediş eğrisi — yıllara yaygın işte ilerleme |
+| 19 | `sezon` | Sezon eğrisi — aylık gelir ve sabit gider |
+| 20 | `uc-halka` | Üç halka — aile, mülkiyet ve işletme |
+| 21 | `savunma` | Üç savunma hattı — yönetim, risk ve uyum, iç denetim |
+| 22 | `terazi` | Terazi — bağımsızlık ve denge |
+| 23 | `bilanco` | Bilanço — aktif ile pasifin dengesi |
+| 24 | `muhur` | Mühür — tasdik ve onaylı belge |
+| 25 | `mutabakat` | Mutabakat — karşılıklı kayıtların eşleşmesi |
+| 26 | `dilimler` | Dilimler — kademeli oran ve hesap |
+| 27 | `kdv-zinciri` | KDV zinciri — yüklenilen ve hesaplanan vergi |
+| 28 | `nakit` | Akış şelalesi — başlangıçtan kapanışa kalem kalem değişim |
+| 29 | `rasyo` | Rasyo radarı — finansal oranların dengesi |
+| 30 | `hile` | Hile üçgeni — baskı, fırsat, gerekçelendirme |
+| 31 | `kup` | Veri küpü — boyutlara göre dilimlenen veri |
+| 32 | `akis` | Süreç akışı — adım, karar ve kontrol noktası |
+| 33 | `pay` | Pay dağılımı — ortaklık ve sermaye yapısı |
+| 34 | `petek` | Hizmet alanları — sekiz alan, altmış hizmet başlığı |
+| 35 | `matris` | Sektör ve hizmet alanı — her sektörde öne çıkan hizmetler |
+| 36 | `ag` | Uzmanlık ağı — kişiler ve çalıştıkları alanlar |
+| 37 | `yayin` | Yayınlar — sirküler, duyuru, blog ve haber |
+| 38 | `kitap` | Okuma notları — kitaplardan alınan notlar |
+| 39 | `abakus` | Abaküs — kalem kalem hesap |
+| 40 | `takvim` | Takvim — aylara yayılan beyan ve ödeme günleri |
+| 41 | `basvuru` | Başvuru yolu — adım adım daralan kapılar |
+| 42 | `yonlendirme` | Yönlendirme — mesajınız konuya göre ilgili alana ulaşır |
+| 43 | `arama` | Arama — sitedeki sayfalar arasında eşleşenler |
+| 44 | `arsiv` | Arşiv — yıllara göre sirküler dosyaları |
+| 45 | `sozluk` | Sözlük — birbirine bağlı terimler |
+| 46 | `gizlilik` | Gizlilik — kişisel verinin korunması |
+| 47 | `sure` | Hizmet süreleri — yıllara yayılan çalışma ve sigortalılık dönemleri |
+| 48 | `soru` | Sorular — başlıklara göre toplanan sorular ve yanıtlar |
+| 49 | `yazit` | Yazıt — Orhun Abideleri tarzında dikili taşlar |
+| 50 | `sozlesme` | Sözleşme — maddeler, imzalar ve kalem (`shapes-legal.js`; Ekim 2026) |
+| 51 | `sicil` | Ticaret sicili — gazete ilanı ve tescil mührü (`shapes-legal.js`; Ekim 2026) |
+| 52 | `arabulucu` | Arabuluculuk masası — taraflar, arabulucu ve iş kanunları (`shapes-legal.js`; Ekim 2026) |
+| 53 | `uyusmazlik` | Vergi uyuşmazlığı — ihbarnameden uzlaşma ya da dava yoluna (`shapes-legal.js`; Ekim 2026) |
+| 54 | `kvkk` | KVKK uyumu — veri envanteri ve koruma kalkanı (`shapes-legal.js`; Ekim 2026) |
+| 55 | `icra` | Alacak takibi — vadesi geçen fatura, ihtar, arabuluculuk, icra ve tahsil (`shapes-legal.js`; Ekim 2026) |
+| 56 | `kurulus` | Şirket kuruluşu — temel, katlar ve yerine inen «A.Ş.» (`shapes-legal.js`; Ekim 2026) |
+| 57 | `belge` | Yatırım teşvik belgesi — belge, mühür ve fabrika (`shapes-legal.js`; Ekim 2026) |
+| 58 | `proje` | Proje iş planı — iş paketleri, takvim ve kilometre taşları (`shapes-legal.js`; Ekim 2026) |
+| 59 | `arge` | Ar-Ge — fikir ampulü ve dişli (`shapes-legal.js`; Ekim 2026) |
+| 60 | `hibe` | AB hibesi — on iki yıldız, avro ve başvuru dosyası (`shapes-legal.js`; Ekim 2026) |
+| 61 | `istihdam` | İstihdam teşviki — yeni koltuklar ve prim desteği (`shapes-legal.js`; Ekim 2026) |
+| 62 | `ihracat` | İhracat — dünya, rota ve konteyner (`shapes-legal.js`; Ekim 2026) |
 
 Kayıttaki diğer alanlar: `spin` (sürekli dönüş; 0 = dönmez), `sway` (>0 ise dönmek yerine ± salınım — düzlemsel şekiller yandan ince görünmesin), `pose` (WebGL kamerası; yeni şekiller için `POSE({ dx, dy, dz, ly })`), `view` (mürekkep çizimi için başlangıç bakışı: `pitch`, `yaw`).
 

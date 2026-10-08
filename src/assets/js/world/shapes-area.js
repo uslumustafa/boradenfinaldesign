@@ -1,6 +1,6 @@
 // Hizmet alanı formasyonları (ana sayfa «Hizmet alanları» bandı ve alan sayfaları) — Ekim 2026 sekiz alanlı yapı.
 // Vergi: beyan rakamları · Kurumsal Finansman: karar ağacı · Teşvik: destek basamakları ve AB yıldız halkası · Hukuk: § ve tokmak ·
-// Akademi: antik okul binası. Saf hesaplama; yerleşim: x ∈ [−6,5, 6,5], y ∈ [−4,2, 4,5], z ∈ [−3,5, 3,5].
+// Dijital Dönüşüm: kâğıttan ekrana · Akademi: antik okul binası. Saf hesaplama; yerleşim: x ∈ [−6,5, 6,5], y ∈ [−4,2, 4,5], z ∈ [−3,5, 3,5].
 import { Draw, X, Y, Z, TAU, v3 } from './draw.js';
 
 const FLOOR = -4.0;
@@ -37,83 +37,68 @@ export function rakamlar(p, rnd, Nf) {
   d.done(Nf);
 }
 
-/* ── Kurumsal Finansman: karar ağacı — kökleri toprağa yayılan kalın gövde, dallar ve dolgun taç; ilk çatallarda karar düğümleri.
-   (Önceki ince dallanma «yeni filizlenen fidan» gibi okunuyordu: müşteri geri bildirimi, Ekim 2026) */
+/* ── Kurumsal Finansman: karar ağacı — ilk «yapı ağacı»nın çizgi dili (dallar ve parlak karar düğümleri), olgun bir ağaç olarak:
+   kökleri olan kalın gövde, altı kademe dallanma, geniş taç; dal uçlarında küçük yaprak pırıltıları. (Ekim 2026: ilk ağaç «yeni filizlenen
+   fidan», yuvarlak bulut taçlı ikinci deneme «ağaç olmamış» bulundu; müşteri «eski formda ama daha büyük, dalları olan» bir ağaç istedi.) */
 export function agac(p, rnd, Nf) {
   const d = new Draw(p, rnd);
-  const ground = FLOOR - 0.1;
-  // dal: konik gövde yüzeyi (r0 → r1); ince dallarda tek çizgi
-  const limb = (a, b, r0, r1, o = {}) => {
-    const ax = v3.norm(v3.sub(b, a));
-    const ref = Math.abs(ax[1]) < 0.9 ? Y : X;
-    const u = v3.norm([ax[1] * ref[2] - ax[2] * ref[1], ax[2] * ref[0] - ax[0] * ref[2], ax[0] * ref[1] - ax[1] * ref[0]]);
-    const w = [ax[1] * u[2] - ax[2] * u[1], ax[2] * u[0] - ax[0] * u[2], ax[0] * u[1] - ax[1] * u[0]];
-    const L = v3.dist(a, b);
-    if (r0 < 0.07) return d.line(a, b, { s: 0.9, d: 1.1, ...o });
-    return d.part(L * (1 + r0 * 7) * (o.d ?? 1.2), (n) => {
-      for (let i = 0; i < n; i++) {
-        const t = rnd();
-        const r = r0 + (r1 - r0) * t;
-        const ang = rnd() * TAU;
-        const q = v3.add(v3.mix(a, b, t), v3.add(v3.mul(u, Math.cos(ang) * r), v3.mul(w, Math.sin(ang) * r)));
-        d.pt(q[0], q[1], q[2], { s: 0.95, sv: 0.3, j: 0.01, ...o });
-      }
-    });
-  };
-  // gövde ve kökler
-  const base = [0, ground, 0];
-  const top = [0.1, -1.0, 0.05];
-  limb(base, top, 0.85, 0.42, { d: 1.9 });
-  for (let k = 0; k < 6; k++) {
-    const a = (k / 6) * TAU + 0.4;
-    const mid = [Math.cos(a) * 0.9, ground + 0.15, Math.sin(a) * 0.7];
-    const end = [Math.cos(a) * (1.5 + (k % 2) * 0.5), ground, Math.sin(a) * (1.0 + (k % 2) * 0.35)];
-    limb([Math.cos(a) * 0.4, ground + 0.5, Math.sin(a) * 0.35], mid, 0.24, 0.14);
-    limb(mid, end, 0.14, 0.04);
-  }
-  // toprak: gövde dibinde kısa çizgi (halka çizilmez — taçla birlikte «mantar» gibi okunuyordu)
-  d.line([-2.4, ground, 0.2], [2.4, ground, 0.2], { s: 0.8, d: 0.6 });
-  // dallar: gövdenin tepesinden beş ana dal geniş açıyla açılır; her kademede 2–3 dal, uçlarda ve dal boyunca yaprak kümeleri
+  const LEN = [1.5, 2.3, 1.75, 1.35, 1.05, 0.8, 0.6]; // kademe → dal boyu
+  const R = [0.3, 0.18, 0.11, 0.07, 0.045, 0.03, 0.02]; // kademe → dal kalınlığı (yarıçap)
+  const S = [1.05, 1.0, 0.95, 0.9, 0.86, 0.82, 0.8]; // kademe → nokta boyu
+  const DENS = [3.0, 2.3, 1.7, 1.25, 1.0, 0.85, 0.7]; // kademe → yoğunluk
+  const segs = [];
+  const forks = [];
   const tips = [];
-  const turn = (dir, ang, az) => {
-    // dir'i, ona dik rastgele bir eksen etrafında ang kadar çevir; yukarı eğilim
-    const ref = Math.abs(dir[1]) < 0.9 ? Y : X;
-    const u = v3.norm([dir[1] * ref[2] - dir[2] * ref[1], dir[2] * ref[0] - dir[0] * ref[2], dir[0] * ref[1] - dir[1] * ref[0]]);
-    const w = [dir[1] * u[2] - dir[2] * u[1], dir[2] * u[0] - dir[0] * u[2], dir[0] * u[1] - dir[1] * u[0]];
-    const side = v3.add(v3.mul(u, Math.cos(az)), v3.mul(w, Math.sin(az)));
-    return v3.norm(v3.add(v3.add(v3.mul(dir, Math.cos(ang)), v3.mul(side, Math.sin(ang))), [0, 0.18, 0]));
-  };
-  const grow = (a, dir, len, r, depth) => {
-    const b = v3.add(a, v3.mul(dir, len));
-    limb(a, b, r, r * 0.7);
-    if (depth === 1) d.node(b, 0.2, 14, { t: [1, 2, 3][tips.length % 3] });
-    if (depth >= 2) d.cloud(v3.mix(a, b, 0.7), [0.42, 0.32, 0.42], 1.0, { s: 0.7, sv: 0.35, j: 0.02, acc: [3, 0.25] });
-    if (depth >= 3) {
+  const grow = (a, dir, depth) => {
+    const b = v3.add(a, v3.mul(dir, LEN[depth] * (0.9 + rnd() * 0.2)));
+    segs.push({ a, b, depth });
+    if (depth >= 6) {
       tips.push(b);
       return;
     }
-    const kids = depth < 2 ? 3 : 2;
-    for (let k = 0; k < kids; k++) grow(b, turn(dir, 0.42 + rnd() * 0.25, (k / kids) * TAU + rnd() * 1.2), len * (0.68 + rnd() * 0.1), r * 0.6, depth + 1);
+    if (depth >= 1 && depth <= 3) forks.push(b);
+    const kids = depth < 3 ? 3 : 2;
+    const spread = [0.95, 0.9, 0.8, 0.72, 0.66, 0.6][depth];
+    for (let k = 0; k < kids; k++) {
+      const ang = (k / kids) * TAU + rnd() * 1.1 + depth * 0.7;
+      grow(b, v3.norm([dir[0] + Math.cos(ang) * spread, dir[1] * 0.82 + 0.32, dir[2] + Math.sin(ang) * spread * 0.85]), depth + 1);
+    }
   };
+  // gövde: tabandan hafif kıvrımla yükselir, sonra dallanır
+  const base = [0, FLOOR - 0.1, 0];
+  const mid = [0.15, FLOOR + 1.6, 0.05];
+  segs.push({ a: base, b: mid, depth: 0, r: 0.42 });
+  grow(mid, v3.norm([-0.08, 1, 0]), 0);
+  // kökler: tabandan yere yayılan beş kök, uçlarında ince saçaklar
   for (let k = 0; k < 5; k++) {
-    const az = (k / 5) * TAU + 0.3;
-    const el = 0.85 + (k % 2) * 0.3; // yataydan yükselme açısı (dik dallar → yuvarlak taç; dallar taç içinde kalır)
-    grow(top, v3.norm([Math.cos(el) * Math.cos(az), Math.sin(el), Math.cos(el) * Math.sin(az) * 0.8]), 1.45, 0.3, 1);
+    const a = (k / 5) * TAU + 0.5;
+    const r1 = 1.2 + (k % 2) * 0.5;
+    const p1 = [Math.cos(a) * r1, FLOOR - 0.05, Math.sin(a) * r1 * 0.8];
+    segs.push({ a: [Math.cos(a) * 0.25, FLOOR + 0.35, Math.sin(a) * 0.2], b: p1, depth: 3 });
+    for (const s of [-0.45, 0.45]) segs.push({ a: p1, b: [p1[0] + Math.cos(a + s) * 0.9, FLOOR - 0.1, p1[2] + Math.sin(a + s) * 0.7], depth: 5 });
   }
-  grow(top, [0.04, 1, 0.02], 1.8, 0.32, 2); // orta (önder) dal
-  // dal uçlarında küçük yaprak kümeleri
-  for (const q of tips) d.cloud(q, [0.5, 0.4, 0.45], 0.7, { s: 0.72, sv: 0.4, j: 0.02, acc: [3, 0.3] });
-  // taç: yuvarlak kubbe — yaprak öbekleri elipsoit yüzeyine yakın dağılır (meşe/çınar silueti); alt kısım açık, gövde ve dallar görünür
-  const C = [0.1, 1.6, 0];
-  const RR = [2.4, 3.0, 2.2]; // taç yüksekliği ≈ genişliği: yuvarlak ağaç (yassı taç «mantar» gibi okunuyordu)
-  for (let i = 0; i < 34; i++) {
-    const yy = -0.62 + 1.62 * ((i + 0.5) / 34); // −0,62…1 (yuvarlak taç; altı kısmen açık)
-    const ang = i * 2.39996; // altın açı
-    const rr = Math.sqrt(Math.max(0, 1 - Math.min(1, yy) ** 2));
-    const dir = [Math.cos(ang) * rr, Math.min(1, yy), Math.sin(ang) * rr];
-    const q = [C[0] + dir[0] * RR[0] * 0.86, C[1] + dir[1] * RR[1] * 0.86, C[2] + dir[2] * RR[2] * 0.86];
-    d.cloud(q, [0.85, 0.85, 0.8], 8, { s: 0.72, sv: 0.4, j: 0.02, acc: [3, 0.28] });
+  // sahneye sığdır: taç genişliği |x|, |z| ≤ 6,4; tepe ≤ 4,6 (taban sabit)
+  const all = [...segs.flatMap((s) => [s.a, s.b]), ...tips];
+  const mxz = Math.max(...all.map((q) => Math.max(Math.abs(q[0]), Math.abs(q[2]))));
+  const myy = Math.max(...all.map((q) => q[1]));
+  const k = Math.min(1, 6.4 / mxz, (4.6 - FLOOR) / (myy - FLOOR));
+  const fit = (q) => [q[0] * k, FLOOR + (q[1] - FLOOR) * k, q[2] * k];
+  // dallar: kesitinde dolu silindir gibi (kalınlık kademeyle incelir)
+  for (const sg of segs) {
+    const a = fit(sg.a);
+    const b = fit(sg.b);
+    const r = (sg.r ?? R[sg.depth]) * k;
+    d.part(v3.dist(a, b) * DENS[sg.depth], (n) => {
+      for (let i = 0; i < n; i++) {
+        const q = v3.mix(a, b, (i + rnd() * 0.7) / n);
+        d.pt(q[0] + (rnd() - 0.5) * 2 * r, q[1] + (rnd() - 0.5) * 1.2 * r, q[2] + (rnd() - 0.5) * 2 * r, { s: S[sg.depth], sv: 0.3, j: 0 });
+      }
+    });
   }
+  // karar düğümleri (ilk üç çatal): seyrek, parlak; mavi · kırmızı · yeşil
+  forks.forEach((c, i) => d.node(fit(c), 0.2, 3, { t: [1, 2, 3][i % 3] }));
+  // yaprak pırıltıları (dal uçları)
+  tips.forEach((c) => d.cloud(fit(c), 0.16, 0.22, { s: 1.0, sv: 0.5, j: 0.01, acc: [3, 0.4], cap: 8 }));
   d.done(Nf);
 }
 
@@ -191,6 +176,85 @@ export function hukuk(p, rnd, Nf) {
   for (let k = 0; k < 12; k++) {
     const t = (k / 12) * TAU;
     d.line([blk[0] + Math.cos(t) * 1.6, blk[1], blk[2] + Math.sin(t) * 1.6], [blk[0] + Math.cos(t) * 1.6, blk[1] + 0.45, blk[2] + Math.sin(t) * 1.6], { s: 0.85, d: 0.6 });
+  }
+  d.done(Nf);
+}
+
+/* ── Dijital Dönüşüm: kâğıttan dijitale — solda kâğıt fatura (başlık, satırlar, tutar), ortada ekrana akan 0 ve 1'ler, sağda ekranda
+   aynı tutarla e-fatura, rapor çubukları ve onay işareti; üstte veriyi eşitleyen bulut (e-arşiv). Akış soldan sağa ve aşağıdan yukarı:
+   şekil dar kalır, sayfa başlığına taşmaz.
+   (Önceki «veri katmanları» şekli anlaşılmadı: müşteri geri bildirimi, Ekim 2026) */
+const bez = (a, b, c, e) => (u) => {
+  const k = 1 - u;
+  return [0, 1, 2].map((i) => k * k * k * a[i] + 3 * k * k * u * b[i] + 3 * k * u * u * c[i] + u * u * u * e[i]);
+};
+export function dijital(p, rnd, Nf) {
+  const d = new Draw(p, rnd);
+  // kâğıt faturalar (solda, aşağıda): arkada bir yaprak, önde okunur fatura — başlık, satırlar, tutar
+  const sheet = (c, ang) => ({ c, u: [Math.cos(ang), Math.sin(ang), 0], v: [-Math.sin(ang), Math.cos(ang), 0] });
+  const B = sheet([-2.95, -0.75, -0.5], -0.1);
+  d.rect(B.c, B.u, B.v, 2.4, 3.2, { s: 0.8, d: 0.8 });
+  const F = sheet([-3.3, -1.05, 0], 0.07);
+  d.rect(F.c, F.u, F.v, 2.4, 3.2, { s: 1.05, d: 1.6 });
+  const at = (a, b) => [F.c[0] + F.u[0] * a + F.v[0] * b, F.c[1] + F.u[1] * a + F.v[1] * b, F.c[2] + 0.01];
+  d.text('FATURA', at(0, 0.95), F.u, F.v, 0.4, { align: 'center', s: 1.1, d: 2.0 });
+  for (let r = 0; r < 4; r++) d.line(at(-0.9, 0.45 - r * 0.33), at(0.9 - (r === 3 ? 0.7 : rnd() * 0.3), 0.45 - r * 0.33), { s: 0.75, d: 0.5 });
+  d.line(at(-0.9, -0.9), at(0.9, -0.9), { s: 0.85, d: 0.7 });
+  d.text('₺', at(-0.92, -1.38), F.u, F.v, 0.34, { t: 1, s: 1.05, d: 1.6 });
+  d.text('12.500', at(0.92, -1.38), F.u, F.v, 0.32, { align: 'right', s: 1.05, d: 1.8 });
+  // akış: kâğıttan ekrana yukarı doğru üç şerit; 0 ve 1'ler ekrana yaklaştıkça büyür, kâğıdın kenarında kırıntılar
+  const lanes = [
+    bez([-2.0, 0.1, 0.3], [-1.2, 0.9, 0.5], [-0.6, 1.6, 0.5], [0.15, 1.6, 0.3]),
+    bez([-2.0, -0.9, 0.3], [-1.1, -0.5, 0.6], [-0.6, 0.6, 0.6], [0.15, 0.85, 0.3]),
+    bez([-2.0, -1.9, 0.3], [-1.0, -1.7, 0.5], [-0.5, -0.2, 0.5], [0.15, 0.1, 0.3]),
+  ];
+  lanes.forEach((L, li) => {
+    d.curve(L, { t: 1, s: 0.75, d: 0.4 });
+    for (let k = 0; k < 5; k++) {
+      const u = 0.12 + k * 0.19;
+      const q = L(u);
+      const sz = 0.2 + u * 0.18;
+      d.text(rnd() < 0.5 ? '0' : '1', [q[0], q[1] - sz * 0.5, q[2]], X, Y, sz, { align: 'center', t: (k + li) % 4 === 3 ? 3 : 1, s: 1.0, d: 1.7 });
+    }
+  });
+  d.cloud([-2.0, -0.9, 0.3], [0.25, 1.2, 0.3], 1.0, { s: 0.75, sv: 0.4, j: 0.02, acc: [1, 0.4] });
+  // ekran (sağda, yukarıda): çerçeve (derinlikli), iç ekran, ayak
+  const M = [2.4, 0.9, 0.2];
+  const MW = 4.6;
+  const MH = 3.0;
+  d.box([M[0], M[1], M[2] - 0.15], [MW, MH, 0.3], { s: 1.0, d: 1.4 });
+  d.rect([M[0], M[1], M[2] + 0.02], X, Y, MW - 0.35, MH - 0.35, { t: 1, s: 0.9, d: 1.0 });
+  d.line([M[0], M[1] - MH / 2, M[2] - 0.15], [M[0], M[1] - MH / 2 - 0.85, M[2] - 0.15], { s: 1.0, d: 1.2 });
+  d.circle([M[0], M[1] - MH / 2 - 0.9, M[2] - 0.15], X, Z, 0.95, { s: 0.95, d: 1.1 });
+  // ekrandaki e-fatura: başlık; solda yükselen rapor çubukları, sağda aynı tutar ve onay işareti
+  const S = (a, b) => [M[0] + a, M[1] + b, M[2] + 0.04];
+  d.text('E-FATURA', S(-1.9, 0.88), X, Y, 0.28, { t: 1, s: 1.05, d: 1.8 });
+  d.line(S(-2.0, 0.72), S(2.0, 0.72), { t: 1, s: 0.85, d: 0.6 });
+  [0.55, 0.9, 1.2, 1.6].forEach((h, k) => {
+    const c = S(-1.75 + k * 0.46, -1.15 + h / 2);
+    const t = [1, 2, 1, 3][k];
+    d.rect(c, X, Y, 0.3, h, { t, s: 0.95, d: 1.1 });
+    d.hatch(c, X, Y, 0.22, h - 0.08, Math.max(2, Math.round(h * 4)), { t, s: 0.8, d: 0.4 });
+  });
+  d.line(S(-2.0, -1.17), S(-0.15, -1.17), { s: 0.85, d: 0.6 });
+  d.text('₺', S(0.1, 0.05), X, Y, 0.34, { t: 1, s: 1.05, d: 1.6 });
+  d.text('12.500', S(1.95, 0.05), X, Y, 0.34, { align: 'right', s: 1.1, d: 1.9 });
+  d.line(S(0.1, -0.3), S(1.95, -0.3), { s: 0.8, d: 0.5 });
+  d.circle(S(1.05, -0.85), X, Y, 0.32, { t: 3, s: 1.05, d: 1.4 });
+  d.poly([S(0.89, -0.85), S(1.0, -0.98), S(1.24, -0.7)], { t: 3, s: 1.2, d: 2.2 });
+  // bulut ve eşitleme okları (e-arşiv)
+  const z0 = -0.4;
+  d.arc([1.8, 3.55, z0], X, Y, 0.4, Math.PI * 0.5, Math.PI * 1.5, { s: 1.05, d: 1.6 });
+  d.arc([2.4, 3.75, z0], X, Y, 0.58, Math.PI * 0.08, Math.PI * 0.92, { s: 1.05, d: 1.6 });
+  d.arc([3.05, 3.57, z0], X, Y, 0.42, -Math.PI * 0.5, Math.PI * 0.5, { s: 1.05, d: 1.6 });
+  d.line([1.8, 3.15, z0], [3.05, 3.15, z0], { s: 1.0, d: 1.4 });
+  for (const [x, up, t] of [[2.15, 1, 3], [2.65, -1, 1]]) {
+    const a = [x, M[1] + MH / 2 + 0.12, z0 / 2];
+    const b = [x, 3.02, z0];
+    d.line(a, b, { t, s: 1.0, d: 1.4 });
+    const tip = up > 0 ? b : a;
+    d.line(tip, [x - 0.16, tip[1] - up * 0.22, tip[2]], { t, s: 1.0, d: 1.2 });
+    d.line(tip, [x + 0.16, tip[1] - up * 0.22, tip[2]], { t, s: 1.0, d: 1.2 });
   }
   d.done(Nf);
 }

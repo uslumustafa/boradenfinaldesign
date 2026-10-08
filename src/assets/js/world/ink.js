@@ -182,8 +182,10 @@ export function createInk(canvas, opts = {}) {
     const rzm = A.rz * (1 - mix) + (B ? B.rz * mix : 0);
     const qxm = A.qx * (1 - mix) + (B ? B.qx * mix : 0);
     const qym = A.qy * (1 - mix) + (B ? B.qy * mix : 0);
-    // kutuya sığdırma: qx/qy perspektif dâhil ekran yarı-boyutlarıdır (prepare); FIT küçük bir güvenlik payı bırakır
-    const scale = Math.min(fit.w / (2 * qxm), fit.h / (2 * qym)) * FIT * (r.zoom || 1);
+    // kutuya sığdırma: qx/qy perspektif dâhil ekran yarı-boyutlarıdır (prepare); FIT küçük bir güvenlik payı bırakır.
+    // view.zoom (FORMATIONS): seyrek uçları yüzdelik sınırın dışında kalan şekiller (ör. ağaç tacı) için şekle özgü küçültme
+    const vzoom = (A.view.zoom || 1) * (1 - mix) + (B ? (B.view.zoom || 1) * mix : 0);
+    const scale = Math.min(fit.w / (2 * qxm), fit.h / (2 * qym)) * FIT * (r.zoom || 1) * vzoom;
     const Rb = Math.max(rxm, rym, rzm);
     const D = Rb * PERSP;
     const intro = r.intro === undefined ? 1 : r.intro;

@@ -14,7 +14,7 @@ test('kimlikler tekil, sıra kalıcı', () => {
   assert.equal(new Set(ids).size, ids.length, 'yinelenen formasyon kimliği');
   assert.equal(FORMATION_COUNT, ids.length);
   // ana sayfa sahneleri sıra numarasıyla seçilir: alan şekilleri 1…8 ardışık olmalı (data-world-range iki komşu şekil arasında geçiş yapar)
-  assert.deepEqual(ids.slice(0, 10), ['ufuk', 'rakamlar', 'ornekleme', 'defter', 'agac', 'tesvik', 'hukuk', 'katman', 'sutunlar', 'kapi']);
+  assert.deepEqual(ids.slice(0, 10), ['ufuk', 'rakamlar', 'ornekleme', 'defter', 'agac', 'tesvik', 'hukuk', 'dijital', 'sutunlar', 'kapi']);
   assert.deepEqual(Object.values(AREA_SHAPE).map(sceneOf), [1, 2, 3, 4, 5, 6, 7, 8], 'alan şekilleri ana sayfa sırasında ardışık');
   ids.forEach((id, i) => assert.equal(SCENE[id], i));
   assert.equal(POSES.length, ids.length);
