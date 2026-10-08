@@ -55,7 +55,7 @@ Kural: sık metin/sayı ızgarası taşıyan bantta şekil yazının arkasına d
 
 ## Kayıt defteri
 
-`src/assets/js/world/formations.js › FORMATIONS`. Şablonlar sahneyi **kimlikle** seçer (`data-world="{{ 'kapi' | scene }}"`; sayı yazılmaz — Ekim 2026'da sıra değişti). Tek sıra kuralı: ana sayfa «Hizmet alanları» sahnesi `data-world-range="1,8"` iki komşu şekil arasında geçiş yaptığından **alan şekilleri 1…8 numarada, ana sayfa alan sırasıyla ardışık** durur (`tests/formations.test.mjs` denetler). Diğer yeni şekiller sona eklenir. Ekim 2026 sekiz alanlı yapı: `rakamlar` (Vergi), `tesvik`, `hukuk` eklendi; `agac` ve `sutunlar` (okul binası) yeniden çizildi; `halka` alan şekli olmaktan çıktı (bordro hizmetlerinde kullanılır).
+`src/assets/js/world/formations.js › FORMATIONS`. Şablonlar sahneyi **kimlikle** seçer (`data-world="{{ 'kapi' | scene }}"`; sayı yazılmaz — Ekim 2026'da sıra değişti). Tek sıra kuralı: ana sayfa «Hizmet alanları» sahnesi `data-world-range="1,8"` iki komşu şekil arasında geçiş yaptığından **alan şekilleri 1…8 numarada, ana sayfa alan sırasıyla ardışık** durur (`tests/formations.test.mjs` denetler). Diğer yeni şekiller sona eklenir. Ekim 2026 sekiz alanlı yapı: `rakamlar` (Vergi), `tesvik`, `hukuk` eklendi; `agac` ve `sutunlar` (okul binası) yeniden çizildi; `halka` alan şekli olmaktan çıktı (bordro hizmetlerinde kullanılır). Aynı ay Hukuk ve Teşvik hizmetlerine kendi şekilleri verildi (`shapes-legal.js`: sözleşme, sicil gazetesi, arabuluculuk masası, uzlaşma/dava yolu, KVKK envanteri, icra takibi, şirket kuruluşu; teşvik belgesi, iş planı, Ar-Ge ampulü, AB hibesi, istihdam, ihracat). Yazılı şekillerde harfler `draw.js › GLYPHS` çizgi harfleridir (Türkçe harfler, €, /, : dahil); harf titreşimi boyla orantılıdır.
 
 | # | Kimlik | Açıklama (`figure`; yalnızca veride — Ekim 2026'dan beri ekranda «Şekil NN · …» alt yazısı gösterilmez, müşteri isteği) |
 | --- | --- | --- |
@@ -108,6 +108,19 @@ Kural: sık metin/sayı ızgarası taşıyan bantta şekil yazının arkasına d
 | 46 | `sure` | Hizmet süreleri — yıllara yayılan çalışma ve sigortalılık dönemleri |
 | 47 | `soru` | Sorular — başlıklara göre toplanan sorular ve yanıtlar |
 | 48 | `yazit` | Yazıt — Orhun Abideleri tarzında dikili taşlar |
+| 49 | `sozlesme` | Sözleşme — maddeler, imzalar ve kalem (`shapes-legal.js`; Ekim 2026) |
+| 50 | `sicil` | Ticaret sicili — gazete ilanı ve tescil mührü (`shapes-legal.js`; Ekim 2026) |
+| 51 | `arabulucu` | Arabuluculuk masası — taraflar, arabulucu ve iş kanunları (`shapes-legal.js`; Ekim 2026) |
+| 52 | `uyusmazlik` | Vergi uyuşmazlığı — ihbarnameden uzlaşma ya da dava yoluna (`shapes-legal.js`; Ekim 2026) |
+| 53 | `kvkk` | KVKK uyumu — veri envanteri ve koruma kalkanı (`shapes-legal.js`; Ekim 2026) |
+| 54 | `icra` | Alacak takibi — vadesi geçen fatura, ihtar, arabuluculuk, icra ve tahsil (`shapes-legal.js`; Ekim 2026) |
+| 55 | `kurulus` | Şirket kuruluşu — temel, katlar ve yerine inen «A.Ş.» (`shapes-legal.js`; Ekim 2026) |
+| 56 | `belge` | Yatırım teşvik belgesi — belge, mühür ve fabrika (`shapes-legal.js`; Ekim 2026) |
+| 57 | `proje` | Proje iş planı — iş paketleri, takvim ve kilometre taşları (`shapes-legal.js`; Ekim 2026) |
+| 58 | `arge` | Ar-Ge — fikir ampulü ve dişli (`shapes-legal.js`; Ekim 2026) |
+| 59 | `hibe` | AB hibesi — on iki yıldız, avro ve başvuru dosyası (`shapes-legal.js`; Ekim 2026) |
+| 60 | `istihdam` | İstihdam teşviki — yeni koltuklar ve prim desteği (`shapes-legal.js`; Ekim 2026) |
+| 61 | `ihracat` | İhracat — dünya, rota ve konteyner (`shapes-legal.js`; Ekim 2026) |
 
 Kayıttaki diğer alanlar: `spin` (sürekli dönüş; 0 = dönmez), `sway` (>0 ise dönmek yerine ± salınım — düzlemsel şekiller yandan ince görünmesin), `pose` (WebGL kamerası; yeni şekiller için `POSE({ dx, dy, dz, ly })`), `view` (mürekkep çizimi için başlangıç bakışı: `pitch`, `yaw`).
 

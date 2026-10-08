@@ -119,6 +119,40 @@ export function buildModel(data) {
   const sources = c.sources || {};
   // Hizmetin kaynak listesi: sourceKeys → sources tablosu ([etiket, adres]); tabloda olmayan anahtar sessizce atlanır
   for (const s of services) s.srcList = (s.sourceKeys || []).map((k) => sources[k]).filter(Boolean).map(([label, url]) => ({ label, url }));
+  // Kaynak etiketi «Kurum — Başlık»; başlık «NNNN sayılı …» ile başlıyorsa kanun numarası ayrılır (Hukuk ve Teşvik sayfalarındaki dayanak bölümleri).
+  const parseSrc = (k) => {
+    const [label, url] = sources[k];
+    const parts = label.split(' — ');
+    const title = parts.length > 1 ? parts.slice(1).join(' — ') : label;
+    const law = title.match(/^(\d+) sayılı (.+)$/);
+    return { key: k, label, url, issuer: parts.length > 1 ? parts[0] : '', title, lawNo: law ? law[1] : null, lawName: law ? law[2] : null };
+  };
+  for (const s of services) {
+    const src = (s.sourceKeys || []).filter((k) => sources[k]).map(parseSrc);
+    s.lawNos = src.map((b) => b.lawNo).filter(Boolean);
+    s.issuers = [...new Set(src.map((b) => b.issuer).filter(Boolean))];
+  }
+  // Alanın dayanak tablosu (content.json › groups[].feature: «mevzuat» → kanunlar, «kurumlar» → kurum ve programlar): hizmetlerin kaynakları,
+  // her kaynağın hangi hizmetlerde geçtiğiyle. Wagtail karşılığı: ServiceAreaPage.feature + kaynak snippet'leri.
+  for (const g of groups) {
+    const map = new Map();
+    for (const s of g.services) {
+      for (const k of s.sourceKeys || []) {
+        if (!sources[k]) continue;
+        if (!map.has(k)) map.set(k, { ...parseSrc(k), services: [] });
+        map.get(k).services.push({ title: s.title, url: s.url });
+      }
+    }
+    const all = [...map.values()];
+    const byIssuer = [];
+    for (const b of all) {
+      const name = b.issuer || b.label;
+      let grp = byIssuer.find((x) => x.issuer === name);
+      if (!grp) byIssuer.push((grp = { issuer: name, items: [] }));
+      grp.items.push(b);
+    }
+    g.basis = { laws: all.filter((b) => b.lawNo), others: all.filter((b) => !b.lawNo), byIssuer };
+  }
 
   // Yayınlar (sirküler/duyuru/blog/haber)
   const publications = {};

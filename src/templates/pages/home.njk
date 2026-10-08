@@ -160,12 +160,25 @@
       <p class="eyebrow" data-reveal>Boraden'de bir gün</p>
       <h2 class="film__title" data-reveal data-reveal-delay="1">Ofisimiz.<br><em>Kapımız size açık.</em></h2>
     </div>
-    <p class="film__note mono">Arşiv görüntüsü · ses yok</p>
     <button class="film__ctl" type="button" data-film-ctl aria-label="Videoyu oynat" hidden>
       <span class="film__ico" aria-hidden="true"></span>
       <span class="film__ctl-t" data-film-ctl-t>Videoyu oynat</span>
     </button>
   </div>
+  {# Birim şeridi: hizmet alanlarımızın adları (Hukuk ve Teşvik dahil) filmin altında yavaşça akar; her ad alan sayfasına gider.
+     İkinci liste yalnızca kesintisiz döngü içindir (aria-hidden, sekme sırasında yok). Hareket azaltma / «Kapalı» katmanda şerit durur, satırlara sarılır.
+     Wagtail: ServiceAreaPage listesi (sıralı). #}
+  <nav class="units" aria-label="Hizmet alanlarımız">
+    <div class="units__track">
+      {% for copy in [0, 1] %}
+      <ul class="units__list"{% if copy %} aria-hidden="true"{% endif %}>
+        {% for g in groups %}
+        <li class="units__i"><a class="units__a" href="{{ g.url }}"{% if copy %} tabindex="-1"{% endif %}><span class="units__n mono tnum">{{ g.number }}</span><span class="units__t">{{ g.name }}</span></a><i class="units__p" aria-hidden="true"></i></li>
+        {% endfor %}
+      </ul>
+      {% endfor %}
+    </div>
+  </nav>
 </section>
 
 {# ───────── 5 · Sektörler (koyu; formasyon solda, liste sağda) ─────────

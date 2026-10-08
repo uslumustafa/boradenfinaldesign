@@ -57,6 +57,90 @@
       </div>
     </section>
 
+    {% if group.feature %}
+    {# Alana özel bölümler (content.json › groups[].feature; şimdilik Hukuk ve Teşvik). Hepsi hizmet kayıtlarından HESAPLANIR:
+       «Hangi durumda?» = services[].needs; mevzuat/kurumlar = services[].sourceKeys → sources (scripts/model.mjs › group.basis).
+       Wagtail karşılığı: ServiceAreaPage.feature (seçim) + hizmetlerin «Şu durumlarda» listesi ve kaynak snippet'leri. #}
+    <section class="areasec sitsec" id="durumlar" data-chapter="Durumlar" aria-labelledby="sit-h">
+      <div class="g12">
+        <div class="gc" style="--gc: 1 / span 4">
+          <h2 class="svc__label mono" id="sit-h" data-reveal>Hangi durumda?</h2>
+          <p class="sitsec__lead" data-reveal data-reveal-delay="1">Durumunuza en yakın kartı seçin; ilgili hizmetin sayfasında kapsamı, süreci ve hazırlanması gerekenleri bulursunuz.</p>
+        </div>
+        <ul class="gc sitgrid" style="--gc: 5 / -1">
+          {% for s in group.services %}{% if s.needs | length %}
+          <li class="sit sit--{{ ['b', 'r', 'g'][loop.index0 % 3] }}" data-reveal data-reveal-delay="{{ loop.index0 % 2 }}">
+            <ul class="sit__list">
+              {% for n in s.needs %}<li>{{ n }}</li>{% endfor %}
+            </ul>
+            <a class="sit__svc" href="{{ s.url }}"><span class="sit__n mono tnum">{{ s.ref }}</span><span class="sit__t">{{ s.title }}</span>{{ m.arrow() }}</a>
+          </li>
+          {% endif %}{% endfor %}
+        </ul>
+      </div>
+    </section>
+
+    {% if group.feature == "mevzuat" and (group.basis.laws | length) %}
+    <section class="areasec lawsec" id="mevzuat" data-chapter="Mevzuat" aria-labelledby="law-h">
+      <div class="g12">
+        <div class="gc" style="--gc: 1 / span 4">
+          <h2 class="svc__label mono" id="law-h" data-reveal>Mevzuat dayanakları</h2>
+          <p class="sitsec__lead" data-reveal data-reveal-delay="1">Bu alandaki hizmetlerin dayandığı kanunlar; güncel metinler Mevzuat Bilgi Sistemi'nde.</p>
+        </div>
+        <div class="gc" style="--gc: 5 / -1">
+          <ul class="lawgrid">
+            {% for b in group.basis.laws %}
+            <li class="law" data-reveal data-reveal-delay="{{ loop.index0 % 3 }}">
+              <a class="law__a" href="{{ b.url }}" target="_blank" rel="noopener noreferrer">
+                <span class="law__no tnum">{{ b.lawNo }}</span>
+                <span class="law__k mono">sayılı</span>
+                <span class="law__t">{{ b.lawName }}</span>
+                <span class="law__go mono">Metni okuyun <span aria-hidden="true">↗</span><span class="sr-only"> (yeni sekmede açılır)</span></span>
+              </a>
+              <p class="law__svc">{% for sv in b.services %}<a href="{{ sv.url }}">{{ sv.title }}</a>{% endfor %}</p>
+            </li>
+            {% endfor %}
+          </ul>
+          {% if group.basis.others | length %}
+          <p class="lawsec__k mono" data-reveal>Kurum ve sistemler</p>
+          <ul class="srclist" data-reveal>
+            {% for b in group.basis.others %}
+            <li><a class="srclink" href="{{ b.url }}" target="_blank" rel="noopener noreferrer"><span>{{ b.label }}</span><span class="srclink__go" aria-hidden="true">↗</span><span class="sr-only"> (yeni sekmede açılır)</span></a></li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+    {% endif %}
+
+    {% if group.feature == "kurumlar" and (group.basis.byIssuer | length) %}
+    <section class="areasec orgsec" id="kurumlar" data-chapter="Kurumlar" aria-labelledby="org-h">
+      <div class="g12">
+        <div class="gc" style="--gc: 1 / span 4">
+          <h2 class="svc__label mono" id="org-h" data-reveal>Kurumlar ve programlar</h2>
+          <p class="sitsec__lead" data-reveal data-reveal-delay="1">Bu alandaki hizmetlerin dayandığı destek programları ve düzenlemeler; bağlantılar kurumların resmî sayfalarına gider.</p>
+        </div>
+        <ul class="gc orggrid" style="--gc: 5 / -1">
+          {% for o in group.basis.byIssuer %}
+          <li class="org" data-reveal data-reveal-delay="{{ loop.index0 % 2 }}">
+            <h3 class="org__h">{{ o.issuer }}</h3>
+            <ul class="org__list">
+              {% for b in o.items %}
+              <li>
+                <a class="org__a" href="{{ b.url }}" target="_blank" rel="noopener noreferrer">{{ b.title }}<span aria-hidden="true"> ↗</span><span class="sr-only"> (yeni sekmede açılır)</span></a>
+                <span class="org__svc">{% for sv in b.services %}{{ sv.title }}{% if not loop.last %} · {% endif %}{% endfor %}</span>
+              </li>
+              {% endfor %}
+            </ul>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </section>
+    {% endif %}
+    {% endif %}
+
     {% if nFaq %}
     <section class="areasec areafaq" id="sss" data-chapter="Sorular" aria-labelledby="areafaq-h">
       <div class="g12">

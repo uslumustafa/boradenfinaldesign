@@ -736,6 +736,252 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+/* ── Alana özel bölümler (Hukuk, Teşvik): «Hangi durumda?» kartları · mevzuat dayanakları · kurumlar ve programlar */
+.sitsec__lead {
+  margin-top: 1rem;
+  max-width: 32ch;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+.sitgrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.8rem, 1.6vw, 1.2rem);
+  list-style: none;
+}
+.sit {
+  --c: var(--b-blue);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  min-width: 0;
+  padding: 1.5rem 1.5rem 1.25rem;
+  border-top: 3px solid var(--c);
+  background: var(--paper-2);
+  transition: background var(--t-med), box-shadow 0.6s var(--ease-out);
+}
+.sit--r {
+  --c: var(--b-red);
+}
+.sit--g {
+  --c: var(--b-green);
+}
+.sit:hover,
+.sit:focus-within {
+  background: #fff;
+  box-shadow: inset 0 0 0 1px var(--line-strong), 0 26px 46px -32px rgba(10, 23, 48, 0.55);
+}
+.sit__list {
+  display: grid;
+  gap: 0.6rem;
+  list-style: none;
+}
+.sit__list > li {
+  position: relative;
+  padding-left: 1.75rem;
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: 1.06rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.sit__list > li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.3em;
+  width: 1rem;
+  height: 0.76rem;
+  background: var(--c);
+  -webkit-mask: var(--tick) center / contain no-repeat;
+  mask: var(--tick) center / contain no-repeat;
+}
+.sit__svc {
+  display: flex;
+  align-items: baseline;
+  gap: 0.65rem;
+  margin-top: auto;
+  padding-top: 0.95rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--ink-2);
+  transition: color var(--t-fast);
+}
+.sit__svc::after {
+  /* tüm kart tıklanır */
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+.sit__svc:focus-visible {
+  outline: none;
+}
+.sit__svc:focus-visible::after {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.sit__n {
+  flex: none;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--ink-3);
+}
+.sit__t {
+  flex: 1;
+  min-width: 0;
+}
+.sit__svc .arr {
+  flex: none;
+  transition: transform var(--t-med) var(--ease-out);
+}
+.sit:hover .sit__svc {
+  color: var(--ink);
+}
+.sit:hover .sit__svc .arr {
+  transform: translateX(4px);
+}
+.lawgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  column-gap: clamp(1.2rem, 2.6vw, 2.2rem);
+  list-style: none;
+  border-top: 1px solid var(--ink);
+}
+.law {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  min-width: 0;
+  padding: 1.4rem 0 1.3rem;
+  border-bottom: 1px solid var(--line);
+}
+.law__a {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
+  column-gap: 0.6rem;
+  row-gap: 0.4rem;
+  color: var(--ink);
+}
+.law__no {
+  font-family: var(--f-display);
+  font-weight: 300;
+  font-size: clamp(2.4rem, 1.7rem + 1.8vw, 3.3rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+.law__k {
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.law__t {
+  grid-column: 1 / -1;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.35;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  text-decoration-color: transparent;
+  transition: text-decoration-color var(--t-med);
+}
+.law__a:hover .law__t,
+.law__a:focus-visible .law__t {
+  text-decoration-color: currentColor;
+}
+.law__go {
+  grid-column: 1 / -1;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-3);
+}
+.law__svc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.9rem;
+  font-size: 0.86rem;
+}
+.law__svc a {
+  display: inline-block;
+  padding-block: 0.3rem;
+  color: var(--ink-2);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  text-decoration-color: var(--line-strong);
+}
+.law__svc a:hover {
+  color: var(--ink);
+  text-decoration-color: currentColor;
+}
+.lawsec__k {
+  margin-top: clamp(1.8rem, 3vw, 2.4rem);
+  margin-bottom: 0.4rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.orggrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.8rem, 3vw, 2.6rem) clamp(1.4rem, 3vw, 2.6rem);
+  list-style: none;
+}
+.org {
+  min-width: 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--ink);
+}
+.org__h {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: 1.28rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.org__list {
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 0.9rem;
+  list-style: none;
+}
+.org__a {
+  display: inline-block;
+  padding-block: 0.2rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  text-decoration-color: var(--line-strong);
+}
+.org__a:hover {
+  text-decoration-color: currentColor;
+}
+.org__svc {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--ink-3);
+}
+@media (max-width: 800px) {
+  .sitgrid,
+  .orggrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
 .areafaq .faq {
   border-top-color: var(--ink);
 }

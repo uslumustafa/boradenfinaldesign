@@ -770,16 +770,6 @@ html.is-opening .hud {
 .film__title em {
   color: var(--on-dark-2);
 }
-.film__note {
-  position: absolute;
-  right: var(--gutter);
-  bottom: calc(clamp(1.4rem, 5vh, 3.2rem) + 3.6rem);
-  margin: 0;
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--on-dark-3);
-}
 .film__ctl {
   position: absolute;
   right: var(--gutter);
@@ -827,14 +817,127 @@ html.is-opening .hud {
   .film__title {
     font-size: var(--fs-5);
   }
-  .film__note {
-    display: none;
-  }
   .film__ctl {
     right: var(--gutter);
     top: 0.9rem;
     bottom: auto;
     min-height: 2.5rem;
+  }
+}
+
+/* Birim şeridi (filmin altında): alan adları yavaşça sola akar; üzerine gelince durur, klavyeyle odaklanınca baştan, durağan gösterilir.
+   Ayırıcı: başlıktaki denetçi tiki (mavi · kırmızı · yeşil sırayla) */
+.units {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(1.5rem, 3.4vw, 2.6rem);
+  border-bottom: 1px solid var(--line-dark);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.units__track {
+  display: flex;
+  width: max-content;
+  animation: units-flow 90s linear infinite;
+}
+.units:hover .units__track {
+  animation-play-state: paused;
+}
+.units:focus-within .units__track {
+  animation: none;
+}
+.units__list {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.units__i {
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+.units__a {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding-block: 0.3rem;
+  font-family: var(--f-display);
+  font-weight: 300;
+  font-size: clamp(1.5rem, 0.9rem + 2.1vw, 3.1rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.52);
+  transition: color 0.35s var(--ease-out);
+}
+.units__a:hover,
+.units__a:focus-visible {
+  color: #fff;
+}
+.units__n {
+  padding-top: 0.35em;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--on-dark-3);
+}
+.units__p {
+  flex: none;
+  width: clamp(1.1rem, 1.5vw, 1.7rem);
+  aspect-ratio: 4 / 3;
+  margin-inline: clamp(1.3rem, 3vw, 2.6rem);
+  background: var(--b-blue-2);
+  -webkit-mask: var(--tick) center / contain no-repeat;
+  mask: var(--tick) center / contain no-repeat;
+}
+.units__i:nth-child(3n + 2) .units__p {
+  background: var(--b-red-2);
+}
+.units__i:nth-child(3n) .units__p {
+  background: var(--b-green-2);
+}
+@keyframes units-flow {
+  to {
+    transform: translateX(-50%);
+  }
+}
+html[data-fx='off'] .units {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+html[data-fx='off'] .units__track {
+  width: auto;
+  animation: none;
+}
+html[data-fx='off'] .units__list {
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 0.5rem;
+  padding-inline: var(--gutter);
+}
+html[data-fx='off'] .units__list[aria-hidden] {
+  display: none;
+}
+html[data-fx='off'] .units__list {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+html[data-fx='off'] .units__i {
+  flex: 0 1 auto;
+  max-width: 100%;
+}
+html[data-fx='off'] .units__a {
+  min-width: 0;
+  white-space: normal; /* durağan listede uzun ad (ya da %200 yazı boyu) satıra sığmazsa kırılır */
+  font-size: clamp(1.2rem, 0.8rem + 1.2vw, 2rem);
+}
+html[data-fx='off'] .units__p {
+  margin-inline: clamp(0.9rem, 2vw, 1.6rem);
+}
+@media (prefers-reduced-motion: reduce) {
+  .units__track {
+    animation: none;
   }
 }
 

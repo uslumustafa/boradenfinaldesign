@@ -56,7 +56,7 @@ export const SERVICE_SHAPE = {
   'mali-musavirlik-ve-muhasebe': 'defter', // kayıt düzeni, dönem kontrolü, beyan hazırlığı
   'diger-dolayli-vergiler': 'kdv-zinciri', // işlemin vergi boyutu zincir boyunca yüklenir
   'bireysel-danismanlik-hizmetleri': 'dilimler', // gelir vergisi: kademeli tarife
-  'ar-ge-hizmetleri': 'akis', // faaliyet ayrımı → kapsam kontrolü → dokümantasyon
+  'ar-ge-hizmetleri': 'arge', // Ar-Ge ampulü ve dişli
   'tam-tasdik-islemleri': 'muhur', // tasdik raporu
   'kdv-iade-islemleri': 'kdv-zinciri', // yüklenilen ve hesaplanan KDV
   'kurumlar-vergisi-denetim-ve-tasdik': 'bilanco', // finansal sonuçtan vergi matrahına köprü
@@ -64,17 +64,17 @@ export const SERVICE_SHAPE = {
   'cari-hesap-mutabakatlarinin-yapilmasi': 'mutabakat', // alacak/borç kayıtlarının eşleşmesi
   'otv-hizmetleri': 'dilimler', // ürün ve matrah kademelerine göre oran
   // Teşvik, AB Projeleri ve Startup
-  'yatirim-tesvik-belgesi': 'tesvik', // belge, yatırım harcaması, kapanış
-  'tubitak-kosgeb-destekleri': 'akis', // başvuru → değerlendirme → raporlama adımları
-  'ab-hibe-projeleri': 'ag', // ortaklar ve iş paketleri
-  'ihracat-destekleri': 'sube', // merkezden pazarlara
+  'yatirim-tesvik-belgesi': 'belge', // teşvik belgesi, mühür, fabrika
+  'tubitak-kosgeb-destekleri': 'proje', // iş paketleri ve takvim (proje kurgusu ve bütçe)
+  'ab-hibe-projeleri': 'hibe', // AB yıldızları, avro, başvuru dosyası
+  'ihracat-destekleri': 'ihracat', // dünya, rota, konteyner
   'startup-danismanligi': 'pay', // pay yapısı ve yatırım turu
   // Hukuk
-  'sirketler-ve-sozlesmeler-hukuku': 'hukuk',
-  'is-ve-sgk-hukuku': 'terazi', // taraflar arasında denge
-  'vergi-uyusmazliklari': 'hukuk',
-  'kvkk-uyum': 'gizlilik', // kişisel verinin korunması
-  'alacak-ve-icra-takibi': 'takvim', // süreler ve takip adımları
+  'sirketler-ve-sozlesmeler-hukuku': 'sozlesme', // maddeler, imzalar, kalem
+  'is-ve-sgk-hukuku': 'arabulucu', // arabuluculuk masası; 4857 ve 5510
+  'vergi-uyusmazliklari': 'uyusmazlik', // ihbarname → uzlaşma ya da dava
+  'kvkk-uyum': 'kvkk', // veri envanteri ve kalkan; 6698
+  'alacak-ve-icra-takibi': 'icra', // fatura → ihtar → arabuluculuk → icra → tahsil
   // Kurumsal Finansman
   'birlesme-ve-devralma': 'pay', // iki yapının birleşmesi, pay dağılımı
   'finansal-yeniden-yapilandirma': 'nakit', // nakit akışı ve borç yapısı
@@ -91,8 +91,8 @@ export const SERVICE_SHAPE = {
   'suistimal-inceleme-ve-onleme': 'akis', // önleyici kontrol noktaları
   // Kurumsal Danışmanlık
   'sirket-degerlemesi': 'nakit', // geleceğe ilişkin nakit akışı varsayımları
-  'sirket-kurulus-danismanligi': 'pay', // şirket yapısı: sermaye ve ortaklık
-  'ticaret-sicil-islemleri': 'muhur', // tescil, onaylı belge
+  'sirket-kurulus-danismanligi': 'kurulus', // temel, katlar, vinç «A.Ş.» bloğunu indirir
+  'ticaret-sicil-islemleri': 'sicil', // sicil gazetesi ilanı ve tescil mührü
   raporlama: 'kup', // ihtiyaç haritası, veri düzeni: boyutlara göre veri
   'yonetim-danismanligi': 'agac', // planlama, organizasyon, kontrol
   'mali-danismanlik': 'bilanco', // işletmenin mali yapısı
@@ -101,7 +101,7 @@ export const SERVICE_SHAPE = {
   'sgk-dosya-acilisi': 'akis', // ilk adım: kayıt ve bildirim hazırlığı
   'ev-hizmetlisi-sgk-dosya-acilisi': 'takvim', // çalışma düzenine göre aylara yayılan gün
   bordrolama: 'abakus', // kalem kalem, kontrollü hesaplama
-  'istihdam-tesvik': 'ornekleme', // koşulu sağlayan çalışan/dönem seçimi
+  'istihdam-tesvik': 'istihdam', // koltuklar ve SGK prim desteği
   'sgk-protokolu': 'mutabakat', // ödeme ve mahsup eşleşmesi
   'asgari-iscilik-ve-ilisiksizlik-belgesi': 'hakedis', // proje ve taahhüt işleri
   'borclanma-islemleri': 'sure', // sigortalılık geçmişindeki dönemler

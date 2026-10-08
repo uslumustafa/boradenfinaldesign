@@ -706,7 +706,7 @@
     {
       "slug": "umut-kutlu",
       "name": "Umut Kutlu",
-      "role": "IT Uzmanı",
+      "role": "Teşvik Uzmanı",
       "department": "tesvik",
       "profile": false,
       "titles": [],
@@ -726,7 +726,7 @@
       "showContact": false,
       "status": "published",
       "needsVerification": true,
-      "verifyNote": "Proje sahibinin isteğiyle Teşvik birimine alındı (Ekim 2026); şemada BT bölümünde, unvan «IT». Birimdeki görev unvanı doğrulanmalı.",
+      "verifyNote": "Proje sahibinin isteğiyle Teşvik birimine alındı ve unvanı «Teşvik Uzmanı» olarak yazıldı (Ekim 2026); şemada BT bölümünde, unvan «IT Uzmanı» idi.",
       "source": "Kurum organizasyon şeması (müşteri, Ekim 2026)"
     },
     {

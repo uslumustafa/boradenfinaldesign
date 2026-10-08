@@ -181,3 +181,40 @@ test('şekillerin ve fotoğrafların altında «Şekil NN · …» ya da «Borad
   const figJs = fs.readFileSync(path.join(root, 'src/assets/js/modules/figure.js'), 'utf8');
   assert.ok(!figJs.includes('Şekil ·'), 'figure.js alt yazı üretmemeli');
 });
+
+test('Hukuk ve Teşvik alan sayfaları: «Hangi durumda?» kartları, mevzuat dayanakları ve kurumlar (hizmet verisinden hesaplanır)', () => {
+  for (const g of model.groups) {
+    const h = page(g.url);
+    const withNeeds = g.services.filter((s) => (s.needs || []).length).length;
+    if (!g.feature) {
+      assert.ok(!has(h, 'durumlar'), `${g.id}: özel bölüm yalnızca feature taşıyan alanlarda`);
+      continue;
+    }
+    assert.equal(count(h, /<li class="sit sit--[brg]"/g), withNeeds, `${g.id}: durum kartı sayısı`);
+    for (const s of g.services) if ((s.needs || []).length) assert.ok(h.includes(`<a class="sit__svc" href="${s.url}">`), `${g.id}: ${s.id} durum kartı yok`);
+    if (g.feature === 'mevzuat') {
+      assert.ok(g.basis.laws.length >= 5, `${g.id}: kanun sayısı`);
+      assert.equal(count(h, /<li class="law"/g), g.basis.laws.length, `${g.id}: kanun kartı sayısı`);
+      for (const b of g.basis.laws) assert.ok(h.includes(`<span class="law__no tnum">${b.lawNo}</span>`), `${g.id}: ${b.lawNo} yok`);
+    }
+    if (g.feature === 'kurumlar') {
+      assert.ok(g.basis.byIssuer.length >= 4, `${g.id}: kurum sayısı`);
+      assert.equal(count(h, /<li class="org"/g), g.basis.byIssuer.length, `${g.id}: kurum kartı sayısı`);
+    }
+  }
+  // Hukuk hizmetinin künyesinde kanun numarası (ör. KVKK → 6698)
+  const kvkk = model.services.find((s) => s.id === 'kvkk-uyum');
+  assert.ok(page(kvkk.url).includes('6698 sayılı Kanun'), 'KVKK künyesinde 6698 sayılı Kanun');
+});
+
+test('ana sayfa: filmin altındaki birim şeridi sekiz alanın hepsine bağlanır; döngü kopyası okuyucudan ve sekme sırasından gizli', () => {
+  const h = page('/');
+  const nav = (h.match(/<nav class="units"[\s\S]*?<\/nav>/) || [''])[0];
+  assert.ok(nav, 'birim şeridi yok');
+  const lists = nav.match(/<ul class="units__list"[\s\S]*?<\/ul>/g) || [];
+  assert.equal(lists.length, 2, 'iki liste (asıl + döngü kopyası)');
+  assert.ok(!/aria-hidden/.test(lists[0].slice(0, 40)) && /aria-hidden="true"/.test(lists[1].slice(0, 60)), 'yalnızca kopya aria-hidden');
+  for (const g of model.groups) assert.ok(lists[0].includes(`href="${g.url}"`), `şeritte ${g.id} yok`);
+  assert.equal(count(lists[1], /tabindex="-1"/g), model.groups.length, 'kopyadaki bağlantılar sekme sırasında değil');
+  assert.ok(!/film__note|Arşiv görüntüsü/.test(h), 'film üzerindeki «Arşiv görüntüsü» etiketi kaldırıldı');
+});

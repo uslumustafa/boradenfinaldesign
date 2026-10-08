@@ -224,10 +224,12 @@ export class Draw {
     });
   }
 
-  /** Yazı: GLYPHS'teki çizgi harflerle `str` (rakam, %, ₺, birkaç büyük harf). o: başlangıç (taban çizgisinin solu; align: 'right' ise sağı,
+  /** Yazı: GLYPHS'teki çizgi harflerle `str` (rakam, %, ₺, €, büyük harfler — Türkçe harfler dahil). o: başlangıç (taban çizgisinin solu; align: 'right' ise sağı,
    *  'center' ise ortası), u: yazı yönü, v: yukarı yönü (birim), size: harf yüksekliği. Harf aralığı yüksekliğe orantılı. Genişliği döndürür. */
   text(str, o, u, v, size, opt = {}) {
     const chars = Array.from(String(str));
+    // harf çizgisi titreşimi harf boyuna orantılı: küçük yazı (levha, tablo başlığı) bulanıklaşmaz
+    const oo = { j: Math.min(0.03, size * 0.03), sv: 0.2, ...opt };
     const adv = (ch) => (GLYPHS[ch] ? GLYPHS[ch].w ?? 0.8 : 0.55) * size;
     const W = chars.reduce((s, ch) => s + adv(ch), 0) - 0.2 * size;
     const shift = opt.align === 'right' ? -W : opt.align === 'center' ? -W / 2 : 0;
@@ -236,8 +238,8 @@ export class Draw {
       const g = GLYPHS[ch];
       if (g) {
         const P = ([gx, gy]) => [o[0] + u[0] * (x + gx * size) + v[0] * gy * size, o[1] + u[1] * (x + gx * size) + v[1] * gy * size, o[2] + u[2] * (x + gx * size) + v[2] * gy * size];
-        for (const st of g.s || []) this.poly(st.map(P), opt);
-        for (const [cx, cy, r, a0 = 0, a1 = TAU] of g.c || []) this.arc(P([cx, cy]), u, v, r * size, a0, a1, opt);
+        for (const st of g.s || []) this.poly(st.map(P), oo);
+        for (const [cx, cy, r, a0 = 0, a1 = TAU] of g.c || []) this.arc(P([cx, cy]), u, v, r * size, a0, a1, oo);
       }
       x += adv(ch);
     }
@@ -276,6 +278,14 @@ export class Draw {
 
 // Çizgi harfler (birim kutu: genişlik ≈ 0,6, yükseklik 1; taban y = 0). s: kırık çizgiler, c: yaylar [cx, cy, r, a0, a1], w: ilerleme.
 // Rakamlar yuvarlatılmış köşeli; ₺ işareti dikey gövde, iki eğik çizgi ve yukarı kıvrılan taban yayıyla çizilir.
+// Ortak çizgiler (S/Ş, O/Ö, U/Ü, G/Ğ, C/Ç aynı gövdeyi paylaşır; CED: çengel)
+const S_ = [[0.58, 0.86], [0.46, 1], [0.13, 1], [0.01, 0.88], [0.01, 0.66], [0.13, 0.54], [0.47, 0.46], [0.6, 0.34], [0.6, 0.12], [0.48, 0], [0.12, 0], [0, 0.13]];
+const O_ = [[0.16, 0], [0.5, 0], [0.66, 0.16], [0.66, 0.84], [0.5, 1], [0.16, 1], [0, 0.84], [0, 0.16], [0.16, 0]];
+const U_ = [[0, 1], [0, 0.15], [0.14, 0], [0.46, 0], [0.6, 0.15], [0.6, 1]];
+const G_ = [[0.58, 0.86], [0.46, 1], [0.14, 1], [0, 0.86], [0, 0.14], [0.14, 0], [0.46, 0], [0.6, 0.14], [0.6, 0.46], [0.34, 0.46]];
+const C_ = [[0.58, 0.86], [0.46, 1], [0.14, 1], [0, 0.86], [0, 0.14], [0.14, 0], [0.46, 0], [0.58, 0.14]];
+const CED = [[0.3, 0], [0.34, -0.12], [0.24, -0.22]];
+
 export const GLYPHS = {
   0: { s: [[[0.12, 0], [0.48, 0], [0.6, 0.12], [0.6, 0.88], [0.48, 1], [0.12, 1], [0, 0.88], [0, 0.12], [0.12, 0]]] },
   1: { s: [[[0.12, 0.78], [0.36, 1], [0.36, 0]], [[0.14, 0], [0.58, 0]]] },
@@ -306,6 +316,26 @@ export const GLYPHS = {
   T: { s: [[[0, 1], [0.6, 1]], [[0.3, 1], [0.3, 0]]] },
   R: { s: [[[0, 0], [0, 1], [0.44, 1], [0.58, 0.88], [0.58, 0.64], [0.44, 0.52], [0, 0.52]], [[0.3, 0.52], [0.62, 0]]] },
   H: { s: [[[0, 0], [0, 1]], [[0.6, 0], [0.6, 1]], [[0, 0.52], [0.6, 0.52]]] },
+  // Ekim 2026: Hukuk ve Teşvik şekilleri için ek harfler (SÖZLEŞME, TİCARET SİCİLİ, İHBARNAME, UZLAŞMA, AR-GE, SGK…) ve €, /, :
+  S: { s: [S_] },
+  Ş: { s: [S_, CED] },
+  Z: { s: [[[0.02, 1], [0.6, 1], [0, 0], [0.6, 0]]] },
+  L: { s: [[[0, 1], [0, 0], [0.56, 0]]], w: 0.72 },
+  O: { s: [O_], w: 0.88 },
+  Ö: { s: [O_, [[0.2, 1.16], [0.26, 1.16]], [[0.4, 1.16], [0.46, 1.16]]], w: 0.88 },
+  U: { s: [U_] },
+  Ü: { s: [U_, [[0.15, 1.16], [0.21, 1.16]], [[0.39, 1.16], [0.45, 1.16]]] },
+  G: { s: [G_] },
+  Ğ: { s: [G_, [[0.16, 1.22], [0.3, 1.12], [0.44, 1.22]]] },
+  N: { s: [[[0, 0], [0, 1], [0.6, 0], [0.6, 1]]] },
+  B: { s: [[[0, 0], [0, 1], [0.42, 1], [0.56, 0.88], [0.56, 0.65], [0.43, 0.53], [0, 0.53]], [[0.43, 0.53], [0.6, 0.41], [0.6, 0.12], [0.48, 0], [0, 0]]] },
+  C: { s: [C_] },
+  Ç: { s: [C_, CED] },
+  P: { s: [[[0, 0], [0, 1], [0.44, 1], [0.58, 0.87], [0.58, 0.63], [0.44, 0.5], [0, 0.5]]] },
+  Y: { s: [[[0, 1], [0.3, 0.5], [0.6, 1]], [[0.3, 0.5], [0.3, 0]]] },
+  '€': { s: [[[-0.04, 0.6], [0.52, 0.6]], [[-0.04, 0.42], [0.48, 0.42]]], c: [[0.48, 0.5, 0.44, 0.72, TAU - 0.72]], w: 1.0 },
+  '/': { s: [[[0, -0.05], [0.46, 1.05]]], w: 0.64 },
+  ':': { s: [[[0.08, 0], [0.15, 0]], [[0.08, 0.06], [0.15, 0.06]], [[0.08, 0.6], [0.15, 0.6]], [[0.08, 0.66], [0.15, 0.66]]], w: 0.42 },
   ' ': { w: 0.45 },
 };
 

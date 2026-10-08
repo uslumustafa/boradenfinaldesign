@@ -613,6 +613,7 @@
     },
     {
       "id": "tesvik",
+      "feature": "kurumlar",
       "name": "Teşvik, AB Projeleri ve Startup",
       "short": "Teşvik",
       "description": "Devlet teşviklerini, kamu ve AB destek programlarını ve yatırım hazırlığını mali kayıtlarınızla uyumlu bir bütün olarak ele alıyoruz.",
@@ -620,6 +621,7 @@
     },
     {
       "id": "hukuk",
+      "feature": "mevzuat",
       "name": "Hukuk",
       "short": "Hukuk",
       "description": "Şirket, sözleşme, iş, vergi ve veri koruma konularındaki hukuki ihtiyaçları mali süreçlerle birlikte ele alıyoruz.",

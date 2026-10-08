@@ -17,12 +17,13 @@
 //   7 Veri katmanı  — çubuk şehri                                    (Dijital Dönüşüm)
 //   8 Okul binası   — kaide, sütunlar, kiriş, alınlık                (Akademi)
 //   9 Kapı          — kemer ve ona uzanan yol                        (Kapanış)
-//   10… bordro halkası, sektörler, hizmet kavramları ve sayfa türleri (bkz. FORMATIONS)
+//   10… bordro halkası, sektörler, hizmet kavramları, sayfa türleri; sonda Hukuk ve Teşvik hizmet şekilleri (bkz. FORMATIONS)
 import { Draw, v3, X, Y } from './draw.js';
 import { kayip, maliyet, varlik, sube, edim, alacak, hakedis, sezon, ucHalka, savunma } from './shapes-sector.js';
 import { terazi, bilanco, muhur, mutabakat, dilimler, kdvZinciri, nakit, rasyo, hile, kup, akis, pay, sure } from './shapes-service.js';
 import { petek, matris, ag, yayin, kitap, abakus, takvim, basvuru, yonlendirme, arama, arsiv, sozluk, gizlilik, soru, yazit } from './shapes-page.js';
 import { rakamlar, agac, tesvik, hukuk, okul } from './shapes-area.js';
+import { sozlesme, sicil, arabulucu, uyusmazlik, kvkk, icra, kurulus, belge, proje, arge, hibe, istihdam, ihracat } from './shapes-legal.js';
 
 const TAU = Math.PI * 2;
 const clamp01 = (v) => Math.min(1, Math.max(0, v));
@@ -429,7 +430,7 @@ export const FORMATIONS = [
   { id: 'akis', build: akis, spin: 0, sway: 0.35, pose: POSE(), figure: 'Süreç akışı — adım, karar ve kontrol noktası', view: { pitch: 0.05, yaw: -0.15 } },
   { id: 'pay', build: pay, spin: 1, pose: POSE({ dy: 1.4, ly: -0.3 }), figure: 'Pay dağılımı — ortaklık ve sermaye yapısı', view: { pitch: 0.5, yaw: 0 } },
   // ── sayfa türleri (hizmetler, sektörler, ekip, bilgi merkezi, araçlar, takvim, kariyer, iletişim, arama, arşiv, sözlük, yasal)
-  { id: 'petek', build: petek, spin: 1, pose: POSE({ dy: 2.6, dz: 0.8, ly: -0.9 }), figure: 'Hizmet alanları — altı alan, kırk yedi hizmet başlığı', view: { pitch: 0.85, yaw: 0 } },
+  { id: 'petek', build: petek, spin: 1, pose: POSE({ dy: 2.6, dz: 0.8, ly: -0.9 }), figure: 'Hizmet alanları — sekiz alan, altmış hizmet başlığı', view: { pitch: 0.85, yaw: 0 } },
   // matris ana sayfanın Sektörler bandında solda da durur (lx/ls: katman ile aynı sol yerleşim)
   { id: 'matris', build: matris, spin: 0, sway: 0.5, pose: { ...POSE({ dy: 1.8, ly: -0.6 }), lx: 1.5, ls: 1.12 }, figure: 'Sektör ve hizmet alanı — her sektörde öne çıkan hizmetler', view: { pitch: 0.8, yaw: 0.12 } },
   { id: 'ag', build: ag, spin: 0, sway: 0.45, pose: POSE({ dz: 1.0 }), figure: 'Uzmanlık ağı — kişiler ve çalıştıkları alanlar', view: { pitch: 0.05, yaw: 0 } },
@@ -447,6 +448,20 @@ export const FORMATIONS = [
   { id: 'sure', build: sure, spin: 0, sway: 0.45, pose: POSE({ dz: 0.8 }), figure: 'Hizmet süreleri — yıllara yayılan çalışma ve sigortalılık dönemleri', view: { pitch: 0.1, yaw: -0.25 } },
   { id: 'soru', build: soru, spin: 0, sway: 0.4, pose: POSE({ dx: 0.7, dz: 1.6 }), figure: 'Sorular — başlıklara göre toplanan sorular ve yanıtlar', view: { pitch: 0.05, yaw: -0.2 } },
   { id: 'yazit', build: yazit, spin: 0, sway: 0.5, pose: POSE({ dy: 0.5, dz: 0.6 }), figure: 'Yazıt — Orhun Abideleri tarzında dikili taşlar', view: { pitch: 0.08, yaw: -0.32 } },
+  // Hukuk ve Teşvik hizmetleri (Ekim 2026; shapes-legal.js)
+  { id: 'sozlesme', build: sozlesme, spin: 0, sway: 0.4, pose: POSE({ dz: 0.6 }), figure: 'Sözleşme — maddeler, imzalar ve kalem', view: { pitch: 0.05, yaw: -0.2 } },
+  { id: 'sicil', build: sicil, spin: 0, sway: 0.4, pose: POSE({ dz: 0.6 }), figure: 'Ticaret sicili — gazete ilanı ve tescil mührü', view: { pitch: 0.05, yaw: 0.2 } },
+  { id: 'arabulucu', build: arabulucu, spin: 0, sway: 0.5, pose: POSE({ dz: 0.4 }), figure: 'Arabuluculuk masası — taraflar, arabulucu ve iş kanunları', view: { pitch: 0.12, yaw: -0.25 } },
+  { id: 'uyusmazlik', build: uyusmazlik, spin: 0, sway: 0.4, pose: POSE({ dz: 0.6 }), figure: 'Vergi uyuşmazlığı — ihbarnameden uzlaşma ya da dava yoluna', view: { pitch: 0.05, yaw: -0.15 } },
+  { id: 'kvkk', build: kvkk, spin: 0, sway: 0.45, pose: POSE({ dz: 0.6 }), figure: 'KVKK uyumu — veri envanteri ve koruma kalkanı', view: { pitch: 0.06, yaw: -0.25 } },
+  { id: 'icra', build: icra, spin: 0, sway: 0.45, pose: POSE({ dy: 0.6, dz: 0.8 }), figure: 'Alacak takibi — vadesi geçen fatura, ihtar, arabuluculuk, icra ve tahsil', view: { pitch: 0.15, yaw: -0.2 } },
+  { id: 'kurulus', build: kurulus, spin: 0, sway: 0.45, pose: POSE({ dy: 0.6, dz: 1.2, ly: 0.4 }), figure: 'Şirket kuruluşu — temel, katlar ve yerine inen «A.Ş.»', view: { pitch: 0.12, yaw: -0.3 } },
+  { id: 'belge', build: belge, spin: 0, sway: 0.4, pose: POSE({ dz: 0.6 }), figure: 'Yatırım teşvik belgesi — belge, mühür ve fabrika', view: { pitch: 0.06, yaw: -0.2 } },
+  { id: 'proje', build: proje, spin: 0, sway: 0.4, pose: POSE({ dz: 0.6 }), figure: 'Proje iş planı — iş paketleri, takvim ve kilometre taşları', view: { pitch: 0.05, yaw: -0.2 } },
+  { id: 'arge', build: arge, spin: 0, sway: 0.5, pose: POSE({ dz: 0.4 }), figure: 'Ar-Ge — fikir ampulü ve dişli', view: { pitch: 0.1, yaw: 0 } },
+  { id: 'hibe', build: hibe, spin: 0, sway: 0.45, pose: POSE({ dz: 0.4 }), figure: 'AB hibesi — on iki yıldız, avro ve başvuru dosyası', view: { pitch: 0.08, yaw: -0.15 } },
+  { id: 'istihdam', build: istihdam, spin: 0, sway: 0.4, pose: POSE({ dy: 0.8, dz: 0.8, ly: -0.3 }), figure: 'İstihdam teşviki — yeni koltuklar ve prim desteği', view: { pitch: 0.25, yaw: -0.2 } },
+  { id: 'ihracat', build: ihracat, spin: 0, sway: 0.4, pose: POSE({ dz: 0.8 }), figure: 'İhracat — dünya, rota ve konteyner', view: { pitch: 0.12, yaw: -0.2 } },
 ];
 
 /** Kimlik → sahne sıra numarası. Şablonlar/rotalar sahneyi buradan adıyla seçer (data-world = sıra numarası). */

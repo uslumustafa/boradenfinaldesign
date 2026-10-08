@@ -20,11 +20,15 @@
 <div class="sheet sec--paper">
   <div class="container">
 
+    {# Dayanak: kaynak sayısı; Hukuk alanında kanun numaraları, Teşvik alanında kurumlar (group.feature) #}
+    {% set dayanak = ((service.srcList | length) ~ " kaynak") if (service.srcList | length) else "" %}
+    {% if group.feature == "mevzuat" and (service.lawNos | length) %}{% set dayanak = (service.lawNos | join(" · ")) ~ " sayılı " ~ ("kanunlar" if (service.lawNos | length) > 1 else "Kanun") %}{% endif %}
+    {% if group.feature == "kurumlar" and (service.issuers | length) %}{% set dayanak = service.issuers | join(" · ") %}{% endif %}
     {{ bk.kunye(service.ref, [
       { k: "Alan", v: group.name, href: group.url },
       { k: "Kapsam", v: nScope ~ " başlık" },
       { k: "Süreç", v: (nSteps ~ " adım") if nSteps else "" },
-      { k: "Dayanak", v: ((service.srcList | length) ~ " kaynak") if (service.srcList | length) else "" }
+      { k: "Dayanak", v: dayanak }
     ], { label: "Hizmet künyesi" }) }}
 
     <div class="svc g12">
