@@ -134,6 +134,8 @@ const FRAG = /* glsl */ `
 
 const LAST = FORMATION_COUNT - 1; // son sahne sırası
 const INTRO_S = 2.2; // toplanma süresi (sn)
+const SURGE_OUT = 450; // sayfa geçişi: noktaların ekran dışına akma süresi (ms) — yönlendirici bu süre dolunca içeriği değiştirir
+const SURGE_IN = 1050; // sayfa geçişi: yeni sayfada noktaların içeri akıp şekle oturma süresi (ms)
 
 export async function createWorld({ fx, canvas, intro = false }) {
   const html = document.documentElement;
@@ -245,15 +247,28 @@ export async function createWorld({ fx, canvas, intro = false }) {
   let introT = 0;
   let wordV = 0; // «BORADEN» anı ilerlemesi 0..1
   let wordT = 0; // hedef
-  let surgeV = 0; // sayfa geçişi akışı 0..1 (0: şekilde, 1: noktalar ekran dışına akmış)
+  // Sayfa geçişi akışı 0..1 (0: şekilde, 1: noktalar ekran dışına akmış). Kare hızından bağımsız, SAATLE ilerler: kareler takılsa da
+  // (ağır sayfa, yavaş GPU, sayfa değişimi) çıkış SURGE_OUT ms'de tamamlanır; yeni sayfanın şekli her seferinde noktalar dışarıdayken
+  // oturur. (Önceden kare başına en çok 0,1 sn sayılıyordu: takılan karelerde noktalar dışarı varamadan sayfa değişiyor, yeni şekil
+  // içeri akmak yerine eski şekil geri toplanıp çözülerek değişiyordu — «geçiş bazen gelmiyor».)
+  let surgeV = 0;
   let surgeT = 0; // hedef
-  let snapAt = -1e9; // akıştan çıkış anı (yeni sayfanın ilk sahne hedefi çözülmeden hemen oturur)
+  let surgeFrom = 0; // geçerli ayağın başlangıç değeri
+  let surgeAt = 0; // geçerli ayağın başlangıç anı (ms); NaN: giriş, yeni şeklin hazırlanıp ilk kez çizileceği kareyi bekliyor
+  let snapOpen = false; // girişte (noktalar hâlâ dışarıdayken) gelen sahne hedefi çözülmeden/süzülmeden doğrudan oturur
   const pointer = { x: 0, y: 0, tx: 0, ty: 0 }; // kamera paralaksı (-1..1)
   const lens = { x: 0, y: 0, tx: 0, ty: 0, k: 0, kt: 0, at: 0 }; // fare lensi (NDC)
   const dt_samples = [];
   let slowWindows = 0;
   const camPos = new Vector3();
   const camLook = new Vector3();
+
+  // akışın verilen andaki değeri (saatle)
+  function surgeAtTime(now) {
+    if (surgeT > 0) return clamp(surgeFrom + Math.max(0, now - surgeAt) / SURGE_OUT);
+    if (Number.isNaN(surgeAt)) return surgeFrom;
+    return clamp(surgeFrom - Math.max(0, now - surgeAt) / SURGE_IN);
+  }
 
   function resize() {
     const w = canvas.clientWidth || innerWidth;
@@ -336,8 +351,10 @@ export async function createWorld({ fx, canvas, intro = false }) {
       return;
     }
     const dt = Math.min(0.1, (now - last) / 1000);
-    // uyarlanabilir kalite
-    if (moving && !document.hidden && now > 6000) {
+    // uyarlanabilir kalite. Sayfa geçişi kareleri ölçülmez: akış kısa sürer, noktalar iri çizilir ve sayfa değişimi (DOM) kareyi
+    // uzatır — kalite yalnızca olağan karelerle ayarlanır (yoksa geçişler kendiliğinden efekt kademesini düşürebiliyordu).
+    const transit = surgeT > 0 || surgeV > 0 || Number.isNaN(surgeAt);
+    if (moving && !transit && !document.hidden && now > 6000) {
       // ilk 6 sn (açılış, video, yazı tipi, ilk boyama) ölçülmez; seyrek takılma kaliteyi düşürmesin
       dt_samples.push(now - last);
       if (dt_samples.length >= 120) {
@@ -370,8 +387,9 @@ export async function createWorld({ fx, canvas, intro = false }) {
       material.uniforms.uWord.value = wordV;
     }
     if (surgeV !== surgeT) {
-      surgeV = clamp(surgeV + Math.sign(surgeT - surgeV) * dt * (surgeT > surgeV ? 1 / 0.45 : 1 / 1.05), 0, 1);
+      surgeV = surgeAtTime(now);
       if (Math.abs(surgeT - surgeV) < 0.001) surgeV = surgeT;
+      if (surgeV === 0 && !surgeT && !Number.isNaN(surgeAt)) snapOpen = false; // giriş bitti
     }
     // çıkış: hızlı başlar (tıklamaya anında tepki), girişte hızlı gelir ve yumuşak oturur
     material.uniforms.uSurge.value = surgeT > 0 ? 1 - (1 - surgeV) * (1 - surgeV) : surgeV * surgeV;
@@ -418,6 +436,8 @@ export async function createWorld({ fx, canvas, intro = false }) {
     // tam sayı sahnede B ikinci kez üretilmez (f = 0 → yalnızca A görünür)
     const b = f === 0 ? a : clamp(a + 1, 0, LAST);
     fillPair(a, b);
+    // giriş: yeni sahnenin şekli hazır (ilk kullanımda üretilir; bu kare uzun sürebilir) — akış bu kareden sonra sayılmaya başlar
+    if (Number.isNaN(surgeAt)) surgeAt = performance.now();
     material.uniforms.uMix.value = f;
     material.uniforms.uTime.value = time;
     material.uniforms.uWave.value = a === 0 ? 1 - smoothstep(0, 0.9, f) : 0;
@@ -544,8 +564,8 @@ export async function createWorld({ fx, canvas, intro = false }) {
       sTarget = clamp(v, 0, LAST);
       liftT = clamp(l, -0.45, 0.45);
       sideT = sd < 0 ? -1 : 1;
-      // noktalar ekran dışındayken (sayfa geçişi) yeni sahne çözülmeden/süzülmeden doğrudan oturur
-      if (surgeV > 0.5 && (surgeT > 0 || performance.now() - snapAt < 600)) {
+      // noktalar ekran dışındayken (sayfa geçişi) yeni sahne çözülmeden/süzülmeden doğrudan oturur; noktalar sonra bu şekle içeri akar
+      if ((surgeT > 0 || snapOpen) && surgeAtTime(performance.now()) > 0.5) {
         s = sTarget;
         lift = liftT;
         side = sideT;
@@ -560,14 +580,30 @@ export async function createWorld({ fx, canvas, intro = false }) {
       else if (surgeV === 0 && surgeT === 0) stop();
     },
     // Sayfa geçişi akışı: on=true noktalar (nx, ny) NDC noktasından dışarı akar; on=false yeni şekle içeri akıp oturur.
+    // Döndürür (on=true): noktaların ekran dışına varmasına kalan süre (ms) — yönlendirici içeriği bu süre dolunca değiştirir.
     surge(on, nx = 0, ny = 0) {
-      if (on) material.uniforms.uSurgeO.value.set(clamp(nx, -1.2, 1.2), clamp(ny, -1.2, 1.2));
-      else snapAt = performance.now();
-      surgeT = on ? 1 : 0;
+      const now = performance.now();
+      const v = surgeAtTime(now);
+      // yön değişince ekrandaki konum sıçramasın: uSurge çıkışta 1-(1-v)², girişte v² — aynı uSurge'ü veren başlangıç değeri
+      const u = surgeT > 0 ? 1 - (1 - v) * (1 - v) : v * v;
+      if (on) {
+        material.uniforms.uSurgeO.value.set(clamp(nx, -1.2, 1.2), clamp(ny, -1.2, 1.2));
+        surgeFrom = surgeT > 0 ? v : 1 - Math.sqrt(1 - u);
+        surgeT = 1;
+        surgeAt = now;
+        snapOpen = false;
+      } else {
+        surgeFrom = surgeT > 0 ? Math.sqrt(u) : v;
+        surgeT = 0;
+        surgeAt = NaN;
+        snapOpen = surgeFrom > 0.5;
+      }
+      surgeV = surgeFrom;
       start();
+      return on ? Math.ceil((1 - surgeFrom) * SURGE_OUT) : 0;
     },
     get surging() {
-      return surgeV > 0.002 || surgeT > 0;
+      return surgeT > 0 || Number.isNaN(surgeAt) || surgeAtTime(performance.now()) > 0.002;
     },
     assemble,
     word,

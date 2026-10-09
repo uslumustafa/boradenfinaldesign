@@ -42,9 +42,10 @@ const world = {
   word(on, text) {
     this.impl?.word?.(on, text);
   },
-  // sayfa geçişi: noktalar (x, y) NDC noktasından dışarı akar (on) / yeni sayfada şekle oturur (!on)
+  // sayfa geçişi: noktalar (x, y) NDC noktasından dışarı akar (on) / yeni sayfada şekle oturur (!on).
+  // Döndürür: çıkışın bitmesine kalan süre (ms; dünya yoksa undefined)
   surge(on, x, y) {
-    this.impl?.surge?.(on, x, y);
+    return this.impl?.surge?.(on, x, y);
   },
   get live() {
     return !!this.impl;

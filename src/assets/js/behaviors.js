@@ -412,7 +412,7 @@ export function createBehaviors({ fx, scroll, world }) {
       const morph = i < n - 1 ? smoothstep(0.35, 0.95, f) : 0; // geçiş her adımın %60'ında sürer: kaydırırken hep bir hareket görünür
       return a + i + morph;
     };
-    const off = scroll.onFrame(() => {
+    const update = () => {
       const vh = innerHeight;
       let best = null;
       let bestVis = 0;
@@ -435,8 +435,11 @@ export function createBehaviors({ fx, scroll, world }) {
       const lift = clamp((vh / 2 - cy) / vh, -0.45, 0.45);
       if (c.range) world.target(sceneOfRange(clamp(-r.top / Math.max(1, r.height - vh)), c.range), lift, c.side);
       else world.target(c.value, lift, c.side);
-    });
-    on(off);
+    };
+    on(scroll.onFrame(update));
+    // Sahne hedefi hemen verilir, bir sonraki kare beklenmez: sayfa geçişinde yönlendirici içeriği değiştirip mount ettiğinde
+    // yeni sayfanın şekli noktalar hâlâ ekran dışındayken oturur; giriş (world.surge(false)) bu çağrıdan sonra gelir.
+    update();
   }
 
   /* ── Şekil kutuları: figure.fig[data-shapes] alanlarına mürekkeple formasyon (modules/figure.js — ayrı parça, yalnızca sayfada kutu varsa yüklenir).

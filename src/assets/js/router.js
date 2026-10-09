@@ -1,6 +1,8 @@
 // Mini sayfa yönlendirici: gerçek URL'ler korunur; JS varsa içerik değiştirilir, kalıcı 3B tuval kesintisiz yaşar.
 // Geçiş: içerik solar, arka plandaki 3B noktalar tıklanan noktadan dışarı akar (world.surge); yeni sayfa gelince
 // noktalar içeri akıp yeni sayfanın şekline oturur, içerik yükselerek belirir. «Kapalı» katmanda geçiş yoktur.
+// Sıra (her seferinde aynı): çıkış → noktalar ekran dışına varır (dünya saatle ilerler, kalan süreyi bildirir) + sayfa getirilir →
+// içerik değişir, yeni sayfanın sahne hedefi aynı anda verilir (behaviors › director) → giriş (noktalar yeni şekle akar).
 // JS yoksa / hata olursa normal sayfa geçişi çalışır.
 import { clamp, qs } from './util.js';
 
@@ -65,8 +67,9 @@ export function initRouter({ fx, world, mount, unmount, onNavigate }) {
     if (world?.live) {
       const nx = from ? clamp((from.x / innerWidth) * 2 - 1, -1, 1) : 0;
       const ny = from ? clamp(-((from.y / innerHeight) * 2 - 1), -1, 1) : 0;
-      world.surge(true, nx, ny);
-      return 480; // noktalar doruğa varsın
+      // noktalar ekran dışına varana kadar beklenir; içerik solması (0,24 sn) da bitsin
+      const ms = world.surge(true, nx, ny);
+      return Math.max(260, (Number.isFinite(ms) ? ms : 450) + 30);
     }
     return 200;
   }
