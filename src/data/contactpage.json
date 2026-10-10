@@ -156,7 +156,7 @@
       "required": true
     },
     "submitLabel": "Mesajı hazırla",
-    "successTitle": "Mesajınız hazırlandı",
+    "successTitle": "Taslağınız hazır — henüz gönderilmedi",
     "successText": "Mesajınız info@boraden.com.tr adresine iletilmek üzere hazırlandı. Gönderim tamamlanmadan mesajınız bize ulaşmış olmaz; e-posta uygulamanızda veya gönderim ekranında son adımı tamamlayın. Sorun yaşarsanız aynı bilgileri doğrudan bu adrese yazabilirsiniz.",
     "errorText": "Mesajınız hazırlanamadı. Lütfen işaretli alanları kontrol edin ya da doğrudan info@boraden.com.tr adresine yazın.",
     "notice": "Bu forma yazdığınız mesaj, Boraden ile bir denetim, danışmanlık veya başka bir hizmet ilişkisi kurmaz. Bağımsız denetim hizmeti verilen kuruluşlara, bağımsızlık kurallarının izin vermediği hizmetler sunulmaz. Bir hizmetin kapsamı, ilgili mevzuat ve meslek kuralları çerçevesinde görev başında ayrıca değerlendirilir."

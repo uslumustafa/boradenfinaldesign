@@ -20,6 +20,13 @@
 <div class="sheet sec--paper">
   <div class="container">
 
+    {# Taslak içerik (content.json › draft: true): onaylanana kadar görünür bant. Yasal metinlerdeki desenle aynı (notice--warn). #}
+    {% if service.draft %}
+    <div class="notice notice--warn draft-note" role="note">
+      <p><strong>Taslak.</strong> Bu sayfanın metni taslaktır; içerik onaylandıktan sonra yayımlanacaktır.</p>
+    </div>
+    {% endif %}
+
     {# Dayanak: kaynak sayısı; Hukuk alanında kanun numaraları, Teşvik alanında kurumlar (group.feature) #}
     {% set dayanak = ((service.srcList | length) ~ " kaynak") if (service.srcList | length) else "" %}
     {% if group.feature == "mevzuat" and (service.lawNos | length) %}{% set dayanak = (service.lawNos | join(" · ")) ~ " sayılı " ~ ("kanunlar" if (service.lawNos | length) > 1 else "Kanun") %}{% endif %}
@@ -72,6 +79,8 @@
             </ul>
           </div>
           {% endif %}
+          {# Mobilde kenar sütundaki görüşme düğmesi «Bu sayfada» şeridinde gizlenir; aynı düğme burada, ilk bölümün sonunda görünür #}
+          <p class="svc__cta-m"><a class="btn" href="/iletisim/?hizmet={{ service.id }}">Bu hizmet için görüşelim {{ m.arrow() }}</a></p>
         </section>
 
         <section class="svc__sec" id="kapsam">
@@ -93,7 +102,7 @@
         {% if nSteps %}
         <section class="svc__sec" id="surec" data-shape-at="akis">
           <h2 class="svc__label mono" data-reveal>Süreç</h2>
-          <ol class="flow flow--{{ nSteps }}" data-steps style="--n: {{ nSteps }}">
+          <ol class="flow flow--{{ nSteps }}" data-steps style="--n: {{ nSteps }}; --lw: {{ service.steps | longest_word('0') }}">
             {% for st in service.steps %}
             <li class="flow__i" style="--i: {{ loop.index0 }}" data-reveal data-reveal-delay="{{ loop.index0 }}">
               <span class="flow__n mono tnum">{{ loop.index | pad2 }}</span>

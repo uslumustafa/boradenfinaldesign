@@ -1,3 +1,4 @@
+{% from "partials/fxswitch.njk" import fxswitch %}
 <footer class="ftr on-dark" id="footer">
   <div class="container">
     <div class="ftr__top">
@@ -40,14 +41,7 @@
       <p>{{ site.disclaimer }}</p>
       <div class="ftr__row">
         <span>© {{ site.year }} {{ site.legalName }}</span>
-        <div class="fxswitch" role="group" aria-label="Görsel efektler">
-          <span id="fxlabel">Efektler</span>
-          <span class="fxswitch__opts">
-            <button type="button" data-fx-set="full" aria-pressed="false" aria-describedby="fxlabel">Tam</button>
-            <button type="button" data-fx-set="lite" aria-pressed="false" aria-describedby="fxlabel">Hafif</button>
-            <button type="button" data-fx-set="off" aria-pressed="false" aria-describedby="fxlabel">Kapalı</button>
-          </span>
-        </div>
+        {{ fxswitch("fxlabel") }}
       </div>
     </div>
   </div>

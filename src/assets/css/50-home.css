@@ -56,6 +56,8 @@ html.is-opening .open.is-out {
   transform: scaleX(var(--ot, 0));
 }
 .open__lab {
+  /* sayaç (--ot: 0→1) son %15'ine gelene kadar gizli; JS yoksa --ot tanımsız → tam görünür */
+  opacity: clamp(0, calc((var(--ot, 1) - 0.85) * 6.67), 1);
   font-family: var(--f-mono);
   font-variant-numeric: tabular-nums;
   font-size: 0.74rem;
@@ -186,6 +188,7 @@ html.is-opening .hud {
   transition-delay: 1.8s;
 }
 .hero__foot {
+  position: relative; /* .hero__scroll buna bağlı */
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
@@ -223,12 +226,14 @@ html.is-opening .hud {
   text-transform: uppercase;
   color: var(--on-dark-3);
   writing-mode: vertical-rl;
+  white-space: nowrap; /* dikey etiket kısa kutuda «KAYD / IRIN» diye bölünmesin */
 }
 @media (min-width: 1000px) {
   .hero__scroll {
     display: inline-flex;
     top: auto;
-    bottom: calc(clamp(2rem, 6vh, 4.5rem) + 8.5rem);
+    right: 0;
+    bottom: calc(100% + clamp(1.2rem, 3vh, 2rem)); /* alt satırın çizgisinin üstünde, düğmelerle aynı sağ hizada */
   }
 }
 .hero__scroll-line {
@@ -256,19 +261,14 @@ html.is-opening .hud {
   }
 }
 
-/* Açılış animasyonu */
+/* Kahraman ilk boyamada görünür (T-07, 4.1): yalnızca hafif, sıralı bir yükselme (40-components.css › hero-rise). Açılış sahnesinde
+   perde kalkana dek (onReveal → is-ready) bekler; perde çözülürken oynar. */
 .js-anim [data-hero-in] {
-  opacity: 0;
-  transform: translate3d(0, 22px, 0);
-  transition: opacity 0.45s var(--ease-out), transform 0.55s var(--ease-out);
-  transition-delay: calc(var(--hd, 0) * 0.3ms);
+  animation: hero-rise 0.6s var(--ease-out) both;
+  animation-delay: calc(var(--hd, 0) * 0.2ms);
 }
-.js-anim .hero__title [data-hero-in] {
-  transform: translate3d(0, 108%, 0);
-}
-.is-ready [data-hero-in] {
-  opacity: 1 !important;
-  transform: none !important;
+.is-opening:not(.is-ready) [data-hero-in] {
+  animation-play-state: paused;
 }
 [data-hero-in='1'] {
   --hd: 150;
@@ -314,7 +314,7 @@ html.is-opening .hud {
   color: var(--ink);
 }
 .statement .w {
-  opacity: 0.16;
+  opacity: var(--lit-dim);
   transition: opacity 0.5s var(--ease-out);
 }
 .statement .w.on {
@@ -877,6 +877,8 @@ html.is-opening .hud {
   color: #fff;
 }
 .units__n {
+  flex: none; /* Kapalı katmanda uzun alan adı iki satıra inince numara «0 / 1» diye bölünmesin */
+  white-space: nowrap;
   padding-top: 0.35em;
   font-size: 0.7rem;
   letter-spacing: 0.1em;

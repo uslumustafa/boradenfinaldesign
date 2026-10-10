@@ -548,6 +548,7 @@
 .flow__i,
 .flow__i + .flow__i {
   position: relative;
+  container-type: inline-size; /* .flow__t yazı boyu adım genişliğine göre (cqi) */
   padding: 1.7rem 1.35rem 1.8rem;
   border-left: 0;
   background: var(--paper-2);
@@ -573,7 +574,9 @@
   clip-path: inset(0 calc((1 - var(--t)) * 100%) 0 0);
 }
 .flow__t {
-  font-size: var(--fs-3);
+  /* --lw: adım başlıklarındaki en uzun kelime (şablondan). «Arabuluculuk», «Değerlendirme» gibi kelimeler 4 sütunlu dar adımda
+     harf ortasından bölünmez; o sürecin başlıkları birlikte biraz küçülür (.sc__t ile aynı desen). */
+  font-size: min(var(--fs-3), calc(100cqi / (max(var(--lw, 1), 1) * 0.66)));
   line-height: 1.15;
 }
 @media (max-width: 720px) {
@@ -1133,6 +1136,14 @@
   .agc__media {
     aspect-ratio: 16 / 8;
   }
+  /* tek sütunda ilk kart ilk ekranda ve görseli sayfanın en büyük öğesi (LCP): kahraman gibi ilk boyamada görünür, yalnızca hafifçe
+     yükselir (40-components.css › hero-rise); ana betiği beklemez (T-07). Diğer kartlar kaydırdıkça belirir. */
+  .js-anim .agrid > li:first-child[data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    animation: hero-rise 0.6s var(--ease-out) both;
+  }
 }
 
 /* ── Mobil «Bu sayfada» şeridi ───────────────────────────────────────────────────────────────────
@@ -1211,4 +1222,12 @@
   .svc:has(> .svc__side:not(.lg-side) .toc li:nth-child(4)) .toc__cta {
     display: none;
   }
+  /* kenar düğmesi gizlenince yerine «Kısaca»nın sonundaki düğme (ilk iki ekranda bir görüşme yolu) */
+  .svc:has(> .svc__side:not(.lg-side) .toc li:nth-child(4)) .svc__cta-m {
+    display: block;
+  }
+}
+.svc__cta-m {
+  display: none;
+  margin-top: clamp(1.6rem, 4vw, 2.2rem);
 }

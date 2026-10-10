@@ -11,8 +11,8 @@
 }
 .lg-hero h1 {
   margin-top: 1.2rem;
-  max-width: 20ch;
-  font-size: var(--fs-5);
+  max-width: min(20ch, 100%, var(--phero-col)); /* başlık sütunu: 30-layout.css › .phero */
+  font-size: min(var(--fs-5), calc(var(--phero-col) / (max(var(--lwe, 1), 1) * 1.02)));
 }
 .lg-status--draft::before {
   content: '';
@@ -362,7 +362,7 @@
 }
 .sr-h1 {
   margin-top: 1.2rem;
-  font-size: var(--fs-5);
+  font-size: min(var(--fs-5), calc(var(--phero-col) / (max(var(--lwe, 1), 1) * 1.02)));
 }
 .sr-form {
   width: 100%;
@@ -1586,7 +1586,7 @@
   letter-spacing: -0.016em;
 }
 .rn-intro .w {
-  opacity: 0.16;
+  opacity: var(--lit-dim);
   transition: opacity 0.5s var(--ease-out);
 }
 .rn-intro .w.on,

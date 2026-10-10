@@ -1,9 +1,9 @@
 {% extends "layouts/base.njk" %}
 {% block main %}
-<section class="phero sec--dark" data-world="0" data-chapter="404">
+<section class="phero phero--wide sec--dark" data-world="0" data-chapter="404" data-module="not-found">
   <div class="container">
     <p class="eyebrow">404</p>
-    <h1 style="margin-top:1.4rem">Aradığınız sayfa bulunamadı.</h1>
+    <h1 style="margin-top:1.4rem;--lw:{{ 'Aradığınız sayfa bulunamadı.' | longest_word }};--lwe:{{ 'Aradığınız sayfa bulunamadı.' | longest_word_em }}">Aradığınız sayfa bulunamadı.</h1>
     <p class="phero__lead">Adres değişmiş ya da sayfa kaldırılmış olabilir. Aşağıdaki bağlantılardan devam edebilirsiniz.</p>
     <div class="phero__meta">
       <a class="btn" href="/">Ana sayfa <span class="arr" aria-hidden="true">→</span></a>

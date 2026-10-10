@@ -8,7 +8,8 @@
 //
 // Kimlikler src/assets/js/world/formations.js › FORMATIONS'tandır. Sıra numarası kalıcıdır ama eşleme kimlikle yazılır; bilinmeyen kimlik
 // derlemeyi durdurur (sessizce boş sayfa üretmez). Wagtail karşılığı: Page.scene / Page.fig (formasyon seçici; kimliğe göre).
-import { SCENE, FIGURES } from '../src/assets/js/world/formations.js';
+import fs from 'node:fs';
+import { SCENE, FIGURES, FORMATIONS } from '../src/assets/js/world/formations.js';
 
 /** Kimlik (ya da geçerli sıra numarası) → sıra numarası. null/undefined → null. */
 export function sceneOf(id) {
@@ -19,6 +20,16 @@ export function sceneOf(id) {
   }
   if (!Object.prototype.hasOwnProperty.call(SCENE, id)) throw new RangeError(`Bilinmeyen formasyon kimliği: «${id}» (formations.js › FORMATIONS)`);
   return SCENE[id];
+}
+
+// Şeklin ekrandaki sol erimi: sayfa kahramanında başlık sütunu bu çizginin solunda kalır (30-layout.css › --phero-col, T-22).
+// scripts/scene-reach.mjs üretir; şekiller değişince yeniden üretilir (tests/scene-reach.test.mjs denetler).
+const REACH = JSON.parse(fs.readFileSync(new URL('../src/data/scene-reach.json', import.meta.url), 'utf8')).scenes;
+
+/** Sahne (kimlik ya da sıra numarası) → [a, b] yüzde (şeklin sol kenarı ≈ a·vw − b·vh/dm) ya da null (sağda şekil yok / veri yok). */
+export function reachOf(id) {
+  const k = sceneOf(id);
+  return k === null ? null : REACH[FORMATIONS[k].id] || null;
 }
 
 /** Şeklin ekranda gösterilen kısa açıklaması. */

@@ -10,7 +10,7 @@
    Metindeki **kalın**, [etiket](/yol) ve [[Yer tutucu]] işaretlemesi `rich` süzgeciyle sunulur; şablonda hukuki metin yazılmaz.
    "Doldurulacak alanlar" ve "Hukuki inceleme notları" yalnızca durum Taslak iken görünür (yayımlanınca kendiliğinden kalkar). #}
 {% block main %}
-<section class="phero lg-hero sec--dark" data-world="{{ page.scene }}">
+<section class="phero lg-hero sec--dark" data-world="{{ page.scene }}"{% if page.scene | scene_reach %} style="{{ page.scene | scene_reach }}"{% endif %}>
   <div class="container">
     <nav aria-label="Sayfa yolu">
       <ol class="crumbs">
@@ -19,7 +19,7 @@
       </ol>
     </nav>
     <p class="eyebrow" data-reveal>Yasal metinler</p>
-    <h1 data-reveal data-reveal-delay="1">{{ doc.title }}</h1>
+    <h1 style="--lw:{{ doc.title | longest_word }};--lwe:{{ doc.title | longest_word_em }}" data-reveal data-reveal-delay="1">{{ doc.title }}</h1>
     <div class="phero__meta" data-reveal data-reveal-delay="2">
       <span class="chip lg-status{% if draft %} lg-status--draft{% endif %}">{{ doc.status }}</span>
       <span class="chip"><span>Güncelleme: <time datetime="{{ doc.updatedAt }}">{{ doc.updatedAt | date_tr }}</time></span></span>
@@ -88,7 +88,7 @@
           {% if doc.placeholders and doc.placeholders.length %}
           <details class="lg-det">
             <summary><span>Doldurulacak alanlar</span><span class="lg-det__n mono tnum">{{ doc.placeholders | length }}</span></summary>
-            <div class="table-wrap">
+            <div class="table-wrap" tabindex="0" role="region" aria-label="Doldurulacak alanlar">
               <table class="table lg-ph">
                 <thead><tr><th scope="col">Yer tutucu</th><th scope="col">Açıklama</th></tr></thead>
                 <tbody>

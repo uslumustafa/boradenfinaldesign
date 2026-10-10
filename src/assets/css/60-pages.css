@@ -157,6 +157,23 @@
   font-family: var(--f-display);
   font-size: var(--fs-3);
 }
+/* boş durumda yol: sitenin tamamında arama ve iletişim */
+.empty__go {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.6rem;
+  margin-top: 1rem;
+  font-family: var(--f-sans);
+  font-size: 1rem;
+}
+/* hizmetler dizini: arama kutusu kartların üstünde; arama sürerken kartlar gizlenir, sonuçlar hemen altta */
+.sidx__find {
+  max-width: 34rem;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+[data-listing][data-querying] .agrid {
+  display: none;
+}
 
 /* ── Hizmet alanı sayfası */
 .areahead {
@@ -172,7 +189,7 @@
   max-width: 24em;
 }
 .areahead__text .w {
-  opacity: 0.16;
+  opacity: var(--lit-dim);
   transition: opacity 0.5s var(--ease-out);
 }
 .areahead__text .w.on {
@@ -342,7 +359,7 @@
   max-width: 30em;
 }
 .svc__def .w {
-  opacity: 0.16;
+  opacity: var(--lit-dim);
   transition: opacity 0.5s var(--ease-out);
 }
 .svc__def .w.on {

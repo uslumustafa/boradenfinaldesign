@@ -16,6 +16,15 @@
 <div class="sheet sec--paper">
   <div class="container">
 
+    {# ── Bölüm dizini: kahramanın hemen altında bölümlere ve «Kimle görüşmeli?» bölümüne atlama (çapalar aşağıdaki bölümlerde) #}
+    <nav class="tm-jump" aria-label="Ekip bölümleri" data-reveal>
+      <p class="tm-jump__k mono">Bölümler</p>
+      <ul class="chips">
+        {% for d in team.departments %}{% if d.name %}<li><a class="chip" href="#bolum-{{ d.id }}">{{ d.name }}</a></li>{% endif %}{% endfor %}
+      </ul>
+      <p class="tm-jump__who"><a class="textlink" href="#konular">Konunuza göre kimle görüşmeli? <span aria-hidden="true">↓</span></a></p>
+    </nav>
+
     {# ── Kadro #}
     <section class="tm-roster" id="kadro" data-chapter="Ekip" aria-labelledby="tm-roster-h">
       <div class="g12 tm-head">

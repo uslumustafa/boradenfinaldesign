@@ -15,7 +15,7 @@ export function initFx() {
     const cores = navigator.hardwareConcurrency || 8;
     const coarse = matchMedia('(pointer: coarse)').matches;
     const small = Math.min(screen.width, screen.height) < 700;
-    if (mem <= 1 || cores <= 2) return 'off';
+    if (mem <= 1 || cores <= 2) return 'off'; // base.njk'deki erken betik de aynı eşikle ilk boyamadan kapatır
     if (coarse || small || mem <= 4 || cores <= 4) return 'lite';
     return 'full';
   }
@@ -37,11 +37,18 @@ export function initFx() {
         store(KEY, tier);
       }
       apply();
+      // Kullanıcı seçimi düzeni hemen değiştirir; kendiliğinden düşürme açık sayfayı yeniden dizmez (yeni sayfada: syncLayout)
+      if (persist) fx.syncLayout();
       if (changed) listeners.forEach((fn) => fn(tier));
     },
     downgrade() {
       if (fx.tier === 'full') fx.set('lite');
       else if (fx.tier === 'lite') fx.set('off');
+    },
+    // Sayfa kahramanı başlık sütunu (30-layout.css): efekt kapalıyken daralmaz. Yalnızca sayfa değişirken ve kullanıcı seçiminde
+    // çağrılır: okunan sayfada başlık kendiliğinden yeniden dizilmez (düzen kayması, T-09).
+    syncLayout() {
+      html.classList.toggle('hero-wide', fx.tier === 'off');
     },
     params() {
       if (fx.tier === 'full') return { dpr: Math.min(devicePixelRatio || 1, 2), points: 26000, pointer: true, fps: 60 };

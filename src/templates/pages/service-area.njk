@@ -20,6 +20,14 @@
 <div class="sheet sec--paper">
   <div class="container">
 
+    {# Alanın bütün hizmetleri taslaksa (Hukuk, Teşvik) alan metni de taslaktır #}
+    {% set nDraft = group.services | selectattr("draft") | length %}
+    {% if nDraft and nDraft == (group.services | length) %}
+    <div class="notice notice--warn draft-note" role="note">
+      <p><strong>Taslak.</strong> Bu alanın metinleri taslaktır; içerik onaylandıktan sonra yayımlanacaktır.</p>
+    </div>
+    {% endif %}
+
     {{ bk.kunye(group.number, [
       { k: "Hizmet", v: nSvc ~ " başlık" },
       { k: "Sektör", v: ((rel.sectors | length) ~ " sektör sayfasında") if (rel.sectors | length) else "" },

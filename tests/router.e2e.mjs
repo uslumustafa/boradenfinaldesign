@@ -317,6 +317,22 @@ async function menu() {
   ok(i.expanded === 'false' && !i.open && !i.inert.some(Boolean) && i.focus === 'page', `bağlantıya dokununca geçiş yapıldı, menü kapandı, odak sayfada (${i.focus})`);
   ok((await page.evaluate(() => window.__alive)) === 'evet', 'menüden gezinme tam yükleme yapmadı');
 
+  // U-21: efekt anahtarı mobil menünün altında da var; seçim kalıcı, iki anahtar eşzamanlı, menü açık kalır
+  await page.tap('.hdr__burger');
+  await page.waitForTimeout(200);
+  await page.locator('#mnav [data-fx-set="lite"]').tap();
+  let s = await page.evaluate(() => ({
+    stored: localStorage.getItem('boraden-fx'),
+    open: document.getElementById('mnav').classList.contains('is-open'),
+    synced: [...document.querySelectorAll('.fxswitch')].every((g) => [...g.querySelectorAll('[aria-pressed="true"]')].map((b) => b.dataset.fxSet).join() === document.documentElement.dataset.fx),
+  }));
+  ok(s.stored === 'lite' && s.open && s.synced, `menüdeki efekt anahtarı: seçim kaydedildi, menü açık, iki anahtar aynı (${JSON.stringify(s)})`);
+  await page.locator('#mnav [data-fx-set="off"]').tap();
+  s = await page.evaluate(() => ({ stored: localStorage.getItem('boraden-fx'), fx: document.documentElement.dataset.fx }));
+  ok(s.stored === 'off' && s.fx === 'off', 'menüden «Kapalı» seçildi');
+  await page.keyboard.press('Escape');
+  await page.waitForTimeout(150);
+
   // menü açıkken pencere genişleyip masaüstü düzenine geçerse menü kendini kapatır
   await page.tap('.hdr__burger');
   await page.waitForTimeout(200);
@@ -344,18 +360,20 @@ async function fx() {
     page.evaluate(() => ({
       tier: document.documentElement.dataset.fx,
       stored: localStorage.getItem('boraden-fx'),
-      pressed: [...document.querySelectorAll('[data-fx-set]')].filter((b) => b.getAttribute('aria-pressed') === 'true').map((b) => b.dataset.fxSet),
+      // altbilgideki anahtar; mobil menüdeki eşi aynı durumu göstermeli
+      pressed: [...document.querySelectorAll('.ftr [data-fx-set]')].filter((b) => b.getAttribute('aria-pressed') === 'true').map((b) => b.dataset.fxSet),
+      synced: [...document.querySelectorAll('.fxswitch')].every((g) => [...g.querySelectorAll('[aria-pressed="true"]')].map((b) => b.dataset.fxSet).join() === document.documentElement.dataset.fx),
       anim: document.documentElement.classList.contains('js-anim'),
     }));
   let x = await st();
-  ok(['full', 'lite'].includes(x.tier) && x.stored === null && x.pressed.length === 1, `otomatik algılama: ${x.tier} (kullanıcı seçimi yok, depolama boş)`);
-  await page.locator('[data-fx-set="lite"]').first().click();
+  ok(['full', 'lite'].includes(x.tier) && x.stored === null && x.pressed.length === 1 && x.synced, `otomatik algılama: ${x.tier} (kullanıcı seçimi yok, depolama boş)`);
+  await page.locator('[data-fx-set="lite"]:visible').click();
   x = await st();
-  ok(x.tier === 'lite' && x.stored === 'lite' && JSON.stringify(x.pressed) === '["lite"]', 'Hafif seçildi: data-fx, depolama ve aria-pressed uyumlu');
+  ok(x.tier === 'lite' && x.stored === 'lite' && JSON.stringify(x.pressed) === '["lite"]' && x.synced, 'Hafif seçildi: data-fx, depolama ve aria-pressed uyumlu (iki anahtar)');
   await page.reload({ waitUntil: 'load' });
   x = await st();
   ok(x.tier === 'lite' && x.stored === 'lite', 'seçim yeniden yüklemede korunuyor');
-  await page.locator('[data-fx-set="off"]').first().click();
+  await page.locator('[data-fx-set="off"]:visible').click();
   x = await st();
   ok(x.tier === 'off' && !x.anim && x.stored === 'off', 'Kapalı seçildi: animasyon sınıfı kalktı');
   const keys = await page.evaluate(() => ({ local: Object.keys(localStorage), session: Object.keys(sessionStorage), cookie: document.cookie }));

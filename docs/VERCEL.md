@@ -8,7 +8,8 @@ Nihai site Wagtail ile ayrı bir sunucuda çalışacak; buradaki yayın yalnızc
 | Dosya | Ne yapar |
 |---|---|
 | `vercel.json` | Kurulum `npm ci`, derleme `npm run build:prod`, çıktı `dist/`. Adresleri sonda `/` ile sabitler (`/hakkimizda` → `/hakkimizda/`). |
-| `vercel.json › headers` | Her yanıta `X-Robots-Tag: noindex, nofollow` (arama motorlarına kapalı) ve temel güvenlik başlıkları; adında içerik özeti olan JS parçalarına (`/assets/js/chunks/`) uzun süreli önbellek. |
+| `vercel.json › headers` | Her yanıtta temel güvenlik başlıkları (`nosniff`, `Referrer-Policy`, `X-Frame-Options`, `Cross-Origin-Opener-Policy`, `Permissions-Policy`) ve zorunlu içerik güvenlik politikası (`Content-Security-Policy`). `X-Robots-Tag: noindex, nofollow` yalnızca canlı alan adı (boraden.com.tr, www.boraden.com.tr) **dışındaki** adreslerde: `….vercel.app` ve önizlemeler arama motorlarına kapalı kalır, alan adı bağlanınca site kendiliğinden açılır. Adında içerik özeti olan JS parçalarına (`/assets/js/chunks/`) uzun süreli önbellek. |
+| `vercel.json › redirects` | Sitenin kendi adres değişiklikleri (32) ve eski siteden 42 adres: ör. `/bordrolama` → `/hizmetler/muhasebe/bordrolama/` (kalıcı), `/en/…` → ana sayfa (geçici; İngilizce sayfa yok). |
 | `package.json › engines` | Node 22.x (yerel geliştirmeyle aynı ana sürüm). |
 
 Ayarlar bu dosyalardan okunur; Vercel panelinde derleme ayarı değiştirmeye gerek yoktur.
@@ -60,7 +61,8 @@ Kaynak: [Sharable Links](https://vercel.com/docs/deployment-protection/methods-t
 
 - Gizli pencerede ana sayfa, bir hizmet sayfası, iletişim ve bir hesaplayıcı; telefonda da bir kez.
 - Tarayıcının geliştirici araçları → Network → sayfa isteği → yanıt başlıklarında `x-robots-tag: noindex, nofollow` görünmeli.
-- `/olmayan-sayfa/` adresi Boraden'in 404 sayfasını açmalı.
+- Aynı yanıtta `content-security-policy` başlığı görünmeli; Console sekmesinde «Refused to …» ile başlayan satır olmamalı.
+- `/olmayan-sayfa/` adresi Boraden'in 404 sayfasını açmalı; `/HIZMETLER/` gibi büyük harfli yazım doğru sayfaya geçmeli; eski bir adres (`/bordrolama`) yeni hizmet sayfasına gitmeli.
 
 ## Güncelleme ve geri alma
 
@@ -77,7 +79,9 @@ Kaynak: [Sharable Links](https://vercel.com/docs/deployment-protection/methods-t
 
 ## Canlıya geçiş notu
 
-Bu yapılandırma önizleme içindir. Statik site ileride gerçek alan adıyla Vercel'de yayınlanırsa: `vercel.json`'daki `X-Robots-Tag` başlığı kaldırılır, alan adı Settings → Domains'ten eklenir ve DNS kayıtları Vercel'in gösterdiği gibi girilir.
+Statik site gerçek alan adıyla Vercel'de yayınlanırsa: alan adı Settings → Domains'ten eklenir ve DNS kayıtları Vercel'in gösterdiği gibi girilir. `X-Robots-Tag` için dosyada değişiklik gerekmez: başlık boraden.com.tr ve www.boraden.com.tr'de kendiliğinden gönderilmez (diğer adreslerde sürer). www ya da www'suz tercih yapılınca (T-02) diğer adres Domains ekranından tercih edilene yönlendirilir; `site.json › url` ve `sitemap.xml` aynı tercihe göre güncellenir.
+
+**Vercel araç çubuğu (yorumlar):** önizleme adreslerindeki içerik güvenlik politikası Vercel'in belgelediği araç çubuğu izinlerini (`vercel.live` …) içerir; canlı alan adında politika katıdır ve araç çubuğu yüklenmez. Üretimde araç çubuğu kullanılmak istenirse aynı izinler canlı politikaya da eklenmeli. Kaynak: [Vercel Toolbar › Using a Content Security Policy](https://vercel.com/docs/vercel-toolbar/managing-toolbar)
 
 ## Sorun giderme
 

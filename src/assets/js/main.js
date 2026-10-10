@@ -13,6 +13,8 @@ const mainEl = document.getElementById('main');
 
 // Açılış sahnesi: karar base.njk'deki erken betikte verilir (html.is-opening); burada yalnızca oynatılır.
 let opening = html.classList.contains('is-opening') && fx.tier !== 'off';
+// efektler kapalı çıktıysa perde oynatılmaz; beklemeden kalkar (yoksa 7 sn'lik güvenlik süresine dek sayfayı örtüyordu)
+if (!opening) html.classList.remove('is-opening');
 let introWanted = opening; // ilk kurulan dünya toplanma animasyonuyla başlar (sonraki yeniden kurulumlar hazır gelir)
 
 // 3B dünya köprüsü: world.js yüklenene kadar çağrıları hatırlar
@@ -113,7 +115,15 @@ async function bootWorld() {
     fx.set('off');
   }
 }
-bootWorld();
+// 3B dünya ilk görüntüden sonra kurulur (T-07, 4.1): sayfa yüklenip tarayıcı boşalınca. Ağ ve ana iş parçacığı önce metne,
+// yazı tiplerine ve görsellere kalır (dünya parçası ≈ 113 KB; kurulumu yavaş telefonda ≈ 0,7 sn). Açılış sahnesi ve geçişler
+// dünyayı beklemez: köprü (world) çağrıları hatırlar, dünya gelince uygular.
+function afterFirstView(fn) {
+  const idle = () => (window.requestIdleCallback ? requestIdleCallback(fn, { timeout: 1200 }) : setTimeout(fn, 300));
+  if (document.readyState === 'complete') idle();
+  else addEventListener('load', idle, { once: true });
+}
+afterFirstView(bootWorld);
 
 fx.onChange((tier) => {
   // katman değişince dünyayı yeni parametrelerle yeniden kur

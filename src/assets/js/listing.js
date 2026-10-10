@@ -91,6 +91,9 @@ function setup(el, on) {
       b.hidden = !qsa('[data-item]', b).some((it) => !it.hidden);
     });
     if (empty) empty.hidden = matched.length > 0;
+    // arama sürerken kapsayıcıda işaret (ör. hizmetler dizini kartları gizler); boş durumda «Sitenin tamamında arayın» sorguyla gider
+    el.toggleAttribute('data-querying', words.length > 0);
+    if (!matched.length) qsa('[data-empty-search]', el).forEach((a) => (a.href = '/arama/' + (state.q ? '?q=' + encodeURIComponent(state.q) : '')));
     if (countEl) countEl.textContent = matched.length ? `${matched.length} sonuç` : '';
     paintBars();
     renderPager(pages);

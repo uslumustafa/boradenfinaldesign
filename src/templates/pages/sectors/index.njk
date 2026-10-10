@@ -13,7 +13,7 @@
 <li class="sx-row" data-sx-row="{{ s.slug }}" data-shape-hover="{{ s.shape }}">
   <a class="sx-row__a" href="{{ s.url }}">
     <span class="sx-row__n mono tnum">{{ s.number }}</span>
-    <span class="sx-row__name">{{ s.name }}</span>
+    <span class="sx-row__name" style="--lw: {{ s.name | longest_word }}">{{ s.name }}</span>
     <span class="sx-row__short">{{ s.short }}</span>
     <span class="sx-row__go" aria-hidden="true">→</span>
   </a>
@@ -35,6 +35,10 @@
 
 <div class="sheet sec--paper">
   <div class="container" data-module="sector-index">
+    {# Müşteri segmentleri sektör listesinin altında kalıyordu (mobilde 2 ekran aşağıda): sayfanın başında doğrudan bağlantılar #}
+    {% if segments | length %}
+    <p class="sx-seglinks" data-reveal><span class="sx-seglinks__k mono">Müşteri segmentleri</span>{% for s in segments %}<a class="chip" href="{{ s.url }}">{{ s.name }}</a>{% endfor %}</p>
+    {% endif %}
     <div class="g12 sx-dir">
       <div class="gc sx-dir__lists" style="--gc: 1 / span 7">
         <section class="sx-block" aria-labelledby="sx-h-ind">
@@ -105,7 +109,8 @@
           <tr>
             <th scope="col" class="sx-mx__corner"><span class="sr-only">Sektör</span></th>
             {% for c in matrix.cols %}
-            <th scope="col"><a href="{{ c.url }}" title="{{ c.name }}"><span class="sx-mx__no tnum">{{ c.number }}</span><span class="sx-mx__lbl">{{ c.short }}</span><span class="sr-only"> — {{ c.name }}</span></a></th>
+            {# Dar ekranda (≤ 720 px) alan sütunları 24 px'ten dar: başlık bağlantı değil, düz etiket (WCAG 2.5.8; alan sayfaları menüde ve altbilgide) #}
+            <th scope="col"><a class="sx-mx__ca" href="{{ c.url }}" title="{{ c.name }}"><span class="sx-mx__no tnum">{{ c.number }}</span><span class="sx-mx__lbl">{{ c.short }}</span><span class="sr-only"> — {{ c.name }}</span></a><span class="sx-mx__ct"><span class="sx-mx__lbl">{{ c.short }}</span><span class="sr-only"> — {{ c.name }}</span></span></th>
             {% endfor %}
             <th scope="col" class="sx-mx__sum"><span class="sx-mx__lbl">Toplam</span></th>
           </tr>

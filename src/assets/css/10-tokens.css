@@ -41,8 +41,10 @@
   --accent: var(--b-blue);
   --accent-dark: #7cc0e2; /* koyu zeminde okunabilir mavi ton */
   --focus: #2b8ccc;
-  --warn: #9a6a12;
+  --warn: #8a5d0c; /* #fbf4e4 ve #f4f6f9 üzerinde ≥ 5,2:1 (T-11) */
   --warn-bg: #fbf4e4;
+  /* Kaydırdıkça aydınlanan metin (data-lit): henüz yanmamış kelimelerin opaklığı. 0,6 → koyu mürekkep beyazda 4,7:1 (T-11, U-18) */
+  --lit-dim: 0.6;
 
   /* Tipografi */
   --f-display: 'Montserrat', 'Segoe UI', Arial, sans-serif;

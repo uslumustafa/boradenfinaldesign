@@ -549,6 +549,7 @@
   transform: scaleY(0);
 }
 .ic-bar__y {
+  order: 1; /* görsel olarak çubuğun altında; DOM'da önce: bağlantı adı yılla başlar (T-12) */
   padding: 0.8rem clamp(0.3rem, 0.8vw, 0.7rem) 0;
   border-top: 1px solid var(--ink);
   font-size: 0.78rem;
@@ -783,6 +784,7 @@
 }
 .pub-feat {
   position: relative;
+  container-type: inline-size; /* başlık en uzun kelimeye göre sığar (--lw) */
   display: flex;
   flex-direction: column;
   gap: clamp(1.6rem, 3vw, 2.6rem);
@@ -831,7 +833,8 @@
 }
 .pub-feat__t {
   max-width: 18ch;
-  font-size: var(--fs-5);
+  /* dar ekranda uzun kelime («değerlemesine») harf ortasından bölünmesin: kart iç genişliğine göre küçülür */
+  font-size: min(var(--fs-5), calc(100cqi / (max(var(--lw, 1), 1) * 0.66)));
   line-height: 1.04;
   letter-spacing: -0.022em;
 }
@@ -926,9 +929,13 @@
 .pub-row__meta {
   margin-bottom: 0.65rem;
 }
+.pub-row__main {
+  container-type: inline-size;
+}
 .pub-row__t {
   max-width: 24ch;
-  font-size: var(--fs-4);
+  /* 320 px'te «güncellemesi», «raporlamada» gibi kelimeler sütuna sığsın (--lw: başlığın en uzun kelimesi) */
+  font-size: min(var(--fs-4), calc(100cqi / (max(var(--lw, 1), 1) * 0.66)));
   line-height: 1.08;
   letter-spacing: -0.018em;
 }
@@ -1198,6 +1205,7 @@
   color: var(--ink-3);
 }
 .arc__t {
+  min-height: 1.5rem; /* tek satırlık başlıkta da ≥ 24 px (WCAG 2.5.8, T-31); dokunma alanı zaten bütün satır (::after) */
   font-size: 0.97rem;
   line-height: 1.45;
   color: var(--ink);

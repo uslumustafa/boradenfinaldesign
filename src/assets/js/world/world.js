@@ -134,7 +134,7 @@ const FRAG = /* glsl */ `
 
 const LAST = FORMATION_COUNT - 1; // son sahne sırası
 const INTRO_S = 2.2; // toplanma süresi (sn)
-const SURGE_OUT = 450; // sayfa geçişi: noktaların ekran dışına akma süresi (ms) — yönlendirici bu süre dolunca içeriği değiştirir
+const SURGE_OUT = 350; // sayfa geçişi: noktaların ekran dışına akma süresi (ms) — yönlendirici bu süre dolunca içeriği değiştirir (U-20)
 const SURGE_IN = 1050; // sayfa geçişi: yeni sayfada noktaların içeri akıp şekle oturma süresi (ms)
 
 export async function createWorld({ fx, canvas, intro = false }) {

@@ -18,8 +18,10 @@ const deferred = () => {
 };
 const flush = () => new Promise((resolve) => setImmediate(resolve));
 
-function harness({ delayFirstCreation = false } = {}) {
+// loaded: sayfa yüklenmiş mi (main.js dünyayı ilk görüntüden sonra — load + boşta — kurar). Varsayılan: yüklenmiş, boşta hemen.
+function harness({ delayFirstCreation = false, loaded = true } = {}) {
   const imports = [], instances = [], warnings = [], classes = new Set(), listeners = new Set();
+  const winListeners = [], idle = [];
   const firstCreation = deferred();
   const fx = {
     tier: 'full',
@@ -37,15 +39,32 @@ function harness({ delayFirstCreation = false } = {}) {
   const context = vm.createContext({
     initFx: () => fx, createScroll: () => ({}), initChrome: () => ({ onNavigate() {} }),
     createBehaviors: () => ({ mount() {}, refreshMotion() {} }), initRouter() {},
-    window: {}, location: { pathname: '/' }, document: { documentElement: { classList: {
+    window: { requestIdleCallback: (fn) => (loaded ? fn() : idle.push(fn)) }, location: { pathname: '/' },
+    requestIdleCallback: (fn) => (loaded ? fn() : idle.push(fn)),
+    addEventListener: (type, fn) => winListeners.push([type, fn]),
+    document: { readyState: loaded ? 'complete' : 'interactive', documentElement: { classList: {
       contains: (name) => classes.has(name), add: (name) => classes.add(name), remove: (name) => classes.delete(name),
     } }, getElementById: () => ({}) },
     requestAnimationFrame: (fn) => fn(), console: { warn: (...args) => warnings.push(args.join(' ')) },
     __loadWorld: () => { const next = deferred(); imports.push(next); return next.promise; },
   });
   vm.runInContext(source + '\n globalThis.__testWorld = world;', context, { filename: 'main.js' });
-  return { fx, imports, instances, warnings, module, firstCreation, world: context.__testWorld };
+  const fire = (type) => winListeners.filter(([t]) => t === type).forEach(([, fn]) => fn());
+  return { fx, imports, instances, warnings, module, firstCreation, world: context.__testWorld, fire, idle };
 }
+
+test('world import waits for the first view: page load, then an idle moment (T-07)', { skip: process.env.BORADEN_TEST_BASELINE === '1' && 'baseline boots at once' }, async () => {
+  const h = harness({ loaded: false });
+  assert.equal(h.imports.length, 0, 'no world import before load');
+  h.fire('load');
+  assert.equal(h.imports.length, 0, 'load only schedules the boot for an idle moment');
+  assert.equal(h.idle.length, 1);
+  h.idle.shift()();
+  assert.equal(h.imports.length, 1, 'world import starts when the browser is idle');
+  h.imports[0].resolve(h.module);
+  await flush();
+  assert.ok(h.world.impl, 'world created');
+});
 
 test('FX off during pending world import creates no renderer', async () => {
   const h = harness();

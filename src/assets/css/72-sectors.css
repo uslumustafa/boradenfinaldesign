@@ -86,6 +86,26 @@
   color: var(--ink-3);
 }
 
+/* sayfa başında müşteri segmenti bağlantıları */
+.sx-seglinks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.6rem;
+  margin-bottom: clamp(2.2rem, 4.5vw, 3.4rem);
+}
+.sx-seglinks__k {
+  margin-right: 0.4rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+@media (pointer: coarse) {
+  .sx-seglinks .chip {
+    min-height: 44px;
+  }
+}
 .sx-row {
   border-bottom: 1px solid var(--line);
 }
@@ -310,6 +330,10 @@
     grid-template-columns: 2.3rem minmax(0, 1fr) 1.4rem;
     gap: 0.3rem 0.7rem;
   }
+  /* «Telekomünikasyon» 320 px'te ad sütununa sığsın: sütun = ekran − kenar boşlukları − numara, ok ve aralıklar (5,1rem) */
+  .sx-row__name {
+    font-size: min(var(--fs-4), calc((100vw - 2 * var(--gutter) - 5.1rem) / (max(var(--lw, 1), 1) * 0.66)));
+  }
   .sx-row__more {
     padding-left: 3rem;
   }
@@ -384,6 +408,9 @@
 }
 .sx-mx thead a:hover {
   color: #fff;
+}
+.sx-mx__ct {
+  display: none;
 }
 .sx-mx__no {
   font-family: var(--f-mono);
@@ -519,6 +546,25 @@
     white-space: nowrap;
   }
 }
+/* ≤ 900 px: sektör adının en uzun kelimesi («Telekomünikasyon») ilk sütuna tek satırda sığsın. Sütun genişlikleri toplamı %100
+   (köşe + 8 alan + toplam); aksi hâlde table-layout: fixed oranları küçültür ve köşe sütunu daralırdı. */
+@media (max-width: 900px) {
+  .sx-mx thead th {
+    width: 7%;
+  }
+  .sx-mx thead th.sx-mx__corner {
+    width: 36%;
+  }
+  .sx-mx thead th.sx-mx__sum {
+    width: 8%;
+  }
+  .sx-mx tbody th[scope='row'] a {
+    display: block;
+  }
+  .sx-mx tbody th[scope='row'] .sx-mx__no {
+    display: none;
+  }
+}
 @media (max-width: 720px) {
   .sx-mx {
     font-size: 0.8rem;
@@ -528,19 +574,28 @@
     padding: 0.7rem 0.1rem;
   }
   .sx-mx thead th {
-    width: 9.3%;
+    width: 6.25%;
     letter-spacing: 0.06em;
   }
   .sx-mx thead th.sx-mx__corner {
-    /* sektör adının en uzun kelimesi («Telekomünikasyon») tek satıra sığsın (yazı boyu da aşağıda vw ile sınırlı) */
-    width: 36%;
+    /* sektör adının en uzun kelimesi («Telekomünikasyon») tek satıra sığsın (yazı boyu da aşağıda sütun genişliğiyle sınırlı) */
+    width: 42%;
   }
   .sx-mx thead .sx-mx__no {
     display: none;
   }
+  /* alan sütunu ≈ 22 px: başlık bağlantısı komşusuna taşıyordu ve 24 px'lik dokunma hedefi sığmıyor (WCAG 2.5.8) → düz etiket.
+     Alan sayfalarına menüden, altbilgiden ve sektör sayfalarından gidilir. */
+  .sx-mx thead .sx-mx__ca {
+    display: none;
+  }
+  .sx-mx thead .sx-mx__ct {
+    display: inline-block;
+    padding: 0.3rem 0;
+  }
   .sx-mx tbody th[scope='row'] a {
-    display: block;
-    font-size: min(0.86rem, 3.15vw);
+    /* köşe sütunu ≈ tablo genişliğinin %42'si; 16 harflik kelime için ≈ 11,6 em */
+    font-size: min(0.86rem, calc((100vw - 2 * var(--gutter)) * 0.42 / 11.6));
   }
   .sx-mx tbody th[scope='row'] .sx-mx__no {
     display: none;
@@ -566,7 +621,7 @@
   color: var(--ink);
 }
 .sx-ov__lead .w {
-  opacity: 0.16;
+  opacity: var(--lit-dim);
   transition: opacity 0.5s var(--ease-out);
 }
 .sx-ov__lead .w.on {
@@ -959,6 +1014,16 @@ a.sx-mini__a:focus-visible {
     grid-template-columns: 1fr;
   }
 }
+/* dar telefonda etiket («Bu sayfa», «Segment») adın altına iner; uzun ad («Telekomünikasyon») tek satırda kalır */
+@media (max-width: 480px) {
+  .sx-mini__a {
+    grid-template-columns: 2.4rem minmax(0, 1fr);
+    row-gap: 0.25rem;
+  }
+  .sx-mini__tag {
+    grid-column: 2;
+  }
+}
 
 /* ═════════ SÖZLÜK ═════════ */
 /* Kahramanın altındaki sayaç bandı (kahramanla aynı koyu örtü) */
@@ -1014,7 +1079,7 @@ a.sx-mini__a:focus-visible {
 }
 .gl-chip__n {
   margin-left: 0.5rem;
-  opacity: 0.62;
+  opacity: 0.78; /* beyazda 5,1:1, seçili (koyu) çipte 11:1 (T-11) */
 }
 .gl-search {
   flex: 0 1 22rem;

@@ -161,24 +161,21 @@ export function initChrome(fx) {
   fx.refreshSwitches();
 
   return {
-    // sayfa değişince menüleri kapat, aktif bağlantıyı güncelle
+    // sayfa değişince menüleri kapat, aktif bağlantıyı güncelle (header.njk ile aynı kural: adres ya da data-match öneki)
     onNavigate(url) {
       closePanels(true);
       setMenu(false);
-      links.forEach((l) => {
-        const href = l.getAttribute('href');
-        const on = href !== '/' && url.startsWith(href);
+      const mark = (l, on, value) => {
         l.classList.toggle('is-active', on);
-        if (on) l.setAttribute('aria-current', 'true');
+        if (on) l.setAttribute('aria-current', value);
         else l.removeAttribute('aria-current');
-      });
-      qsa('.nav__link:not([data-panel])', hdr).forEach((l) => {
+      };
+      qsa('.nav__link', hdr).forEach((l) => {
         const href = l.getAttribute('href');
-        const on = href !== '/' && url.startsWith(href);
-        l.classList.toggle('is-active', on);
-        if (on) l.setAttribute('aria-current', 'true');
-        else l.removeAttribute('aria-current');
+        const extra = l.dataset.match;
+        mark(l, href !== '/' && (url.startsWith(href) || (!!extra && url.startsWith(extra))), 'true');
       });
+      qsa('.hdr__icon[href], .hdr__cta', hdr).forEach((l) => mark(l, url.startsWith(l.getAttribute('href')), 'page'));
     },
   };
 }

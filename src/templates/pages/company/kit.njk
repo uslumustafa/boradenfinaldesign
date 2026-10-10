@@ -12,7 +12,8 @@
   <legend class="field__label">{{ f.label }}{% if f.required %}<span class="ct-req" aria-hidden="true">*</span>{% endif %}</legend>
   <div class="seg ct-seg">
     {% for o in f.options %}
-    <label><input type="radio" name="{{ f.id }}" value="{{ o.value }}"{% if f.required %} required{% endif %} aria-describedby="{{ desc }}"><span>{{ o.label }}</span></label>
+    {# eğik çizgiden sonra satır kırılabilsin («Öğrenci/Stajyer adayı» dar düğmede «Stajye / r» diye bölünüyordu); <wbr> metne karakter eklemez #}
+    <label><input type="radio" name="{{ f.id }}" value="{{ o.value }}"{% if f.required %} required{% endif %} aria-describedby="{{ desc }}"><span>{{ o.label | escape | replace("/", "/<wbr>") | safe }}</span></label>
     {% endfor %}
   </div>
   {% if f.help %}<p class="field__help" id="{{ fid }}-h">{{ f.help }}</p>{% endif %}

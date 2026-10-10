@@ -221,7 +221,11 @@ export function buildModel(data) {
       }
       m.items.push(it);
     }
-    calendar = { ...cal, items, months, catById, count: items.length };
+    // «Sıradaki tarihler» şeridi derlemede de çizilir (derleme gününe göre ilk 3 kayıt): yeri ilk boyamada ayrılır, tarayıcı
+    // bugüne göre günceller (calc-ui.js › mountCalendar). Önceden yalnızca JS doldurduğu için süzgeç çubuğu aşağı kayıyordu (T-09).
+    const buildDay = new Intl.DateTimeFormat('sv-SE', { timeZone: 'Europe/Istanbul' }).format(new Date());
+    const next = items.filter((it) => it.date >= buildDay).slice(0, 3);
+    calendar = { ...cal, items, months, catById, count: items.length, next };
   }
 
   // ——— Sözlük, SSS, kurumsal sayfalar

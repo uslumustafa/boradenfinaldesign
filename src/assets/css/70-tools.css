@@ -500,15 +500,19 @@ td > a:not([class]):hover {
     display: none;
   }
   .calc__peekl {
+    flex: 1 1 auto;
+    min-width: 0; /* dar ekranda etiket satıra kırılır, tutar değil */
     font-size: 0.68rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--on-dark-3);
   }
   .calc__peekv {
+    flex: none;
     margin-left: auto;
+    white-space: nowrap; /* tutar «232.500,0 / 0 ₺» diye bölünmesin */
     font-family: var(--f-display);
-    font-size: 1.55rem;
+    font-size: clamp(1.15rem, 5.4vw, 1.55rem);
     font-weight: 300;
   }
   .calc__peeka {
@@ -551,6 +555,11 @@ td > a:not([class]):hover {
   margin-bottom: 2.6rem;
   border-top: 1px solid var(--ink);
   border-bottom: 1px solid var(--line);
+}
+/* şerit derlemede dolu gelir; tarayıcı bugüne göre yeniler. Sıradaki kayıt yoksa ya da JS kapalıysa (tarih eski olabilir) gizli. */
+.cal__next[hidden],
+.no-js .cal__next {
+  display: none;
 }
 .cal__next::before {
   content: 'Sıradaki tarihler';

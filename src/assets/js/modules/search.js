@@ -6,6 +6,13 @@
 // • Dizin tembel yüklenir: modül yalnızca bu sayfada yüklenir, dizin bir kez indirilir.
 // • Türkçe harf katlama: İ/I/ı/i → i, ş → s, ğ → g, ü → u, ö → o, ç → c (+ diğer aksanlar, tırnak ve tire biçimleri).
 // • Sözcükler VE mantığıyla aranır; puan: başlık tam eşleşme > başlık öneki > başlıkta geçme > açıklamada geçme.
+// • Türkçe ekler: sözcük metinde yoksa ekleri atılmış kökü sözcük başında aranır («iadesi» → iade, «kuruluşu» → kuruluş,
+//   «kurmak» → kur, «muhasebeci» → muhasebe); kök eşleşmesi tam eşleşmeden biraz düşük puan alır.
+// • Eş anlamlılar: küçük bir liste sorgunun bir varyantını üretir («YMM» → tam tasdik, «staj» → kariyer…); varyant sonuçları
+//   özgün sorgunun sonuçlarından biraz aşağıda sıralanır.
+// • Başlığı sorguyla eşleşen hizmet, hizmet alanı, hesaplayıcı, araç ve kurumsal sayfalar sözlük maddelerinin önüne geçer.
+//   Başlığı eşleşen bir hizmet alanı varsa, hizmetler kendi aralarında o alanın hizmetleri önde olacak biçimde sıralanır
+//   («muhasebe» → Mali Müşavirlik ve Muhasebe, Muhasebe ve Vergi Eğitimi'nden önce); diğer sonuçların yeri değişmez.
 // • Sonuçlar türe göre gruplanır (en iyi sonucu olan tür önce); tür süzgeci adetlidir; ilk 50 + "daha fazla göster".
 // • Eşleşen kısımlar <mark> ile vurgulanır — yalnızca DOM/textContent; kullanıcı metni innerHTML'e girmez.
 // • ?q= adres çubuğuyla eşitlenir (history.replaceState). Klavye: ↓ sonuçlara geçer, ↑/↓ sonuçlar arasında gezer,
@@ -55,12 +62,73 @@ function atWordStart(s, w) {
   return false;
 }
 
+// Türkçe ek sadeleştirme (katlanmış metinde): sözcüğün olası kökleri, uzundan kısaya. Kök en az 4 harf; mastar (-mak/-mek) 3.
+const SUFFIXES = ['larindan', 'lerinden', 'larinin', 'lerinin', 'larina', 'lerine', 'larini', 'lerini', 'lari', 'leri', 'lar', 'ler', 'ligi', 'lugu', 'sinin', 'sunun', 'sini', 'sunu', 'sina', 'sine', 'nin', 'nun', 'ndan', 'nden', 'dan', 'den', 'tan', 'ten', 'nda', 'nde', 'lik', 'luk', 'si', 'su', 'ci', 'cu', 'in', 'un', 'ni', 'nu', 'yi', 'yu', 'ya', 'ye', 'da', 'de', 'ta', 'te', 'i', 'u', 'a', 'e'];
+export function stems(w) {
+  const out = [];
+  if (/^[a-z]+$/.test(w)) {
+    if ((w.endsWith('mak') || w.endsWith('mek')) && w.length >= 6) out.push(w.slice(0, -3));
+    for (const suf of SUFFIXES) if (w.endsWith(suf) && w.length - suf.length >= 4) out.push(w.slice(0, -suf.length));
+  }
+  return [...new Set(out)].filter((x) => x !== w);
+}
+
+// Eş anlamlılar (katlanmış, sözcük sınırında): sorgunun bir varyantını üretir. Yalnızca sitede karşılığı olan sayfalara yönlendirir.
+const SYNONYMS = [
+  ['yeminli mali musavir', 'tam tasdik'],
+  ['ymm', 'tam tasdik'],
+  ['oturma izni', 'ikamet izni'],
+  ['is basvurusu', 'kariyer'],
+  ['is ilani', 'kariyer'],
+  ['acik pozisyon', 'kariyer'],
+  ['stajyer', 'kariyer'],
+  ['staj', 'kariyer'],
+  ['alacak tahsili', 'alacak icra'],
+  ['isci davasi', 'is hukuku'],
+  ['devlet tesviki', 'tesvik'],
+  ['devlet destegi', 'tesvik'],
+  ['muhasebeci', 'mali musavirlik'],
+  ['ik', 'insan kaynaklari'],
+  ['adres', 'iletisim'],
+  ['telefon', 'iletisim'],
+  ['beyanname tarihleri', 'vergi takvimi'],
+  ['beyanname takvimi', 'vergi takvimi'],
+  ['vergi tarihleri', 'vergi takvimi'],
+];
+export function variants(q) {
+  const base = ' ' + fold(q) + ' ';
+  const out = [];
+  for (const [from, to] of SYNONYMS) {
+    const key = ' ' + from + ' ';
+    if (base.includes(key)) out.push(base.replace(key, ' ' + to + ' ').trim());
+  }
+  return [...new Set(out)];
+}
+
+// Başlığı eşleşince sözlüğün önüne geçen türler
+const PRIMARY = new Set(['Hizmet', 'Hizmet alanı', 'Hesaplayıcı', 'Araç', 'Kurumsal']);
+
+// Sözcüğün bir alandaki eşleşmesi: 2 = tam (sözcük başında), 1 = tam (sözcük içinde), 0.75 = kök (sözcük başında), 0 = yok
+function hit(field, w, st) {
+  if (field.includes(w)) return atWordStart(field, w) ? 2 : 1;
+  for (const r of st) if (atWordStart(field, r)) return 0.75;
+  return 0;
+}
+
 // Puan: -1 = eşleşmedi. Her sözcük başlıkta, açıklamada ya da türde geçmeli (VE).
-function scoreOf(it, qf, words) {
+function scoreOf(it, qf, words, st) {
   let s = 0;
-  for (const w of words) {
-    if (it.tf.includes(w)) s += atWordStart(it.tf, w) ? 40 : 24;
-    else if (it.df.includes(w)) s += atWordStart(it.df, w) ? 10 : 7;
+  let inTitle = 0;
+  for (let i = 0; i < words.length; i++) {
+    const w = words[i];
+    const h = hit(it.tf, w, st[i]);
+    if (h) {
+      s += h === 2 ? 40 : h === 1 ? 24 : 30;
+      inTitle++;
+      continue;
+    }
+    const hd = hit(it.df, w, st[i]);
+    if (hd) s += hd === 2 ? 10 : hd === 1 ? 7 : 8;
     else if (it.kf.includes(w)) s += 4;
     else return -1;
   }
@@ -69,6 +137,7 @@ function scoreOf(it, qf, words) {
   else if (atWordStart(it.tf, qf)) s += 200;
   else if (it.tf.includes(qf)) s += 120;
   else if (words.length > 1 && it.df.includes(qf)) s += 15;
+  if (inTitle === words.length && PRIMARY.has(it.k)) s += it.k === 'Hizmet alanı' ? 1160 : 1100; // başlığı eşleşen hizmet/hesaplayıcı sözlükten önce; alan sayfası (alanın bütün hizmetleri) tek hizmetten önce
   if (isPdf(it.u)) s -= 3; // arşiv PDF'leri eşit puanda sayfalardan sonra gelir
   return s;
 }
@@ -77,17 +146,61 @@ export function tokenize(q) {
   return [...new Set(fold(q).split(/[\s,;:!?()"«»]+/).filter(Boolean))];
 }
 
-export function search(index, q) {
+// Dizin kaydını aramaya hazırlar (katlanmış alanlar). Modül ve testler aynı biçimi kullanır.
+export function prepare(arr) {
+  return (Array.isArray(arr) ? arr : [])
+    .filter((x) => x && x.t && x.u)
+    .map((x) => ({ t: String(x.t), u: String(x.u), d: String(x.d || ''), k: String(x.k || 'Sayfa'), tf: fold(x.t), df: fold(x.d), kf: fold(x.k) }));
+}
+
+function run(index, q, penalty, best) {
   const qf = fold(q);
   const words = tokenize(q);
-  if (!words.length) return [];
-  const out = [];
+  if (!words.length) return;
+  const st = words.map(stems);
   for (const it of index) {
-    const s = scoreOf(it, qf, words);
-    if (s >= 0) out.push({ it, s });
+    const s = scoreOf(it, qf, words, st);
+    if (s < 0) continue;
+    const v = s - penalty;
+    const prev = best.get(it);
+    if (prev === undefined || v > prev) best.set(it, v);
   }
-  out.sort((a, b) => b.s - a.s || a.it.t.length - b.it.t.length || a.it.t.localeCompare(b.it.t, 'tr'));
-  return out.map((x) => x.it);
+}
+
+export function search(index, q) {
+  if (!tokenize(q).length) return [];
+  const best = new Map();
+  run(index, q, 0, best);
+  for (const v of variants(q)) run(index, v, 8, best); // eş anlamlı varyant: özgün eşleşmelerden biraz aşağıda
+  const ranked = [...best].sort(byScore);
+  // Başlığı eşleşen bir hizmet alanı varsa (puanı ≥ 1100: başlık artısını almış), hizmetler yalnızca kendi aralarında yeniden
+  // sıralanır: o alanın başlığı eşleşen hizmetleri öne geçer. Hizmet dışındaki sonuçların (alan, araç, sözlük…) yeri değişmez.
+  const areas = ranked.filter(([it, s]) => it.k === 'Hizmet alanı' && s >= 1100).map(([it]) => it.u);
+  if (areas.length) {
+    const slots = [];
+    const svc = [];
+    ranked.forEach(([it, s], i) => {
+      if (it.k !== 'Hizmet') return;
+      slots.push(i);
+      svc.push([it, s >= 1100 && areas.some((u) => it.u.startsWith(u)) ? s + 250 : s]);
+    });
+    svc.sort(byScore);
+    slots.forEach((i, j) => (ranked[i] = svc[j]));
+  }
+  return ranked.map(([it]) => it);
+}
+
+function byScore(a, b) {
+  return b[1] - a[1] || a[0].t.length - b[0].t.length || a[0].t.localeCompare(b[0].t, 'tr');
+}
+
+// Vurgulanacak sözcükler: sorgu sözcükleri, kökleri ve eş anlamlı varyantların sözcükleri
+export function markWords(q) {
+  const words = tokenize(q);
+  const all = new Set(words);
+  for (const w of words) for (const r of stems(w)) all.add(r);
+  for (const v of variants(q)) for (const w of tokenize(v)) all.add(w);
+  return [...all].sort((a, b) => b.length - a.length);
 }
 
 // Vurgu: özgün metin + katlanmış sözcükler → metin düğümleri ve <mark> öğeleri
@@ -166,11 +279,7 @@ export function mount(form, ctx) {
           if (!r.ok) throw new Error('HTTP ' + r.status);
           return r.json();
         })
-        .then((arr) =>
-          (Array.isArray(arr) ? arr : [])
-            .filter((x) => x && x.t && x.u)
-            .map((x) => ({ t: String(x.t), u: String(x.u), d: String(x.d || ''), k: String(x.k || 'Sayfa'), tf: fold(x.t), df: fold(x.d), kf: fold(x.k) }))
-        );
+        .then((arr) => prepare(arr));
       p.catch(() => indexCache.delete(src));
       indexCache.set(src, p);
     }
@@ -265,7 +374,7 @@ export function mount(form, ctx) {
   }
 
   function renderResults(focusFrom = -1) {
-    const words = tokenize(state.q);
+    const words = markWords(state.q);
     const pool = state.kind === 'all' ? matches : matches.filter((it) => it.k === state.kind);
     const shown = pool.slice(0, state.limit);
     const groups = new Map();

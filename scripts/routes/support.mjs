@@ -141,6 +141,7 @@ export function registerSupport(ctx) {
       template: 'pages/support/legal.njk',
       title: l.title,
       description,
+      lastmod: l.updatedAt,
       ...PAGE.legal,
       kind: 'Yasal',
       crumbs,

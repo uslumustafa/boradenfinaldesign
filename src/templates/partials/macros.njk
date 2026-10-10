@@ -31,7 +31,8 @@
 
 {# Alt sayfa kahramanı: koyu bölüm, 3B dünya arkada. page: sayfa nesnesi (crumbs için) #}
 {% macro phero(page, title, lead="", eyebrow="", scene=null, chips=[]) %}
-<section class="phero sec--dark" data-world="{{ scene if scene !== null else (page.scene or 0) }}">
+{% set sc = scene if scene !== null else (page.scene or 0) %}
+<section class="phero sec--dark" data-world="{{ sc }}"{% if sc | scene_reach %} style="{{ sc | scene_reach }}"{% endif %}>
   <div class="container">
     {% if page.crumbs and page.crumbs.length %}
     <nav aria-label="Sayfa yolu">
@@ -42,7 +43,7 @@
     </nav>
     {% endif %}
     {% if eyebrow %}<p class="eyebrow" data-reveal>{{ eyebrow }}</p>{% endif %}
-    <h1 style="margin-top:1.2rem;--lw:{{ title | longest_word }}" data-reveal data-reveal-delay="1">{{ title }}</h1>
+    <h1 style="margin-top:1.2rem;--lw:{{ title | longest_word }};--lwe:{{ title | longest_word_em }}" data-reveal data-reveal-delay="1">{{ title }}</h1>
     {% if lead %}<p class="phero__lead" data-reveal data-reveal-delay="2">{{ lead }}</p>{% endif %}
     {% if chips and chips.length %}<div class="phero__meta" data-reveal data-reveal-delay="3">{% for c in chips %}{% if c %}<span class="chip">{{ c }}</span>{% endif %}{% endfor %}</div>{% endif %}
   </div>

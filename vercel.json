@@ -10,10 +10,6 @@
       "source": "/(.*)",
       "headers": [
         {
-          "key": "X-Robots-Tag",
-          "value": "noindex, nofollow"
-        },
-        {
           "key": "X-Content-Type-Options",
           "value": "nosniff"
         },
@@ -26,8 +22,56 @@
           "value": "SAMEORIGIN"
         },
         {
+          "key": "Cross-Origin-Opener-Policy",
+          "value": "same-origin"
+        },
+        {
           "key": "Permissions-Policy",
           "value": "camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": {
+            "inc": [
+              "boraden.com.tr",
+              "www.boraden.com.tr"
+            ]
+          }
+        }
+      ],
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'sha256-DCxI4h1M8IK7Oc1ZtMdFRL4dmvpa0L6sabORd2TvzZE='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:; frame-ancestors 'self'; upgrade-insecure-requests"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "missing": [
+        {
+          "type": "host",
+          "value": {
+            "inc": [
+              "boraden.com.tr",
+              "www.boraden.com.tr"
+            ]
+          }
+        }
+      ],
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'sha256-DCxI4h1M8IK7Oc1ZtMdFRL4dmvpa0L6sabORd2TvzZE=' https://vercel.live; style-src 'self' 'unsafe-inline' https://vercel.live; img-src 'self' data: blob: https://vercel.live https://vercel.com; font-src 'self' https://vercel.live https://assets.vercel.com; connect-src 'self' https://vercel.live wss://ws-us3.pusher.com; media-src 'self'; frame-src 'self' https://vercel.live; object-src 'none'; base-uri 'self'; form-action 'self' mailto:; frame-ancestors 'self'; upgrade-insecure-requests"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
         }
       ]
     },
@@ -201,6 +245,216 @@
       "source": "/hizmetler/sistemler/cozum-prosedurleri/",
       "destination": "/hizmetler/dijital-donusum/cozum-prosedurleri/",
       "permanent": true
+    },
+    {
+      "source": "/ar-ge-hizmetleri/",
+      "destination": "/hizmetler/tesvik/ar-ge-hizmetleri/",
+      "permanent": true
+    },
+    {
+      "source": "/asgari-iscilik-ve-ilisiksizlik-belgesi/",
+      "destination": "/hizmetler/muhasebe/asgari-iscilik-ve-ilisiksizlik-belgesi/",
+      "permanent": true
+    },
+    {
+      "source": "/bagimsiz-denetim/",
+      "destination": "/hizmetler/denetim/bagimsiz-denetim/",
+      "permanent": true
+    },
+    {
+      "source": "/bireysel-danismanlik-hizmetleri/",
+      "destination": "/hizmetler/vergi/bireysel-danismanlik-hizmetleri/",
+      "permanent": true
+    },
+    {
+      "source": "/borclanma-islemleri/",
+      "destination": "/hizmetler/muhasebe/borclanma-islemleri/",
+      "permanent": true
+    },
+    {
+      "source": "/bordrolama/",
+      "destination": "/hizmetler/muhasebe/bordrolama/",
+      "permanent": true
+    },
+    {
+      "source": "/calisma-izni-alma-ve-iptali/",
+      "destination": "/hizmetler/muhasebe/calisma-izni-alma-ve-iptali/",
+      "permanent": true
+    },
+    {
+      "source": "/cari-hesap-mutabakatlarinin-yapilmasi/",
+      "destination": "/hizmetler/muhasebe/cari-hesap-mutabakatlarinin-yapilmasi/",
+      "permanent": true
+    },
+    {
+      "source": "/diger-dolayli-vergiler/",
+      "destination": "/hizmetler/vergi/diger-dolayli-vergiler/",
+      "permanent": true
+    },
+    {
+      "source": "/emeklilik-danismanligi/",
+      "destination": "/hizmetler/muhasebe/emeklilik-danismanligi/",
+      "permanent": true
+    },
+    {
+      "source": "/ev-hizmetlisi-sgk-dosya-acilisi/",
+      "destination": "/hizmetler/muhasebe/ev-hizmetlisi-sgk-dosya-acilisi/",
+      "permanent": true
+    },
+    {
+      "source": "/finansal-analiz/",
+      "destination": "/hizmetler/akademi/finansal-analiz/",
+      "permanent": true
+    },
+    {
+      "source": "/finansal-tablo-denetimi/",
+      "destination": "/hizmetler/denetim/finansal-tablo-denetimi/",
+      "permanent": true
+    },
+    {
+      "source": "/ic-denetim/",
+      "destination": "/hizmetler/akademi/ic-denetim/",
+      "permanent": true
+    },
+    {
+      "source": "/ic-denetim-ve-ic-kontrol/",
+      "destination": "/hizmetler/denetim/ic-denetim-ve-ic-kontrol/",
+      "permanent": true
+    },
+    {
+      "source": "/insan-kiymetleri-egitimi/",
+      "destination": "/hizmetler/akademi/insan-kiymetleri-egitimi/",
+      "permanent": true
+    },
+    {
+      "source": "/insan-kiymetleri-surec-yonetimi/",
+      "destination": "/hizmetler/muhasebe/insan-kiymetleri-surec-yonetimi/",
+      "permanent": true
+    },
+    {
+      "source": "/istihdam-tesvik/",
+      "destination": "/hizmetler/tesvik/istihdam-tesvik/",
+      "permanent": true
+    },
+    {
+      "source": "/isveren-denetimi-ve-raporlamasi/",
+      "destination": "/hizmetler/muhasebe/isveren-denetimi-ve-raporlamasi/",
+      "permanent": true
+    },
+    {
+      "source": "/kdv-iade-islemleri/",
+      "destination": "/hizmetler/vergi/kdv-iade-islemleri/",
+      "permanent": true
+    },
+    {
+      "source": "/kurumlar-vergisi-denetim-ve-tasdik/",
+      "destination": "/hizmetler/vergi/kurumlar-vergisi-denetim-ve-tasdik/",
+      "permanent": true
+    },
+    {
+      "source": "/kurumsal-raporlama/",
+      "destination": "/hizmetler/muhasebe/kurumsal-raporlama/",
+      "permanent": true
+    },
+    {
+      "source": "/mali-musavirlik-ve-muhasebe/",
+      "destination": "/hizmetler/muhasebe/mali-musavirlik-ve-muhasebe/",
+      "permanent": true
+    },
+    {
+      "source": "/mali-tablolarin-denetimi/",
+      "destination": "/hizmetler/denetim/mali-tablolarin-denetimi/",
+      "permanent": true
+    },
+    {
+      "source": "/muhasebe-ve-vergi/",
+      "destination": "/hizmetler/akademi/muhasebe-ve-vergi/",
+      "permanent": true
+    },
+    {
+      "source": "/otv-hizmetleri/",
+      "destination": "/hizmetler/vergi/otv-hizmetleri/",
+      "permanent": true
+    },
+    {
+      "source": "/raporlama/",
+      "destination": "/hizmetler/muhasebe/raporlama/",
+      "permanent": true
+    },
+    {
+      "source": "/sgk-dosya-acilisi/",
+      "destination": "/hizmetler/muhasebe/sgk-dosya-acilisi/",
+      "permanent": true
+    },
+    {
+      "source": "/sgk-dosya-kapanisi/",
+      "destination": "/hizmetler/muhasebe/sgk-dosya-kapanisi/",
+      "permanent": true
+    },
+    {
+      "source": "/sgk-protokolu/",
+      "destination": "/hizmetler/muhasebe/sgk-protokolu/",
+      "permanent": true
+    },
+    {
+      "source": "/suistimal-inceleme-ve-onleme/",
+      "destination": "/hizmetler/denetim/suistimal-inceleme-ve-onleme/",
+      "permanent": true
+    },
+    {
+      "source": "/tam-tasdik-islemleri/",
+      "destination": "/hizmetler/vergi/tam-tasdik-islemleri/",
+      "permanent": true
+    },
+    {
+      "source": "/ticaret-sicil-islemleri/",
+      "destination": "/hizmetler/hukuk/ticaret-sicil-islemleri/",
+      "permanent": true
+    },
+    {
+      "source": "/transfer-fiyatlandirma/",
+      "destination": "/hizmetler/vergi/transfer-fiyatlandirma/",
+      "permanent": true
+    },
+    {
+      "source": "/ufrs/",
+      "destination": "/hizmetler/akademi/ufrs/",
+      "permanent": true
+    },
+    {
+      "source": "/ufrs-tfrs-raporlama/",
+      "destination": "/hizmetler/muhasebe/ufrs-tfrs-raporlama/",
+      "permanent": true
+    },
+    {
+      "source": "/usulsuzluk-ve-hile-denetimi/",
+      "destination": "/hizmetler/denetim/usulsuzluk-ve-hile-denetimi/",
+      "permanent": true
+    },
+    {
+      "source": "/yabanci-uyruklu-ikamet-izini/",
+      "destination": "/hizmetler/muhasebe/yabanci-uyruklu-ikamet-izini/",
+      "permanent": true
+    },
+    {
+      "source": "/yonetim-danismanligi/",
+      "destination": "/hizmetler/kurumsal-finansman/yonetim-danismanligi/",
+      "permanent": true
+    },
+    {
+      "source": "/yurtdisina-isci-gonderimi/",
+      "destination": "/hizmetler/muhasebe/yurtdisina-isci-gonderimi/",
+      "permanent": true
+    },
+    {
+      "source": "/danismanlik/",
+      "destination": "/hizmetler/kurumsal-finansman/",
+      "permanent": true
+    },
+    {
+      "source": "/en/:path*/",
+      "destination": "/",
+      "permanent": false
     }
   ]
 }

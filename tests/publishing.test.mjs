@@ -19,14 +19,30 @@ test('shared head identifies the canonical page and unchanged approved logo at i
   assert.match(html,/<meta property="og:image:alt" content="Boraden">/);
   assert.match(html,/<meta property="og:image:width" content="211">/);
   assert.match(html,/<meta property="og:image:height" content="48">/);
+  assert.match(html,/<meta property="og:type" content="website">/);
+  assert.match(html,/<meta name="twitter:card" content="summary">/,'211 px genişlikteki logo için geniş kart değil');
+  assert.doesNotMatch(html,/article:published_time/);
+  const art=env.render('layouts/base.njk',{page:{canonical,url:'/x/',crumbs:[],titleFull:'Yazı',description:'Fixture',ogType:'article',published:'2026-09-06'}});
+  assert.match(art,/<meta property="og:type" content="article">/);
+  assert.match(art,/<meta property="article:published_time" content="2026-09-06">/);
 });
 
-test('sitemap serializes only public pages and omits lastmod without trusted revision data',()=>{
-  const routes=[{url:'/'},{url:'/bilgi-merkezi/'},{url:'/taslak/',noindex:true},{url:'/arama#sozluk',searchOnly:true}];
+test('sitemap serializes only public pages; lastmod only from a content date, never the build day',()=>{
+  const routes=[{url:'/'},{url:'/bilgi-merkezi/'},{url:'/taslak/',noindex:true,lastmod:'2026-01-01'},{url:'/arama#sozluk',searchOnly:true},{url:'/not/',lastmod:'2026-09-06'},{url:'/bozuk/',lastmod:'Eylül 2026'}];
   const xml=sitemapXML(routes,'https://www.boraden.com.tr');
-  assert.deepEqual([...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>m[1]),['https://www.boraden.com.tr/','https://www.boraden.com.tr/bilgi-merkezi/']);
-  assert.doesNotMatch(xml,/<lastmod>/);
+  assert.deepEqual([...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>m[1]),['https://www.boraden.com.tr/','https://www.boraden.com.tr/bilgi-merkezi/','https://www.boraden.com.tr/not/','https://www.boraden.com.tr/bozuk/']);
+  assert.deepEqual([...xml.matchAll(/<lastmod>(.*?)<\/lastmod>/g)].map(m=>m[1]),['2026-09-06'],'yalnızca geçerli içerik tarihi; tarihsiz ya da biçimsiz değer yazılmaz');
   const data=loadData();
-  const actual=sitemapXML(buildRoutes(data,buildModel(data)),data.site.url);
-  assert.doesNotMatch(actual,/<lastmod>/);
+  const all=buildRoutes(data,buildModel(data));
+  const actual=sitemapXML(all,data.site.url);
+  const today=new Date().toISOString().slice(0,10);
+  const dated=new Map(all.filter(r=>r.lastmod&&!r.noindex&&!r.searchOnly).map(r=>[data.site.url.replace(/\/$/,'')+r.url,r.lastmod]));
+  const got=[...actual.matchAll(/<loc>([^<]+)<\/loc><lastmod>([^<]+)<\/lastmod>/g)];
+  assert.equal(got.length,dated.size);
+  for(const [,loc,lm] of got){
+    assert.equal(lm,dated.get(loc),`${loc}: lastmod rotadaki içerik tarihiyle aynı olmalı`);
+    assert.match(lm,/^\d{4}-\d{2}-\d{2}$/);
+    assert.ok(lm<=today,`${loc}: gelecek tarihli lastmod`);
+  }
+  assert.doesNotMatch(actual,new RegExp(`<loc>${data.site.url}/</loc><lastmod>`),'ana sayfanın içerik tarihi yok');
 });

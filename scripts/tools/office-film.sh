@@ -1,7 +1,8 @@
 #!/bin/bash
 # Boraden ofis filmi (ana sayfa «Film» bölümü) — yeniden üretim betiği.
 #   Çıktı: /tmp/vcut/ofis-loop.mp4 → src/assets/video/boraden-ofis.mp4 olarak kopyalayın.
-#   Poster: /tmp/vcut/poster.jpg (kesitin özgün POSTER_FRAME. karesi; kişisiz giriş karesi) → src/assets/video/boraden-ofis-poster.jpg olarak kopyalayın.
+#   Poster: /tmp/vcut/poster-1280.webp ve poster-768.webp (kesitin özgün POSTER_FRAME. karesi; kişisiz giriş karesi) →
+#           src/assets/video/boraden-ofis-poster-1280.webp ve boraden-ofis-poster-768.webp olarak kopyalayın (poster.jpg ara dosyadır).
 #   Gereken: ffmpeg (Homebrew: /opt/homebrew/bin/ffmpeg; zscale/tonemap/hqdn3d/minterpolate filtreleri), kaynak klip (aşağıdaki D klasörü).
 #   Kaynak: 2022 arşivi, IMG_0376.MOV (4K HEVC 10-bit HLG) → SDR'ye (hable) çevrilir.
 #   Kesit: 8,0–9,87 sn. Girişteki ahşap çıtalı bölmeden, bilgisayar başında sırtı dönük oturan çalışanın göründüğü ana kadar (müşteri isteği).
@@ -38,6 +39,9 @@ FO=$(python3 -c "print(round($SEC-0.7,3))")
 echo "süre: $SEC sn · solma çıkışı: $FO"
 # 3) poster (özgün kare + aynı hafif gürültü azaltma)
 $FF -hide_banner -loglevel error -y -i "$W/src/$(printf %04d $POSTER_FRAME).png" -vf "hqdn3d=2:1.5:5:4" -frames:v 1 -q:v 3 poster.jpg && echo "POSTER-OK"
+# 3b) sayfadaki poster WebP (srcset: 768 ve 1280 px; ≈ 21 KB / 42 KB — JPG 134 KB idi)
+$FF -hide_banner -loglevel error -y -i poster.jpg -c:v libwebp -quality 78 -compression_level 6 poster-1280.webp
+$FF -hide_banner -loglevel error -y -i poster.jpg -vf "scale=768:-2:flags=lanczos" -c:v libwebp -quality 78 -compression_level 6 poster-768.webp && echo "POSTER-WEBP-OK"
 # 4) solma + H.264 (bt709 etiketli, hızlı başlangıç)
 $FF -hide_banner -loglevel error -y -i pre.mkv \
   -vf "fade=t=in:st=0:d=0.7,fade=t=out:st=${FO}:d=0.7,setparams=colorspace=bt709:color_primaries=bt709:color_trc=bt709:range=tv" \

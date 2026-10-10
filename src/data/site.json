@@ -25,7 +25,8 @@
     {
       "label": "Bilgi Merkezi",
       "url": "/bilgi-merkezi/",
-      "panel": "insights"
+      "panel": "insights",
+      "match": "/vergi-takvimi/"
     },
     {
       "label": "Hesaplayıcılar",
@@ -33,7 +34,8 @@
     },
     {
       "label": "Hakkımızda",
-      "url": "/hakkimizda/"
+      "url": "/hakkimizda/",
+      "match": "/kariyer/"
     }
   ],
   "cta": {

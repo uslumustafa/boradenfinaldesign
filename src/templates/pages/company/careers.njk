@@ -91,7 +91,7 @@
           <h2 id="cr-proc-h" data-reveal data-reveal-delay="1">Başvurudan sonuca {{ cr.process | length }} adım</h2>
         </div>
       </header>
-      <ol class="cr-steps" data-steps>
+      <ol class="cr-steps" data-steps style="--lw: {{ cr.process | longest_word('title') }}">
         {% for s in cr.process %}
         <li class="cr-step" data-reveal data-reveal-delay="{{ loop.index0 }}">
           <span class="cr-step__n mono tnum">{{ loop.index | pad2 }}</span>

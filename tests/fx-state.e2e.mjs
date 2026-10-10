@@ -15,7 +15,7 @@ const errors = [];
 page.on('pageerror', e => errors.push(e.message));
 page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
 async function tier(value) {
-  await page.locator(`[data-fx-set="${value}"]`).click();
+  await page.locator(`[data-fx-set="${value}"]:visible`).click();
   await page.waitForFunction(t => document.documentElement.dataset.fx === t, value);
   await page.waitForTimeout(150);
   assert.equal(await page.locator('html').getAttribute('data-fx'), value, `stable effect tier ${value}`);
@@ -107,6 +107,49 @@ try {
   console.log('PASS: effect changes preserve calculator input and result');
   assert.deepEqual(errors, []);
   console.log('PASS: effect changes preserve full draft, copy, form values and context');
+
+  // T-09: automatic fallback (no WebGL) must not re-wrap the open page's hero title; the next page and the user's own choice may.
+  const gl = await guardContext(await browser.newContext({ viewport: { width: 1440, height: 900 } }));
+  await gl.addInitScript(() => {
+    // capable hardware (tier «full» on start), but no WebGL: the world fails after its chunk loads
+    Object.defineProperty(Navigator.prototype, 'hardwareConcurrency', { get: () => 8 });
+    Object.defineProperty(Navigator.prototype, 'deviceMemory', { get: () => 8 });
+    const get = HTMLCanvasElement.prototype.getContext;
+    HTMLCanvasElement.prototype.getContext = function (type, ...rest) { return /webgl/i.test(type) ? null : get.call(this, type, ...rest); };
+  });
+  let release;
+  const held = new Promise((r) => { release = r; });
+  await gl.route('**/chunks/world-*.js', async (route) => { await held; await route.continue(); });
+  const p2 = await gl.newPage();
+  const hero = () => p2.evaluate(() => {
+    const h = document.querySelector('.phero h1'); // layout box (offset*: the entrance transform does not count)
+    const d = document.documentElement;
+    return { box: [h.offsetTop, h.offsetWidth, h.offsetHeight], wide: d.classList.contains('hero-wide'), fx: d.dataset.fx };
+  });
+  try {
+    await p2.goto(base + '/vergi-takvimi/');
+    await p2.waitForFunction(() => document.documentElement.classList.contains('is-ready'));
+    const before = await hero();
+    assert.ok(before.fx !== 'off' && !before.wide, `effects on at start, column follows the shape (${JSON.stringify(before)})`);
+    release();
+    await p2.waitForFunction(() => document.documentElement.dataset.fx === 'off');
+    await p2.waitForTimeout(100);
+    const after = await hero();
+    assert.equal(after.wide, false, 'automatic fallback keeps the open page laid out');
+    assert.deepEqual(after.box, before.box, 'hero title box unchanged after automatic fallback');
+    await p2.evaluate(() => { const a = document.createElement('a'); a.href = '/hizmetler/'; document.body.append(a); a.click(); a.remove(); });
+    await p2.waitForFunction(() => document.querySelector('#main').dataset.url === '/hizmetler/' && document.activeElement?.id === 'main');
+    assert.equal((await hero()).wide, true, 'next page uses the full-width column');
+    await p2.locator('[data-fx-set="full"]:visible').click();
+    assert.equal((await hero()).wide, false, 'user choice narrows the column at once');
+    await p2.waitForFunction(() => document.documentElement.dataset.fx === 'off');
+    assert.equal((await hero()).wide, false, 'fallback after the user choice keeps the open page laid out');
+    await p2.locator('[data-fx-set="off"]:visible').click();
+    assert.equal((await hero()).wide, true, 'user choice «off» widens the column at once');
+    console.log('PASS: automatic effect fallback keeps the hero title in place');
+  } finally {
+    await gl.close();
+  }
 } finally {
   await ctx.close();
   await browser.close();

@@ -38,7 +38,7 @@
             <span class="pub-feat__rail" aria-hidden="true"><i></i><i></i><i></i></span>
             <span class="pub-feat__top mono"><span class="pub-feat__k">{% if p.date %}Son yayın{% else %}Öne çıkan yazı{% endif %}</span><span>{{ p.category }}</span>{{ m.pubdate(p, "tr") }}</span>
             <div class="pub-feat__grid">
-              <h2 class="pub-feat__t">{{ p.title }}</h2>
+              <h2 class="pub-feat__t" style="--lw: {{ p.title | longest_word }}">{{ p.title }}</h2>
               <div class="pub-feat__side">
                 <p class="pub-feat__s">{{ p.summary }}</p>
                 <span class="pub-feat__foot"><span class="mono">{{ p.sourceList | length }} kaynak{% if p.sourceDate %} · kaynak tarihi {{ p.sourceDate | date_short }}{% endif %}</span><span class="pub-feat__go">Okuyun <span class="arr" aria-hidden="true">→</span></span></span>
@@ -50,7 +50,7 @@
             {% if p.date %}<time class="pub-row__d" datetime="{{ p.date }}"><span class="pub-row__day tnum">{{ p.date | day_of }}</span><span class="pub-row__my mono">{{ p.date | month_short }} {{ p.date | year_of }}</span></time>{% else %}<span class="pub-row__d pub-row__d--tbd mono">{{ p.dateStatus }}</span>{% endif %}
             <div class="pub-row__main">
               <p class="pub-row__meta mono">{{ p.category }}{% if p.editorialType %} · {{ p.editorialType }}{% endif %}</p>
-              <h2 class="pub-row__t">{{ p.title }}</h2>
+              <h2 class="pub-row__t" style="--lw: {{ p.title | longest_word }}">{{ p.title }}</h2>
             </div>
             <div class="pub-row__side">
               <p class="pub-row__s">{{ p.summary }}</p>

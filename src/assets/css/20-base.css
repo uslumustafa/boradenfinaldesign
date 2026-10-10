@@ -268,10 +268,13 @@ p {
 }
 
 /* Düğmeler */
+/* Üzerine gelince alttan yükselen dolgu (--hv) düğmenin kendi renginin bir tonu: dolu düğme dolu, çerçeveli düğme çerçeveli kalır
+   (önceden dolgu ters renkteydi; birincil ve ikincil düğme üzerine gelince yer değiştiriyordu). */
 .btn {
   --bg: var(--ink);
   --fg: #fff;
   --bd: var(--ink);
+  --hv: color-mix(in srgb, #fff 16%, var(--ink));
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -298,13 +301,13 @@ p {
   content: '';
   position: absolute;
   inset: 0;
-  background: var(--fg);
+  background: var(--hv);
   transform: translateY(101%);
   transition: transform var(--t-med) var(--ease-out);
   z-index: -1;
 }
 .btn:hover {
-  color: var(--bg);
+  color: var(--fg);
 }
 .btn:hover::before {
   transform: translateY(0);
@@ -320,12 +323,9 @@ p {
   --bg: transparent;
   --fg: var(--ink);
   --bd: var(--line-strong);
-}
-.btn--ghost::before {
-  background: var(--ink);
+  --hv: color-mix(in srgb, var(--ink) 7%, transparent);
 }
 .btn--ghost:hover {
-  color: #fff;
   border-color: var(--ink);
 }
 .on-dark .btn,
@@ -334,16 +334,7 @@ p {
   --bg: #fff;
   --fg: var(--navy-950);
   --bd: #fff;
-}
-.on-dark .btn::before,
-.sec--dark .btn::before,
-.sec--solid .btn::before {
-  background: var(--navy-950);
-}
-.on-dark .btn:hover,
-.sec--dark .btn:hover,
-.sec--solid .btn:hover {
-  color: #fff;
+  --hv: color-mix(in srgb, var(--navy-950) 10%, #fff);
 }
 .on-dark .btn--ghost,
 .sec--dark .btn--ghost,
@@ -351,16 +342,11 @@ p {
   --bg: transparent;
   --fg: #fff;
   --bd: var(--line-dark-2);
-}
-.on-dark .btn--ghost::before,
-.sec--dark .btn--ghost::before,
-.sec--solid .btn--ghost::before {
-  background: #fff;
+  --hv: rgba(255, 255, 255, 0.12);
 }
 .on-dark .btn--ghost:hover,
 .sec--dark .btn--ghost:hover,
 .sec--solid .btn--ghost:hover {
-  color: var(--navy-950);
   border-color: #fff;
 }
 

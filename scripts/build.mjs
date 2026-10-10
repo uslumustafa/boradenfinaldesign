@@ -6,7 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import nunjucks from 'nunjucks';
 import * as esbuild from 'esbuild';
-import { makeFilters } from './filters.mjs';
+import { makeFilters, metaDesc } from './filters.mjs';
 import { buildModel } from './model.mjs';
 import { buildRoutes } from './routes.mjs';
 
@@ -43,9 +43,16 @@ export function loadData() {
   return data;
 }
 
+// lastmod: yalnızca içeriğin kendi tarihi olan sayfalarda (yayın tarihi, parametre/metin güncelleme tarihi — rota › lastmod).
+// Derleme günü lastmod değildir; tarihi olmayan sayfada etiket yazılmaz.
+export const isoDate = (d) => (typeof d === 'string' && /^\d{4}-\d{2}-\d{2}(T[\d:.]+(Z|[+-]\d{2}:\d{2})?)?$/.test(d) ? d : '');
 export function sitemapXML(routes, base) {
-  // Bu statik modelde güvenilir içerik revision tarihi yok; build günü lastmod değildir.
-  const urls = routes.filter((r) => !r.noindex && !r.searchOnly).map((r) => `  <url><loc>${base}${r.url}</loc></url>`);
+  const urls = routes
+    .filter((r) => !r.noindex && !r.searchOnly)
+    .map((r) => {
+      const lm = isoDate(r.lastmod);
+      return `  <url><loc>${base}${r.url}</loc>${lm ? `<lastmod>${lm}</lastmod>` : ''}</url>`;
+    });
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join('\n')}\n</urlset>\n`;
 }
 
@@ -177,7 +184,9 @@ export async function build({ prod = false, quiet = false } = {}) {
       url: r.url,
       title: r.title,
       titleFull: r.titleFull || `${r.title} — ${data.site.name}`,
-      description: r.description || data.site.description,
+      description: metaDesc(r.description || data.site.description),
+      ogType: r.ogType || 'website',
+      published: isoDate(r.published),
       scene: r.scene,
       fig: r.fig || null,
       kind: r.kind,

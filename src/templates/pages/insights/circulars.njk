@@ -54,14 +54,14 @@
 
       <div class="arc__bar">
         <div class="arc__years" role="group" aria-label="Yıla göre süz" data-filter-by="yil">
-          <button class="arc__yr is-on" type="button" data-filter="all" aria-pressed="true" aria-label="Tüm yıllar: {{ arc.total }} sirküler">
+          <button class="arc__yr is-on" type="button" data-filter="all" aria-pressed="true" aria-label="Tümü: {{ arc.total }} sirküler">
             <span class="arc__yh arc__yh--all" aria-hidden="true">{% for y in arc.years %}<i style="--v: {{ y.ratio }}"></i>{% endfor %}</span>
-            <span class="arc__yl">Tümü</span><span class="arc__yc tnum">{{ arc.total }}</span>
+            <span class="arc__yl">Tümü</span> <span class="arc__yc tnum">{{ arc.total }}</span>
           </button>
           {% for y in arc.years %}
           <button class="arc__yr" type="button" data-filter="{{ y.year }}" aria-pressed="false" aria-label="{{ y.year }}: {{ y.count }} sirküler">
             <span class="arc__yh" aria-hidden="true"><i style="--v: {{ y.ratio }}"></i></span>
-            <span class="arc__yl tnum">{{ y.year }}</span><span class="arc__yc tnum">{{ y.count }}</span>
+            <span class="arc__yl tnum">{{ y.year }}</span> <span class="arc__yc tnum">{{ y.count }}</span>
           </button>
           {% endfor %}
         </div>

@@ -10,7 +10,7 @@
    Davranış modules/search.js'tedir: Türkçe harf katlama, VE mantığı, puanlama, türe göre gruplama, vurgulama, ?q= eşitlemesi,
    klavye (↑/↓, Enter, Esc). JS yokken önerilen yollar ve site haritası bağlantısı kullanılabilir. #}
 {% block main %}
-<section class="phero sr-hero sec--dark" data-world="{{ page.scene }}">
+<section class="phero sr-hero sec--dark" data-world="{{ page.scene }}"{% if page.scene | scene_reach %} style="{{ page.scene | scene_reach }}"{% endif %}>
   <div class="container">
     <nav aria-label="Sayfa yolu">
       <ol class="crumbs">
@@ -19,7 +19,7 @@
       </ol>
     </nav>
     <p class="eyebrow" data-reveal>{{ copy.title }}</p>
-    <h1 class="sr-h1" data-reveal data-reveal-delay="1">{{ copy.h1 }}</h1>
+    <h1 class="sr-h1" style="--lw:{{ copy.h1 | longest_word }};--lwe:{{ copy.h1 | longest_word_em }}" data-reveal data-reveal-delay="1">{{ copy.h1 }}</h1>
     <form class="sr-form" role="search" action="/arama/" method="get" data-module="search" data-index="/assets/data/search-index.json?v={{ build_id }}" data-reveal data-reveal-delay="2">
       <label class="sr-only" for="sr-q">Aranacak sözcükler</label>
       <div class="sr-field">

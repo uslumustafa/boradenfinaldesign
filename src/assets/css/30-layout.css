@@ -152,6 +152,15 @@ html.hdr-hidden .hdr {
   width: auto;
   display: block;
 }
+/* Zorlanmış renkler (Windows Yüksek Karşıtlık): zemin sistem rengine döner, açık temada logodaki beyaz «BORADEN» kaybolur.
+   Logo kabı koyu zeminini korur; logo dosyasına ve işaretlemesine dokunulmaz (T-26). */
+@media (forced-colors: active) {
+  .brand {
+    forced-color-adjust: none;
+    background: var(--navy-950);
+    padding-inline: 0.5rem;
+  }
+}
 .nav {
   flex: 1;
   min-width: 0;
@@ -211,8 +220,14 @@ html.hdr-hidden .hdr {
   color: var(--on-dark-2);
   transition: color var(--t-fast);
 }
-.hdr__icon:hover {
+.hdr__icon:hover,
+.hdr__icon.is-active {
   color: #fff;
+}
+/* bulunulan sayfa arama ya da iletişimse: menü bağlantılarındaki gibi altta ince vurgu çizgisi */
+.hdr__icon.is-active,
+.hdr__cta.is-active {
+  box-shadow: 0 7px 0 -5px var(--accent-dark);
 }
 .btn--sm {
   min-height: 2.75rem;
@@ -220,13 +235,15 @@ html.hdr-hidden .hdr {
   font-size: 0.95rem;
   gap: 0.6rem;
 }
-.hdr__burger {
+.hdr__burger,
+.hdr__map {
   display: none;
   position: relative;
   width: 44px;
   height: 44px;
 }
-.hdr__burger span {
+.hdr__burger span,
+.hdr__map span {
   position: absolute;
   left: 12px;
   right: 12px;
@@ -234,10 +251,12 @@ html.hdr-hidden .hdr {
   background: #fff;
   transition: transform var(--t-med) var(--ease-out), top var(--t-med) var(--ease-out);
 }
-.hdr__burger span:nth-child(1) {
+.hdr__burger span:nth-child(1),
+.hdr__map span:nth-child(1) {
   top: 18px;
 }
-.hdr__burger span:nth-child(2) {
+.hdr__burger span:nth-child(2),
+.hdr__map span:nth-child(2) {
   top: 26px;
 }
 .hdr__burger[aria-expanded='true'] span:nth-child(1) {
@@ -266,6 +285,19 @@ html.hdr-hidden .hdr {
   clip-path: inset(0 0 0 0);
   transition: clip-path 0.55s var(--ease-out), visibility 0s;
 }
+/* kısa pencerede (ör. 1280×720) panel ekrana sığmazsa kendi içinde kayar */
+.mega--services {
+  max-height: calc(100vh - var(--hdr));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+/* Sütun başına 7 hizmet yalnızca panel ekrana sığdığında; kısa pencerede 5 (kalanlar «Tüm … (N) →» bağlantısında sayılı).
+   7 hizmetli panelin alt kenarı ≈ 885 px (1280–1439 px genişlik), ≈ 790–840 px (1440 px ve üstü). */
+@media (max-width: 1439px) and (max-height: 899px), (max-height: 849px) {
+  .mega--services .mega__col > a:not(.all):nth-of-type(n + 6) {
+    display: none;
+  }
+}
 .mega__inner {
   padding-block: 2.6rem 3rem;
 }
@@ -286,7 +318,22 @@ html.hdr-hidden .hdr {
   gap: 0.7rem;
   align-items: baseline;
 }
+.mega__col h3 a {
+  display: flex;
+  gap: 0.7rem;
+  align-items: baseline;
+  padding: 0;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+.mega__col h3 a:hover {
+  color: #fff;
+  transform: none;
+}
 .mega__col h3 span {
+  flex: none; /* «04» dar sütunda «0 / 4» diye bölünmesin (1280–1440 px) */
+  white-space: nowrap;
   font-family: var(--f-mono);
   font-variant-numeric: tabular-nums;
   color: var(--accent-dark);
@@ -307,6 +354,24 @@ html.hdr-hidden .hdr {
   margin-top: 0.6rem;
   color: var(--accent-dark);
   font-weight: 500;
+}
+.mega__col .all__n {
+  white-space: nowrap; /* sayı ve ok birlikte kırılır: ok tek başına alt satıra düşmesin */
+}
+/* alçak pencerede (≤ 760 px, ör. 1280×720) daha sık aralık: panel kaydırma gerektirmeden sığsın */
+@media (max-height: 760px) {
+  .mega__inner {
+    padding-block: 1.6rem 1.8rem;
+  }
+  .mega__grid {
+    row-gap: 1.4rem;
+  }
+  .mega__col h3 {
+    margin-bottom: 0.7rem;
+  }
+  .mega__col a {
+    padding-block: 0.24rem;
+  }
 }
 .mega--insights .mega__grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -411,9 +476,19 @@ html.hdr-hidden .prog {
 }
 .mnav__foot {
   display: grid;
-  gap: 1rem;
+  gap: 0.5rem;
   color: var(--on-dark-2);
   font-size: 0.95rem;
+}
+/* efekt anahtarı menünün en altında (altbilgideki anahtarla eş; ikisi de chrome.js ile eşzamanlı) */
+.mnav__fx {
+  margin-top: 1rem;
+}
+/* telefon ve e-posta: parmakla rahat dokunulur yükseklik (≥ 44 px) */
+.mnav__foot a:not(.btn) {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
 }
 
 @media (max-width: 75em) {
@@ -430,6 +505,13 @@ html.hdr-hidden .prog {
   }
   .mega {
     display: none;
+  }
+  /* JS kapalıyken menü açılamaz: düğmenin yerinde site haritası bağlantısı (T-34) */
+  .no-js .hdr__burger {
+    display: none;
+  }
+  .no-js .hdr__map {
+    display: inline-block;
   }
 }
 @media (min-width: 75.001em) {
@@ -456,6 +538,36 @@ html.hdr-hidden .prog {
 }
 .phero > .container {
   position: relative;
+}
+/* Başlık sütunu (--phero-col). İki sütunlu düzende (> 900 px) başlık ve özet, sağdaki 3B şeklin dönerken ulaşabildiği en sol
+   çizgiye kadar uzanır; uzun başlık şeklin üstüne binmek yerine satıra kırılır.
+   Çizgi sahneye göredir: şekil genişliğin sabit oranında durur, boyu ekran yüksekliğiyle ölçeklenir (world.js › pose; en-boy
+   1,6'dan darsa kamera dm kadar uzaklaşır) → sol ≈ a·vw − b·vh/dm. a ve b (--sa, --sb, yüzde) sayfanın sahnesinden gelir
+   (src/data/scene-reach.json, scripts/scene-reach.mjs üretir; şablonda style="{{ sahne | scene_reach }}"). Sahnesi verisiz
+   sayfada genel değerler: bütün sahnelerin en genişine yakın. Sütun, içerik kutusunun sol kenarından (geniş ekranda kutu
+   ortalanır: --maxw) bu çizgiye kadar, 1,25rem pay bırakarak.
+   Efektler kapalıyken şekil çizilmez: sütun daralmaz (html.hero-wide). Sınıfı ilk boyamada base.njk, sonra yalnızca kullanıcı
+   seçimi ve sayfa değişimi ayarlar (fx.js › syncLayout): efekt kendiliğinden kapanınca açık sayfanın başlığı yeniden dizilmez.
+   Çok dar/dik pencerede sütun 20rem'den daralmaz: şekil yazının arkasına biraz girebilir, soldaki degrade okunurluğu korur. */
+.phero {
+  --sa: 67.6;
+  --sb: 39.8;
+  --phero-col: calc(100vw - 2 * var(--gutter));
+}
+@media (min-width: 901px) {
+  html:not(.hero-wide) .phero {
+    --phero-col: max(
+      20rem,
+      calc(
+        max(var(--sa) * 1vw - var(--sb) * 1vh, min(var(--sa) * 1vw - var(--sb) / 1.6 * 1vw, var(--sa) * 1vw - var(--sb) / 1.25 * 1vh)) -
+          max(var(--gutter), (100vw - var(--maxw)) / 2) - 1.25rem
+      )
+    );
+  }
+}
+/* Sağda şekil olmayan sahne (404: tam genişlikte arazi, yazının arkasında): başlık sütunu daralmaz */
+html .phero.phero--wide {
+  --phero-col: calc(100vw - 2 * var(--gutter));
 }
 @media (max-width: 900px) {
   /* dar ekranda yazı tüm genişliği kaplar: degrade yandan değil aşağıdan koyulaşır (şekil üstte görünür, başlık/öz okunur kalır) */
@@ -484,16 +596,16 @@ html.hdr-hidden .prog {
   opacity: 0.6;
 }
 .phero h1 {
-  /* Uzun başlık sağdaki parçacık şekline taşmasın: kutu ≈ 12,5ch (8 × fs-6), iki-üç satıra kırılır.
-     --lw (şablondan: en uzun kelimenin harf sayısı) 12'yi aşarsa yazı orantılı küçülür (8 × fs-6 ÷ 0,66em/harf ≈ 12,1 harf); böylece «Telekomünikasyon» gibi
-     uzun bir kelime kutuya sığar, harf ortasından bölünmez. Kutu genişliği yazı boyundan değil fs-6'dan türer. */
-  font-size: calc(var(--fs-6) * min(1, 12.1 / max(var(--lw, 1), 1)));
-  max-width: min(100%, calc(var(--fs-6) * 8));
+  /* --lwe (şablondan): en uzun kelimenin bu yazı tipindeki genişliği (em; filters.mjs › longestWordEm). Yazı, o kelime başlık
+     kutusuna sığacak kadar küçülür (harf ortasından bölünmez, %2 pay); kısa kelimeli başlıklar fs-6'da kalır ve kutuya sığmayan
+     başlık satıra kırılır. Kutu: fs-6'nın 8 katı (≈ 12,5ch) ya da başlık sütunu, hangisi darsa. */
+  font-size: min(var(--fs-6), calc(min(var(--phero-col), var(--fs-6) * 8) / (max(var(--lwe, 1), 1) * 1.02)));
+  max-width: min(100%, calc(var(--fs-6) * 8), var(--phero-col));
   text-wrap: balance;
 }
 .phero__lead {
   margin-top: clamp(1.2rem, 2.4vw, 2rem);
-  max-width: 38ch; /* sağdaki parçacık şekline taşmasın */
+  max-width: min(38ch, var(--phero-col)); /* sağdaki parçacık şekline taşmasın */
   font-family: var(--f-sans);
   font-weight: 400;
   font-size: var(--fs-3);
@@ -541,9 +653,13 @@ html.hdr-hidden .prog {
   color: #fff;
 }
 .ftr__cols {
+  --ftr-n: 4; /* en çok sütun */
+  --ftr-gap: 2rem;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 2rem;
+  /* Sütun, en uzun bağlantı kelimesinden («Hesaplayıcılar» ≈ 6rem) dar olamaz: tarayıcıda yazı büyütülünce (%150–200) sütun sayısı
+     azalır, kelime harf ortasından bölünmez. Olağan yazı boyunda düzen aynı (4 sütun; ≤ 900 px'te 2). −0,1px: yuvarlama payı. */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, max(6.4rem, calc((100% - (var(--ftr-n) - 1) * var(--ftr-gap)) / var(--ftr-n) - 0.1px))), 1fr));
+  gap: var(--ftr-gap);
 }
 .ftr__cols h2 {
   font-family: var(--f-mono);
@@ -561,6 +677,12 @@ html.hdr-hidden .prog {
   font-size: 0.93rem;
   color: var(--on-dark-2);
   transition: color var(--t-fast);
+}
+/* dokunmatik ekranda altbilgi bağlantıları ≈ 44 px yükseklikte (parmakla isabet) */
+@media (pointer: coarse) {
+  .ftr__cols a {
+    padding-block: 0.68rem;
+  }
 }
 .ftr__cols a:hover {
   color: #fff;
@@ -617,12 +739,22 @@ html.hdr-hidden .prog {
   background: #fff;
   color: var(--navy-950);
 }
+/* 901–1140 px (ör. 1440 pencerede %150 yakınlaştırma): dört bağlantı sütunu daralıp «Hesaplayıcılar» harf ortasından bölünüyordu;
+   sütunlara daha çok yer ve daha dar aralık */
+@media (min-width: 901px) and (max-width: 1140px) {
+  .ftr__top {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  }
+  .ftr__cols {
+    --ftr-gap: 1.4rem;
+  }
+}
 @media (max-width: 900px) {
   .ftr__top {
     grid-template-columns: 1fr;
   }
   .ftr__cols {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    --ftr-n: 2;
   }
 }
 

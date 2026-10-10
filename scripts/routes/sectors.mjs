@@ -85,7 +85,7 @@ export function registerSectors({ add, data, model, site, home }) {
         url: s.url,
         template: 'pages/sectors/sector.njk',
         title: s.name,
-        titleFull: `${s.name}: Denetim, Vergi ve Danışmanlık Gündemi — ${site.name}`,
+        titleFull: `${s.name}: Denetim ve Vergi — ${site.name}`,
         description: s.lead,
         scene: s.shape,
         fig: [s.shape],

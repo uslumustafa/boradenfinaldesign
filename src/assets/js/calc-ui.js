@@ -232,7 +232,7 @@ function tableHTML(t) {
   const cell = (c, v) => `<td${c.align === 'right' ? ' class="num"' : ''}>${esc(fmt(c.kind, v, c))}</td>`;
   const body = (t.rows || []).map((r) => `<tr>${cols.map((c) => cell(c, r[c.key])).join('')}</tr>`).join('');
   const foot = t.footer ? `<tfoot><tr>${cols.map((c) => (t.footer[c.key] === undefined ? '<td></td>' : cell(c, t.footer[c.key]))).join('')}</tr></tfoot>` : '';
-  return `<section class="calc__sec"><h2 class="calc__h">${esc(t.title)}</h2>${t.note ? `<p class="calc__tnote">${esc(t.note)}</p>` : ''}<div class="table-wrap"><table class="table calc__table"><thead><tr>${th}</tr></thead><tbody>${body}</tbody>${foot}</table></div></section>`;
+  return `<section class="calc__sec"><h2 class="calc__h">${esc(t.title)}</h2>${t.note ? `<p class="calc__tnote">${esc(t.note)}</p>` : ''}<div class="table-wrap" tabindex="0" role="region" aria-label="${esc(t.title)}"><table class="table calc__table"><thead><tr>${th}</tr></thead><tbody>${body}</tbody>${foot}</table></div></section>`;
 }
 
 function recapHTML(def, vals) {
@@ -341,8 +341,7 @@ function setupCalc(el, { fx, on, scroll }) {
   const peek = document.createElement('button');
   peek.type = 'button';
   peek.className = 'calc__peek';
-  peek.hidden = true;
-  peek.setAttribute('aria-label', 'Sonuca git');
+  peek.hidden = true; // ad: görünen etiket ve tutar + «sonuca git» (T-12, WCAG 2.5.3)
   el.appendChild(peek);
   let formIn = false;
   let resIn = true;
@@ -392,7 +391,7 @@ function setupCalc(el, { fx, on, scroll }) {
     el.setAttribute('aria-busy', 'false');
     if (!out.error) syncUrl(def, vals, base);
     const first = !out.error ? (out.summary || []).find((s) => s.main) || (out.summary || [])[0] : null;
-    peek.innerHTML = first ? `<span class="calc__peekl mono">${esc(first.label)}</span><span class="calc__peekv tnum">${esc(fmt(first.kind, first.value, first))}</span><span class="calc__peeka" aria-hidden="true">↑</span>` : '';
+    peek.innerHTML = first ? `<span class="calc__peekl mono">${esc(first.label)}</span><span class="calc__peekv tnum">${esc(fmt(first.kind, first.value, first))}</span><span class="sr-only">, sonuca git</span><span class="calc__peeka" aria-hidden="true">↑</span>` : '';
     syncPeek();
     // ekran okuyucu için kısa özet (yalnızca değişince)
     if (live) {
@@ -457,6 +456,9 @@ function setupCalc(el, { fx, on, scroll }) {
     if (e.target.matches && e.target.matches('[data-params]')) st.paramsOpen = e.target.open;
   };
 
+  // Enter tuşu formu göndermesin: hesap yazdıkça yapılır. Satır içi onsubmit yerine burada (CSP satır içi işleyicileri engeller).
+  const onSubmit = (e) => e.preventDefault();
+  form.addEventListener('submit', onSubmit);
   form.addEventListener('input', onInput);
   form.addEventListener('focusout', onFocusOut);
   form.addEventListener('click', onFormClick);
@@ -468,6 +470,7 @@ function setupCalc(el, { fx, on, scroll }) {
     io?.disconnect();
     peek.removeEventListener('click', onPeek);
     peek.remove();
+    form.removeEventListener('submit', onSubmit);
     form.removeEventListener('input', onInput);
     form.removeEventListener('focusout', onFocusOut);
     form.removeEventListener('click', onFormClick);
@@ -520,7 +523,7 @@ export function mountCalendar(root, { on, scroll }) {
           })
           .join('');
         strip.hidden = false;
-      }
+      } else strip.hidden = true; // derlemeden bu yana takvim aralığı bittiyse
     }
     const btn = qs('[data-cal-ics]', el);
     const onIcs = () => {

@@ -170,7 +170,7 @@
     },
     "submitLabel": "Başvuruyu hazırla",
     "fallbackNote": "CV'nizi doğrudan info@boraden.com.tr adresine de gönderebilirsiniz.",
-    "successTitle": "Başvurunuz hazırlandı",
+    "successTitle": "Başvuru taslağınız hazır — henüz gönderilmedi",
     "successText": "Başvurunuz info@boraden.com.tr adresine iletilmek üzere e-posta taslağı olarak hazırlandı. Gönderim tamamlanmadan başvurunuz bize ulaşmış olmaz; e-posta uygulamanızda son adımı tamamlayın. E-posta uygulamanız açılmadıysa başvuru metnini kopyalayıp özgeçmişinizle birlikte bu adrese gönderebilirsiniz.",
     "attachNote": "Özgeçmiş dosyası e-posta taslağına otomatik olarak eklenemez; göndermeden önce dosyanızı e-postaya ekleyin.",
     "errorText": "Başvurunuz hazırlanamadı. Lütfen işaretli alanları kontrol edin ya da özgeçmişinizi doğrudan info@boraden.com.tr adresine gönderin."

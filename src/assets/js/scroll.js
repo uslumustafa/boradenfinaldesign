@@ -1,5 +1,7 @@
 // Kaydırma motoru: yerel kaydırma (scroll-jacking yok) + tek rAF döngüsü.
 // Öğelere ilerleme değeri (0..1) hesaplar; CSS özel özellikleri ve geri çağırmalarla animasyonu sürer.
+// Karede sıra (U-39): önce bütün okumalar (izlenen öğelerin konumu, kare dinleyicileri), sonra yazmalar. Okuma arasına yazma girerse
+// tarayıcı stili ve yerleşimi kare içinde yeniden hesaplamak zorunda kalır (yavaş telefonda kaydırma süresinin çoğu buydu).
 import { clamp } from './util.js';
 
 export function createScroll() {
@@ -10,7 +12,13 @@ export function createScroll() {
   let raf = 0;
   let lastY = -1;
   let velocity = 0;
-  const root = document.documentElement;
+  // Sayfa ilerleme çizgisi: --sp yalnızca çizginin kabına yazılır (kökte bütün belgenin stilini her karede geçersiz kılıyordu).
+  const bar = document.querySelector('.prog');
+  // Kaydırılabilir yükseklik karede okunmaz: yalnızca boyut değişince ölçülür (içerik/sayfa değişimi, pencere boyu).
+  let docH = 1;
+  const measure = () => {
+    docH = Math.max(1, document.documentElement.scrollHeight - vh);
+  };
 
   function progressOf(el, mode, rect) {
     switch (mode) {
@@ -31,22 +39,22 @@ export function createScroll() {
     raf = 0;
     y = scrollY;
     velocity = y - lastY;
-    const docH = Math.max(1, document.documentElement.scrollHeight - vh);
-    root.style.setProperty('--sp', clamp(y / docH).toFixed(4));
-    // önce oku
+    // 1 · oku: izlenen öğelerin konumları (karede tek yerleşim hesabı)
     const reads = [];
     for (const [el, cfg] of items) {
       const rect = el.getBoundingClientRect();
       if (cfg.cull && (rect.bottom < -vh * 0.5 || rect.top > vh * 1.5) && cfg.last !== undefined && (cfg.last === 0 || cfg.last === 1)) continue;
       reads.push([el, cfg, rect]);
     }
-    // sonra yaz
+    // 2 · kare dinleyicileri (bölüm göstergesi, sahne yönetmeni): çoğunlukla okur, yalnızca değişimde yazar → yazmalardan önce
+    for (const fn of frameFns) fn({ y, vh, velocity });
+    // 3 · yaz
+    bar?.style.setProperty('--sp', clamp(y / docH).toFixed(4));
     for (const [el, cfg, rect] of reads) {
       const p = progressOf(el, cfg.mode, rect);
       cfg.last = p;
       cfg.fn(p, { rect, vh, y, el });
     }
-    for (const fn of frameFns) fn({ y, vh, velocity });
     lastY = y;
   }
   function schedule() {
@@ -56,8 +64,18 @@ export function createScroll() {
   addEventListener('scroll', schedule, { passive: true });
   addEventListener('resize', () => {
     vh = innerHeight;
+    measure();
     schedule();
   });
+  // İçerik yüksekliği değişince (sayfa değişimi, görsel, açılan panel, süzgeç) yeniden ölç; gözlemci yerleşimden sonra çağrılır,
+  // ek hesap zorlamaz. Desteklemeyen (çok eski) tarayıcıda yalnızca pencere boyu değişince ve refresh() ile ölçülür.
+  if ('ResizeObserver' in window) {
+    new ResizeObserver(() => {
+      measure();
+      schedule();
+    }).observe(document.body);
+  }
+  measure();
 
   return {
     get y() {
@@ -77,7 +95,10 @@ export function createScroll() {
       schedule();
       return () => frameFns.delete(fn);
     },
-    refresh: schedule,
+    refresh() {
+      measure();
+      schedule();
+    },
     clear() {
       items.clear();
     },

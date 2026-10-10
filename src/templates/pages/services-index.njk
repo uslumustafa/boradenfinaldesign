@@ -1,17 +1,31 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/macros.njk" as m %}
 
+{% block head_extra %}
+<script type="application/ld+json">{{ ld | json_script }}</script>
+{% endblock %}
+
 {% block main %}
 {{ m.phero(page, "Hizmetler", "Sekiz hizmet alanında " ~ (services | length) ~ " başlık: vergi, bağımsız denetim, muhasebe ve bordro, kurumsal finansman, teşvik, hukuk, dijital dönüşüm ve eğitim.", "Hizmet alanları", page.scene) }}
 
 <div class="sheet sec--paper">
   <div class="container" data-listing="services">
+    {# Arama kutusu en üstte (kahramanın hemen altında); yazmaya başlayınca alan kartları gizlenir, eşleşen hizmetler hemen altta #}
+    <div class="sidx__find">
+      <label class="searchbox">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+        <span class="sr-only">Hizmetlerde ara</span>
+        <input type="search" placeholder="Hizmet ara…" data-search autocomplete="off">
+      </label>
+    </div>
+
     {# Alan kartları: gerçek arşiv karesi + sayı + tanım (hepsi alan kaydından). Wagtail: ServiceAreaPage.photo / description #}
     <ol class="agrid" aria-label="Hizmet alanları">
       {% for g in groups %}
       <li data-reveal data-reveal-delay="{{ loop.index0 % 3 }}">
         <a class="agc agc--{{ ['b', 'r', 'g'][loop.index0 % 3] }}" href="{{ g.url }}">
-          <span class="agc__media" aria-hidden="true">{{ m.photo(g.photo, "(min-width: 1000px) 30vw, (min-width: 620px) 46vw, 92vw", "agc__img", false, "") }}</span>
+          {# ilk kartın görseli mobilde ilk ekranda ve sayfanın en büyük öğesi (LCP): tembel değil, öncelikli yüklenir (T-07) #}
+          <span class="agc__media" aria-hidden="true">{{ m.photo(g.photo, "(min-width: 1000px) 30vw, (min-width: 620px) 46vw, 92vw", "agc__img", loop.first, "") }}</span>
           <span class="agc__body">
             <span class="agc__k mono tnum">{{ g.number }} / {{ groups | length | pad2 }}</span>
             <span class="agc__t">{{ g.name }}</span>
@@ -29,11 +43,6 @@
         <button class="chip is-on" type="button" data-filter="all" aria-pressed="true">Tümü</button>
         {% for g in groups %}<button class="chip" type="button" data-filter="{{ g.id }}" aria-pressed="false">{{ g.short }}</button>{% endfor %}
       </div>
-      <label class="searchbox">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
-        <span class="sr-only">Hizmetlerde ara</span>
-        <input type="search" placeholder="Hizmet ara…" data-search autocomplete="off">
-      </label>
     </div>
 
     {# Liste solda; sağda yapışkan şekil: bölüme göre alanın şekli, satırın üzerine gelince hizmetin şekli #}
@@ -63,7 +72,7 @@
     </section>
     {% endfor %}
 
-    <p class="empty" data-empty hidden>Aramanızla eşleşen hizmet bulunamadı.</p>
+    <p class="empty" data-empty hidden>Aramanızla eşleşen hizmet bulunamadı. <span class="empty__go"><a class="textlink" href="/arama/" data-empty-search>Sitenin tamamında arayın →</a> <a class="textlink" href="/iletisim/">Bize yazın →</a></span></p>
     </div>
     <div class="gc sidx__fig" style="--gc: 9 / -1">{{ m.fig("pv", groups[0].shape) }}</div>
     </div>

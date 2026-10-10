@@ -18,7 +18,10 @@
 <div class="sheet sec--paper">
   <div class="container" data-listing="calendar" data-cal>
 
-    <div class="cal__next" data-cal-next hidden aria-label="Sıradaki tarihler"></div>
+    {# Şerit derlemede çizilir (yeri baştan ayrılır); tarayıcı bugüne göre yeniler ve «… gün kaldı»yı yazar. JS yoksa gizli (tarih eski olabilir). #}
+    <nav class="cal__next" data-cal-next aria-label="Sıradaki tarihler"{% if not cal.next.length %} hidden{% endif %}>
+      {%- for it in cal.next %}<a class="cal__nx" href="#{{ it.id }}"><span class="cal__nxd">{{ it.date | date_tr }}</span><b>{{ it.title }}</b><span class="cal__left">&nbsp;</span></a>{% endfor -%}
+    </nav>
 
     <div class="toolbar">
       <div class="chips" role="group" aria-label="Türe göre filtrele" data-filter-by="cat">
@@ -72,7 +75,7 @@
     </section>
     {% endfor %}
 
-    <p class="empty" data-empty hidden>Aramanızla eşleşen kayıt bulunamadı.</p>
+    <p class="empty" data-empty hidden>Aramanızla eşleşen kayıt bulunamadı. <span class="empty__go"><a class="textlink" href="/arama/" data-empty-search>Sitenin tamamında arayın →</a> <a class="textlink" href="/iletisim/">Bize yazın →</a></span></p>
 
     <div class="g12 calrules">
       <p class="eyebrow gc" style="--gc: 1 / span 4" data-reveal>Nasıl okunur</p>
@@ -84,7 +87,7 @@
     <div class="g12 calhol">
       <p class="eyebrow gc" style="--gc: 1 / span 4" data-reveal>Takvimdeki tatiller</p>
       <div class="gc" style="--gc: 5 / -1" data-reveal>
-        <div class="table-wrap">
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Takvimdeki tatiller">
           <table class="table">
             <thead><tr><th scope="col">Tarih</th><th scope="col">Gün</th><th scope="col">Tatil</th><th scope="col">Tür</th></tr></thead>
             <tbody>

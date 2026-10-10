@@ -10,7 +10,7 @@
    Kahraman, phero makrosunun yapısını izler; ek olarak sayaç satırı taşır. #}
 {% block main %}
 {% set feat = latest[0] %}
-<section class="phero sec--dark ic-hero" data-world="{{ page.scene }}" id="giris" data-chapter="Bilgi merkezi">
+<section class="phero sec--dark ic-hero" data-world="{{ page.scene }}"{% if page.scene | scene_reach %} style="{{ page.scene | scene_reach }}"{% endif %} id="giris" data-chapter="Bilgi merkezi">
   <div class="container">
     <nav aria-label="Sayfa yolu">
       <ol class="crumbs">
@@ -19,7 +19,7 @@
       </ol>
     </nav>
     <p class="eyebrow" data-reveal>Yayınlar · Arşiv · Araçlar</p>
-    <h1 style="margin-top:1.2rem" data-reveal data-reveal-delay="1">Bilgi Merkezi</h1>
+    <h1 style="margin-top:1.2rem;--lw:{{ 'Bilgi Merkezi' | longest_word }};--lwe:{{ 'Bilgi Merkezi' | longest_word_em }}" data-reveal data-reveal-delay="1">Bilgi Merkezi</h1>
     <p class="phero__lead" data-reveal data-reveal-delay="2">Güncel yayınlar, sirküler arşivi, başvuru içerikleri ve araçlar bir arada. Her yayın, dayandığı kaynağa bağlantı verir.</p>
     <dl class="ic-stats" data-reveal data-reveal-delay="3">
       <div class="ic-stat"><dt>Güncel yayın</dt><dd class="tnum" data-count="{{ total }}">{{ total }}</dd></div>
@@ -133,10 +133,10 @@
         <ol class="ic-bars" style="--n: {{ arc.years | length }}">
           {% for y in arc.years %}
           <li class="ic-bar" style="--v: {{ y.ratio }}; --i: {{ loop.index0 }}">
-            <a class="ic-bar__a" href="/bilgi-merkezi/sirkulerler/?yil={{ y.year }}#arsiv" aria-label="{{ y.year }}: {{ y.count }} sirküler (arşivi bu yıla göre aç)">
+            <a class="ic-bar__a" href="/bilgi-merkezi/sirkulerler/?yil={{ y.year }}#arsiv" aria-label="{{ y.year }}: {{ y.count }} · %{{ y.share }} — sirküler arşivini bu yıla göre aç">
+              <span class="ic-bar__y mono tnum" aria-hidden="true">{{ y.year }}</span>
               <span class="ic-bar__n tnum" aria-hidden="true"><span data-count="{{ y.count }}">{{ y.count }}</span><small>%{{ y.share }}</small></span>
               <span class="ic-bar__col" aria-hidden="true"><span class="ic-bar__fill"></span></span>
-              <span class="ic-bar__y mono tnum" aria-hidden="true">{{ y.year }}</span>
             </a>
           </li>
           {% endfor %}

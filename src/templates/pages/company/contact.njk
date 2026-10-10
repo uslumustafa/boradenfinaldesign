@@ -33,6 +33,16 @@
             </a>
           </li>
           {% endfor %}
+          {# Adres de doğrudan iletişim listesinde: mobilde formun ve uzun açıklamaların üstünde görünür (tam adres aşağıda «Ofis»te) #}
+          <li data-reveal data-reveal-delay="{{ (cp.channels | length) + 1 }}">
+            <a class="ct-channel" href="{{ mapsUrl }}" target="_blank" rel="noopener noreferrer">
+              <span class="ct-channel__ic">{{ kit.icon("pin") }}</span>
+              <span class="ct-channel__k mono">Adres · haritada aç</span>
+              <span class="ct-channel__v">{{ contact.district }} / {{ contact.city }}</span>
+              <span class="ct-channel__go" aria-hidden="true">↗</span>
+              <span class="sr-only"> (Google Haritalar, yeni sekmede açılır)</span>
+            </a>
+          </li>
         </ul>
         {{ m.fig("lead") }}
       </section>

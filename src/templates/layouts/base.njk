@@ -8,7 +8,7 @@
   {% if page.noindex %}<meta name="robots" content="noindex">{% endif %}
   {% if page.canonical %}<link rel="canonical" href="{{ page.canonical }}">{% endif %}
   <meta name="theme-color" content="#08132a">
-  <meta property="og:type" content="website">
+  <meta property="og:type" content="{{ page.ogType or 'website' }}">
   <meta property="og:site_name" content="{{ site.name }}">
   <meta property="og:title" content="{{ page.titleFull }}">
   <meta property="og:description" content="{{ page.description }}">
@@ -18,6 +18,9 @@
   <meta property="og:image:alt" content="{{ share_image.alt }}">
   <meta property="og:image:width" content="{{ share_image.width }}">
   <meta property="og:image:height" content="{{ share_image.height }}">
+  {% if page.ogType == 'article' and page.published %}<meta property="article:published_time" content="{{ page.published }}">{% endif %}
+  {# geniş kart yalnızca paylaşım görseli en az 1200 px genişse (şimdilik logo yer tutucu: küçük kart) #}
+  <meta name="twitter:card" content="{{ 'summary_large_image' if share_image.width >= 1200 else 'summary' }}">
   <link rel="icon" href="data:,">
   <link rel="preload" href="/assets/fonts/montserrat-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/open-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
@@ -32,9 +35,14 @@
       var m = null;
       try { m = localStorage.getItem('boraden-fx'); } catch (e) {}
       var r = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var fx = m || (r ? 'off' : 'auto');
+      /* çok zayıf cihaz (fx.js › detect ile aynı eşik): efektler ilk boyamadan kapalı — sonradan kapanıp sayfa yeniden dizilmesin */
+      var low = (navigator.deviceMemory || 8) <= 1 || (navigator.hardwareConcurrency || 8) <= 2;
+      var fx = m || (r || low ? 'off' : 'auto');
       d.setAttribute('data-fx', fx);
       if (fx !== 'off') d.classList.add('js-anim');
+      /* Sayfa kahramanında başlık sütunu: ilk boyamada efekt kapalıysa daralmaz (30-layout.css). Sonradan kendiliğinden kapanma
+         (WebGL yok, bağlam kaybı, yavaş cihazda düşürme) açık sayfayı yeniden dizmez; yeni sayfada uygulanır (fx.js › syncLayout). */
+      if (fx === 'off') d.classList.add('hero-wide');
       /* Açılış sahnesi (≈2,2 sn, atlanabilir): yalnızca ana sayfaya İLK gelişte — adres çubuğu/dış bağlantı; yeniden yükleme, geri-ileri ve site içi gezintide yok.
          Otomasyon (webdriver) ve veri tasarrufu açıkken atlanır (?intro ile zorlanabilir). Depolama kullanılmaz. */
       try {

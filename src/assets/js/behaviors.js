@@ -87,10 +87,10 @@ export function createBehaviors({ fx, scroll, world }) {
         return;
       }
       let shown = -1;
+      // Paragraf ekranın altından girerken yanmaya başlar; üst kenarı ekranın alt üçte birinden çıkmadan (2/3 çizgisi) tamamı
+      // yanmış olur: okuma alanına sönük kelime gelmez (U-18). Sönük kelimeler de okunur (--lit-dim, 10-tokens.css).
       const off = scroll.add(el, 'enter', (_p, { rect, vh }) => {
-        const start = vh * 0.82;
-        const end = vh * 0.5;
-        const p = clamp((start - rect.top) / (rect.height + start - end));
+        const p = clamp((vh - rect.top) / (vh / 3));
         const n = Math.round(p * (words.length + 3));
         if (n === shown) return;
         shown = n;
@@ -244,6 +244,10 @@ export function createBehaviors({ fx, scroll, world }) {
         out('vat').textContent = fmt(gross - net);
         out('gross').textContent = fmt(gross);
       };
+      // Enter tuşu formu göndermesin (sonuç zaten yazdıkça hesaplanır). Satır içi onsubmit yerine burada: içerik güvenlik
+      // politikası (CSP) satır içi olay işleyicilerini engeller.
+      const stay = (e) => e.preventDefault();
+      form.addEventListener('submit', stay);
       form.addEventListener('input', calc);
       form.addEventListener('change', calc);
       const blur = () => {
@@ -252,6 +256,7 @@ export function createBehaviors({ fx, scroll, world }) {
       };
       amount.addEventListener('blur', blur);
       onPage(() => {
+        form.removeEventListener('submit', stay);
         form.removeEventListener('input', calc);
         form.removeEventListener('change', calc);
         amount.removeEventListener('blur', blur);

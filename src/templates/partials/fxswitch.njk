@@ -1,0 +1,12 @@
+{# Efekt anahtarı (Tam / Hafif / Kapalı): altbilgide ve mobil menünün altında. Düğmeleri chrome.js yönetir (data-fx-set).
+   id: «Efektler» etiketinin sayfada tekil kimliği (aria-describedby). #}
+{% macro fxswitch(id, cls="") %}
+<div class="fxswitch{% if cls %} {{ cls }}{% endif %}" role="group" aria-label="Görsel efektler">
+  <span id="{{ id }}">Efektler</span>
+  <span class="fxswitch__opts">
+    <button type="button" data-fx-set="full" aria-pressed="false" aria-describedby="{{ id }}">Tam</button>
+    <button type="button" data-fx-set="lite" aria-pressed="false" aria-describedby="{{ id }}">Hafif</button>
+    <button type="button" data-fx-set="off" aria-pressed="false" aria-describedby="{{ id }}">Kapalı</button>
+  </span>
+</div>
+{% endmacro %}

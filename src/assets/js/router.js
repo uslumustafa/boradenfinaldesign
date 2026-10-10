@@ -11,6 +11,15 @@ const PAGE_HEAD = 'meta[name="description"],meta[name="robots"],link[rel="canoni
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
+// Gelen sayfayı etkisiz bir <template> içinde ayrıştırır (betik çalışmaz, görsel/video yüklenmez). DOMParser belgesi —
+// içindeki <video> yüzünden — hiç toplanmıyordu: ana sayfaya her dönüşte bir belge (≈ 2.400 düğüm) birikiyordu (T-10).
+function parsePage(text) {
+  const t = document.createElement('template');
+  t.innerHTML = text;
+  const f = t.content;
+  return { main: f.querySelector('#main'), title: f.querySelector('title')?.textContent ?? '', head: f.querySelectorAll(PAGE_HEAD) };
+}
+
 export function initRouter({ fx, world, mount, unmount, onNavigate }) {
   const main = qs('#main');
   const html = document.documentElement;
@@ -23,6 +32,7 @@ export function initRouter({ fx, world, mount, unmount, onNavigate }) {
   let shownEntry = history.state?.boradenEntry ?? 0;
   let entrySeq = shownEntry;
   let hoverTimer = 0;
+  let busyT = 0;
 
   history.scrollRestoration = 'manual';
   history.replaceState({ ...history.state, boradenEntry: shownEntry, y: scrollY }, '');
@@ -69,7 +79,7 @@ export function initRouter({ fx, world, mount, unmount, onNavigate }) {
       const ny = from ? clamp(-((from.y / innerHeight) * 2 - 1), -1, 1) : 0;
       // noktalar ekran dışına varana kadar beklenir; içerik solması (0,24 sn) da bitsin
       const ms = world.surge(true, nx, ny);
-      return Math.max(260, (Number.isFinite(ms) ? ms : 450) + 30);
+      return Math.max(260, (Number.isFinite(ms) ? ms : 350) + 30);
     }
     return 200;
   }
@@ -86,19 +96,41 @@ export function initRouter({ fx, world, mount, unmount, onNavigate }) {
   }
   function abort() {
     clearTimeout(enterT);
+    busy(false);
     html.classList.remove('is-leaving', 'is-entering');
     world?.surge(false);
   }
+  // Yavaş ağ (T-14, U-13): çıkış bittiği hâlde sayfa gelmediyse ince bir yükleme çizgisi (.prog, 80-fx.css › is-loading).
+  // Tıklamadan en az 300 ms sonra ve çıkış efektinden 100 ms sonra; yanıt o ana dek geldiyse hiç görünmez (kısa gezinmede yanıp sönmez).
+  function busy(on, page, ms = 0) {
+    clearTimeout(busyT);
+    if (!on) {
+      html.classList.remove('is-loading');
+      main.removeAttribute('aria-busy');
+      return;
+    }
+    let arrived = false;
+    page.then(
+      () => (arrived = true),
+      () => {}
+    );
+    busyT = setTimeout(() => {
+      if (arrived) return;
+      html.classList.add('is-loading');
+      main.setAttribute('aria-busy', 'true');
+    }, Math.max(300, ms + 100));
+  }
 
   function applyDocument(doc, url, { push, y, entry }) {
-    const next = doc.querySelector('#main');
+    const next = doc.main;
     if (!next) throw new Error('main yok');
     unmount();
     document.title = doc.title;
     // Sayfaya ait head verisini değiştir; kalıcı CSS ve çalıştırılabilir betikler kabukta kalır.
     document.head.querySelectorAll(PAGE_HEAD).forEach((el) => el.remove());
-    doc.head.querySelectorAll(PAGE_HEAD).forEach((el) => document.head.append(el.cloneNode(true)));
+    doc.head.forEach((el) => document.head.append(document.importNode(el, true)));
     document.body.className = next.dataset.bodyClass || '';
+    fx.syncLayout?.();
     for (const a of ['data-scene', 'data-shapes', 'data-url', 'data-title', 'data-body-class']) {
       if (next.hasAttribute(a)) main.setAttribute(a, next.getAttribute(a));
       else main.removeAttribute(a);
@@ -139,9 +171,13 @@ export function initRouter({ fx, world, mount, unmount, onNavigate }) {
     positions.set(shownEntry, scrollY);
     if (push && history.state?.boradenEntry === shownEntry) history.replaceState({ ...history.state, y: scrollY }, '');
     try {
-      const [res] = await Promise.all([fetchPage(url), wait(leave(from))]);
+      const page = fetchPage(url);
+      const out = leave(from);
+      busy(true, page, out);
+      const [res] = await Promise.all([page, wait(out)]);
       if (id !== nav) return; // daha yeni bir gezinme başladı (o, geçişi kendisi sürdürür)
-      const doc = new DOMParser().parseFromString(res.text, 'text/html');
+      busy(false);
+      const doc = parsePage(res.text);
       applyDocument(doc, url, { push, y, entry });
       enter();
     } catch (err) {

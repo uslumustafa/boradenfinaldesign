@@ -4,37 +4,11 @@
 //   ContactPage (AbstractEmailForm: FormField'lar; konular = ContactTopic snippet'i; ?hizmet= eşlemesi
 //   ServicePage → ContactTopic ilişkisinden üretilir).
 // Formlar statik sürümde yalnızca ön yüzdür: geçerli gönderim bir mailto: taslağı hazırlar, ağ isteği yoktur.
-import { baseOf, breadcrumbLd, graph, webPageLd } from '../ld.mjs';
+import { baseOf, breadcrumbLd, graph, orgNode, webPageLd } from '../ld.mjs';
 import { PAGE, ABOUT_SHAPE, sceneOf } from '../scenes.mjs';
 import { plainInline } from '../filters.mjs';
 
 const KIND = 'Kurumsal';
-
-// Kuruluş düğümü (JSON-LD): unvan, kuruluş yılı, adres, e-posta, telefon
-function orgNode(site, c, extra = {}) {
-  const o = {
-    '@type': 'Organization',
-    '@id': `${baseOf(site)}/#organization`,
-    name: site.name,
-    legalName: site.legalName,
-    url: site.url,
-  };
-  if (site.description) o.description = site.description;
-  if (site.founded) o.foundingDate = String(site.founded);
-  if (c.street) {
-    o.address = {
-      '@type': 'PostalAddress',
-      streetAddress: c.street,
-      postalCode: c.postcode,
-      addressLocality: c.district,
-      addressRegion: c.city,
-      addressCountry: 'TR',
-    };
-  }
-  if (c.email) o.email = c.email;
-  if (c.phoneHref) o.telephone = c.phoneHref;
-  return { ...o, ...extra };
-}
 
 // Form alanları: seçenek kaynağı (optionsFrom) çözülür; metin/e-posta/telefon yarım, diğerleri tam genişlik
 function prepFields(fields, sources) {

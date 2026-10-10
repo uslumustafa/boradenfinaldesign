@@ -1,5 +1,5 @@
 // Router regressions against the real source (isolated fixture) or a running production build.
-// node tests/router-regression.e2e.mjs [--base=http://127.0.0.1:4181] [--only=history|race|head] [--out=path.json]
+// node tests/router-regression.e2e.mjs [--base=http://127.0.0.1:4181] [--only=history|race|head|memory|slow] [--out=path.json]
 import assert from 'node:assert/strict';
 import http from 'node:http';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
@@ -13,8 +13,8 @@ const only = arg('only');
 const results = { mode: fixture ? 'source fixture' : 'production', command: process.argv.slice(1).join(' '), checks: [] };
 let server;
 let base = arg('base');
-const paths = fixture ? { a: '/a/', b: '/b/', c: '/c/', search: '/search/', legal: '/legal/' }
-  : { a: '/hakkimizda/', b: '/hizmetler/', c: '/iletisim/', search: '/arama/', legal: '/yasal/kvkk-aydinlatma-metni/' };
+const paths = fixture ? { a: '/a/', b: '/b/', c: '/c/', search: '/search/', legal: '/legal/', home: '/' }
+  : { a: '/hakkimizda/', b: '/hizmetler/', c: '/iletisim/', search: '/arama/', legal: '/yasal/kvkk-aydinlatma-metni/', home: '/' };
 
 if (fixture) {
   const source = new Map(await Promise.all(['router.js', 'util.js'].map(async (name) => [name, await readFile(new URL(`../src/assets/js/${name}`, import.meta.url), 'utf8')])));
@@ -27,7 +27,7 @@ if (fixture) {
     const path = url.pathname;
     const robots = [paths.search, paths.legal].includes(path) ? '<meta name="robots" content="noindex,follow">' : '';
     const schema = path === paths.b ? '' : `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@type': path === paths.c ? 'ContactPage' : 'WebPage', url: `https://boraden.test${path}` })}</script>`;
-    res.writeHead(200, { 'Content-Type': 'text/html' }).end(`<!doctype html><html><head><title>${path}</title><meta name="description" content="Description ${path}">${robots}<link rel="canonical" href="https://boraden.test${path}"><meta property="og:title" content="${path}"><meta property="og:url" content="https://boraden.test${path}"><meta property="og:image" content="https://boraden.test${path}image.png"><meta property="og:image:alt" content="Image ${path}"><meta name="twitter:title" content="${path}">${schema}<style id="shell-style">body{margin:0}main{height:6000px}</style></head><body><main id="main" tabindex="-1" data-url="${path}"><h1>${path}</h1><h2 id="anchor" style="margin-top:1400px">Anchor</h2></main><p id="live"></p><script type="module" id="shell-script">import {initRouter} from '/router.js';window.__router=initRouter({fx:{tier:'off'},mount(){},unmount(){},onNavigate(){}});window.__routerReady=true;</script></body></html>`);
+    res.writeHead(200, { 'Content-Type': 'text/html' }).end(`<!doctype html><html><head><title>${path}</title><meta name="description" content="Description ${path}">${robots}<link rel="canonical" href="https://boraden.test${path}"><meta property="og:title" content="${path}"><meta property="og:url" content="https://boraden.test${path}"><meta property="og:image" content="https://boraden.test${path}image.png"><meta property="og:image:alt" content="Image ${path}"><meta name="twitter:title" content="${path}">${schema}<style id="shell-style">body{margin:0}main{height:6000px}</style></head><body><main id="main" tabindex="-1" data-url="${path}"><h1>${path}</h1><video muted playsinline preload="none"></video><h2 id="anchor" style="margin-top:1400px">Anchor</h2></main><p id="live"></p><script type="module" id="shell-script">import {initRouter} from '/router.js';window.__router=initRouter({fx:{tier:'off'},mount(){},unmount(){},onNavigate(){}});window.__routerReady=true;</script></body></html>`);
   });
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
   base = `http://127.0.0.1:${server.address().port}`;
@@ -173,6 +173,52 @@ try {
       }
     } finally { await direct.close(); }
     return observations;
+  });
+  // T-10: gelen sayfa DOMParser'la ayrıştırılınca (içinde <video> varken) belge hiç toplanmıyordu; her gidiş-dönüşte bir belge birikiyordu
+  if (!only || only === 'memory') await check('F05 swaps do not accumulate documents or nodes', async () => {
+    await open(paths.home);
+    const cdp = await ctx.newCDPSession(page);
+    const counters = async () => {
+      for (let i = 0; i < 3; i++) await cdp.send('HeapProfiler.collectGarbage');
+      return cdp.send('Memory.getDOMCounters');
+    };
+    try {
+      await swap(paths.b);
+      await swap(paths.home);
+      const start = await counters();
+      for (let i = 0; i < 6; i++) {
+        await swap(paths.b);
+        await swap(paths.home);
+      }
+      const end = await counters();
+      assert.ok(end.documents <= start.documents, `documents grew ${start.documents} → ${end.documents}`);
+      assert.ok(end.nodes - start.nodes < 200, `nodes grew ${start.nodes} → ${end.nodes}`);
+      return { start, end };
+    } finally { await cdp.detach(); }
+  });
+  // T-14 / U-13: yavaş ağda çıkıştan sonra yükleme çizgisi (html.is-loading + main[aria-busy]); hızlı yanıtta hiç görünmez
+  if (!only || only === 'slow') await check('F06 slow response shows a loading line; fast one does not', async () => {
+    await open(paths.a);
+    await page.evaluate(() => {
+      window.__loading = [];
+      new MutationObserver(() => window.__loading.push(document.documentElement.classList.contains('is-loading'))).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    });
+    await swap(paths.c); // önbellekte değil, ama yerel: hızlı
+    const fast = await page.evaluate(() => window.__loading.includes(true));
+    assert.equal(fast, false, 'fast response must not flash the loading line');
+    const slowPath = new URL(paths.b, base).pathname;
+    await page.route((u) => u.pathname === slowPath, async (route) => { await new Promise((r) => setTimeout(r, 1500)); await route.continue(); });
+    try {
+      const t0 = Date.now();
+      await click(paths.b);
+      await page.waitForFunction(() => document.documentElement.classList.contains('is-loading') && document.getElementById('main').getAttribute('aria-busy') === 'true', null, { timeout: 1400 });
+      const shownAfter = Date.now() - t0;
+      await settled(slowPath);
+      const after = await page.evaluate(() => ({ loading: document.documentElement.classList.contains('is-loading'), busy: document.getElementById('main').hasAttribute('aria-busy') }));
+      assert.deepEqual(after, { loading: false, busy: false }, 'loading state cleared after the swap');
+      assert.ok(shownAfter >= 250, `line appeared too early (${shownAfter} ms)`);
+      return { shownAfter };
+    } finally { await page.unroute((u) => u.pathname === slowPath); }
   });
 } finally {
   await ctx.close(); await browser.close();

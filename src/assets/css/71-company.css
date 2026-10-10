@@ -71,7 +71,7 @@
 }
 .ab-statement .w,
 .ab-method__t .w {
-  opacity: 0.16;
+  opacity: var(--lit-dim);
   transition: opacity 0.5s var(--ease-out);
 }
 .ab-statement .w.on,
@@ -638,6 +638,7 @@ html[data-fx='off'] .ab-method__t .w {
   clip-path: inset(0 calc((1 - var(--p, 0)) * 100%) 0 0);
 }
 .cr-step {
+  container-type: inline-size;
   padding: 1.8rem 1.6rem 0 0;
 }
 .cr-step + .cr-step {
@@ -653,7 +654,8 @@ html[data-fx='off'] .ab-method__t .w {
 }
 .cr-step h3 {
   margin-bottom: 0.7rem;
-  font-size: var(--fs-3);
+  /* dört sütunda (≈ 960 px) «Değerlendirme» sütuna sığsın: başlıklar en uzun kelimeye göre birlikte küçülür (--lw) */
+  font-size: min(var(--fs-3), calc(100cqi / (max(var(--lw, 1), 1) * 0.66)));
 }
 .cr-step p {
   color: var(--ink-2);

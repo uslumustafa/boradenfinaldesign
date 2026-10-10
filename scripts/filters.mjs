@@ -1,6 +1,6 @@
 // Nunjucks süzgeçleri — Django şablon süzgeçleriyle bire bir karşılık gelecek şekilde adlandırıldı.
 import nunjucks from 'nunjucks';
-import { sceneOf } from './scenes.mjs';
+import { sceneOf, reachOf } from './scenes.mjs';
 
 const MONTHS = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
 const SHORT = ['Oca', 'Şub', 'Mar', 'Nis', 'May', 'Haz', 'Tem', 'Ağu', 'Eyl', 'Eki', 'Kas', 'Ara'];
@@ -42,6 +42,19 @@ export function plainInline(s) {
     .replace(/\[([^\]]+?)\]\(([^)\s]+)\)/g, '$1');
 }
 
+// Arama sonucu açıklaması (meta description, og:description): en çok `max` karakter. Uzunsa cümle sınırında kısaltılır
+// (ilk cümleler sığdığı kadar; en az 70 karakter kalmalı); cümle sınırı yoksa kelime sınırında «…» ile. Sayfadaki görünür
+// metin değişmez; yalnızca arama/paylaşım önizlemesinde kesik cümle görünmesin diye. Wagtail karşılığı: search_description.
+export function metaDesc(s, max = 160) {
+  const t = plainInline(s).replace(/\s+/g, ' ').trim();
+  if (t.length <= max) return t;
+  const ends = [...t.slice(0, max + 1).matchAll(/[.!?…](?=\s)/g)].map((m) => m.index + 1);
+  const cut = ends.filter((i) => i >= 70).pop();
+  if (cut) return t.slice(0, cut);
+  const word = t.slice(0, max).replace(/\s+\S*$/, '').replace(/[\s,;:–—-]+$/u, '');
+  return word + '…';
+}
+
 // «Tam, doğru, zamanında.» → ['Tam', 'doğru', 'zamanında']: ana sayfa başlığının satırları (en çok 4).
 // Virgülle ayrılır; virgül yoksa boşlukla; sondaki noktalama atılır. Tek kaynak `site.tagline`dır (Wagtail: SiteSettings.tagline).
 // Wagtail karşılığı: boraden_tags içinde aynı adlı süzgeç (`{{ site.tagline|tagline_words }}`).
@@ -63,6 +76,33 @@ export function longestWord(s) {
     if (n > max) max = n;
   }
   return max;
+}
+
+// Kahraman başlığı yazı tipinde (Montserrat 300, harf aralığı −0,018em) harf başına ilerleme genişliği (em; tarayıcıda ölçüldü,
+// kerning hariç — gerçek çizim bu toplamdan en çok %1 dardır). Tabloda olmayan karakter 0,70em sayılır.
+const HERO_ADV = {
+  a: 0.565, b: 0.657, c: 0.5285, ç: 0.5285, d: 0.657, e: 0.579, f: 0.3129, g: 0.664, ğ: 0.664, h: 0.655, ı: 0.243, i: 0.243, j: 0.248, k: 0.565,
+  l: 0.243, m: 1.046, n: 0.655, o: 0.602, ö: 0.602, p: 0.657, q: 0.657, r: 0.3675, s: 0.46, ş: 0.46, t: 0.3667, u: 0.651, ü: 0.651, v: 0.5072,
+  w: 0.8412, x: 0.501, y: 0.5072, z: 0.485, â: 0.565, î: 0.243, û: 0.651,
+  A: 0.6917, B: 0.734, C: 0.6547, Ç: 0.6547, D: 0.808, E: 0.651, F: 0.613, G: 0.755, Ğ: 0.755, H: 0.796, I: 0.277, İ: 0.277, J: 0.473, K: 0.685,
+  L: 0.567, M: 0.938, N: 0.796, O: 0.82, Ö: 0.82, P: 0.6875, Q: 0.82, R: 0.702, S: 0.591, Ş: 0.591, T: 0.5545, U: 0.775, Ü: 0.775, V: 0.669,
+  W: 1.08, X: 0.5993, Y: 0.6355, Z: 0.628, Â: 0.6917, Î: 0.277, Û: 0.775,
+  0: 0.64, 1: 0.335, 2: 0.545, 3: 0.5353, 4: 0.636, 5: 0.5353, 6: 0.584, 7: 0.563, 8: 0.614, 9: 0.584,
+  '.': 0.182, ',': 0.182, ':': 0.182, ';': 0.182, '!': 0.234, '?': 0.4984, '(': 0.303, ')': 0.304, '’': 0.2039, "'": 0.2188, '"': 0.3817,
+  '«': 0.4275, '»': 0.4275, '&': 0.6285, '%': 0.6879, '+': 0.551,
+};
+// En uzun kelimenin kahraman başlığı yazı tipindeki genişliği (em, iki ondalık). Kelimeler longestWord ile aynı kuralla ayrılır;
+// kelimeye bitişik noktalama (virgül, nokta, parantez…) genişliğe katılır.
+// .phero h1 yazı boyunu buna göre sınırlar (style="--lwe: …"): sütuna sığmayan uzun kelime harf ortasından bölünmez, başlık
+// yalnızca gerektiği kadar küçülür (harf sayısı × sabit katsayı tahmininden daha az). Wagtail karşılığı: boraden_tags › longest_word_em.
+export function longestWordEm(s) {
+  let max = 0;
+  for (const w of plainInline(String(s ?? '')).split(/[\s‐-―/-]+/)) {
+    let em = 0;
+    for (const ch of w) em += HERO_ADV[ch] ?? 0.7; // noktalama da sayılır: tarayıcı «Perakende,» kelimesini virgülüyle birlikte taşır
+    if (em > max) max = em;
+  }
+  return Math.round(max * 100) / 100;
 }
 
 // Telefon numarası: rakam grupları arasında bölünmez boşluk (U+00A0); satır yalnızca alan kodundan sonra kırılabilir.
@@ -149,7 +189,15 @@ export function makeFilters() {
     // dizi verilirse en uzunu (key: öğe alanı) — ör. kart ızgarasında ortak yazı boyu: {{ items | longest_word('title') }}
     // formasyon kimliği → 3B dünya sahne numarası (koyu bantlarda): data-world="{{ 'matris' | scene }}"; bilinmeyen kimlik derlemeyi durdurur
     scene: (id) => sceneOf(id),
+    // sahne → sayfa kahramanı başlık sütunu katsayıları (T-22): style="{{ sahne | scene_reach }}" → «--sa:68.3;--sb:32.7»; veri yoksa boş
+    // (CSS genel değerleri kullanır). Wagtail karşılığı: boraden_tags › scene_reach (aynı JSON).
+    scene_reach: (id) => {
+      const r = reachOf(id);
+      return r ? `--sa:${r[0]};--sb:${r[1]}` : '';
+    },
     longest_word: (s, key) => (Array.isArray(s) ? Math.max(0, ...s.map((x) => longestWord(key ? x && x[key] : x))) : longestWord(s)),
+    // kahraman başlığı: en uzun kelimenin genişliği (em) — {{ title | longest_word_em }}
+    longest_word_em: (s) => longestWordEm(s),
     truncate_words: (s, n = 24) => {
       const w = String(s || '').split(/\s+/);
       return w.length <= n ? w.join(' ') : w.slice(0, n).join(' ') + '…';

@@ -17,6 +17,37 @@ html.is-leaving .mega {
   opacity: 0 !important;
   transition: opacity 0.2s ease-in;
 }
+/* Yavaş ağ (router.js › busy): çıkış bittiği hâlde sayfa gelmediyse üstteki ince çizgi soldan sağa akar (T-14, U-13).
+   Efektler kapalıyken ya da hareket azaltmada akmaz, dolu çizgi olarak durur. */
+html.is-loading .prog {
+  opacity: 1 !important;
+  overflow: hidden;
+  transition: none; /* çıkıştaki solma geçişiyle yarışmasın: çizgi beklenince hemen görünür */
+}
+html.is-loading .prog__fill {
+  right: auto;
+  width: 32%;
+  clip-path: none;
+  animation: prog-load 1.1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+html.is-loading[data-fx='off'] .prog__fill {
+  width: 100%;
+  animation: none;
+}
+@keyframes prog-load {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(320%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.is-loading .prog__fill {
+    width: 100%;
+    animation: none;
+  }
+}
 /* belirme: opaklık hızlı (açık zeminli bölümler gri bir ara hâlde kalmasın), yükselme daha yavaş */
 html.is-entering :is(#main, #footer) {
   animation: page-in-o 0.4s ease-out both, page-in-t 0.85s var(--ease-out) both;

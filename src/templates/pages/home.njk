@@ -1,6 +1,10 @@
 {% extends "layouts/base.njk" %}
 {% import "partials/macros.njk" as m %}
 
+{% block head_extra %}
+<script type="application/ld+json">{{ ld | json_script }}</script>
+{% endblock %}
+
 {#
   ANA SAYFA (v3) — kısa, sahne tabanlı akış. Masaüstünde ≈9 ekran (eski sürüm ≈15,5), mobilde sabitleme yok.
     0  Açılış perdesi     yalnızca ilk gelişte görünür (html.is-opening; opening.js)
@@ -48,9 +52,9 @@
           <a class="btn" href="/hizmetler/">Hizmetlerimiz {{ m.arrow() }}</a>
           <a class="btn btn--ghost" href="/iletisim/">İletişime geçin</a>
         </div>
+        {# kaydırma ipucu alt satıra bağlı: her pencere boyunda düğmelerin hemen üstünde, sağ kenarda durur (düğmeye binmez) #}
+        <a class="hero__scroll" href="#hakkimizda" data-hero-in="7"><span class="hero__scroll-line" aria-hidden="true"></span>Kaydırın</a>
       </div>
-
-      <a class="hero__scroll" href="#hakkimizda" data-hero-in="7"><span class="hero__scroll-line" aria-hidden="true"></span>Kaydırın</a>
     </div>
   </section>
 
@@ -153,7 +157,7 @@
 {# ───────── 4 · Film: ofis görüntüsü (arşiv). Video yalnızca «Tam» katmanda ve masaüstünde oynar; diğerlerinde poster + «Videoyu oynat» ───────── #}
 <section class="film sec--dark" id="film" data-chapter="Ofisimiz" data-module="film" aria-label="Ofisimiz">
   <div class="film__frame" data-film-frame>
-    <img class="film__poster" src="/assets/video/boraden-ofis-poster.jpg" width="1280" height="720" alt="Boraden ofisinin girişi: ahşap çıtalı bölme ve arkasındaki açık ofis" loading="lazy" decoding="async">
+    <img class="film__poster" src="/assets/video/boraden-ofis-poster-1280.webp" srcset="/assets/video/boraden-ofis-poster-768.webp 768w, /assets/video/boraden-ofis-poster-1280.webp 1280w" sizes="100vw" width="1280" height="720" alt="Boraden ofisinin girişi: ahşap çıtalı bölme ve arkasındaki açık ofis" loading="lazy" decoding="async">
     <video class="film__video" muted loop playsinline preload="none" tabindex="-1" aria-hidden="true" data-src="/assets/video/boraden-ofis.mp4"></video>
     <div class="film__shade" aria-hidden="true"></div>
     <div class="film__cap container">
@@ -223,7 +227,7 @@
         <p data-reveal data-reveal-delay="3"><a class="btn" href="/hesaplayicilar/">Tüm hesaplayıcılar {{ m.arrow() }}</a></p>
       </div>
 
-      <form class="mini" data-mini="kdv" data-reveal data-reveal-delay="2" aria-label="Hızlı KDV hesabı" onsubmit="return false">
+      <form class="mini" data-mini="kdv" data-reveal data-reveal-delay="2" aria-label="Hızlı KDV hesabı">
         <p class="mini__title"><span class="eyebrow">Hızlı hesap</span></p>
         <h3 class="mini__h">KDV hesaplama</h3>
         <div class="mini__row">

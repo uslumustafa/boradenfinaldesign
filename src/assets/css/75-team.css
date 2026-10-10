@@ -122,8 +122,29 @@
   color: var(--ink-2);
 }
 .tm-roster,
-.who {
+.who,
+.tm-dept {
   scroll-margin-top: calc(var(--hdr) + 1.5rem);
+}
+/* bölüm dizini (kahramanın altında) */
+.tm-jump {
+  display: grid;
+  gap: 0.9rem;
+  margin-bottom: clamp(2.6rem, 5vw, 4rem);
+}
+.tm-jump__k {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.tm-jump__who {
+  margin-top: 0.3rem;
+}
+@media (pointer: coarse) {
+  .tm-jump .chip {
+    min-height: 44px;
+  }
 }
 /* kadro: bölümlere göre (kurum şemasındaki sıra). Solda bölüm adı, sağda kişi satırları */
 .tm-depts {
@@ -416,7 +437,7 @@
   letter-spacing: -0.022em;
 }
 .tm-join__t .w {
-  opacity: 0.16;
+  opacity: var(--lit-dim);
   transition: opacity 0.5s var(--ease-out);
 }
 .tm-join__t .w.on {
