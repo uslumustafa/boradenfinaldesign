@@ -520,8 +520,11 @@ html.hdr-hidden .prog {
   }
 }
 
-/* ── Alt sayfa kahramanı */
+/* ── Alt sayfa kahramanı (başlık sütunu değişkenleri --sa/--sb/--phero-col: aşağıdaki açıklama) */
 .phero {
+  --sa: 67.6;
+  --sb: 39.8;
+  --phero-col: calc(100vw - 2 * var(--gutter));
   position: relative;
   min-height: min(64svh, 680px);
   padding: calc(var(--hdr) + clamp(2rem, 6vw, 4.5rem)) 0 clamp(2.5rem, 5vw, 4.5rem);
@@ -548,12 +551,8 @@ html.hdr-hidden .prog {
    ortalanır: --maxw) bu çizgiye kadar, 1,25rem pay bırakarak.
    Efektler kapalıyken şekil çizilmez: sütun daralmaz (html.hero-wide). Sınıfı ilk boyamada base.njk, sonra yalnızca kullanıcı
    seçimi ve sayfa değişimi ayarlar (fx.js › syncLayout): efekt kendiliğinden kapanınca açık sayfanın başlığı yeniden dizilmez.
-   Çok dar/dik pencerede sütun 20rem'den daralmaz: şekil yazının arkasına biraz girebilir, soldaki degrade okunurluğu korur. */
-.phero {
-  --sa: 67.6;
-  --sb: 39.8;
-  --phero-col: calc(100vw - 2 * var(--gutter));
-}
+   Çok dar/dik pencerede sütun 20rem'den daralmaz: şekil yazının arkasına biraz girebilir, soldaki degrade okunurluğu korur.
+   Varsayılan değerler (sahnesi verisiz sayfa) .phero bloğunda. */
 @media (min-width: 901px) {
   html:not(.hero-wide) .phero {
     --phero-col: max(

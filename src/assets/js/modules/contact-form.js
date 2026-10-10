@@ -142,7 +142,7 @@ export function mount(el, ctx) {
     kit.openMail(href);
   }
 
-  // ön seçim varsa ve form ekranın altında kalıyorsa forma kaydır (hizmet sayfasından «Bu hizmet için görüşelim» geçişi)
+  // ön seçim varsa ve form ekranın altında kalıyorsa forma kaydır (hizmet sayfasından «Görüşme talep edin» geçişi)
   let raf = 0;
   if (applyParams()) {
     raf = requestAnimationFrame(() => {

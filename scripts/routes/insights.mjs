@@ -156,7 +156,10 @@ export function registerInsights({ add, model, site, home }) {
     },
   ]
     .map((g) => ({ ...g, items: g.items.filter((x) => x.count > 0) }))
-    .filter((g) => g.items.length);
+    .filter((g) => g.items.length)
+    // U-31: satırda 10'dan küçük bir sayı varsa o satırdaki sayılar büyük rakam değil küçük etiket olur (satır içi hiza korunur):
+    // «1 duyuru» büyük puntoyla «az ve eski» izlenimi veriyordu
+    .map((g) => ({ ...g, small: g.items.some((x) => x.count < 10) }));
   const collectionCount = collections.reduce((s, g) => s + g.items.length, 0);
 
   // ——— Merkez sayfa (son yayınlar listesi en fazla HUB_LIMIT kayıt; tür çiplerindeki sayılar bu listeden)

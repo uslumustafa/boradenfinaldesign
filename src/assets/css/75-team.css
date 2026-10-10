@@ -778,6 +778,9 @@ html[data-fx='off'] .tm-join__t .w {
   display: flex;
   align-items: baseline;
   gap: 0.9rem;
+  /* dokunma hedefi ≥ 24 px (aşağıdaki «Dokunma hedefleri» kalıbı; esnek kutu olduğu için listeye alınmadı) */
+  padding-block: 0.3rem;
+  margin-block: -0.3rem;
 }
 .pf-svcgrp__h .mono {
   font-size: 0.72rem;
@@ -915,8 +918,4 @@ html[data-fx='off'] .prow--link:hover .prow__act .arr {
   padding-block: 0.3rem;
   margin-block: -0.3rem;
   background-origin: content-box;
-}
-.pf-svcgrp__h a {
-  padding-block: 0.3rem;
-  margin-block: -0.3rem;
 }

@@ -137,9 +137,23 @@ const INTRO_S = 2.2; // toplanma süresi (sn)
 const SURGE_OUT = 350; // sayfa geçişi: noktaların ekran dışına akma süresi (ms) — yönlendirici bu süre dolunca içeriği değiştirir (U-20)
 const SURGE_IN = 1050; // sayfa geçişi: yeni sayfada noktaların içeri akıp şekle oturma süresi (ms)
 
+// WebGL 2 desteği önce küçük, atılan bir tuvalde sınanır (T-35): yoksa three.js çiziciyi kurmaya çalışıp konsola hata yazmaz;
+// dünya kurulmaz ve efektler «Kapalı»ya düşer (main.js › bootWorld). Sınama bağlamı hemen bırakılır.
+function webgl2Ok() {
+  try {
+    const gl = document.createElement('canvas').getContext('webgl2');
+    if (!gl) return false;
+    gl.getExtension('WEBGL_lose_context')?.loseContext();
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 export async function createWorld({ fx, canvas, intro = false }) {
   const html = document.documentElement;
   const P = fx.params();
+  if (!webgl2Ok()) return null;
   let renderer;
   try {
     renderer = new WebGLRenderer({ canvas, alpha: true, antialias: false, depth: false, stencil: false, powerPreference: 'high-performance' });

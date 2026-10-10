@@ -54,14 +54,26 @@ export function initRouter({ fx, world, mount, unmount, onNavigate }) {
     !SKIP_EXT.test(a.pathname) &&
     !a.pathname.startsWith('/assets/');
 
+  // Ağ hatası (bağlantı yok, yanıt yarıda kesildi) ayrıca işaretlenir: yalnızca o durumda bağlantı yoklanır (T-38)
+  const netFail = (e) => {
+    e.network = true;
+    throw e;
+  };
+  // Bağlantı gerçekten yok mu? Geçiş isteği ağ hatası verince başlıksız küçük bir HEAD isteğiyle yoklanır. Yanıt gelirse ağ
+  // çalışıyordur (yalnızca geçiş isteği engellenmiş olabilir: tarayıcı eklentisi, vekil sunucu) ve tam sayfa yüklemesine dönülür.
+  const reachable = (url) =>
+    fetch(url, { method: 'HEAD', cache: 'no-store' }).then(
+      () => true,
+      () => false
+    );
   async function fetchPage(url) {
     if (cache.has(url)) return cache.get(url);
     const p = fetch(url, { headers: { 'X-Requested-With': 'boraden-swap' } }).then((r) => {
       if (!r.ok && r.status !== 404) throw new Error('HTTP ' + r.status);
       const ct = r.headers.get('content-type') || '';
       if (!ct.includes('text/html')) throw new Error('html değil');
-      return r.text().then((text) => ({ text, status: r.status }));
-    });
+      return r.text().then((text) => ({ text, status: r.status }), netFail);
+    }, netFail);
     cache.set(url, p);
     if (cache.size > 24) cache.delete(cache.keys().next().value);
     p.catch(() => cache.delete(url));
@@ -177,15 +189,55 @@ export function initRouter({ fx, world, mount, unmount, onNavigate }) {
       const [res] = await Promise.all([page, wait(out)]);
       if (id !== nav) return; // daha yeni bir gezinme başladı (o, geçişi kendisi sürdürür)
       busy(false);
+      document.getElementById('netnote')?.remove();
       const doc = parsePage(res.text);
       applyDocument(doc, url, { push, y, entry });
       enter();
     } catch (err) {
       if (id !== nav) return; // eski isteğin hatası yeni gezinmeyi iptal edemez
       abort();
+      // Ağ yok (T-38): bağlantıya tıklanınca tarayıcının hata sayfasına gidilmez; sayfa yerinde kalır, kısa bir uyarı ve
+      // «Yeniden dene» çıkar. Ağ çalışıyorsa (yoklama yanıt aldı), geri/ileri tuşunda (adres zaten değişti) ve ağ dışı
+      // hatalarda (sunucu hatası, sayfa uygulanırken çıkan hata) önceki gibi tam sayfa yüklemesine dönülür.
+      if (push && err?.network) {
+        const online = navigator.onLine !== false && (await reachable(url));
+        if (id !== nav) return; // yoklama sürerken yeni bir gezinme başladı
+        if (!online) {
+          offline(url);
+          return;
+        }
+      }
       console.warn('[router] tam sayfa yüklemeye dönülüyor:', err.message);
       location.href = url;
     }
+  }
+
+  // Uyarı her seferinde yeniden kurulur: role="alert" ekrana gelişte okunur (gizleyip yeniden açmak tekrar okutmaz)
+  function offline(url) {
+    document.getElementById('netnote')?.remove();
+    const el = document.createElement('div');
+    el.id = 'netnote';
+    el.className = 'netnote';
+    el.setAttribute('role', 'alert');
+    const msg = document.createElement('p');
+    msg.className = 'netnote__t';
+    msg.textContent = 'Bağlantı yok: sayfa açılamadı.';
+    const retry = document.createElement('button');
+    retry.type = 'button';
+    retry.className = 'netnote__b';
+    retry.textContent = 'Yeniden dene';
+    retry.addEventListener('click', () => {
+      el.remove();
+      go(url);
+    });
+    const close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'netnote__x';
+    close.setAttribute('aria-label', 'Uyarıyı kapat');
+    close.textContent = '×';
+    close.addEventListener('click', () => el.remove());
+    el.append(msg, retry, close);
+    document.body.append(el);
   }
 
   document.addEventListener('click', (e) => {

@@ -1060,6 +1060,7 @@ html[data-fx='off'] .ab-method__t .w {
   scroll-margin-top: calc(var(--hdr) + 1.25rem);
 }
 .ct-field {
+  align-content: start;
   scroll-margin-top: calc(var(--hdr) + 1rem);
 }
 .ct-form > * + * {
@@ -1100,9 +1101,6 @@ html[data-fx='off'] .ab-method__t .w {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.6rem 1.2rem;
-}
-.ct-field {
-  align-content: start;
 }
 .ct-field--wide {
   grid-column: 1 / -1;

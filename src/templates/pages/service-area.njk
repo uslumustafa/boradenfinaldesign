@@ -28,10 +28,11 @@
     </div>
     {% endif %}
 
+    {# Künye (U-28): sayılar ziyaretçinin dilinde ve ilgili bölüme bağlı #}
     {{ bk.kunye(group.number, [
-      { k: "Hizmet", v: nSvc ~ " başlık" },
-      { k: "Sektör", v: ((rel.sectors | length) ~ " sektör sayfasında") if (rel.sectors | length) else "" },
-      { k: "Hesaplayıcı", v: ((rel.calculators | length) ~ " ilgili araç") if (rel.calculators | length) else "" }
+      { k: "Hizmetler", v: nSvc ~ " hizmet", href: "#hizmetler" },
+      { k: "Sektörler", v: ((rel.sectors | length) ~ " sektör") if (rel.sectors | length) else "", href: "#ilgili" },
+      { k: "Hesaplayıcılar", v: ((rel.calculators | length) ~ " hesaplayıcı") if (rel.calculators | length) else "", href: "#ilgili" }
     ], { label: "Hizmet alanı künyesi" }) }}
 
     <div class="g12 areahead">
@@ -166,10 +167,11 @@
               </div>
             </details>
             {% endfor %}
+            {# U-42: ortak yanıttaki «ilgili hizmet sayfasına» bağlantısı alan sayfasında bu sayfanın hizmet listesine gider #}
             {% for f in model.generalFaq %}
             <details>
               <summary>{{ f.q }}</summary>
-              <div class="faq__a">{{ f.a | paras_rich }}</div>
+              <div class="faq__a">{{ f.a | replace("ilgili [hizmet sayfasına](/hizmetler/) da", "bu alandaki [hizmet sayfalarına](#hizmetler) da") | paras_rich }}</div>
             </details>
             {% endfor %}
           </div>

@@ -25,7 +25,7 @@
             {% if note.questions.length %}<li><a href="#sorular">Sorular</a></li>{% endif %}
             <li><a href="#kaynak">Kaynak</a></li>
           </ol>
-          {% if note.svc %}<a class="btn toc__cta" href="/iletisim/?hizmet={{ note.svc.id }}">Bu konuyu görüşelim {{ m.arrow() }}</a>{% endif %}
+          {% if note.svc %}<a class="btn toc__cta" href="/iletisim/?hizmet={{ note.svc.id }}">Görüşme talep edin {{ m.arrow() }}</a>{% endif %}
         </nav>
         {{ m.fig("side") }}
       </aside>

@@ -21,7 +21,7 @@ Page modellerine, `src/data/*.json` dosyaları snippet / StreamField / site ayar
 | Arama | `wagtail.search` (başta DB arka ucu) | Şimdilik istemci tarafı dizin (§7) |
 | Görseller | Wagtail Image + `{% image %}` renditions | `photos.json` → görsel + `alt` |
 | Belgeler | `wagtaildocs` | 247 sirküler PDF'i (≈156 MB) |
-| Statik | `ManifestStaticFilesStorage` | `build_id` yerine içerik özeti |
+| Statik | `ManifestStaticFilesStorage` | Statik sürümdeki içerik özetli `?v=` (`asset_v`) yerine dosya adında özet |
 | Ön yüz derlemesi | `npm run build:assets` (esbuild, değişmez) | CSS birleştirme + JS paketi → `static/` |
 
 Önerilen Django uygulamaları: `core` (SiteSettings, HomePage, taban sayfa), `services`, `sectors`, `insights`, `reference` (sözlük, SSS),
@@ -141,7 +141,9 @@ alanlar sarı uyarıyla gösterilmeli; `needs_verification` doluyken ilgili hesa
 | `{{ x \| filter }}` | `{{ x\|filter }}` | süzgeç karşılıkları aşağıda |
 | `autoescape: true` | varsayılan | `\| safe` yalnızca `rich`/`json_script` çıktısında |
 | `{{ asset('…') }}` | `{% static '…' %}` | |
-| `{{ build_id }}` | `ManifestStaticFilesStorage` | önbellek kırıcı |
+| `{{ asset_v.css }}`, `{{ asset_v.js }}` (`?v=` içerik özeti) | `{% static %}` + `ManifestStaticFilesStorage` | önbellek kırıcı; dosya değişmedikçe adres aynı kalır |
+| `{{ search_v }}` (arama dizini `?v=`) | dizini üreten görünüm (yayın sinyaliyle önbellek) | §7 |
+| `{{ font_url('montserrat-300-normal') }}` | `{% static 'fonts/…' %}` (`src/assets/fonts/fonts.json`'daki ad) | yalnızca `<link rel=preload>` |
 | `data`, `site`, `model`, `groups`, `services`, `contact` (küresel) | bağlam işlemcisi + `SiteSettings` | `model.*` sorguları sayfa modellerinin `get_context()` içinde |
 | `page` (url, title, titleFull, description, scene, kind, crumbs, bodyClass, noindex, canonical) | Page alanları: `seo_title`, `search_description`, `scene` (seçim), `body_class`, `noindex` (`Page` → `robots`), `full_url` | `crumbs` = `page.get_ancestors()` |
 
@@ -226,7 +228,7 @@ Mantık `longestWord()`; noktalama ve `**…**`/`[…](…)` işaretlemesi sayı
 ## 9. Önerilen taşıma sırası
 
 1. Django + Wagtail iskeleti; `SiteSettings`; `base.html` + `header/footer/cta/logo` parçaları; `boraden_tags` (süzgeçler, `phero/photo/arrow` etiketleri).
-2. Statik varlıklar: `npm run build:assets` (CSS birleştirme + esbuild JS paketi) → `static/`; yazı tipleri (`scripts/vendor-fonts.mjs`) ve fotoğraflar.
+2. Statik varlıklar: `npm run build:assets` (CSS birleştirme + esbuild JS paketi) → `static/`; yazı tipleri (`src/assets/fonts/`, adında içerik özeti; yeniden üretim `npm run fonts`) ve fotoğraflar.
 3. Snippet modelleri + **içe aktarma komutları** (`manage.py import_boraden <json>`): her JSON dosyası için bir komut; `rich` regex'i RichText'e çevirir. Kimlikler (`id`, `slug`) olduğu gibi korunur.
 4. Sayfa ağacı: §2'deki modeller, URL'ler birebir; `get_context()` içinde rota modüllerindeki türetilmiş veriler (sayılar, komşu notlar, ilgi matrisi, site ağacı).
 5. Şablon dönüşümü: sıra → ana sayfa, hizmetler, sektörler, bilgi merkezi, araçlar, kurumsal, destek. Her şablonun başındaki «Wagtail karşılığı» yorumu alan listesidir.

@@ -121,6 +121,8 @@ try {
   const held = new Promise((r) => { release = r; });
   await gl.route('**/chunks/world-*.js', async (route) => { await held; await route.continue(); });
   const p2 = await gl.newPage();
+  const glErrors = [];
+  p2.on('console', (m) => { if (m.type() === 'error') glErrors.push(m.text()); });
   const hero = () => p2.evaluate(() => {
     const h = document.querySelector('.phero h1'); // layout box (offset*: the entrance transform does not count)
     const d = document.documentElement;
@@ -147,6 +149,9 @@ try {
     await p2.locator('[data-fx-set="off"]:visible').click();
     assert.equal((await hero()).wide, true, 'user choice «off» widens the column at once');
     console.log('PASS: automatic effect fallback keeps the hero title in place');
+    // T-35: WebGL 2 is tested on a throwaway canvas first, so three.js never tries (and logs) a failing renderer
+    assert.deepEqual(glErrors.filter((t) => /THREE|WebGL/i.test(t)), [], 'no three.js / WebGL errors without WebGL');
+    console.log('PASS: no console errors from the renderer when WebGL is missing');
   } finally {
     await gl.close();
   }

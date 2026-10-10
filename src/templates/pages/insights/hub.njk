@@ -24,7 +24,7 @@
     <dl class="ic-stats" data-reveal data-reveal-delay="3">
       <div class="ic-stat"><dt>Güncel yayın</dt><dd class="tnum" data-count="{{ total }}">{{ total }}</dd></div>
       <div class="ic-stat"><dt>Arşiv sirküleri</dt><dd class="tnum" data-count="{{ arc.total }}">{{ arc.total }}</dd></div>
-      <div class="ic-stat"><dt>Arşiv yılı · {{ arc.range }}</dt><dd class="tnum" data-count="{{ arc.years | length }}">{{ arc.years | length }}</dd></div>
+      <div class="ic-stat"><dt>Sirküler arşivi dönemi</dt><dd class="tnum"><span class="ic-stat__sm">{{ arc.range }}</span></dd></div>
       <div class="ic-stat"><dt>Koleksiyon</dt><dd class="tnum" data-count="{{ collectionCount }}">{{ collectionCount }}</dd></div>
     </dl>
   </div>
@@ -98,12 +98,11 @@
     {% for g in collections %}
     <div class="ic-cg" data-reveal>
       <p class="ic-cg__h mono"><span class="tnum">{{ loop.index | pad2 }}</span> {{ g.label }}</p>
-      <ul class="ic-cg__list ic-cg__list--{{ g.items | length }}">
+      <ul class="ic-cg__list ic-cg__list--{{ g.items | length }}{% if g.small %} ic-cg__list--small{% endif %}">
         {% for c in g.items %}
         <li>
           <a class="ic-col" href="{{ c.url }}">
-            <span class="ic-col__n tnum" data-count="{{ c.count }}">{{ c.count }}</span>
-            <span class="ic-col__u mono">{{ c.unit }}</span>
+            <span class="ic-col__k"><span class="ic-col__n tnum" data-count="{{ c.count }}">{{ c.count }}</span> <span class="ic-col__u mono">{{ c.unit }}</span></span>
             <span class="ic-col__t">{{ c.title }}</span>
             <span class="ic-col__d">{{ c.desc }}</span>
             <span class="ic-col__go" aria-hidden="true">→</span>

@@ -51,6 +51,13 @@
   letter-spacing: -0.03em;
   color: #fff;
 }
+/* U-31: dönem («2018–2022») sayı değil; küçük puntoda, tek satırda. Satır yüksekliği ve taban çizgisi sayaçlarla aynı
+   kalır (dd'nin büyük punto boyu korunur), etiketler hizalı durur. */
+.ic-stat__sm {
+  font-size: 0.55em;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
 @media (max-width: 720px) {
   .ic-stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -298,7 +305,7 @@
     height: 1px;
     margin: -1px;
     overflow: hidden;
-    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
     white-space: nowrap;
   }
   .ic-row.is-cur {
@@ -404,6 +411,26 @@
   container-type: inline-size; /* .ic-col__t yazı boyu sütun genişliğine göre (cqi) */
   transition: background-color var(--t-med);
 }
+.ic-col__k {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+/* U-31: küçük sayılı satırda sayı + birim tek satırda, birim boyunda («1 duyuru», «247 arşiv PDF’i») */
+.ic-cg__list--small .ic-col__k {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 0.5em;
+}
+.ic-cg__list--small .ic-col__n {
+  font-family: var(--f-mono);
+  font-size: 0.66rem;
+  font-weight: 500;
+  line-height: inherit;
+  letter-spacing: 0.12em;
+  color: var(--on-dark-2);
+}
 .ic-col__n {
   font-family: var(--f-display);
   font-weight: 300;
@@ -462,12 +489,10 @@
   }
   .ic-cg__list li:nth-child(odd) .ic-col {
     border-left: 0;
+    padding-left: 0;
   }
   .ic-cg__list li:nth-child(n + 3) .ic-col {
     border-top: 1px solid var(--line-dark);
-  }
-  .ic-cg__list li:nth-child(odd) .ic-col {
-    padding-left: 0;
   }
 }
 @media (max-width: 520px) {
@@ -1610,7 +1635,7 @@ main[data-url="/bilgi-merkezi/blog/degerleme-oncesi-bes-soru/"] .phero {
     width: auto;
     height: auto;
     margin: 0;
-    clip: auto;
+    clip-path: none;
     white-space: normal;
   }
 }

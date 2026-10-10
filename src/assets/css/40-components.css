@@ -333,6 +333,38 @@ a.chip:hover {
 .phero .chip {
   min-height: 1.9rem;
 }
+/* U-22: tıklanmayan etiket (span.chip: sayfa üst bilgisi, yayımlayan, durum) çerçevesiz ve düz zeminli; çerçeveli çip
+   görünümü yalnızca süzgeç düğmeleri ve bağlantılarda kalır */
+span.chip {
+  border-color: transparent;
+  background: var(--paper-2);
+}
+.on-dark span.chip,
+.sec--dark span.chip,
+.phero span.chip {
+  border-color: transparent;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ── Sözlüğe bağlı kısaltma (U-42): sayfadaki ilk geçiş, metin renginde noktalı alt çizgi; üzerine gelince vurgulanır */
+.gl-abbr {
+  color: inherit;
+  text-decoration: underline dotted;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition: color var(--t-fast);
+}
+.gl-abbr:hover,
+.gl-abbr:focus-visible {
+  color: var(--accent);
+  text-decoration-style: solid;
+}
+.on-dark .gl-abbr:hover,
+.sec--dark .gl-abbr:hover,
+.on-dark .gl-abbr:focus-visible,
+.sec--dark .gl-abbr:focus-visible {
+  color: var(--accent-dark);
+}
 
 /* ── SSS / açılır panel */
 .faq {
@@ -452,10 +484,14 @@ a.chip:hover {
   }
 }
 
-/* ── Bildirim kutusu */
+/* ── Bildirim kutusu
+   U-40: satırda en çok ≈ 75 karakter (60ch; «ch» = «0» rakamının genişliği, Türkçe metindeki ortalama harften geniş: ölçüldü).
+   Kutu metne göre daralır (geniş sütunda 180 karaktere varan satırlar oluyordu); sayfa başındaki taslak bantları tam
+   genişlikte kalır, yalnızca metinleri sınırlanır. */
 .notice {
   display: flex;
   gap: 1rem;
+  max-width: 60ch;
   padding: 1.1rem 1.3rem;
   border-left: 3px solid var(--b-blue);
   background: var(--paper-2);
@@ -469,6 +505,14 @@ a.chip:hover {
 }
 .notice strong {
   color: var(--ink);
+}
+.notice.draft-note,
+.notice.lg-draft {
+  max-width: none;
+}
+.notice.draft-note > *,
+.notice.lg-draft > * {
+  max-width: 60ch;
 }
 /* taslak içerik bandı (hizmet ve alan sayfaları; yasal metinlerde .lg-draft) */
 .draft-note {
@@ -566,4 +610,80 @@ a.chip:hover {
 }
 .nowrap {
   white-space: nowrap;
+}
+
+/* ── Bağlantı yok uyarısı (router.js › offline, T-38): ağ yokken tıklanan iç bağlantıda sayfa yerinde kalır, altta bu uyarı çıkar */
+.netnote {
+  position: fixed;
+  left: 50%;
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  z-index: calc(var(--z-menu) + 1); /* mobil menüden tıklanan bağlantıda da menünün üstünde görünsün */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.75rem;
+  width: max-content;
+  max-width: calc(100vw - 2rem);
+  padding: 0.5rem 0.5rem 0.5rem 1.1rem;
+  transform: translateX(-50%);
+  background: var(--navy-900);
+  color: var(--on-dark);
+  border: 1px solid var(--line-dark-2);
+  border-radius: var(--radius);
+  box-shadow: 0 12px 32px rgba(5, 12, 26, 0.3);
+  font-size: var(--fs-1);
+  line-height: 1.4;
+  animation: netnote-in var(--t-med) var(--ease-out) both;
+}
+.netnote__t {
+  flex: 1 1 auto;
+  margin: 0;
+}
+.netnote__b,
+.netnote__x {
+  min-height: 2.75rem;
+  border: 1px solid var(--line-dark-2);
+  border-radius: var(--radius);
+  background: transparent;
+  color: inherit;
+  font-family: var(--f-action);
+  font-weight: 500;
+  font-size: 0.95rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color var(--t-fast),
+    color var(--t-fast);
+}
+.netnote__b {
+  padding: 0 1rem;
+  border-color: var(--on-dark-3); /* düğme sınırı zeminden ≥ 3:1 (WCAG 1.4.11) */
+}
+.netnote__x {
+  min-width: 2.75rem;
+  border-color: transparent;
+  color: var(--on-dark-2);
+  font-size: 1.4rem;
+}
+.netnote__b:hover,
+.netnote__x:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--on-dark);
+}
+.netnote :focus-visible {
+  outline-color: #8fd0f2;
+}
+@keyframes netnote-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 0.75rem);
+  }
+}
+html[data-fx='off'] .netnote {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .netnote {
+    animation: none;
+  }
 }

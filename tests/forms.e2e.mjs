@@ -151,7 +151,7 @@ async function contact() {
   // KVKK bağlantısı yeni sekmede (form verisi kaybolmasın)
   ok((await page.getAttribute('.ct-consent a', 'target')) === '_blank', 'onay metnindeki bağlantı yeni sekmede');
 
-  // yönlendirici (fetch-and-swap) ile hizmet sayfasından geçiş: «Bu hizmet için görüşelim»
+  // yönlendirici (fetch-and-swap) ile hizmet sayfasından geçiş: «Görüşme talep edin»
   await page.goto(`${BASE}/hizmetler/vergi/kdv-iade-islemleri/`, { waitUntil: 'load' });
   await page.waitForTimeout(400);
   await page.click('a.toc__cta');
@@ -210,7 +210,7 @@ async function contact() {
       ok((await p2.isHidden('[data-ct-person]')) && (await p2.isHidden('[data-ct-sector]')), `geçersiz ?kisi=/?sektor= (${bad}) çip göstermez`);
     }
 
-    // sektör sayfası → yönlendirici ile forma: «Bu sektör için görüşelim»
+    // sektör sayfası → yönlendirici ile forma: «Görüşme talep edin»
     await p2.goto(`${BASE}/sektorler/saglik-ve-ilac/`, { waitUntil: 'load' });
     await p2.waitForTimeout(400);
     await p2.click('a.toc__cta');

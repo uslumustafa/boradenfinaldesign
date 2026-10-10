@@ -396,9 +396,11 @@
   flex-wrap: wrap;
   gap: 0.5rem;
 }
+/* U-22: «Şu durumlarda» maddeleri tıklanmaz: çerçevesiz, düz zeminli etiket (çip görünümü yalnızca süzgeç ve bağlantıda) */
 .needs__list li {
   padding: 0.5rem 1rem;
-  border: 1px solid var(--line-strong);
+  border: 1px solid transparent;
+  background: var(--paper-2);
   font-size: 0.93rem;
   color: var(--ink-2);
 }

@@ -1,6 +1,7 @@
 // Statik üretim: src/ → dist/
 //   node scripts/build.mjs [--prod]      tam site (sayfalar + varlıklar)
 //   node scripts/build.mjs --assets      yalnızca CSS/JS/yazı tipi/görsel (Wagtail hattı için)
+import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -9,6 +10,7 @@ import * as esbuild from 'esbuild';
 import { makeFilters, metaDesc } from './filters.mjs';
 import { buildModel } from './model.mjs';
 import { buildRoutes } from './routes.mjs';
+import { glossaryAbbrs, linkGlossary } from './gloss-link.mjs';
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = path.join(ROOT, 'src');
@@ -21,6 +23,8 @@ const write = (p, s) => {
   fs.mkdirSync(path.dirname(p), { recursive: true });
   fs.writeFileSync(p, s);
 };
+// önbellek kırıcı (T-16, T-38): içerik özeti — dosya değişmedikçe adresi (?v=) derlemeden derlemeye aynı kalır
+export const contentHash = (buf) => crypto.createHash('sha256').update(buf).digest('hex').slice(0, 10);
 
 export function loadData() {
   const dir = path.join(SRC, 'data');
@@ -83,6 +87,7 @@ async function buildCSS(prod) {
   const css = files.map((f) => `/* ── ${f} */\n` + fs.readFileSync(path.join(dir, f), 'utf8')).join('\n');
   const out = prod ? (await esbuild.transform(css, { loader: 'css', minify: true })).code : css;
   write(path.join(DIST, 'assets/css/site.css'), out);
+  return out;
 }
 
 async function buildJS(prod) {
@@ -111,6 +116,26 @@ export async function buildAssets({ prod = false, quiet = false } = {}) {
   await Promise.all([buildCSS(prod), buildJS(prod)]);
   copyDir(path.join(SRC, 'assets'), path.join(DIST, 'assets'), ['css', 'js', 'documents']);
   if (!quiet) console.log(`✔ varlıklar → ${DIST} (${Date.now() - t0} ms${prod ? ', prod' : ''})`);
+}
+
+// Şablon genelleri (derleme ve şablon testleri aynı listeyi kullanır). Sürümler (asset_v, search_v) derleme sırasında eklenir.
+export function templateGlobals(data, model) {
+  // yazı tipi dosyalarının adında içerik özeti var (scripts/tools/subset-fonts.py → src/assets/fonts/fonts.json)
+  const fontManifest = readJSON(path.join(SRC, 'assets/fonts/fonts.json'));
+  return {
+    asset: (p) => `/assets/${p}`,
+    font_url: (key) => {
+      if (!fontManifest[key]) throw new Error(`Yazı tipi yok: ${key} (npm run fonts)`);
+      return fontManifest[key];
+    },
+    data,
+    site: data.site,
+    share_image: { ...data.site.shareImage, url: new URL(data.site.shareImage.path, data.site.url).href },
+    model,
+    groups: model.groups,
+    services: model.services,
+    contact: model.contact,
+  };
 }
 
 export async function build({ prod = false, quiet = false } = {}) {
@@ -144,18 +169,9 @@ export async function build({ prod = false, quiet = false } = {}) {
     lstripBlocks: true,
   });
   for (const [k, fn] of Object.entries(makeFilters())) env.addFilter(k, fn);
-  const buildId = Date.now().toString(36);
-  env.addGlobal('asset', (p) => `/assets/${p}`);
-  env.addGlobal('build_id', buildId);
-  env.addGlobal('data', data);
-  env.addGlobal('site', data.site);
-  env.addGlobal('share_image', { ...data.site.shareImage, url: new URL(data.site.shareImage.path, data.site.url).href });
-  env.addGlobal('model', model);
-  env.addGlobal('groups', model.groups);
-  env.addGlobal('services', model.services);
-  env.addGlobal('contact', model.contact);
+  for (const [k, v] of Object.entries(templateGlobals(data, model))) env.addGlobal(k, v);
 
-  await Promise.all([
+  const [css] = await Promise.all([
     buildCSS(prod),
     buildJS(prod).catch((e) => {
       if (!lenient) throw e;
@@ -164,6 +180,17 @@ export async function build({ prod = false, quiet = false } = {}) {
     }),
   ]);
   copyDir(path.join(SRC, 'assets'), path.join(DIST, 'assets'), ['css', 'js']);
+  // yazı tipi dosyalarının adı içerikle değişir: kaynakta artık olmayanlar (geliştirme çıktısında kalanlar) silinir.
+  // Yazı tipi listesi (fonts.json) yalnızca derlemede okunur; yayına gitmez.
+  const fontsOut = path.join(DIST, 'assets/fonts');
+  if (fs.existsSync(fontsOut)) for (const f of fs.readdirSync(fontsOut)) if (!fs.existsSync(path.join(SRC, 'assets/fonts', f))) fs.rmSync(path.join(fontsOut, f), { force: true });
+  fs.rmSync(path.join(fontsOut, 'fonts.json'), { force: true });
+
+  // Sürüm (?v=): CSS ve JS giriş dosyasının içerik özeti. vercel.json bu adresleri bir yıl «immutable» önbelleğe alır;
+  // dosya değişince özet, dolayısıyla adres değişir. JS parçalarının adında zaten özet var (esbuild chunkNames).
+  // JS derlenemediyse (yalnız geliştirmede) zaman damgası: eski dosya önbellekte kalmasın.
+  const mainJS = path.join(DIST, 'assets/js/main.js');
+  env.addGlobal('asset_v', { css: contentHash(css), js: fs.existsSync(mainJS) ? contentHash(fs.readFileSync(mainJS)) : Date.now().toString(36) });
 
   // hesaplayıcı parametre dosyaları (tarayıcıda hesap için yüklenir): /assets/data/params/<yıl>-<alan>.json
   // (iç çalışma notları meta.notes yayına gitmez)
@@ -172,14 +199,22 @@ export async function build({ prod = false, quiet = false } = {}) {
     write(path.join(DIST, 'assets/data/params', `${key}.json`), JSON.stringify({ ...val, meta: { id: m.id, year: m.year, verifiedOn: m.verifiedOn } }));
   }
 
+  // sözlük bağlantıları (U-42): hizmet, sektör, bilgi merkezi, hesaplayıcı ve takvim sayfaları; sözlük, arama, hukuki metin hariç
+  const GLOSS_PAGES = /^\/(hizmetler|sektorler|bilgi-merkezi|hesaplayicilar|vergi-takvimi)\//;
+  const GLOSS_SKIP = /^\/bilgi-merkezi\/sozluk\//;
+  const glossAbbrs = glossaryAbbrs(model.glossary);
+
+  // arama dizini: sayfalardan önce hazırlanır, adresindeki sürüm (?v=, arama sayfası › data-index) içeriğin özeti olsun
+  // (yalnızca-arama kayıtları — sözlük terimleri, SSS soruları… — ve aranabilir, noindex olmayan sayfalar; rota sırasıyla)
+  const searchJSON = JSON.stringify(
+    routes.filter((r) => r.searchOnly || (r.searchable && !r.noindex)).map((r) => ({ t: r.title, u: r.url, d: (r.description || '').slice(0, 220), k: r.kind || 'Sayfa' }))
+  );
+  env.addGlobal('search_v', contentHash(searchJSON));
+
   // sayfalar
-  const search = [];
   for (const r of routes) {
     // yalnızca arama dizinine girecek kayıtlar (ör. sözlük terimleri): sayfa üretilmez
-    if (r.searchOnly) {
-      search.push({ t: r.title, u: r.url, d: (r.description || '').slice(0, 220), k: r.kind || 'Sayfa' });
-      continue;
-    }
+    if (r.searchOnly) continue;
     const page = {
       url: r.url,
       title: r.title,
@@ -198,6 +233,8 @@ export async function build({ prod = false, quiet = false } = {}) {
     let html;
     try {
       html = env.render(r.template, { page, ...(r.ctx || {}) });
+      // U-42: kısaltmaların sayfadaki ilk geçişi sözlüğe bağlanır (içerik sayfalarında; sözlüğün kendisi hariç)
+      if (GLOSS_PAGES.test(r.url) && !GLOSS_SKIP.test(r.url)) html = linkGlossary(html, glossAbbrs);
     } catch (e) {
       if (!lenient) throw e;
       errors++;
@@ -208,7 +245,6 @@ export async function build({ prod = false, quiet = false } = {}) {
     }
     const out = r.url.endsWith('.html') ? path.join(DIST, r.url) : path.join(DIST, r.url, 'index.html');
     write(out, html);
-    if (r.searchable && !r.noindex) search.push({ t: r.title, u: r.url, d: (r.description || '').slice(0, 220), k: r.kind || 'Sayfa' });
   }
 
   // 404
@@ -223,7 +259,7 @@ export async function build({ prod = false, quiet = false } = {}) {
   const base = data.site.url.replace(/\/$/, '');
   write(path.join(DIST, 'sitemap.xml'), sitemapXML(routes, base));
   write(path.join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${base}/sitemap.xml\n`);
-  write(path.join(DIST, 'assets/data/search-index.json'), JSON.stringify(search));
+  write(path.join(DIST, 'assets/data/search-index.json'), searchJSON);
 
   const pages = routes.filter((r) => !r.searchOnly).length;
   if (!quiet) console.log(`✔ ${pages} sayfa (+${routes.length - pages} yalnızca arama kaydı), ${Date.now() - t0} ms${prod ? ' (prod)' : ''}${errors ? ` — ${errors} HATA` : ''}`);

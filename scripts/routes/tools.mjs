@@ -1,6 +1,6 @@
 // Araçlar: hesaplayıcı dizini, hesaplayıcı sayfaları, vergi takvimi.
 // Wagtail karşılığı: CalculatorIndexPage, CalculatorPage (alanlar = calculators-*.json şeması), TaxCalendarPage.
-import { baseOf, breadcrumbLd, faqLd, graph, listLd, orgRef, webPageLd } from '../ld.mjs';
+import { breadcrumbLd, faqLd, graph, listLd, webPageLd } from '../ld.mjs';
 import { PAGE } from '../scenes.mjs';
 
 function calculatorLd(site, cl, trail) {

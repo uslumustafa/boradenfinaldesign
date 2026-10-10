@@ -1,12 +1,13 @@
 // Sayfa geçişi (router) + klavye + mobil menü + efekt anahtarı uçtan uca denetimi (gerçek Chrome, Playwright).
 // Çalışan bir sunucu gerekir (npm run dev ya da BORADEN_DIST=… PORT=… node scripts/serve.mjs).
-//   node tests/router.e2e.mjs [--base=http://127.0.0.1:4181] [--only=router|keys|menu|fx]
+//   node tests/router.e2e.mjs [--base=http://127.0.0.1:4181] [--only=router|keys|menu|fx|offline]
 // Denetlenenler:
 //   router — tam yeniden yükleme olmadan gezinme (sayfa işareti + kalıcı tuval), başlık/duyuru/odak, aria-current,
 //            geri/ileri (+ ?q= durumu), modüllerin yeniden kurulması (sözlük, arşiv, hesaplayıcı, iletişim formu, arama), 404
 //   keys   — «İçeriğe geç» bağlantısı, klavye gezinmesi sonrası odak halkası, mega menü (odak/ArrowDown ile aç, Esc ile kapat)
 //   menu   — mobil menü: <nav> işareti, aç/kapa, arka plan inert, Tab menü dışına çıkmaz, Esc → odak düğmeye, bağlantı → kapanır
 //   fx     — azaltılmış hareket → Kapalı; Tam/Hafif/Kapalı anahtarı kalıcı; tek depolama anahtarı boraden-fx (çerez yok)
+//   offline — ağ yokken iç bağlantı: sayfada kalınır, «Bağlantı yok» uyarısı + «Yeniden dene»; sunucu hatası tam yüklemeye döner
 import { chromium } from 'playwright-core';
 import { guardContext } from './safe-context.mjs';
 
@@ -344,6 +345,82 @@ async function menu() {
   await ctx.close();
 }
 
+/* ─── Bağlantı yok (T-38) ─── */
+// Ağ yokken iç bağlantı: sayfada kalınır (tarayıcının hata sayfası yerine), uyarı + «Yeniden dene»; ağ gelince aynı düğme
+// sayfayı açar. Ağ dışı hata (sunucu 500) uyarı göstermez, önceki gibi tam sayfa yüklemesine döner.
+async function offline() {
+  console.log('Bağlantı yok');
+  const { ctx, page, logs } = await newPage({ fx: 'lite' });
+  await open(page, '/hizmetler/');
+  const mark = await page.evaluate(() => (window.__mark = Math.random()));
+  const st = () =>
+    page.evaluate(() => {
+      const n = document.querySelectorAll('#netnote');
+      const el = n[0];
+      const html = document.documentElement;
+      return {
+        path: location.pathname,
+        mark: window.__mark,
+        url: document.getElementById('main').dataset.url,
+        n: n.length,
+        role: el?.getAttribute('role'),
+        text: el?.querySelector('.netnote__t')?.textContent,
+        visible: !!el && el.checkVisibility(),
+        inView: !!el && (() => { const r = el.getBoundingClientRect(); return r.top >= 0 && r.bottom <= innerHeight && r.left >= 0 && r.right <= innerWidth; })(),
+        busy: html.classList.contains('is-leaving') || html.classList.contains('is-loading') || document.getElementById('main').hasAttribute('aria-busy'),
+      };
+    });
+  await ctx.setOffline(true);
+  await clickAnchor(page, '/iletisim/');
+  await page.waitForSelector('#netnote', { timeout: 8000 });
+  await page.waitForTimeout(450);
+  let s = await st();
+  ok(s.path === '/hizmetler/' && s.url === '/hizmetler/' && s.mark === mark, 'ağ yok: sayfa yerinde kaldı (adres ve içerik aynı, tam yükleme yok)');
+  ok(s.n === 1 && s.role === 'alert' && s.text === 'Bağlantı yok: sayfa açılamadı.' && s.visible && s.inView, 'uyarı görünür, ekranda, role="alert"');
+  ok(!s.busy, 'çıkış efekti ve yükleme çizgisi geri alındı');
+  await page.locator('#netnote .netnote__b').click();
+  await page.waitForSelector('#netnote', { timeout: 8000 });
+  s = await st();
+  ok(s.n === 1 && s.path === '/hizmetler/', 'hâlâ çevrimdışı: «Yeniden dene» uyarıyı yeniden gösterir (tek kopya)');
+  await page.locator('#netnote .netnote__x').click();
+  ok((await page.locator('#netnote').count()) === 0, '× uyarıyı kapatır');
+  await clickAnchor(page, '/iletisim/');
+  await page.waitForSelector('#netnote', { timeout: 8000 });
+  await ctx.setOffline(false);
+  await page.locator('#netnote .netnote__b').click();
+  await waitSwap(page, '/iletisim/');
+  s = await st();
+  ok(s.path === '/iletisim/' && s.mark === mark && s.n === 0, 'ağ gelince «Yeniden dene» sayfayı açar (tam yükleme yok), uyarı kalkar');
+  // mobil: dar ekranda uyarı taşmaz
+  await page.setViewportSize({ width: 320, height: 640 });
+  await ctx.setOffline(true);
+  await clickAnchor(page, '/hakkimizda/');
+  await page.waitForSelector('#netnote', { timeout: 8000 });
+  await page.waitForTimeout(450);
+  s = await st();
+  const sw = await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth);
+  ok(s.visible && s.inView && sw, '320 px: uyarı ekranın içinde, yatay kaydırma yok');
+  await ctx.setOffline(false);
+  await page.setViewportSize({ width: 1440, height: 900 });
+  // tarayıcı çevrimiçi görünüyor ama sunucuya ulaşılamıyor (geçiş isteği de yoklama da başarısız): yine sayfada kalınır, uyarı çıkar.
+  // (Yalnızca geçiş isteği engellenip yoklama yanıt alırsa tam yüklemeye dönülür: router-regression F03)
+  await page.route('**/kariyer/', (r) => r.abort('internetdisconnected'));
+  await clickAnchor(page, '/kariyer/');
+  await page.waitForSelector('#netnote', { timeout: 8000 });
+  s = await st();
+  ok(s.path === '/iletisim/' && s.mark === mark && s.n === 1, 'çevrimiçi görünürken sunucuya ulaşılamıyor: sayfa yerinde, uyarı');
+  await page.unroute('**/kariyer/');
+  // ağ dışı hata: uyarı yok, tam sayfa yüklemesine dönülür
+  await page.route('**/hakkimizda/', (r) => r.fulfill({ status: 500, contentType: 'text/html; charset=utf-8', body: '<!doctype html><title>500</title><p>sunucu hatası</p>' }));
+  await clickAnchor(page, '/hakkimizda/');
+  await page.waitForURL('**/hakkimizda/', { timeout: 8000 });
+  const after = await page.evaluate(() => ({ path: location.pathname, title: document.title, mark: window.__mark, n: document.querySelectorAll('#netnote').length }));
+  ok(after.path === '/hakkimizda/' && after.title === '500' && after.mark === undefined && after.n === 0, 'sunucu hatası: uyarı yok, tam sayfa yüklemesine dönüldü');
+  const errs = logs.filter((l) => l.startsWith('[pageerror]'));
+  ok(errs.length === 0, 'sayfa hatası yok' + (errs.length ? ': ' + errs.slice(0, 3).join(' | ') : ''));
+  await ctx.close();
+}
+
 /* ─── Efekt anahtarı ─── */
 async function fx() {
   console.log('Efekt katmanı');
@@ -388,6 +465,7 @@ try {
   if (only('keys')) await keys();
   if (only('menu')) await menu();
   if (only('fx')) await fx();
+  if (only('offline')) await offline();
 } catch (e) {
   console.log('  ✘ beklenmeyen hata: ' + (e && e.message ? e.message.split('\n')[0] : e));
   fails++;

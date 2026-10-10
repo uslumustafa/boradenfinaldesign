@@ -27,15 +27,15 @@
     </div>
     {% endif %}
 
-    {# Dayanak: kaynak sayısı; Hukuk alanında kanun numaraları, Teşvik alanında kurumlar (group.feature) #}
-    {% set dayanak = ((service.srcList | length) ~ " kaynak") if (service.srcList | length) else "" %}
+    {# Künye (U-28): ziyaretçinin dilinde — alan, ilgili ekip, dayanak. Dayanak: Hukuk alanında kanun numaraları, Teşvik alanında
+       kurumlar (group.feature), diğerlerinde kaynakları yayımlayan kurumlar; kaynak bölümüne bağlanır. #}
+    {% set dayanak = service.srcList | src_issuers %}
     {% if group.feature == "mevzuat" and (service.lawNos | length) %}{% set dayanak = (service.lawNos | join(" · ")) ~ " sayılı " ~ ("kanunlar" if (service.lawNos | length) > 1 else "Kanun") %}{% endif %}
     {% if group.feature == "kurumlar" and (service.issuers | length) %}{% set dayanak = service.issuers | join(" · ") %}{% endif %}
     {{ bk.kunye(service.ref, [
       { k: "Alan", v: group.name, href: group.url },
-      { k: "Kapsam", v: nScope ~ " başlık" },
-      { k: "Süreç", v: (nSteps ~ " adım") if nSteps else "" },
-      { k: "Dayanak", v: dayanak }
+      { k: "İlgili ekip", v: ((service.people | length) ~ " kişi") if (service.people | length) else "", href: "#ekip" },
+      { k: "Dayanak", v: dayanak, href: "#kaynaklar" if (service.srcList | length) else "" }
     ], { label: "Hizmet künyesi" }) }}
 
     <div class="svc g12">
@@ -54,7 +54,7 @@
             {% if service.related.total %}<li><a href="#ilgili">İlgili içerik</a></li>{% endif %}
             {% if service.people | length %}<li><a href="#ekip">İlgili ekip</a></li>{% endif %}
           </ol>
-          <a class="btn toc__cta" href="/iletisim/?hizmet={{ service.id }}">Bu hizmet için görüşelim {{ m.arrow() }}</a>
+          <a class="btn toc__cta" href="/iletisim/?hizmet={{ service.id }}">Görüşme talep edin {{ m.arrow() }}</a>
         </nav>
         {{ m.fig("side") }}
       </aside>
@@ -80,7 +80,7 @@
           </div>
           {% endif %}
           {# Mobilde kenar sütundaki görüşme düğmesi «Bu sayfada» şeridinde gizlenir; aynı düğme burada, ilk bölümün sonunda görünür #}
-          <p class="svc__cta-m"><a class="btn" href="/iletisim/?hizmet={{ service.id }}">Bu hizmet için görüşelim {{ m.arrow() }}</a></p>
+          <p class="svc__cta-m"><a class="btn" href="/iletisim/?hizmet={{ service.id }}">Görüşme talep edin {{ m.arrow() }}</a></p>
         </section>
 
         <section class="svc__sec" id="kapsam">
@@ -154,11 +154,14 @@
           {% endif %}
           {% if model.generalFaq | length %}
           {% if nOwnFaq %}<p class="svc__sub mono" data-reveal>Çalışma biçimimiz hakkında</p>{% endif %}
+          {# U-42: ortak yanıttaki «ilgili hizmet sayfasına» bağlantısı, ziyaretçi zaten hizmet sayfasındayken dizine değil bu sayfanın
+             «Çıktı (ve hazırlık)» bölümüne gider (SSS sayfasında dizine gitmeye devam eder) #}
+          {% set faqHere = "bu sayfadaki [" ~ ("Çıktı ve hazırlık" if (service.prepareList | length) else "Çıktı") ~ "](#cikti) bölümüne de" %}
           <div class="faq" data-reveal>
             {% for f in model.generalFaq %}
             <details>
               <summary>{{ f.q }}</summary>
-              <div class="faq__a">{{ f.a | paras_rich }}</div>
+              <div class="faq__a">{{ f.a | replace("ilgili [hizmet sayfasına](/hizmetler/) da", faqHere) | paras_rich }}</div>
             </details>
             {% endfor %}
           </div>

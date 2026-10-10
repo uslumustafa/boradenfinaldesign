@@ -541,6 +541,12 @@ td > a:not([class]):hover {
 .calcdoc__block p + p {
   margin-top: 0.85rem;
 }
+/* U-40: varsayımlar ve sık sorulan yanıtlar da uyarı kutularıyla aynı ölçüde (satırda en çok ≈ 75 karakter) */
+.calcdoc .ticklist,
+.calcdoc .faq__a p,
+.calc__detail .ticklist {
+  max-width: 60ch;
+}
 .calcdoc__upd {
   margin-top: 1.4rem;
   font-size: 0.78rem;
@@ -804,7 +810,7 @@ td > a:not([class]):hover {
 .calrules__list li {
   counter-increment: rule;
   display: grid;
-  grid-template-columns: 3rem minmax(0, 1fr);
+  grid-template-columns: 3rem minmax(0, 60ch); /* U-40: çizgiler sütun boyunca, metin ≈ 75 karakterde kırılır */
   gap: 1rem;
   padding: 1.1rem 0;
   border-bottom: 1px solid var(--line);

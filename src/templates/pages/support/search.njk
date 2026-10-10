@@ -20,7 +20,7 @@
     </nav>
     <p class="eyebrow" data-reveal>{{ copy.title }}</p>
     <h1 class="sr-h1" style="--lw:{{ copy.h1 | longest_word }};--lwe:{{ copy.h1 | longest_word_em }}" data-reveal data-reveal-delay="1">{{ copy.h1 }}</h1>
-    <form class="sr-form" role="search" action="/arama/" method="get" data-module="search" data-index="/assets/data/search-index.json?v={{ build_id }}" data-reveal data-reveal-delay="2">
+    <form class="sr-form" role="search" action="/arama/" method="get" data-module="search" data-index="/assets/data/search-index.json?v={{ search_v }}" data-reveal data-reveal-delay="2">
       <label class="sr-only" for="sr-q">Aranacak sözcükler</label>
       <div class="sr-field">
         <svg class="sr-field__ic" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>

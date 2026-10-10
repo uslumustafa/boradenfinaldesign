@@ -3,7 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import path from 'node:path';
 import nunjucks from 'nunjucks';
-import {loadData,ROOT} from '../scripts/build.mjs';
+import {loadData,ROOT,templateGlobals} from '../scripts/build.mjs';
 import {buildModel} from '../scripts/model.mjs';
 import {buildRoutes} from '../scripts/routes.mjs';
 import {makeFilters} from '../scripts/filters.mjs';
@@ -11,7 +11,7 @@ import {makeFilters} from '../scripts/filters.mjs';
 const data=loadData(), model=buildModel(data), routes=buildRoutes(data,model);
 const env=new nunjucks.Environment(new nunjucks.FileSystemLoader(path.join(ROOT,'src/templates')),{autoescape:true});
 for(const [name,fn] of Object.entries(makeFilters()))env.addFilter(name,fn);
-for(const [name,value] of Object.entries({data,model,site:data.site,groups:model.groups,services:model.services,contact:model.contact,share_image:{...data.site.shareImage,url:new URL(data.site.shareImage.path,data.site.url).href}}))env.addGlobal(name,value);
+for(const [name,value] of Object.entries(templateGlobals(data,model)))env.addGlobal(name,value);
 const render=r=>env.render(r.template,{page:{...r,titleFull:r.title,canonical:data.site.url+r.url},...r.ctx});
 
 test('unverified dates stay in source but are absent from the public model and article JSON-LD',()=>{

@@ -80,7 +80,8 @@ html[data-fx='off'] .world canvas {
   display: none !important;
 }
 
-/* Yazdırma: koyu zemin, dünya ve menü gizlenir */
+/* Yazdırma: koyu zemin, dünya ve menü gizlenir. İçindekiler listeleri (.toc: «Bu sayfada», «Bu metinde»…) ve bağlantı
+   uyarısı da basılmaz — kenar sütunundakiler zaten gizli, kural başka yere konan bir liste için de geçerli olsun (T-38) */
 @media print {
   .world,
   .hdr,
@@ -91,7 +92,9 @@ html[data-fx='off'] .world canvas {
   .ftr__cols,
   .fxswitch,
   .toolbar,
-  .skip {
+  .skip,
+  .toc,
+  .netnote {
     display: none !important;
   }
   html,

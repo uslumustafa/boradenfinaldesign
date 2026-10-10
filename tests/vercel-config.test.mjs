@@ -61,6 +61,23 @@ test('noindex yalnızca canlı alan adında kalkar; temel güvenlik başlıklar�
   }
 });
 
+test('önbellek (T-16): özetli adresler bir yıl «immutable»; görsel/video/PDF bir gün; HTML ve parametre dosyaları varsayılan', () => {
+  const IMM = 'public, max-age=31536000, immutable';
+  for (const host of ['www.boraden.com.tr', 'boraden-onizleme.vercel.app']) {
+    const cc = (pathname, search = '') => route(cfg, { pathname, search, host }).headers['Cache-Control'];
+    // adında içerik özeti olmayan dosyalar yalnızca ?v= (içerik özeti) ile istendiğinde uzun önbelleğe alınır
+    for (const p of ['/assets/css/site.css', '/assets/js/main.js', '/assets/data/search-index.json']) {
+      assert.equal(cc(p, '?v=0123456789'), IMM, `${host}${p}?v=`);
+      assert.equal(cc(p), undefined, `${host}${p}: sürümsüz adres uzun önbelleğe alınmamalı`);
+    }
+    assert.equal(cc('/assets/js/chunks/router-ABCD2345.js'), IMM);
+    assert.equal(cc('/assets/fonts/montserrat-300-normal.e08446cd.woff2'), IMM);
+    assert.equal(cc('/assets/fonts/montserrat.LICENSE'), undefined, 'lisans dosyası özetli değil');
+    for (const p of ['/assets/img/hizmetler/x.webp', '/assets/video/x.mp4', '/assets/documents/sirkuler/2020/x.pdf']) assert.equal(cc(p), 'public, max-age=86400', p);
+    for (const p of ['/', '/hizmetler/', '/olmayan/', '/assets/data/params/2026-bordro.json', '/robots.txt', '/sitemap.xml']) assert.equal(cc(p), undefined, `${host}${p}: varsayılan (her ziyarette doğrulanır)`);
+  }
+});
+
 test('CSP: canlıda katı; önizleme adreslerinde yalnızca Vercel araç çubuğu izinleri eklenir', () => {
   const live = parseCSP(headersFor('www.boraden.com.tr')['Content-Security-Policy']);
   const prev = parseCSP(headersFor('boraden-onizleme.vercel.app')['Content-Security-Policy']);

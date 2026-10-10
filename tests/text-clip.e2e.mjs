@@ -158,7 +158,7 @@ function audit(opts = {}) {
       let m;
       while ((m = re.exec(n.nodeValue))) {
         const w = m[0];
-        if (/[-‐‑–—\/@._·:]/.test(w)) continue;
+        if (/[-‐‑–—/@._·:]/.test(w)) continue;
         const wr = document.createRange();
         wr.setStart(n, m.index);
         wr.setEnd(n, m.index + w.length);

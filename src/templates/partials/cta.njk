@@ -8,7 +8,8 @@
         <h2 style="--lw:{{ cta_h | longest_word }}" data-reveal data-reveal-delay="1">{{ cta_h }}</h2>
         <p class="lead" style="margin-top:1.6rem;max-width:34ch" data-reveal data-reveal-delay="2">{{ cta_text | default('İhtiyacınızı ve kapsamı birlikte netleştirelim. İlk görüşmede nasıl ilerleyeceğimizi konuşalım.') }}</p>
         <div class="cta__btns" data-reveal data-reveal-delay="3">
-          <a class="btn" href="{{ cta_href | default('/iletisim/') }}">Mesaj gönderin <span class="arr" aria-hidden="true">→</span></a>
+          {# U-23: bağlamlı (hizmet/sektör/kişi) → «Görüşme talep edin»; genel → «Bize yazın» #}
+          <a class="btn" href="{{ cta_href | default('/iletisim/') }}">{{ 'Görüşme talep edin' if cta_href else 'Bize yazın' }} <span class="arr" aria-hidden="true">→</span></a>
           <a class="btn btn--ghost" href="tel:{{ contact.phoneHref }}">{{ contact.phone | phone }}</a>
         </div>
       </div>

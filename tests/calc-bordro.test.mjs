@@ -928,7 +928,6 @@ test('severance: yasal tutarın üzerindeki ödeme ücret gibi vergilenir (devre
 test('notice: ihbar süresi bandı (ay/gün sınırları), tutar, gelir vergisi, damga vergisi — bağımsız kıyas', () => {
   const weeksFor = (months, days) => (months < 6 ? 2 : months < 18 ? 4 : months < 36 || (months === 36 && days === 0) ? 6 : 8);
   const end = '2026-08-15';
-  const T = OT;
   let n = 0;
   for (let months = 0; months <= 60; months++) {
     for (const d of [0, 1, 15]) {

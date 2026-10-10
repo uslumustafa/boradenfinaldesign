@@ -20,14 +20,14 @@ const WEEKDAYS = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cum
 
 // Satır içi işaretleme (içerik alanlarında): **kalın**, [etiket](bağ), [[Yer tutucu]].
 // Önce tüm metin kaçışlanır; ardından yalnızca bu üç yapı HTML'e dönüştürülür. Bağlar yalnızca
-// /iç-yol, https://, mailto: ve tel: olabilir. Wagtail karşılığı: RichText / StreamField blokları.
+// /iç-yol, #sayfa-içi-çapa, https://, mailto: ve tel: olabilir. Wagtail karşılığı: RichText / StreamField blokları.
 export function richInline(s) {
   const esc = nunjucks.lib.escape;
   let t = esc(String(s ?? ''));
   t = t.replace(/\[\[([^\]]+?)\]\]/g, '<mark class="ph">$1</mark>');
   t = t.replace(/\*\*([^*]+?)\*\*/g, '<strong>$1</strong>');
   t = t.replace(/\[([^\]]+?)\]\(([^)\s]+)\)/g, (m, label, url) => {
-    if (/^\/(?!\/)/.test(url) || /^(mailto:|tel:)/.test(url)) return `<a href="${url}">${label}</a>`;
+    if (/^\/(?!\/)/.test(url) || /^#[\w-]+$/.test(url) || /^(mailto:|tel:)/.test(url)) return `<a href="${url}">${label}</a>`;
     if (/^https?:\/\//.test(url)) return `<a href="${url}" target="_blank" rel="noopener noreferrer">${label}<span class="sr-only"> (yeni sekmede açılır)</span></a>`;
     return m;
   });
@@ -114,6 +114,17 @@ export function phoneNbsp(s) {
   return m ? `${nb(m[1])} ${nb(m[2])}` : nb(t);
 }
 
+// Kaynak listesinden yayımlayan kurumlar (künye «Dayanak» hücresi, U-28): «KGK — …» / «KGK – …» → «KGK»; tekrarsız,
+// en çok `max` ad, fazlası «+N». Wagtail karşılığı: ServicePage.sources → source.issuer.
+export function srcIssuers(list, max = 2) {
+  const names = [];
+  for (const x of list || []) {
+    const n = String((x && x.label) || '').split(/\s[—–]\s/)[0].trim();
+    if (n && !names.includes(n)) names.push(n);
+  }
+  return names.length > max ? `${names.slice(0, max).join(' · ')} +${names.length - max}` : names.join(' · ');
+}
+
 export function makeFilters() {
   const dateParts = (iso) => {
     if (!iso) return null;
@@ -131,6 +142,7 @@ export function makeFilters() {
           .join('')
       ),
     plain: (s) => plainInline(s),
+    src_issuers: (list, max) => srcIssuers(list, max),
     day_of: (iso) => {
       const d = dateParts(iso);
       return d ? d.getUTCDate() : '';

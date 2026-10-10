@@ -467,8 +467,6 @@ html.is-opening .hud {
 }
 .areas__track {
   position: relative;
-}
-.areas__track {
   height: calc(var(--n, 6) * 30vh + 100vh);
 }
 .areas__stage {
@@ -913,6 +911,8 @@ html[data-fx='off'] .units__track {
   animation: none;
 }
 html[data-fx='off'] .units__list {
+  flex: 1 1 auto;
+  min-width: 0;
   flex-wrap: wrap;
   justify-content: center;
   row-gap: 0.5rem;
@@ -920,10 +920,6 @@ html[data-fx='off'] .units__list {
 }
 html[data-fx='off'] .units__list[aria-hidden] {
   display: none;
-}
-html[data-fx='off'] .units__list {
-  flex: 1 1 auto;
-  min-width: 0;
 }
 html[data-fx='off'] .units__i {
   flex: 0 1 auto;
@@ -1272,14 +1268,12 @@ html[data-fx='off'] .units__p {
   text-transform: uppercase;
   color: var(--on-dark-3);
 }
+/* Etiket (bölüm adı) sağ kenar sütununda içeriğin üstüne binebilir: okunur kalsın diye küçük bir zemin taşır */
 .hud__label {
   opacity: 0;
   transform: translateX(6px);
   transition: opacity 0.3s, transform 0.4s var(--ease-out);
   white-space: nowrap;
-}
-/* Etiket (bölüm adı) sağ kenar sütununda içeriğin üstüne binebilir: okunur kalsın diye küçük bir zemin taşır */
-.hud__label {
   padding: 0.12rem 0.5rem;
   background: rgba(7, 16, 36, 0.84);
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);

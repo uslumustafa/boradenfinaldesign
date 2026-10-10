@@ -89,7 +89,8 @@ export function buildTeam(raw, { groups = [], services = [], sectors = [], photo
       const contact = m.showContact && (c.email || c.phone || c.linkedin) ? { email: c.email || '', phone: c.phone || '', linkedin: c.linkedin || '' } : null;
       const profile = m.profile !== false; // varsayılan: kendi sayfası var
       // `verifyNote` (neyin doğrulanacağı) ve `source` (kaynak) editoryal üst veridir; kişi kaydına/şablonlara taşınmaz
-      const { verifyNote, source: _source, ...pub } = m;
+      const { verifyNote, ...pub } = m;
+      delete pub.source;
       if (verifyNote) verifyNotes.push({ slug: m.slug, note: verifyNote });
       return {
         ...pub,
