@@ -15,6 +15,7 @@
     "test:e2e": "node tests/forms.e2e.mjs && node tests/router.e2e.mjs && node tests/hud.e2e.mjs && node tests/hero.e2e.mjs && node tests/services.e2e.mjs && node tests/calc-smoke.mjs && node tests/fx-state.e2e.mjs && node tests/router-regression.e2e.mjs --base=http://127.0.0.1:4181 && node tests/text-resize.e2e.mjs && node tests/transition.e2e.mjs && node tests/csp.e2e.mjs",
     "test:text": "node tests/text-clip.e2e.mjs",
     "test:words": "node tests/text-clip.e2e.mjs --words",
+    "test:landscape": "node tests/landscape.e2e.mjs",
     "links": "node tests/links.mjs",
     "audit": "node tests/audit.mjs"
   },

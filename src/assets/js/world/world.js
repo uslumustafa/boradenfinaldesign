@@ -254,7 +254,9 @@ export async function createWorld({ fx, canvas, intro = false }) {
   let last = performance.now();
   let time = 0;
   let aspect = 1;
-  let twoCol = true; // sayfa iki sütunlu mu (> 900 px): şekil sağ/sol sütunda durur; değilse metnin arkasında ortalanır
+  // sayfa iki sütunlu mu (> 900 px; ya da yan çevrilmiş telefon: 601–900 px, en-boy ≥ 1,5): şekil sağ/sol sütunda durur, başlık
+  // sütunu ona göre daralır (30-layout.css › .phero, aynı koşul); değilse metnin arkasında ortalanır
+  let twoCol = true;
   let firstFrame = true;
   let introV = intro ? 0 : 1; // 0: dağınık/görünmez → 1: toplanmış
   let introRun = false;
@@ -290,7 +292,7 @@ export async function createWorld({ fx, canvas, intro = false }) {
     renderer.setPixelRatio(P.dpr);
     renderer.setSize(w, h, false);
     aspect = w / h;
-    twoCol = w > 900;
+    twoCol = w > 900 || (w > 600 && aspect >= 1.5);
     camera.aspect = aspect;
     camera.updateProjectionMatrix();
     material.uniforms.uAspect.value = aspect;

@@ -20,7 +20,7 @@
   "open-office-desk": { "w": 2000, "h": 1333, "sizes": [640, 1200, 1800], "alt": "Açık ofiste çalışma masaları, bilgisayar ekranları ve dolaplar", "old": true },
   "open-office-slats": { "w": 2000, "h": 1333, "sizes": [640, 1200, 1800], "alt": "Ahşap çıtalı bölmenin yanında açık ofis çalışma alanı", "old": true },
   "desk-monitor-top": { "w": 2000, "h": 1333, "sizes": [640, 1200, 1800], "alt": "Çalışma masasında hesap tablosu açık ekran, klavye, hesap makinesi ve kalemlik; yukarıdan görünüm", "old": true },
-  "person-cengiz-turmaz": { "w": 640, "h": 800, "sizes": [320, 640], "alt": "Cengiz Turmaz, portre", "old": true, "person": true },
+  "person-cengiz-turmaz": { "w": 640, "h": 800, "sizes": [320, 640], "alt": "Cengiz Turmaz, portre", "person": true },
   "person-murat-demirtas": { "w": 640, "h": 800, "sizes": [320, 640], "alt": "Murat Demirtaş, portre", "old": true, "person": true },
   "person-suat-bozkurt": { "w": 640, "h": 800, "sizes": [320, 640], "alt": "Suat Bozkurt, portre", "old": true, "person": true },
   "person-hazal-kesbic": { "w": 640, "h": 800, "sizes": [320, 640], "alt": "Hazal Kesbiç, portre", "old": true, "person": true },

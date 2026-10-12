@@ -85,6 +85,7 @@ Mac uyuyunca/yeniden başlayınca sunucu gider; yeniden `npm run dev`. `BORADEN_
 | `node tests/probe.mjs /yol "<seçici>"` | Seçicinin boyut/konum/ata zincirini yazar (hata ayıklama) |
 | `npm run test:text` (`node tests/text-clip.e2e.mjs [--full] [--only=/,/hizmetler/] [--sizes=1440x900,390x844]`) | Kesilen / taşan / örtülen yazı ve harf ortasından bölünen kelime taraması: sayfaları baştan sona kaydırıp görünen her satırı denetler (✘ hata, ⚠ uyarı). Varsayılan 20 sayfa × 4 ekran (≈ 6 dk); `--full` 31 sayfa × 8 ekran (≈ 17 dk) |
 | `npm run test:words` (`… --words`) | Site haritasındaki **tüm** sayfalarda (kaydırmadan) yalnızca kelime bölünmesi — 7 genişlik, ≈ 5 dk. Yeni şablon ya da uzun başlıklı içerikten sonra çalıştırın. `--all --sizes=1440x900,390x844`: tüm sayfalarda kaydırmalı tam denetim |
+| `npm run test:landscape` (`node tests/landscape.e2e.mjs [--all] [--only=/,/iletisim/] [--devices=844x390] [--shots=dizin]`) | Yan çevrilmiş telefon ve tablet denetimi (667×375, 844×390, 915×412, 932×430, 1024×768, 1180×820; dokunmatik öykünme): yatay taşma, üstte/altta sabit şeritlerin kapladığı yükseklik, h1'in ilk ekranda görünmesi, mobil menünün kaydırılıp son öğesine ulaşılması, sahne tuvali; dikeyde açılıp yataya çevrilen sayfada aynı denetimler. 20 sayfa × 6 cihaz ≈ 10 dk; `--all` tüm sayfalarda hızlı denetim |
 | `node tests/shots/formation-sheet.mjs --ids=23,24 --tag=x` | (geliştirme, depoya girmez) Formasyonların iletişim tablosu: mürekkep üç açı + koyu parıltı; yeni şekil eklerken |
 
 Görüntüler `tests/shots/` altına yazılır (git'e girmez).

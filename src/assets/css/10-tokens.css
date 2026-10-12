@@ -110,3 +110,11 @@
     --logo-h: 31px;
   }
 }
+/* Alçak yatay ekran (telefon yan çevrilmiş: 375–430 px yükseklik): başlık şeridi ekranın beşte birini kaplamasın. Yapışkan
+   «Bu sayfada» şeridi ve mobil menü --hdr'nin altından başlar, onlar da birlikte yukarı kayar. */
+@media (max-height: 500px) and (orientation: landscape) {
+  :root {
+    --hdr: 58px;
+    --logo-h: 26px;
+  }
+}

@@ -409,6 +409,13 @@ html[data-fx='off'] .ab-method__t .w {
   margin-top: 1.2rem;
   font-size: var(--fs-5);
 }
+/* iki sütunlu düzenin başında (901–≈1000 px; ör. yan çevrilmiş büyük telefon 915×412) başlık sütunu ≈ 0,37vw: en uzun kelime
+   («gözettiklerimiz» ≈ 7,1em) sığsın diye yazı sütunla küçülür; daha geniş ekranda fs-5 zaten küçük kalır */
+@media (min-width: 901px) {
+  .cr-head h2 {
+    font-size: min(var(--fs-5), 5.1vw);
+  }
+}
 .cr-head__lead {
   max-width: 46ch;
   color: var(--ink-2);

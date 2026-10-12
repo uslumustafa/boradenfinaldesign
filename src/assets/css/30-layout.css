@@ -552,8 +552,11 @@ html.hdr-hidden .prog {
    Efektler kapalıyken şekil çizilmez: sütun daralmaz (html.hero-wide). Sınıfı ilk boyamada base.njk, sonra yalnızca kullanıcı
    seçimi ve sayfa değişimi ayarlar (fx.js › syncLayout): efekt kendiliğinden kapanınca açık sayfanın başlığı yeniden dizilmez.
    Çok dar/dik pencerede sütun 20rem'den daralmaz: şekil yazının arkasına biraz girebilir, soldaki degrade okunurluğu korur.
-   Varsayılan değerler (sahnesi verisiz sayfa) .phero bloğunda. */
-@media (min-width: 901px) {
+   Varsayılan değerler (sahnesi verisiz sayfa) .phero bloğunda.
+   Yan çevrilmiş telefon (601–900 px genişlik, en-boy ≥ 1,5; ör. 667×375, 844×390): sayfa tek sütunlu kalır ama sahne şekli
+   sağda durur (world.js › twoCol aynı koşulu kullanır); başlık sütunu da iki sütunlu düzendeki gibi daralır, yoksa başlık şeklin
+   üstüne biner. */
+@media (min-width: 901px), (min-width: 601px) and (min-aspect-ratio: 3/2) {
   html:not(.hero-wide) .phero {
     --phero-col: max(
       20rem,
@@ -564,12 +567,19 @@ html.hdr-hidden .prog {
     );
   }
 }
+/* yan çevrilmiş telefonda sayfa yolu da başlık sütununda kalır (uzun yol şeklin üstüne binmez, satıra kırılır) */
+@media (max-width: 900px) and (min-width: 601px) and (min-aspect-ratio: 3/2) {
+  html:not(.hero-wide) .phero .crumbs {
+    max-width: var(--phero-col);
+  }
+}
 /* Sağda şekil olmayan sahne (404: tam genişlikte arazi, yazının arkasında): başlık sütunu daralmaz */
 html .phero.phero--wide {
   --phero-col: calc(100vw - 2 * var(--gutter));
 }
-@media (max-width: 900px) {
-  /* dar ekranda yazı tüm genişliği kaplar: degrade yandan değil aşağıdan koyulaşır (şekil üstte görünür, başlık/öz okunur kalır) */
+@media (max-width: 900px) and (max-aspect-ratio: 1499/1000), (max-width: 600px) {
+  /* dar ekranda yazı tüm genişliği kaplar: degrade yandan değil aşağıdan koyulaşır (şekil üstte görünür, başlık/öz okunur kalır).
+     Yan çevrilmiş telefonda (yukarıdaki koşul dışı) iki sütunlu düzenin yandan degradesi kalır. */
   .phero::before {
     background: linear-gradient(180deg, rgba(8, 19, 42, 0.18) 0%, rgba(8, 19, 42, 0.62) 38%, rgba(8, 19, 42, 0.86) 70%, rgba(8, 19, 42, 0.9) 100%);
   }
