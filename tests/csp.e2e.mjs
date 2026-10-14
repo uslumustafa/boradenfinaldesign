@@ -171,7 +171,8 @@ try {
   await page.locator('#film').scrollIntoViewIfNeeded();
   const film = page.locator('[data-film-ctl]');
   await film.evaluate((b) => b.click());
-  await page.waitForFunction(() => !document.querySelector('.film__video').paused, null, { timeout: 8000 });
+  // ekran kartı olmayan sunucuda (GitHub Actions) video yazılımla çözülür; ilk kare 8 sn'yi aşabiliyor
+  await page.waitForFunction(() => !document.querySelector('.film__video').paused, null, { timeout: 30000 });
   await film.evaluate((b) => b.click());
   step('film');
   for (const tier of ['off', 'lite', 'full']) {
