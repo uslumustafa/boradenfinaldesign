@@ -60,6 +60,8 @@ test('uzun önbelleğe alınan dosyaların adında içerik özeti var; yazı tip
   // CSS'teki yazı tipi adresleri var olan dosyalara gider
   const css = read('assets/css/site.css').toString();
   const urls = [...css.matchAll(/url\((["']?)(\/assets\/fonts\/[^)"']+)\1\)/g)].map((m) => m[2]);
-  assert.ok(urls.length >= 10, `yazı tipi adresi: ${urls.length}`);
+  // her yazı tipi yüzü (src/assets/fonts/fonts.json) CSS'te en az bir kez adreslenir
+  const faces = Object.keys(JSON.parse(fs.readFileSync(path.join(ROOT, 'src/assets/fonts/fonts.json'), 'utf8'))).length;
+  assert.ok(faces > 0 && urls.length >= faces, `yazı tipi adresi: ${urls.length}, yüz: ${faces}`);
   for (const u of urls) assert.ok(fs.existsSync(path.join(DIST, u)), `${u} yok`);
 });

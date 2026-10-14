@@ -1488,7 +1488,7 @@
 .rn-row__xin {
   min-height: 0;
   overflow: hidden;
-  font-family: var(--f-display);
+  font-family: var(--f-accent);
   font-style: italic;
   font-size: var(--fs-2);
   line-height: 1.4;

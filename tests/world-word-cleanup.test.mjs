@@ -36,7 +36,7 @@ test('destroy cancels a pending word and prevents restarting the disposed render
 });
 
 test('3D word loads and draws with the current display font', async () => {
-  const family = "'Montserrat', 'Segoe UI', Arial, sans-serif";
+  const family = "'Open Sans', 'Segoe UI', Arial, sans-serif";
   let loaded, painted;
   const pixels = new Uint8ClampedArray(1600 * 420 * 4);
   pixels[(200 * 1600 + 800) * 4 + 3] = 255;

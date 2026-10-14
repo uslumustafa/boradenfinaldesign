@@ -538,8 +538,9 @@
 .sx-dots i:nth-child(n + 6) {
   --k: 5;
 }
-/* Dar sütunlarda alan adları («DANIŞMANLIK») yatay sığmıyor ve harf ortasından bölünüyordu: dikey yazılır */
-@media (max-width: 1240px) {
+/* Dar sütunlarda alan adları («DANIŞMANLIK») yatay sığmıyor ve harf ortasından bölünüyordu: dikey yazılır.
+   Open Sans etiketleri Asap'tan geniş (Ekim 2026): 1280 px'te «FINANSMAN» sığmıyordu, sınır 1360 px. */
+@media (max-width: 1360px) {
   .sx-mx__lbl {
     writing-mode: vertical-rl;
     transform: rotate(180deg);

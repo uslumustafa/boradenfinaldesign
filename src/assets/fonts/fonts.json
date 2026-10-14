@@ -1,20 +1,11 @@
 {
-  "montserrat-300-normal": "/assets/fonts/montserrat-300-normal.4abcc9be.woff2",
-  "montserrat-300-italic": "/assets/fonts/montserrat-300-italic.3dd1c424.woff2",
-  "montserrat-400-normal": "/assets/fonts/montserrat-400-normal.1bdfbe97.woff2",
-  "montserrat-400-italic": "/assets/fonts/montserrat-400-italic.b13ed042.woff2",
-  "montserrat-500-normal": "/assets/fonts/montserrat-500-normal.79537425.woff2",
-  "montserrat-600-normal": "/assets/fonts/montserrat-600-normal.2d784061.woff2",
-  "montserrat-600-italic": "/assets/fonts/montserrat-600-italic.b7b06a75.woff2",
-  "montserrat-700-normal": "/assets/fonts/montserrat-700-normal.f5de5190.woff2",
   "open-sans-300-normal": "/assets/fonts/open-sans-300-normal.f0f2d565.woff2",
+  "open-sans-300-italic": "/assets/fonts/open-sans-300-italic.ae73245e.woff2",
   "open-sans-400-normal": "/assets/fonts/open-sans-400-normal.dffe4db8.woff2",
   "open-sans-400-italic": "/assets/fonts/open-sans-400-italic.37f1a968.woff2",
   "open-sans-500-normal": "/assets/fonts/open-sans-500-normal.1a43be08.woff2",
   "open-sans-600-normal": "/assets/fonts/open-sans-600-normal.3be7963d.woff2",
+  "open-sans-600-italic": "/assets/fonts/open-sans-600-italic.f37bb813.woff2",
   "open-sans-700-normal": "/assets/fonts/open-sans-700-normal.f2ff5b1f.woff2",
-  "asap-400-normal": "/assets/fonts/asap-400-normal.450db014.woff2",
-  "asap-500-normal": "/assets/fonts/asap-500-normal.83a3c789.woff2",
-  "asap-600-normal": "/assets/fonts/asap-600-normal.50718aa8.woff2",
-  "asap-700-normal": "/assets/fonts/asap-700-normal.58e63824.woff2"
+  "stix-two-text-400-italic": "/assets/fonts/stix-two-text-400-italic.6174fc39.woff2"
 }

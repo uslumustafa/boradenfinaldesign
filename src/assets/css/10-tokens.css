@@ -48,12 +48,14 @@
   --lit-dim: 0.16;
 
   /* Tipografi */
-  --f-display: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+  /* Deloitte sitesindeki aileler (müşteri isteği, Ekim 2026): her yerde Open Sans; başlıklardaki italik vurgu STIX Two Text.
+     Belirteç adları korunur (Wagtail şablonları aynı adları kullanır): display = başlık, action = düğme, mono = etiket ve
+     numaralar (eşit genişlikli rakamlar font-variant-numeric ile; ad tarihseldir). */
+  --f-display: 'Open Sans', 'Segoe UI', Arial, sans-serif;
   --f-sans: 'Open Sans', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
-  --f-action: 'Asap', 'Open Sans', Arial, sans-serif;
-  /* etiket yazı tipi (bölüm etiketleri, numaralar, künye): boraden.com.tr ailesindeki Asap, eşit genişlikli rakamlarla.
-     Ad tarihseldir (eskiden IBM Plex Mono); Wagtail şablonlarında da aynı belirteç kullanılır. */
-  --f-mono: 'Asap', 'Open Sans', Arial, sans-serif;
+  --f-action: 'Open Sans', 'Segoe UI', Arial, sans-serif;
+  --f-mono: 'Open Sans', 'Segoe UI', Arial, sans-serif;
+  --f-accent: 'STIX Two Text', Georgia, 'Times New Roman', serif;
 
   --fs-0: clamp(0.78rem, 0.76rem + 0.1vw, 0.84rem);
   --fs-1: clamp(0.94rem, 0.92rem + 0.15vw, 1.02rem);
