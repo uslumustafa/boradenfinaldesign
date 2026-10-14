@@ -21,6 +21,7 @@ const VERT = /* glsl */ `
   attribute vec2 aSB;
   attribute vec2 aR;
   attribute vec2 aW;
+  attribute float aK;
   uniform float uWord;
   uniform float uSurge;
   uniform vec2 uSurgeO;
@@ -112,6 +113,11 @@ const VERT = /* glsl */ `
     vA *= (1.0 + sg * 1.5) * (1.0 - smoothstep(0.95, 1.0, uSurge));
     // kahraman (uWave>0): ekranın alt kısmı sakinleşir → alt bilgi metni ve düğmeler okunur kalır
     vA *= 1.0 - uWave * 0.9 * (1.0 - smoothstep(-0.85, -0.25, ndc.y));
+    // kenar (müşteri geri bildirimi, Ekim 2026: «kenarlarda uçuşan noktalar»): şekil noktaları ekranın kenarına yaklaşırken söner;
+    // kenarda yarım kalmış şekil parçası görünmez. Arka plan tozu (aK = 0), «BORADEN» kelimesi (wt) ve sayfa geçişindeki akış
+    // (uSurge) olduğu gibi kalır.
+    float edge = (1.0 - smoothstep(0.80, 0.98, abs(ndc.x))) * (1.0 - smoothstep(0.86, 1.0, abs(ndc.y)));
+    vA *= mix(1.0, edge, aK * (1.0 - wt) * (1.0 - smoothstep(0.0, 0.15, uSurge)));
     vC = tintOf(tn);
   }
 `;
@@ -186,6 +192,10 @@ export async function createWorld({ fx, canvas, intro = false }) {
   geo.setAttribute('aSB', aSB);
   const aW = new BufferAttribute(new Float32Array(N * 2), 2); // «BORADEN» hedefleri (ekran uzayı)
   geo.setAttribute('aR', new BufferAttribute(rArr, 2));
+  // aK: 1 = şekil noktası, 0 = arka plan tozu (formations.js › buildFormation: ilk %90 şekil, kalanı her sahnede aynı toz)
+  const kArr = new Float32Array(N);
+  kArr.fill(1, 0, Math.floor(N * 0.9));
+  geo.setAttribute('aK', new BufferAttribute(kArr, 1));
   geo.setAttribute('aW', aW);
   geo.boundingSphere = new Sphere(new Vector3(), 1e4);
 

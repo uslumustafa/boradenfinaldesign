@@ -376,7 +376,7 @@ async function offline() {
   await page.waitForTimeout(450);
   let s = await st();
   ok(s.path === '/hizmetler/' && s.url === '/hizmetler/' && s.mark === mark, 'ağ yok: sayfa yerinde kaldı (adres ve içerik aynı, tam yükleme yok)');
-  ok(s.n === 1 && s.role === 'alert' && s.text === 'Bağlantı yok: sayfa açılamadı.' && s.visible && s.inView, 'uyarı görünür, ekranda, role="alert"');
+  ok(s.n === 1 && s.role === 'alert' && s.text === 'Bağlantı yok: sayfa açılamadı' && s.visible && s.inView, 'uyarı görünür, ekranda, role="alert"');
   ok(!s.busy, 'çıkış efekti ve yükleme çizgisi geri alındı');
   await page.locator('#netnote .netnote__b').click();
   await page.waitForSelector('#netnote', { timeout: 8000 });

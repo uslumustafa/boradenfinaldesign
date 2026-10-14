@@ -11,17 +11,17 @@ const EMAIL_RE = /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)+$/;
 export const MAIL_MAX = 1800; // mailto gövdesi için güvenli üst sınır (karakter)
 
 const MSG = {
-  required: 'Lütfen bu alanı doldurun.',
-  select: 'Lütfen listeden bir seçim yapın.',
-  radio: 'Lütfen seçeneklerden birini işaretleyin.',
-  email: 'Geçerli bir e-posta adresi yazın (ör. ad@alanadi.com).',
-  tel: 'Geçerli bir telefon numarası yazın (ör. 0 212 000 00 00).',
-  short: 'Lütfen en az 2 karakter yazın.',
-  min: (n, cur) => `En az ${n} karakter yazın (şu an ${cur}).`,
-  max: (n) => `En fazla ${n} karakter yazın.`,
-  consent: "Devam etmek için KVKK Aydınlatma Metni'ni okuduğunuzu onaylayın.",
-  fileType: (list) => `Yalnızca ${list} biçiminde bir dosya seçebilirsiniz.`,
-  fileSize: (max, cur) => `Dosya en fazla ${max} MB olabilir (seçilen: ${cur} MB).`,
+  required: 'Lütfen bu alanı doldurun',
+  select: 'Lütfen listeden bir seçim yapın',
+  radio: 'Lütfen seçeneklerden birini işaretleyin',
+  email: 'Geçerli bir e-posta adresi yazın (ör. ad@alanadi.com)',
+  tel: 'Geçerli bir telefon numarası yazın (ör. 0 212 000 00 00)',
+  short: 'Lütfen en az 2 karakter yazın',
+  min: (n, cur) => `En az ${n} karakter yazın (şu an ${cur})`,
+  max: (n) => `En fazla ${n} karakter yazın`,
+  consent: "Devam etmek için KVKK Aydınlatma Metni'ni okuduğunuzu onaylayın",
+  fileType: (list) => `Yalnızca ${list} biçiminde bir dosya seçebilirsiniz`,
+  fileSize: (max, cur) => `Dosya en fazla ${max} MB olabilir (seçilen: ${cur} MB)`,
 };
 
 const mb = (bytes) => (bytes / (1024 * 1024)).toLocaleString('tr-TR', { maximumFractionDigits: 1, minimumFractionDigits: 1 });
@@ -273,7 +273,7 @@ export function createFormKit(wrap, { fx, onValid, onReset } = {}) {
       if (!file || message(f)) return;
       const b = document.createElement('b');
       b.textContent = file.name;
-      note.append(b, ` (${mb(file.size)} MB) seçildi. Bu dosya e-posta taslağına otomatik eklenemez; taslak açıldığında e-postaya ekleyin.`);
+      note.append(b, ` (${mb(file.size)} MB) seçildi. Bu dosya e-posta taslağına otomatik eklenemez; taslak açıldığında e-postaya ekleyin`);
     };
     on(inp, 'change', paintFile);
     repaints.push(paintFile);
@@ -314,7 +314,7 @@ export function createFormKit(wrap, { fx, onValid, onReset } = {}) {
     submitted = true;
     const bad = fields.filter((f) => !check(f));
     if (bad.length) {
-      if (status) status.textContent = `${status.dataset.error || 'Lütfen işaretli alanları kontrol edin.'} Düzeltilmesi gereken alan sayısı: ${bad.length}.`;
+      if (status) status.textContent = `${status.dataset.error || 'Lütfen işaretli alanları kontrol edin.'} Düzeltilmesi gereken alan sayısı: ${bad.length}`;
       focusField(bad[0]);
       return;
     }
@@ -371,7 +371,7 @@ export function createFormKit(wrap, { fx, onValid, onReset } = {}) {
       if (ok) {
         btn.textContent = 'Kopyalandı';
         btn.classList.add('is-done');
-        say('Metin panoya kopyalandı.');
+        say('Metin panoya kopyalandı');
         later(() => {
           btn.textContent = btn.dataset.label || 'Kopyala';
           btn.classList.remove('is-done');
@@ -384,13 +384,13 @@ export function createFormKit(wrap, { fx, onValid, onReset } = {}) {
         const s = getSelection();
         s.removeAllRanges();
         s.addRange(r);
-        say('Metin kopyalanamadı; seçili metni kendiniz kopyalayabilirsiniz.');
+        say('Metin kopyalanamadı; seçili metni kendiniz kopyalayabilirsiniz');
       }
     });
     on(done.querySelector('[data-fk-edit]'), 'click', () => backToForm(false));
     on(done.querySelector('[data-fk-reset]'), 'click', () => {
       backToForm(true);
-      say('Form sıfırlandı.');
+      say('Form sıfırlandı');
     });
   }
 

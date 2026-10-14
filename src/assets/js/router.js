@@ -221,7 +221,7 @@ export function initRouter({ fx, world, mount, unmount, onNavigate }) {
     el.setAttribute('role', 'alert');
     const msg = document.createElement('p');
     msg.className = 'netnote__t';
-    msg.textContent = 'Bağlantı yok: sayfa açılamadı.';
+    msg.textContent = 'Bağlantı yok: sayfa açılamadı';
     const retry = document.createElement('button');
     retry.type = 'button';
     retry.className = 'netnote__b';

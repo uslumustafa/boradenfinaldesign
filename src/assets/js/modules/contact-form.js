@@ -29,8 +29,8 @@ export function mount(el, ctx) {
 
   // bağlam çipleri (kişi, sektör): eşleme sayfaya gömülü JSON; her çip kaldırılabilir ve adres çubuğundan da silinir
   const extras = [
-    { key: 'person', param: 'kisi', line: 'Görüşmek istenen kişi', removed: 'Seçilen kişi kaldırıldı.', text: (e) => (e.r ? `${e.t} (${e.r})` : e.t) },
-    { key: 'sector', param: 'sektor', line: 'İlgili sektör', removed: 'Seçilen sektör kaldırıldı.', text: (e) => e.t },
+    { key: 'person', param: 'kisi', line: 'Görüşmek istenen kişi', removed: 'Seçilen kişi kaldırıldı', text: (e) => (e.r ? `${e.t} (${e.r})` : e.t) },
+    { key: 'sector', param: 'sektor', line: 'İlgili sektör', removed: 'Seçilen sektör kaldırıldı', text: (e) => e.t },
   ]
     .map((x) => {
       const box = el.querySelector(`[data-ct-${x.key}]`);
@@ -98,7 +98,7 @@ export function mount(el, ctx) {
     if (!picked && service) picked = setTopic(service.k);
     if (picked && topicSel) {
       const label = topicSel.selectedOptions[0]?.textContent.trim() || '';
-      kit.say(service ? `Seçilen hizmet: ${service.t}. Konu: ${label}.` : `Konu seçildi: ${label}.`);
+      kit.say(service ? `Seçilen hizmet: ${service.t}. Konu: ${label}` : `Konu seçildi: ${label}`);
     }
     let extra = false;
     for (const x of extras) {
@@ -116,7 +116,7 @@ export function mount(el, ctx) {
     const u = new URL(location.href);
     u.searchParams.delete('hizmet');
     history.replaceState(history.state, '', u.pathname + u.search + u.hash);
-    kit.say('Seçilen hizmet kaldırıldı.');
+    kit.say('Seçilen hizmet kaldırıldı');
     if (topicSel) topicSel.focus();
   };
   chipX?.addEventListener('click', removeChip);

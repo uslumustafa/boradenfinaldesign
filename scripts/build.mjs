@@ -11,6 +11,7 @@ import { makeFilters, metaDesc } from './filters.mjs';
 import { buildModel } from './model.mjs';
 import { buildRoutes } from './routes.mjs';
 import { glossaryAbbrs, linkGlossary } from './gloss-link.mjs';
+import { dropFinalPeriod, dropFinalPeriods } from './final-period.mjs';
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = path.join(ROOT, 'src');
@@ -207,7 +208,7 @@ export async function build({ prod = false, quiet = false } = {}) {
   // arama dizini: sayfalardan önce hazırlanır, adresindeki sürüm (?v=, arama sayfası › data-index) içeriğin özeti olsun
   // (yalnızca-arama kayıtları — sözlük terimleri, SSS soruları… — ve aranabilir, noindex olmayan sayfalar; rota sırasıyla)
   const searchJSON = JSON.stringify(
-    routes.filter((r) => r.searchOnly || (r.searchable && !r.noindex)).map((r) => ({ t: r.title, u: r.url, d: (r.description || '').slice(0, 220), k: r.kind || 'Sayfa' }))
+    routes.filter((r) => r.searchOnly || (r.searchable && !r.noindex)).map((r) => ({ t: dropFinalPeriod(r.title || ''), u: r.url, d: dropFinalPeriod((r.description || '').slice(0, 220)), k: r.kind || 'Sayfa' }))
   );
   env.addGlobal('search_v', contentHash(searchJSON));
 
@@ -235,6 +236,8 @@ export async function build({ prod = false, quiet = false } = {}) {
       html = env.render(r.template, { page, ...(r.ctx || {}) });
       // U-42: kısaltmaların sayfadaki ilk geçişi sözlüğe bağlanır (içerik sayfalarında; sözlüğün kendisi hariç)
       if (GLOSS_PAGES.test(r.url) && !GLOSS_SKIP.test(r.url)) html = linkGlossary(html, glossAbbrs);
+      // cümle sonu noktası kuralı (müşteri isteği, Ekim 2026): metin bloklarının son noktası kalkar (final-period.mjs)
+      html = dropFinalPeriods(html);
     } catch (e) {
       if (!lenient) throw e;
       errors++;
@@ -250,9 +253,9 @@ export async function build({ prod = false, quiet = false } = {}) {
   // 404
   write(
     path.join(DIST, '404.html'),
-    env.render('pages/404.njk', {
+    dropFinalPeriods(env.render('pages/404.njk', {
       page: { url: '/404.html', title: 'Sayfa bulunamadı', titleFull: 'Sayfa bulunamadı — Boraden', description: '', scene: 0, crumbs: [], bodyClass: 'is-404', noindex: true, canonical: '' },
-    })
+    }))
   );
 
   // sitemap, robots, arama dizini

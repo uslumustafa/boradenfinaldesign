@@ -117,6 +117,12 @@ export function initChrome(fx) {
       () => {
         const y = scrollY;
         const d = y - lastY;
+        // bölüm göstergesinden atlama sürerken (behaviors.js › hud) yukarı kaymak header'ı geri getirmez: hedef bölümün üstünü örtmesin
+        if (html.classList.contains('is-jumping') && y >= 120 && !pinned()) {
+          setHidden(true);
+          lastY = y;
+          return;
+        }
         if (y < 120 || pinned()) setHidden(false);
         else if (d > 8) setHidden(true);
         else if (d < -8) setHidden(false);

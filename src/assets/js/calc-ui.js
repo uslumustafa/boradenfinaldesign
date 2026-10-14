@@ -1,6 +1,7 @@
 // Araç arayüzleri: hesaplayıcı (form + sonuç) ve vergi takvimi.
 // Hesaplayıcı: sayfadaki tanımdan (data-calc-def) form üretir; hesap çekirdeğini (src/calc/core.mjs) ve yıllık parametre
 // dosyasını tembel yükler. Wagtail'de aynı tanım şeması CalculatorPage alanlarından gelir; bu dosya aynen kullanılır.
+import { dropFinalPeriodsIn } from './text-rules.js';
 import { qs, qsa, fmtTR, parseTR } from './util.js';
 
 const MONTHS = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
@@ -377,7 +378,7 @@ function setupCalc(el, { fx, on, scroll }) {
       out = core.calculate(def.engine, v, params);
     } catch (err) {
       console.warn('[hesaplayıcı]', err);
-      out = { error: 'Parametre dosyası veya hesaplama modülü yüklenemedi. Sayfayı yenileyip tekrar deneyin.' };
+      out = { error: 'Parametre dosyası veya hesaplama modülü yüklenemedi. Sayfayı yenileyip tekrar deneyin' };
     }
     if (my !== seq) return;
     last = out;
@@ -385,6 +386,9 @@ function setupCalc(el, { fx, on, scroll }) {
     const parts = renderParts(out, def, vals, st);
     res.innerHTML = parts.top;
     detail.innerHTML = parts.detail;
+    // cümle sonu noktası kuralı (text-rules.js): hesaplama notları, adımlar, uyarılar da noktasız biter
+    dropFinalPeriodsIn(res);
+    dropFinalPeriodsIn(detail);
     res.classList.remove('is-updated');
     void res.offsetWidth;
     res.classList.add('is-updated');

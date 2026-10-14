@@ -46,7 +46,7 @@ export function mount(el, ctx) {
     target.scrollIntoView({ block: 'start', behavior: motion() ? 'smooth' : 'auto' });
     history.replaceState(history.state, '', '#basvuru');
     const live = ctx.root.querySelector('[data-fk-live]');
-    if (live) live.textContent = `İlgilendiğiniz alan seçildi: ${sel.selectedOptions[0].textContent.trim()}.`;
+    if (live) live.textContent = `İlgilendiğiniz alan seçildi: ${sel.selectedOptions[0].textContent.trim()}`;
     const first = form.querySelector('input[type="text"], input[type="email"], textarea');
     clearTimeout(timer);
     timer = setTimeout(() => first && !form.hidden && first.focus({ preventScroll: true }), motion() ? 650 : 0);

@@ -298,6 +298,68 @@ export function createBehaviors({ fx, scroll, world }) {
       '</ol>';
     document.body.appendChild(nav);
     const links = qsa('a', nav);
+    const html = document.documentElement;
+    // Tıklama (müşteri geri bildirimi, Ekim 2026: «en üste basınca en üste gitmiyor, tam oturmuyor»): hedefe kendimiz kayarız.
+    // • İlk çizgi sayfanın en üstüdür. Ana sayfa kahramanı yapışkan (position: sticky): scrollIntoView onu o anki (yapışmış)
+    //   yerinde sanıp sayfanın ortasına gidiyordu; yapışkan bölümün yeri kabından ölçülür.
+    // • Hedef, kendi scroll-margin-top'u kadar aşağıda durur; sayfa sonuna sığmayan son bölümler en alta kayar.
+    // • Kayma sürerken ve hedefte dururken tıklanan çizgi etkin kalır (kısa bölüm — ör. Kariyer, 400 px — ekran ortasına
+    //   ulaşamadığı için sıradaki bölüm etkin görünüyordu).
+    // • Tam ekran bölümlerde (scroll-margin 0) yukarı kayarken header geri gelip bölümün üstünü örtmesin: kayma boyunca
+    //   html.is-jumping (chrome.js header'ı gizli tutar). Menüden türeyen göstergede bölümlerin payı header'ı zaten hesaba katar.
+    let pin = -1;
+    let pinY = 0;
+    let jumpRaf = 0;
+    const targetY = (i) => {
+      const el = chapters[i].el;
+      const max = Math.max(0, document.documentElement.scrollHeight - innerHeight);
+      if (i === 0 && !quiet) return 0;
+      const cs = getComputedStyle(el);
+      const ref = cs.position === 'sticky' && el.parentElement ? el.parentElement : el;
+      const top = ref.getBoundingClientRect().top + scrollY - (parseFloat(cs.scrollMarginTop) || 0);
+      return Math.round(Math.max(0, Math.min(max, top)));
+    };
+    const endJump = () => {
+      cancelAnimationFrame(jumpRaf);
+      jumpRaf = 0;
+      html.classList.remove('is-jumping');
+    };
+    // kayma bitti mi: konum art arda birkaç karede değişmiyorsa (ya da en çok 3 sn) — scrollend her tarayıcıda yok
+    const watchJump = () => {
+      const t0 = performance.now();
+      let last = scrollY;
+      let still = 0;
+      const step = () => {
+        const y = scrollY;
+        still = Math.abs(y - last) < 0.5 ? still + 1 : 0;
+        last = y;
+        if ((still >= 8 && Math.abs(y - pinY) < 2) || still >= 20 || performance.now() - t0 > 3000) endJump();
+        else jumpRaf = requestAnimationFrame(step);
+      };
+      cancelAnimationFrame(jumpRaf);
+      jumpRaf = requestAnimationFrame(step);
+    };
+    const onClick = (e) => {
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      const i = links.indexOf(e.target.closest('a'));
+      if (i < 0) return;
+      e.preventDefault();
+      const el = chapters[i].el;
+      const y = targetY(i);
+      pin = i;
+      pinY = y;
+      cur = -1; // etkin çizgi hemen güncellensin
+      scroll.refresh();
+      if (Math.abs(y - scrollY) > 2) {
+        if (!quiet && !(parseFloat(getComputedStyle(el).scrollMarginTop) > 0)) html.classList.add('is-jumping');
+        scrollTo({ top: y, behavior: fx.tier === 'off' ? 'auto' : 'smooth' });
+        watchJump();
+      }
+      history.replaceState(history.state, '', i === 0 && !quiet ? location.pathname + location.search : '#' + el.id);
+      if (!el.matches('[tabindex]')) el.setAttribute('tabindex', '-1');
+      el.focus({ preventScroll: true });
+    };
+    nav.addEventListener('click', onClick);
     // etiketin içerikle çakışmadan sığacağı boşluk: ekranın sağ kenarı ile sayfa kabının sağ kenarı arası
     const hudRoom = (a) => {
       const box = root.querySelector('.container');
@@ -317,12 +379,16 @@ export function createBehaviors({ fx, scroll, world }) {
         away = nowAway;
         nav.classList.toggle('is-away', away);
       }
+      // tıklanan çizgi, kayma sürerken ve sayfa hedefte durdukça etkin kalır; kullanıcı kaydırıp ayrılınca kural yeniden işler
+      if (pin >= 0 && !jumpRaf && Math.abs(y - pinY) > 4) pin = -1;
       const mid = innerHeight * 0.5;
       let idx = 0;
-      chapters.forEach((c, i) => {
-        const r = c.el.getBoundingClientRect();
-        if (r.top <= mid) idx = i;
-      });
+      if (pin >= 0) idx = pin;
+      else
+        chapters.forEach((c, i) => {
+          const r = c.el.getBoundingClientRect();
+          if (r.top <= mid) idx = i;
+        });
       if (idx === cur) return;
       cur = idx;
       links.forEach((l, i) => {
@@ -343,6 +409,8 @@ export function createBehaviors({ fx, scroll, world }) {
     on(() => {
       off();
       clearTimeout(flashT);
+      endJump();
+      nav.removeEventListener('click', onClick);
       nav.remove();
     });
   }
