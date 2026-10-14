@@ -14,7 +14,7 @@ import { once } from 'node:events';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright-core';
 import { serve } from '../scripts/serve.mjs';
-import { guardContext } from './safe-context.mjs';
+import { guardContext, softwareGL } from './safe-context.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = path.resolve(ROOT, process.env.BORADEN_DIST || 'dist');
@@ -171,9 +171,18 @@ try {
   await page.locator('#film').scrollIntoViewIfNeeded();
   const film = page.locator('[data-film-ctl]');
   await film.evaluate((b) => b.click());
-  // ekran kartı olmayan sunucuda (GitHub Actions) video yazılımla çözülür; ilk kare 8 sn'yi aşabiliyor
-  await page.waitForFunction(() => !document.querySelector('.film__video').paused, null, { timeout: 30000 });
-  await film.evaluate((b) => b.click());
+  // Ekran kartı olmayan sunucuda (GitHub Actions) video yazılımla çözülür ve başsız Chrome'da oynamayabilir: orada oynatma
+  // beklenmez (bu adımın amacı CSP: video isteği ve düğme işleyicisi ihlal üretmemeli; ihlal toplayıcı açık kalır).
+  const softGL = await softwareGL(page);
+  let played = true;
+  await page
+    .waitForFunction(() => !document.querySelector('.film__video').paused, null, { timeout: softGL ? 10000 : 8000 })
+    .catch((e) => {
+      if (!softGL) throw e;
+      played = false;
+      console.log('NOT: yazılım WebGL (ekran kartı yok): film bu makinede oynamadı, oynatma denetimi atlandı');
+    });
+  if (played) await film.evaluate((b) => b.click());
   step('film');
   for (const tier of ['off', 'lite', 'full']) {
     await page.locator(`[data-fx-set="${tier}"]:visible`).click();
