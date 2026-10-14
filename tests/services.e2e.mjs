@@ -9,7 +9,7 @@
 //   router — dizin → alan → hizmet gezinmesi tam yenileme olmadan; künye ve tik yeniden kurulur; konsol/HTTP temiz
 //   mobile — 390 px: «Bu sayfada» yapışkan çip şeridi (aktif çip ortalanır, çipe dokununca bölüm şeridin altında kalır); ekip/hizmet/künye bağlantıları ≥ 24 px
 import { chromium } from 'playwright-core';
-import { guardContext } from './safe-context.mjs';
+import { guardContext, driverNoise } from './safe-context.mjs';
 import { loadData } from '../scripts/build.mjs';
 import { buildModel } from '../scripts/model.mjs';
 
@@ -39,7 +39,7 @@ async function newPage({ w = 1440, h = 900, mobile = false, fx = 'full', reduced
   if (fx) await ctx.addInitScript((v) => localStorage.setItem('boraden-fx', v), fx); // fx=null: kayıtlı tercih yok (hareket azaltma kendiliğinden «Kapalı» yapar)
   const page = await ctx.newPage();
   const logs = [];
-  page.on('console', (m) => ['error', 'warning'].includes(m.type()) && logs.push(`[${m.type()}] ${m.text()}`));
+  page.on('console', (m) => ['error', 'warning'].includes(m.type()) && !driverNoise(m.text()) && logs.push(`[${m.type()}] ${m.text()}`));
   page.on('pageerror', (e) => logs.push('[pageerror] ' + e.message));
   page.on('response', (r) => r.status() >= 400 && logs.push(`[http ${r.status()}] ${r.url()}`));
   page.on('requestfailed', (r) => !/ERR_ABORTED/.test(r.failure()?.errorText || '') && logs.push(`[failed] ${r.url()}`));

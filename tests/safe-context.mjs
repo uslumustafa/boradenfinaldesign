@@ -27,3 +27,23 @@ export async function actHuman(ctx) {
   await ctx.addInitScript(() => Object.defineProperty(navigator, 'webdriver', { get: () => false, configurable: true }));
   return ctx;
 }
+
+// Ekran kartı olmayan makine (GitHub Actions'ın ubuntu sunucusu): WebGL yazılımla (SwiftShader / llvmpipe) çalışır ve Chrome
+// sürücünün performans uyarılarını konsola yazar («GL Driver Message … GPU stall due to ReadPixels»). Bunlar sitenin hatası
+// değildir; «konsol temiz» denetimleri bu satırları saymaz.
+export const driverNoise = (text) => /GL Driver Message|GPU stall due to ReadPixels/.test(String(text));
+
+// Sayfanın WebGL'i yazılımla mı çiziyor (ekran kartı yok)? Böyle makinede efektlerin kendiliğinden «Kapalı» seçilmesi doğrudur.
+export async function softwareGL(page) {
+  return page.evaluate(() => {
+    try {
+      const gl = document.createElement('canvas').getContext('webgl');
+      if (!gl) return true;
+      const ext = gl.getExtension('WEBGL_debug_renderer_info');
+      const r = ext ? gl.getParameter(ext.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER);
+      return /swiftshader|llvmpipe|software|softpipe/i.test(String(r));
+    } catch (e) {
+      return true;
+    }
+  });
+}

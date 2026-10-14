@@ -114,10 +114,12 @@ const VERT = /* glsl */ `
     // kahraman (uWave>0): ekranın alt kısmı sakinleşir → alt bilgi metni ve düğmeler okunur kalır
     vA *= 1.0 - uWave * 0.9 * (1.0 - smoothstep(-0.85, -0.25, ndc.y));
     // kenar (müşteri geri bildirimi, Ekim 2026: «kenarlarda uçuşan noktalar»): şekil noktaları ekranın kenarına yaklaşırken söner;
-    // kenarda yarım kalmış şekil parçası görünmez. Arka plan tozu (aK = 0), «BORADEN» kelimesi (wt) ve sayfa geçişindeki akış
-    // (uSurge) olduğu gibi kalır.
+    // kenarda yarım kalmış şekil parçası görünmez. «BORADEN» kelimesi (wt) ve sayfa geçişindeki akış (uSurge) olduğu gibi kalır.
     float edge = (1.0 - smoothstep(0.80, 0.98, abs(ndc.x))) * (1.0 - smoothstep(0.86, 1.0, abs(ndc.y)));
     vA *= mix(1.0, edge, aK * (1.0 - wt) * (1.0 - smoothstep(0.0, 0.15, uSurge)));
+    // arka plan tozu (aK = 0, ekranın her yerinde süzülen sönük «yıldızlar»): müşteri isteğiyle görünmez. Yalnızca «BORADEN»
+    // kelimesine katılırken ve sayfa geçişi akışında görünür (kelime ve akış seyrekleşmesin), sonra yumuşakça söner.
+    vA *= mix(max(wt, smoothstep(0.0, 0.15, uSurge)), 1.0, aK);
     vC = tintOf(tn);
   }
 `;

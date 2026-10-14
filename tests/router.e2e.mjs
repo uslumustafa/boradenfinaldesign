@@ -9,7 +9,7 @@
 //   fx     — azaltılmış hareket → Kapalı; Tam/Hafif/Kapalı anahtarı kalıcı; tek depolama anahtarı boraden-fx (çerez yok)
 //   offline — ağ yokken iç bağlantı: sayfada kalınır, «Bağlantı yok» uyarısı + «Yeniden dene»; sunucu hatası tam yüklemeye döner
 import { chromium } from 'playwright-core';
-import { guardContext } from './safe-context.mjs';
+import { guardContext, driverNoise, softwareGL } from './safe-context.mjs';
 
 const arg = (k, d) => (process.argv.find((a) => a.startsWith(`--${k}=`)) || '').split('=').slice(1).join('=') || d;
 const BASE = arg('base', 'http://127.0.0.1:4181');
@@ -36,7 +36,7 @@ async function newPage(opts = {}) {
   const page = await ctx.newPage();
   const logs = [];
   page.on('console', (m) => {
-    if (['error', 'warning'].includes(m.type())) logs.push(`[${m.type()}] ${m.text()}`);
+    if (['error', 'warning'].includes(m.type()) && !driverNoise(m.text())) logs.push(`[${m.type()}] ${m.text()}`);
   });
   page.on('pageerror', (e) => logs.push('[pageerror] ' + e.message));
   page.on('response', (r) => {
@@ -443,7 +443,9 @@ async function fx() {
       anim: document.documentElement.classList.contains('js-anim'),
     }));
   let x = await st();
-  ok(['full', 'lite'].includes(x.tier) && x.stored === null && x.pressed.length === 1 && x.synced, `otomatik algılama: ${x.tier} (kullanıcı seçimi yok, depolama boş)`);
+  // ekran kartı olmayan makinede (CI) otomatik seçim «Kapalı» olmalı; gerçek cihazda «Tam» ya da «Hafif»
+  const soft = await softwareGL(page);
+  ok((soft ? ['off'] : ['full', 'lite']).includes(x.tier) && x.stored === null && x.pressed.length === 1 && x.synced, `otomatik algılama: ${x.tier}${soft ? ' (yazılım WebGL: ekran kartı yok)' : ''} (kullanıcı seçimi yok, depolama boş)`);
   await page.locator('[data-fx-set="lite"]:visible').click();
   x = await st();
   ok(x.tier === 'lite' && x.stored === 'lite' && JSON.stringify(x.pressed) === '["lite"]' && x.synced, 'Hafif seçildi: data-fx, depolama ve aria-pressed uyumlu (iki anahtar)');

@@ -7,7 +7,7 @@
 //   (1) uygulama, otomasyonda (navigator.webdriver) openMail'i atlar; (2) tüm bağlamlar guardContext ile sarılıdır: mailto: gezinmesi
 //   iptal edilip kaydedilir; (3) «mailto» bölümü ziyaretçi yolunu (webdriver=false) bu güvenlik ağı altında dener.
 import { chromium } from 'playwright-core';
-import { guardContext, actHuman } from './safe-context.mjs';
+import { guardContext, actHuman, driverNoise } from './safe-context.mjs';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -31,7 +31,7 @@ async function newPage(opts = {}) {
   const page = await ctx.newPage();
   const logs = [];
   page.on('console', (m) => {
-    if (['error', 'warning'].includes(m.type())) logs.push(`[${m.type()}] ${m.text()}`);
+    if (['error', 'warning'].includes(m.type()) && !driverNoise(m.text())) logs.push(`[${m.type()}] ${m.text()}`);
   });
   page.on('pageerror', (e) => logs.push('[pageerror] ' + e.message));
   page.on('response', (r) => {

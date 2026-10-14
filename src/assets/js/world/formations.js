@@ -100,12 +100,13 @@ function horizon(p, rnd, Nf) {
       p.add(x, terrain(x, z), z, (contour ? 1.1 : 0.8) + rnd() * 0.6, rnd() < 0.02 ? 1 + Math.floor(rnd() * 3) : 0);
     }
   }
-  // veri sisi: arazinin hemen üstünde, yere yakın yoğun
+  // veri sisi: arazinin hemen üstünde, yere yakın yoğun. Yüksekliği sınırlı (müşteri geri bildirimi, Ekim 2026: arka planda
+  // süzülen «yıldız» istenmiyor): önceden arazinin 7,5 birim üstüne kadar dağılıp gökyüzünde tek tek nokta gibi görünüyordu.
   while (p.n < Nf) {
     const dist = 8 + Math.pow(rnd(), 0.75) * 92;
     const z = 16.5 - dist;
     const x = (rnd() - 0.5) * 2 * dist * 0.85;
-    const y = terrain(x, z) + 0.3 + Math.pow(rnd(), 1.7) * 7.5;
+    const y = terrain(x, z) + 0.2 + Math.pow(rnd(), 1.7) * 1.4;
     p.add(x, y, z, 0.55 + rnd() * 0.55, rnd() < 0.012 ? 1 + Math.floor(rnd() * 3) : 0);
   }
 }

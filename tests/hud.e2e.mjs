@@ -5,7 +5,7 @@
 //    sessizdir (data-quiet: ad kendiliğinden belirmez) ve yalnızca ≥1360 px'te görünür.
 //  • Menüsüz sayfada, «Kapalı» efekt kademesinde ve router geçişlerinden sonra yinelenen/artık gösterge kalmaz.
 import { chromium } from 'playwright-core';
-import { guardContext } from './safe-context.mjs';
+import { guardContext, driverNoise } from './safe-context.mjs';
 
 const arg = (k, d) => (process.argv.find((a) => a.startsWith(`--${k}=`)) || '').split('=').slice(1).join('=') || d;
 const BASE = arg('base', 'http://127.0.0.1:4181');
@@ -22,7 +22,7 @@ async function newPage({ w = 1440, h = 900, mobile = false, fx = 'full' } = {}) 
   await ctx.addInitScript((v) => localStorage.setItem('boraden-fx', v), fx);
   const page = await ctx.newPage();
   const logs = [];
-  page.on('console', (m) => ['error', 'warning'].includes(m.type()) && logs.push(`[${m.type()}] ${m.text()}`));
+  page.on('console', (m) => ['error', 'warning'].includes(m.type()) && !driverNoise(m.text()) && logs.push(`[${m.type()}] ${m.text()}`));
   page.on('pageerror', (e) => logs.push('[pageerror] ' + e.message));
   page.on('response', (r) => r.status() >= 400 && logs.push(`[http ${r.status()}] ${r.url()}`));
   return { ctx, page, logs };
