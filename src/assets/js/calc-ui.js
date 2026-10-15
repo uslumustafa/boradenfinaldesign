@@ -378,7 +378,7 @@ function setupCalc(el, { fx, on, scroll }) {
       out = core.calculate(def.engine, v, params);
     } catch (err) {
       console.warn('[hesaplayıcı]', err);
-      out = { error: 'Parametre dosyası veya hesaplama modülü yüklenemedi. Sayfayı yenileyip tekrar deneyin' };
+      out = { error: 'Parametre dosyası veya hesaplama modülü yüklenemedi Sayfayı yenileyip tekrar deneyin' };
     }
     if (my !== seq) return;
     last = out;

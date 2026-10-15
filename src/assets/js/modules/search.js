@@ -419,7 +419,7 @@ export function mount(form, ctx) {
     }
     if (!index) {
       if (failed) {
-        say('Arama dizini yüklenemedi. Sayfaları site haritasından bulabilirsiniz');
+        say('Arama dizini yüklenemedi Sayfaları site haritasından bulabilirsiniz');
         showStart();
         return;
       }

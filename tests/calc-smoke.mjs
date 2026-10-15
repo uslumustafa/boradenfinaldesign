@@ -16,7 +16,7 @@ const list = defs.filter((d) => !args.only || d.slug === args.only);
 const browser = await chromium.launch({ channel: 'chrome', headless: true });
 const ctx = await guardContext(await browser.newContext({ viewport: { width: 1280, height: 900 } })); // mailto:/tel: işletim sistemine gitmesin (safe-context.mjs)
 let problems = 0;
-const DESIGNED = /^Hesaplanamadı\./;
+const DESIGNED = /^Hesaplanamadı(\s|$)/; // «Hesaplanamadı» (nokta kuralı: cümle sonu noktası yazılmaz)
 const say = (ok, ...m) => { if (!ok) problems++; console.log(ok ? '  ok ' : '  !! ', ...m); };
 
 for (const def of list) {

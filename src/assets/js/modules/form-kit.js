@@ -7,6 +7,8 @@
 // (otomasyonla sürülen tarayıcıda açılmaz: bkz. openMail). Ağ isteği YOK, hiçbir şey saklanmaz (çerez/depolama yok).
 // Wagtail'e geçişte yalnızca gönderim adımı sunucuya taşınır.
 
+import { dropSentencePeriods } from '../text-rules.js';
+
 const EMAIL_RE = /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)+$/;
 export const MAIL_MAX = 1800; // mailto gövdesi için güvenli üst sınır (karakter)
 
@@ -273,7 +275,7 @@ export function createFormKit(wrap, { fx, onValid, onReset } = {}) {
       if (!file || message(f)) return;
       const b = document.createElement('b');
       b.textContent = file.name;
-      note.append(b, ` (${mb(file.size)} MB) seçildi. Bu dosya e-posta taslağına otomatik eklenemez; taslak açıldığında e-postaya ekleyin`);
+      note.append(b, ` (${mb(file.size)} MB) seçildi Bu dosya e-posta taslağına otomatik eklenemez; taslak açıldığında e-postaya ekleyin`);
     };
     on(inp, 'change', paintFile);
     repaints.push(paintFile);
@@ -314,7 +316,7 @@ export function createFormKit(wrap, { fx, onValid, onReset } = {}) {
     submitted = true;
     const bad = fields.filter((f) => !check(f));
     if (bad.length) {
-      if (status) status.textContent = `${status.dataset.error || 'Lütfen işaretli alanları kontrol edin.'} Düzeltilmesi gereken alan sayısı: ${bad.length}`;
+      if (status) status.textContent = `${dropSentencePeriods(status.dataset.error || 'Lütfen işaretli alanları kontrol edin')} Düzeltilmesi gereken alan sayısı: ${bad.length}`;
       focusField(bad[0]);
       return;
     }

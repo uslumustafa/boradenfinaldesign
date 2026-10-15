@@ -1,5 +1,6 @@
 // Sayfa davranışları: her sayfa yüklendiğinde (veya yönlendirici içeriği değiştirdiğinde) mount() çalışır.
 // Wagtail'de: aynı data-* öznitelikleri şablonlarda kalır; bu dosya statik dosya olarak aynen kullanılır.
+import { dropSentencePeriods } from './text-rules.js';
 import { clamp, smoothstep, easeOutExpo, qs, qsa, fmtTR, parseTR } from './util.js';
 import { initCalculators } from './calculators.js';
 import { initListing } from './listing.js';
@@ -203,13 +204,14 @@ export function createBehaviors({ fx, scroll, world }) {
       const cap = qs('[data-sectors-cap]', sec);
       const list = qs('.sectorlist', sec);
       if (!cap || !list) return;
-      const def = cap.dataset.default || cap.textContent;
+      // data-default / data-short öznitelik metni: cümle noktası kuralı (text-rules.js) derlemede yalnızca görünen metne uygulanır
+      const def = dropSentencePeriods(cap.dataset.default || cap.textContent);
       const show = (t) => {
         if (cap.textContent !== t) cap.textContent = t;
       };
       const over = (e) => {
         const a = e.target.closest?.('.sector');
-        if (a && a.dataset.short) show(a.dataset.short);
+        if (a && a.dataset.short) show(dropSentencePeriods(a.dataset.short));
       };
       const out = () => show(def);
       list.addEventListener('pointerover', over);
@@ -484,7 +486,8 @@ export function createBehaviors({ fx, scroll, world }) {
       const x = p * n;
       const i = Math.min(n - 1, Math.floor(x));
       const f = x - i;
-      const morph = i < n - 1 ? smoothstep(0.35, 0.95, f) : 0; // geçiş her adımın %60'ında sürer: kaydırırken hep bir hareket görünür
+      // geçiş her adımın %40'ında sürer (Ekim 2026: daha keskin istendi; önce %60): şekil daha uzun süre net durur, sonra hızla değişir
+      const morph = i < n - 1 ? smoothstep(0.5, 0.9, f) : 0;
       return a + i + morph;
     };
     const update = () => {

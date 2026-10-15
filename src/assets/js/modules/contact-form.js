@@ -98,7 +98,7 @@ export function mount(el, ctx) {
     if (!picked && service) picked = setTopic(service.k);
     if (picked && topicSel) {
       const label = topicSel.selectedOptions[0]?.textContent.trim() || '';
-      kit.say(service ? `Seçilen hizmet: ${service.t}. Konu: ${label}` : `Konu seçildi: ${label}`);
+      kit.say(service ? `Seçilen hizmet: ${service.t} Konu: ${label}` : `Konu seçildi: ${label}`);
     }
     let extra = false;
     for (const x of extras) {

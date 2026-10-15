@@ -10,9 +10,11 @@
         <div class="cta__btns" data-reveal data-reveal-delay="3">
           {# U-23: bağlamlı (hizmet/sektör/kişi) → «Görüşme talep edin»; genel → «Bize yazın» #}
           <a class="btn" href="{{ cta_href | default('/iletisim/') }}">{{ 'Görüşme talep edin' if cta_href else 'Bize yazın' }} <span class="arr" aria-hidden="true">→</span></a>
-          <a class="btn btn--ghost" href="tel:{{ contact.phoneHref }}">{{ contact.phone | phone }}</a>
+          {% if not cta_no_contact %}<a class="btn btn--ghost" href="tel:{{ contact.phoneHref }}">{{ contact.phone | phone }}</a>{% endif %}
         </div>
       </div>
+      {# cta_no_contact (kişi sayfası, müşteri isteği Ekim 2026): telefon, e-posta ve adres şimdilik yazılmaz; yalnızca düğme #}
+      {% if not cta_no_contact %}
       <div class="cta__side" data-reveal data-reveal-delay="2">
         <dl>
           <div><dt>Adres</dt><dd>{{ contact.street }}, {{ contact.postcode }} {{ contact.district }} / {{ contact.city }}</dd></div>
@@ -20,6 +22,7 @@
           <div><dt>Telefon</dt><dd><a href="tel:{{ contact.phoneHref }}">{{ contact.phone | phone }}</a></dd></div>
         </dl>
       </div>
+      {% endif %}
     </div>
   </div>
 </section>

@@ -3,7 +3,7 @@
 içeriğin gerektirdiği karakterlere indirilir. Önceden her yüz iki dosyaydı (Türkçe metinde ğ, ş, ı, İ latin-ext'ten gelir):
 sayfa başına 13–16 dosya ≈ 240–310 KB. Şimdi yüz başına bir dosya.
 
-Aileler: aşağıdaki FAMILIES (Open Sans + STIX Two Text italik). Kapsam: Temel Latin + Latin-1 (Ç Ö Ü Â Î Û…), Latin Genişletilmiş-A (Ğ ğ İ ı Ş ş ve Avrupa dilleri), genel noktalama
+Aile: Open Sans (FAMILIES). Kapsam: Temel Latin + Latin-1 (Ç Ö Ü Â Î Û…), Latin Genişletilmiş-A (Ğ ğ İ ı Ş ş ve Avrupa dilleri), genel noktalama
 (– — ‘ ’ “ ” … ‐ ‑), para birimleri (₺ €), ™, ok ve eksi işaretleri, birleşik işaretler. Glif biçimleri değişmez (aynı
 yazı tipinden alt küme); harf aralığı (kerning) ve OpenType özellikleri korunur.
 
@@ -30,12 +30,10 @@ NM = os.path.join(ROOT, 'node_modules', '@fontsource')
 OUT_FONTS = os.path.join(ROOT, 'src', 'assets', 'fonts')
 OUT_CSS = os.path.join(ROOT, 'src', 'assets', 'css', '00-fonts.css')
 
-# Yazı tipleri Deloitte'un sitesindekilerle aynı aileler (müşteri isteği, Ekim 2026; deloitte.com stil dosyası incelendi):
-# Open Sans her yerde (başlık, metin, düğme, etiket) ve vurgu için STIX Two Text italik (Deloitte'ta «secondary-font»).
-# İkisi de SIL Open Font License; Deloitte'un kendi simge yazı tipi (Dcom-EDE) kullanılmaz.
+# Yazı tipi: Open Sans, her yerde (müşteri isteği, Ekim 2026: Deloitte sitesindeki aile; «bir cümlede iki yazı tipi olmasın» —
+# vurgu italiği de Open Sans'tır, ikinci aile yok). SIL Open Font License.
 FAMILIES = [
     ('Open Sans', 'open-sans', ['300', '300-italic', '400', '400-italic', '500', '600', '600-italic', '700']),
-    ('STIX Two Text', 'stix-two-text', ['400-italic']),
 ]
 
 # unicode-range ile aynı kapsam (tarayıcı bu aralık dışındaki karakter için yedek yazı tipine geçer)
@@ -92,7 +90,7 @@ def main():
     os.makedirs(OUT_FONTS, exist_ok=True)
     # eski çıktılar (bu betiğin ya da eski vendor-fonts.mjs'in) kaldırılır: yalnızca .woff2 ve fonts.json
     old = [f for f in os.listdir(OUT_FONTS) if f.endswith('.woff2') or f == 'fonts.json']
-    css = ['/* Otomatik üretildi: scripts/tools/subset-fonts.py (npm run fonts) — Open Sans ve STIX Two Text italik (SIL OFL),',
+    css = ['/* Otomatik üretildi: scripts/tools/subset-fonts.py (npm run fonts) — Open Sans (SIL OFL),',
            '   Deloitte sitesindeki yazı tipi aileleri. Yüz başına tek dosya: latin + latin-ext birleşik, Türkçe için alt küme;',
            '   dosya adında içerik özeti var (süresiz önbellek). */']
     manifest = {}

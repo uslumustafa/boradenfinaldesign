@@ -48,14 +48,16 @@ const VERT = /* glsl */ `
 
   void main() {
     float s = aR.y;
-    float t = clamp((uMix - aR.x * 0.38) / (1.0 - 0.38), 0.0, 1.0);
+    // sahne geçişi (müşteri geri bildirimi, Ekim 2026: «daha keskin, daha net»): noktaya özgü gecikme ve geçiş sırasındaki
+    // dağılma azaltıldı; noktalar yeni şekle daha doğrudan gider, bulut gibi dağılıp toplanmaz
+    float t = clamp((uMix - aR.x * 0.22) / (1.0 - 0.22), 0.0, 1.0);
     t = t * t * (3.0 - 2.0 * t);
     // A formasyonu ufuk arazisiyse yavaş dalga (uWave: 0..1)
     vec3 pa = position;
     pa.y += uWave * (sin(pa.x * 0.33 + uTime * 0.7) * cos(pa.z * 0.27 - uTime * 0.5) * 0.30 + sin(pa.x * 0.9 - uTime * 1.1 + pa.z * 0.4) * 0.07);
     vec3 p = mix(pa, aB, t);
     float w = sin(t * 3.14159265);
-    p += vec3(sin(s * 6.2831 + uTime * 0.5), cos(s * 12.566 + uTime * 0.45), sin(s * 9.4 - uTime * 0.4)) * w * 1.25;
+    p += vec3(sin(s * 6.2831 + uTime * 0.5), cos(s * 12.566 + uTime * 0.45), sin(s * 9.4 - uTime * 0.4)) * w * 0.45;
     p += vec3(sin(uTime * 0.28 + s * 40.0), cos(uTime * 0.25 + s * 31.0), sin(uTime * 0.2 + s * 17.0)) * 0.05;
 
     // açılış: dağınık hâlden formasyona toplanma (noktaya özgü gecikme, yavaşlayan varış)
@@ -98,15 +100,15 @@ const VERT = /* glsl */ `
       sdir = normalize(dp + vec2(1e-4, 0.0));
       ndc = uSurgeO + dp / vec2(uAspect, 1.0) * (1.0 + sg * sp * 2.2);
     }
-    vS = vec3(sdir.x, -sdir.y, sg * sp * 1.8);
+    vS = vec3(sdir.x, -sdir.y, sg * sp * 1.1);
     gl_Position = vec4(ndc * clip.w, clip.zw);
 
     float dist = max(1.0, -mv.z);
     float size = mix(aSA.x, aSB.x, t);
     float tn = t < 0.5 ? aSA.y : aSB.y;
-    float psz = max(1.9, size * uPx * (96.0 / dist) * (1.0 + w * 0.5 + push * ${glf(LENS.grow)}));
+    float psz = max(1.9, size * uPx * (96.0 / dist) * (1.0 + w * 0.2 + push * ${glf(LENS.grow)}));
     gl_PointSize = mix(psz, max(2.2, 2.6 * uPx), wt);
-    gl_PointSize = min(gl_PointSize * (1.0 + sg * (1.3 + 2.0 * sp)), 110.0);
+    gl_PointSize = min(gl_PointSize * (1.0 + sg * (0.9 + 1.2 * sp)), 90.0);
     float tw = 0.74 + 0.26 * sin(uTime * (0.6 + fract(s * 13.7)) + s * 50.0);
     vA = (0.58 + 0.42 * fract(s * 7.31)) * tw * smoothstep(170.0, 12.0, dist) * uBright * uFade * (1.0 + push * ${glf(LENS.glow)}) * smoothstep(0.0, 0.22, it);
     vA = mix(vA, 0.95 * uFade * (1.0 + push * ${glf(LENS.glow * 0.8)}), wt);
@@ -133,9 +135,10 @@ const FRAG = /* glsl */ `
     vec2 c = (gl_PointCoord - 0.5) * 2.0;
     float r = length(vec2(dot(c, vS.xy), dot(c, vec2(-vS.y, vS.x)) * (1.0 + vS.z)));
     if (r > 1.0) discard;
-    float core = 1.0 - smoothstep(0.0, 0.5, r);
-    float halo = pow(1.0 - r, 2.2);
-    float a = core * 0.9 + halo * 0.5;
+    // daha net nokta (Ekim 2026): çekirdek biraz daha geniş ve sert, hale daha dar ve sönük
+    float core = 1.0 - smoothstep(0.1, 0.6, r);
+    float halo = pow(1.0 - r, 3.2);
+    float a = core * 1.0 + halo * 0.3;
     gl_FragColor = vec4(vC * (0.9 + 0.5 * core), a * vA);
   }
 `;
@@ -143,7 +146,7 @@ const FRAG = /* glsl */ `
 const LAST = FORMATION_COUNT - 1; // son sahne sırası
 const INTRO_S = 2.2; // toplanma süresi (sn)
 const SURGE_OUT = 350; // sayfa geçişi: noktaların ekran dışına akma süresi (ms) — yönlendirici bu süre dolunca içeriği değiştirir (U-20)
-const SURGE_IN = 1050; // sayfa geçişi: yeni sayfada noktaların içeri akıp şekle oturma süresi (ms)
+const SURGE_IN = 850; // sayfa geçişi: yeni sayfada noktaların içeri akıp şekle oturma süresi (ms)
 
 // WebGL 2 desteği önce küçük, atılan bir tuvalde sınanır (T-35): yoksa three.js çiziciyi kurmaya çalışıp konsola hata yazmaz;
 // dünya kurulmaz ve efektler «Kapalı»ya düşer (main.js › bootWorld). Sınama bağlamı hemen bırakılır.
@@ -442,20 +445,20 @@ export async function createWorld({ fx, canvas, intro = false }) {
     // sahne değeri: yakın geçişlerde süzülür, uzak sıçramalarda çözülerek değişir
     if (dissolve) {
       if (dissolve.phase === 'out') {
-        dissolve.v = Math.max(0, dissolve.v - dt / 0.26);
+        dissolve.v = Math.max(0, dissolve.v - dt / 0.2);
         if (dissolve.v <= 0) {
           s = sTarget;
           dissolve = { phase: 'in', v: 0 };
         }
       } else {
-        dissolve.v = Math.min(1, dissolve.v + dt / 0.6);
+        dissolve.v = Math.min(1, dissolve.v + dt / 0.42);
         if (dissolve.v >= 1) dissolve = null;
       }
       material.uniforms.uFade.value = dissolve ? dissolve.v : 1;
     } else if (Math.abs(sTarget - s) > 1.6) {
       dissolve = { phase: 'out', v: 1 };
     } else {
-      s += (sTarget - s) * (1 - Math.exp(-dt * 2.6)); // süzülme: hızlı kaydırmada da geçiş ~1 sn sürer
+      s += (sTarget - s) * (1 - Math.exp(-dt * 4.2)); // süzülme: geçiş ~0,6 sn sürer (Ekim 2026: daha keskin istendi; önce 2,6 ≈ 1 sn)
       if (Math.abs(sTarget - s) < 0.0005) s = sTarget;
     }
 

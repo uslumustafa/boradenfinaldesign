@@ -114,17 +114,10 @@ h3 {
 h4 {
   font-size: var(--fs-3);
 }
+/* italik vurgu («Sektörün dilini / bilen bir bakış»): aynı ailenin italiği; ikinci bir yazı tipi kullanılmaz */
 em,
 .it {
   font-style: italic;
-}
-/* başlıklardaki italik vurgu («Sektörün dilini / bilen bir bakış») ve .it: STIX Two Text (Deloitte'taki ikincil yazı tipi);
-   metin içindeki em, metnin kendi yazı tipinin italiği kalır */
-:is(h1, h2, h3, h4, h5, h6) em,
-.it {
-  font-family: var(--f-accent);
-  font-weight: 400;
-  letter-spacing: 0;
 }
 strong,
 b {

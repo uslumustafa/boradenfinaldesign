@@ -177,10 +177,10 @@ html.hdr-hidden .hdr {
   align-items: center;
   height: 100%;
   padding-inline: 0.35rem;
-  font-size: 1.04rem;
+  font-size: 1.12rem; /* Ekim 2026 (müşteri): bir kademe büyük ve kalın (önce 1,04rem / 600) */
   white-space: nowrap; /* menü adı hiçbir genişlikte harf ortasından kırılmaz (sığmazsa ≤1200 px'te mobil menü) */
   font-family: var(--f-display);
-  font-weight: 600;
+  font-weight: 700;
   color: var(--on-dark-2);
   transition: color var(--t-fast);
 }
