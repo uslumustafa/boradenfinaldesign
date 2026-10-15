@@ -12,7 +12,7 @@ import { clamp, smoothstep } from '../util.js';
 //   falloff — düşüş sertliği; etki yarıçapı (%10 şiddet) ≈ √(2,3 / falloff) × ekran yüksekliğinin yarısı (120 → ≈ %14 → 900 px'te ≈ 62 px)
 //   push    — merkezde en fazla itme, NDC birimi (0,022 → 900 px'te ≈ 10 px)
 //   grow    — merkezde nokta boyutu artışı (katsayı)      glow — merkezde parlaklık artışı (katsayı)
-const LENS = { falloff: 120, push: 0.022, grow: 0.6, glow: 0.7 };
+const LENS = { falloff: 120, push: 0.012, grow: 0.5, glow: 0.7 }; // Ekim 2026 (okunurluk): itme 0,022 → 0,012
 const glf = (n) => n.toFixed(3); // GLSL ondalık sabiti
 
 const VERT = /* glsl */ `
@@ -24,6 +24,7 @@ const VERT = /* glsl */ `
   attribute float aK;
   uniform float uWord;
   uniform float uSurge;
+  uniform float uSurgeOut; // 1: çıkış (noktalar dışarı akar), 0: giriş (yeni şekil yerinde belirir)
   uniform vec2 uSurgeO;
   uniform float uMix;
   uniform float uTime;
@@ -90,10 +91,12 @@ const VERT = /* glsl */ `
     float sg = 0.0;
     float sp = 0.0;
     vec2 sdir = vec2(1.0, 0.0);
-    if (uSurge > 0.001) {
+    // Giriş (müşteri geri bildirimi, Ekim 2026: «sayfanın şekli doğrudan gelsin»): noktalar dışarıdan akıp toplanmak yerine
+    // yeni şeklin kendi yerinde, noktaya özgü küçük gecikmeyle belirir; akış yalnızca çıkışta.
+    if (uSurge > 0.001 && uSurgeOut > 0.5) {
       sp = 0.55 + 1.65 * h11(s * 11.3);
       sg = uSurge * (0.94 + 0.06 * sin(uTime * 3.0 + s * 20.0));
-      // dışarı akarken hafif girdap: noktaya özgü hızla dönerek uzaklaşır (girişte tersine, yerine dönerek oturur)
+      // dışarı akarken hafif girdap: noktaya özgü hızla dönerek uzaklaşır (giriş akışı yok: yeni şekil yerinde belirir)
       float ang = sg * sp * 0.2;
       vec2 dp = (ndc - uSurgeO) * vec2(uAspect, 1.0);
       dp = vec2(cos(ang) * dp.x - sin(ang) * dp.y, sin(ang) * dp.x + cos(ang) * dp.y);
@@ -106,13 +109,15 @@ const VERT = /* glsl */ `
     float dist = max(1.0, -mv.z);
     float size = mix(aSA.x, aSB.x, t);
     float tn = t < 0.5 ? aSA.y : aSB.y;
-    float psz = max(1.9, size * uPx * (96.0 / dist) * (1.0 + w * 0.2 + push * ${glf(LENS.grow)}));
+    float psz = max(2.1, size * uPx * 1.12 * (96.0 / dist) * (1.0 + w * 0.2 + push * ${glf(LENS.grow)}));
     gl_PointSize = mix(psz, max(2.2, 2.6 * uPx), wt);
     gl_PointSize = min(gl_PointSize * (1.0 + sg * (0.9 + 1.2 * sp)), 90.0);
-    float tw = 0.74 + 0.26 * sin(uTime * (0.6 + fract(s * 13.7)) + s * 50.0);
-    vA = (0.58 + 0.42 * fract(s * 7.31)) * tw * smoothstep(170.0, 12.0, dist) * uBright * uFade * (1.0 + push * ${glf(LENS.glow)}) * smoothstep(0.0, 0.22, it);
+    // okunurluk (Ekim 2026): titreme ve nokta başına parlaklık farkı azaltıldı; şekil daha dolu ve sabit görünür
+    float tw = 0.86 + 0.14 * sin(uTime * (0.6 + fract(s * 13.7)) + s * 50.0);
+    vA = (0.72 + 0.28 * fract(s * 7.31)) * tw * smoothstep(170.0, 12.0, dist) * uBright * uFade * (1.0 + push * ${glf(LENS.glow)}) * smoothstep(0.0, 0.22, it);
     vA = mix(vA, 0.95 * uFade * (1.0 + push * ${glf(LENS.glow * 0.8)}), wt);
     vA *= (1.0 + sg * 1.5) * (1.0 - smoothstep(0.95, 1.0, uSurge));
+    if (uSurgeOut < 0.5) vA *= clamp((1.0 - uSurge - aR.x * 0.35) / 0.65, 0.0, 1.0);
     // kahraman (uWave>0): ekranın alt kısmı sakinleşir → alt bilgi metni ve düğmeler okunur kalır
     vA *= 1.0 - uWave * 0.9 * (1.0 - smoothstep(-0.85, -0.25, ndc.y));
     // kenar (müşteri geri bildirimi, Ekim 2026: «kenarlarda uçuşan noktalar»): şekil noktaları ekranın kenarına yaklaşırken söner;
@@ -146,7 +151,7 @@ const FRAG = /* glsl */ `
 const LAST = FORMATION_COUNT - 1; // son sahne sırası
 const INTRO_S = 2.2; // toplanma süresi (sn)
 const SURGE_OUT = 350; // sayfa geçişi: noktaların ekran dışına akma süresi (ms) — yönlendirici bu süre dolunca içeriği değiştirir (U-20)
-const SURGE_IN = 850; // sayfa geçişi: yeni sayfada noktaların içeri akıp şekle oturma süresi (ms)
+const SURGE_IN = 600; // sayfa geçişi: yeni sayfada şeklin yerinde belirme süresi (ms) — önce 850 (içeri akış)
 
 // WebGL 2 desteği önce küçük, atılan bir tuvalde sınanır (T-35): yoksa three.js çiziciyi kurmaya çalışıp konsola hata yazmaz;
 // dünya kurulmaz ve efektler «Kapalı»ya düşer (main.js › bootWorld). Sınama bağlamı hemen bırakılır.
@@ -223,6 +228,7 @@ export async function createWorld({ fx, canvas, intro = false }) {
       uPtr: { value: new Vector3(0, 0, 0) },
       uWord: { value: 0 },
       uSurge: { value: 0 },
+      uSurgeOut: { value: 1 },
       uSurgeO: { value: new Vector2(0, 0) },
     },
   });
@@ -367,7 +373,8 @@ export async function createWorld({ fx, canvas, intro = false }) {
     }
     material.uniforms.uBright.value = L(PA.bright, PB.bright) * (0.5 + 0.5 * Math.min(1, k0));
     // SWAY > 0: sürekli dönmek yerine ±SWAY rad salınır (kapı, düzlemsel şekiller); aksi hâlde SPIN çarpanıyla yavaş dönüş
-    const turn = (scene) => (SWAY[scene] > 0 ? Math.sin(time * 0.24) * SWAY[scene] + pointer.x * 0.1 : (SPIN[scene] ?? 1) * (time * 0.035 + pointer.x * 0.1));
+    // salınım genliği %60 (Ekim 2026, okunurluk): yazı ve tablo gibi düzlemsel şekiller daha önden görünür
+    const turn = (scene) => (SWAY[scene] > 0 ? Math.sin(time * 0.24) * SWAY[scene] * 0.6 + pointer.x * 0.1 : (SPIN[scene] ?? 1) * (time * 0.035 + pointer.x * 0.1));
     points.rotation.y = L(turn(a), turn(b));
   }
 
@@ -424,6 +431,7 @@ export async function createWorld({ fx, canvas, intro = false }) {
     }
     // çıkış: hızlı başlar (tıklamaya anında tepki), girişte hızlı gelir ve yumuşak oturur
     material.uniforms.uSurge.value = surgeT > 0 ? 1 - (1 - surgeV) * (1 - surgeV) : surgeV * surgeV;
+    material.uniforms.uSurgeOut.value = surgeT > 0 ? 1 : 0;
     pointer.x += (pointer.tx - pointer.x) * Math.min(1, dt * 3);
     pointer.y += (pointer.ty - pointer.y) * Math.min(1, dt * 3);
 
@@ -442,24 +450,24 @@ export async function createWorld({ fx, canvas, intro = false }) {
     lens.y += (lens.ty - lens.y) * Math.min(1, dt * 12);
     material.uniforms.uPtr.value.set(lens.x, lens.y, lens.k);
 
-    // sahne değeri: yakın geçişlerde süzülür, uzak sıçramalarda çözülerek değişir
+    // Sahne değişimi (müşteri geri bildirimi, Ekim 2026: «bölümün şekli doğrudan gelsin, önce eskisi görünmesin»): iki şekil
+    // arasında süzülme (nokta yolculuğu) yok. Her değişim kısa bir kesme: eski şekil 0,12 sn'de söner, yeni şekil kendi yerinde
+    // 0,28 sn'de belirir. Belirme sürerken hedef yine değişirse beklemeden sönmeye döner.
+    if (dissolve && dissolve.phase === 'in' && sTarget !== s) dissolve = { phase: 'out', v: dissolve.v };
     if (dissolve) {
       if (dissolve.phase === 'out') {
-        dissolve.v = Math.max(0, dissolve.v - dt / 0.2);
+        dissolve.v = Math.max(0, dissolve.v - dt / 0.12);
         if (dissolve.v <= 0) {
           s = sTarget;
           dissolve = { phase: 'in', v: 0 };
         }
       } else {
-        dissolve.v = Math.min(1, dissolve.v + dt / 0.42);
+        dissolve.v = Math.min(1, dissolve.v + dt / 0.28);
         if (dissolve.v >= 1) dissolve = null;
       }
       material.uniforms.uFade.value = dissolve ? dissolve.v : 1;
-    } else if (Math.abs(sTarget - s) > 1.6) {
+    } else if (sTarget !== s) {
       dissolve = { phase: 'out', v: 1 };
-    } else {
-      s += (sTarget - s) * (1 - Math.exp(-dt * 4.2)); // süzülme: geçiş ~0,6 sn sürer (Ekim 2026: daha keskin istendi; önce 2,6 ≈ 1 sn)
-      if (Math.abs(sTarget - s) < 0.0005) s = sTarget;
     }
 
     const a = clamp(Math.floor(s), 0, LAST);
@@ -592,11 +600,12 @@ export async function createWorld({ fx, canvas, intro = false }) {
 
   return {
     target(v, l = 0, sd = 1) {
-      sTarget = clamp(v, 0, LAST);
+      sTarget = Math.round(clamp(v, 0, LAST)); // sahneler tam sayı: iki şekil arası ara durum çizilmez
       liftT = clamp(l, -0.45, 0.45);
       sideT = sd < 0 ? -1 : 1;
-      // noktalar ekran dışındayken (sayfa geçişi) yeni sahne çözülmeden/süzülmeden doğrudan oturur; noktalar sonra bu şekle içeri akar
-      if ((surgeT > 0 || snapOpen) && surgeAtTime(performance.now()) > 0.5) {
+      // Noktalar ekran dışındayken (sayfa geçişi) ya da ilk kare henüz çizilmemişken (tam yükleme: önce ana sayfa şekli
+      // görünmesin) yeni sahne çözülmeden doğrudan oturur.
+      if (firstFrame || ((surgeT > 0 || snapOpen) && surgeAtTime(performance.now()) > 0.5)) {
         s = sTarget;
         lift = liftT;
         side = sideT;

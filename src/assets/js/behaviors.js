@@ -169,11 +169,19 @@ export function createBehaviors({ fx, scroll, world }) {
       });
       on(off);
       // seçilen alanın kaydırma konumu: ilerleme (i + 0,35) / n → sahne tam o alanın şeklinde durur
+      let forceT = 0;
       const goTo = (i) => {
         const r = sec.getBoundingClientRect();
         const span = Math.max(1, r.height - innerHeight);
         const top = scrollY + r.top + ((i + 0.35) / n) * span;
         holdUntil = performance.now() + 1200;
+        // kaydırma sürerken şekil doğrudan hedef alanınki olsun (director › data-world-force); aradaki alanların şekli görünmez
+        const [a] = String(sec.dataset.worldRange || '').split(',').map(Number);
+        if (Number.isFinite(a)) {
+          sec.dataset.worldForce = String(a + i);
+          clearTimeout(forceT);
+          forceT = setTimeout(() => delete sec.dataset.worldForce, 1200);
+        }
         scrollTo({ top, behavior: fx.tier === 'off' ? 'auto' : 'smooth' });
       };
       items.forEach((it, i) => {
@@ -193,7 +201,11 @@ export function createBehaviors({ fx, scroll, world }) {
       });
       const mqChange = () => setActive(Math.max(0, active), true);
       mq.addEventListener('change', mqChange);
-      on(() => mq.removeEventListener('change', mqChange));
+      on(() => {
+        mq.removeEventListener('change', mqChange);
+        clearTimeout(forceT);
+        delete sec.dataset.worldForce;
+      });
       setActive(0, true);
     });
   }
@@ -481,14 +493,11 @@ export function createBehaviors({ fx, scroll, world }) {
       }
       return { el, value: Number(el.dataset.world), side };
     });
+    // Aralıklı bölümde (ana sayfa alanları) sahne tam sayı adımlarla değişir; eşik, alan listesindeki vurguyla aynı
+    // (areas › setActive: floor(p·n + 0,18)) — vurgulanan alan ile şekil hep aynıdır. Süzülme yok (Ekim 2026: şekil doğrudan gelsin).
     const sceneOfRange = (p, [a, b]) => {
       const n = b - a + 1;
-      const x = p * n;
-      const i = Math.min(n - 1, Math.floor(x));
-      const f = x - i;
-      // geçiş her adımın %40'ında sürer (Ekim 2026: daha keskin istendi; önce %60): şekil daha uzun süre net durur, sonra hızla değişir
-      const morph = i < n - 1 ? smoothstep(0.5, 0.9, f) : 0;
-      return a + i + morph;
+      return a + Math.min(n - 1, Math.floor(p * n + 0.18));
     };
     const update = () => {
       const vh = innerHeight;
@@ -511,7 +520,9 @@ export function createBehaviors({ fx, scroll, world }) {
       // formasyon, bölümün ekranda görünen kısmının ortasına hizalanır (kısa alt sayfa kahramanlarında yukarı kayar)
       const cy = (Math.max(r.top, 0) + Math.min(r.bottom, vh)) / 2;
       const lift = clamp((vh / 2 - cy) / vh, -0.45, 0.45);
-      if (c.range) world.target(sceneOfRange(clamp(-r.top / Math.max(1, r.height - vh)), c.range), lift, c.side);
+      // data-world-force: alan adına tıklanınca kaydırma sürerken hedef alanın şekli doğrudan gelir (aradaki alanlar sırayla görünmez)
+      if (c.el.dataset.worldForce) world.target(Number(c.el.dataset.worldForce), lift, c.side);
+      else if (c.range) world.target(sceneOfRange(clamp(-r.top / Math.max(1, r.height - vh)), c.range), lift, c.side);
       else world.target(c.value, lift, c.side);
     };
     on(scroll.onFrame(update));

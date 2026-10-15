@@ -3,7 +3,7 @@
 // Hizmetler gezinmesinde (dizin satırı, kırıntı, alan kartı, alan → hizmet, Hizmetler mega menüsü) HER tıklamada:
 //   · noktalar tamamen ekran dışına akar (uSurge ≥ 0,98),
 //   · yeni sayfanın şekli noktalar dışarıdayken oturur — çözülme yok (uFade hep 1), iki şekil arası süzülme yok (uMix tam sayı),
-//   · noktalar yeni şekle içeri akar (uSurge 1 → 0, ara kareler çizilir), tam sayfa yenilemesi olmaz.
+//   · yeni şekil yerinde belirir (uSurge 1 → 0 yalnızca saydamlık; ara kareler çizilir), tam sayfa yenilemesi olmaz.
 // İki koşu: olağan kareler ve geçiş sırasında yapay olarak yavaşlatılmış kareler (--slow ms; ağır sayfa / yavaş cihaz / GPU takılması).
 // Eski sürümde yavaş karelerde noktalar dışarı varamadan sayfa değişiyor, yeni şekil içeri akmak yerine eski şekil geri toplanıp
 // çözülerek değişiyordu («geçiş bazen gelmiyor», Ekim 2026) — bu betik o durumu yakalar.
