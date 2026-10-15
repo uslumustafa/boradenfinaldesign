@@ -23,13 +23,16 @@ const world = {
   _target: 0,
   _lift: 0,
   _side: 1,
+  _cover: 1,
   _visible: false,
   _assemble: false,
-  target(v, lift = 0, side = 1) {
+  // cover: seçili bölümün görünen payı (toplanma eşiği); cut: bitişik olmayan koyu bölüme geçiş (dönüşüm yerine toplanma)
+  target(v, lift = 0, side = 1, cover = 1, cut = false) {
     this._target = v;
     this._lift = lift;
     this._side = side;
-    this.impl?.target(v, lift, side);
+    this._cover = cover;
+    this.impl?.target(v, lift, side, cover, cut);
   },
   setVisible(b) {
     this._visible = b;
@@ -106,7 +109,7 @@ async function bootWorld() {
       return;
     }
     world.impl = impl;
-    impl.target(world._target, world._lift, world._side);
+    impl.target(world._target, world._lift, world._side, world._cover);
     impl.setVisible(world._visible);
     if (world._assemble) impl.assemble?.();
   } catch (err) {

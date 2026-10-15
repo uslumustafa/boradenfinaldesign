@@ -494,11 +494,13 @@ export function createBehaviors({ fx, scroll, world }) {
       return { el, value: Number(el.dataset.world), side };
     });
     // Aralıklı bölümde (ana sayfa alanları) sahne tam sayı adımlarla değişir; eşik, alan listesindeki vurguyla aynı
-    // (areas › setActive: floor(p·n + 0,18)) — vurgulanan alan ile şekil hep aynıdır. Süzülme yok (Ekim 2026: şekil doğrudan gelsin).
+    // (areas › setActive: floor(p·n + 0,18)) — vurgulanan alan ile şekil hep aynıdır; her adımda şekil bir öncekinden belirgin
+    // bir dönüşümle gelir (world.js › MORPH_S).
     const sceneOfRange = (p, [a, b]) => {
       const n = b - a + 1;
       return a + Math.min(n - 1, Math.floor(p * n + 0.18));
     };
+    let prevEl = null; // önceki karede seçili bölüm
     const update = () => {
       const vh = innerHeight;
       let best = null;
@@ -520,10 +522,21 @@ export function createBehaviors({ fx, scroll, world }) {
       // formasyon, bölümün ekranda görünen kısmının ortasına hizalanır (kısa alt sayfa kahramanlarında yukarı kayar)
       const cy = (Math.max(r.top, 0) + Math.min(r.bottom, vh)) / 2;
       const lift = clamp((vh / 2 - cy) / vh, -0.45, 0.45);
+      // görünen kısım / min(ekran, bölüm): ekrana giren bölümün şekli, bölüm yeterince görününce toplanır (world.js › FORM_COVER)
+      const cover = bestVis / Math.max(1, Math.min(vh, r.height));
+      // Seçim, araya beyaz bölüm giren (bitişik olmayan) başka bir koyu bölüme geçtiyse şekil eskisinden dönüşmez: eski şekil
+      // yeni bölümde hiç görünmez, yeni bölümün şekli orada toplanır («önce ilk şekil, sonra bölümün şekli» olmasın).
+      // Bitişik koyu bölümler (ana sayfa kahramanı → alanlar) ve aralıklı bölümün adımları dönüşümle geçer.
+      let cut = false;
+      if (prevEl && prevEl !== c.el && prevEl.isConnected) {
+        const pr = prevEl.getBoundingClientRect();
+        cut = (r.top >= pr.top ? r.top - pr.bottom : pr.top - r.bottom) > 24;
+      }
+      prevEl = c.el;
       // data-world-force: alan adına tıklanınca kaydırma sürerken hedef alanın şekli doğrudan gelir (aradaki alanlar sırayla görünmez)
-      if (c.el.dataset.worldForce) world.target(Number(c.el.dataset.worldForce), lift, c.side);
-      else if (c.range) world.target(sceneOfRange(clamp(-r.top / Math.max(1, r.height - vh)), c.range), lift, c.side);
-      else world.target(c.value, lift, c.side);
+      if (c.el.dataset.worldForce) world.target(Number(c.el.dataset.worldForce), lift, c.side, cover, cut);
+      else if (c.range) world.target(sceneOfRange(clamp(-r.top / Math.max(1, r.height - vh)), c.range), lift, c.side, cover, cut);
+      else world.target(c.value, lift, c.side, cover, cut);
     };
     on(scroll.onFrame(update));
     // Sahne hedefi hemen verilir, bir sonraki kare beklenmez: sayfa geçişinde yönlendirici içeriği değiştirip mount ettiğinde

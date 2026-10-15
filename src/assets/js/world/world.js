@@ -3,6 +3,16 @@
 //
 // Görünürlük (v3): iri, parıltılı noktalar; ufuk arazisinde yavaş dalga; «Tam» katmanda fare lensi (ekran uzayında itme + parlama);
 // açılışta (opts.intro) noktalar dağınık hâlden formasyona toplanır — assemble() ile başlatılır.
+//
+// Sahne değişimi (müşteri geri bildirimi, Ekim 2026: «kaydırdıkça belirgin değişim animasyonu; hangi bölümse onun şekli doğrudan
+// gelsin, araya önceki/ilk şekil girmesin»):
+//   · görünürken hedef değişince şekil, ekrandaki hâlinden hedef şekle DOĞRUDAN dönüşür (herhangi iki şekil; ara sahne, solma yok):
+//     noktalar kendi gecikmeleriyle hafif girdaplı bir yay çizerek akar (MORPH_S). Dönüşüm sürerken hedef yine değişirse ekrandaki
+//     ara hâl dondurulur (freeze) ve oradan yeni hedefe gidilir — önceki şekle dönülmez.
+//   · dünya görünmezken (araya beyaz bölümler girince) tuval boşaltılır; sonraki koyu bölüm ekrana girerken eski şekil hiç
+//     görünmez, bölümün kendi şekli toplanarak belirir (FORM_S). Aynı bölüme dönülünce şekil zaten oradadır (yeniden toplanmaz).
+//   · tam sayfa yüklemesinde ilk kare sayfanın şekliyle başlar ve toplanarak belirir; sayfa geçişinde noktalar dışarı akar, yeni
+//     sayfanın şekli noktalar dışarıdayken oturur ve içeri akar.
 import { WebGLRenderer, Scene, PerspectiveCamera, BufferGeometry, BufferAttribute, Points, ShaderMaterial, AdditiveBlending, Sphere, Vector2, Vector3 } from 'three';
 import { lazyFormations, mulberry32, POSES, SPIN, SWAY, FORMATION_COUNT } from './formations.js';
 import { clamp, smoothstep } from '../util.js';
@@ -15,16 +25,24 @@ import { clamp, smoothstep } from '../util.js';
 const LENS = { falloff: 120, push: 0.012, grow: 0.5, glow: 0.7 }; // Ekim 2026 (okunurluk): itme 0,022 → 0,012
 const glf = (n) => n.toFixed(3); // GLSL ondalık sabiti
 
+// Sahne dönüşümü ve toplanma — hepsi buradan ayarlanır (CPU'daki freeze() aynı sabitleri kullanır):
+const MORPH_S = 0.8; // dönüşüm süresi (sn) — Ekim 2026: 1,15 sn önizlemesinden sonra «daha hızlı» istendi
+const MORPH_ST = 0.3; // noktaya özgü gecikme payı: dönüşüm şeklin üzerinden dalga gibi geçer (her nokta ≈ 0,56 sn yol alır)
+const SWIRL = 0.75; // dönüşüm yolundaki girdap: dikey eksen çevresinde en çok dönüş (rad, yolun ortasında)
+const BULGE = 0.7; // yolun noktaya özgü sabit sapması (dünya birimi, yolun ortasında)
+const FORM_S = 0.8; // bölüm ekrana girince şeklin toplanma süresi (sn)
+const FORM_COVER = 0.4; // toplanma, bölümün görünen kısmı min(ekran, bölüm) yüksekliğinin bu oranına varınca başlar
+
 const VERT = /* glsl */ `
   attribute vec3 aB;
   attribute vec2 aSA;
   attribute vec2 aSB;
   attribute vec2 aR;
+  attribute vec4 aM;
   attribute vec2 aW;
   attribute float aK;
   uniform float uWord;
   uniform float uSurge;
-  uniform float uSurgeOut; // 1: çıkış (noktalar dışarı akar), 0: giriş (yeni şekil yerinde belirir)
   uniform vec2 uSurgeO;
   uniform float uMix;
   uniform float uTime;
@@ -33,6 +51,8 @@ const VERT = /* glsl */ `
   uniform float uBright;
   uniform float uIntro;
   uniform float uWave;
+  uniform vec2 uWv;
+  uniform float uForm;
   uniform float uAspect;
   uniform vec3 uPtr;
   varying float vA;
@@ -46,20 +66,42 @@ const VERT = /* glsl */ `
     return vec3(0.34, 0.86, 0.50);
   }
   float h11(float n) { return fract(sin(n * 91.3458) * 47453.5453); }
+  // ufuk arazisinin yavaş dalgası (world.js › waveY ile aynı)
+  float waveY(vec3 q) {
+    return sin(q.x * 0.33 + uTime * 0.7) * cos(q.z * 0.27 - uTime * 0.5) * 0.30 + sin(q.x * 0.9 - uTime * 1.1 + q.z * 0.4) * 0.07;
+  }
+  vec2 rot(vec2 v, float a) {
+    float c = cos(a);
+    float n = sin(a);
+    return vec2(c * v.x - n * v.y, n * v.x + c * v.y);
+  }
 
   void main() {
     float s = aR.y;
-    // sahne geçişi (müşteri geri bildirimi, Ekim 2026: «daha keskin, daha net»): noktaya özgü gecikme ve geçiş sırasındaki
-    // dağılma azaltıldı; noktalar yeni şekle daha doğrudan gider, bulut gibi dağılıp toplanmaz
-    float t = clamp((uMix - aR.x * 0.22) / (1.0 - 0.22), 0.0, 1.0);
+    // Sahne dönüşümü: A (position) → B (aB). Her nokta kendi gecikmesiyle (aR.x) yola çıkar; yol, dikey eksen çevresinde hafif
+    // girdaplı bir yaydır (aM: noktaya özgü sabitler). Yol zamandan bağımsızdır: yarıda kesilen dönüşüm world.js › freeze()
+    // ile CPU'da birebir dondurulur ve yeni hedefe oradan devam edilir.
+    float t = clamp((uMix - aR.x * ${glf(MORPH_ST)}) / ${glf(1 - MORPH_ST)}, 0.0, 1.0);
     t = t * t * (3.0 - 2.0 * t);
-    // A formasyonu ufuk arazisiyse yavaş dalga (uWave: 0..1)
     vec3 pa = position;
-    pa.y += uWave * (sin(pa.x * 0.33 + uTime * 0.7) * cos(pa.z * 0.27 - uTime * 0.5) * 0.30 + sin(pa.x * 0.9 - uTime * 1.1 + pa.z * 0.4) * 0.07);
-    vec3 p = mix(pa, aB, t);
+    pa.y += uWv.x * waveY(pa);
+    vec3 pb = aB;
+    pb.y += uWv.y * waveY(pb);
+    vec3 p = mix(pa, pb, t);
     float w = sin(t * 3.14159265);
-    p += vec3(sin(s * 6.2831 + uTime * 0.5), cos(s * 12.566 + uTime * 0.45), sin(s * 9.4 - uTime * 0.4)) * w * 0.45;
+    // girdap: uzak noktalar (ufuk arazisi) daha az döner — yer değiştirme sınırlı kalır
+    p.xz = rot(p.xz, w * aM.x * ${glf(SWIRL)} / (1.0 + length(p.xz) * 0.08));
+    p += aM.yzw * w * ${glf(BULGE)};
     p += vec3(sin(uTime * 0.28 + s * 40.0), cos(uTime * 0.25 + s * 31.0), sin(uTime * 0.2 + s * 17.0)) * 0.05;
+    // Toplanma (uForm 0 → 1): bölüm ekrana girince şekil, çevresindeki gevşek bir buluttan dönerek kendi yerine süzülür;
+    // önceki sahnenin şekli hiç görünmez. uForm = 0 iken noktalar görünmez.
+    float g = clamp((uForm - aR.x * 0.4) / 0.6, 0.0, 1.0);
+    float ge = 1.0 - pow(1.0 - g, 3.0);
+    if (ge < 1.0) {
+      vec3 gd = normalize(aM.yzw + vec3(0.001, 0.0, 0.0));
+      p.xz = rot(p.xz, (1.0 - ge) * 0.9);
+      p += gd * (2.2 + 2.6 * aM.x) * (1.0 - ge);
+    }
 
     // açılış: dağınık hâlden formasyona toplanma (noktaya özgü gecikme, yavaşlayan varış)
     float it = clamp((uIntro - aR.x * 0.5) / 0.5, 0.0, 1.0);
@@ -91,12 +133,10 @@ const VERT = /* glsl */ `
     float sg = 0.0;
     float sp = 0.0;
     vec2 sdir = vec2(1.0, 0.0);
-    // Giriş (müşteri geri bildirimi, Ekim 2026: «sayfanın şekli doğrudan gelsin»): noktalar dışarıdan akıp toplanmak yerine
-    // yeni şeklin kendi yerinde, noktaya özgü küçük gecikmeyle belirir; akış yalnızca çıkışta.
-    if (uSurge > 0.001 && uSurgeOut > 0.5) {
+    if (uSurge > 0.001) {
       sp = 0.55 + 1.65 * h11(s * 11.3);
       sg = uSurge * (0.94 + 0.06 * sin(uTime * 3.0 + s * 20.0));
-      // dışarı akarken hafif girdap: noktaya özgü hızla dönerek uzaklaşır (giriş akışı yok: yeni şekil yerinde belirir)
+      // dışarı akarken hafif girdap: noktaya özgü hızla dönerek uzaklaşır (girişte tersine, yerine dönerek oturur)
       float ang = sg * sp * 0.2;
       vec2 dp = (ndc - uSurgeO) * vec2(uAspect, 1.0);
       dp = vec2(cos(ang) * dp.x - sin(ang) * dp.y, sin(ang) * dp.x + cos(ang) * dp.y);
@@ -109,15 +149,16 @@ const VERT = /* glsl */ `
     float dist = max(1.0, -mv.z);
     float size = mix(aSA.x, aSB.x, t);
     float tn = t < 0.5 ? aSA.y : aSB.y;
-    float psz = max(2.1, size * uPx * 1.12 * (96.0 / dist) * (1.0 + w * 0.2 + push * ${glf(LENS.grow)}));
+    // dönüşüm ve toplanma yolundaki noktalar biraz iri ve parlak: akış belirgin görünür
+    float psz = max(2.1, size * uPx * 1.12 * (96.0 / dist) * (1.0 + w * 0.25 + (1.0 - ge) * 0.3 + push * ${glf(LENS.grow)}));
     gl_PointSize = mix(psz, max(2.2, 2.6 * uPx), wt);
     gl_PointSize = min(gl_PointSize * (1.0 + sg * (0.9 + 1.2 * sp)), 90.0);
     // okunurluk (Ekim 2026): titreme ve nokta başına parlaklık farkı azaltıldı; şekil daha dolu ve sabit görünür
     float tw = 0.86 + 0.14 * sin(uTime * (0.6 + fract(s * 13.7)) + s * 50.0);
     vA = (0.72 + 0.28 * fract(s * 7.31)) * tw * smoothstep(170.0, 12.0, dist) * uBright * uFade * (1.0 + push * ${glf(LENS.glow)}) * smoothstep(0.0, 0.22, it);
+    vA *= (1.0 + w * 0.12) * smoothstep(0.0, 0.4, g);
     vA = mix(vA, 0.95 * uFade * (1.0 + push * ${glf(LENS.glow * 0.8)}), wt);
     vA *= (1.0 + sg * 1.5) * (1.0 - smoothstep(0.95, 1.0, uSurge));
-    if (uSurgeOut < 0.5) vA *= clamp((1.0 - uSurge - aR.x * 0.35) / 0.65, 0.0, 1.0);
     // kahraman (uWave>0): ekranın alt kısmı sakinleşir → alt bilgi metni ve düğmeler okunur kalır
     vA *= 1.0 - uWave * 0.9 * (1.0 - smoothstep(-0.85, -0.25, ndc.y));
     // kenar (müşteri geri bildirimi, Ekim 2026: «kenarlarda uçuşan noktalar»): şekil noktaları ekranın kenarına yaklaşırken söner;
@@ -151,7 +192,23 @@ const FRAG = /* glsl */ `
 const LAST = FORMATION_COUNT - 1; // son sahne sırası
 const INTRO_S = 2.2; // toplanma süresi (sn)
 const SURGE_OUT = 350; // sayfa geçişi: noktaların ekran dışına akma süresi (ms) — yönlendirici bu süre dolunca içeriği değiştirir (U-20)
-const SURGE_IN = 600; // sayfa geçişi: yeni sayfada şeklin yerinde belirme süresi (ms) — önce 850 (içeri akış)
+const SURGE_IN = 850; // sayfa geçişi: yeni sayfada noktaların içeri akıp şekle oturma süresi (ms)
+const FROZEN = -2; // dondurulmuş ara hâl (yarıda kesilen dönüşüm): A tamponunda, kendi duruşuyla (frozen)
+const PI = Math.PI;
+
+// ufuk arazisinin dalgası — VERT › waveY ile birebir aynı (freeze() dalgalı A/B konumunu dondururken kullanır)
+const waveY = (x, z, T) => Math.sin(x * 0.33 + T * 0.7) * Math.cos(z * 0.27 - T * 0.5) * 0.3 + Math.sin(x * 0.9 - T * 1.1 + z * 0.4) * 0.07;
+const lerpPose = (PA, PB, e) => {
+  const L = (u, v) => u + (v - u) * e;
+  return {
+    pos: [0, 1, 2].map((i) => L(PA.pos[i], PB.pos[i])),
+    look: [0, 1, 2].map((i) => L(PA.look[i], PB.look[i])),
+    fov: L(PA.fov, PB.fov),
+    bright: L(PA.bright, PB.bright),
+    lx: L(PA.lx ?? 1, PB.lx ?? 1),
+    ls: L(PA.ls ?? 1, PB.ls ?? 1),
+  };
+};
 
 // WebGL 2 desteği önce küçük, atılan bir tuvalde sınanır (T-35): yoksa three.js çiziciyi kurmaya çalışıp konsola hata yazmaz;
 // dünya kurulmaz ve efektler «Kapalı»ya düşer (main.js › bootWorld). Sınama bağlamı hemen bırakılır.
@@ -207,6 +264,16 @@ export async function createWorld({ fx, canvas, intro = false }) {
   kArr.fill(1, 0, Math.floor(N * 0.9));
   geo.setAttribute('aK', new BufferAttribute(kArr, 1));
   geo.setAttribute('aW', aW);
+  // aM: dönüşüm yolunun noktaya özgü sabitleri — x: girdap kazancı (0,5–1), yzw: yay sapması / toplanma yönü (−1..1)
+  const rm = mulberry32(31337);
+  const mArr = new Float32Array(N * 4);
+  for (let i = 0; i < N; i++) {
+    mArr[i * 4] = 0.5 + 0.5 * rm();
+    mArr[i * 4 + 1] = rm() * 2 - 1;
+    mArr[i * 4 + 2] = rm() * 2 - 1;
+    mArr[i * 4 + 3] = rm() * 2 - 1;
+  }
+  geo.setAttribute('aM', new BufferAttribute(mArr, 4));
   geo.boundingSphere = new Sphere(new Vector3(), 1e4);
 
   const material = new ShaderMaterial({
@@ -224,11 +291,12 @@ export async function createWorld({ fx, canvas, intro = false }) {
       uBright: { value: 1 },
       uIntro: { value: intro ? 0 : 1 },
       uWave: { value: 0 },
+      uWv: { value: new Vector2(0, 0) },
+      uForm: { value: 1 },
       uAspect: { value: 1 },
       uPtr: { value: new Vector3(0, 0, 0) },
       uWord: { value: 0 },
       uSurge: { value: 0 },
-      uSurgeOut: { value: 1 },
       uSurgeO: { value: new Vector2(0, 0) },
     },
   });
@@ -239,7 +307,8 @@ export async function createWorld({ fx, canvas, intro = false }) {
   let pairA = -1;
   let pairB = -1;
   function fillPair(a, b) {
-    if (a !== pairA) {
+    // FROZEN: A tamponunu freeze() doldurdu (yarıda kesilen dönüşümün ekrandaki hâli)
+    if (a !== pairA && a !== FROZEN) {
       aPos.array.set(F[a].pos);
       for (let i = 0; i < N; i++) {
         aSA.array[i * 2] = F[a].size[i];
@@ -262,13 +331,28 @@ export async function createWorld({ fx, canvas, intro = false }) {
   }
 
   // ── durum
-  let s = 0; // geçerli sahne (kesirli)
+  // Sahne: sFrom → sTo dönüşümü, m ∈ [0, 1] (0: sFrom, 1: sTo); durağanken sFrom === sTo. sFrom = FROZEN: yarıda kesilen
+  // dönüşümün ekrandaki hâli (A tamponunda; duruşu, dönüşü ve dalga payı `frozen` içinde).
+  let sFrom = 0;
+  let sTo = 0;
+  let m = 0;
+  let mDir = 1; // 1: sTo'ya, -1: geri sFrom'a (hedef eski şekle dönerse aynı yoldan geri)
   let sTarget = 0;
+  let frozen = null; // { pose, turn, dim }
+  let lastFreeze = -1;
   let lift = 0; // formasyonun ekranda yukarı kayması (görüntü yüksekliğinin oranı); bölümün görünen ortasına hizalar
   let liftT = 0;
   let side = 1; // formasyonun ekrandaki tarafı: 1 sağ, -1 sol (düzen değişince süzülür)
   let sideT = 1;
-  let dissolve = null; // {phase:'out'|'in', to, v}
+  // Toplanma: 1 oturmuş; 0..1 bölüm ekrana girerken şekil toplanıyor. formWait: bölümün yeterince görünmesi bekleniyor (görünmez)
+  let formV = 1;
+  let formRun = false;
+  let formWait = false;
+  let cover = 1; // seçili bölümün görünen kısmı / min(ekran, bölüm) yüksekliği (director)
+  let blank = false; // tuval boşaltıldı (dünya görünmezken): sonraki görünüşte eski kare değil, bölümün şekli gelir
+  let appear = false; // görünmezlikten sonra ilk hedef bekleniyor
+  let cutV = -1; // ≥ 0: bitişik olmayan bölüme geçiş — eski şekil hızla söner (uFade 1 → 0), sonra yeni bölümün şekli toplanır
+  let lastScene = -1; // görünürken en son çizilen sahne (dönüşüm sürüyorsa hedefi); aynı bölüme dönülünce yeniden toplanmaz
   let visible = false;
   let running = false;
   let rafId = 0;
@@ -348,8 +432,8 @@ export async function createWorld({ fx, canvas, intro = false }) {
 
   function pose(a, b, f) {
     const e = smoothstep(0, 1, f);
-    const PA = POSES[a];
-    const PB = POSES[b];
+    const PA = poseOf(a);
+    const PB = poseOf(b);
     const k0 = twoCol ? aspect * 0.5 : clamp((aspect - 1.0) / 0.75); // iki sütunda formasyon genişliğin sabit oranında (≈ %68) durur; dar ekranda ortalanır ve metnin arkasında söner
     const k = k0 * (side < 0 ? side * (PA.lx ?? 1) * (1 - e) + side * (PB.lx ?? 1) * e : side); // side<0 → solda (lx: sol yerleşim kazancı)
     const L = (u, v) => u + (v - u) * e;
@@ -372,17 +456,139 @@ export async function createWorld({ fx, canvas, intro = false }) {
       camera.updateProjectionMatrix();
     }
     material.uniforms.uBright.value = L(PA.bright, PB.bright) * (0.5 + 0.5 * Math.min(1, k0));
-    // SWAY > 0: sürekli dönmek yerine ±SWAY rad salınır (kapı, düzlemsel şekiller); aksi hâlde SPIN çarpanıyla yavaş dönüş
-    // salınım genliği %60 (Ekim 2026, okunurluk): yazı ve tablo gibi düzlemsel şekiller daha önden görünür
-    const turn = (scene) => (SWAY[scene] > 0 ? Math.sin(time * 0.24) * SWAY[scene] * 0.6 + pointer.x * 0.1 : (SPIN[scene] ?? 1) * (time * 0.035 + pointer.x * 0.1));
-    points.rotation.y = L(turn(a), turn(b));
+    points.rotation.y = turnMix(turnOf(a), turnOf(b), e);
+  }
+
+  // pose yardımcıları (sc < 0: dondurulmuş ara hâl — FROZEN). İşlev bildirimi olarak pose'un hemen ardında durur:
+  // scripts/scene-reach.mjs ve tests/world-contact-pose.test.mjs pose'u «function pose( … function frame(» dilimiyle VM'de çalıştırır.
+  function poseOf(sc) {
+    return sc < 0 ? frozen.pose : POSES[sc];
+  }
+  // SWAY > 0: sürekli dönmek yerine ±SWAY rad salınır (kapı, düzlemsel şekiller); aksi hâlde SPIN çarpanıyla yavaş dönüş.
+  // Salınım genliği %60 (Ekim 2026, okunurluk): yazı ve tablo gibi düzlemsel şekiller daha önden görünür.
+  function turnOf(sc) {
+    if (sc < 0) return frozen.turn;
+    return SWAY[sc] > 0 ? Math.sin(time * 0.24) * SWAY[sc] * 0.6 + pointer.x * 0.1 : (SPIN[sc] ?? 1) * (time * 0.035 + pointer.x * 0.1);
+  }
+  // iki dönüş açısı arasında en kısa yoldan geçiş: sürekli dönen (SPIN, açı zamanla büyür) şekilden salınan (SWAY) şekle geçerken
+  // nesne birkaç tur dönmesin (görünüm 2π'ye göre aynıdır; geçiş bitince açı tam 2π katı kadar sıçrar, görünmez)
+  function turnMix(u, v, e) {
+    const d = v - u;
+    return u + (d - 2 * Math.PI * Math.round(d / (2 * Math.PI))) * e;
+  }
+  // ufuk arazisi (sahne 0): dalga yer değiştirmesi; dondurulmuş hâlde dalga konuma işlenmiştir
+  function waveOf(sc) {
+    return sc === 0 ? 1 : 0;
+  }
+  // kahramanın (ufuk arazisi) alt kısmını sakinleştirme payı
+  function dimOf(sc) {
+    return sc < 0 ? frozen.dim : sc === 0 ? 1 : 0;
+  }
+
+  // Yarıda kesilen dönüşümün ekrandaki hâlini (VERT ile birebir aynı hesap) A tamponuna dondurur; dönüşüm oradan sTarget'a sürer.
+  // Böylece hızlı kaydırmada şekil önce eski hedefe varıp sonra dönmez, ekrandaki hâlinden doğrudan yeni hedefe akar.
+  function freeze() {
+    const A = aPos.array;
+    const B = aB.array;
+    const SA = aSA.array;
+    const SB = aSB.array;
+    const wa = waveOf(sFrom);
+    const wb = waveOf(sTo);
+    for (let i = 0; i < N; i++) {
+      let t = clamp((m - rArr[i * 2] * MORPH_ST) / (1 - MORPH_ST));
+      t = t * t * (3 - 2 * t);
+      const i3 = i * 3;
+      const ax = A[i3];
+      const az = A[i3 + 2];
+      const ay = A[i3 + 1] + (wa ? waveY(ax, az, time) : 0);
+      const bx = B[i3];
+      const bz = B[i3 + 2];
+      const by = B[i3 + 1] + (wb ? waveY(bx, bz, time) : 0);
+      let px = ax + (bx - ax) * t;
+      const py = ay + (by - ay) * t;
+      let pz = az + (bz - az) * t;
+      const w = Math.sin(t * PI);
+      const i4 = i * 4;
+      const ang = (w * mArr[i4] * SWIRL) / (1 + Math.hypot(px, pz) * 0.08);
+      const c = Math.cos(ang);
+      const n = Math.sin(ang);
+      const rx = c * px - n * pz;
+      pz = n * px + c * pz;
+      px = rx;
+      A[i3] = px + mArr[i4 + 1] * w * BULGE;
+      A[i3 + 1] = py + mArr[i4 + 2] * w * BULGE;
+      A[i3 + 2] = pz + mArr[i4 + 3] * w * BULGE;
+      SA[i * 2] += (SB[i * 2] - SA[i * 2]) * t;
+      if (t >= 0.5) SA[i * 2 + 1] = SB[i * 2 + 1];
+    }
+    aPos.needsUpdate = true;
+    aSA.needsUpdate = true;
+    const e = smoothstep(0, 1, m);
+    const L = (u, v) => u + (v - u) * e;
+    frozen = { pose: lerpPose(poseOf(sFrom), poseOf(sTo), e), turn: turnMix(turnOf(sFrom), turnOf(sTo), e), dim: L(dimOf(sFrom), dimOf(sTo)) };
+    pairA = FROZEN;
+    sFrom = FROZEN;
+    sTo = sTarget;
+    m = 0;
+    mDir = 1;
+    lastFreeze = time;
+  }
+
+  // Sahne durumunu hedefe göre ilerletir (her karede)
+  function stepScene(dt) {
+    if (sFrom === sTo) {
+      if (sTarget !== sTo) {
+        sTo = sTarget; // dönüşüm başlar: ekrandaki şekilden doğrudan hedefe
+        m = 0;
+        mDir = 1;
+      }
+    } else if (sTarget === sFrom) {
+      mDir = -1; // eski şekle dönüldü: aynı yoldan geri
+    } else if (sTarget === sTo) {
+      mDir = 1;
+    } else if (time - lastFreeze > 0.08) {
+      freeze(); // üçüncü bir hedef: ekrandaki ara hâlden doğrudan ona (en çok 80 ms'de bir)
+    }
+    if (sFrom !== sTo) {
+      m = clamp(m + (mDir * dt) / MORPH_S);
+      if (mDir > 0 && m >= 1) {
+        sFrom = sTo;
+        m = 0;
+      } else if (mDir < 0 && m <= 0) {
+        sTo = sFrom;
+        m = 0;
+        mDir = 1;
+      }
+    }
+  }
+
+  // Sahneyi dönüşümsüz yerleştirir (ilk kare, sayfa geçişi, görünmezlikten sonra). gather: şekil toplanarak belirsin
+  function settle(sc, gather) {
+    sFrom = sTo = sTarget = sc;
+    m = 0;
+    mDir = 1;
+    lift = liftT;
+    side = sideT;
+    formV = gather ? 0 : 1;
+    formWait = gather;
+    formRun = false;
+    cutV = -1;
+    material.uniforms.uForm.value = formV;
+    material.uniforms.uFade.value = 1;
+  }
+
+  // Görünmez dünya: tuval boşaltılır — sonraki koyu bölüm ekrana girerken eski şeklin son karesi görünmesin
+  function clearCanvas() {
+    renderer.setRenderTarget(null);
+    renderer.clear();
+    blank = true;
   }
 
   function frame(now) {
     rafId = 0;
     if (!running) return;
     const lensLive = lens.k > 0.01 || now - lens.at < 2300;
-    const moving = Math.abs(sTarget - s) > 0.003 || dissolve || introRun || lensLive || Math.abs(pointer.tx - pointer.x) > 0.002 || Math.abs(liftT - lift) > 0.0015 || Math.abs(sideT - side) > 0.004 || wordV !== wordT || wordV > 0.002 || surgeV !== surgeT || surgeV > 0.002;
+    const moving = sFrom !== sTo || sTarget !== sTo || formRun || cutV >= 0 || introRun || lensLive || Math.abs(pointer.tx - pointer.x) > 0.002 || Math.abs(liftT - lift) > 0.0015 || Math.abs(sideT - side) > 0.004 || wordV !== wordT || wordV > 0.002 || surgeV !== surgeT || surgeV > 0.002;
     const minDt = 1000 / (moving ? P.fps : 30);
     if (now - last < minDt - 2) {
       rafId = requestAnimationFrame(frame);
@@ -415,10 +621,13 @@ export async function createWorld({ fx, canvas, intro = false }) {
     } else if (!moving) dt_samples.length = 0;
     last = now;
     time += dt;
-    lift += (liftT - lift) * (1 - Math.exp(-dt * 4.5));
-    if (Math.abs(liftT - lift) < 0.0008) lift = liftT;
-    side += (sideT - side) * (1 - Math.exp(-dt * 3.2));
-    if (Math.abs(sideT - side) < 0.003) side = sideT;
+    // (eski şekil sönerken yerinde kalır: yeni bölüme kayıp orada görünmesin — yeni konuma settle() ile oturulur)
+    if (cutV < 0) {
+      lift += (liftT - lift) * (1 - Math.exp(-dt * 4.5));
+      if (Math.abs(liftT - lift) < 0.0008) lift = liftT;
+      side += (sideT - side) * (1 - Math.exp(-dt * 3.2));
+      if (Math.abs(sideT - side) < 0.003) side = sideT;
+    }
     if (wordV !== wordT) {
       wordV = clamp(wordV + Math.sign(wordT - wordV) * (dt / 1.15), 0, 1);
       if (Math.abs(wordT - wordV) < 0.001) wordV = wordT;
@@ -431,7 +640,6 @@ export async function createWorld({ fx, canvas, intro = false }) {
     }
     // çıkış: hızlı başlar (tıklamaya anında tepki), girişte hızlı gelir ve yumuşak oturur
     material.uniforms.uSurge.value = surgeT > 0 ? 1 - (1 - surgeV) * (1 - surgeV) : surgeV * surgeV;
-    material.uniforms.uSurgeOut.value = surgeT > 0 ? 1 : 0;
     pointer.x += (pointer.tx - pointer.x) * Math.min(1, dt * 3);
     pointer.y += (pointer.ty - pointer.y) * Math.min(1, dt * 3);
 
@@ -450,48 +658,57 @@ export async function createWorld({ fx, canvas, intro = false }) {
     lens.y += (lens.ty - lens.y) * Math.min(1, dt * 12);
     material.uniforms.uPtr.value.set(lens.x, lens.y, lens.k);
 
-    // Sahne değişimi (müşteri geri bildirimi, Ekim 2026: «bölümün şekli doğrudan gelsin, önce eskisi görünmesin»): iki şekil
-    // arasında süzülme (nokta yolculuğu) yok. Her değişim kısa bir kesme: eski şekil 0,12 sn'de söner, yeni şekil kendi yerinde
-    // 0,28 sn'de belirir. Belirme sürerken hedef yine değişirse beklemeden sönmeye döner.
-    if (dissolve && dissolve.phase === 'in' && sTarget !== s) dissolve = { phase: 'out', v: dissolve.v };
-    if (dissolve) {
-      if (dissolve.phase === 'out') {
-        dissolve.v = Math.max(0, dissolve.v - dt / 0.12);
-        if (dissolve.v <= 0) {
-          s = sTarget;
-          dissolve = { phase: 'in', v: 0 };
-        }
-      } else {
-        dissolve.v = Math.min(1, dissolve.v + dt / 0.28);
-        if (dissolve.v >= 1) dissolve = null;
-      }
-      material.uniforms.uFade.value = dissolve ? dissolve.v : 1;
-    } else if (sTarget !== s) {
-      dissolve = { phase: 'out', v: 1 };
+    // Sahne: hedefe doğrudan dönüşüm (bkz. dosya başı). Görünmezlikten sonraki ilk hedef target() içinde yerleşir; hedef
+    // gelmeden kare çizilecek olursa son bilinen hedefle burada yerleşir.
+    if (appear) handleAppear();
+    // şekil henüz görünmüyorken (toplanma bekleniyor) hedef değişirse dönüşüm değil, yeni sahneyle beklemeye devam
+    if (formWait && sTarget !== sTo) settle(sTarget, true);
+    if (cutV >= 0) {
+      // bitişik olmayan bölüme geçiş: eski şekil 0,18 sn'de söner, ardından yeni bölümün şekli yerinde toplanır
+      cutV = Math.max(0, cutV - dt / 0.18);
+      material.uniforms.uFade.value = cutV;
+      if (cutV <= 0) settle(sTarget, introV >= 1);
+    } else stepScene(dt);
+    // toplanma: bölüm yeterince göründüğünde başlar (ekranın altında yarım görünürken oynayıp kaçmasın)
+    if (formWait && cover >= FORM_COVER) {
+      formWait = false;
+      formRun = true;
     }
+    if (formRun) {
+      formV = Math.min(1, formV + dt / FORM_S);
+      if (formV >= 1) formRun = false;
+    }
+    material.uniforms.uForm.value = formV;
 
-    const a = clamp(Math.floor(s), 0, LAST);
-    const f = a === LAST ? 0 : s - a;
-    // tam sayı sahnede B ikinci kez üretilmez (f = 0 → yalnızca A görünür)
-    const b = f === 0 ? a : clamp(a + 1, 0, LAST);
-    fillPair(a, b);
+    fillPair(sFrom, sTo);
     // giriş: yeni sahnenin şekli hazır (ilk kullanımda üretilir; bu kare uzun sürebilir) — akış bu kareden sonra sayılmaya başlar
     if (Number.isNaN(surgeAt)) surgeAt = performance.now();
-    material.uniforms.uMix.value = f;
+    material.uniforms.uMix.value = m;
     material.uniforms.uTime.value = time;
-    material.uniforms.uWave.value = a === 0 ? 1 - smoothstep(0, 0.9, f) : 0;
-    pose(a, b, f);
+    pose(sFrom, sTo, m);
+    material.uniforms.uWave.value = dimOf(sFrom) + (dimOf(sTo) - dimOf(sFrom)) * smoothstep(0, 1, m);
+    material.uniforms.uWv.value.set(waveOf(sFrom), waveOf(sTo));
+    if (!visible && surgeV === 0 && surgeT === 0) {
+      // görünmez + akış bitti: tuval boşaltılır (eski şeklin karesi sonraki bölümde görünmesin), döngü durur
+      clearCanvas();
+      running = false;
+      return;
+    }
     renderer.render(scene, camera);
+    blank = false;
+    if (visible) lastScene = sTo;
     if (firstFrame) {
       firstFrame = false;
       html.classList.add('fx-live');
     }
-    if (!visible && surgeV === 0 && surgeT === 0) {
-      // görünmez + akış bitti: son kare çizildi, döngü durur
-      running = false;
-      return;
-    }
     rafId = requestAnimationFrame(frame);
+  }
+
+  // Görünmezlikten sonra ilk hedef: aynı bölüme dönüldüyse şekil zaten odur, yerinde görünür; başka bölümse eski şeklin
+  // karesi hiç çizilmez — bölümün şekli doğrudan yerleşir ve bölüm yeterince görününce toplanarak belirir.
+  function handleAppear() {
+    appear = false;
+    settle(sTarget, sTarget !== lastScene && introV >= 1);
   }
 
   function start() {
@@ -506,9 +723,8 @@ export async function createWorld({ fx, canvas, intro = false }) {
     rafId = 0;
   }
 
-  // ilk durumu hazırla (görünmese de)
-  fillPair(0, 1);
-  pose(0, 1, 0);
+  // ilk durumu hazırla: kamera hazır; formasyon tamponları ilk karede, sayfanın sahnesiyle doldurulur (önce ana sayfa şekli üretilmez)
+  pose(0, 0, 0);
 
   // açılış toplanmasını başlat (yoksa güvenlik ağı: 5 sn sonra kendiliğinden)
   function assemble() {
@@ -599,25 +815,35 @@ export async function createWorld({ fx, canvas, intro = false }) {
   }
 
   return {
-    target(v, l = 0, sd = 1) {
-      sTarget = Math.round(clamp(v, 0, LAST)); // sahneler tam sayı: iki şekil arası ara durum çizilmez
+    target(v, l = 0, sd = 1, cov = 1, cut = false) {
+      // v: sahne; l: yukarı kayma; sd: taraf; cov: seçili bölümün görünen kısmı / min(ekran, bölüm) yüksekliği (toplanma eşiği);
+      // cut: seçim araya beyaz bölüm giren başka bir koyu bölüme geçti — dönüşüm yok, eski şekil söner, yenisi orada toplanır
+      sTarget = Math.round(clamp(v, 0, LAST)); // sahneler tam sayı: her değişim bir şekilden ötekine tam bir dönüşüm
       liftT = clamp(l, -0.45, 0.45);
       sideT = sd < 0 ? -1 : 1;
-      // Noktalar ekran dışındayken (sayfa geçişi) ya da ilk kare henüz çizilmemişken (tam yükleme: önce ana sayfa şekli
-      // görünmesin) yeni sahne çözülmeden doğrudan oturur.
-      if (firstFrame || ((surgeT > 0 || snapOpen) && surgeAtTime(performance.now()) > 0.5)) {
-        s = sTarget;
-        lift = liftT;
-        side = sideT;
-        dissolve = null;
-        material.uniforms.uFade.value = 1;
-      }
+      cover = cov;
+      if ((surgeT > 0 || snapOpen) && surgeAtTime(performance.now()) > 0.5) {
+        // sayfa geçişi: noktalar ekran dışında — yeni sahne dönüşümsüz oturur, noktalar sonra bu şekle içeri akar
+        appear = false;
+        settle(sTarget, false);
+      } else if (firstFrame) {
+        // tam yükleme: ilk kare sayfanın şekliyle başlar (önce ana sayfa şekli görünmez) ve toplanarak belirir
+        // (açılış perdesi varsa noktaları açılış toplar: uIntro)
+        appear = false;
+        settle(sTarget, introV >= 1);
+      } else if (appear) handleAppear();
+      else if (cut && cutV < 0) cutV = material.uniforms.uFade.value;
     },
     setVisible(b) {
       if (b === visible) return;
       visible = b;
-      if (b) start();
-      else if (surgeV === 0 && surgeT === 0) stop();
+      if (b) {
+        if (blank) appear = true;
+        start();
+      } else if (surgeV === 0 && surgeT === 0) {
+        stop();
+        clearCanvas();
+      }
     },
     // Sayfa geçişi akışı: on=true noktalar (nx, ny) NDC noktasından dışarı akar; on=false yeni şekle içeri akıp oturur.
     // Döndürür (on=true): noktaların ekran dışına varmasına kalan süre (ms) — yönlendirici içeriği bu süre dolunca değiştirir.
