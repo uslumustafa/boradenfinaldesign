@@ -501,6 +501,8 @@ export function createBehaviors({ fx, scroll, world }) {
       return a + Math.min(n - 1, Math.floor(p * n + 0.18));
     };
     let prevEl = null; // önceki karede seçili bölüm
+    // Koyu ara şeritler (data-world-bridge — ana sayfadaki birim şeridi) iki koyu bölümü birbirinden ayırmaz: aradaki boşluktan düşülür
+    const bridges = qsa('[data-world-bridge]', root);
     const update = () => {
       const vh = innerHeight;
       let best = null;
@@ -526,11 +528,17 @@ export function createBehaviors({ fx, scroll, world }) {
       const cover = bestVis / Math.max(1, Math.min(vh, r.height));
       // Seçim, araya beyaz bölüm giren (bitişik olmayan) başka bir koyu bölüme geçtiyse şekil eskisinden dönüşmez: eski şekil
       // yeni bölümde hiç görünmez, yeni bölümün şekli orada toplanır («önce ilk şekil, sonra bölümün şekli» olmasın).
-      // Bitişik koyu bölümler (ana sayfa kahramanı → alanlar) ve aralıklı bölümün adımları dönüşümle geçer.
+      // Bitişik koyu bölümler (ana sayfa: alanlar → birim şeridi → sektörler) ve aralıklı bölümün adımları dönüşümle geçer.
       let cut = false;
       if (prevEl && prevEl !== c.el && prevEl.isConnected) {
         const pr = prevEl.getBoundingClientRect();
-        cut = (r.top >= pr.top ? r.top - pr.bottom : pr.top - r.bottom) > 24;
+        const [gapTop, gapBottom] = r.top >= pr.top ? [pr.bottom, r.top] : [r.bottom, pr.top];
+        let gap = gapBottom - gapTop;
+        for (const b of bridges) {
+          const br = b.getBoundingClientRect();
+          if (br.top >= gapTop - 1 && br.bottom <= gapBottom + 1) gap -= br.height;
+        }
+        cut = gap > 24;
       }
       prevEl = c.el;
       // data-world-force: alan adına tıklanınca kaydırma sürerken hedef alanın şekli doğrudan gelir (aradaki alanlar sırayla görünmez)

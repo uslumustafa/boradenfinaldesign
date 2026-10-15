@@ -110,7 +110,8 @@ html[data-fx='off'] .world canvas {
     position: static !important;
   }
   .phero::before,
-  .hero::before {
+  .hero__media,
+  .hero__ctl {
     display: none;
   }
   .phero h1,

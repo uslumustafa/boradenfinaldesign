@@ -17,10 +17,10 @@ tek vurgu (marka üç rengi yalnızca ince çizgi/nokta); parçacık alanı «an
 | Bölüm | id | Dünya sahnesi | Not |
 |---|---|---|---|
 | Açılış perdesi | `.open` | — | yalnızca ilk gelişte; bkz. §3 |
-| Kahraman | `#giris` | 0 «Ufuk» (veri arazisi) | «Tam ✓ doğru ✓ zamanında ✓» (satırlar sloganın öbeklerinden; tikler §7); alt kenarda sis; imleç mercek etkisi |
+| Kahraman | `#giris` | — (zemin ofis videosu; 2026-10-16'ya dek 0 «Ufuk») | «Tam ✓ doğru ✓ zamanında ✓» (satırlar sloganın öbeklerinden; tikler §7); zemin: ofis videosu (§4) |
 | Tanıtım | `#hakkimizda` | 0 | kuruluş yılı/8 alan/60 hizmet/11 araç (modelden); 4 adımlık çalışma akışı |
 | Hizmet alanları | `#alanlar` | 1–8 (`data-world-range`) | tek sabit sahne; kaydırınca ya da alan başlığına tıklayınca alan seçilir (tıklama sayfaya gitmez; gitmek için «İncele»). Her alan bir şekil: beyan rakamları, denetim dosyası, defter yaprakları (üstte okunur mizan rakamları), çizgi dallı karar ağacı, destek basamakları + AB yıldızları, § ve tokmak, kâğıt faturadan ekrandaki e-faturaya (`dijital`), antik okul binası |
-| Film | `#film` | — | kaydırdıkça açılan çerçeve; ofis görüntüsü (§4); başlık yalnızca «Ofisimiz.» (müşteri isteği, Ekim 2026); altında sekiz alanın adlarının aktığı **birim şeridi** (`.units`; hover’da durur, «Kapalı»da satırlara sarılır) |
+| Birim şeridi | `nav.units` | — (köprü: `data-world-bridge`) | sekiz alanın adlarının aktığı şerit (hover’da durur, «Kapalı»da satırlara sarılır); «Ofisimiz» filmi 2026-10-16'da kaldırıldı, video kahramana taşındı |
 | Sektörler | `#sektorler` | `matris` = 31 (solda, `data-world-side="-1"`; 2026-10-05'e kadar 5 «veri katmanları» idi — Sistemler alanıyla aynı şekil tekrarlanıyordu) | 8 sektörlük liste; üzerine gelince kısa tanım solda belirir |
 | Araçlar | `#araclar` | — (açık zemin) | 4 hesaplayıcı çipi + mini KDV |
 | Bilgi | `#bilgi` | — | öne çıkan + son 3 yayın + arşiv satırı |
@@ -29,7 +29,7 @@ tek vurgu (marka üç rengi yalnızca ince çizgi/nokta); parçacık alanı «an
 
 ## 3. Açılış sekansı (`opening.js`)
 
-~2,2 sn: koyu perde üstünde kuruluş yılı 1900 → 1993 sayaçla belirir, perde ortadan dışa **piksel piksel** çözülür (nadir marka renkli hücreler), altta parçacık alanı toplanır (`world.assemble()`) ve başlık açılır.
+~2,2 sn: koyu perde üstünde kuruluş yılı 1900 → 1993 sayaçla belirir, perde ortadan dışa **piksel piksel** çözülür (nadir marka renkli hücreler), altta kahramanın video posteri ve başlık açılır (2026-10-16'ya dek burada parçacık alanı toplanırdı — `world.assemble()`; kahraman videoya geçince kaldırıldı, dünya ilk şeklini hizmet alanlarında toplar).
 Logo kullanılmaz (logo yalnızca bileşende; sayfada tam 2 kez kuralı). Başlık çubuğu perdenin üstünde kalır; HUD açılışta gizlidir.
 
 Ne zaman çalışır (karar `layouts/base.njk` içindeki erken betikte → `html.is-opening`; depolama yok):
@@ -37,11 +37,12 @@ yalnızca `/`, `#` yok, efekt «Kapalı» değil, gezinme türü `navigate`, yö
 Hareket azaltma → Kapalı → açılış yok. Atlama: tıklama, Esc/Enter/Boşluk, tekerlek/dokunma, «Girişi atla» düğmesi. Güvenlik ağları: ana betik 3,5 sn içinde gelmezse perde kalkar; her durumda 7 sn'de kalkar.
 Elle denemek için yeni sekmede adresi yazıp açın (yönlendiren yok); site içinden (logoya tıklayarak) dönüşte yönlendiren aynı site olduğu için görünmez. Otomasyonda `/?intro` ekleyin.
 
-## 4. Film (`modules/film.js`) ve video varlığı
+## 4. Kahraman videosu (`modules/hero-film.js`) ve video varlığı
 
-`src/assets/video/boraden-ofis.mp4` (1,1 MB, 4,8 sn, 1280×720, sessiz, döngü; başta ve sonda 0,7 sn solma) + poster `boraden-ofis-poster-1280.webp` / `-768.webp` (`srcset`; ≈ 42 / 21 KB). Kurgu: 2022 arşivinden tek klip (IMG_0376, 4K HEVC HLG → SDR), girişteki ahşap çıtalı bölmeden bilgisayar başında sırtı dönük oturan çalışanın göründüğü ana kadar (kaynakta 8,0–9,87 sn), logosuz; 2,6 kat yavaşlatılıp hareket tahminli ara karelerle uzatılır. Bulanıklık/sansür yok (müşteri isteği, 6 Ekim 2026; arka planda bitkinin ardında birkaç kişi uzaktan küçük görünür); betik `scripts/tools/office-film.sh` (kaynak klip kullanıcının Downloads klasöründe). Poster: girişteki çıtalı bölme ve ofisin göründüğü kişisiz kare (ara dosyanın 0,9. saniyesi).
-Oynatma: otomatik yalnızca «Tam» katmanda, ≥ 900 px'te, veri tasarrufu kapalıyken; görünür alan dışında durur; «Duraklat/Oynat» düğmesi her zaman vardır. Hafif/Kapalı/mobil/hareket azaltma/veri tasarrufu → yalnızca poster (video dosyası indirilmez) ve «Videoyu oynat» düğmesi.
-**Hukuki not:** müşteri geri bildirimi (Ekim 2026) gereği ayrılan çalışanların yüzü görünmemeli; filmde yüzler bulanıklaştırıldı ve kesit, sırtı dönük çalışanla bitiyor (sonrasında yüzü açık biri giriyor). Arşiv 2022'ye ait olduğundan yayın öncesi çalışan rızası/KVKK aydınlatması yine de netleşmeli; mümkünse yeni çekim önerilir. Duvarda eski logo varyantı bulunan kareler bilerek dışlandı.
+`src/assets/video/boraden-giris-1080.mp4` (3,6 MB) / `boraden-giris-720.mp4` (1,5 MB) — 10,6 sn, sessiz, döngü, başta 0,35 sn ve sonda 0,42 sn laciverde (#08132a) geçiş; poster `boraden-giris-poster-768/1280/1920.webp` (≈ 19 / 36 / 60 KB; videonun 0,9 sn karesi). Kurgu `scripts/tools/hero-film.py`: müşterinin Ekim 2026 çekimi (4K HEVC HLG → SDR, mobius ton eşleme), ilk 5 sn tam kare (tabela eksiksiz), 5,0–8,6 sn arası sola yaslı yavaş itme (1,0× → 1,52×; alt piksel kırpma). Renk: hafif soğuk, az doygun.
+Yerleşim: masaüstünde tam genişlik zemin; koyulaşma başlık sütununu izler (`--l` = içerik sütununun sol kenarı) ve videonun en parlak karelerinde metin karşıtlığını korur. Dar dikey ekranda zemin başlığın altında 16:9 bant. Beyaz sayfa binerken zemin çok az yaklaşır ve kararır (`--hp`).
+Oynatma: kendiliğinden yalnızca «Tam»/«Hafif» katmanda, ≥ 900 px'te, veri tasarrufu kapalıyken; beyaz sayfa kahramanı örtünce ve sekme gizlenince durur; «Duraklat/Videoyu oynat» düğmesi her zaman vardır (sağ üst; bantta sağ alt). Kapalı/mobil/hareket azaltma/veri tasarrufu → yalnızca poster (video indirilmez). İlk oynatma poster karesinden başlar (`POSTER_T`). Dosya: cihaz pikseli genişliği > 1400 → 1080p, değilse 720p.
+**Hukuki not:** müşteri isteği (Ekim 2026) gereği eski çalışanlar görünmez — yalnızca kadrajla (görüntüde rötuş ya da yüz değişikliği yok). Klibin sonunda oturan üç çalışan görünür; yayın öncesi rıza/KVKK aydınlatması netleşmeli.
 
 ## 5. Parçacık dünyası — ayar rehberi (`src/assets/js/world/`)
 
@@ -66,5 +67,4 @@ Ana sayfa v2.1'den sonra siteye yayılan etkileşim katmanları ana sayfada da �
 - **Bölüm noktaları (HUD):** ana sayfada elle işaretli `[data-chapter]` bölümlerinden (bölüm adı belirir); diğer uzun sayfalarda «Bu sayfada» menüsünden otomatik (`behaviors.js`). Beliren bölüm adı yarı saydam bir «hap» zemin üzerindedir (koyu/açık ton otomatik; içeriğin üstüne binse de okunur). «Kapalı» katmanda ve mobilde görünmez.
 - **Başlıkta denetçi tikleri:** «Tam, doğru, zamanında.» başlığındaki üç renkli noktalama, denetçilerin çalışma kâğıdına attığı kontrol işaretiyle (tik) değiştirildi — logodaki üç çizginin dili; mavi → kırmızı → yeşil sırayla «çizilir» (açılışta ≈ 1–2,3 sn). Başlık satırları `site.tagline`dan (`tagline_words` süzgeci) türer; okunan metin `h1[aria-label]`; tik süstür. «Kapalı»/hareket azaltma/JS yokken tikler hazır durur. CSS: `50-home.css › .hero__title .p`; test: `tests/hero.e2e.mjs`. **Eski görünüme dönmek için:** `50-home.css` içindeki `.hero__title .p` kurallarını kaldırıp `home.njk` başlığındaki `<i class="p" …></i>` yerine noktalama yazmak yeter.
 - **Sayfa geçişi «3B noktalar akar»** (`router.js › world.surge`; Kapalı'da yok). Düğmeler fareye çekilmez (mıknatıs efekti kaldırıldı); «Tam»da yalnızca imleç ucunda küçük bir fare lensi vardır (`world.js › LENS`).
-- **BORADEN yazısı:** ana sayfa kahramanında fare hızlıca sağa-sola sallanınca parçacıklardan oluşur (`modules/swipe-word.js`; kelime logodan değil site yazı tipinden üretilir; Kapalı'da yok).
 - Sözleşme ve Wagtail karşılığı: `WAGTAIL_MAP.md` §7.

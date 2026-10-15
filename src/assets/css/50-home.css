@@ -1,5 +1,5 @@
 /* ═════════ ANA SAYFA (v3 — kısa, sahne tabanlı) ═════════
-   Bölüm sırası: açılış perdesi · kahraman · giriş · hizmet alanları (sabit) · film · sektörler · hesaplayıcılar · bilgi merkezi · kariyer · kapanış
+   Bölüm sırası: açılış perdesi · kahraman (ofis videosu) · giriş · hizmet alanları (sabit) · birim şeridi · sektörler · hesaplayıcılar · bilgi merkezi · kariyer · kapanış
    Kompakt bölüm boşluğu: --hs (genel --sec'ten ≈%25 dar) */
 .is-home {
   --hs: clamp(3.4rem, 1.9rem + 5vw, 7.2rem);
@@ -93,7 +93,7 @@ html.is-opening .hud {
   opacity: 0;
 }
 
-/* ── 1 · Kahraman (sabit sahne) */
+/* ── 1 · Kahraman (sabit sahne; zemin ofis videosu) */
 .stack {
   position: relative;
 }
@@ -105,13 +105,151 @@ html.is-opening .hud {
   padding-top: var(--hdr);
   z-index: 0;
 }
-.hero::before {
-  /* metin okunabilirliği için yalnızca sol taraf hafif koyulaşır; alanın geri kalanı tam görünür */
+/* Zemin: ofis videosu (modules/hero-film.js). Poster ilk boyamada görünür; video posterin karesinden başlayıp üstüne açılır.
+   Okunurluk: başlık sütunu soldan, alt satır (metin + düğmeler) alttan, üst bilginin altı yukarıdan lacivertle koyulaşır; tabela ve
+   ofis sağda açık kalır. Koyulaşma videonun en parlak karelerine göre ayarlıdır (kameranın beyaz duvarı geçtiği ≈3–4. sn): başlık
+   ≥ 8:1, alt metin ve üst etiket ≥ 4,5:1, çerçeveli düğme ≥ 4,5:1 (1024–2560 px genişlik; zeminin %95'lik en parlak noktasına göre).
+   Beyaz sayfa üstüne binerken (--hp) zemin çok az yaklaşır ve kararır. */
+.hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: var(--navy-950);
+}
+.hero__poster,
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 58% 50%;
+  transform: scale(calc(1 + var(--hp, 0) * 0.05));
+  transform-origin: 62% 46%;
+}
+.hero__video {
+  opacity: 0;
+  transition: opacity 0.7s var(--ease-out);
+}
+.hero.has-video .hero__video {
+  opacity: 1;
+}
+.hero__media::after {
+  /* --l: içerik sütununun sol kenarı (geniş ekranda sütun ortalanır, koyulaşma başlıkla birlikte kayar) */
+  --l: max(var(--gutter), calc(50% - var(--maxw) / 2));
+  --n: 5, 12, 26;
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(7, 16, 36, 0.58) 0%, rgba(7, 16, 36, 0.16) 44%, transparent 68%);
+  background:
+    linear-gradient(180deg, rgba(var(--n), 0.55) var(--hdr), rgba(var(--n), 0) calc(var(--hdr) + 24%)),
+    linear-gradient(0deg, rgba(var(--n), 0.82) 0%, rgba(var(--n), 0.62) 22%, rgba(var(--n), 0.32) 38%, rgba(var(--n), 0) 56%),
+    linear-gradient(
+      90deg,
+      rgba(var(--n), 0.88) var(--l),
+      rgba(var(--n), 0.78) calc(var(--l) + min(26%, 380px)),
+      rgba(var(--n), 0.44) calc(var(--l) + min(52%, 780px)),
+      rgba(var(--n), 0.12) calc(var(--l) + min(74%, 1100px)),
+      rgba(var(--n), 0) 100%
+    );
   pointer-events: none;
+}
+/* yatay telefon (kısa ekran): içerik zeminin çoğunu kaplar — zemin bütünüyle bir kademe koyulaşır */
+@media (orientation: landscape) and (max-height: 520px) {
+  .hero__media::after {
+    background-color: rgba(5, 12, 26, 0.5);
+  }
+}
+.hero .hero__eyebrow {
+  color: var(--on-dark-2); /* video zemininde 4,5:1 */
+}
+.hero__media::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--navy-1000);
+  opacity: calc(var(--hp, 0) * 0.6);
+  pointer-events: none;
+}
+/* Oynat/duraklat (WCAG 2.2.2): sağ üstte, içeriğin sağ hizasında; alt satıra ve bölüm göstergesine binmez */
+.hero__ctl {
+  position: absolute;
+  z-index: 1;
+  top: calc(var(--hdr) + clamp(0.9rem, 2.4vh, 1.6rem));
+  right: var(--gutter);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 2.6rem;
+  padding: 0 1.05rem;
+  border: 1px solid var(--line-dark-2);
+  border-radius: var(--radius);
+  background: rgba(8, 19, 42, 0.55);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  font-family: var(--f-action);
+  font-size: 0.84rem;
+  font-weight: 500;
+  opacity: calc(1 - var(--hp, 0) * 1.4);
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+}
+.hero__ctl[hidden] {
+  display: none;
+}
+.hero__ctl:hover {
+  background: #fff;
+  color: var(--navy-950);
+  border-color: #fff;
+}
+.hero__ico {
+  position: relative;
+  flex: none;
+  width: 0.66rem;
+  height: 0.76rem;
+}
+.hero__ico::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: currentColor;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+.hero__ctl.is-playing .hero__ico::before {
+  clip-path: polygon(0 0, 34% 0, 34% 100%, 0 100%, 0 0, 66% 0, 100% 0, 100% 100%, 66% 100%, 66% 0);
+}
+/* Dar dikey ekran (telefon, dikey tablet): tam ekran zeminde tabela ve ofis başlığın arkasında kaybolurdu — zemin başlığın altında
+   16:9 bir bant olur, kare bütünüyle görünür; düğme bandın sağ altında */
+@media (max-width: 900px) and (max-aspect-ratio: 4/5) {
+  .hero {
+    flex-direction: column;
+  }
+  .hero__inner {
+    flex: 1 0 auto;
+  }
+  .hero__media {
+    position: relative;
+    inset: auto;
+    z-index: auto;
+    flex: none;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+  .hero__poster,
+  .hero__video {
+    object-position: 50% 50%;
+    transform: none;
+  }
+  .hero__media::after {
+    background: linear-gradient(180deg, rgba(5, 12, 26, 0.3) 0%, rgba(5, 12, 26, 0) 28%, rgba(5, 12, 26, 0) 66%, rgba(5, 12, 26, 0.5) 100%);
+  }
+  .hero__ctl {
+    top: auto;
+    bottom: 0.8rem;
+    min-height: 2.5rem;
+  }
 }
 .hero__inner {
   position: relative;
@@ -711,125 +849,17 @@ html.is-opening .hud {
   }
 }
 
-/* ── 4 · Film: kaydırdıkça çerçeve tam ekrana açılır */
-.film {
-  position: relative;
-  z-index: 2;
-  background: var(--navy-1000);
-  color: #fff;
-}
-.film__frame {
-  --e2: var(--e, 1);
-  position: relative;
-  height: clamp(440px, 86vh, 880px);
-  overflow: hidden;
-  clip-path: inset(calc((1 - var(--e2)) * 11vh) calc((1 - var(--e2)) * 11vw) round calc((1 - var(--e2)) * 6px));
-}
-.film__poster,
-.film__video {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scale(calc(1.14 - var(--e2) * 0.14));
-}
-.film__video {
-  opacity: 0;
-  transition: opacity 0.9s var(--ease-out);
-}
-.film.has-video .film__video {
-  opacity: 1;
-}
-.film__shade {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(5, 12, 26, 0.4) 0%, rgba(5, 12, 26, 0) 26%, rgba(5, 12, 26, 0) 48%, rgba(5, 12, 26, 0.82) 100%);
-  pointer-events: none;
-}
-.film__cap {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: clamp(1.4rem, 5vh, 3.2rem);
-  margin-inline: auto;
-  pointer-events: none;
-  text-shadow: 0 1px 24px rgba(5, 12, 26, 0.7);
-}
-.film__cap .eyebrow {
-  color: rgba(255, 255, 255, 0.88);
-}
-.film__title {
-  margin-top: 1rem;
-  font-size: var(--fs-6);
-  line-height: 0.98;
-  letter-spacing: -0.03em;
-}
-.film__title em {
-  color: var(--on-dark-2);
-}
-.film__ctl {
-  position: absolute;
-  right: var(--gutter);
-  bottom: clamp(1.4rem, 5vh, 3.2rem);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  min-height: 2.8rem;
-  padding: 0 1.15rem;
-  border: 1px solid var(--line-dark-2);
-  background: rgba(8, 19, 42, 0.55);
-  color: #fff;
-  font-size: 0.86rem;
-  font-weight: 500;
-  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
-}
-.film__ctl[hidden] {
-  display: none;
-}
-.film__ctl:hover {
-  background: #fff;
-  color: var(--navy-950);
-  border-color: #fff;
-}
-.film__ico {
-  position: relative;
-  width: 0.72rem;
-  height: 0.82rem;
-}
-.film__ico::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: currentColor;
-  clip-path: polygon(0 0, 100% 50%, 0 100%);
-}
-.film__ctl.is-playing .film__ico::before {
-  clip-path: polygon(0 0, 34% 0, 34% 100%, 0 100%, 0 0, 66% 0, 100% 0, 100% 100%, 66% 100%, 66% 0);
-}
-@media (max-width: 900px) {
-  .film__frame {
-    height: clamp(300px, 70vw, 520px);
-    clip-path: inset(calc((1 - var(--e2)) * 5vh) calc((1 - var(--e2)) * 5vw) round calc((1 - var(--e2)) * 4px));
-  }
-  .film__title {
-    font-size: var(--fs-5);
-  }
-  .film__ctl {
-    right: var(--gutter);
-    top: 0.9rem;
-    bottom: auto;
-    min-height: 2.5rem;
-  }
-}
-
-/* Birim şeridi (filmin altında): alan adları yavaşça sola akar; üzerine gelince durur, klavyeyle odaklanınca baştan, durağan gösterilir.
-   Ayırıcı: başlıktaki denetçi tiki (mavi · kırmızı · yeşil sırayla) */
+/* ── 4 · Birim şeridi (hizmet alanlarının altında, koyu zeminde): alan adları yavaşça sola akar; üzerine gelince durur, klavyeyle
+   odaklanınca baştan, durağan gösterilir. Ayırıcı: başlıktaki denetçi tiki (mavi · kırmızı · yeşil sırayla).
+   Zemin lacivert: alanların büyük şekli şeridin altından geçerken yazının üstüne nokta binmez (kenarlarda maskeyle söner).
+   Şerit iki koyu bölümü ayırmaz: alanlardan sektörlere şekil doğrudan dönüşür (data-world-bridge › behaviors.js › director). */
 .units {
   position: relative;
   overflow: hidden;
+  color: #fff;
+  background: var(--navy-950);
   padding-block: clamp(1.5rem, 3.4vw, 2.6rem);
-  border-bottom: 1px solid var(--line-dark);
+  border-block: 1px solid var(--line-dark);
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
 }

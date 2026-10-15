@@ -3,15 +3,17 @@
 
 {% block head_extra %}
 <script type="application/ld+json">{{ ld | json_script }}</script>
+{# kahraman posteri ilk boyamanın en büyük görseli: erken istenir (aynı srcset/sizes, tarayıcı tek dosya indirir) #}
+<link rel="preload" as="image" href="/assets/video/boraden-giris-poster-1280.webp" imagesrcset="/assets/video/boraden-giris-poster-768.webp 768w, /assets/video/boraden-giris-poster-1280.webp 1280w, /assets/video/boraden-giris-poster-1920.webp 1920w" imagesizes="100vw" fetchpriority="high">
 {% endblock %}
 
 {#
   ANA SAYFA (v3) — kısa, sahne tabanlı akış. Masaüstünde ≈9 ekran (eski sürüm ≈15,5), mobilde sabitleme yok.
     0  Açılış perdesi     yalnızca ilk gelişte görünür (html.is-opening; opening.js)
-    1  Kahraman           parçacık alanı (ufuk) + başlık          [dünya 0]
+    1  Kahraman           ofis videosu (tam genişlik) + başlık; 3B dünya burada çizilmez
     2  Giriş sayfası      ifade + rakamlar + çalışma akışı (beyaz yaprak, kahramanın üstüne biner)
-    3  Hizmet alanları    sabit sahne, kaydırdıkça 6 formasyon         [dünya 1–6]
-    4  Film               ofis görüntüsü, kaydırdıkça genişleyen çerçeve (video yalnızca «Tam» katmanda, masaüstünde)
+    3  Hizmet alanları    sabit sahne, kaydırdıkça alan formasyonları  [dünya 1–8; ilk şekil burada toplanarak gelir]
+    4  Birim şeridi       alan adları yavaşça akar (koyu ara şerit; alanlar → sektörler arasında şekil doğrudan dönüşür)
     5  Sektörler          koyu, alan solda                             [dünya 5, sol]
     6  Hesaplayıcılar     mini KDV + seçki
     7  Bilgi merkezi      öne çıkan + son yayınlar
@@ -32,9 +34,14 @@
 </div>
 <button class="open__skip" type="button" data-open-skip>Girişi atla</button>
 
-{# ───────── 1 · Kahraman + 2 · Giriş: koyu sahne üstüne beyaz sayfa biner ───────── #}
+{# ───────── 1 · Kahraman + 2 · Giriş: koyu sahne üstüne beyaz sayfa biner ─────────
+   Kahramanın zemini ofis videosudur (müşteri isteği, Ekim 2026: eski «Ofisimiz» filmi kaldırıldı, video buraya taşındı). Kurgu:
+   scripts/tools/hero-film.py — giriş tabelası, resepsiyon ve açık ofis; eski çalışanlar kadraj dışında, süre kısaltılmadı.
+   Poster ilk boyamada görünür; video yalnızca «Tam»/«Hafif» katmanda, geniş ekranda ve veri tasarrufu kapalıyken kendiliğinden
+   oynar, diğer durumlarda «Videoyu oynat» düğmesi ziyaretçiye bırakır (modules/hero-film.js). 3B dünya bu bölümde çizilmez
+   (data-world yok); ilk şekil hizmet alanlarında toplanarak gelir. #}
 <div class="stack" data-stack>
-  <section class="hero sec--dark" id="giris" data-world="0" data-chapter="Giriş" data-hero data-module="swipe-word">
+  <section class="hero sec--dark" id="giris" data-chapter="Giriş" data-hero data-module="hero-film">
     <div class="container hero__inner">
       <p class="eyebrow hero__eyebrow" data-hero-in="1">Bağımsız denetim · Vergi · Danışmanlık</p>
 
@@ -56,6 +63,15 @@
         <a class="hero__scroll" href="#hakkimizda" data-hero-in="7"><span class="hero__scroll-line" aria-hidden="true"></span>Kaydırın</a>
       </div>
     </div>
+    {# zemin: içerikten sonra gelir (ekran okuyucu önce başlığı okur); masaüstünde tam genişlik, dar dikey ekranda başlığın altında 16:9 bant #}
+    <div class="hero__media">
+      <img class="hero__poster" src="/assets/video/boraden-giris-poster-1280.webp" srcset="/assets/video/boraden-giris-poster-768.webp 768w, /assets/video/boraden-giris-poster-1280.webp 1280w, /assets/video/boraden-giris-poster-1920.webp 1920w" sizes="100vw" width="1920" height="1080" alt="Boraden ofisinin girişi: ahşap çıtalı duvarda BORADEN tabelası" fetchpriority="high" decoding="async">
+      <video class="hero__video" muted loop playsinline disablepictureinpicture preload="none" tabindex="-1" aria-hidden="true" data-src="/assets/video/boraden-giris-1080.mp4" data-src-sm="/assets/video/boraden-giris-720.mp4"></video>
+    </div>
+    <button class="hero__ctl" type="button" data-film-ctl aria-label="Videoyu oynat" hidden>
+      <span class="hero__ico" aria-hidden="true"></span>
+      <span class="hero__ctl-t" data-film-ctl-t>Videoyu oynat</span>
+    </button>
   </section>
 
   <section class="intro sec--paper" id="hakkimizda" data-chapter="Hakkımızda">
@@ -154,36 +170,21 @@
   </div>
 </section>
 
-{# ───────── 4 · Film: ofis görüntüsü (arşiv). Video yalnızca «Tam» katmanda ve masaüstünde oynar; diğerlerinde poster + «Videoyu oynat» ───────── #}
-<section class="film sec--dark" id="film" data-chapter="Ofisimiz" data-module="film" aria-label="Ofisimiz">
-  <div class="film__frame" data-film-frame>
-    <img class="film__poster" src="/assets/video/boraden-ofis-poster-1280.webp" srcset="/assets/video/boraden-ofis-poster-768.webp 768w, /assets/video/boraden-ofis-poster-1280.webp 1280w" sizes="100vw" width="1280" height="720" alt="Boraden ofisinin girişi: ahşap çıtalı bölme ve arkasındaki açık ofis" loading="lazy" decoding="async">
-    <video class="film__video" muted loop playsinline preload="none" tabindex="-1" aria-hidden="true" data-src="/assets/video/boraden-ofis.mp4"></video>
-    <div class="film__shade" aria-hidden="true"></div>
-    <div class="film__cap container">
-      <p class="eyebrow" data-reveal>Boraden'de bir gün</p>
-      <h2 class="film__title" data-reveal data-reveal-delay="1">Ofisimiz.</h2>
-    </div>
-    <button class="film__ctl" type="button" data-film-ctl aria-label="Videoyu oynat" hidden>
-      <span class="film__ico" aria-hidden="true"></span>
-      <span class="film__ctl-t" data-film-ctl-t>Videoyu oynat</span>
-    </button>
-  </div>
-  {# Birim şeridi: hizmet alanlarımızın adları (Hukuk ve Teşvik dahil) filmin altında yavaşça akar; her ad alan sayfasına gider.
+{# ───────── 4 · Birim şeridi: hizmet alanlarımızın adları (Hukuk ve Teşvik dahil) alanların altında yavaşça akar; her ad alan sayfasına gider.
      İkinci liste yalnızca kesintisiz döngü içindir (aria-hidden, sekme sırasında yok). Hareket azaltma / «Kapalı» katmanda şerit durur, satırlara sarılır.
-     Wagtail: ServiceAreaPage listesi (sıralı). #}
-  <nav class="units" aria-label="Hizmet alanlarımız">
-    <div class="units__track">
-      {% for copy in [0, 1] %}
-      <ul class="units__list"{% if copy %} aria-hidden="true"{% endif %}>
-        {% for g in groups %}
-        <li class="units__i"><a class="units__a" href="{{ g.url }}"{% if copy %} tabindex="-1"{% endif %}><span class="units__n mono tnum">{{ g.number }}</span><span class="units__t">{{ g.name }}</span></a><i class="units__p" aria-hidden="true"></i></li>
-        {% endfor %}
-      </ul>
+     data-world-bridge: koyu ara şerit — alanlardan sektörlere geçerken 3B şekil kesilip yeniden toplanmaz, doğrudan dönüşür (behaviors.js › director).
+     (Ekim 2026'ya dek bu şeridin üstünde «Ofisimiz» filmi vardı; video kahramana taşındı.) Wagtail: ServiceAreaPage listesi (sıralı). ───────── #}
+<nav class="units" aria-label="Hizmet alanlarımız" data-world-bridge>
+  <div class="units__track">
+    {% for copy in [0, 1] %}
+    <ul class="units__list"{% if copy %} aria-hidden="true"{% endif %}>
+      {% for g in groups %}
+      <li class="units__i"><a class="units__a" href="{{ g.url }}"{% if copy %} tabindex="-1"{% endif %}><span class="units__n mono tnum">{{ g.number }}</span><span class="units__t">{{ g.name }}</span></a><i class="units__p" aria-hidden="true"></i></li>
       {% endfor %}
-    </div>
-  </nav>
-</section>
+    </ul>
+    {% endfor %}
+  </div>
+</nav>
 
 {# ───────── 5 · Sektörler (koyu; formasyon solda, liste sağda) ─────────
    Şekil: sektör × hizmet alanı matrisi (önceden «Veri katmanı» idi — yukarıdaki Sistemler alanıyla aynı şekil tekrarlanıyordu) #}

@@ -1,7 +1,7 @@
 // İçerik güvenlik politikası (CSP) taraması — yayındaki başlıklarla: sunucu vercel.json'u uygular ve canlı alan adını
 // (www.boraden.com.tr) öykünür, yani katı politika denenir. Tüm sayfalar tam yüklemeyle gezilir, ardından etkileşimler:
 // yönlendirici geçişleri, 3B dünya ve açılış sahnesi, efekt anahtarı (masaüstü ve mobil menü), hızlı KDV ve 11 hesaplayıcı
-// (Enter ile gönderim yok), arama, sözlük, sirküler arşivi, SSS, sektör matrisi, vergi takvimi (.ics), film, iletişim
+// (Enter ile gönderim yok), arama, sözlük, sirküler arşivi, SSS, sektör matrisi, vergi takvimi (.ics), kahraman videosu, iletişim
 // formu taslağı, 404 ve eski site yönlendirmesi. Her ihlal (securitypolicyviolation olayı, konsoldaki CSP iletisi ya da
 // CSP'nin engellediği istek) testi düşürür. Önce iki bilinçli ihlalle politikanın gerçekten etkin olduğu doğrulanır.
 //
@@ -147,11 +147,13 @@ try {
   }
   if (crawled) console.log(`PASS: ${crawled} sayfa tam yüklemeyle gezildi — ihlal ${violations.length}`);
 
-  // 3) Açılış sahnesi + 3B dünya (efektler tam)
+  // 3) Açılış sahnesi + 3B dünya (efektler tam). Kahramanın zemini video (3B dünya orada çizilmez): dünya ilk karesini
+  //    hizmet alanlarında çizer (html.fx-live)
   await page.evaluate(() => localStorage.setItem('boraden-fx', 'full'));
   await page.goto(base + '/?intro', { waitUntil: 'load' });
-  await page.waitForFunction(() => document.documentElement.classList.contains('fx-live'), null, { timeout: 20000 });
   await page.waitForFunction(() => !document.documentElement.classList.contains('is-opening'), null, { timeout: 20000 });
+  await page.locator('#alanlar').scrollIntoViewIfNeeded();
+  await page.waitForFunction(() => document.documentElement.classList.contains('fx-live'), null, { timeout: 20000 });
   step('açılış sahnesi ve dünya');
 
   // 4) Hızlı KDV: Enter sayfayı göndermez
@@ -166,24 +168,31 @@ try {
   assert.notEqual((await page.textContent('[data-mini="kdv"] [data-out="gross"]')).trim(), '—');
   step('hızlı KDV Enter');
 
-  // 5) Film ve efekt anahtarı
-  // film denetimi efektler açıkken kaydırmaya bağlı sahnede yer değiştirir: düğmeye doğrudan basılır (işleyici aynı)
-  await page.locator('#film').scrollIntoViewIfNeeded();
-  const film = page.locator('[data-film-ctl]');
+  // 5) Kahraman videosu ve efekt anahtarı
+  // Tam katmanda video kahraman görünürken kendiliğinden oynar: oynuyorsa düğme önce duraklatır, sonraki basış yeniden oynatır
+  // (düğmeye doğrudan basılır; işleyici aynı)
+  await page.evaluate(() => scrollTo(0, 0));
+  await page.waitForTimeout(600);
+  const film = page.locator('.hero [data-film-ctl]');
+  const heroPlaying = () => page.evaluate(() => !document.querySelector('.hero__video').paused);
+  if (await heroPlaying()) {
+    await film.evaluate((b) => b.click());
+    await page.waitForFunction(() => document.querySelector('.hero__video').paused, null, { timeout: 4000 });
+  }
   await film.evaluate((b) => b.click());
   // Ekran kartı olmayan sunucuda (GitHub Actions) video yazılımla çözülür ve başsız Chrome'da oynamayabilir: orada oynatma
   // beklenmez (bu adımın amacı CSP: video isteği ve düğme işleyicisi ihlal üretmemeli; ihlal toplayıcı açık kalır).
   const softGL = await softwareGL(page);
   let played = true;
   await page
-    .waitForFunction(() => !document.querySelector('.film__video').paused, null, { timeout: softGL ? 10000 : 8000 })
+    .waitForFunction(() => !document.querySelector('.hero__video').paused, null, { timeout: softGL ? 10000 : 8000 })
     .catch((e) => {
       if (!softGL) throw e;
       played = false;
-      console.log('NOT: yazılım WebGL (ekran kartı yok): film bu makinede oynamadı, oynatma denetimi atlandı');
+      console.log('NOT: yazılım WebGL (ekran kartı yok): kahraman videosu bu makinede oynamadı, oynatma denetimi atlandı');
     });
   if (played) await film.evaluate((b) => b.click());
-  step('film');
+  step('kahraman videosu');
   for (const tier of ['off', 'lite', 'full']) {
     await page.locator(`[data-fx-set="${tier}"]:visible`).click();
     await page.waitForFunction((t) => document.documentElement.dataset.fx === t, tier);

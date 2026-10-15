@@ -1,6 +1,6 @@
 // Açılış sahnesi (yalnızca ana sayfaya ilk gelişte; başlangıç kararı base.njk'deki erken betikte verilir → html.is-opening).
 //   ~0,9 sn: koyu perde üstünde kuruluş yılı sayaçla belirir, ardından perde ortadan dışa doğru PİKSEL PİKSEL çözülür ve
-//   altındaki ana sahne (parçacık alanı + başlık) açılır. Her zaman atlanabilir: tıklama, Esc/Enter/Boşluk, kaydırma, «Girişi atla».
+//   altındaki ana sahne (ofis videosunun posteri + başlık) açılır. Her zaman atlanabilir: tıklama, Esc/Enter/Boşluk, kaydırma, «Girişi atla».
 // İçerik asla bu sahneye bağlı değildir: perde yalnızca üstte durur; JS gelmezse base.njk'deki güvenlik ağı onu kaldırır.
 // Depolama yok (çerez, localStorage, sessionStorage kullanılmaz); «bir kez» kararı gezinti türü + yönlendirenle verilir.
 import { clamp, smoothstep, easeOutExpo, prefersReduced } from './util.js';

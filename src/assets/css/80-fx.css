@@ -69,21 +69,6 @@ html.is-entering :is(#main, #footer) {
   }
 }
 
-/* «BORADEN» anı: kahraman metni çekilir, noktalar kelimeyi oluşturur (swipe-word.js) */
-html.is-word .hero__inner,
-html.is-word .hero__scroll {
-  opacity: 0.04 !important;
-  pointer-events: none;
-  transition: opacity 0.45s var(--ease-out);
-}
-html.is-word-out .hero__inner,
-html.is-word-out .hero__scroll {
-  transition: opacity 0.9s var(--ease-out);
-}
-html.is-word .hud {
-  opacity: 0.25;
-}
-
 /* ── Şekil kutusu (js/modules/figure.js): beyaz sayfalarda formasyonun KENDİ yeri — yazının, kartın, fotoğrafın arkasına değil, yanına.
       Koyu kahramandaki 3B dünyanın beyaz sayfadaki karşılığı: aynı şekil üreticileri, açık zeminde 2B tuval, mürekkep renkleri.
       .fig--side  yapışkan yan sütunda «Bu sayfada» menüsünün altında (yüksekliği JS kalan boşluğa göre verir; yer yoksa .is-off)

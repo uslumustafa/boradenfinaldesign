@@ -15,7 +15,8 @@ const mainEl = document.getElementById('main');
 let opening = html.classList.contains('is-opening') && fx.tier !== 'off';
 // efektler kapalı çıktıysa perde oynatılmaz; beklemeden kalkar (yoksa 7 sn'lik güvenlik süresine dek sayfayı örtüyordu)
 if (!opening) html.classList.remove('is-opening');
-let introWanted = opening; // ilk kurulan dünya toplanma animasyonuyla başlar (sonraki yeniden kurulumlar hazır gelir)
+// Perde kalkınca kahramanın video posteri görünür. 3B dünya kahramanda çizilmediği için (Ekim 2026) açılışta noktaların toplanma
+// animasyonu (world.js › assemble/uIntro) kullanılmaz: dünya ilk şeklini, her yüklemede olduğu gibi, ilk koyu bölümünde toplayarak çizer.
 
 // 3B dünya köprüsü: world.js yüklenene kadar çağrıları hatırlar
 const world = {
@@ -25,7 +26,6 @@ const world = {
   _side: 1,
   _cover: 1,
   _visible: false,
-  _assemble: false,
   // cover: seçili bölümün görünen payı (toplanma eşiği); cut: bitişik olmayan koyu bölüme geçiş (dönüşüm yerine toplanma)
   target(v, lift = 0, side = 1, cover = 1, cut = false) {
     this._target = v;
@@ -38,12 +38,8 @@ const world = {
     this._visible = b;
     this.impl?.setVisible(b);
   },
-  // açılış: noktalar dağınık hâlden toplanır (dünya henüz yüklenmediyse yüklenince)
-  assemble() {
-    this._assemble = true;
-    this.impl?.assemble?.();
-  },
-  // «BORADEN» anı: noktalar kelimeyi oluşturur (true) / hero şekline döner (false)
+  // «BORADEN» anı: noktalar kelimeyi oluşturur (true) / önceki şekle döner (false). Ekim 2026'dan beri hiçbir sayfa kullanmıyor
+  // (ana sayfa kahramanının zemini videoya geçti, modules/swipe-word.js kaldırıldı); dünya motorundaki karşılığı yerinde duruyor.
   word(on, text) {
     this.impl?.word?.(on, text);
   },
@@ -72,7 +68,6 @@ if (opening) {
       m.playOpening({
         onReveal() {
           ready();
-          world.assemble();
         },
         onDone() {
           opening = false;
@@ -84,7 +79,6 @@ if (opening) {
       opening = false;
       html.classList.remove('is-opening');
       ready();
-      world.assemble();
     });
 } else {
   // ilk boyamadan sonra açılış animasyonlarını başlat
@@ -98,12 +92,11 @@ async function bootWorld() {
   try {
     const mod = await import('./world/world.js');
     if (id !== worldBoot || fx.tier === 'off') return;
-    const impl = await mod.createWorld({ fx, canvas: document.getElementById('world-canvas'), intro: introWanted });
+    const impl = await mod.createWorld({ fx, canvas: document.getElementById('world-canvas') });
     if (id !== worldBoot || fx.tier === 'off') {
       impl?.destroy();
       return;
     }
-    introWanted = false;
     if (!impl) {
       fx.set('off');
       return;
@@ -111,7 +104,6 @@ async function bootWorld() {
     world.impl = impl;
     impl.target(world._target, world._lift, world._side, world._cover);
     impl.setVisible(world._visible);
-    if (world._assemble) impl.assemble?.();
   } catch (err) {
     if (id !== worldBoot || fx.tier === 'off') return;
     console.warn('[dünya] başlatılamadı, efektler kapatıldı:', err);

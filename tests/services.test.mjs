@@ -207,7 +207,7 @@ test('Hukuk ve Teşvik alan sayfaları: «Hangi durumda?» kartları, mevzuat da
   assert.ok(page(kvkk.url).includes('6698 sayılı Kanun'), 'KVKK künyesinde 6698 sayılı Kanun');
 });
 
-test('ana sayfa: filmin altındaki birim şeridi sekiz alanın hepsine bağlanır; döngü kopyası okuyucudan ve sekme sırasından gizli', () => {
+test('ana sayfa: birim şeridi (alanların altında) sekiz alanın hepsine bağlanır; döngü kopyası okuyucudan ve sekme sırasından gizli', () => {
   const h = page('/');
   const nav = (h.match(/<nav class="units"[\s\S]*?<\/nav>/) || [''])[0];
   assert.ok(nav, 'birim şeridi yok');
@@ -216,5 +216,28 @@ test('ana sayfa: filmin altındaki birim şeridi sekiz alanın hepsine bağlanı
   assert.ok(!/aria-hidden/.test(lists[0].slice(0, 40)) && /aria-hidden="true"/.test(lists[1].slice(0, 60)), 'yalnızca kopya aria-hidden');
   for (const g of model.groups) assert.ok(lists[0].includes(`href="${g.url}"`), `şeritte ${g.id} yok`);
   assert.equal(count(lists[1], /tabindex="-1"/g), model.groups.length, 'kopyadaki bağlantılar sekme sırasında değil');
-  assert.ok(!/film__note|Arşiv görüntüsü/.test(h), 'film üzerindeki «Arşiv görüntüsü» etiketi kaldırıldı');
+  assert.match(nav, /^<nav class="units"[^>]*\sdata-world-bridge[\s>]/, 'şerit koyu ara şerit: alanlar → sektörler arasında 3B şekil kesilmez');
+  // «Ofisimiz» filmi kaldırıldı (Ekim 2026): video kahramanın zemini oldu
+  assert.doesNotMatch(h, /film__|id="film"|data-chapter="Ofisimiz"|boraden-ofis/, '«Ofisimiz» filmi kaldırıldı');
+});
+
+test('ana sayfa: kahramanın zemini ofis videosu — poster ilk boyamada, video tembel yüklenir, oynat/duraklat düğmesi var', () => {
+  const h = page('/');
+  const hero = (h.match(/<section class="hero[\s\S]*?<\/section>/) || [''])[0];
+  assert.ok(hero, 'kahraman yok');
+  assert.match(hero, /^<section class="hero sec--dark" id="giris"[^>]*data-module="hero-film"/);
+  assert.doesNotMatch(hero.slice(0, hero.indexOf('>')), /data-world/, 'kahramanda 3B dünya sahnesi yok (zemin video)');
+  assert.doesNotMatch(h, /swipe-word/, '«BORADEN» anı modülü bağlı değil');
+  const vid = (hero.match(/<video[^>]*>/) || [''])[0];
+  for (const a of ['muted', 'loop', 'playsinline', 'preload="none"', 'aria-hidden="true"', 'data-src="/assets/video/boraden-giris-1080.mp4"', 'data-src-sm="/assets/video/boraden-giris-720.mp4"'])
+    assert.ok(vid.includes(a), `video: ${a} yok`);
+  assert.doesNotMatch(vid, /\ssrc=/, 'video dosyası ilk boyamada istenmez (data-src)');
+  const img = (hero.match(/<img class="hero__poster"[^>]*>/) || [''])[0];
+  for (const w of [768, 1280, 1920]) assert.ok(img.includes(`/assets/video/boraden-giris-poster-${w}.webp ${w}w`), `poster ${w}w`);
+  assert.match(img, /\salt="[^"]{12,}"/, 'posterin alt metni');
+  assert.ok(hero.indexOf('hero__media') > hero.indexOf('</h1>'), 'zemin içerikten sonra gelir (ekran okuyucu önce başlığı okur)');
+  assert.match(hero, /<button class="hero__ctl" type="button" data-film-ctl aria-label="Videoyu oynat" hidden>/, 'oynat/duraklat düğmesi');
+  assert.match(h, /<link rel="preload" as="image" href="\/assets\/video\/boraden-giris-poster-1280\.webp" imagesrcset="[^"]+" imagesizes="100vw"/, 'poster ön yüklemesi');
+  for (const f of ['boraden-giris-1080.mp4', 'boraden-giris-720.mp4', 'boraden-giris-poster-768.webp', 'boraden-giris-poster-1280.webp', 'boraden-giris-poster-1920.webp'])
+    assert.ok(fs.existsSync(path.join(dist, 'assets/video', f)), `derlemede ${f} yok`);
 });

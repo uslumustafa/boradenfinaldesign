@@ -29,14 +29,16 @@ try {
     assert.equal(await page.locator('[data-lit] .sr-only').first().textContent(), original, `lit text after ${value}`);
   }
   console.log('PASS: repeated effect changes keep one accessible text copy');
-  const video = page.locator('.film__video');
-  await page.click('[data-film-ctl]');
-  await page.waitForFunction(() => !document.querySelector('.film__video').paused);
-  await page.click('[data-film-ctl]');
+  // hero video (home): with effects off nothing autoplays; play, then pause explicitly — later tier changes (lite/full would autoplay)
+  // and scrolling back to the hero must keep the explicit pause
+  const video = page.locator('.hero__video');
+  await page.click('.hero [data-film-ctl]');
+  await page.waitForFunction(() => !document.querySelector('.hero__video').paused);
+  await page.click('.hero [data-film-ctl]');
   for (const value of ['lite', 'full', 'off']) {
     await tier(value);
-    await page.locator('#film').scrollIntoViewIfNeeded();
-    await page.waitForTimeout(250);
+    await page.evaluate(() => scrollTo(0, 0));
+    await page.waitForTimeout(350);
     assert.equal(await video.evaluate(el => el.paused), true, `explicit video pause after ${value}`);
   }
   console.log('PASS: effect changes preserve explicit video pause');
