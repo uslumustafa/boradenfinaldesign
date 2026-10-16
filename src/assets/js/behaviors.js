@@ -131,13 +131,34 @@ export function createBehaviors({ fx, scroll, world }) {
     });
   }
 
-  /* ── Kahraman: üstüne beyaz sayfa binerken sahne geri çekilir */
+  /* ── Kahraman: üstüne beyaz sayfa binerken sahne geri çekilir.
+     Kahraman ekrandan uzunsa (telefon, yan çevrilmiş telefon, kısa pencere) yapışma, kahramanın alt kenarı ekranın altına değince
+     başlar (50-home.css › .hero › top, --hero-h): video, metin ve düğmelerin tamamı beyaz sayfa üstüne binmeden görünür ve dokunulur.
+     Geri çekilme (--hp) de ancak o andan sonra başlar. Ölçü her katmanda tutulur (yapışma «Kapalı»da da vardır). */
   function stack(root) {
     qsa('[data-stack]', root).forEach((el) => {
       const hero = qs('.hero', el);
-      if (!hero || fx.tier === 'off') return;
+      if (!hero) return;
+      let over = 0; // kahramanın ekrandan taşan yüksekliği (px)
+      const measure = () => {
+        const h = hero.offsetHeight;
+        hero.style.setProperty('--hero-h', `${h}px`);
+        over = Math.max(0, h - innerHeight);
+      };
+      measure();
+      if ('ResizeObserver' in window) {
+        const ro = new ResizeObserver(measure);
+        ro.observe(hero);
+        on(() => ro.disconnect());
+      }
+      addEventListener('resize', measure);
+      on(() => {
+        removeEventListener('resize', measure);
+        hero.style.removeProperty('--hp');
+      });
+      if (fx.tier === 'off') return;
       const off = scroll.add(el, 'enter', (_p, { rect, vh }) => {
-        hero.style.setProperty('--hp', clamp(-rect.top / (vh * 0.92)).toFixed(4));
+        hero.style.setProperty('--hp', clamp((-rect.top - over) / (vh * 0.92)).toFixed(4));
       });
       on(off);
     });

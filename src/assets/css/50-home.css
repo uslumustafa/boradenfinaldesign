@@ -99,7 +99,9 @@ html.is-opening .hud {
 }
 .hero {
   position: sticky;
-  top: 0;
+  /* kahraman ekrandan uzunsa (telefon, yan çevrilmiş telefon, kısa pencere) yapışma alt kenarı ekranın altına değince başlar:
+     içeriğin tamamı beyaz sayfa üstüne binmeden görünür (--hero-h: behaviors.js › stack; yoksa 0) */
+  top: min(0px, calc(100svh - var(--hero-h, 100svh)));
   min-height: 100svh;
   display: flex;
   padding-top: var(--hdr);
@@ -220,35 +222,24 @@ html.is-opening .hud {
 .hero__ctl.is-playing .hero__ico::before {
   clip-path: polygon(0 0, 34% 0, 34% 100%, 0 100%, 0 0, 66% 0, 100% 0, 100% 100%, 66% 100%, 66% 0);
 }
-/* Dar dikey ekran (telefon, dikey tablet): tam ekran zeminde tabela ve ofis başlığın arkasında kaybolurdu — zemin başlığın altında
-   16:9 bir bant olur, kare bütünüyle görünür; düğme bandın sağ altında */
-@media (max-width: 900px) and (max-aspect-ratio: 4/5) {
-  .hero {
-    flex-direction: column;
-  }
-  .hero__inner {
-    flex: 1 0 auto;
-  }
-  .hero__media {
-    position: relative;
-    inset: auto;
-    z-index: auto;
-    flex: none;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-  }
+/* Dikey ekran (telefon, dikey tablet): masaüstündeki gibi video başlığın arkasında tam ekran zemindir (müşteri isteği, Ekim 2026).
+   16:9 kareden dikey bir dilim görünür: dilim logodaki üç tikin ve çıtalı duvarın üstüne denk gelir (object-position).
+   Yazı tüm genişliği kapladığı için koyulaşma yandan değil yukarıdan aşağı artar; videonun en parlak karesinde başlık ≥ 7,5:1,
+   alt metin ≥ 6:1, üst etiket ≥ 4,5:1 (320–834 px). Düğme masaüstündeki gibi sağ üstte. */
+@media (max-aspect-ratio: 4/5) {
   .hero__poster,
   .hero__video {
-    object-position: 50% 50%;
-    transform: none;
+    object-position: 31% 50%;
   }
   .hero__media::after {
-    background: linear-gradient(180deg, rgba(5, 12, 26, 0.3) 0%, rgba(5, 12, 26, 0) 28%, rgba(5, 12, 26, 0) 66%, rgba(5, 12, 26, 0.5) 100%);
-  }
-  .hero__ctl {
-    top: auto;
-    bottom: 0.8rem;
-    min-height: 2.5rem;
+    background: linear-gradient(
+      180deg,
+      rgba(var(--n), 0.66) var(--hdr),
+      rgba(var(--n), 0.68) 34%,
+      rgba(var(--n), 0.76) 58%,
+      rgba(var(--n), 0.88) 80%,
+      rgba(var(--n), 0.92) 100%
+    );
   }
 }
 .hero__inner {
@@ -778,6 +769,13 @@ html.is-opening .hud {
   .areas__visual {
     display: none;
   }
+  /* sabitlenmeyen düzende yazı boyu ekran yüksekliğine bağlanmaz (yan çevrilmiş telefonda 3svh ≈ 10 px'e iniyordu) */
+  .areas__head h2 {
+    font-size: clamp(1.9rem, 1rem + 2.5vw, 3.6rem);
+  }
+  .area__name {
+    font-size: clamp(1.15rem, 0.8rem + 1.05vw, 1.9rem);
+  }
   .area__link {
     color: #fff;
     cursor: default; /* mobilde tüm alanlar açık; başlık seçim yapmaz, gitmek için «İncele» */
@@ -825,6 +823,12 @@ html.is-opening .hud {
   }
   html[data-fx='off'] .areas__visual {
     display: none;
+  }
+  html[data-fx='off'] .areas__head h2 {
+    font-size: clamp(1.9rem, 1rem + 2.5vw, 3.6rem);
+  }
+  html[data-fx='off'] .area__name {
+    font-size: clamp(1.15rem, 0.8rem + 1.05vw, 1.9rem);
   }
   html[data-fx='off'] .area__body {
     grid-template-rows: 1fr;

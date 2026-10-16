@@ -37,8 +37,9 @@
 {# ───────── 1 · Kahraman + 2 · Giriş: koyu sahne üstüne beyaz sayfa biner ─────────
    Kahramanın zemini ofis videosudur (müşteri isteği, Ekim 2026: eski «Ofisimiz» filmi kaldırıldı, video buraya taşındı). Kurgu:
    scripts/tools/hero-film.py — giriş tabelası, resepsiyon ve açık ofis; eski çalışanlar kadraj dışında, süre kısaltılmadı.
-   Poster ilk boyamada görünür; video yalnızca «Tam»/«Hafif» katmanda, geniş ekranda ve veri tasarrufu kapalıyken kendiliğinden
-   oynar, diğer durumlarda «Videoyu oynat» düğmesi ziyaretçiye bırakır (modules/hero-film.js). 3B dünya bu bölümde çizilmez
+   Poster ilk boyamada görünür; video «Tam»/«Hafif» katmanda ve veri tasarrufu kapalıyken (telefon ve tablet dahil) kendiliğinden
+   oynar, «Kapalı» katmanda ve veri tasarrufunda «Videoyu oynat» düğmesi ziyaretçiye bırakır (modules/hero-film.js).
+   Kahraman ekrandan uzunsa (telefon, yan çevrilmiş telefon) yapışma alt kenarı ekrana değince başlar (behaviors.js › stack). 3B dünya bu bölümde çizilmez
    (data-world yok); ilk şekil hizmet alanlarında toplanarak gelir. #}
 <div class="stack" data-stack>
   <section class="hero sec--dark" id="giris" data-chapter="Giriş" data-hero data-module="hero-film">
@@ -63,7 +64,7 @@
         <a class="hero__scroll" href="#hakkimizda" data-hero-in="7"><span class="hero__scroll-line" aria-hidden="true"></span>Kaydırın</a>
       </div>
     </div>
-    {# zemin: içerikten sonra gelir (ekran okuyucu önce başlığı okur); masaüstünde tam genişlik, dar dikey ekranda başlığın altında 16:9 bant #}
+    {# zemin: içerikten sonra gelir (ekran okuyucu önce başlığı okur); her ekranda başlığın arkasında tam ekran (dikeyde dilim, 50-home.css) #}
     <div class="hero__media">
       <img class="hero__poster" src="/assets/video/boraden-giris-poster-1280.webp" srcset="/assets/video/boraden-giris-poster-768.webp 768w, /assets/video/boraden-giris-poster-1280.webp 1280w, /assets/video/boraden-giris-poster-1920.webp 1920w" sizes="100vw" width="1920" height="1080" alt="Boraden ofisinin girişi: ahşap çıtalı duvarda BORADEN tabelası" fetchpriority="high" decoding="async">
       <video class="hero__video" muted loop playsinline disablepictureinpicture preload="none" tabindex="-1" aria-hidden="true" data-src="/assets/video/boraden-giris-1080.mp4" data-src-sm="/assets/video/boraden-giris-720.mp4"></video>

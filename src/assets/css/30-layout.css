@@ -493,7 +493,8 @@ html.hdr-hidden .prog {
 
 @media (max-width: 75em) {
   .hdr__bar {
-    padding-inline: min(var(--gutter), 3vw);
+    /* yan çevrilmiş iPhone: logo ve menü düğmesi çentiğin/Dynamic Island'ın altına girmesin (güvenli alan) */
+    padding-inline: max(min(var(--gutter), 3vw), env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px));
     gap: 0.5rem;
   }
   .nav,
@@ -571,6 +572,22 @@ html.hdr-hidden .prog {
 @media (max-width: 900px) and (min-width: 601px) and (min-aspect-ratio: 3/2) {
   html:not(.hero-wide) .phero .crumbs {
     max-width: var(--phero-col);
+  }
+}
+/* Yan çevrilmiş telefonda koyu bölümler (şekil yanda; world.js › twoCol aynı koşul): sayfa tek sütunlu olduğu için yazı tüm genişliğe
+   yayılıp şeklin üstüne biniyordu (alanlar, sektörler, çalışma biçimi, kariyer, iletişim bandı…). Yazı şeklin karşı yarısında kalır:
+   şekil sağdaysa içerik sol yarıda, solda (ana sayfa sektörleri) ise sağ yarıda. Efektler kapalıyken şekil yok, düzen değişmez. */
+@media (max-width: 900px) and (min-width: 601px) and (min-aspect-ratio: 3/2) {
+  html:not(.hero-wide) :is(.ab-method, .cta, .cr-open, .ct-more, .rn-band) > .container,
+  html:not(.hero-wide) .areas .areas__grid {
+    padding-right: max(var(--gutter), 47vw);
+  }
+  html:not(.hero-wide) .sectors > .container {
+    padding-left: max(var(--gutter), 45vw);
+  }
+  /* alanlarda mobilin bütünüyle koyulaşan zemini yerine masaüstündeki gibi yalnızca yazı tarafı koyulaşır (şekil açık kalır) */
+  html:not(.hero-wide) .areas::before {
+    background: linear-gradient(90deg, rgba(8, 19, 42, 0.62) 0%, rgba(8, 19, 42, 0.38) 40%, transparent 58%);
   }
 }
 /* Sağda şekil olmayan sahne (404: tam genişlikte arazi, yazının arkasında): başlık sütunu daralmaz */

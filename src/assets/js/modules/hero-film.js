@@ -2,9 +2,11 @@
 // Müşteri isteği (Ekim 2026): eski «Ofisimiz» filmi kaldırıldı, video kahramanın zemini oldu. Kurgu: scripts/tools/hero-film.py.
 //
 // Oynatma kuralları (bütçe + erişilebilirlik):
-//   • Kendiliğinden oynatma: «Tam» ya da «Hafif» katman, geniş ekran (≥900 px) ve veri tasarrufu kapalı. Video sessiz ve döngülüdür;
-//     beyaz sayfa kahramanın üstünü tamamen örtünce ve sekme gizlenince DURUR (pil/CPU), kahraman yeniden görünce sürer.
-//   • «Kapalı» katman (hareket azaltma tercihi dahil), dar ekran ve veri tasarrufu: yalnızca poster (video dosyası hiç indirilmez);
+//   • Kendiliğinden oynatma: «Tam» ya da «Hafif» katman ve veri tasarrufu kapalı (telefon ve tablet dahil; video her ekranda başlığın
+//     arkasında tam ekran zemin). Video sessiz ve döngülüdür; video alanı ekrandan çıkınca, beyaz sayfa kahramanın üstünü tamamen
+//     örtünce ve sekme gizlenince DURUR (pil/CPU), yeniden görününce sürer. Tarayıcı kendiliğinden oynatmayı engellerse (ör. iPhone
+//     Düşük Güç Modu) poster ve «Videoyu oynat» düğmesi kalır.
+//   • «Kapalı» katman (hareket azaltma tercihi dahil) ve veri tasarrufu: yalnızca poster (video dosyası hiç indirilmez);
 //     «Videoyu oynat» düğmesi oynatmayı ziyaretçiye bırakır.
 //   • «Duraklat / Videoyu oynat» düğmesi her zaman vardır (WCAG 2.2.2). Ziyaretçi duraklattıysa kaydırma ya da katman değişimi
 //     videoyu kendiliğinden yeniden başlatmaz.
@@ -23,12 +25,13 @@ export function mount(el, { fx, scroll, on }) {
   // kahramanın üstüne binen beyaz sayfa (giriş): üstü ekranın üstüne değince kahraman tamamen örtülmüştür
   const sheet = el.nextElementSibling;
 
+  const media = el.querySelector('.hero__media') || video;
   const saveData = !!navigator.connection?.saveData;
-  const wide = matchMedia('(min-width: 900px)');
-  const auto = () => fx.tier !== 'off' && !saveData && wide.matches; // kendiliğinden oynatma izni
+  const auto = () => fx.tier !== 'off' && !saveData; // kendiliğinden oynatma izni
   let wantPlay = auto();
   let userPaused = false;
   let covered = false;
+  let inView = true;
   let loaded = false;
   let started = false;
 
@@ -58,14 +61,33 @@ export function mount(el, { fx, scroll, on }) {
     try {
       await video.play();
     } catch (e) {
-      /* otomatik oynatma engellendi / hızlı duraklatma: poster + düğme kalır */
+      // Safari (iPhone/iPad): sayfa açılırken videonun görünürlüğü henüz hesaplanmadan gelen play() «NotAllowedError» ile reddedilir.
+      // Kısa aralıklarla birkaç kez yeniden denenir; yine olmazsa (ör. Düşük Güç Modu) ilk dokunuşta açılır (unlock). Başka hata
+      // (hızlı duraklatma, dosya yok) yoksayılır: poster + düğme kalır.
+      if (e?.name === 'NotAllowedError' && retries < 5) {
+        retries++;
+        setTimeout(() => {
+          if (canRun() && video.paused) play();
+        }, 350 * retries);
+      }
     }
   }
-  const canRun = () => wantPlay && !userPaused && !covered && !document.hidden;
+  let retries = 0;
+  const canRun = () => wantPlay && !userPaused && !covered && inView && !document.hidden;
+  // ilk dokunuş (tıklama) / tuş: tarayıcı kendiliğinden oynatmayı engellediyse ziyaretçinin etkileşimiyle açılır. Dinleyici pencerede
+  // ve kabarcık aşamasında: oynat/duraklat düğmesinin kendi işleyicisi önce çalışır (duraklattıysa canRun yanlış, oynattıysa video
+  // zaten oynuyor). «touchend» kullanılmaz: dokunuşta önce o gelir, düğmeye dokunuş videoyu başlatıp ardından gelen tıklama durdururdu.
+  const unlock = () => {
+    if (video.paused && canRun()) play();
+  };
+  const UNLOCK = ['click', 'keydown'];
+  UNLOCK.forEach((t) => addEventListener(t, unlock, { passive: true }));
+  const dropUnlock = () => UNLOCK.forEach((t) => removeEventListener(t, unlock));
 
   const onPlaying = () => {
     el.classList.add('has-video'); // poster karesinden başlar; duraklatınca son kare kalır
     ui(true);
+    dropUnlock(); // bir kez oynadı: tarayıcı izni var
   };
   const onPause = () => ui(false);
   const onError = () => {
@@ -85,6 +107,13 @@ export function mount(el, { fx, scroll, on }) {
     else if (canRun()) play();
   };
   on(scroll.onFrame(check));
+  // video alanı ekrandan çıkınca dur, görününce (izin varsa) sür
+  const io = new IntersectionObserver(([en]) => {
+    inView = en.isIntersecting;
+    if (!inView) video.pause();
+    else if (canRun()) play();
+  }, { threshold: 0.15 });
+  io.observe(media);
 
   const onVis = () => {
     if (document.hidden) video.pause();
@@ -117,6 +146,8 @@ export function mount(el, { fx, scroll, on }) {
 
   return () => {
     offFx();
+    io.disconnect();
+    dropUnlock();
     document.removeEventListener('visibilitychange', onVis);
     ctl.removeEventListener('click', onClick);
     video.removeEventListener('playing', onPlaying);
