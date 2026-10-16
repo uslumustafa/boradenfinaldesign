@@ -29,7 +29,7 @@ Sektörler dizininde önizleme panelinin üstündeki kutu üzerine gelinen sekt�
 
 **Bölüm işaretleri:** aynı beyaz bölümde (`.sheet`) `[data-shape-at="kimlik"]` taşıyan bölüm ekranın ortasına geldikçe şekil sırayla o şekle döner. Dönüşüm zamana yayılır (hızlı kaydırmada bile ≈1 sn). Örnek: hizmet sayfasında *Süreç* → `akis`, komşu hizmetler → alanın şekli; sektör sayfasında *İlgili hizmetler* → `petek`, *SSS* → `soru`, *Diğer sektörler* → `matris`.
 
-**Üzerine gelme:** `[data-shape-hover="kimlik"]` taşıyan satır/kartın üzerine fareyle gelince (ya da klavyeyle odaklanınca) şekil geçici olarak o şekle döner; ayrılınca geri gelir. Dokunmatik ekranda devre dışıdır.
+**Üzerine gelme:** `[data-shape-hover="kimlik"]` taşıyan satır/kartın üzerine fareyle gelince (ya da klavyeyle odaklanınca) şekil geçici olarak o şekle döner. Satırdan satıra geçince şekil ekrandaki hâlinden **doğrudan** yeni satırın şekline döner (0,7 sn); araya sayfanın ya da önceki satırın şekli girmez. Dönüşüm sürerken başka satıra geçilirse ara hâl dondurulur ve oradan yeni şekle gidilir (`world/ink.js › pose`). İmleç liste bölgesinde (satırların en yakın ortak atası: satır araları, grup başlıkları) kaldıkça son şekil kalır; bölgeden çıkınca sayfanın şekline döner. Dokunmatik ekranda devre dışıdır. Test: `tests/figure-hover.e2e.mjs` (her çizilen kare `fig.__ink` izinden denetlenir).
 
 **Katmanlar:** Tam = canlı, 60 fps, küçük fare lensi · Hafif = canlı, 30 fps, daha az nokta · Kapalı (ve `prefers-reduced-motion`) = hareketsiz tek kare, dönüşüm anlık. Görünmeyen kutu çizilmez; yazdırmada ve yüksek karşıtlık tercihinde gizlenir; JS yoksa görünmez.
 

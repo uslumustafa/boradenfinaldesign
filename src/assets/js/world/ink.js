@@ -12,6 +12,30 @@ const smooth = (a, b, x) => {
   const t = clamp01((x - a) / (b - a));
   return t * t * (3 - 2 * t);
 };
+// A → B dönüşümünde i. noktanın yerel konumu ve boyu (döndürme, soluma ve toplanma öncesi) → MP = [x, y, z, boy].
+// draw() ile pose() aynı hesabı kullanır: dondurulan ara hâl, dondurulduğu karede çizilenle birebir aynıdır.
+const MP = new Float64Array(4);
+function morphPt(A, B, i, mix, t, Rb) {
+  let x = A.px[i * 3];
+  let y = A.px[i * 3 + 1];
+  let z = A.px[i * 3 + 2];
+  let sz = A.sz[i];
+  if (B) {
+    // dönüşüm: noktaya özgü gecikme (Morton sırası → komşu noktalar birlikte akar)
+    let tt = clamp01((mix - A.rank[i] * 0.38) / 0.62);
+    tt = tt * tt * (3 - 2 * tt);
+    const w = Math.sin(tt * Math.PI) * Rb * 0.2;
+    const s = A.phase[i * 4];
+    x += (B.px[i * 3] - x) * tt + Math.sin(s * 6.283 + t * 0.5) * w;
+    y += (B.px[i * 3 + 1] - y) * tt + Math.cos(s * 12.566 + t * 0.45) * w;
+    z += (B.px[i * 3 + 2] - z) * tt + Math.sin(s * 9.4 - t * 0.4) * w;
+    sz += (B.sz[i] - sz) * tt;
+  }
+  MP[0] = x;
+  MP[1] = y;
+  MP[2] = z;
+  MP[3] = sz;
+}
 const hash = (n) => {
   const s = Math.sin(n * 91.3458) * 47453.5453;
   return s - Math.floor(s);
@@ -141,6 +165,47 @@ export function createInk(canvas, opts = {}) {
     return P;
   }
 
+  // a / b: formasyon sıra numarası ya da pose() çıktısı (dondurulmuş ara hâl)
+  const res = (k) => (k && typeof k === 'object' ? k : prepare(k));
+
+  /**
+   * Ara hâli dondurur: a → b dönüşümünün (mix, t anındaki) nokta konumları yeni bir «şekil» olur; draw() bunu a ya da b olarak alır.
+   * Dönüşüm sürerken hedef değişirse ekrandaki hâlden DOĞRUDAN yeni hedefe gidilir — önce eski ya da ilk şekle dönülmez (modules/figure.js).
+   * Renk grupları, gecikme sırası, soluma ve toplanma fazları A'dan, ölçüler ve bakış açısı karışımdan gelir → çizim dondurulduğu kareyle aynıdır.
+   * into: daha önce pose()'un döndürdüğü nesne → yeniden kullanılır (her karede çağrılırsa bellek ayrılmaz). Dönüşüm yoksa A'nın kendisi döner.
+   */
+  function pose(a, b, mix, t = 0, into = null) {
+    const A = res(a);
+    const B = b !== undefined && b !== null && b !== a && mix > 0 ? res(b) : null;
+    if (!B || B === A) return A;
+    const m = clamp01(mix);
+    const n = Math.min(A.n, B.n, N);
+    const P = into && into.own && into.px.length >= n * 3 ? into : { own: true, k: -1, px: new Float32Array(n * 3), sz: new Float32Array(n), view: {} };
+    const lerp = (p, q) => p * (1 - m) + q * m;
+    P.n = n;
+    P.rank = A.rank;
+    P.phase = A.phase;
+    P.sc = A.sc;
+    P.ranges = m >= 0.5 ? B.ranges : A.ranges;
+    P.rx = lerp(A.rx, B.rx);
+    P.ry = lerp(A.ry, B.ry);
+    P.rz = lerp(A.rz, B.rz);
+    P.qx = lerp(A.qx, B.qx);
+    P.qy = lerp(A.qy, B.qy);
+    P.view.yaw = lerp(A.view.yaw || 0, B.view.yaw || 0);
+    P.view.pitch = lerp(A.view.pitch || 0, B.view.pitch || 0);
+    P.view.zoom = lerp(A.view.zoom || 1, B.view.zoom || 1);
+    const Rb = Math.max(P.rx, P.ry, P.rz);
+    for (let i = 0; i < n; i++) {
+      morphPt(A, B, i, m, t, Rb);
+      P.px[i * 3] = MP[0];
+      P.px[i * 3 + 1] = MP[1];
+      P.px[i * 3 + 2] = MP[2];
+      P.sz[i] = MP[3];
+    }
+    return P;
+  }
+
   const buf = {
     x: new Float32Array(N),
     y: new Float32Array(N),
@@ -159,7 +224,7 @@ export function createInk(canvas, opts = {}) {
 
   /**
    * Bir kare çizer.
-   *   a, b   — formasyon sıra numaraları (b verilirse mix ile a→b dönüşür)
+   *   a, b   — formasyon sıra numaraları ya da pose() ara hâlleri (b verilirse mix ile a→b dönüşür)
    *   mix    — 0..1 dönüşüm ilerlemesi         intro — 0..1 toplanma (noktalar dağınık hâlden şekle)
    *   yaw, pitch — ek döndürme (rad)           zoom — boyut çarpanı (1 = kutuya sığdır)
    *   cx, cy — şeklin merkezi (css px)         fit — {w, h}: şeklin sığacağı kutu (css px)
@@ -167,8 +232,8 @@ export function createInk(canvas, opts = {}) {
    */
   function draw(r) {
     const t = r.t || 0;
-    const A = prepare(r.a);
-    const B = r.b !== undefined && r.b !== r.a && (r.mix || 0) > 0 ? prepare(r.b) : null;
+    const A = res(r.a);
+    const B = r.b !== undefined && r.b !== null && r.b !== r.a && (r.mix || 0) > 0 ? res(r.b) : null;
     const mix = B ? clamp01(r.mix) : 0;
     const yaw0 = (r.yaw || 0) + (A.view.yaw || 0) * (1 - mix) + (B ? (B.view.yaw || 0) * mix : 0);
     const pitch0 = (r.pitch || 0) + (A.view.pitch || 0) * (1 - mix) + (B ? (B.view.pitch || 0) * mix : 0);
@@ -198,21 +263,11 @@ export function createInk(canvas, opts = {}) {
     const pxs = Math.min(1.5, Math.max(0.8, Math.sqrt(scale) * 0.34)) * (theme === 'glow' ? 1.25 : 1);
 
     for (let i = 0; i < n; i++) {
-      let x = A.px[i * 3];
-      let y = A.px[i * 3 + 1];
-      let z = A.px[i * 3 + 2];
-      let sz = A.sz[i];
-      if (B) {
-        // dönüşüm: noktaya özgü gecikme (Morton sırası → komşu noktalar birlikte akar)
-        let tt = clamp01((mix - A.rank[i] * 0.38) / 0.62);
-        tt = tt * tt * (3 - 2 * tt);
-        const w = Math.sin(tt * Math.PI) * Rb * 0.2;
-        const s = A.phase[i * 4];
-        x += (B.px[i * 3] - x) * tt + Math.sin(s * 6.283 + t * 0.5) * w;
-        y += (B.px[i * 3 + 1] - y) * tt + Math.cos(s * 12.566 + t * 0.45) * w;
-        z += (B.px[i * 3 + 2] - z) * tt + Math.sin(s * 9.4 - t * 0.4) * w;
-        sz += (B.sz[i] - sz) * tt;
-      }
+      morphPt(A, B, i, mix, t, Rb);
+      let x = MP[0];
+      let y = MP[1];
+      let z = MP[2];
+      const sz = MP[3];
       // soluma: noktaya özgü küçük salınım
       const ph = A.phase[i * 4 + 1];
       const br = Math.sin(t * 0.6 + ph * 40) * drift;
@@ -296,5 +351,5 @@ export function createInk(canvas, opts = {}) {
     prepared.clear();
   }
 
-  return { resize, draw, dispose, prepare, get size() { return { w: W, h: H, dpr }; } };
+  return { resize, draw, dispose, prepare, pose, get size() { return { w: W, h: H, dpr }; } };
 }

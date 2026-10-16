@@ -9,6 +9,10 @@
 //   Birden çok şekil verilirse kapsam (en yakın .sheet, yoksa main) kaydırıldıkça sırayla birbirine dönüşür.
 // [data-shape-at="kimlik"]: kapsamdaki bölüm ekranın ortasına geldikçe şekil sırayla o şekle döner (dönüşüm zamana yayılır, ~1 sn).
 // [data-shape-hover="kimlik"]: kapsamdaki satırın/kartın üzerine gelince (fare) ya da klavyeyle odaklanınca geçici olarak o şekil.
+//   Şekil ekrandaki hâlinden DOĞRUDAN yeni satırın şekline döner; araya sayfanın/önceki satırın şekli girmez (müşteri, 2026-10-16:
+//   «sadece üzerine gelinen şekil gelmeli»). Dönüşüm sürerken başka satıra geçilirse ara hâl dondurulur ve oradan gidilir (ink.pose).
+//   İmleç liste bölgesinde kaldıkça (satır araları, grup başlıkları) son şekil kalır; bölgeden çıkınca sayfanın şekline dönülür.
+//   Test izi: her karede fig.__ink = { a, b, mix } (şekil kimlikleri; 'kaydirma' = kaydırma şekli, 'ara' = dondurulmuş ara hâl) — tests/figure-hover.e2e.mjs
 // Katmanlar: Tam = canlı, 60 fps, küçük fare lensi · Hafif = canlı, 30 fps, daha az nokta · Kapalı = hareketsiz tek kare.
 // Görünmezken çizilmez. Yazdırmada ve yüksek karşıtlık tercihinde gizlenir (CSS: 80-fx.css › .fig).
 import { createInk } from '../world/ink.js';
@@ -19,6 +23,10 @@ const POINTS = { side: [4200, 2200], pv: [6400, 3000], lead: [6400, 3000] }; // 
 const FPS = { full: 60, lite: 30 };
 const INTRO_S = 1.6; // toplanma süresi (sn)
 const STRENGTH = 1.55; // mürekkep koyuluğu (yazı arkası değil, ön planda şekil)
+const HOVER_S = 0.7; // üzerine gelme dönüşümünün süresi (sn)
+const SCROLL = 'kaydirma'; // hedef: kaydırmanın o anki şekli (üzerine gelinen öğe yok)
+const TAU = Math.PI * 2;
+const wrapPi = (x) => x - Math.round(x / TAU) * TAU;
 
 // paylaşılan döngü: görünen canlı şekil varsa tek rAF
 const live = new Set();
@@ -79,8 +87,10 @@ export function mount(fig, ctx = {}) {
   const marks = [...scope.querySelectorAll('[data-shape-at]')]
     .map((el) => ({ el, k: parseShapes(el.dataset.shapeAt)[0] }))
     .filter((m) => m.k !== undefined);
-  // üzerine gelinen öğenin şekli: kaydırma şeklinin üstüne biner. cur: gösterilen, m: ağırlığı (0…1), want: istenen (−1 = yok)
-  const hov = { cur: -1, want: -1, m: 0 };
+  // gösterilen şekil = kaynak → hedef dönüşümü (m 0…1, zamana yayılır). Kaynak/hedef: şekil sıra numarası, SCROLL ya da
+  // dondurulmuş ara hâl (ink.pose; yalnızca kaynak olabilir). want: istenen hedef (üzerine gelinen öğenin şekli ya da SCROLL)
+  const hv = { src: SCROLL, dst: SCROLL, m: 1, want: SCROLL };
+  let scrollPose = null; // kaydırma dönüşümü sürerken SCROLL'un o anki hâli (her karede yeniden doldurulur)
   let W = 0;
   let H = 0;
   let last = 0;
@@ -134,11 +144,20 @@ export function mount(fig, ctx = {}) {
     ink.resize(W, H, dprMax);
   }
 
-  // dönüş: salınımlı şekiller ±sway, diğerleri yavaşça döner
-  const turn = (k, t) => {
-    const F = FORMATIONS[k];
-    return F.sway ? Math.sin(t * 0.24) * F.sway : (F.spin ?? 1) * t * 0.05;
+  // dönüş: salınımlı şekiller ±sway, diğerleri yavaşça döner → yaw(t) = sw·sin(0,24·t) + sp·0,05·t + off
+  // (katsayı biçimi: dondurulan ara hâl, dondurulduğu andaki açıdan aynı hızla dönmeye devam eder)
+  const COEF = new Map();
+  const coef = (k) => {
+    let c = COEF.get(k);
+    if (!c) {
+      const F = FORMATIONS[k];
+      c = F.sway ? { sw: F.sway, sp: 0, off: 0 } : { sw: 0, sp: F.spin ?? 1, off: 0 };
+      COEF.set(k, c);
+    }
+    return c;
   };
+  const yawC = (c, t) => c.sw * Math.sin(t * 0.24) + c.sp * t * 0.05 + c.off;
+  const turn = (k, t) => yawC(coef(k), t);
 
   function frame(now, t) {
     if (dead) return;
@@ -182,36 +201,63 @@ export function mount(fig, ctx = {}) {
       a = shapes[i];
       b = i < n - 1 ? shapes[i + 1] : a;
     }
-    // üzerine gelinen öğe: önce eskisi söner, sonra yenisi belirir
-    const r = ease(7);
-    if (hov.cur !== hov.want) {
-      hov.m -= hov.m * r;
-      if (hov.m < 0.02 || still) {
-        hov.m = 0;
-        hov.cur = hov.want;
-      }
+    // ——— üzerine gelinen öğe: gösterilen şekil ekrandaki hâlinden DOĞRUDAN hedefe döner (araya sayfanın/önceki satırın şekli girmez)
+    const tt = still ? 0 : t;
+    const sa = a;
+    const sb = b;
+    const smix = mix;
+    // SCROLL'u çizilebilir yap: tek şekil ya da (kaydırma dönüşümü sürüyorsa) o anki ara hâl
+    const resolve = (s) => {
+      if (s !== SCROLL) return s;
+      if (!(smix > 0) || sa === sb) return sa;
+      scrollPose = ink.pose(sa, sb, smix, tt, scrollPose);
+      return scrollPose;
+    };
+    const yawOf = (s) => (s === SCROLL ? turn(sa, tt) * (1 - smix) + turn(sb, tt) * smix : typeof s === 'object' ? yawC(s.turnC, tt) : turn(s, tt));
+    const coefOf = (s) => (s === SCROLL ? coef(smix < 0.5 ? sa : sb) : typeof s === 'object' ? s.turnC : coef(s));
+    // dönüş açısı en kısa yoldan (uzun süre açık sayfada sürekli dönen şekillerin açısı büyür; dönüşümde birkaç tur fırıl dönmesin)
+    const hoverYaw = (mx) => {
+      const y0 = yawOf(hv.src);
+      return y0 + wrapPi(yawOf(hv.dst) - y0) * mx;
+    };
+    if (hv.want !== hv.dst) {
+      const mx = smoothstep(0, 1, hv.m);
+      if (hv.src !== hv.dst && !still && mx > 0 && mx < 1) {
+        // dönüşüm sürüyor: ekrandaki ara hâli (noktalar + açı) dondur, yeni hedefe oradan git — eski hedefe/ilk şekle uğramadan
+        const P = ink.pose(resolve(hv.src), resolve(hv.dst), mx, tt);
+        if (P && P.own && P !== scrollPose) {
+          const c = coefOf(mx < 0.5 ? hv.src : hv.dst);
+          P.turnC = { sw: c.sw, sp: c.sp, off: 0 };
+          P.turnC.off = hoverYaw(mx) - yawC(P.turnC, tt);
+          hv.src = P;
+        } else hv.src = mx < 0.5 ? hv.src : hv.dst;
+      } else if (hv.src === hv.dst || mx >= 1 || still) hv.src = hv.dst;
+      // mx = 0: ekranda hâlâ kaynak var → kaynak aynen kalır
+      hv.dst = hv.want;
+      hv.m = hv.src === hv.dst ? 1 : 0;
     }
-    if (hov.cur === hov.want && hov.cur >= 0) hov.m += (1 - hov.m) * r;
-    if (hov.cur >= 0 && hov.m > 0.004) {
-      const base = mix < 0.5 ? a : b;
-      if (base !== hov.cur) {
-        a = base;
-        b = hov.cur;
-        mix = smoothstep(0, 1, hov.m);
-      } else {
-        a = base;
-        b = base;
-        mix = 0;
-      }
-    }
-    if (still && mix > 0) {
-      // hareketsiz katman: ara kare yok
-      a = mix >= 0.5 ? b : a;
+    if (hv.m < 1) hv.m = still ? 1 : Math.min(1, hv.m + dtf / HOVER_S);
+    if (hv.m >= 1) hv.src = hv.dst;
+    let yaw;
+    if (hv.src !== hv.dst) {
+      mix = smoothstep(0, 1, hv.m);
+      a = resolve(hv.src);
+      b = resolve(hv.dst);
+      yaw = hoverYaw(mix);
+    } else if (hv.dst !== SCROLL) {
+      a = hv.dst;
       b = a;
       mix = 0;
+      yaw = turn(a, tt);
+    } else {
+      if (still && mix > 0) {
+        // hareketsiz katman: ara kare yok
+        a = mix >= 0.5 ? b : a;
+        b = a;
+        mix = 0;
+      }
+      yaw = turn(a, tt) * (1 - mix) + turn(b, tt) * mix;
     }
-    const tt = still ? 0 : t;
-    const yaw = turn(a, tt) * (1 - mix) + turn(b, tt) * mix;
     // fare lensi (yalnızca Tam): son 1,8 sn içinde şeklin üstünde hareket varsa açık
     let lens = null;
     if (!lite && !still) {
@@ -222,6 +268,9 @@ export function mount(fig, ctx = {}) {
       ptr.y += (ptr.ty - ptr.y) * 0.5;
       if (ptr.k > 0.004) lens = { x: ptr.x - cr.left, y: ptr.y - cr.top, k: ptr.k };
     }
+    // test izi (tests/figure-hover.e2e.mjs): çizilen a → b dönüşümü
+    const idOf = (s) => (typeof s === 'number' ? FORMATIONS[s]?.id : s === scrollPose ? SCROLL : 'ara');
+    fig.__ink = { a: idOf(a), b: mix > 0 && b !== a ? idOf(b) : null, mix };
     ink.draw({
       a,
       b,
@@ -253,8 +302,16 @@ export function mount(fig, ctx = {}) {
   let intentT = 0;
   let leaveT = 0;
   const hoverOf = (el) => (el && el.closest ? el.closest('[data-shape-hover]') : null);
+  // liste bölgesi: üzerine gelme öğelerinin en yakın ortak atası (hizmet listesi sütunu, kart ızgarası, sektör listeleri).
+  // İmleç bölgede kaldıkça (satır araları, grup başlıkları) son şekil kalır. Ortak ata kapsamın kendisiyse ya da şekli de içeriyorsa bölge yok.
+  const items = [...scope.querySelectorAll('[data-shape-hover]')];
+  let zone = items.length ? items[0].parentElement : null;
+  while (zone && zone !== scope && !items.every((it) => zone.contains(it))) zone = zone.parentElement;
+  if (zone && (zone === scope || zone.contains(fig))) zone = null;
+  const inZone = (el) => !!(zone && el && el.nodeType === 1 && zone.contains(el));
   const setWant = (k) => {
-    hov.want = k;
+    if (hv.want === k) return;
+    hv.want = k;
     if (still) redraw();
   };
   const aim = (el) => {
@@ -268,23 +325,26 @@ export function mount(fig, ctx = {}) {
   const release = () => {
     clearTimeout(intentT);
     clearTimeout(leaveT);
-    leaveT = setTimeout(() => setWant(-1), 160);
+    leaveT = setTimeout(() => setWant(SCROLL), 160);
   };
   const onOver = (e) => {
     if (e.pointerType && e.pointerType !== 'mouse') return;
     const el = hoverOf(e.target);
     if (el && scope.contains(el)) aim(el);
+    else if (inZone(e.target)) clearTimeout(leaveT); // bölgeye geri dönüldü: son şekil kalır
   };
   const onOut = (e) => {
     if (e.pointerType && e.pointerType !== 'mouse') return;
-    if (!hoverOf(e.relatedTarget)) release();
+    if (hoverOf(e.relatedTarget)) return; // satırdan satıra: yenisinin pointerover'ı karar verir
+    clearTimeout(intentT); // satırdan boşluğa: yarım kalan bekleme iptal (yalnızca üzerinde durulan satırın şekli gelir)
+    if (!inZone(e.relatedTarget)) release();
   };
   const onFocusIn = (e) => {
     const el = hoverOf(e.target);
     if (el && e.target.matches && e.target.matches(':focus-visible')) aim(el);
   };
   const onFocusOut = (e) => {
-    if (!hoverOf(e.relatedTarget)) release();
+    if (!hoverOf(e.relatedTarget) && !inZone(e.relatedTarget)) release();
   };
   scope.addEventListener('pointerover', onOver);
   scope.addEventListener('pointerout', onOut);
