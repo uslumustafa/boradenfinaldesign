@@ -24,6 +24,7 @@ import { terazi, bilanco, muhur, mutabakat, dilimler, kdvZinciri, nakit, rasyo, 
 import { petek, matris, ag, yayin, kitap, abakus, takvim, basvuru, yonlendirme, arama, arsiv, sozluk, gizlilik, soru, yazit } from './shapes-page.js';
 import { rakamlar, agac, tesvik, hukuk, dijital, okul } from './shapes-area.js';
 import { sozlesme, sicil, arabulucu, uyusmazlik, kvkk, icra, kurulus, belge, proje, arge, hibe, istihdam, ihracat } from './shapes-legal.js';
+import { tasdik, kdvIade, kurumlar, transfer, dolayli, otv, bireysel } from './shapes-vergi.js';
 
 const TAU = Math.PI * 2;
 const clamp01 = (v) => Math.min(1, Math.max(0, v));
@@ -473,6 +474,14 @@ export const FORMATIONS = [
   { id: 'hibe', build: hibe, spin: 0, sway: 0.45, pose: POSE({ dz: 0.4 }), figure: 'AB hibesi — on iki yıldız, avro ve başvuru dosyası', view: { pitch: 0.08, yaw: -0.15 } },
   { id: 'istihdam', build: istihdam, spin: 0, sway: 0.4, pose: POSE({ dy: 0.8, dz: 0.8, ly: -0.3 }), figure: 'İstihdam teşviki — yeni koltuklar ve prim desteği', view: { pitch: 0.25, yaw: -0.2 } },
   { id: 'ihracat', build: ihracat, spin: 0, sway: 0.4, pose: POSE({ dz: 0.8 }), figure: 'İhracat — dünya, rota ve konteyner', view: { pitch: 0.12, yaw: -0.2 } },
+  // Vergi hizmetleri (Ekim 2026; shapes-vergi.js): her hizmete bir bakışta tanınan tek nesne
+  { id: 'tasdik', build: tasdik, spin: 0, sway: 0.4, pose: POSE({ dz: 0.6 }), figure: 'Tasdik — mühürlü ve onaylı rapor, yanında kaşe', view: { pitch: 0.06, yaw: -0.22 } },
+  { id: 'kdv-iade', build: kdvIade, spin: 0, sway: 0.45, pose: POSE({ dz: 0.6 }), figure: 'KDV iadesi — geri dönen ok ve ₺', view: { pitch: 0.05, yaw: 0.22 } },
+  { id: 'kurumlar', build: kurumlar, spin: 0, sway: 0.4, pose: POSE({ dz: 0.6 }), figure: 'Kurumlar vergisi denetimi — şirket binası ve onaylı büyüteç', view: { pitch: 0.1, yaw: -0.3 } },
+  { id: 'transfer', build: transfer, spin: 0, sway: 0.4, pose: POSE({ dz: 0.6 }), figure: 'Transfer fiyatlandırması — iki grup şirketi arasındaki işlemin fiyatı', view: { pitch: 0.1, yaw: -0.2 } },
+  { id: 'dolayli', build: dolayli, spin: 0, sway: 0.4, pose: POSE({ dz: 0.6 }), figure: 'Dolaylı vergiler — alışveriş arabası ve fiyatın içindeki %', view: { pitch: 0.18, yaw: -0.42 } },
+  { id: 'otv', build: otv, spin: 0, sway: 0.4, pose: POSE({ dz: 0.6 }), figure: 'ÖTV — otomobil ve akaryakıt pompası', view: { pitch: 0.12, yaw: -0.35 } },
+  { id: 'bireysel', build: bireysel, spin: 0, sway: 0.4, pose: POSE({ dz: 0.6 }), figure: 'Bireysel vergi — kişi, evi ve geliri', view: { pitch: 0.08, yaw: -0.2 } },
 ];
 
 /** Kimlik → sahne sıra numarası. Şablonlar/rotalar sahneyi buradan adıyla seçer (data-world = sıra numarası). */

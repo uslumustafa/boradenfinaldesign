@@ -122,6 +122,15 @@ Kural: sık metin/sayı ızgarası taşıyan bantta şekil yazının arkasına d
 | 60 | `hibe` | AB hibesi — on iki yıldız, avro ve başvuru dosyası (`shapes-legal.js`; Ekim 2026) |
 | 61 | `istihdam` | İstihdam teşviki — yeni koltuklar ve prim desteği (`shapes-legal.js`; Ekim 2026) |
 | 62 | `ihracat` | İhracat — dünya, rota ve konteyner (`shapes-legal.js`; Ekim 2026) |
+| 63 | `tasdik` | Tasdik — «TASDİK» başlıklı rapor, kırmızı mühür izi ve yeşil onay; solunda saplı kaşe (`shapes-vergi.js`; 16 Ekim 2026) |
+| 64 | `kdv-iade` | KDV iadesi — dik duran ₺ madeni para, çevresinde geri dönen yeşil ok, altta «KDV» (`shapes-vergi.js`) |
+| 65 | `kurumlar` | Kurumlar vergisi denetimi — şirket binası ve önünde merceğinde onay olan büyüteç (`shapes-vergi.js`) |
+| 66 | `transfer` | Transfer fiyatlandırması — iki grup şirketi, aralarında iki yönlü ok ve ₺ fiyat etiketi (`shapes-vergi.js`) |
+| 67 | `dolayli` | Dolaylı vergiler — alışveriş arabası (ürünlerle) ve % etiketi: vergi fiyatın içinde (`shapes-vergi.js`) |
+| 68 | `otv` | ÖTV — otomobil ve «ÖTV» levhalı akaryakıt pompası, tabanca aracın deposunda (`shapes-vergi.js`) |
+| 69 | `bireysel` | Bireysel vergi — kişi (kravatlı büst), evi ve madeni para yığını (`shapes-vergi.js`) |
+
+**Vergi hizmetleri (16 Ekim 2026, müşteri geri bildirimi «buradaki 3B şekiller çok mantıksız; buraya uygun, daha belirgin, net görünen şekiller»):** Vergi alanının yedi hizmeti önceden soyut çizelgeler taşıyordu (KDV zinciri basamakları, dilim çubukları, pasta dilimi, bilanço rafları, araba tekerleği gibi okunan mühür halkası) ve iki çift aynı şekli paylaşıyordu (KDV İade ile Dolaylı Vergiler `kdv-zinciri`; ÖTV ile Bireysel `dilimler`). Artık her hizmet bir bakışta tanınan tek nesne gösterir (63–69). Okunurluk kuralları (`shapes-vergi.js` başı): dış hat yoğun ve iri noktalı, iç ayrıntı seyrek; nesne kameraya dönük (salınım, tam tur yok); yalnızca birkaç iri harf/simge (TASDİK, KDV, ÖTV, ₺, %); renk parçaları ayırır (lacivert gövde, mavi ayrıntı, kırmızı vergi/fiyat, yeşil onay/iade). Kişi ve kaşe topuzu gibi yuvarlak hacimler tel çerçeve değil, yüzeyde noktalar + çevre çizgisiyle çizilir (`ball`; tel küre «kafes» gibi görünüyordu). Kompozisyon kuralı: uzun parça sağda (rapor, bina, merkez şirket) — kahramanda soldaki sayfa yolu ve başlık sütunu boş kalır. Eski şekiller (`muhur`, `kdv-zinciri`, `dilimler`, `bilanco`, `pay`) kayıtta durur; hesaplayıcılar ve diğer alanlar kullanmaya devam eder. `tests/formations.test.mjs` Vergi hizmetlerinin şekil paylaşmadığını ve eski şekillere dönmediğini, `tests/hero-overlap.e2e.mjs` şekillerin kahraman yazısına binmediğini (11 ekran, 1920×1080 … 667×375) ve dikey telefonda kırpılmadığını denetler.
 
 Kayıttaki diğer alanlar: `spin` (sürekli dönüş; 0 = dönmez), `sway` (>0 ise dönmek yerine ± salınım — düzlemsel şekiller yandan ince görünmesin), `pose` (WebGL kamerası; yeni şekiller için `POSE({ dx, dy, dz, ly })`), `view` (mürekkep çizimi için başlangıç bakışı: `pitch`, `yaw`).
 
@@ -138,7 +147,9 @@ Performans: şekiller ilk kullanıldıklarında üretilir (`lazyFormations`); 26
 
 ## İlgili testler
 
-- `tests/formations.test.mjs` — 46 şeklin her biri üretilebilir, sonlu, sahne ölçüsünde (içerik şekilleri |x| ≤ 7,5, |y| ≤ 5,5, |z| ≤ 6) ve aynı tohumla tekrarlanabilir; kimlikler tekil, ilk 8 ana sayfa sahnesi yerinde; `scenes.mjs` eşlemeleri yalnızca var olan şekillere gider; Hakkımızda terazi değil yazıt
+- `tests/formations.test.mjs` — kayıttaki her şekil üretilebilir, sonlu, sahne ölçüsünde (içerik şekilleri |x| ≤ 7,5, |y| ≤ 5,5, |z| ≤ 6) ve aynı tohumla tekrarlanabilir; kimlikler tekil, ilk 8 ana sayfa sahnesi yerinde; `scenes.mjs` eşlemeleri yalnızca var olan şekillere gider; Hakkımızda terazi değil yazıt
 - `tests/world-contact-pose.test.mjs` — kahraman kamerası/dönüşü (gerçek three.js izdüşümü)
 - `tests/services.test.mjs` — hizmet ve alan sayfalarında «Çalışma biçimimiz» bandının alan sahnesi
+- `tests/hero-overlap.e2e.mjs` — Vergi hizmet sayfalarında 3B şeklin noktaları dünyanın kendi kamerasıyla izdüşürülür: iki sütunlu düzende (1920×1080 … 667×375) sayfa yolu, üst etiket, başlık ve öze düşen nokta ≤ %0,2; dar düzende (dikey telefon/tablet) ekran dışında kalan ≤ %2
+- `tests/figure-hover.e2e.mjs` — şekil kutusunda üzerine gelme: yalnızca gelinen satırın şekli, araya sayfanın/önceki satırın şekli girmez
 - `npm run test:e2e` — gezinme, kahraman, metin büyütme, efekt katmanları

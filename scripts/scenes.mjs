@@ -63,17 +63,18 @@ export const AREA_SHAPE = {
 
 // ——— 60 hizmet: şekil, hizmetin kendi kapsamından (content.json › services: başlık, kapsam, çıktı) ———————————
 export const SERVICE_SHAPE = {
-  // Vergi ve Mali Müşavirlik
+  // Vergi ve Mali Müşavirlik — Vergi alanının yedi hizmeti kendi şekillerini taşır (shapes-vergi.js; müşteri isteği, 2026-10-16:
+  // önceki soyut çizelgeler «mantıksız» bulundu, iki hizmet çifti aynı şekli paylaşıyordu). Biri tekrar paylaşılırsa test düşer.
   'mali-musavirlik-ve-muhasebe': 'defter', // kayıt düzeni, dönem kontrolü, beyan hazırlığı
-  'diger-dolayli-vergiler': 'kdv-zinciri', // işlemin vergi boyutu zincir boyunca yüklenir
-  'bireysel-danismanlik-hizmetleri': 'dilimler', // gelir vergisi: kademeli tarife
+  'diger-dolayli-vergiler': 'dolayli', // alışveriş arabası ve % etiketi: vergi fiyatın içinde
+  'bireysel-danismanlik-hizmetleri': 'bireysel', // kişi, evi (varlık) ve geliri
   'ar-ge-hizmetleri': 'arge', // Ar-Ge ampulü ve dişli
-  'tam-tasdik-islemleri': 'muhur', // tasdik raporu
-  'kdv-iade-islemleri': 'kdv-zinciri', // yüklenilen ve hesaplanan KDV
-  'kurumlar-vergisi-denetim-ve-tasdik': 'bilanco', // finansal sonuçtan vergi matrahına köprü
-  'transfer-fiyatlandirma': 'pay', // ilişkili taraflar: ortaklık ve kontrol bağı
+  'tam-tasdik-islemleri': 'tasdik', // «TASDİK» raporu, mühür izi ve kaşe
+  'kdv-iade-islemleri': 'kdv-iade', // ₺ ve geri dönen ok
+  'kurumlar-vergisi-denetim-ve-tasdik': 'kurumlar', // şirket binası ve onaylı büyüteç
+  'transfer-fiyatlandirma': 'transfer', // iki grup şirketi, iki yönlü ok ve ₺ etiketi
   'cari-hesap-mutabakatlarinin-yapilmasi': 'mutabakat', // alacak/borç kayıtlarının eşleşmesi
-  'otv-hizmetleri': 'dilimler', // ürün ve matrah kademelerine göre oran
+  'otv-hizmetleri': 'otv', // otomobil ve «ÖTV» levhalı akaryakıt pompası
   // Teşvik, AB Projeleri ve Startup
   'yatirim-tesvik-belgesi': 'belge', // teşvik belgesi, mühür, fabrika
   'tubitak-kosgeb-destekleri': 'proje', // iş paketleri ve takvim (proje kurgusu ve bütçe)

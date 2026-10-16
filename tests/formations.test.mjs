@@ -81,3 +81,17 @@ test('Hakkımızda: terazi değil, Orhun Abideleri tarzında yazıt', () => {
   assert.ok(!Object.values(ABOUT_SHAPE).includes('terazi'));
   assert.match(FIGURES[SCENE.yazit], /Orhun/);
 });
+
+test('Vergi alanı: yedi hizmetin her biri kendi, tanınır şeklini taşır (müşteri isteği, 2026-10-16)', async () => {
+  const fs = await import('node:fs');
+  const content = JSON.parse(fs.readFileSync(new URL('../src/data/content.json', import.meta.url), 'utf8'));
+  const ids = content.services.filter((s) => s.group === 'vergi').map((s) => s.id);
+  assert.equal(ids.length, 7, 'Vergi alanındaki hizmet sayısı değişti: şekil eşlemesini gözden geçirin');
+  const shapes = ids.map((id) => SERVICE_SHAPE[id]);
+  assert.equal(new Set(shapes).size, ids.length, `Vergi hizmetleri şekil paylaşıyor: ${shapes.join(', ')}`);
+  // eski soyut çizelgeler (basamak, dilim çubukları, pasta, raf, halka) bu hizmetlere geri dönmesin
+  for (const old of ['kdv-zinciri', 'dilimler', 'pay', 'bilanco', 'muhur']) assert.ok(!shapes.includes(old), `Vergi hizmetinde eski şekil: ${old}`);
+  const own = ['tasdik', 'kdv-iade', 'kurumlar', 'transfer', 'dolayli', 'otv', 'bireysel'];
+  assert.deepEqual([...shapes].sort(), [...own].sort());
+  for (const id of own) assert.ok(SWAY[SCENE[id]] > 0 && !SPIN[SCENE[id]], `${id}: kameraya dönük durmalı (salınım, tam tur yok)`);
+});

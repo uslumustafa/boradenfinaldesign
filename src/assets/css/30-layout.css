@@ -568,9 +568,11 @@ html.hdr-hidden .prog {
     );
   }
 }
-/* yan çevrilmiş telefonda sayfa yolu da başlık sütununda kalır (uzun yol şeklin üstüne binmez, satıra kırılır) */
-@media (max-width: 900px) and (min-width: 601px) and (min-aspect-ratio: 3/2) {
-  html:not(.hero-wide) .phero .crumbs {
+/* Sayfa yolu ve üst etiket de başlık sütununda kalır (uzun yol şeklin üstüne binmez, satıra kırılır): yan çevrilmiş telefonda ve
+   alçak geniş ekranda (yükseklik ≤ 640 px; ör. 932×430, 960×600) — şekil orada kahramanın neredeyse tüm boyunu kaplar. Yüksek ekranda
+   şeklin üstü sayfa yolunun altında kalır: yol tam genişlikte, tek satırda durur. Ölçüm: tests/hero-overlap.e2e.mjs */
+@media (max-width: 900px) and (min-width: 601px) and (min-aspect-ratio: 3/2), (min-width: 901px) and (max-height: 640px) {
+  html:not(.hero-wide) .phero :is(.crumbs, .eyebrow) {
     max-width: var(--phero-col);
   }
 }
