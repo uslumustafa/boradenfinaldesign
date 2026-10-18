@@ -11,7 +11,8 @@ import { createFormKit, composeMail, mailtoHref } from './form-kit.js';
 export function mount(el, ctx) {
   const form = el.querySelector('form');
   if (!form) return undefined;
-  const to = el.dataset.mailTo || 'info@boraden.com.tr';
+  // alıcı sayfaya gömülü (content.json › contact.email); boşsa taslak alıcısız açılır — sabit yedek adres yok (Ekim 2026)
+  const to = el.dataset.mailTo || '';
   const prefix = el.dataset.mailPrefix || '[Web sitesi]';
   const wa = el.dataset.wa || '';
   let svcMap = {};

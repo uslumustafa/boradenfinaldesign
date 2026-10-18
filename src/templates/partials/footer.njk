@@ -5,12 +5,15 @@
       <div class="ftr__brand">
         {% include "partials/logo.njk" %}
         <p>{{ data.content.about.foundation }}</p>
+        {# genel iletişim bilgileri boşsa (content.json › contact) satır çizilmez; hiçbiri yoksa adres bloğu da yok #}
+        {% if contact.hasAddress or contact.phone or contact.email %}
         <address class="ftr__addr">
-          {{ contact.street }}<br>
-          {{ contact.postcode }} {{ contact.district }} / {{ contact.city }}<br>
-          <a href="tel:{{ contact.phoneHref }}">{{ contact.phone | phone }}</a> ·
-          <a href="mailto:{{ contact.email }}">{{ contact.email }}</a>
+          {% if contact.street %}{{ contact.street }}<br>{% endif %}
+          {% if contact.line2 %}{{ contact.line2 }}<br>{% endif %}
+          {% if contact.phone %}<a href="tel:{{ contact.phoneHref }}">{{ contact.phone | phone }}</a>{% endif %}{% if contact.phone and contact.email %} ·{% endif %}
+          {% if contact.email %}<a href="mailto:{{ contact.email }}">{{ contact.email }}</a>{% endif %}
         </address>
+        {% endif %}
       </div>
 
       <nav class="ftr__cols" aria-label="Alt menü">

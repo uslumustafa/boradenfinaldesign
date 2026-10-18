@@ -77,7 +77,7 @@
   {% if o.attach %}<div class="notice notice--warn ct-done__attach"><p><strong>CV'nizi e-postaya ekleyin.</strong> {{ o.attach }}</p></div>{% endif %}
   <div class="notice ct-done__cut" data-fk-cut hidden><p>Metniniz uzun olduğu için e-posta taslağında kısaltıldı. Tam metni «{{ o.copyLabel }}» ile kopyalayıp e-postanıza yapıştırabilirsiniz.</p></div>
   <dl class="ct-done__mail">
-    <div><dt>Alıcı</dt><dd>{{ o.to }}</dd></div>
+    {% if o.to %}<div><dt>Alıcı</dt><dd>{{ o.to }}</dd></div>{% endif %}
     <div><dt>Konu</dt><dd data-fk-subject></dd></div>
     <div class="ct-done__row"><dt>Metin</dt><dd><pre class="ct-done__body" data-fk-body tabindex="0" role="region" aria-label="Hazırlanan e-posta metni"></pre></dd></div>
   </dl>

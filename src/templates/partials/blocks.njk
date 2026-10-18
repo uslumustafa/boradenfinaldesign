@@ -4,12 +4,13 @@
 {% import "partials/macros.njk" as m %}
 
 {# Çalışma kâğıdı künyesi: denetçilerin çalışma kâğıdı başlığından esinlenen bir özet şeridi.
-   ref: «01.03» gibi alan.sıra kodu (yalnızca gezinme etiketi) · cells: [{ k, v, href? }] — v boşsa hücre çizilmez. #}
+   ref: «01.03» gibi alan.sıra kodu (yalnızca gezinme etiketi) · cells: [{ k, v, href? }] — v boşsa hücre çizilmez.
+   Etiket kısaltmasız «Referans» (müşteri isteği, Ekim 2026: «Ref.» kısaltması kullanılmaz). #}
 {% macro kunye(ref, cells, o={}) %}
 {% set shown = [] %}
 {% for c in cells %}{% if c and c.v %}{% set _ = shown.push(c) %}{% endif %}{% endfor %}
 <dl class="kunye" style="--cols: {{ (shown | length) + 1 }}" data-reveal aria-label="{{ o.label or 'Künye' }}">
-  <div class="kunye__ref"><dt>Ref.</dt><dd class="tnum">{{ ref }}</dd></div>
+  <div class="kunye__ref"><dt>Referans</dt><dd class="tnum">{{ ref }}</dd></div>
   {% for c in shown %}
   <div><dt>{{ c.k }}</dt><dd>{% if c.href %}<a href="{{ c.href }}">{{ c.v }}</a>{% else %}{{ c.v }}{% endif %}</dd></div>
   {% endfor %}

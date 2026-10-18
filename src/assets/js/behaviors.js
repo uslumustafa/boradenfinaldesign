@@ -10,6 +10,7 @@ const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>'
 export function createBehaviors({ fx, scroll, world }) {
   let cleanups = [];
   let pageCleanups = [];
+  let dockEl = null; // sayfanın yüzen «Bu sayfada» şeridi (toc) — bölüme varış konumu (landY) onu hesaba katar
   const on = (fn) => cleanups.push(fn);
   const onPage = (fn) => pageCleanups.push(fn);
 
@@ -349,6 +350,8 @@ export function createBehaviors({ fx, scroll, world }) {
       const el = chapters[i].el;
       const max = Math.max(0, document.documentElement.scrollHeight - innerHeight);
       if (i === 0 && !quiet) return 0;
+      // menüden türeyen göstergede varış, menü ve yüzen şerit tıklamasıyla aynı kuralla hesaplanır (header + şerit bölümü örtmesin)
+      if (quiet) return landY(el);
       const cs = getComputedStyle(el);
       const ref = cs.position === 'sticky' && el.parentElement ? el.parentElement : el;
       const top = ref.getBoundingClientRect().top + scrollY - (parseFloat(cs.scrollMarginTop) || 0);
@@ -450,23 +453,94 @@ export function createBehaviors({ fx, scroll, world }) {
     });
   }
 
-  /* ── İçindekiler: aktif bölümü izler, tıklamada yumuşak kayar */
+  /* ── İçindekiler («Bu sayfada», «Bu notta», «Bu metinde»…): aktif bölümü izler, tıklamada yumuşak kayar.
+     Yüzen şerit (müşteri, Ekim 2026: «Bu sayfada kısmı en alta gelince kaymıyor; müşteri en üste de gitmek isteyecek, yukarı çıkıp
+     tekrar basmak zor»): ≥ 4 bölümlü sayfalarda menü kaydırmayla ekrandan çıkınca — masaüstünde kenar sütunundaki liste yukarıda
+     kalınca, mobilde yapışkan çip şeridi içerik bitip yerinden ayrılırken — aynı bağlantılar ekranın üstünde ince bir şeritte görünür
+     ve sayfanın sonuna (ilgili ekip, çalışma biçimi bandı, iletişim, alt bilgi) kadar kalır. Şeritte «Başa dön» düğmesi vardır.
+     Menü yeniden görününce şerit çekilir. Mobilde şerit, yapışkan çip şeridiyle aynı yerde ve aynı görünümdedir (geçiş fark edilmez). */
+  // Bölüme varış konumu: bölümün içeriği, varışta üstte duracak katmanların (header + yüzen şerit) altında kalsın. Aşağı inerken
+  // header gizlenir, yukarı çıkarken görünür (chrome.js). Bölümün CSS payı (scroll-margin-top) yeterliyse olduğu gibi kullanılır.
+  function landY(el) {
+    const cs = getComputedStyle(el);
+    const top = el.getBoundingClientRect().top + scrollY;
+    let y = top - (parseFloat(cs.scrollMarginTop) || 0);
+    const hdrEl = qs('#hdr');
+    const hdrH = y > scrollY + 1 && y >= 120 ? 0 : hdrEl ? hdrEl.offsetHeight : 0;
+    const cover = hdrH + (dockEl ? dockEl.offsetHeight : 0) + 16;
+    const content = top + (parseFloat(cs.paddingTop) || 0);
+    if (content - y < cover) y = content - cover;
+    const max = Math.max(0, document.documentElement.scrollHeight - innerHeight);
+    return Math.round(Math.max(0, Math.min(max, y)));
+  }
+  // menü bağlantısının yazısı (hukuki metinlerdeki sıra numarası olmadan)
+  const linkText = (a) => {
+    const c = a.cloneNode(true);
+    c.querySelectorAll('[class$="__n"], [aria-hidden="true"]').forEach((x) => x.remove());
+    return (c.textContent || '').replace(/\s+/g, ' ').trim();
+  };
   function toc(root) {
+    let docked = false;
     qsa('[data-toc]', root).forEach((nav) => {
       const pairs = qsa('a[href^="#"]', nav)
         .map((a) => ({ a, s: qs(a.getAttribute('href'), root) }))
         .filter((p) => p.s);
       if (!pairs.length) return;
       let cur = -1;
+      const smooth = () => (fx.tier === 'off' ? 'auto' : 'smooth');
       // Mobilde menü yatay kayan bir çip şeridi olur (65-services.css): aktif çip şeritte ortalanır.
       // Şerit taşmıyorsa (masaüstü: dikey liste) hiçbir şey yapmaz; yalnızca şeridi kaydırır, sayfayı oynatmaz.
       const strip = qs('ol', nav);
-      const centerActive = (a) => {
-        if (!strip || strip.scrollWidth <= strip.clientWidth + 2) return;
+      const centerIn = (list, a) => {
+        if (!list || !a || list.scrollWidth <= list.clientWidth + 2) return;
         const r = a.getBoundingClientRect();
-        const sr = strip.getBoundingClientRect();
-        strip.scrollBy({ left: r.left + r.width / 2 - (sr.left + sr.width / 2), behavior: fx.tier === 'off' ? 'auto' : 'smooth' });
+        const sr = list.getBoundingClientRect();
+        list.scrollBy({ left: r.left + r.width / 2 - (sr.left + sr.width / 2), behavior: smooth() });
       };
+
+      // yüzen şerit: sayfadaki ilk (≥ 4 bölümlü) menü için
+      let dock = null;
+      let dockList = null;
+      let dockLinks = [];
+      let shown = false;
+      if (!docked && pairs.length >= 4) {
+        docked = true;
+        const label = nav.getAttribute('aria-label') || 'Bu sayfada';
+        const head = (qs('.toc__h', nav)?.textContent || label).replace(/\s+/g, ' ').trim();
+        dock = document.createElement('nav');
+        dock.className = 'tocdock';
+        dock.setAttribute('aria-label', `${label} — hızlı erişim`);
+        dock.innerHTML =
+          '<div class="container tocdock__in">' +
+          `<p class="tocdock__h" aria-hidden="true">${esc(head)}</p>` +
+          '<ol class="tocdock__list">' +
+          pairs.map((p) => `<li><a href="#${esc(p.s.id)}">${esc(linkText(p.a))}</a></li>`).join('') +
+          '</ol>' +
+          '<button class="tocdock__top" type="button"><span class="tocdock__tl">Başa dön</span><span class="tocdock__ta" aria-hidden="true">↑</span></button>' +
+          '</div>';
+        document.body.appendChild(dock);
+        dockList = qs('.tocdock__list', dock);
+        dockLinks = qsa('a', dockList);
+        dockEl = dock;
+      }
+      // menünün ekrandan çıkıp çıkmadığı (yalnızca okuma)
+      const side = nav.closest('.svc__side, .ab-doc__side') || nav;
+      const grid = side.parentElement || side;
+      let stripMode = false;
+      const measure = () => {
+        stripMode = !!strip && getComputedStyle(strip).overflowX === 'auto';
+      };
+      measure();
+      const passed = () => {
+        const hh = qs('#hdr')?.offsetHeight || 0;
+        // mobil yapışkan şerit: içerik (ızgara) bitince yerinden ayrılır → yüzen şerit tam o anda aynı yere geçer
+        if (stripMode) return grid.getBoundingClientRect().bottom < side.offsetHeight + hh + 2;
+        // dikey liste (masaüstü) ya da yerinde duran liste: liste header'ın altında kalınca. Liste görünmüyorsa
+        // (ör. kapalı «İçindekiler» kutusu) kenar sütunu ölçülür.
+        const anchor = strip && strip.offsetHeight ? strip : side;
+        return anchor.getBoundingClientRect().bottom < hh + 4;
+      };
+
       const off = scroll.onFrame(() => {
         const line = innerHeight * 0.36;
         let idx = 0;
@@ -474,6 +548,14 @@ export function createBehaviors({ fx, scroll, world }) {
           if (p.s.closest('[hidden]')) return; // süzgeç/arama ile gizlenen bölümleri sayma
           if (p.s.getBoundingClientRect().top <= line) idx = i;
         });
+        if (dock) {
+          const want = passed();
+          if (want !== shown) {
+            shown = want;
+            dock.classList.toggle('is-on', want);
+            if (want && cur >= 0) centerIn(dockList, dockLinks[cur]);
+          }
+        }
         if (idx === cur) return;
         cur = idx;
         pairs.forEach((p, i) => {
@@ -481,20 +563,52 @@ export function createBehaviors({ fx, scroll, world }) {
           if (i === idx) p.a.setAttribute('aria-current', 'location');
           else p.a.removeAttribute('aria-current');
         });
-        centerActive(pairs[idx].a);
+        dockLinks.forEach((a, i) => {
+          a.classList.toggle('is-on', i === idx);
+          if (i === idx) a.setAttribute('aria-current', 'location');
+          else a.removeAttribute('aria-current');
+        });
+        centerIn(strip, pairs[idx].a);
+        if (shown) centerIn(dockList, dockLinks[idx]);
       });
-      const click = (e) => {
+      // menüden ya da şeritten bölüme git
+      const go = (e) => {
+        if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
         const a = e.target.closest('a[href^="#"]');
-        const hit = a && pairs.find((p) => p.a === a);
-        if (!hit) return;
+        if (!a) return;
+        let i = pairs.findIndex((p) => p.a === a);
+        if (i < 0) i = dockLinks.indexOf(a);
+        if (i < 0) return;
         e.preventDefault();
-        hit.s.scrollIntoView({ behavior: fx.tier === 'off' ? 'auto' : 'smooth', block: 'start' });
-        history.replaceState(history.state, '', a.getAttribute('href'));
+        const s = pairs[i].s;
+        scrollTo({ top: landY(s), behavior: smooth() });
+        history.replaceState(history.state, '', '#' + s.id);
+        if (!s.matches('[tabindex]')) s.setAttribute('tabindex', '-1');
+        s.focus({ preventScroll: true });
       };
-      nav.addEventListener('click', click);
+      // «Başa dön»: sayfanın en üstü; odak sayfa başlığına
+      const toTop = (e) => {
+        if (!e.target.closest('.tocdock__top')) return;
+        scrollTo({ top: 0, behavior: smooth() });
+        history.replaceState(history.state, '', location.pathname + location.search);
+        const h1 = qs('h1', root);
+        if (h1) {
+          if (!h1.matches('[tabindex]')) h1.setAttribute('tabindex', '-1');
+          h1.focus({ preventScroll: true });
+        }
+      };
+      nav.addEventListener('click', go);
+      dock?.addEventListener('click', go);
+      dock?.addEventListener('click', toTop);
+      addEventListener('resize', measure);
       on(() => {
         off();
-        nav.removeEventListener('click', click);
+        nav.removeEventListener('click', go);
+        removeEventListener('resize', measure);
+        if (dock) {
+          dock.remove();
+          if (dockEl === dock) dockEl = null;
+        }
       });
     });
   }

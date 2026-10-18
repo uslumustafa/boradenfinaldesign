@@ -142,11 +142,11 @@ td > a:not([class]):hover {
   margin-bottom: clamp(1.4rem, 3vw, 2rem);
   padding-bottom: 1rem;
   border-bottom: 1px solid var(--ink);
-  font-size: var(--fs-0);
-  font-weight: 500;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
 }
 .calc__loading {
   color: var(--ink-3);
@@ -273,11 +273,11 @@ td > a:not([class]):hover {
   margin-bottom: 0.7rem;
   font-family: var(--f-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--on-dark-3);
+  color: var(--c-label-dark);
 }
 .calc__main dd {
   font-family: var(--f-display);
@@ -394,11 +394,11 @@ td > a:not([class]):hover {
   margin-bottom: 1.2rem;
   font-family: var(--f-mono);
   font-variant-numeric: tabular-nums;
-  font-size: var(--fs-0);
-  font-weight: 500;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
 }
 .calc__h::before {
   content: '';
@@ -429,9 +429,10 @@ td > a:not([class]):hover {
   border-bottom: 1px solid var(--line);
 }
 .calc__stepn {
-  font-size: var(--fs-0);
+  font-size: var(--fs-meta);
+  font-weight: 600;
   letter-spacing: 0.12em;
-  color: var(--ink-3);
+  color: var(--ink-2);
 }
 .calc__stept em {
   display: block;
@@ -502,10 +503,10 @@ td > a:not([class]):hover {
   .calc__peekl {
     flex: 1 1 auto;
     min-width: 0; /* dar ekranda etiket satıra kırılır, tutar değil */
-    font-size: 0.68rem;
-    letter-spacing: 0.12em;
+    font-size: var(--fs-meta);
+    letter-spacing: var(--ls-meta);
     text-transform: uppercase;
-    color: var(--on-dark-3);
+    color: var(--c-meta-dark);
   }
   .calc__peekv {
     flex: none;
@@ -573,11 +574,11 @@ td > a:not([class]):hover {
   padding: 1rem 0 0;
   font-family: var(--f-mono);
   font-variant-numeric: tabular-nums;
-  font-size: var(--fs-0);
-  font-weight: 500;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
 }
 .cal__nx {
   position: relative;
@@ -594,10 +595,11 @@ td > a:not([class]):hover {
 .cal__nxd {
   font-family: var(--f-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-meta);
+  letter-spacing: var(--ls-meta);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-meta);
 }
 .cal__nx b {
   font-family: var(--f-display);
@@ -627,9 +629,10 @@ td > a:not([class]):hover {
 .cal__count {
   min-height: 1.4em;
   margin-top: 1rem;
-  font-size: 0.78rem;
+  font-size: var(--fs-meta);
+  font-weight: 600;
   letter-spacing: 0.06em;
-  color: var(--ink-3);
+  color: var(--ink-2);
 }
 .cal__month {
   padding-top: clamp(2rem, 4vw, 3.2rem);
@@ -745,8 +748,9 @@ td > a:not([class]):hover {
 .cal__shift .mono {
   display: block;
   margin-bottom: 0.2rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-meta);
+  letter-spacing: var(--ls-meta);
   text-transform: uppercase;
   color: var(--warn);
 }
@@ -773,8 +777,9 @@ td > a:not([class]):hover {
   gap: 0.6rem;
   font-family: var(--f-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-meta);
+  letter-spacing: var(--ls-meta);
   text-transform: uppercase;
   color: var(--ink-2);
 }
@@ -784,16 +789,18 @@ td > a:not([class]):hover {
   color: var(--ink);
 }
 .cal__conf {
-  font-size: 0.66rem;
-  letter-spacing: 0.1em;
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-meta);
+  letter-spacing: var(--ls-meta);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-meta);
 }
 .cal__flag {
   padding: 0.15rem 0.5rem;
   border: 1px solid color-mix(in srgb, var(--warn) 45%, transparent);
-  font-size: 0.66rem;
-  letter-spacing: 0.1em;
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-meta);
+  letter-spacing: var(--ls-meta);
   text-transform: uppercase;
   color: var(--warn);
 }

@@ -68,11 +68,16 @@
       "id": "degisiklikler-ve-iletisim",
       "heading": "8. Değişiklikler ve iletişim",
       "paragraphs": [
-        "Sitede kullanılan teknolojilerde veya mevzuatta değişiklik olması hâlinde bu politika güncellenir; güncel sürüm bu sayfada yayımlanır. Sorularınız için info@boraden.com.tr adresine yazabilirsiniz."
+        "Sitede kullanılan teknolojilerde veya mevzuatta değişiklik olması hâlinde bu politika güncellenir; güncel sürüm bu sayfada yayımlanır. Sorularınız için [[E-posta adresi]] adresine yazabilirsiniz."
       ]
     }
   ],
-  "placeholders": [],
+  "placeholders": [
+    {
+      "token": "E-posta adresi",
+      "description": "Şirketin genel e-posta adresi; iletişim ve kariyer formlarından hazırlanan e-posta taslakları da bu adrese yönelir. Sitenin diğer bölümlerindeki adresle aynı olmalıdır."
+    }
+  ],
   "reviewNotes": [
     "Kurum'un Çerez Uygulamaları Hakkında Rehberi (KVKK Yayınları No: 69, Temmuz 2025) çerezleri kapsar; localStorage ve benzeri teknolojiler hakkında yönlendirme içermediğini belirtir (bölüm 1.2 ve dipnot 2). Rehber ayrıca 5809 sayılı Kanun m.51/3'ün esas olarak elektronik haberleşme işletmecilerine uygulandığını belirtir. boraden-fx kaydının 5809 sayılı Kanun m.51/3 veya 6698 sayılı Kanun kapsamında ayrıca onay gerektirip gerektirmediği avukatça teyit edilmelidir. Metin bu kaydı, yalnızca ziyaretçinin açıkça yaptığı tercihi hatırlayan, kişisel veri içermeyen işlevsel bir kayıt olarak tanımlar.",
     "Bölüm 5'teki taahhüt (analitik veya reklam eklenmeden önce onay alınması) bilinçli bir tercih olarak teyit edilmelidir: Rehber bazı birinci taraf analitik kullanımlarını açık rıza dışındaki şartlarla değerlendirmeye açık görür; çevrim içi davranışsal reklam çerezleri ise açık rıza gerektirir.",

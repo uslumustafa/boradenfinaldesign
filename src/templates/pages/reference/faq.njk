@@ -71,7 +71,7 @@
         <p data-reveal data-reveal-delay="2">Sorunuzu kısa bir notla iletebilirsiniz; konunun kapsamı ilk görüşmede birlikte netleştirilir.</p>
         <p class="qa-help__btns" data-reveal data-reveal-delay="3">
           <a class="btn" href="/iletisim/">Bize yazın {{ m.arrow() }}</a>
-          <a class="btn btn--ghost" href="tel:{{ contact.phoneHref }}">{{ contact.phone | phone }}</a>
+          {% if contact.phone %}<a class="btn btn--ghost" href="tel:{{ contact.phoneHref }}">{{ contact.phone | phone }}</a>{% endif %}
         </p>
       </div>
       <div class="qa-help__side">

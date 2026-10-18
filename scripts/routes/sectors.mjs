@@ -187,7 +187,7 @@ export function registerSectors({ add, data, model, site, home }) {
         qCount: pairs.length,
         ld: graph(
           {
-            ...faqLd(pairs),
+            ...(faqLd(pairs) || { '@type': 'WebPage' }),
             name: 'Sık Sorulan Sorular',
             url: base + url,
             inLanguage: 'tr-TR',

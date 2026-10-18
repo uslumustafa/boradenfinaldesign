@@ -3760,14 +3760,14 @@
     }
   ],
   "contact": {
-    "email": "info@boraden.com.tr",
-    "phone": "+90 (212) 483 26 11",
-    "phoneHref": "+902124832611",
-    "whatsapp": "905532380335",
-    "street": "Maltepe Mahallesi, Yedikule Çırpıcı Yolu Sokak, Avrupa Kale Ofis Blok, No: 2, Kat: 2, Daire: 5",
-    "postcode": "34010",
-    "district": "Zeytinburnu",
-    "city": "İstanbul",
+    "email": "",
+    "phone": "",
+    "phoneHref": "",
+    "whatsapp": "",
+    "street": "",
+    "postcode": "",
+    "district": "",
+    "city": "",
     "country": "Türkiye"
   },
   "world": {

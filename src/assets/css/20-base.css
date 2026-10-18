@@ -135,11 +135,11 @@ p {
   align-items: center;
   gap: 0.9rem;
   font-family: var(--f-action);
-  font-size: var(--fs-0);
-  font-weight: 500;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
   text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--ink-3);
+  letter-spacing: var(--ls-label);
+  color: var(--c-label);
 }
 .eyebrow::before {
   content: '';
@@ -151,7 +151,7 @@ p {
 .on-dark .eyebrow,
 .sec--dark .eyebrow,
 .sec--solid .eyebrow {
-  color: var(--on-dark-3);
+  color: var(--c-label-dark);
 }
 .lead {
   font-family: var(--f-sans);

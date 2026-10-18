@@ -29,7 +29,7 @@
       "id": "formlar",
       "heading": "3. Formlar aracılığıyla paylaştığınız bilgiler",
       "paragraphs": [
-        "İletişim ve kariyer formlarına yazdığınız bilgiler, talebinizi veya başvurunuzu değerlendirmek ve size dönüş yapmak amacıyla işlenir. Formlardan gelen iletiler info@boraden.com.tr adresine ve Boraden'in kayıtlarına aktarılır. Zorunlu olmayan alanları boş bırakabilirsiniz.",
+        "İletişim ve kariyer formlarına yazdığınız bilgiler, talebinizi veya başvurunuzu değerlendirmek ve size dönüş yapmak amacıyla işlenir. Formlardan gelen iletiler [[E-posta adresi]] adresine ve Boraden'in kayıtlarına aktarılır. Zorunlu olmayan alanları boş bırakabilirsiniz.",
         "Kariyer formuna yüklediğiniz özgeçmiş, başvurunuzu değerlendirmek amacıyla işlenir; saklama ve diğer ayrıntılar [KVKK Aydınlatma Metni](/yasal/kvkk-aydinlatma-metni/) sayfasında açıklanmıştır.",
         "Bir forma yazı yazmanız, e-posta göndermeniz veya Boraden ile telefon ya da WhatsApp üzerinden iletişim kurmanız bir hizmet ilişkisi kurmaz; ayrıntılar için [Kullanım Koşulları](/yasal/kullanim-kosullari/) sayfasına bakabilirsiniz.",
         "Kimlik numarası, banka veya kart bilgisi, şifre ve sağlık bilgisi gibi hassas bilgileri formlara veya e-postalara yazmamanızı rica ederiz; ilk iletişim için bu bilgilere gerek yoktur."
@@ -76,7 +76,7 @@
       "heading": "9. Değişiklikler ve iletişim",
       "paragraphs": [
         "Bu politika güncellenebilir; güncel sürüm bu sayfada yayımlanır ve güncelleme tarihi sayfada gösterilir.",
-        "Sorularınız için info@boraden.com.tr adresine yazabilir veya +90 (212) 483 26 11 numaralı telefondan bize ulaşabilirsiniz. Adres: Maltepe Mahallesi, Yedikule Çırpıcı Yolu Sokak, Avrupa Kale Ofis Blok, No: 2, Kat: 2, Daire: 5, 34010 Zeytinburnu / İstanbul."
+        "Sorularınız için [[E-posta adresi]] adresine yazabilir veya [[Telefon numarası]] numaralı telefondan bize ulaşabilirsiniz. Adres: [[Adres]]."
       ]
     }
   ],
@@ -84,6 +84,18 @@
     {
       "token": "Barındırma ve e-posta hizmet sağlayıcıları",
       "description": "Siteyi barındıran, form e-postalarını ileten ve bilgi teknolojileri desteği sağlayan hizmet sağlayıcıların unvanları (KVKK Aydınlatma Metni ile aynı bilgi kullanılmalıdır)."
+    },
+    {
+      "token": "E-posta adresi",
+      "description": "Şirketin genel e-posta adresi; iletişim ve kariyer formlarından hazırlanan e-posta taslakları da bu adrese yönelir. Sitenin diğer bölümlerindeki adresle aynı olmalıdır."
+    },
+    {
+      "token": "Telefon numarası",
+      "description": "Şirketin genel telefon numarası. Sitenin diğer bölümlerindeki numarayla aynı olmalıdır."
+    },
+    {
+      "token": "Adres",
+      "description": "Şirketin açık adresi. Sitenin diğer bölümlerinde (İletişim sayfası, alt bilgi) yer alacak adresle aynı olmalıdır."
     }
   ],
   "reviewNotes": [

@@ -28,8 +28,9 @@
     </div>
   </div>
 
-  {# Hizmetler mega paneli #}
+  {# Hizmetler mega paneli. .mega = fareye ait kap (açıldığı anda tam boyuyla), .mega__sheet = perde gibi inen görünen yüzey (chrome.js) #}
   <div class="mega mega--services" id="mega-services" data-mega="services">
+    <div class="mega__sheet">
     <div class="container mega__inner">
       <div class="mega__grid">
         {% for g in groups %}
@@ -44,10 +45,12 @@
         {% endfor %}
       </div>
     </div>
+    </div>
   </div>
 
   {# Bilgi merkezi mega paneli #}
   <div class="mega mega--insights" id="mega-insights" data-mega="insights">
+    <div class="mega__sheet">
     <div class="container mega__inner">
       <div class="mega__grid">
         {% for chunk in [site.insights.slice(0, 3), site.insights.slice(3, 6), site.insights.slice(6, 9)] %}
@@ -61,6 +64,7 @@
           <a href="/bilgi-merkezi/"><strong>Bilgi merkezine git</strong><small>Tüm yayınlar, arşiv ve araçlar</small></a>
         </div>
       </div>
+    </div>
     </div>
   </div>
 </header>
@@ -93,8 +97,8 @@
     </ul>
     <div class="mnav__foot">
       <a class="btn" href="{{ site.cta.url }}">{{ site.cta.label }} <span class="arr" aria-hidden="true">→</span></a>
-      <a href="tel:{{ contact.phoneHref }}">{{ contact.phone | phone }}</a>
-      <a href="mailto:{{ contact.email }}">{{ contact.email }}</a>
+      {% if contact.phone %}<a href="tel:{{ contact.phoneHref }}">{{ contact.phone | phone }}</a>{% endif %}
+      {% if contact.email %}<a href="mailto:{{ contact.email }}">{{ contact.email }}</a>{% endif %}
       {# hareket ayarı menüden de değiştirilebilsin: sayfa sonuna inmeden (U-21) #}
       {{ fxswitch("fxlabel-m", "mnav__fx") }}
     </div>

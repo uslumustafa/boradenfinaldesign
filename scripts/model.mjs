@@ -65,6 +65,17 @@ function pickLatestParams(params) {
   return best;
 }
 
+// Kurumun genel iletişim bilgileri (content.json › contact; Wagtail: SiteSettings «İletişim»). Boş alan hiçbir yerde çizilmez:
+// alt bilgi, kapanış bandı, mobil menü, SSS, İletişim › Ofis ve yapılandırılmış veri yalnızca dolu alanları gösterir.
+// Ekim 2026 (müşteri): tüm genel iletişim bilgileri boş — kişiye özel doldurulacak (kişi bilgileri: team.json › contact).
+// Türetilen alanlar: place = «İlçe / İl», line2 = «Posta kodu İlçe / İl», full = «Sokak, Posta kodu İlçe / İl» (boş parçalar atlanır).
+function contactOf(raw = {}) {
+  const c = { email: '', phone: '', phoneHref: '', whatsapp: '', street: '', postcode: '', district: '', city: '', country: '', ...raw };
+  const place = [c.district, c.city].filter(Boolean).join(' / ');
+  const line2 = [c.postcode, place].filter(Boolean).join(' ');
+  return { ...c, place, line2, full: [c.street, line2].filter(Boolean).join(', '), hasAddress: !!(c.street || line2) };
+}
+
 export function buildModel(data) {
   const c = data.content || {};
   const groups = (c.groups || []).map((g, i) => ({
@@ -272,7 +283,7 @@ export function buildModel(data) {
     archiveYears: years,
     sectors,
     team,
-    contact: c.contact || {},
+    contact: contactOf(c.contact),
     about: c.about || {},
     perspectives: c.perspectives || [],
     sectorReports: c.sectorReports || [],

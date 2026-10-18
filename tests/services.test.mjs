@@ -25,7 +25,7 @@ const has = (s, id) => new RegExp(`\\sid="${id}"`).test(s);
 const visible = (s) => s.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<style[\s\S]*?<\/style>/g, '');
 const toc = (s) => (s.match(/<nav class="toc" data-toc[\s\S]*?<\/nav>/) || [''])[0];
 const tocIds = (s) => [...toc(s).matchAll(/href="#([^"]+)"/g)].map((m) => m[1]);
-const kunyeRef = (s) => (s.match(/<div class="kunye__ref"><dt>Ref\.<\/dt><dd class="tnum">([^<]+)<\/dd>/) || [])[1];
+const kunyeRef = (s) => (s.match(/<div class="kunye__ref"><dt>Referans<\/dt><dd class="tnum">([^<]+)<\/dd>/) || [])[1];
 
 test('her hizmet sayfası: tek h1, benzersiz kimlikler, «Bu sayfada» menüsü bölümlerle birebir', () => {
   assert.equal(model.services.length, 60);

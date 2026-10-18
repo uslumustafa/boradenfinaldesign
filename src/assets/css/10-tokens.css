@@ -65,6 +65,21 @@
   --fs-6: clamp(2.6rem, 1.5rem + 4.6vw, 6.2rem);
   --fs-7: clamp(3.1rem, 1rem + 8.6vw, 10.4rem);
 
+  /* Etiketler (Ekim 2026, müşteri: «yazılar çok küçük; Deloitte'taki gibi belirgin olmalı, müşteri görmeli»). Bölüm ve satır
+     etiketleri («Kısaca», «Sektörler», künye ve özet etiketleri, alt bilgi sütun başlıkları…), üst bilgi satırları (tarih, sayaç, tür)
+     ve sıra numaraları bu ölçekten beslenir. Önce 0,62–0,84 rem · 400–500 · soluk gri (ink-3 / on-dark-3) ve geniş aralık (0,14 em)
+     idi; şimdi en az ≈ 13 px, kalın ve koyu. Tek yerden ayarlanır. */
+  --fs-label: clamp(0.88rem, 0.84rem + 0.15vw, 0.96rem); /* ≈ 14–15,4 px */
+  --fs-meta: clamp(0.8rem, 0.78rem + 0.1vw, 0.86rem); /* ≈ 12,8–13,8 px */
+  --fw-label: 700;
+  --fw-meta: 600;
+  --ls-label: 0.08em;
+  --ls-meta: 0.06em;
+  --c-label: var(--ink);
+  --c-label-dark: var(--on-dark);
+  --c-meta: var(--ink-2);
+  --c-meta-dark: var(--on-dark-2);
+
   /* Aralık */
   --s-1: 0.25rem;
   --s-2: 0.5rem;

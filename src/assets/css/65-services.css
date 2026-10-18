@@ -36,13 +36,14 @@
 }
 .svc__sub {
   margin: clamp(2rem, 4vw, 3rem) 0 0.2rem;
-  font-size: var(--fs-0);
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
 }
 
-/* ── Künye: çalışma kâğıdı başlığı gibi ince özet şeridi (Ref. + alan + sayılar; hepsi veriden) */
+/* ── Künye: çalışma kâğıdı başlığı gibi ince özet şeridi (Referans + alan + sayılar; hepsi veriden) */
 .kunye {
   display: grid;
   grid-auto-flow: column;
@@ -64,11 +65,11 @@
   margin-bottom: 0.4rem;
   font-family: var(--f-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
 }
 .kunye dd {
   font-size: 0.98rem;
@@ -134,7 +135,7 @@
   .kunye dt {
     flex: none; /* etiket bölünmez («DAYANA / K»); uzun değer kendi içinde kırılır */
     margin-bottom: 0;
-    font-size: 0.62rem;
+    font-size: var(--fs-meta);
     white-space: nowrap;
   }
   .kunye dd {
@@ -193,9 +194,10 @@
   width: 100%;
 }
 .sc__n {
-  font-size: var(--fs-0);
+  font-size: var(--fs-meta);
+  font-weight: 600;
   letter-spacing: 0.12em;
-  color: var(--ink-3);
+  color: var(--ink-2);
 }
 .sc__t {
   /* --lw: ızgaradaki en uzun kelime (şablondan, tüm kartlar için ortak). «Dokümantasyon», «değerlendirilmesi» gibi kelimeler
@@ -312,7 +314,7 @@
   background: var(--b-blue-2);
 }
 .dcard--dark .deliver__k {
-  color: var(--on-dark-3);
+  color: var(--c-label-dark);
 }
 .dcard .deliver__v {
   max-width: none;
@@ -347,8 +349,9 @@
 .rel__row {
   --k: var(--b-blue);
   display: grid;
-  /* en az «HESAPLAYICILAR» genişliği: etiket harf ortasından bölünmesin, satırlar arasında sütun hizası korunsun */
-  grid-template-columns: minmax(9.6rem, 1fr) minmax(0, 4fr);
+  /* en az «HESAPLAYICILAR» genişliği (kalın etiket + kare ≈ 10,2 rem): etiket harf ortasından bölünmesin, satırlar arasında
+     sütun hizası korunsun */
+  grid-template-columns: minmax(10.6rem, 1fr) minmax(0, 4fr);
   gap: 0.8rem clamp(1rem, 3vw, 2.4rem);
   align-items: start;
   padding: 1.35rem 0;
@@ -368,10 +371,11 @@
   align-items: center;
   gap: 0.6rem;
   padding-top: 0.5rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
 }
 .rel__k::before {
   content: '';
@@ -412,7 +416,7 @@
 .rel__d {
   grid-column: 1;
   color: var(--ink-2);
-  font-size: 0.9rem;
+  font-size: var(--fs-1); /* Ekim 2026: küçük açıklama metinleri bir kademe büyük (önce 0,9 rem) */
   line-height: 1.5;
 }
 .rel__go {
@@ -693,9 +697,10 @@
   box-shadow: inset 0 0 0 1px var(--line-strong), 0 26px 46px -32px rgba(10, 23, 48, 0.55);
 }
 .acard__n {
-  font-size: var(--fs-0);
+  font-size: var(--fs-meta);
+  font-weight: 600;
   letter-spacing: 0.12em;
-  color: var(--ink-3);
+  color: var(--ink-2);
 }
 .acard__t {
   font-family: var(--f-display);
@@ -846,10 +851,10 @@
 }
 .sit__n {
   flex: none;
-  font-size: 0.7rem;
-  font-weight: 400;
+  font-size: var(--fs-meta);
+  font-weight: 600;
   letter-spacing: 0.1em;
-  color: var(--ink-3);
+  color: var(--ink-2);
 }
 .sit__t {
   flex: 1;
@@ -896,10 +901,11 @@
   letter-spacing: -0.035em;
 }
 .law__k {
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
 }
 .law__t {
   grid-column: 1 / -1;
@@ -944,10 +950,11 @@
 .lawsec__k {
   margin-top: clamp(1.8rem, 3vw, 2.4rem);
   margin-bottom: 0.4rem;
-  font-size: 0.7rem;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
 }
 .orggrid {
   display: grid;
@@ -1102,16 +1109,17 @@
 }
 .agc__d {
   color: var(--ink-2);
-  font-size: 0.93rem;
+  font-size: var(--fs-1); /* Ekim 2026: küçük açıklama metinleri bir kademe büyük (önce 0,93 rem) */
   line-height: 1.55;
 }
 .agc__m {
   margin-top: auto;
   padding-top: 0.9rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-meta);
+  letter-spacing: var(--ls-meta);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-meta);
 }
 .agc__m b {
   margin-right: 0.15rem;

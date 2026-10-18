@@ -61,11 +61,11 @@
 .field__label {
   font-family: var(--f-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
 }
 .field__box {
   position: relative;
@@ -269,10 +269,11 @@ a.card:hover,
 .card__meta {
   font-family: var(--f-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-meta);
+  letter-spacing: var(--ls-meta);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-meta);
   display: flex;
   gap: 0.9rem;
   flex-wrap: wrap;
@@ -453,11 +454,11 @@ span.chip {
 .table th {
   font-family: var(--f-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-meta);
+  letter-spacing: var(--ls-meta);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-meta);
   border-bottom: 1px solid var(--ink);
   white-space: nowrap;
 }

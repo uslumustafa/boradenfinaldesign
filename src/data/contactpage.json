@@ -157,8 +157,8 @@
     },
     "submitLabel": "Mesajı hazırla",
     "successTitle": "Taslağınız hazır — henüz gönderilmedi",
-    "successText": "Mesajınız info@boraden.com.tr adresine iletilmek üzere hazırlandı. Gönderim tamamlanmadan mesajınız bize ulaşmış olmaz; e-posta uygulamanızda veya gönderim ekranında son adımı tamamlayın. Sorun yaşarsanız aynı bilgileri doğrudan bu adrese yazabilirsiniz.",
-    "errorText": "Mesajınız hazırlanamadı. Lütfen işaretli alanları kontrol edin ya da doğrudan info@boraden.com.tr adresine yazın.",
+    "successText": "Mesajınız [[E-posta adresi]] adresine iletilmek üzere hazırlandı. Gönderim tamamlanmadan mesajınız bize ulaşmış olmaz; e-posta uygulamanızda veya gönderim ekranında son adımı tamamlayın. Sorun yaşarsanız aynı bilgileri doğrudan bu adrese yazabilirsiniz.",
+    "errorText": "Mesajınız hazırlanamadı. Lütfen işaretli alanları kontrol edin.",
     "notice": "Bu forma yazdığınız mesaj, Boraden ile bir denetim, danışmanlık veya başka bir hizmet ilişkisi kurmaz. Bağımsız denetim hizmeti verilen kuruluşlara, bağımsızlık kurallarının izin vermediği hizmetler sunulmaz. Bir hizmetin kapsamı, ilgili mevzuat ve meslek kuralları çerçevesinde görev başında ayrıca değerlendirilir."
   },
   "process": [
@@ -179,20 +179,26 @@
     {
       "id": "email",
       "label": "E-posta",
-      "value": "info@boraden.com.tr",
-      "href": "mailto:info@boraden.com.tr"
+      "value": "",
+      "href": ""
     },
     {
       "id": "phone",
       "label": "Telefon",
-      "value": "+90 (212) 483 26 11",
-      "href": "tel:+902124832611"
+      "value": "",
+      "href": ""
     },
     {
       "id": "whatsapp",
       "label": "WhatsApp",
-      "value": "+90 553 238 03 35",
-      "href": "https://wa.me/905532380335"
+      "value": "",
+      "href": ""
+    },
+    {
+      "id": "address",
+      "label": "Adres",
+      "value": "",
+      "href": ""
     }
   ],
   "addressNote": "Ofisimizde görüşme planlamak istiyorsanız, gelmeden önce e-posta veya telefonla bizimle iletişime geçmenizi rica ederiz.",

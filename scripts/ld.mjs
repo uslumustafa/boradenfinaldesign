@@ -66,11 +66,14 @@ export function listLd(site, name, url, items, trail) {
   );
 }
 
-// SSS: [[soru, cevap], …] — cevaplardaki satır içi işaretleme düz metne çevrilir
+// SSS: [[soru, cevap], …] — cevaplardaki satır içi işaretleme düz metne çevrilir. Doldurulmamış yer tutucu ([[…]]) içeren
+// soru yapılandırılmış veriye yazılmaz (ör. iletişim bilgileri henüz eklenmemişken «Boraden'e nasıl ulaşabilirim?»).
 export function faqLd(pairs) {
+  const ready = pairs.filter(([q, a]) => !/\[\[[^\]]+?\]\]/.test(`${q} ${a}`));
+  if (!ready.length) return null; // graph() boş düğümü atar
   return {
     '@type': 'FAQPage',
-    mainEntity: pairs.map(([q, a]) => ({ '@type': 'Question', name: plainInline(q), acceptedAnswer: { '@type': 'Answer', text: plainInline(a) } })),
+    mainEntity: ready.map(([q, a]) => ({ '@type': 'Question', name: plainInline(q), acceptedAnswer: { '@type': 'Answer', text: plainInline(a) } })),
   };
 }
 

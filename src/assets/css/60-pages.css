@@ -124,9 +124,10 @@
   grid-template-columns: 3.5rem minmax(0, 5fr) minmax(0, 6fr) 2rem;
 }
 .svcrow__n {
-  font-size: var(--fs-0);
+  font-size: var(--fs-meta);
+  font-weight: 600;
   letter-spacing: 0.12em;
-  color: var(--ink-3);
+  color: var(--ink-2);
 }
 @media (max-width: 800px) {
   .svcrow,
@@ -213,9 +214,10 @@
   border-top: 1px solid var(--ink);
 }
 .arow__n {
-  font-size: var(--fs-0);
+  font-size: var(--fs-meta);
+  font-weight: 600;
   letter-spacing: 0.12em;
-  color: var(--ink-3);
+  color: var(--ink-2);
 }
 .arow__t {
   font-family: var(--f-display);
@@ -246,10 +248,11 @@
   align-self: start;
 }
 .toc__h {
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
   padding-bottom: 0.9rem;
   border-bottom: 1px solid var(--ink);
 }
@@ -322,6 +325,173 @@
   }
 }
 
+/* ── Yüzen «Bu sayfada» şeridi (behaviors.js › toc). ≥ 4 bölümlü sayfalarda menü kaydırmayla ekrandan çıkınca ekranın üstünde,
+   header'ın altında belirir ve sayfanın sonuna kadar kalır; header gizlenince en üste çıkar. Masaüstünde yatay bağlantı dizisi +
+   «Başa dön»; ≤ 900 px'te yapışkan çip şeridinin (65-services.css) aynısı — içerik bitip şerit yerinden ayrılırken yerine geçer. */
+.tocdock {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: var(--hdr);
+  z-index: calc(var(--z-header) - 2);
+  height: 3.6rem;
+  background: var(--paper);
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 14px 26px -22px rgba(10, 23, 48, 0.5);
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-0.6rem);
+  transition: top 520ms var(--ease-out), opacity 240ms var(--ease-out), transform 240ms var(--ease-out), visibility 0s linear 240ms;
+}
+.tocdock.is-on {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  transition: top 520ms var(--ease-out), opacity 240ms var(--ease-out), transform 240ms var(--ease-out), visibility 0s;
+}
+html.hdr-hidden .tocdock {
+  top: 0;
+}
+.tocdock__in {
+  display: flex;
+  align-items: stretch;
+  gap: clamp(0.8rem, 2vw, 1.8rem);
+  height: 100%;
+}
+.tocdock__h {
+  flex: none;
+  align-self: center;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--c-label);
+}
+.tocdock__list {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: stretch;
+  gap: clamp(0.2rem, 0.8vw, 0.9rem);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.tocdock__list::-webkit-scrollbar {
+  display: none;
+}
+.tocdock__list li {
+  flex: none;
+  display: flex;
+}
+.tocdock__list a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 0.55rem;
+  white-space: nowrap;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink-2);
+  transition: color var(--t-fast);
+}
+.tocdock__list a::after {
+  content: '';
+  position: absolute;
+  left: 0.55rem;
+  right: 0.55rem;
+  bottom: -1px;
+  height: 3px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--t-med) var(--ease-out);
+}
+.tocdock__list a:hover,
+.tocdock__list a.is-on {
+  color: var(--ink);
+}
+.tocdock__list a:hover::after,
+.tocdock__list a.is-on::after {
+  transform: scaleX(1);
+}
+.tocdock__top {
+  flex: none;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem; /* dokunma hedefi ≥ 44 px */
+  padding: 0 1rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+}
+.tocdock__top:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+.tocdock__ta {
+  font-size: 1.05rem;
+  line-height: 1;
+}
+@media (max-width: 900px) {
+  .tocdock__in {
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .tocdock__h,
+  .tocdock__tl {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+  .tocdock__list {
+    align-items: center;
+    gap: 0.5rem;
+    height: 100%;
+  }
+  .tocdock__list li {
+    display: block;
+  }
+  .tocdock__list a {
+    min-height: 2.5rem;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--line-strong);
+    font-size: 0.82rem;
+    font-weight: 400;
+  }
+  .tocdock__list a::after {
+    display: none;
+  }
+  .tocdock__list a:hover,
+  .tocdock__list a.is-on {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+  }
+  .tocdock__top {
+    width: 2.75rem;
+    padding: 0;
+  }
+}
+
 .svc__sec {
   scroll-margin-top: calc(var(--hdr) + 1.5rem);
   padding-bottom: clamp(3rem, 6vw, 5.5rem);
@@ -337,11 +507,11 @@
   margin-bottom: clamp(1.4rem, 3vw, 2.4rem);
   font-family: var(--f-mono);
   font-variant-numeric: tabular-nums;
-  font-size: var(--fs-0);
-  font-weight: 500;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
 }
 .svc__label::before {
   content: '';
@@ -385,10 +555,11 @@
 }
 .needs__h,
 .deliver__k {
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
   margin-bottom: 0.9rem;
 }
 .needs__list {
@@ -418,9 +589,10 @@
   border-bottom: 1px solid var(--line);
 }
 .scope__n {
-  font-size: var(--fs-0);
+  font-size: var(--fs-meta);
+  font-weight: 600;
   letter-spacing: 0.12em;
-  color: var(--ink-3);
+  color: var(--ink-2);
 }
 .scope__t {
   font-size: var(--fs-3);
@@ -465,9 +637,10 @@
 .flow__n {
   display: block;
   margin-bottom: 1.1rem;
-  font-size: 0.78rem;
+  font-size: var(--fs-meta);
+  font-weight: 600;
   letter-spacing: 0.12em;
-  color: var(--ink-3);
+  color: var(--ink-2);
 }
 .flow__t {
   font-size: var(--fs-3);
@@ -570,10 +743,11 @@
   justify-items: end;
 }
 .svcnav__k {
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
 }
 .svcnav__t {
   font-family: var(--f-display);

@@ -472,10 +472,11 @@ html.is-opening .hud {
   order: 2;
   font-family: var(--f-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
 }
 .figure dd {
   order: 1;
@@ -514,9 +515,10 @@ html.is-opening .hud {
 .flow__no {
   display: block;
   margin-bottom: 0.8rem;
-  font-size: 0.74rem;
+  font-size: var(--fs-meta);
+  font-weight: 600;
   letter-spacing: 0.12em;
-  color: var(--ink-3);
+  color: var(--ink-2);
 }
 .flow__step h3 {
   font-size: var(--fs-3);
@@ -525,7 +527,7 @@ html.is-opening .hud {
 .flow__step p {
   max-width: 30ch;
   color: var(--ink-2);
-  font-size: 0.93rem;
+  font-size: var(--fs-1); /* Ekim 2026: küçük açıklama metinleri bir kademe büyük (önce 0,93 rem) */
   line-height: 1.5;
 }
 @media (max-width: 900px) {
@@ -663,7 +665,8 @@ html.is-opening .hud {
   width: 2.2rem;
   font-family: var(--f-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 0.78rem;
+  font-size: var(--fs-meta);
+  font-weight: 600;
   letter-spacing: 0.08em;
 }
 .area__name {
@@ -912,9 +915,10 @@ html.is-opening .hud {
   flex: none; /* Kapalı katmanda uzun alan adı iki satıra inince numara «0 / 1» diye bölünmesin */
   white-space: nowrap;
   padding-top: 0.35em;
-  font-size: 0.7rem;
+  font-size: var(--fs-meta);
+  font-weight: 600;
   letter-spacing: 0.1em;
-  color: var(--on-dark-3);
+  color: var(--on-dark-2);
 }
 .units__p {
   flex: none;
@@ -1037,8 +1041,9 @@ html[data-fx='off'] .units__p {
   padding-left: 0.8rem;
 }
 .sector__no {
-  font-size: 0.76rem;
-  color: var(--on-dark-3);
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  color: var(--on-dark-2);
 }
 .sector__name {
   font-family: var(--f-display);
@@ -1176,12 +1181,13 @@ html[data-fx='off'] .units__p {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem 1rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-meta);
+  letter-spacing: var(--ls-meta);
   text-transform: uppercase;
 }
 .feat__meta {
-  color: var(--on-dark-3);
+  color: var(--c-meta-dark);
 }
 .feat__t {
   font-size: var(--fs-4);
@@ -1211,7 +1217,7 @@ html[data-fx='off'] .units__p {
   padding-left: 0.8rem;
 }
 .news__meta {
-  color: var(--ink-3);
+  color: var(--c-meta);
 }
 .news__t {
   font-family: var(--f-display);

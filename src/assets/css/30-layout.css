@@ -268,22 +268,31 @@ html.hdr-hidden .hdr {
   transform: rotate(-45deg);
 }
 
-/* Mega panel */
+/* Mega panel. İki katman (header.njk): .mega fareye ait kaptır — açıldığı anda tam boyuyla isabet alır, böylece perde inerken panelin
+   henüz çizilmemiş kısmına inen fare de paneldedir; .mega__sheet perde gibi yukarıdan inen görünen yüzeydir (clip-path isabeti de
+   kırpar — eskiden perdeden hızlı inen fare panelin dışında sayılıp paneli kapatıyordu). Kapanırken kap hemen fareyi bırakır. */
 .mega {
   position: absolute;
   left: 0;
   right: 0;
   top: 100%;
-  background: var(--navy-900);
-  border-bottom: 1px solid var(--line-dark);
   visibility: hidden;
-  clip-path: inset(0 0 100% 0);
-  transition: clip-path 0.55s var(--ease-out), visibility 0s linear 0.55s;
+  pointer-events: none;
+  transition: visibility 0s linear 0.55s;
 }
 .mega.is-open {
   visibility: visible;
+  pointer-events: auto;
+  transition: visibility 0s;
+}
+.mega__sheet {
+  background: var(--navy-900);
+  border-bottom: 1px solid var(--line-dark);
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.55s var(--ease-out);
+}
+.mega.is-open .mega__sheet {
   clip-path: inset(0 0 0 0);
-  transition: clip-path 0.55s var(--ease-out), visibility 0s;
 }
 /* kısa pencerede (ör. 1280×720) panel ekrana sığmazsa kendi içinde kayar */
 .mega--services {
@@ -308,11 +317,11 @@ html.hdr-hidden .hdr {
 }
 .mega__col h3 {
   font-family: var(--f-sans);
-  font-size: 0.78rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--on-dark-3);
+  color: var(--c-label-dark);
   margin-bottom: 1rem;
   display: flex;
   gap: 0.7rem;
@@ -575,6 +584,16 @@ html.hdr-hidden .prog {
   html:not(.hero-wide) .phero :is(.crumbs, .eyebrow) {
     max-width: var(--phero-col);
   }
+  /* dar başlık sütununda (≈ 20 rem) üst etiket kalın kalır ama bir kademe küçük ve sıkı, baştaki süs çizgisi olmadan: «Vergi Denetim
+     ve Danışmanlık · 01» sütunun içinde tek satıra sığar, şeklin tarafına uzanmaz (etiket ölçeğiyle büyüyünce 667×375'te şeklin
+     noktaları üst etikete düşüyordu — tests/hero-overlap.e2e.mjs) */
+  html:not(.hero-wide) .phero .eyebrow {
+    font-size: var(--fs-meta);
+    letter-spacing: 0.04em;
+  }
+  html:not(.hero-wide) .phero .eyebrow::before {
+    display: none;
+  }
 }
 /* Yan çevrilmiş telefonda koyu bölümler (şekil yanda; world.js › twoCol aynı koşul): sayfa tek sütunlu olduğu için yazı tüm genişliğe
    yayılıp şeklin üstüne biniyordu (alanlar, sektörler, çalışma biçimi, kariyer, iletişim bandı…). Yazı şeklin karşı yarısında kalır:
@@ -609,10 +628,11 @@ html .phero.phero--wide {
   gap: 0.35rem 0.7rem;
   font-family: var(--f-mono);
   font-variant-numeric: tabular-nums;
-  font-size: var(--fs-0);
-  letter-spacing: 0.08em;
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-meta);
+  letter-spacing: var(--ls-meta);
   text-transform: uppercase;
-  color: var(--on-dark-3);
+  color: var(--c-meta-dark);
   margin-bottom: clamp(1.4rem, 3vw, 2.4rem);
 }
 .crumbs a:hover {
@@ -692,11 +712,12 @@ html .phero.phero--wide {
 .ftr__cols h2 {
   font-family: var(--f-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 0.74rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
+  /* dar sütunda («Hizmet alanları» ≈ 10 rem) tek satıra sığsın: etiket ölçeğinin küçük kademesi, sıkı aralık */
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-label);
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: var(--on-dark-3);
+  color: var(--c-label-dark);
   margin-bottom: 1.1rem;
 }
 .ftr__cols a {
@@ -842,10 +863,11 @@ html .phero.phero--wide {
 .cta__side dt {
   font-family: var(--f-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--on-dark-3);
+  color: var(--c-label-dark);
 }
 .cta__side dd {
   font-size: 1.05rem;

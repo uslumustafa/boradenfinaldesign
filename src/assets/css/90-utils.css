@@ -94,6 +94,7 @@ html[data-fx='off'] .world canvas {
   .toolbar,
   .skip,
   .toc,
+  .tocdock,
   .netnote {
     display: none !important;
   }

@@ -9,7 +9,7 @@
       "id": "veri-sorumlusu",
       "heading": "1. Veri sorumlusu",
       "paragraphs": [
-        "Kişisel verileriniz, Kanun kapsamında veri sorumlusu sıfatıyla **Boraden Bağımsız Denetim ve Danışmanlık A.Ş.** (Boraden) tarafından işlenir. Adres: Maltepe Mahallesi, Yedikule Çırpıcı Yolu Sokak, Avrupa Kale Ofis Blok, No: 2, Kat: 2, Daire: 5, 34010 Zeytinburnu / İstanbul. E-posta: info@boraden.com.tr. Telefon: +90 (212) 483 26 11."
+        "Kişisel verileriniz, Kanun kapsamında veri sorumlusu sıfatıyla **Boraden Bağımsız Denetim ve Danışmanlık A.Ş.** (Boraden) tarafından işlenir. Adres: [[Adres]]. E-posta: [[E-posta adresi]]. Telefon: [[Telefon numarası]]."
       ],
       "list": [
         "MERSİS numarası: [[MERSİS numarası]]",
@@ -52,7 +52,7 @@
       "heading": "5. Kişisel verilerin toplanma yöntemi",
       "paragraphs": [
         "Verileriniz doğrudan sizden, sitedeki formlara girdiğiniz bilgiler ve yüklediğiniz belgeler aracılığıyla elektronik ortamda toplanır. Teknik günlük kayıtları ise siteyi ziyaret ettiğinizde otomatik yollarla oluşur. Veriler tamamen veya kısmen otomatik yollarla elde edilir ve işlenir.",
-        "Formlar aracılığıyla gönderilen bilgiler info@boraden.com.tr adresine ve Boraden'in kayıtlarına aktarılır."
+        "Formlar aracılığıyla gönderilen bilgiler [[E-posta adresi]] adresine ve Boraden'in kayıtlarına aktarılır."
       ]
     },
     {
@@ -113,8 +113,8 @@
       "list": [
         "Yazılı ve imzalı olarak, yukarıda belirtilen adrese;",
         "Kayıtlı elektronik posta (KEP) ile [[KEP adresi]] adresine;",
-        "Güvenli elektronik imza veya mobil imza ile imzalanmış başvurunuzu info@boraden.com.tr adresine göndererek;",
-        "Daha önce bize bildirdiğiniz ve sistemimizde kayıtlı olan e-posta adresinizden info@boraden.com.tr adresine yazarak."
+        "Güvenli elektronik imza veya mobil imza ile imzalanmış başvurunuzu [[E-posta adresi]] adresine göndererek;",
+        "Daha önce bize bildirdiğiniz ve sistemimizde kayıtlı olan e-posta adresinizden [[E-posta adresi]] adresine yazarak."
       ]
     },
     {
@@ -131,11 +131,23 @@
       "heading": "12. Değişiklikler ve iletişim",
       "paragraphs": [
         "Bu metin, mevzuattaki veya veri işleme faaliyetlerimizdeki değişikliklere bağlı olarak güncellenebilir. Güncel sürüm bu sayfada yayımlanır; sayfadaki güncelleme tarihi son değişikliği gösterir.",
-        "Bu metin ve kişisel verilerinizin işlenmesi hakkındaki sorularınız için info@boraden.com.tr adresine yazabilirsiniz. Genel veri uygulamalarımız için [Gizlilik Politikası](/yasal/gizlilik-politikasi/) ve [Çerez Politikası](/yasal/cerez-politikasi/) sayfalarına da bakabilirsiniz."
+        "Bu metin ve kişisel verilerinizin işlenmesi hakkındaki sorularınız için [[E-posta adresi]] adresine yazabilirsiniz. Genel veri uygulamalarımız için [Gizlilik Politikası](/yasal/gizlilik-politikasi/) ve [Çerez Politikası](/yasal/cerez-politikasi/) sayfalarına da bakabilirsiniz."
       ]
     }
   ],
   "placeholders": [
+    {
+      "token": "Adres",
+      "description": "Şirketin açık adresi. Sitenin diğer bölümlerinde (İletişim sayfası, alt bilgi) yer alacak adresle aynı olmalıdır."
+    },
+    {
+      "token": "E-posta adresi",
+      "description": "Şirketin genel e-posta adresi; iletişim ve kariyer formlarından hazırlanan e-posta taslakları da bu adrese yönelir. Sitenin diğer bölümlerindeki adresle aynı olmalıdır."
+    },
+    {
+      "token": "Telefon numarası",
+      "description": "Şirketin genel telefon numarası. Sitenin diğer bölümlerindeki numarayla aynı olmalıdır."
+    },
     {
       "token": "MERSİS numarası",
       "description": "Şirketin MERSİS (Merkezi Sicil Kayıt Sistemi) numarası."

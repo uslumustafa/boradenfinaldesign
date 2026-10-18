@@ -21,14 +21,14 @@ function prepFields(fields, sources) {
 // Metindeki düz e-posta adresini satır içi bağlantıya çevirir (rich süzgeciyle işlenecek metinler için)
 const linkMail = (s, email) => (s && email && !s.includes(`](mailto:${email})`) ? s.split(email).join(`[${email}](mailto:${email})`) : s || '');
 
-// Harici harita bağlantısı (betik/iframe yok): adres metniyle arama
-const mapsUrl = (c) =>
-  'https://www.google.com/maps/search/?api=1&query=' +
-  encodeURIComponent([c.street, `${c.postcode || ''} ${c.district || ''}/${c.city || ''}`.trim(), c.country].filter(Boolean).join(', '));
+// Harici harita bağlantısı (betik/iframe yok): adres metniyle arama. Adres boşsa '' (bağlantı çizilmez; «/, Türkiye» gibi
+// anlamsız bir arama üretilmez).
+const mapsUrl = (q) => (q ? 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q) : '');
 
 export function registerCompany({ add, model, site, home }) {
   const c = model.contact || {};
-  const mailTo = c.email || 'info@boraden.com.tr';
+  // formların alıcısı kurumun genel e-posta adresidir; boşsa (Ekim 2026: kişiye özel doldurulacak) taslak alıcısız hazırlanır
+  const mailTo = c.email || '';
   const crumbs = [home];
   const orgId = { '@id': `${baseOf(site)}/#organization` };
 
@@ -121,6 +121,13 @@ export function registerCompany({ add, model, site, home }) {
     ]
       .filter((x) => x.n > 0)
       .map((x) => ({ label: x.label, url: x.url, meta: `${x.n} ${x.unit}` }));
+    // «Doğrudan iletişim» kanalları: bağlantı girilmemiş adres satırı haritaya bağlanır (önce ofis adresi, yoksa satırın kendi metni).
+    // Değeri boş kanal bağlantısız kalır (şablon boş durumda çizer).
+    const officeMap = c.hasAddress ? mapsUrl([c.street, c.line2, c.country].filter(Boolean).join(', ')) : '';
+    const channels = (cp.channels || []).map((ch) => ({
+      ...ch,
+      href: ch.value ? ch.href || (ch.id === 'address' ? officeMap || mapsUrl(ch.value) : '') : '',
+    }));
     add({
       url,
       template: 'pages/company/contact.njk',
@@ -131,21 +138,36 @@ export function registerCompany({ add, model, site, home }) {
       crumbs,
       ctx: {
         cp,
+        channels,
         fields,
         svcMap,
         peopleMap,
         sectorMap,
         more,
         successText: linkMail(cp.form?.successText, mailTo),
-        mapsUrl: mapsUrl(c),
+        mapsUrl: officeMap,
         mail: { to: mailTo, prefix: '[Web sitesi]', wa: c.whatsapp || '' },
         ld: graph(
           { ...webPageLd(site, { name: title, url, description: cp.lead, type: 'ContactPage' }), about: orgId },
-          orgNode(site, c, {
-            contactPoint: [
-              { '@type': 'ContactPoint', contactType: 'customer service', email: c.email, telephone: c.phoneHref, areaServed: 'TR', availableLanguage: ['Turkish'] },
-            ],
-          }),
+          orgNode(
+            site,
+            c,
+            // iletişim noktası yalnızca e-posta ya da telefon tanımlıysa (boş alan yapılandırılmış veriye yazılmaz)
+            c.email || c.phoneHref
+              ? {
+                  contactPoint: [
+                    {
+                      '@type': 'ContactPoint',
+                      contactType: 'customer service',
+                      ...(c.email ? { email: c.email } : {}),
+                      ...(c.phoneHref ? { telephone: c.phoneHref } : {}),
+                      areaServed: 'TR',
+                      availableLanguage: ['Turkish'],
+                    },
+                  ],
+                }
+              : {}
+          ),
           breadcrumbLd(site, [...crumbs, { label: title, url }])
         ),
       },

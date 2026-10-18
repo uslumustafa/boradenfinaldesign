@@ -122,11 +122,11 @@
     "items": [
       {
         "q": "Boraden’e nasıl ulaşabilirim?",
-        "a": "Boraden’e e-posta ile info@boraden.com.tr adresinden, telefonla +90 (212) 483 26 11 numarasından ulaşabilir ya da [WhatsApp](https://wa.me/905532380335) üzerinden yazabilirsiniz. Tüm iletişim bilgileri [İletişim](/iletisim/) sayfasında yer alır."
+        "a": "Boraden’e e-posta ile [[E-posta adresi]] adresinden, telefonla [[Telefon numarası]] numarasından ulaşabilir ya da WhatsApp üzerinden [[WhatsApp numarası]] numarasına yazabilirsiniz. Tüm iletişim bilgileri [İletişim](/iletisim/) sayfasında yer alır."
       },
       {
         "q": "Boraden’in adresi nedir?",
-        "a": "Maltepe Mahallesi, Yedikule Çırpıcı Yolu Sokak, Avrupa Kale Ofis Blok, No: 2, Kat: 2, Daire: 5, 34010 Zeytinburnu, İstanbul, Türkiye.\n\nZiyaret planlıyorsanız, görüşmenin planlanabilmesi için önceden telefon veya e-posta ile iletişime geçmeniz yararlı olur."
+        "a": "[[Adres]]\n\nZiyaret planlıyorsanız, görüşmenin planlanabilmesi için önceden telefon veya e-posta ile iletişime geçmeniz yararlı olur."
       },
       {
         "q": "Talebimi iletirken hangi bilgileri yazmalıyım?",
@@ -138,11 +138,11 @@
       },
       {
         "q": "Kariyer ve başvuru sorularım için ne yapmalıyım?",
-        "a": "İş başvurularına ilişkin bilgiler [Kariyer](/kariyer/) sayfasında yer alır; başvurularda o sayfadaki bilgileri esas almanız önerilir. Sorularınız için info@boraden.com.tr adresine de yazabilirsiniz."
+        "a": "İş başvurularına ilişkin bilgiler [Kariyer](/kariyer/) sayfasında yer alır; başvurularda o sayfadaki bilgileri esas almanız önerilir. Sorularınız için [[E-posta adresi]] adresine de yazabilirsiniz."
       },
       {
         "q": "Sitede güncel olmayan bir bilgi veya hata görürsem nasıl bildirebilirim?",
-        "a": "Konuyu, ilgili sayfanın bağlantısıyla birlikte info@boraden.com.tr adresine iletebilirsiniz. Mevzuat içerikleri ve hesaplayıcı parametreleri zamanla değişebileceğinden, bu tür bildirimler içeriklerin gözden geçirilmesine yardımcı olur."
+        "a": "Konuyu, ilgili sayfanın bağlantısıyla birlikte [[E-posta adresi]] adresine iletebilirsiniz. Mevzuat içerikleri ve hesaplayıcı parametreleri zamanla değişebileceğinden, bu tür bildirimler içeriklerin gözden geçirilmesine yardımcı olur."
       }
     ]
   }

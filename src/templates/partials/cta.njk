@@ -10,16 +10,18 @@
         <div class="cta__btns" data-reveal data-reveal-delay="3">
           {# U-23: bağlamlı (hizmet/sektör/kişi) → «Görüşme talep edin»; genel → «Bize yazın» #}
           <a class="btn" href="{{ cta_href | default('/iletisim/') }}">{{ 'Görüşme talep edin' if cta_href else 'Bize yazın' }} <span class="arr" aria-hidden="true">→</span></a>
-          {% if not cta_no_contact %}<a class="btn btn--ghost" href="tel:{{ contact.phoneHref }}">{{ contact.phone | phone }}</a>{% endif %}
+          {% if not cta_no_contact and contact.phone %}<a class="btn btn--ghost" href="tel:{{ contact.phoneHref }}">{{ contact.phone | phone }}</a>{% endif %}
         </div>
       </div>
-      {# cta_no_contact (kişi sayfası, müşteri isteği Ekim 2026): telefon, e-posta ve adres şimdilik yazılmaz; yalnızca düğme #}
-      {% if not cta_no_contact %}
+      {# cta_no_contact (kişi sayfası, müşteri isteği Ekim 2026): telefon, e-posta ve adres şimdilik yazılmaz; yalnızca düğme.
+         İletişim bilgileri (content.json › contact) boşsa satır çizilmez; hiçbiri yoksa yan sütun da yok (Ekim 2026, müşteri: tüm genel
+         iletişim bilgileri boş — kişiye özel doldurulacak) #}
+      {% if not cta_no_contact and (contact.hasAddress or contact.email or contact.phone) %}
       <div class="cta__side" data-reveal data-reveal-delay="2">
         <dl>
-          <div><dt>Adres</dt><dd>{{ contact.street }}, {{ contact.postcode }} {{ contact.district }} / {{ contact.city }}</dd></div>
-          <div><dt>E-posta</dt><dd><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></dd></div>
-          <div><dt>Telefon</dt><dd><a href="tel:{{ contact.phoneHref }}">{{ contact.phone | phone }}</a></dd></div>
+          {% if contact.hasAddress %}<div><dt>Adres</dt><dd>{{ contact.full }}</dd></div>{% endif %}
+          {% if contact.email %}<div><dt>E-posta</dt><dd><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></dd></div>{% endif %}
+          {% if contact.phone %}<div><dt>Telefon</dt><dd><a href="tel:{{ contact.phoneHref }}">{{ contact.phone | phone }}</a></dd></div>{% endif %}
         </dl>
       </div>
       {% endif %}

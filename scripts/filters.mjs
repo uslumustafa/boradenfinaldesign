@@ -34,10 +34,11 @@ export function richInline(s) {
   return new nunjucks.runtime.SafeString(t);
 }
 
-// JSON-LD gibi düz metin gereken yerler için işaretlemeyi temizler
+// JSON-LD gibi düz metin gereken yerler için işaretlemeyi temizler. Yer tutucu köşeli parantezle kalır («[E-posta adresi]»):
+// arama sonucu açıklamasında doldurulmamış alan, cümlenin parçası gibi okunmaz.
 export function plainInline(s) {
   return String(s ?? '')
-    .replace(/\[\[([^\]]+?)\]\]/g, '$1')
+    .replace(/\[\[([^\]]+?)\]\]/g, '[$1]')
     .replace(/\*\*([^*]+?)\*\*/g, '$1')
     .replace(/\[([^\]]+?)\]\(([^)\s]+)\)/g, '$1');
 }

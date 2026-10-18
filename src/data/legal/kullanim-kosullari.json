@@ -85,7 +85,7 @@
       "id": "iletisim",
       "heading": "11. İletişim",
       "paragraphs": [
-        "Bu koşullara ilişkin sorularınız için info@boraden.com.tr adresine yazabilirsiniz. Adres: Maltepe Mahallesi, Yedikule Çırpıcı Yolu Sokak, Avrupa Kale Ofis Blok, No: 2, Kat: 2, Daire: 5, 34010 Zeytinburnu / İstanbul."
+        "Bu koşullara ilişkin sorularınız için [[E-posta adresi]] adresine yazabilirsiniz. Adres: [[Adres]]."
       ]
     }
   ],
@@ -97,6 +97,14 @@
     {
       "token": "Yetkili mahkeme ve icra daireleri",
       "description": "Uyuşmazlıklarda yetkili mahkeme ve icra daireleri (avukat belirler)."
+    },
+    {
+      "token": "E-posta adresi",
+      "description": "Şirketin genel e-posta adresi; iletişim ve kariyer formlarından hazırlanan e-posta taslakları da bu adrese yönelir. Sitenin diğer bölümlerindeki adresle aynı olmalıdır."
+    },
+    {
+      "token": "Adres",
+      "description": "Şirketin açık adresi. Sitenin diğer bölümlerinde (İletişim sayfası, alt bilgi) yer alacak adresle aynı olmalıdır."
     }
   ],
   "reviewNotes": [

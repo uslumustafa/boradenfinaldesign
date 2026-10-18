@@ -169,11 +169,11 @@
       "required": true
     },
     "submitLabel": "Başvuruyu hazırla",
-    "fallbackNote": "CV'nizi doğrudan info@boraden.com.tr adresine de gönderebilirsiniz.",
+    "fallbackNote": "CV'nizi doğrudan [[E-posta adresi]] adresine de gönderebilirsiniz.",
     "successTitle": "Başvuru taslağınız hazır — henüz gönderilmedi",
-    "successText": "Başvurunuz info@boraden.com.tr adresine iletilmek üzere e-posta taslağı olarak hazırlandı. Gönderim tamamlanmadan başvurunuz bize ulaşmış olmaz; e-posta uygulamanızda son adımı tamamlayın. E-posta uygulamanız açılmadıysa başvuru metnini kopyalayıp özgeçmişinizle birlikte bu adrese gönderebilirsiniz.",
+    "successText": "Başvurunuz [[E-posta adresi]] adresine iletilmek üzere e-posta taslağı olarak hazırlandı. Gönderim tamamlanmadan başvurunuz bize ulaşmış olmaz; e-posta uygulamanızda son adımı tamamlayın. E-posta uygulamanız açılmadıysa başvuru metnini kopyalayıp özgeçmişinizle birlikte bu adrese gönderebilirsiniz.",
     "attachNote": "Özgeçmiş dosyası e-posta taslağına otomatik olarak eklenemez; göndermeden önce dosyanızı e-postaya ekleyin.",
-    "errorText": "Başvurunuz hazırlanamadı. Lütfen işaretli alanları kontrol edin ya da özgeçmişinizi doğrudan info@boraden.com.tr adresine gönderin."
+    "errorText": "Başvurunuz hazırlanamadı. Lütfen işaretli alanları kontrol edin."
   },
   "note": "Başvuru formunda ve özgeçmişinizde, başvurunuzun değerlendirilmesi için gerekli olmayan bilgilere (kimlik numarası, banka bilgisi; sağlık, sendika üyeliği, ceza mahkûmiyeti gibi özel nitelikli kişisel veriler) yer vermemenizi rica ederiz. Başvurunuzdaki kişisel veriler [KVKK Aydınlatma Metni](/yasal/kvkk-aydinlatma-metni/) kapsamında işlenir. Bu sayfadaki başvuru, bir iş teklifi veya iş sözleşmesi doğurmaz."
 }

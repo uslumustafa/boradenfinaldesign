@@ -39,6 +39,11 @@ async function newPage(opts = {}) {
   });
   return { ctx, page, logs };
 }
+// Genel iletişim bilgileri veriden okunur (content.json › contact). Ekim 2026: boş — bilgiler kişiye özel doldurulacak; alıcısız
+// taslak, «Alıcı» satırı ve WhatsApp düğmesi olmadan çalışır. Bilgiler girildiğinde aynı denetimler dolu değerlerle geçerlidir.
+const CONTACT = JSON.parse(fs.readFileSync(new URL('../src/data/content.json', import.meta.url), 'utf8')).contact || {};
+const MAIL_TO = CONTACT.email || '';
+const WA = CONTACT.whatsapp || '';
 const decodeMailto = (href) => {
   const u = new URL(href);
   // mailto satır sonları %0D%0A → karşılaştırma için \n
@@ -100,12 +105,15 @@ async function contact() {
   ok((await page.evaluate(() => document.activeElement && document.activeElement.matches('[data-fk-done]'))), 'odak «taslak hazır» panelinde');
   const href = await page.getAttribute('[data-fk-mailto]', 'href');
   const m = decodeMailto(href);
-  ok(m.to === 'info@boraden.com.tr', 'mailto alıcısı');
+  ok(m.to === MAIL_TO, `mailto alıcısı: ${MAIL_TO || 'boş (genel e-posta adresi henüz eklenmedi)'}`);
+  const dts = await page.$$eval('[data-fk-done] .ct-done__mail dt', (ds) => ds.map((d) => d.textContent.trim()));
+  ok(dts.includes('Alıcı') === !!MAIL_TO, `«taslak hazır» panelinde «Alıcı» satırı ${MAIL_TO ? 'var' : 'yok (adres boş)'}`);
   ok(m.subject === '[Web sitesi] Vergi denetim ve danışmanlık — Ayşe Yılmaz', `konu satırı: ${m.subject}`);
   ok(m.body.includes('İlgili hizmet: KDV İade İşlemleri') && m.body.includes('Şirket veya kurum: Örnek A.Ş.') && m.body.includes('Mesajınız:\nKDV iade'), 'gövde: alanlar + ilgili hizmet + mesaj');
   ok(href.includes('%0D%0A'), 'satır sonları %0D%0A');
-  const wa = await page.getAttribute('[data-fk-wa]', 'href');
-  ok(wa.startsWith('https://wa.me/905532380335?text='), 'WhatsApp bağlantısı');
+  const wa = await page.$('[data-fk-wa]');
+  if (WA) ok(!!wa && (await wa.getAttribute('href')).startsWith(`https://wa.me/${WA}?text=`), 'WhatsApp bağlantısı');
+  else ok(!wa, 'WhatsApp numarası boşken «WhatsApp ile yaz» düğmesi yok');
   ok(!/gönderildi/i.test(await page.textContent('[data-fk-done]')), '«gönderildi» denmiyor');
   const net = reqs.filter((u) => !u.startsWith('mailto:') && !u.startsWith('data:'));
   ok(net.length === 0, `gönderimde ağ isteği yok (${net.length})`);
@@ -116,7 +124,7 @@ async function contact() {
   await page.click('[data-fk-copy]');
   await page.waitForTimeout(200);
   const clip = await page.evaluate(() => navigator.clipboard.readText().catch(() => ''));
-  ok(clip.startsWith('Alıcı: info@boraden.com.tr\nKonu: [Web sitesi]'), 'Mesajı kopyala → panoda tam metin');
+  ok(clip.startsWith(`${MAIL_TO ? `Alıcı: ${MAIL_TO}\n` : ''}Konu: [Web sitesi]`), 'Mesajı kopyala → panoda tam metin');
   await page.click('[data-fk-edit]');
   ok((await page.isVisible('#ct-form')) && (await page.inputValue('#ct-f-ad')) === 'Ayşe Yılmaz', 'Forma dön: veriler korunuyor');
   await page.click('.ct-submit');
@@ -162,7 +170,7 @@ async function contact() {
   await page.waitForFunction(() => scrollY > 300, null, { timeout: 3000 }).catch(() => {});
   ok((await page.evaluate(() => scrollY)) > 300, 'ön seçimle gelince forma kaydırıldı');
 
-  // ?kisi= / ?sektor= : kişi kartı ve sektör sayfasından gelen bağlam çipleri (kişiye özel adres YOK: alıcı hep şirketin tek adresi)
+  // ?kisi= / ?sektor= : kişi kartı ve sektör sayfasından gelen bağlam çipleri (alıcı kişiye göre değişmez: hep şirketin genel adresi)
   {
     const { ctx: c2, page: p2, logs: l2 } = await newPage();
     await p2.goto(`${BASE}/iletisim/?kisi=adem-baser&sektor=saglik-ve-ilac`, { waitUntil: 'load' });
@@ -184,7 +192,7 @@ async function contact() {
     await p2.click('.ct-submit');
     await p2.waitForSelector('[data-fk-done]:not([hidden])', { timeout: 5000 });
     const km = decodeMailto(await p2.getAttribute('[data-fk-mailto]', 'href'));
-    ok(km.to === 'info@boraden.com.tr', 'kişi/sektör bağlamında alıcı yine şirketin tek adresi');
+    ok(km.to === MAIL_TO, 'kişi/sektör bağlamında alıcı yine şirketin genel adresi');
     // görev veriden okunur (ekip şeması değişince test kırılmasın): «Ad (görev)»
     const adem = JSON.parse(fs.readFileSync(new URL('../src/data/team.json', import.meta.url), 'utf8')).members.find((m) => m.slug === 'adem-baser');
     ok(km.body.includes(`Görüşmek istenen kişi: ${adem.name} (${adem.role})`), `gövde: «Görüşmek istenen kişi» satırı (ad + unvan: ${adem.role})`);
@@ -373,7 +381,7 @@ async function nojs() {
   const { ctx, page } = await newPage({ js: false });
   await page.goto(`${BASE}/iletisim/`, { waitUntil: 'load' });
   const f = await page.$eval('#ct-form', (e) => ({ a: e.getAttribute('action'), m: e.getAttribute('method'), t: e.getAttribute('enctype'), req: [...e.querySelectorAll('[required]')].map((x) => x.name) }));
-  ok(f.a === 'mailto:info@boraden.com.tr' && f.m === 'post' && f.t === 'text/plain', 'form action=mailto, method=post, enctype=text/plain');
+  ok(f.a === `mailto:${MAIL_TO}` && f.m === 'post' && f.t === 'text/plain', `form action=mailto:${MAIL_TO}, method=post, enctype=text/plain`);
   ok(['ad', 'eposta', 'konu', 'mesaj', 'kvkk-onay'].every((n) => f.req.includes(n)), `yerel doğrulama öznitelikleri: ${f.req.join(', ')}`);
   ok(await page.isVisible('.ct-channel'), 'kanallar görünür');
   await page.goto(`${BASE}/kariyer/`, { waitUntil: 'load' });

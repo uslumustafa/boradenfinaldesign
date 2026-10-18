@@ -133,10 +133,11 @@
   margin-bottom: clamp(2.6rem, 5vw, 4rem);
 }
 .tm-jump__k {
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
 }
 .tm-jump__who {
   margin-top: 0.3rem;
@@ -166,10 +167,11 @@
 }
 .tm-dept__n {
   margin-top: 0.55rem;
-  font-size: 0.7rem;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-meta);
+  letter-spacing: var(--ls-meta);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-meta);
 }
 /* Bölümün bağlı olduğu hizmet alanı (team.json › departments[].areas) */
 .tm-dept__a {
@@ -179,10 +181,11 @@
   gap: 0.4rem;
 }
 .tm-dept__ak {
-  font-size: 0.62rem;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-meta);
+  letter-spacing: var(--ls-meta);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-meta);
 }
 .tm-dept__a a {
   display: inline-flex;
@@ -270,10 +273,11 @@
 }
 .prow__act {
   margin-top: 0.45rem;
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-meta);
+  letter-spacing: var(--ls-meta);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-meta);
   transition: color var(--t-med);
 }
 .prow__act .arr {
@@ -329,10 +333,10 @@
 }
 .who__n {
   flex: none;
-  font-size: 0.72rem;
-  font-weight: 400;
+  font-size: var(--fs-meta);
+  font-weight: 600;
   letter-spacing: 0.1em;
-  color: var(--ink-3);
+  color: var(--ink-2);
 }
 .who__t {
   font-family: var(--f-display);
@@ -521,11 +525,12 @@ html[data-fx='off'] .tm-join__t .w {
 .pp__role {
   font-family: var(--f-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 0.68rem;
-  letter-spacing: 0.1em;
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-meta);
+  letter-spacing: var(--ls-meta);
   line-height: 1.55;
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-meta);
 }
 .pp__name {
   margin-top: 0.35rem;
@@ -553,10 +558,11 @@ html[data-fx='off'] .tm-join__t .w {
 }
 .pp__k {
   margin-bottom: 0.55rem;
-  font-size: 0.66rem;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
 }
 .pp__topics ul {
   list-style: none;
@@ -645,10 +651,11 @@ html[data-fx='off'] .tm-join__t .w {
   margin-bottom: 0.35rem;
   font-family: var(--f-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
 }
 .pf-facts dd {
   font-size: 0.93rem;

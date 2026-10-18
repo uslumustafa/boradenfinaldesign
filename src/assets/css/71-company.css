@@ -29,10 +29,11 @@
   order: 2;
   font-family: var(--f-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
 }
 .ab-fact dd {
   order: 1;
@@ -99,10 +100,11 @@ html[data-fx='off'] .ab-method__t .w {
 }
 .ab-found__legal span {
   margin-right: 0.9rem;
-  font-size: 0.7rem;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-meta);
+  letter-spacing: var(--ls-meta);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-meta);
 }
 
 /* ── Hizmet alanları (çizgili satırlar) */
@@ -159,9 +161,10 @@ html[data-fx='off'] .ab-method__t .w {
   transform: scaleY(1);
 }
 .ab-arow__n {
-  font-size: var(--fs-0);
+  font-size: var(--fs-meta);
+  font-weight: 600;
   letter-spacing: 0.12em;
-  color: var(--ink-3);
+  color: var(--ink-2);
   transition: color var(--t-fast);
 }
 .ab-arow:hover .ab-arow__n {
@@ -179,11 +182,12 @@ html[data-fx='off'] .ab-method__t .w {
 }
 .ab-arow__c {
   justify-self: end;
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-meta);
+  letter-spacing: var(--ls-meta);
   text-transform: uppercase;
   white-space: nowrap;
-  color: var(--ink-3);
+  color: var(--c-meta);
 }
 .ab-arow__go {
   justify-self: end;
@@ -258,10 +262,11 @@ html[data-fx='off'] .ab-method__t .w {
 }
 .ab-princ__k {
   padding-bottom: 1.2rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--on-dark-3);
+  color: var(--c-label-dark);
 }
 .ab-princ__list {
   display: grid;
@@ -300,9 +305,10 @@ html[data-fx='off'] .ab-method__t .w {
 .ab-princ__n {
   display: block;
   margin-bottom: 1.3rem;
-  font-size: 0.78rem;
+  font-size: var(--fs-meta);
+  font-weight: 600;
   letter-spacing: 0.12em;
-  color: var(--on-dark-3);
+  color: var(--on-dark-2);
 }
 .ab-princ__i h3 {
   margin-bottom: 0.8rem;
@@ -336,11 +342,11 @@ html[data-fx='off'] .ab-method__t .w {
   display: flex;
   align-items: baseline;
   gap: 0.9rem;
-  font-size: var(--fs-0);
-  font-weight: 500;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
 }
 .ab-sec__k .tnum {
   color: var(--accent);
@@ -448,9 +454,10 @@ html[data-fx='off'] .ab-method__t .w {
   padding: 1.4rem 0 0.8rem;
 }
 .cr-area__n {
-  font-size: 0.78rem;
+  font-size: var(--fs-meta);
+  font-weight: 600;
   letter-spacing: 0.12em;
-  color: var(--ink-3);
+  color: var(--ink-2);
 }
 .cr-area__t {
   font-size: var(--fs-4);
@@ -605,9 +612,10 @@ html[data-fx='off'] .ab-method__t .w {
   display: inline-flex;
   align-items: center;
   gap: 0.7rem;
-  font-size: 0.78rem;
+  font-size: var(--fs-meta);
+  font-weight: 600;
   letter-spacing: 0.12em;
-  color: var(--ink-3);
+  color: var(--ink-2);
 }
 .cr-value__n::before {
   content: '';
@@ -655,9 +663,10 @@ html[data-fx='off'] .ab-method__t .w {
 .cr-step__n {
   display: block;
   margin-bottom: 1.2rem;
-  font-size: 0.78rem;
+  font-size: var(--fs-meta);
+  font-weight: 600;
   letter-spacing: 0.12em;
-  color: var(--ink-3);
+  color: var(--ink-2);
 }
 .cr-step h3 {
   margin-bottom: 0.7rem;
@@ -692,10 +701,11 @@ html[data-fx='off'] .ab-method__t .w {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem 1.2rem;
-  font-size: 0.74rem;
-  letter-spacing: 0.1em;
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-meta);
+  letter-spacing: var(--ls-meta);
   text-transform: uppercase;
-  color: var(--on-dark-3);
+  color: var(--c-meta-dark);
 }
 
 /* ── Başvuru formu bölümü */
@@ -759,11 +769,11 @@ html[data-fx='off'] .ab-method__t .w {
   gap: 0.9rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid var(--ink);
-  font-size: var(--fs-0);
-  font-weight: 500;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
 }
 
 /* ── Kanallar */
@@ -794,13 +804,13 @@ html[data-fx='off'] .ab-method__t .w {
   transform-origin: 50% 0;
   transition: transform var(--t-med) var(--ease-out);
 }
-.ct-channel:hover,
-.ct-channel:focus-visible {
+a.ct-channel:hover,
+a.ct-channel:focus-visible {
   padding-left: 1rem;
   background: var(--paper-2);
 }
-.ct-channel:hover::before,
-.ct-channel:focus-visible::before {
+a.ct-channel:hover::before,
+a.ct-channel:focus-visible::before {
   transform: scaleY(1);
 }
 .ct-channel__ic,
@@ -817,18 +827,19 @@ html[data-fx='off'] .ab-method__t .w {
 .ct-channel__ic {
   grid-area: ic;
 }
-.ct-channel:hover .ct-channel__ic,
-.ct-channel:focus-visible .ct-channel__ic {
+a.ct-channel:hover .ct-channel__ic,
+a.ct-channel:focus-visible .ct-channel__ic {
   background: var(--ink);
   border-color: var(--ink);
   color: #fff;
 }
 .ct-channel__k {
   grid-area: k;
-  font-size: 0.7rem;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
 }
 .ct-channel__v {
   grid-area: v;
@@ -844,9 +855,18 @@ html[data-fx='off'] .ab-method__t .w {
   color: var(--ink-3);
   transition: transform var(--t-med) var(--ease-out), color var(--t-fast);
 }
-.ct-channel:hover .ct-channel__go {
+a.ct-channel:hover .ct-channel__go {
   transform: translateX(4px);
   color: var(--ink);
+}
+/* Değeri henüz girilmemiş kanal (contact.njk): bağlantı değil, üzerine gelince tepki vermez; değer alanı boş ama satır yüksekliği
+   dolu satırla aynı kalır (bilgiler gelince yerleşim kaymaz) */
+.ct-channel--empty .ct-channel__ic {
+  color: var(--ink-3);
+}
+.ct-channel--empty .ct-channel__v {
+  min-height: 1.2em;
+  font-size: var(--fs-3);
 }
 
 /* ── Form sütunu */
@@ -885,10 +905,11 @@ html[data-fx='off'] .ab-method__t .w {
   background: var(--paper-2);
 }
 .ct-svc__k {
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
 }
 .ct-svc__v {
   flex: 1 1 12rem;
@@ -959,9 +980,10 @@ html[data-fx='off'] .ab-method__t .w {
 }
 .ct-step__n {
   display: block;
-  font-size: 0.74rem;
+  font-size: var(--fs-meta);
+  font-weight: 600;
   letter-spacing: 0.12em;
-  color: var(--ink-3);
+  color: var(--ink-2);
 }
 .ct-step__t {
   margin-top: 0.35rem;
@@ -1031,11 +1053,12 @@ html[data-fx='off'] .ab-method__t .w {
   line-height: 1.15;
 }
 .ct-more__v {
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-meta);
+  letter-spacing: var(--ls-meta);
   text-transform: uppercase;
   white-space: nowrap;
-  color: var(--on-dark-3);
+  color: var(--c-meta-dark);
 }
 .ct-more__go {
   justify-self: end;
@@ -1386,10 +1409,11 @@ fieldset.ct-field > legend {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--on-dark-3);
+  color: var(--c-label-dark);
 }
 .ct-done__dot {
   width: 0.55rem;
@@ -1429,10 +1453,11 @@ fieldset.ct-field > legend {
   padding-top: 0.2rem;
   font-family: var(--f-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--on-dark-3);
+  color: var(--c-label-dark);
 }
 .ct-done__mail dd {
   min-width: 0;

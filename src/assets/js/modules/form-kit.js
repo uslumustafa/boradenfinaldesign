@@ -43,7 +43,8 @@ export function composeMail({ to, subject, header, message, messageLabel = 'Mesa
   const head = header.join('\n');
   const join = (m) => head + (m ? `\n\n${messageLabel}:\n${m}` : '');
   const fullBody = join(message);
-  const full = `Alıcı: ${to}\nKonu: ${subject}\n\n${fullBody}`;
+  // alıcı adresi henüz tanımlı değilse (content.json › contact.email boş) «Alıcı:» satırı yazılmaz
+  const full = `${to ? `Alıcı: ${to}\n` : ''}Konu: ${subject}\n\n${fullBody}`;
   if (fullBody.length <= max) return { body: fullBody, full, cut: false };
   if (max < 1) return { body: '', full, cut: true };
   const note = '\n\n[Metnin devamı, e-posta bağlantısının uzunluk sınırı nedeniyle kısaltıldı. Tam metni formdaki «kopyala» düğmesiyle alabilirsiniz.]'.slice(0, max - 1);

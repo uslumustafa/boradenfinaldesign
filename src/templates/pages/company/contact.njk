@@ -17,32 +17,37 @@
   <div class="container">
     <div class="ct-grid">
 
-      {# ── Kanallar #}
+      {# ── Kanallar (contactpage.json › channels: e-posta, telefon, WhatsApp, adres; bağlantılar rota modülünde çözülür). Değeri boş
+         olan kanal bağlantısız çizilir: simge ve etiket görünür, değer alanı boş kalır. Ekim 2026 (müşteri): kesin iletişim bilgileri
+         gelene kadar dört satır da boş; değer girilince satır kendiliğinden bağlantı olur (adres satırına bağlantı girilmezse ofis
+         adresinden, o da boşsa satırın kendi metninden harita bağlantısı kurulur). Adres de bu listede: mobilde formun ve uzun
+         açıklamaların üstünde görünür (tam adres aşağıda «Ofis»te). #}
       <section class="ct-ch" aria-labelledby="ct-ch-h">
         <h2 class="ct-label mono" id="ct-ch-h" data-reveal>Doğrudan iletişim</h2>
         <ul class="ct-channels">
-          {% for ch in cp.channels %}
-          {% set ext = ch.href.startsWith("http") %}
+          {% for ch in channels %}
+          {% set isAddr = ch.id == "address" %}
+          {% set href = ch.href %}
+          {% set ext = href.startsWith("http") %}
           <li data-reveal data-reveal-delay="{{ loop.index }}">
-            <a class="ct-channel" href="{{ ch.href }}"{% if ext %} target="_blank" rel="noopener noreferrer"{% endif %}>
-              <span class="ct-channel__ic">{{ kit.icon(ch.id) }}</span>
-              <span class="ct-channel__k mono">{{ ch.label }}</span>
-              <span class="ct-channel__v tnum">{{ (ch.value | phone) if ch.value.startsWith("+") else ch.value }}</span>
+            {% if ch.value and href %}
+            <a class="ct-channel" href="{{ href }}"{% if ext %} target="_blank" rel="noopener noreferrer"{% endif %}>
+              <span class="ct-channel__ic">{{ kit.icon("pin" if isAddr else ch.id) }}</span>
+              <span class="ct-channel__k mono">{{ (ch.label ~ " · haritada aç") if isAddr else ch.label }}</span>
+              <span class="ct-channel__v{% if not isAddr %} tnum{% endif %}">{{ (ch.value | phone) if ch.value.startsWith("+") else ch.value }}</span>
               <span class="ct-channel__go" aria-hidden="true">{{ "↗" if ext else "→" }}</span>
-              {% if ext %}<span class="sr-only"> (yeni sekmede açılır)</span>{% endif %}
+              {% if ext %}<span class="sr-only"> ({{ "Google Haritalar, " if isAddr else "" }}yeni sekmede açılır)</span>{% endif %}
             </a>
+            {% else %}
+            <div class="ct-channel ct-channel--empty">
+              <span class="ct-channel__ic">{{ kit.icon("pin" if isAddr else ch.id) }}</span>
+              <span class="ct-channel__k mono">{{ ch.label }}</span>
+              <span class="ct-channel__v" aria-hidden="true"></span>
+              <span class="sr-only">: henüz eklenmedi</span>
+            </div>
+            {% endif %}
           </li>
           {% endfor %}
-          {# Adres de doğrudan iletişim listesinde: mobilde formun ve uzun açıklamaların üstünde görünür (tam adres aşağıda «Ofis»te) #}
-          <li data-reveal data-reveal-delay="{{ (cp.channels | length) + 1 }}">
-            <a class="ct-channel" href="{{ mapsUrl }}" target="_blank" rel="noopener noreferrer">
-              <span class="ct-channel__ic">{{ kit.icon("pin") }}</span>
-              <span class="ct-channel__k mono">Adres · haritada aç</span>
-              <span class="ct-channel__v">{{ contact.district }} / {{ contact.city }}</span>
-              <span class="ct-channel__go" aria-hidden="true">↗</span>
-              <span class="sr-only"> (Google Haritalar, yeni sekmede açılır)</span>
-            </a>
-          </li>
         </ul>
         {{ m.fig("lead") }}
       </section>
@@ -104,15 +109,16 @@
           <h2 class="ct-label mono" id="ct-office-h" data-reveal>Ofis</h2>
           <div class="ct-office__box" data-reveal data-reveal-delay="1">
             <span class="ct-office__ic">{{ kit.icon("pin") }}</span>
+            {# adres boşsa (content.json › contact) yalnızca unvan görünür; adres girilince satırlar ve harita bağlantısı kendiliğinden gelir #}
             <address class="ct-office__addr">
-              <strong>{{ site.legalName }}</strong><br>
-              {{ contact.street }}<br>
-              {{ contact.postcode }} {{ contact.district }} / {{ contact.city }}<br>
-              {{ contact.country }}
+              <strong>{{ site.legalName }}</strong>
+              {% if contact.street %}<br>{{ contact.street }}{% endif %}
+              {% if contact.line2 %}<br>{{ contact.line2 }}{% endif %}
+              {% if contact.hasAddress and contact.country %}<br>{{ contact.country }}{% endif %}
             </address>
           </div>
           {% if cp.addressNote %}<p class="ct-office__note" data-reveal data-reveal-delay="2">{{ cp.addressNote | rich }}</p>{% endif %}
-          <p class="ct-office__map" data-reveal data-reveal-delay="2"><a class="textlink" href="{{ mapsUrl }}" target="_blank" rel="noopener noreferrer">Haritada aç <span aria-hidden="true">↗</span><span class="sr-only"> (Google Haritalar, yeni sekmede açılır)</span></a></p>
+          {% if mapsUrl %}<p class="ct-office__map" data-reveal data-reveal-delay="2"><a class="textlink" href="{{ mapsUrl }}" target="_blank" rel="noopener noreferrer">Haritada aç <span aria-hidden="true">↗</span><span class="sr-only"> (Google Haritalar, yeni sekmede açılır)</span></a></p>{% endif %}
         </section>
 
         <section class="ct-proc" aria-labelledby="ct-proc-h">

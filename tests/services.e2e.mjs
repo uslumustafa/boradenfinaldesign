@@ -110,12 +110,12 @@ async function tick() {
   // renk döngüsü: mavi → kırmızı → yeşil (3n+2 / 3n)
   const colors = await page.evaluate(() => [...document.querySelectorAll('.svc__sec .svc__label')].slice(0, 3).map((e) => getComputedStyle(e, '::before').backgroundColor));
   ok(new Set(colors).size === 3, `ilk üç başlıkta üç farklı vurgu rengi (${colors.join(' | ')})`);
-  // künye: Ref. + en az 3 hücre; tik maskesi
+  // künye: Referans + en az 3 hücre; tik maskesi
   const k = await page.evaluate(() => {
     const d = document.querySelector('dl.kunye');
     return { cells: d.children.length, ref: d.querySelector('.kunye__ref dd')?.textContent, mask: (getComputedStyle(d.querySelector('.kunye__ref dd'), '::before').webkitMaskImage || '').slice(0, 20) };
   });
-  ok(k.cells >= 3 && /^\d{2}\.\d{2}$/.test(k.ref) && /svg/.test(k.mask), `künye: ${k.cells} hücre, Ref. ${k.ref}, tik maskesi var`);
+  ok(k.cells >= 3 && /^\d{2}\.\d{2}$/.test(k.ref) && /svg/.test(k.mask), `künye: ${k.cells} hücre, Referans ${k.ref}, tik maskesi var`);
   ok(logs.length === 0, `konsol/HTTP temiz${logs.length ? ': ' + logs.join(' | ') : ''}`);
   await ctx.close();
 
@@ -280,7 +280,7 @@ async function router() {
   await page.waitForFunction((p) => document.getElementById('main').dataset.url === p, first.url, { timeout: 9000 });
   await page.waitForTimeout(1200);
   s = await page.evaluate(() => ({ mark: window.__navMark, ref: document.querySelector('.kunye__ref dd')?.textContent, labels: document.querySelectorAll('.svc__label[data-reveal]').length, sc: document.querySelectorAll('.sc').length }));
-  ok(s.mark === marker && s.ref === first.ref && s.labels >= 4 && s.sc === first.scopeItems.length, `alan → hizmet: künye Ref. ${s.ref}, ${s.labels} başlık, ${s.sc} kapsam kartı`);
+  ok(s.mark === marker && s.ref === first.ref && s.labels >= 4 && s.sc === first.scopeItems.length, `alan → hizmet: künye Referans ${s.ref}, ${s.labels} başlık, ${s.sc} kapsam kartı`);
   // yeni sayfada tik yeniden kurulur (router sonrası da çizilir)
   await scrollToEl(page, '#cikti .svc__label', 0.4);
   await page.waitForTimeout(1900);

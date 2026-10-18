@@ -52,9 +52,10 @@
 .lg-toc__n {
   flex: none;
   min-width: 1.9rem;
-  font-size: 0.7rem;
+  font-size: var(--fs-meta);
+  font-weight: 600;
   letter-spacing: 0.08em;
-  color: var(--ink-3);
+  color: var(--ink-2);
 }
 @media (min-width: 901px) {
   /* uzun içindekiler kısa ekranlarda kendi içinde kayar */
@@ -98,10 +99,10 @@
   letter-spacing: -0.012em;
 }
 .lg-sec__n {
-  font-size: var(--fs-0);
-  font-weight: 400;
+  font-size: var(--fs-meta);
+  font-weight: 600;
   letter-spacing: 0.12em;
-  color: var(--ink-3);
+  color: var(--ink-2);
 }
 .lg-sec__body {
   padding-left: var(--lg-n);
@@ -136,9 +137,9 @@
   scroll-margin-top: calc(var(--hdr) + 1.2rem);
 }
 .lg-review__h {
-  font-size: var(--fs-0);
-  font-weight: 500;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
   color: var(--warn);
 }
@@ -171,8 +172,9 @@
 }
 .lg-det__n {
   margin-left: auto;
-  font-size: 0.78rem;
-  color: var(--ink-3);
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  color: var(--ink-2);
 }
 .lg-det summary::after {
   content: '';
@@ -229,11 +231,11 @@
   border-top: 1px solid var(--ink);
 }
 .lg-others__h {
-  font-size: var(--fs-0);
-  font-weight: 500;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
 }
 .lg-others__list {
   display: grid;
@@ -257,10 +259,11 @@
 }
 .lg-other__m {
   grid-column: 1;
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-meta);
+  letter-spacing: var(--ls-meta);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-meta);
 }
 .lg-other__go {
   grid-column: 2;
@@ -603,7 +606,7 @@
 .sr-hit__d {
   grid-column: 1;
   max-width: 72ch;
-  font-size: 0.92rem;
+  font-size: var(--fs-1); /* Ekim 2026: küçük açıklama metinleri bir kademe büyük (önce 0,92 rem) */
   line-height: 1.5;
   color: var(--ink-2);
 }
@@ -697,10 +700,11 @@
 .sr-path__n small {
   font-family: var(--f-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-meta);
+  letter-spacing: var(--ls-meta);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-meta);
 }
 .sr-path__t {
   font-weight: 500;
@@ -709,7 +713,7 @@
 }
 .sr-path__d {
   max-width: 34ch;
-  font-size: 0.9rem;
+  font-size: var(--fs-1); /* Ekim 2026: küçük açıklama metinleri bir kademe büyük (önce 0,9 rem) */
   color: var(--ink-2);
 }
 .sr-path:hover .sr-path__t {
@@ -721,10 +725,11 @@
   margin-top: clamp(2rem, 4vw, 3rem);
 }
 .sr-try__h {
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
 }
 .sr-try__list {
   display: flex;
@@ -858,17 +863,19 @@
   letter-spacing: -0.045em;
 }
 .sm-total__u {
-  font-size: 0.78rem;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-meta);
+  letter-spacing: var(--ls-meta);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-meta);
 }
 .sm-dist__h {
   margin-bottom: 0.9rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
 }
 .sm-bar {
   display: flex;
@@ -938,9 +945,10 @@
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  font-size: var(--fs-0);
+  font-size: var(--fs-meta);
+  font-weight: 600;
   letter-spacing: 0.14em;
-  color: var(--ink-3);
+  color: var(--ink-2);
 }
 .sm-sec__head h2 {
   font-size: var(--fs-4);
@@ -953,10 +961,11 @@
   background-size: 100% 1px;
 }
 .sm-sec__c {
-  font-size: 0.74rem;
-  letter-spacing: 0.12em;
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-meta);
+  letter-spacing: var(--ls-meta);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-meta);
 }
 .sm-groups {
   display: grid;
@@ -1017,10 +1026,11 @@
 .sm-list__m {
   display: block;
   margin-bottom: 0.1rem;
-  font-size: 0.62rem;
-  letter-spacing: 0.1em;
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-meta);
+  letter-spacing: var(--ls-meta);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-meta);
 }
 .sm-foot {
   margin-top: clamp(2.4rem, 5vw, 3.6rem);
@@ -1082,9 +1092,10 @@
 .rp-count {
   min-height: 1.4em;
   margin-top: 1rem;
-  font-size: 0.78rem;
+  font-size: var(--fs-meta);
+  font-weight: 600;
   letter-spacing: 0.06em;
-  color: var(--ink-3);
+  color: var(--ink-2);
 }
 /* zaman çizgisi: tarih sütununun yanında ince ray; kaydırdıkça (data-steps → --p) dolar */
 .rp-list {
@@ -1173,10 +1184,11 @@
 }
 .rp-dlabel {
   margin-top: 0.35rem;
-  font-size: 0.64rem;
-  letter-spacing: 0.12em;
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-meta);
+  letter-spacing: var(--ls-meta);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-meta);
 }
 .rp-main {
   min-width: 0;
@@ -1275,10 +1287,11 @@
   flex: none; /* etiket daralıp harf harf bölünmesin (değer uzunsa değer satır atlar) */
   font-family: var(--f-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 0.66rem;
-  letter-spacing: 0.12em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
 }
 .rp-meta dd {
   display: inline-flex;
@@ -1371,10 +1384,11 @@
   letter-spacing: -0.045em;
 }
 .rn-idx__unit {
-  font-size: 0.78rem;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-meta);
+  letter-spacing: var(--ls-meta);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-meta);
 }
 .rn-idx__text {
   max-width: 34ch;
@@ -1385,10 +1399,11 @@
   margin-top: 2rem;
   padding-bottom: 0.8rem;
   border-bottom: 1px solid var(--ink);
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
 }
 .rn-idx__chips {
   margin-top: 1rem;
@@ -1462,10 +1477,11 @@
   min-width: 0;
 }
 .rn-row__k {
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
 }
 .rn-row__t {
   font-family: var(--f-display);
@@ -1498,8 +1514,9 @@
   padding-top: 0.5rem;
   margin-bottom: 0.25rem;
   font-style: normal;
-  font-size: 0.66rem;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-meta);
+  letter-spacing: var(--ls-meta);
   text-transform: uppercase;
   color: var(--accent);
 }
@@ -1559,11 +1576,11 @@
   align-items: center;
   gap: 0.9rem;
   margin-bottom: clamp(1.1rem, 2.4vw, 1.8rem);
-  font-size: var(--fs-0);
-  font-weight: 500;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
 }
 .rn-label::before {
   content: '';
@@ -1721,10 +1738,11 @@ html[data-fx='off'] .rn-intro .w {
   background: var(--paper-2);
 }
 .rn-src__k {
-  font-size: 0.7rem;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-label);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--c-label);
 }
 .rn-src__t {
   max-width: 32em;

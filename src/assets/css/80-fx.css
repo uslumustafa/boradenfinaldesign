@@ -13,7 +13,8 @@ html.is-leaving :is(#main, #footer) {
 }
 html.is-leaving .hud,
 html.is-leaving .prog,
-html.is-leaving .mega {
+html.is-leaving .mega,
+html.is-leaving .tocdock {
   opacity: 0 !important;
   transition: opacity 0.2s ease-in;
 }
