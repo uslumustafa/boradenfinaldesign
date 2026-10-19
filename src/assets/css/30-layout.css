@@ -294,15 +294,27 @@ html.hdr-hidden .hdr {
 .mega.is-open .mega__sheet {
   clip-path: inset(0 0 0 0);
 }
-/* kısa pencerede (ör. 1280×720) panel ekrana sığmazsa kendi içinde kayar */
+/* Hizmetler paneli ekranın altına kadar inmez: altında her zaman sayfadan bir şerit görünür ve fare oraya inince panel kapanır
+   (müşteri, 19 Ekim 2026: «navbar'a gelince nasıl çıkacağız» — panel 6 + 2 sütunla ekran boyunca uzanıyordu; 1440×900'de altta 58 px,
+   1366×768'de 24 px, 1280×720'de 11 px kalıyordu). Sekiz alan geniş ekranda (≥ 1512 px) tek sırada, 1200–1511 px arasında iki sırada
+   dörder (daha dar sekiz sütunda «e-Fatura» gibi adlar tireden bölünüyordu). Çok alçak pencerede içerik sığmazsa panel kendi içinde
+   kayar; şerit yine kalır (en az ≈ %14 ekran yüksekliği). */
 .mega--services {
-  max-height: calc(100vh - var(--hdr));
+  max-height: calc(100vh - var(--hdr) - clamp(5rem, 14vh, 9rem));
   overflow-y: auto;
   overscroll-behavior: contain;
 }
-/* Sütun başına 7 hizmet yalnızca panel ekrana sığdığında; kısa pencerede 5 (kalanlar «Tüm … (N) →» bağlantısında sayılı).
-   7 hizmetli panelin alt kenarı ≈ 885 px (1280–1439 px genişlik), ≈ 790–840 px (1440 px ve üstü). */
-@media (max-width: 1439px) and (max-height: 899px), (max-height: 849px) {
+.mega--services .mega__grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+@media (min-width: 94.5em) {
+  .mega--services .mega__grid {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+}
+/* Sütun başına 7 hizmet yalnızca panelin altında yeterli şerit kalınca; alçak pencerede 5 (kalanlar «Tüm … (N) →» bağlantısında sayılı).
+   Panelin alt kenarı (7 hizmet): ≈ 590 px (≥ 1512 px, tek sıra), ≈ 765 px (1200–1511 px, iki sıra). */
+@media (max-width: 94.499em) and (max-height: 899px), (max-height: 719px) {
   .mega--services .mega__col > a:not(.all):nth-of-type(n + 6) {
     display: none;
   }

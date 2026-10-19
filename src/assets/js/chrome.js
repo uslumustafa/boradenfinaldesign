@@ -24,25 +24,61 @@ export function initChrome(fx) {
   };
 
   /* ── Mega paneller (Hizmetler, Bilgi Merkezi)
-     Müşteri (Ekim 2026): «fare paneldeyken tıklamadıysa panel kalsın, alt sınırın dışına inerse kapansın; bazen kalıyor bazen gidiyor».
+     Müşteri (18 Ekim 2026): «fare paneldeyken tıklamadıysa panel kalsın, alt sınırın dışına inerse kapansın; bazen kalıyor bazen gidiyor».
+     Müşteri (19 Ekim 2026): «navbar'a gelince nasıl çıkacağız» — önceki sürümde üst şeridin tamamı bölgeye dahildi: fare şeritte yana
+     (logoya, boş alana, aramaya, İletişim düğmesine) gidince panel açık kalıyordu; Hizmetler paneli de ekranın altına kadar indiği için
+     aşağıdan çıkılamıyordu (30-layout.css artık panelin altında sayfadan bir şerit bırakır).
      • Açılış: tetikleyicide kısa duruş (OPEN_DELAY). Üzerinden geçip giden fare paneli açmaz (açılıp kapanma titremesi olmaz).
-     • Açık kalma: fare «bölgede» kaldıkça — bölge = üst şerit + açık panelin kutusu. Bölge geometriyle ölçülür (getBoundingClientRect):
-       fare olayları perde (clip-path) inerken panelin henüz çizilmemiş kısmında ya da üstte duran başka bir katmanda güvenilir değildi.
-     • Kapanış: fare bölgenin dışına çıkınca (ör. panelin alt kenarının altına inince ya da pencereden çıkınca) CLOSE_DELAY sonra;
-       bu sürede bölgeye dönülürse iptal. Kapanınca header, sayfa aşağıdaysa eskisi gibi yeniden gizlenir.
-     • Şeritte başka öğeye geçiş: o öğede DURULURSA (SWITCH_DELAY) panel değişir, panelsiz öğede kapanır. Panele doğru çapraz giderken
-       üzerinden geçilen öğe paneli değiştirmez (bekleyen açılış, fare öğeden çıkınca iptal edilir).
+     • Açık kalma: fare «bölgede» kaldıkça — bölge = açık panelin tetikleyici sütunu (öğenin genişliği × header'ın boyu) + panelin kutusu
+       + tetikleyiciden panele doğru giden yol (fare sütundan çıktığı noktadan panelin üst kenarına doğru açılan üçgen; AIM_MS boyunca).
+       Bölge geometriyle ölçülür (getBoundingClientRect): fare olayları perde (clip-path) inerken panelin henüz çizilmemiş kısmında güvenilir
+       değildi.
+     • Kapanış: fare bölgenin dışına çıkınca — panelin alt kenarının altına inince, şeritte tetikleyiciden yana (logo, boş alan, arama,
+       İletişim) gidince, panelden yukarı şeride çıkınca ya da pencereden çıkınca — CLOSE_DELAY sonra; bu sürede dönülürse iptal.
+       Kapanınca header, sayfa aşağıdaysa eskisi gibi yeniden gizlenir.
+     • Şeritte başka öğeye geçiş: o öğede DURULURSA (SWITCH_DELAY) panel doğrudan değişir (arada kapanmaz); panelsiz öğede durunca
+       (PLAIN_DELAY) kapanır. Menü öğelerinin arasından geçen fareye TRANSIT_MS süre tanınır (öğeler arası boşluk ya da üzerinden geçilen
+       panelsiz öğe paneli hemen kapatmaz); menü öğelerinin dışına (logo, boş alan, arama, İletişim) çıkınca CLOSE_DELAY geçerlidir. Panele
+       doğru çapraz giden fare (üçgenin içinde) üzerinden geçtiği öğeyle paneli değiştirmez ya da kapatmaz.
      • Klavye (odak, ↓, Esc) ve dokunmatik (ilk dokunuş açar, ikinci sayfaya gider) davranışı değişmedi. */
   const OPEN_DELAY = 90;
   const SWITCH_DELAY = 150;
   const CLOSE_DELAY = 220;
+  const PLAIN_DELAY = 250; // panelsiz öğede bu kadar durunca panel kapanır (üzerinden geçerken kapanmasın: Hizmetler → Sektörler → Bilgi Merkezi)
+  const TRANSIT_MS = 450;
+  const AIM_MS = 600;
+  const navList = qs('.nav__list', hdr);
   const within = (r, x, y) => x >= r.left && x <= r.right && y >= r.top && y <= r.bottom;
-  const inZone = (x, y) => !!openKey && (within(hdr.getBoundingClientRect(), x, y) || within(panels[openKey].getBoundingClientRect(), x, y));
+  // açık panelin tetikleyici sütunu: öğe (li) ± 8 px genişliğinde, header'ın üst kenarından panelin üst kenarına
+  const colRect = (key) => {
+    const l = links.find((x) => x.dataset.panel === key);
+    const a = (l.closest('li') || l).getBoundingClientRect();
+    const h = hdr.getBoundingClientRect();
+    return { left: a.left - 8, right: a.right + 8, top: h.top, bottom: h.bottom };
+  };
+  // panele doğru giden yol: fare sütundan şeride çıktığı noktadan (aim) aşağıya, panelin üst kenarına doğru genişleyen üçgen. Yatay
+  // (şerit boyunca) giden fare üçgenin dışında kalır; aşağı-çapraz giden içinde. Süresi (AIM_MS) dolunca geçersiz: şeritte duran fare paneli tutmaz.
+  let aim = null; // { x, y, t }
+  let lastCol = null; // farenin sütundaki son konumu
+  let aimTimer = 0;
+  const aiming = (x, y) => {
+    if (!aim || !openKey || performance.now() - aim.t > AIM_MS) return false;
+    const top = panels[openKey].getBoundingClientRect().top;
+    const dy = y - aim.y;
+    if (dy < -4 || y > top + 2) return false;
+    const dx = x - aim.x;
+    const k = (dx < 0 ? aim.x : innerWidth - aim.x) / Math.max(1, top - aim.y);
+    return Math.abs(dx) <= Math.max(0, dy) * k + 12;
+  };
+  const inPanel = (x, y) => !!openKey && within(panels[openKey].getBoundingClientRect(), x, y);
+  const inCol = (x, y) => !!openKey && within(colRect(openKey), x, y);
+  const inZone = (x, y) => inPanel(x, y) || inCol(x, y) || aiming(x, y);
   // Süre dolunca karar bir sonraki karede verilir: tarayıcı o karenin fare olaylarını önce işler. Yoğun/yavaş bir makinede geciken
   // olaylar da karara yetişir (ör. fare öğeden çoktan çıkmışken eski :hover durumuyla panel değişmesin, bölgeye dönmüşken kapanmasın).
   const later = (ms, fn) => setTimeout(() => requestAnimationFrame(fn), ms);
   let intent = null; // bekleyen açılış/geçiş: fare bu öğede duruyor ({ el })
   let closeSeq = 0;
+  let closeAt = 0; // gecikmeli kapanışın başladığı an
   const cancelClose = () => {
     clearTimeout(closeTimer);
     closeTimer = 0;
@@ -51,6 +87,10 @@ export function initChrome(fx) {
   const cancelIntent = () => {
     clearTimeout(openTimer);
     intent = null;
+  };
+  const resetAim = () => {
+    aim = lastCol = null;
+    clearTimeout(aimTimer);
   };
   function openPanel(key, pointer = false) {
     cancelClose();
@@ -65,12 +105,18 @@ export function initChrome(fx) {
     links.forEach((l) => l.setAttribute('aria-expanded', String(l.dataset.panel === key)));
     openKey = key;
     byPointer = pointer;
+    if (pointer && inCol(px, py)) lastCol = { x: px, y: py };
   }
-  // immediate=false: CLOSE_DELAY sonra (bekleyen kapanış yeniden başlatılmaz — bölge dışında gezinen fare kapanışı ertelemesin)
+  // immediate=false: CLOSE_DELAY sonra (bekleyen kapanış yeniden başlatılmaz — bölge dışında gezinen fare kapanışı ertelemesin).
+  // Fare başka bir panelli öğenin üzerinde bekliyorsa (geçiş süresi işliyor) panel kapanmaz: geçiş doğrudan olur, arada boş an yok.
+  // Fare menü öğelerinin arasındaysa kapanış, başladığı andan TRANSIT_MS sonrasına kadar ertelenir. Farenin gecikmeli kapanışı bekleyen
+  // öğe beklemesini (geçiş / panelsiz öğede kapanış) iptal etmez.
   function closePanels(immediate = false, pointer = false) {
-    cancelIntent();
+    if (immediate || !pointer) cancelIntent();
     const done = () => {
       cancelClose();
+      cancelIntent();
+      resetAim();
       const was = openKey;
       Object.values(panels).forEach((p) => p.classList.remove('is-open'));
       links.forEach((l) => l.setAttribute('aria-expanded', 'false'));
@@ -81,20 +127,42 @@ export function initChrome(fx) {
     if (immediate) return done();
     if (closeTimer) return;
     const seq = closeSeq;
-    closeTimer = later(CLOSE_DELAY, () => {
+    closeAt = performance.now();
+    const check = () => {
       if (seq !== closeSeq) return; // iptal edildi
       if (pointer && byPointer && inZone(px, py)) return cancelClose(); // bu arada bölgeye dönüldü
+      if (pointer && intent && links.includes(intent.el) && intent.el.matches(':hover')) return cancelClose(); // geçiş bekleniyor
+      const left = TRANSIT_MS - (performance.now() - closeAt);
+      if (pointer && left > 16 && within(navList.getBoundingClientRect(), px, py)) {
+        closeTimer = later(left, check); // menü öğelerinin arasından geçiyor
+        return;
+      }
       done();
-    });
+    };
+    closeTimer = later(CLOSE_DELAY, check);
   }
-  // fare bir üst menü öğesinde durursa (süre dolduğunda hâlâ üzerindeyse) fn çalışır; öğeden çıkınca iptal
+  // fare bir üst menü öğesinde durursa (süre dolduğunda hâlâ üzerindeyse) fn çalışır; öğeden çıkınca iptal. Panele doğru çapraz giden
+  // fare (üçgenin içinde) üzerinden geçtiği öğeyi seçmez; orada durursa üçgenin süresi dolunca seçer.
   const dwell = (l, ms, fn) => {
     cancelIntent();
     const it = (intent = { el: l });
-    openTimer = later(ms, () => intent === it && l.matches(':hover') && fn());
+    const fire = () => {
+      if (intent !== it || !l.matches(':hover')) return;
+      if (aiming(px, py)) {
+        openTimer = later(Math.max(30, AIM_MS - (performance.now() - aim.t)), fire);
+        return;
+      }
+      intent = null;
+      fn();
+    };
+    openTimer = later(ms, fire);
   };
   // Bekleme, öğenin üzerindeki GERÇEK fare hareketiyle başlar (pointermove): sayfa yukarı kaydırılınca header duran farenin altına
   // kayarak geldiğinde (ör. «Bu sayfada» şeridinden bir bölüme tıklandıktan sonra) panel kendiliğinden açılmaz.
+  // Dokunuşla gelen odak paneli açmaz: dokunmatikte ilk dokunuşu tıklama işleyicisi karşılar (açar), ikincisi sayfaya gider. (Chrome
+  // dokunulan bağlantıya tıklamadan önce odak verir; odak paneli açınca tıklama «ikinci dokunuş» sayılıp ilk dokunuşta sayfaya gidiliyordu.)
+  let touchAt = -1e9;
+  hdr.addEventListener('pointerdown', (e) => e.pointerType !== 'mouse' && (touchAt = performance.now()), { passive: true });
   links.forEach((l) => {
     const key = l.dataset.panel;
     l.addEventListener('pointermove', (e) => {
@@ -113,7 +181,7 @@ export function initChrome(fx) {
       if (e.pointerType === 'mouse' && intent?.el === l) cancelIntent();
     });
     l.addEventListener('focus', () => {
-      if (!quiet) openPanel(key);
+      if (!quiet && performance.now() - touchAt > 800) openPanel(key);
     });
     // klavye: ↓ paneli açar ve ilk bağlantısına geçer (panel DOM'da üst menünün sonunda durduğu için Tab ile ulaşılmaz)
     l.addEventListener('keydown', (e) => {
@@ -130,29 +198,44 @@ export function initChrome(fx) {
       }
     });
   });
-  // panelsiz öğede durmak açık paneli kapatır (üzerinden geçmek kapatmaz)
+  // panelsiz öğe bölgenin dışındadır: üzerinde durunca (PLAIN_DELAY) panel kapanır; üzerinden geçip giden fare kapatmaz. Panele doğru
+  // çapraz giderken (üçgenin içinde) orada kısa durmak da kapatmaz; üçgenin süresi dolunca kapatır.
   plain.forEach((l) => {
     l.addEventListener('pointermove', (e) => {
       if (e.pointerType !== 'mouse' || !openKey || intent?.el === l) return;
-      dwell(l, SWITCH_DELAY, () => openKey && closePanels(true, true));
+      dwell(l, PLAIN_DELAY, () => openKey && closePanels(true, true));
     });
     l.addEventListener('pointerleave', (e) => {
       if (e.pointerType === 'mouse' && intent?.el === l) cancelIntent();
     });
   });
   // fare bölgesi: açık panel varken her fare hareketinde bölge denetlenir (yalnızca okuma; değişiklik yalnızca durum değişince)
+  const track = (x, y) => {
+    if (inPanel(x, y)) {
+      aim = lastCol = null; // panele girildi: yol tamam
+    } else if (inCol(x, y)) {
+      aim = null;
+      lastCol = { x, y };
+    } else if (lastCol && !aim) {
+      // sütundan şeride çıktı: üçgenin tepesi sütundaki son nokta; süresi dolunca (fare şeritte durmuşsa) yeniden karar verilir
+      aim = { x: lastCol.x, y: lastCol.y, t: performance.now() };
+      lastCol = null;
+      clearTimeout(aimTimer);
+      aimTimer = setTimeout(() => openKey && byPointer && !inZone(px, py) && closePanels(false, true), AIM_MS + 20);
+    }
+    if (inZone(x, y)) {
+      // klavyeyle açılmış panele fare girdiyse bundan sonra fare kuralı geçerli
+      byPointer = true;
+      if (closeTimer) cancelClose();
+    } else if (byPointer) closePanels(false, true);
+  };
   addEventListener(
     'pointermove',
     (e) => {
       if (e.pointerType !== 'mouse') return;
       px = e.clientX;
       py = e.clientY;
-      if (!openKey) return;
-      if (inZone(px, py)) {
-        // klavyeyle açılmış panele fare girdiyse bundan sonra fare kuralı geçerli
-        byPointer = true;
-        if (closeTimer) cancelClose();
-      } else if (byPointer) closePanels(false, true);
+      if (openKey) track(px, py);
     },
     { passive: true }
   );
@@ -161,6 +244,7 @@ export function initChrome(fx) {
   document.addEventListener('mouseout', (e) => {
     if (e.relatedTarget) return;
     px = py = -1;
+    cancelIntent(); // pencereden çıkan fare bekleyen geçişi de bırakır
     if (openKey && byPointer) closePanels(false, true);
   });
   Object.values(panels).forEach((p) => {
