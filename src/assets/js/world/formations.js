@@ -19,8 +19,8 @@
 //   9 Diyalog       — iki kabarık konuşma balonu: mesajınız ve yanıtımız (Kapanış «Görüşelim»; Ekim 2026'ya kadar kemer ve yol `kapi`)
 //   10… bordro halkası, sektörler, hizmet kavramları, sayfa türleri; sonda Hukuk ve Teşvik hizmet şekilleri (bkz. FORMATIONS)
 import { Draw, v3, X, Y } from './draw.js';
-import { kayip, maliyet, varlik, sube, edim, alacak, hakedis, sezon, ucHalka, savunma } from './shapes-sector.js';
-import { terazi, bilanco, muhur, mutabakat, dilimler, kdvZinciri, nakit, rasyo, hile, kup, akis, pay, sure } from './shapes-service.js';
+import { kasa, fabrika, enerji, magaza, kule, ilac, vinc, otel, aile, kamu } from './shapes-sector.js';
+import { terazi, bilanco, muhur, mutabakat, dilimler, kdvZinciri, nakit, rasyo, hile, kup, akis, pay, sure, sube, hakedis, savunma } from './shapes-service.js';
 import { petek, matris, ag, yayin, kitap, abakus, takvim, basvuru, yonlendirme, arama, arsiv, sozluk, gizlilik, soru, yazit } from './shapes-page.js';
 import { rakamlar, agac, tesvik, hukuk, dijital, okul } from './shapes-area.js';
 import { sozlesme, sicil, arabulucu, uyusmazlik, kvkk, icra, kurulus, belge, proje, arge, hibe, istihdam, ihracat } from './shapes-legal.js';
@@ -376,7 +376,7 @@ const POSE = ({ dx = 0, dy = 0, dz = 0, ly = 0, bright = 1.55 } = {}) => ({ pos:
 // Solda yerleşim (data-world-side="-1"; world.js › pose): lx sola kaydırma kazancı, ls uzaklık çarpanı (küçülür), ll ek yukarı kayma
 // (görüntü yüksekliğinin oranı; eksi → aşağı). Sektör şekilleri ana sayfa Sektörler bandında solda, tanım yazısının altında görünür
 // (üzerine gelinen sektörün şekli — behaviors.js › sectors); sağda yerleşimleri (sektör sayfası kahramanı) değişmez.
-const SECTOR_LEFT = { lx: 1.64, ls: 1.4, ll: -0.14 };
+const SECTOR_LEFT = { lx: 1.64, ls: 1.28, ll: -0.14 };
 
 // spin: sürekli dönüş çarpanı (0 = dönmez). sway: >0 ise dönmek yerine ±sway rad salınır (düzlemsel şekiller yandan ince görünmesin).
 // view: mürekkep alanı (2B) için başlangıç bakışı — pitch: öne eğim (rad), yaw: sağa dönüş (rad), zoom: boyut çarpanı.
@@ -394,17 +394,22 @@ export const FORMATIONS = [
   { id: 'halka', build: ring, spin: 1, pose: { pos: [-5.1, 6.4, 17.9], look: [-5.1, -1.4, 0], fov: 44, bright: 1.55 }, figure: 'Yıl halkası — on iki aylık bordro döngüsü', view: { pitch: 0.45, yaw: 0 } },
   // sektörlerde solda: lx = sol kaydırma kazancı, ls = sol uzaklık çarpanı
   { id: 'katman', build: strata, spin: 1, pose: { pos: [-6.4, 1.5, 23.5], look: [-6.4, -1.9, 0], fov: 44, bright: 1.6, lx: 1.5, ls: 1.12 }, figure: 'Veri katmanları — sistem ve raporlama', view: { pitch: 0.3, yaw: -0.35 } },
-  // ── sektörler (src/data/sectors.json › her sektörün ilk konu başlığı)
-  { id: 'kayip', build: kayip, spin: 0, sway: 0.5, pose: { ...POSE({ dy: 0.4 }), ...SECTOR_LEFT }, figure: 'Kayıp dağılımı — beklenen kredi zararı ve kuyruk riski', view: { pitch: 0.1, yaw: -0.25 } },
-  { id: 'maliyet', build: maliyet, spin: 0, sway: 0.5, pose: { ...POSE(), ...SECTOR_LEFT }, figure: 'Maliyet akışı — hammadde, işçilik ve genel üretim gideri', view: { pitch: 0.1, yaw: 0.2 } },
-  { id: 'varlik', build: varlik, spin: 0, sway: 0.5, pose: { ...POSE(), ...SECTOR_LEFT }, figure: 'Varlık ömrü — aktifleştirme, amortisman ve değer düşüklüğü', view: { pitch: 0.12, yaw: -0.2 } },
-  { id: 'sube', build: sube, spin: 1, pose: { ...POSE({ dy: 3.2, dz: -1.5, ly: -1.0 }), ...SECTOR_LEFT }, figure: 'Şube ağı — merkez kayda bağlanan çok noktalı yapı', view: { pitch: 0.55, yaw: 0 } },
-  { id: 'edim', build: edim, spin: 0, sway: 0.45, pose: { ...POSE({ ly: 0.4 }), ...SECTOR_LEFT }, figure: 'Edimler — sözleşmenin zamana yayılan gelir dilimleri', view: { pitch: 0.05, yaw: -0.25 } },
-  { id: 'alacak', build: alacak, spin: 0, sway: 0.5, pose: { ...POSE(), ...SECTOR_LEFT }, figure: 'Alacak akışı — hasta, özel sigorta ve kurum gelirleri', view: { pitch: 0.1, yaw: 0.2 } },
-  { id: 'hakedis', build: hakedis, spin: 0, sway: 0.5, pose: { ...POSE(), ...SECTOR_LEFT }, figure: 'Hakediş eğrisi — yıllara yaygın işte ilerleme', view: { pitch: 0.1, yaw: -0.25 } },
-  { id: 'sezon', build: sezon, spin: 0, sway: 0.5, pose: { ...POSE(), ...SECTOR_LEFT }, figure: 'Sezon eğrisi — aylık gelir ve sabit gider', view: { pitch: 0.1, yaw: 0.2 } },
-  { id: 'uc-halka', build: ucHalka, spin: 0, sway: 0.5, pose: { ...POSE({ dy: -0.2 }), ...SECTOR_LEFT }, figure: 'Üç halka — aile, mülkiyet ve işletme', view: { pitch: 0, yaw: 0 } },
-  { id: 'savunma', build: savunma, spin: 1, pose: { ...POSE({ dy: 1.0 }), ...SECTOR_LEFT }, figure: 'Üç savunma hattı — yönetim, risk ve uyum, iç denetim', view: { pitch: 0.25, yaw: 0.1 } },
+  // ── sektörler (20 Ekim 2026, müşteri: «şekiller sektörle doğrudan bağlantılı olmalı»; shapes-sector.js): her sektöre bir bakışta tanınan
+  //    nesne. Sektöre özgü eski soyut çizelgelerin yerini aynı sırada aldılar (diğer şekillerin sırası ve tohumu değişmez); hizmetlerin de
+  //    kullandığı üç eski şekil (sube, hakedis, savunma) yerinde kaldı, Perakende, İnşaat ve Kamu'nun yeni şekilleri kaydın sonunda.
+  { id: 'kasa', build: kasa, spin: 0, sway: 0.4, pose: { ...POSE({ dz: 0.6 }), ...SECTOR_LEFT }, figure: 'Kasa ve para — çarklı kasa kapısı ve yükselen para kuleleri', view: { pitch: 0.08, yaw: -0.22 } },
+  { id: 'fabrika', build: fabrika, spin: 0, sway: 0.4, pose: { ...POSE({ dz: 0.6 }), ...SECTOR_LEFT }, figure: 'Fabrika — testere dişi çatı, bacalar ve dişli çark', view: { pitch: 0.12, yaw: -0.3 } },
+  { id: 'enerji', build: enerji, spin: 0, sway: 0.4, pose: { ...POSE({ dz: 0.6 }), ...SECTOR_LEFT }, figure: 'Enerji — rüzgâr türbinleri ve güneş panelleri', view: { pitch: 0.1, yaw: -0.25 } },
+  // hizmet şekli (Yurt dışına işçi gönderimi); 20 Ekim 2026'ya kadar Perakende'nin de şekliydi
+  { id: 'sube', build: sube, spin: 1, pose: POSE({ dy: 3.2, dz: -1.5, ly: -1.0 }), figure: 'Şube ağı — merkez kayda bağlanan çok noktalı yapı', view: { pitch: 0.55, yaw: 0 } },
+  { id: 'kule', build: kule, spin: 0, sway: 0.4, pose: { ...POSE({ dz: 0.6 }), ...SECTOR_LEFT }, figure: 'İletişim — kule, sinyal halkaları ve akıllı telefon', view: { pitch: 0.08, yaw: -0.25 } },
+  { id: 'ilac', build: ilac, spin: 0, sway: 0.4, pose: { ...POSE({ dz: 0.6 }), ...SECTOR_LEFT }, figure: 'Sağlık ve ilaç — ilaç şişesi, kapsüller ve kalp ritmi', view: { pitch: 0.12, yaw: -0.25 } },
+  // hizmet şekli (Asgari işçilik ve ilişiksizlik belgesi); 20 Ekim 2026'ya kadar İnşaat'ın da şekliydi
+  { id: 'hakedis', build: hakedis, spin: 0, sway: 0.5, pose: POSE(), figure: 'Hakediş eğrisi — yıllara yaygın işte ilerleme', view: { pitch: 0.1, yaw: -0.25 } },
+  { id: 'otel', build: otel, spin: 0, sway: 0.4, pose: { ...POSE({ dz: 0.6 }), ...SECTOR_LEFT }, figure: 'Turizm — deniz kıyısında otel, palmiyeler ve güneş', view: { pitch: 0.08, yaw: -0.22 } },
+  { id: 'aile', build: aile, spin: 0, sway: 0.4, pose: { ...POSE({ dz: 0.6 }), ...SECTOR_LEFT }, figure: 'Aile şirketi — üç kuşak aile ve küçük işletme binası', view: { pitch: 0.08, yaw: -0.22 } },
+  // hizmet şekli (İç denetim ve iç kontrol); 20 Ekim 2026'ya kadar Kamu ve Sivil Toplum'un da şekliydi
+  { id: 'savunma', build: savunma, spin: 1, pose: POSE({ dy: 1.0 }), figure: 'Üç savunma hattı — yönetim, risk ve uyum, iç denetim', view: { pitch: 0.25, yaw: 0.1 } },
   // ── hizmet kavramları (src/data/content.json › hizmet adları ve açıklamaları)
   { id: 'terazi', build: terazi, spin: 0, sway: 0.5, pose: POSE({ dy: 0.2 }), figure: 'Terazi — bağımsızlık ve denge', view: { pitch: 0.08, yaw: 0 } },
   { id: 'bilanco', build: bilanco, spin: 0, sway: 0.5, pose: POSE(), figure: 'Bilanço — aktif ile pasifin dengesi', view: { pitch: 0.1, yaw: -0.2 } },
@@ -460,6 +465,10 @@ export const FORMATIONS = [
   { id: 'dolayli', build: dolayli, spin: 0, sway: 0.4, pose: POSE({ dz: 0.6 }), figure: 'Dolaylı vergiler — alışveriş arabası ve fiyatın içindeki %', view: { pitch: 0.18, yaw: -0.42 } },
   { id: 'otv', build: otv, spin: 0, sway: 0.4, pose: POSE({ dz: 0.6 }), figure: 'ÖTV — otomobil ve akaryakıt pompası', view: { pitch: 0.12, yaw: -0.35 } },
   { id: 'bireysel', build: bireysel, spin: 0, sway: 0.4, pose: POSE({ dz: 0.6 }), figure: 'Bireysel vergi — kişi, evi ve geliri', view: { pitch: 0.08, yaw: -0.2 } },
+  // Sektörler (20 Ekim 2026; shapes-sector.js): Perakende, İnşaat ve Kamu — eski şekilleri hizmetlerde kaldığı için sonda
+  { id: 'magaza', build: magaza, spin: 0, sway: 0.4, pose: { ...POSE({ dz: 0.6 }), ...SECTOR_LEFT }, figure: 'Mağaza — çizgili tenteli vitrin ve alışveriş poşetleri', view: { pitch: 0.1, yaw: -0.28 } },
+  { id: 'vinc', build: vinc, spin: 0, sway: 0.4, pose: { ...POSE({ dz: 0.6 }), ...SECTOR_LEFT }, figure: 'İnşaat — kule vinç, yükselen bina iskeleti ve bitmiş binalar', view: { pitch: 0.1, yaw: -0.28 } },
+  { id: 'kamu', build: kamu, spin: 0, sway: 0.4, pose: { ...POSE({ dz: 0.6 }), ...SECTOR_LEFT }, figure: 'Kamu ve sivil toplum — kubbeli kamu binası ve el ele insanlar', view: { pitch: 0.1, yaw: -0.25 } },
 ];
 
 /** Kimlik → sahne sıra numarası. Şablonlar/rotalar sahneyi buradan adıyla seçer (data-world = sıra numarası). */

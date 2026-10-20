@@ -136,18 +136,22 @@ export const SERVICE_SHAPE = {
   'insan-kiymetleri-egitimi': 'halka', // özlük, ücret ve bordro düzeni
 };
 
-// ——— 10 sektör + müşteri segmenti (sectors.json): şekil, sektörün kendi muhasebe/denetim konusundan ———————————
+// ——— 10 sektör + müşteri segmenti (sectors.json): şekil, sektörü bir bakışta anlatan nesne ———————————————————————
+// 20 Ekim 2026 (müşteri: «yaptığın şekiller çok alakasız; turizm için deniz, otel, palmiye; inşaata binalar — şekiller doğrudan bağlantılı
+// olmalı»; nesneleri proje sahibi onayladı). Önceden her sektörün ilk muhasebe konusundan soyut çizelgeler (kayıp dağılımı, maliyet akışı,
+// şube ağı, hakediş eğrisi, üç savunma hattı…). Aynı şekil sektör sayfasının kahramanında, Sektörler dizininin önizlemesinde ve ana sayfa
+// Sektörler bandında (satırın üzerine gelince) görünür.
 export const SECTOR_SHAPE = {
-  'finansal-hizmetler': 'kayip', // beklenen kredi zararı ve kuyruk riski
-  'uretim-ve-sanayi': 'maliyet', // hammadde, işçilik, genel üretim gideri
-  'enerji-ve-dogal-kaynaklar': 'varlik', // aktifleştirme, amortisman, değer düşüklüğü
-  'perakende-tuketici-ve-gida': 'sube', // çok noktalı satışın merkez kayda bağlanması
-  'teknoloji-medya-ve-telekom': 'edim', // sözleşmenin zamana yayılan gelir dilimleri
-  'saglik-ve-ilac': 'alacak', // hasta, özel sigorta ve kurum alacakları
-  'insaat-gayrimenkul-ve-altyapi': 'hakedis', // yıllara yaygın iş, hakediş
-  'turizm-ulastirma-ve-lojistik': 'sezon', // sezonluk gelir, sabit gider
-  'aile-sirketleri-ve-kobiler': 'uc-halka', // aile, mülkiyet, işletme
-  'kamu-ve-sivil-toplum': 'savunma', // yönetim, risk ve uyum, iç denetim
+  'finansal-hizmetler': 'kasa', // kasa kapısı ve para kuleleri
+  'uretim-ve-sanayi': 'fabrika', // fabrika, bacalar, dişli çark
+  'enerji-ve-dogal-kaynaklar': 'enerji', // rüzgâr türbinleri ve güneş panelleri
+  'perakende-tuketici-ve-gida': 'magaza', // tenteli mağaza vitrini ve alışveriş poşetleri
+  'teknoloji-medya-ve-telekom': 'kule', // iletişim kulesi, sinyal, akıllı telefon
+  'saglik-ve-ilac': 'ilac', // ilaç şişesi, kapsüller, kalp ritmi
+  'insaat-gayrimenkul-ve-altyapi': 'vinc', // kule vinç ve binalar
+  'turizm-ulastirma-ve-lojistik': 'otel', // deniz kıyısında otel, palmiyeler, güneş
+  'aile-sirketleri-ve-kobiler': 'aile', // üç kuşak aile ve küçük işletme binası
+  'kamu-ve-sivil-toplum': 'kamu', // kubbeli kamu binası ve el ele insanlar
 };
 
 // ——— Hesaplayıcılar (calculators-*.json): şekil, hesabın kendi mantığından ——————————————————————————————

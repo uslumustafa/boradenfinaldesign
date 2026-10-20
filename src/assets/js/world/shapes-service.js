@@ -1,9 +1,10 @@
 
 // Hizmet kavramı formasyonları — denetim, vergi, raporlama ve danışmanlık işinin kendi sözcüklerinden (terazi, bilanço, mühür, mutabakat…).
 // Saf hesaplama; yerleşim: x ∈ [−6,5, 6,5], y ∈ [−4,2, 4,2], z ∈ [−3,5, 3,5].
-import { Draw, X, Y, Z, TAU } from './draw.js';
+import { Draw, X, Y, Z, TAU, v3 } from './draw.js';
 
 const FLOOR = -4.0;
+const sig = (x) => 1 / (1 + Math.exp(-x));
 
 /* ── Terazi — bağımsız denetim: bağımsızlık ve denge. İki kefe, kiriş, sütun; kefelerde mavi/yeşil kayıt bulutları */
 export function terazi(p, rnd, Nf) {
@@ -408,5 +409,113 @@ export function sure(p, rnd, Nf) {
   // toplam süre ölçüsü: iki uçta çentikli yatay çizgi
   d.line([xa, 3.9, 0], [fx, 3.9, 0], { s: 0.9, d: 1.0 });
   for (const x of [xa, fx]) d.line([x, 3.7, 0], [x, 4.1, 0], { s: 0.9, d: 1.0 });
+  d.done(Nf);
+}
+
+/* ── Şube ağı — merkez kayda bağlanan çok noktalı yapı (Yurt dışına işçi gönderimi: merkezden çok noktaya görevlendirme). 20 Ekim 2026'ya
+      kadar Perakende sektörünün de şekliydi (shapes-sector.js'ten taşındı; sektörde artık mağaza vitrini) */
+export function sube(p, rnd, Nf) {
+  const d = new Draw(p, rnd);
+  const hub = [0, 1.1, 0];
+  // merkez defter: üst üste yapraklar
+  for (let k = 0; k < 4; k++) {
+    const c = [0, hub[1] + k * 0.3, 0];
+    d.rect(c, X, Z, 1.9, 1.9, { s: 1.0, d: 1.2, t: k === 3 ? 1 : 0 });
+    if (k === 3) d.hatch(c, X, Z, 1.9, 1.9, 5, { s: 0.7, d: 0.7 });
+  }
+  d.node([0, hub[1] + 0.5, 0], 0.5, 30, { t: 0, s: 2.6 });
+  const rings = [
+    { r: 2.7, n: 10, y: -0.6 },
+    { r: 4.4, n: 16, y: -1.9 },
+    { r: 6.0, n: 22, y: -3.2 },
+  ];
+  const nodes = rings.map((R, ri) =>
+    Array.from({ length: R.n }, (_, i) => {
+      const a = (i / R.n) * TAU + ri * 0.31 + (rnd() - 0.5) * 0.1;
+      const r = R.r + (rnd() - 0.5) * 0.25;
+      return [Math.cos(a) * r, R.y + (rnd() - 0.5) * 0.18, Math.sin(a) * r * 0.85];
+    })
+  );
+  // yörünge çizgileri (sönük)
+  rings.forEach((R) => d.circle([0, R.y, 0], X, [0, 0, 0.85], R.r, { s: 0.7, d: 0.3 }));
+  const nearest = (a, list) => list.reduce((b, q) => (v3.dist(a, q) < v3.dist(a, b) ? q : b), list[0]);
+  nodes[0].forEach((q) => d.line([0, hub[1] + 0.1, 0], q, { s: 0.8, d: 0.8 }));
+  nodes[1].forEach((q) => d.line(nearest(q, nodes[0]), q, { s: 0.8, d: 0.8 }));
+  nodes[2].forEach((q) => d.line(nearest(q, nodes[1]), q, { s: 0.8, d: 0.8 }));
+  nodes.forEach((list, ri) =>
+    list.forEach((q, i) => {
+      const flag = (ri * 7 + i * 3) % 11 === 0; // kayıt–fiziki stok farkı olan noktalar
+      d.node(q, flag ? 0.3 : 0.2, flag ? 20 : 11, { t: flag ? 2 : ri === 0 ? 1 : 0 });
+    })
+  );
+  d.done(Nf);
+}
+
+/* ── Hakediş eğrisi — yıllara yaygın işte ilerleme (S eğrisi) ve hakediş basamakları (Asgari işçilik ve ilişiksizlik belgesi: proje ve
+      taahhüt işleri). 20 Ekim 2026'ya kadar İnşaat sektörünün de şekliydi (shapes-sector.js'ten taşındı; sektörde artık kule vinç) */
+export function hakedis(p, rnd, Nf) {
+  const d = new Draw(p, rnd);
+  const floor = -4.0;
+  const L = (u, c, k) => (sig(k * (u - c)) - sig(-k * c)) / (sig(k * (1 - c)) - sig(-k * c));
+  const Y0 = floor + 0.1;
+  const H = 7.4;
+  const X0 = -6.0;
+  const W = 12.0;
+  // eksenler + işaretler
+  d.line([X0 - 0.6, floor, 0], [X0 + W + 0.6, floor, 0], { s: 1.1, d: 1.5 });
+  d.line([X0 - 0.6, floor, 0], [X0 - 0.6, floor + H + 0.4, 0], { s: 1.1, d: 1.2 });
+  for (let i = 0; i <= 10; i++) d.line([X0 + (W * i) / 10, floor, 0], [X0 + (W * i) / 10, floor - 0.22, 0], { s: 0.8, d: 1.2 });
+  // gerçekleşen ilerleme: üç paralel eğri (şerit)
+  for (const z of [-0.5, 0, 0.5]) d.curve((u) => [X0 + W * u, Y0 + H * L(u, 0.5, 9), z], { s: 1.0, d: 1.5, t: 0 }, 140);
+  // planlanan (mavi, geride) ve nakit gerçekleşme (yeşil, önde)
+  d.curve((u) => [X0 + W * u, Y0 + H * L(u, 0.56, 8), -1.7], { t: 1, s: 0.9, d: 1.0 }, 120);
+  d.curve((u) => [X0 + W * u, Y0 + H * L(u, 0.45, 8.5), 1.7], { t: 3, s: 0.9, d: 1.0 }, 120);
+  // hakediş basamakları: her dönemin ilerleme artışı
+  const n = 9;
+  for (let i = 0; i < n; i++) {
+    const u0 = i / n;
+    const u1 = (i + 1) / n;
+    const h = (L(u1, 0.5, 9) - L(u0, 0.5, 9)) * H * 2.1 + 0.1;
+    d.box([X0 + W * (u0 + u1) / 2, floor + h / 2, 0.2], [W / n - 0.22, h, 1.2], { t: 1, s: 0.85 }, { front: 1 });
+  }
+  // dönüm noktaları: eğri üzerinde düğüm + eksene inen çizgi
+  [0.25, 0.5, 0.75, 1].forEach((u, i) => {
+    const q = [X0 + W * u, Y0 + H * L(u, 0.5, 9), 0];
+    d.line(q, [q[0], floor, 0], { s: 0.7, d: 0.5 });
+    d.node(q, 0.22, 16, { t: i === 3 ? 3 : 0 });
+  });
+  d.done(Nf);
+}
+
+/* ── Üç savunma hattı — yönetim, risk ve uyum, iç denetim varlıkları çevreler (İç denetim ve iç kontrol). 20 Ekim 2026'ya kadar Kamu
+      ve Sivil Toplum segmentinin de şekliydi (shapes-sector.js'ten taşındı; segmentte artık kubbeli kamu binası) */
+export function savunma(p, rnd, Nf) {
+  const d = new Draw(p, rnd);
+  const c0 = [0, -3.6, 0];
+  const front = Math.PI / 2; // kameraya bakan yön: dış katmanlarda bu dilim açık bırakılır (iç katmanlar görünsün)
+  const shells = [
+    { R: 4.7, t: 1, mer: 14, lat: 4, cut: 0.8, w: 1.0 },
+    { R: 3.4, t: 0, mer: 12, lat: 3, cut: 0.45, w: 0.9 },
+    { R: 2.2, t: 3, mer: 10, lat: 3, cut: 0, w: 0.8 },
+  ];
+  const dome = (R, phi, psi) => [c0[0] + R * Math.cos(phi) * Math.cos(psi), c0[1] + R * Math.sin(phi), c0[2] + R * Math.cos(phi) * Math.sin(psi) * 0.9];
+  for (const S of shells) {
+    for (let k = 0; k < S.lat; k++) {
+      const phi = (k / S.lat) * 1.35;
+      const c = [c0[0], c0[1] + S.R * Math.sin(phi), c0[2]];
+      const r = S.R * Math.cos(phi);
+      if (S.cut > 0) d.arc(c, X, [0, 0, 0.9], r, front + S.cut, front + TAU - S.cut, { t: S.t, s: 0.9, d: S.w });
+      else d.circle(c, X, [0, 0, 0.9], r, { t: S.t, s: 0.9, d: S.w });
+    }
+    for (let j = 0; j < S.mer; j++) {
+      const psi = (j / S.mer) * TAU;
+      const off = Math.abs(Math.atan2(Math.sin(psi - front), Math.cos(psi - front)));
+      if (S.cut > 0 && off < S.cut) continue;
+      d.curve((u) => dome(S.R, u * 1.4, psi), { t: S.t, s: 0.9, d: S.w }, 24);
+    }
+  }
+  // çekirdek: korunan varlıklar ve kaynaklar
+  d.node([0, c0[1] + 0.7, 0], 0.55, 70, { t: 2, s: 2.4 });
+  d.node([0, c0[1] + 0.7, 0], 1.0, 40, { t: 0, s: 1.4 });
   d.done(Nf);
 }

@@ -1,12 +1,15 @@
 // Sayfa kahramanı: 3B şekil yazının üstüne binmiyor ve dar ekranda kırpılmıyor — gerçek Chrome + dünyanın kendi kamera yerleşimi.
 // Çalışan bir sunucu gerekir (npm run dev ya da node scripts/serve.mjs).
-//   node tests/hero-overlap.e2e.mjs [--base=http://127.0.0.1:4181]
+//   node tests/hero-overlap.e2e.mjs [--base=http://127.0.0.1:4181] [--set=vergi|sektorler|hepsi]
 // Müşteri geri bildirimi (2026-10-16): Vergi hizmetlerinin şekilleri yeniden çizildi («buraya uygun, daha belirgin, net görünen»);
 // web, mobil ve yatay ekranda denetlenir. Yöntem: şeklin noktaları world.js › pose (scripts/scene-reach.mjs ile aynı VM dilimi) ile
 // ekrana izdüşürülür; salınımın uçları ve fare paralaksı (±0,1 rad) dahil her evrede, sayfadaki yazı satırlarının kutularına
 // (Range.getClientRects; sayfa yolu, üst etiket, başlık, öz; 6 px pay) düşen nokta sayılır.
 //   • iki sütunlu düzen (> 900 px ya da yan çevrilmiş telefon, en-boy ≥ 1,5): 1920×1080 … 667×375 — yazıya düşen nokta ≤ %0,2
 //   • dar düzen (dikey telefon/tablet: şekil ortada, yazının arkasında ve sönük — tasarım gereği): ekran dışında kalan nokta ≤ %2
+// Sayfa kümesi (--set): vergi (varsayılan; test:e2e zincirinde) — yedi Vergi hizmeti; sektorler — on sektör sayfası (20 Ekim 2026, müşteri:
+// «şekiller sektörle doğrudan bağlantılı olmalı»: kasa, fabrika, rüzgâr türbini, mağaza, iletişim kulesi, ilaç, vinç, otel, aile, kamu
+// binası; npm run test:sectors ile); hepsi — ikisi birden.
 import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
 import { Euler, Matrix4, PerspectiveCamera, Vector3 } from 'three';
@@ -16,15 +19,24 @@ import { buildFormation, FORMATIONS, POSES, SPIN, SWAY } from '../src/assets/js/
 import { clamp, smoothstep } from '../src/assets/js/util.js';
 
 const BASE = (process.argv.find((a) => a.startsWith('--base=')) || '--base=http://127.0.0.1:4181').slice(7);
-const PAGES = [
-  '/hizmetler/vergi/tam-tasdik-islemleri/',
-  '/hizmetler/vergi/kdv-iade-islemleri/',
-  '/hizmetler/vergi/kurumlar-vergisi-denetim-ve-tasdik/',
-  '/hizmetler/vergi/transfer-fiyatlandirma/',
-  '/hizmetler/vergi/diger-dolayli-vergiler/',
-  '/hizmetler/vergi/otv-hizmetleri/',
-  '/hizmetler/vergi/bireysel-danismanlik-hizmetleri/',
-];
+const SETS = {
+  vergi: [
+    '/hizmetler/vergi/tam-tasdik-islemleri/',
+    '/hizmetler/vergi/kdv-iade-islemleri/',
+    '/hizmetler/vergi/kurumlar-vergisi-denetim-ve-tasdik/',
+    '/hizmetler/vergi/transfer-fiyatlandirma/',
+    '/hizmetler/vergi/diger-dolayli-vergiler/',
+    '/hizmetler/vergi/otv-hizmetleri/',
+    '/hizmetler/vergi/bireysel-danismanlik-hizmetleri/',
+  ],
+  sektorler: [
+    'finansal-hizmetler', 'uretim-ve-sanayi', 'enerji-ve-dogal-kaynaklar', 'perakende-tuketici-ve-gida', 'teknoloji-medya-ve-telekom', 'saglik-ve-ilac',
+    'insaat-gayrimenkul-ve-altyapi', 'turizm-ulastirma-ve-lojistik', 'aile-sirketleri-ve-kobiler', 'kamu-ve-sivil-toplum',
+  ].map((s) => `/sektorler/${s}/`),
+};
+const SET = (process.argv.find((a) => a.startsWith('--set=')) || '--set=vergi').slice(6);
+const PAGES = SET === 'hepsi' ? [...SETS.vergi, ...SETS.sektorler] : SETS[SET];
+if (!PAGES) throw new Error(`bilinmeyen sayfa kümesi: ${SET} (vergi, sektorler, hepsi)`);
 const TWO = [[1920, 1080], [1440, 900], [1366, 768], [1280, 720], [1100, 800], [1024, 768], [960, 600], [932, 430], [844, 390], [740, 360], [667, 375]];
 const NARROW = [[320, 568], [360, 740], [390, 844], [412, 915], [768, 1024]];
 const MAX_TEXT = 0.002;

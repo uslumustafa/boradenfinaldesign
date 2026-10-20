@@ -96,3 +96,31 @@ test('Vergi alanı: yedi hizmetin her biri kendi, tanınır şeklini taşır (m�
   assert.deepEqual([...shapes].sort(), [...own].sort());
   for (const id of own) assert.ok(SWAY[SCENE[id]] > 0 && !SPIN[SCENE[id]], `${id}: kameraya dönük durmalı (salınım, tam tur yok)`);
 });
+
+test('Sektörler: her sektör kendi, tanınır nesne şeklini taşır (müşteri isteği, 2026-10-20)', async () => {
+  const fs = await import('node:fs');
+  const sectors = JSON.parse(fs.readFileSync(new URL('../src/data/sectors.json', import.meta.url), 'utf8'));
+  const slugs = sectors.map((s) => s.slug);
+  assert.equal(slugs.length, 10, 'Sektör sayısı değişti: şekil eşlemesini gözden geçirin');
+  const shapes = slugs.map((s) => SECTOR_SHAPE[s]);
+  assert.equal(new Set(shapes).size, slugs.length, `Sektörler şekil paylaşıyor: ${shapes.join(', ')}`);
+  // «Turizm için deniz, otel, palmiye; inşaata binalar»: nesneler — eski soyut çizelgeler (dağılım, akış, eğri, halka) geri dönmesin
+  const own = { 'turizm-ulastirma-ve-lojistik': 'otel', 'insaat-gayrimenkul-ve-altyapi': 'vinc', 'finansal-hizmetler': 'kasa', 'uretim-ve-sanayi': 'fabrika', 'enerji-ve-dogal-kaynaklar': 'enerji', 'perakende-tuketici-ve-gida': 'magaza', 'teknoloji-medya-ve-telekom': 'kule', 'saglik-ve-ilac': 'ilac', 'aile-sirketleri-ve-kobiler': 'aile', 'kamu-ve-sivil-toplum': 'kamu' };
+  assert.deepEqual(SECTOR_SHAPE, own);
+  for (const old of ['kayip', 'maliyet', 'varlik', 'sube', 'edim', 'alacak', 'hakedis', 'sezon', 'uc-halka', 'savunma']) assert.ok(!shapes.includes(old), `Sektörde eski soyut şekil: ${old}`);
+  for (const id of shapes) {
+    const k = SCENE[id];
+    assert.ok(SWAY[k] > 0 && !SPIN[k], `${id}: kameraya dönük durmalı (salınım, tam tur yok)`);
+    // ana sayfa Sektörler bandında solda (data-world-side="-1"): sol yerleşim değerleri
+    assert.ok(POSES[k].lx > 1 && POSES[k].ls > 1 && POSES[k].ll < 0, `${id}: sol yerleşim (SECTOR_LEFT) yok`);
+    // dikey telefonda kırpılmasın, yan çevrilmiş telefonda başlık sütununa girmesin: Vergi şekilleriyle aynı genişlik (shapes-sector.js › fitX)
+    const f = buildFormation(k, N);
+    let lo = Infinity;
+    let hi = -Infinity;
+    for (let i = 0; i < f.nf; i++) {
+      lo = Math.min(lo, f.pos[i * 3]);
+      hi = Math.max(hi, f.pos[i * 3]);
+    }
+    assert.ok(lo >= -5.45 && hi <= 5.45, `${id}: x ${lo.toFixed(2)}..${hi.toFixed(2)} (±5,3 beklenir)`);
+  }
+});
