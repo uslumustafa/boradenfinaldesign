@@ -615,8 +615,10 @@ html.hdr-hidden .prog {
   html:not(.hero-wide) .areas .areas__grid {
     padding-right: max(var(--gutter), 47vw);
   }
+  /* sektörler: liste şeklin sağ kenarından biraz açıkta başlar (45vw'de üzerine gelinen sektörün şekli — fareyle küçük yatay pencerede —
+     ve bandın şekli listenin sol kenarına değiyordu; tests/sectors-hover.e2e.mjs) */
   html:not(.hero-wide) .sectors > .container {
-    padding-left: max(var(--gutter), 45vw);
+    padding-left: max(var(--gutter), 47vw);
   }
   /* alanlarda mobilin bütünüyle koyulaşan zemini yerine masaüstündeki gibi yalnızca yazı tarafı koyulaşır (şekil açık kalır) */
   html:not(.hero-wide) .areas::before {

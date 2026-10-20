@@ -17,6 +17,7 @@
     "test:words": "node tests/text-clip.e2e.mjs --words",
     "test:landscape": "node tests/landscape.e2e.mjs",
     "test:video": "node tests/hero-film.e2e.mjs",
+    "test:sectors": "node tests/sectors-hover.e2e.mjs",
     "links": "node tests/links.mjs",
     "audit": "node tests/audit.mjs"
   },

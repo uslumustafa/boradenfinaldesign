@@ -65,11 +65,11 @@
       </div>
     </div>
     {# zemin: içerikten sonra gelir (ekran okuyucu önce başlığı okur); her ekranda başlığın arkasında tam ekran (dikeyde dilim, 50-home.css).
-       Video bir kez oynar, ofis alanının geçişinde son karede durur (döngü yok — 20 Ekim 2026, müşteri: «insan yüzü görünmesin»).
-       Dosya adı her yeni kurguda değişir (-v2): /assets/video/ bir gün önbellekte kalır. #}
+       Video kimse görünmeden ofis alanının geçişinde biter (20 Ekim 2026, müşteri: «insan yüzü görünmesin») ve laciverde geçip başa sarar
+       (döngü). Dosya adı her yeni kurguda değişir (-v3): /assets/video/ bir gün önbellekte kalır. #}
     <div class="hero__media">
       <img class="hero__poster" src="/assets/video/boraden-giris-poster-1280.webp" srcset="/assets/video/boraden-giris-poster-768.webp 768w, /assets/video/boraden-giris-poster-1280.webp 1280w, /assets/video/boraden-giris-poster-1920.webp 1920w" sizes="100vw" width="1920" height="1080" alt="Boraden ofisinin girişi: ahşap çıtalı duvarda BORADEN tabelası" fetchpriority="high" decoding="async">
-      <video class="hero__video" muted playsinline disablepictureinpicture preload="none" tabindex="-1" aria-hidden="true" data-src="/assets/video/boraden-giris-v2-1080.mp4" data-src-sm="/assets/video/boraden-giris-v2-720.mp4"></video>
+      <video class="hero__video" muted loop playsinline disablepictureinpicture preload="none" tabindex="-1" aria-hidden="true" data-src="/assets/video/boraden-giris-v3-1080.mp4" data-src-sm="/assets/video/boraden-giris-v3-720.mp4"></video>
     </div>
     <button class="hero__ctl" type="button" data-film-ctl aria-label="Videoyu oynat" hidden>
       <span class="hero__ico" aria-hidden="true"></span>
@@ -191,7 +191,10 @@
 
 {# ───────── 5 · Sektörler (koyu; formasyon solda, liste sağda) ─────────
    Şekil: sektör × hizmet alanı matrisi (önceden «Veri katmanı» idi — yukarıdaki Sistemler alanıyla aynı şekil tekrarlanıyordu) #}
-<section class="sectors sec--dark" id="sektorler" data-world="{{ 'matris' | scene }}" data-world-side="-1" data-chapter="Sektörler" data-sectors>
+{# Sektörler: bandın şekli matris (sektör × hizmet alanı); bir sektörün üzerine gelince (ya da klavyeyle odaklanınca) 3B şekil o sektörün
+   şekline döner — sektör sayfasının kahramanındaki şekil (data-world-shape; behaviors.js › sectors). Şekiller solda, tanım yazısının altında;
+   bandın ortasına bağlı (data-world-anchor): kaydırırken yazıyla birlikte kayar, yazıya binmez. #}
+<section class="sectors sec--dark" id="sektorler" data-world="{{ 'matris' | scene }}" data-world-side="-1" data-world-anchor="band" data-chapter="Sektörler" data-sectors>
   <div class="container sectors__grid">
     <header class="sectors__head">
       <p class="eyebrow" data-reveal>Sektörler</p>
@@ -201,7 +204,7 @@
     <ul class="sectorlist">
       {% for s in model.sectors | limit(8) %}
       <li data-reveal data-reveal-delay="{{ loop.index0 % 4 }}">
-        <a class="sector" href="/sektorler/{{ s.slug }}/" data-short="{{ s.short }}">
+        <a class="sector" href="/sektorler/{{ s.slug }}/" data-short="{{ s.short }}" data-world-shape="{{ s.shape | scene }}">
           <span class="sector__no mono tnum">{{ loop.index | pad2 }}</span>
           <span class="sector__name">{{ s.name }}</span>
           <span class="sector__go" aria-hidden="true">→</span>

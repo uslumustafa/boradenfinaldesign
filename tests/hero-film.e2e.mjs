@@ -2,12 +2,13 @@
 // Çalışan bir sunucu gerekir (npm run dev ya da node scripts/serve.mjs).
 //   node tests/hero-film.e2e.mjs [--base=http://127.0.0.1:4181]
 // Müşteri (2026-10-20): «insan yüzü görünmesin; tam ofise girdiğimizde, kapıdan giriş anında dursun» — video ofis alanına geçerken,
-// kimse görünmeden biter (scripts/tools/hero-film.py › END) ve SON KAREDE DURUR (döngü yok; modules/hero-film.js). Denetlenenler:
-//   • videoda döngü yok; süre ≈ 7,7 sn (230 kare)
-//   • kendiliğinden oynar, sona gelince durur: duraklatılmış, «ended», son karede (poster gizli, video görünür); düğme «Videoyu oynat»
-//   • sona geldikten sonra kaydırıp geri gelmek, sekme gizleyip göstermek ve efekt katmanı değişimi videoyu yeniden başlatmaz
-//   • düğmeye basınca baştan oynar (son kareden değil); bir daha sona gelince yine durur
-//   • masaüstü (1440×900, 1080p dosya) ve telefon (390×844, 720p dosya); konsol temiz
+// kimse görünmeden biter (scripts/tools/hero-film.py › END). Aynı gün proje sahibi: «video bitince eskisi gibi başa sarıyordu, tekrar
+// öyle» — video döngüdür; sonu ve başı laciverde geçişlidir (başa dönüş kesik görünmez). Denetlenenler:
+//   • videoda döngü var; süre ≈ 7,7 sn (230 kare); ekrana göre doğru dosya (1080p / 720p)
+//   • kendiliğinden oynar; sona gelince durmaz, başa sarıp oynamayı sürdürür
+//   • son ve ilk kareler lacivert (geçiş), arada parlak (görüntü): başa dönüşte sert kesme yok
+//   • ziyaretçi duraklatınca kaydırma, sekme ve efekt katmanı değişimi videoyu yeniden başlatmaz; düğme yeniden oynatır
+//   • masaüstü (1440×900) ve telefon (390×844); konsol temiz
 import { chromium } from 'playwright-core';
 import { guardContext, driverNoise } from './safe-context.mjs';
 
@@ -28,13 +29,36 @@ const state = (page) =>
       ended: v.ended,
       t: v.currentTime,
       d: v.duration,
-      hasVideo: document.querySelector('.hero').classList.contains('has-video'),
       label: ctl.getAttribute('aria-label'),
     };
   });
+// t anındaki karenin ortalama parlaklığı (0–255): video duraklatılır, konuma gidilir, kare küçük bir tuvale çizilir. Her bekleme
+// süreyle sınırlıdır: duraklatılmış videoda kare geri çağrısı (requestVideoFrameCallback) hiç gelmeyebilir; konum zaten oradaysa
+// «seeked» de gelmez — sınırsız bekleme testi takardı.
+const lumaAt = (page, t) =>
+  page.evaluate(async (t) => {
+    const v = document.querySelector('.hero__video');
+    const within = (ms, fn) => Promise.race([new Promise(fn), new Promise((res) => setTimeout(res, ms))]);
+    v.pause();
+    await within(1500, (res) => {
+      v.addEventListener('seeked', res, { once: true });
+      v.currentTime = Math.max(0, Math.min(v.duration - 0.001, t));
+    });
+    await within(400, (res) => (v.requestVideoFrameCallback ? v.requestVideoFrameCallback(() => res()) : setTimeout(res, 120)));
+    await new Promise((res) => setTimeout(res, 60));
+    const c = document.createElement('canvas');
+    c.width = 64;
+    c.height = 36;
+    const g = c.getContext('2d');
+    g.drawImage(v, 0, 0, 64, 36);
+    const px = g.getImageData(0, 0, 64, 36).data;
+    let sum = 0;
+    for (let i = 0; i < px.length; i += 4) sum += 0.2126 * px[i] + 0.7152 * px[i + 1] + 0.0722 * px[i + 2];
+    return sum / (px.length / 4);
+  }, t);
 
 const browser = await chromium.launch({ channel: 'chrome', headless: true, args: ['--autoplay-policy=no-user-gesture-required'] });
-for (const vp of [{ k: 'masaüstü', w: 1440, h: 900, m: false, file: 'boraden-giris-v2-1080.mp4' }, { k: 'telefon', w: 390, h: 844, m: true, file: 'boraden-giris-v2-720.mp4' }]) {
+for (const vp of [{ k: 'masaüstü', w: 1440, h: 900, m: false, file: 'boraden-giris-v3-1080.mp4' }, { k: 'telefon', w: 390, h: 844, m: true, file: 'boraden-giris-v3-720.mp4' }]) {
   console.log(`\n${vp.k} ${vp.w}×${vp.h}`);
   const ctx = await guardContext(await browser.newContext({ viewport: { width: vp.w, height: vp.h }, isMobile: vp.m, hasTouch: vp.m, deviceScaleFactor: vp.m ? 2 : 1 }));
   await ctx.addInitScript(() => localStorage.setItem('boraden-fx', 'full'));
@@ -52,20 +76,37 @@ for (const vp of [{ k: 'masaüstü', w: 1440, h: 900, m: false, file: 'boraden-g
     continue;
   }
   let s = await state(page);
-  ok(!s.loop, 'videoda döngü yok');
+  ok(s.loop, 'videoda döngü var');
   ok(s.src === vp.file, `ekran için doğru dosya (${s.src})`);
   ok(Math.abs(s.d - 7.674) < 0.06, `süre ≈ 7,7 sn (${s.d.toFixed(3)} sn)`);
-  // sona sar: gerçek oynatmayla son 0,6 sn
+  // sona yakın bir konuma git: gerçek oynatmayla sona varınca durmaz, başa sarıp sürer
   await page.evaluate(() => {
     const v = document.querySelector('.hero__video');
     v.currentTime = Math.max(0, v.duration - 0.6);
   });
-  const ended = await page.waitForFunction(() => document.querySelector('.hero__video').ended, null, { timeout: 8000 }).then(() => true, () => false);
+  const wrapped = await page
+    .waitForFunction(() => {
+      const v = document.querySelector('.hero__video');
+      return !v.paused && v.currentTime > 0.05 && v.currentTime < 2;
+    }, null, { timeout: 8000 })
+    .then(() => true, () => false);
   s = await state(page);
-  ok(ended && s.paused && s.t >= s.d - 0.05, `sona gelince durur, son karede (t ${s.t.toFixed(3)} / ${s.d.toFixed(3)})`);
-  ok(s.hasVideo, 'son kare görünür kalır (poster yerine video)');
-  ok(s.label === 'Videoyu oynat', `düğme «${s.label}»`);
-  // kaydır, geri gel; sekme gizle/göster; efekt katmanı değiştir — yeniden başlamaz
+  ok(wrapped && !s.ended && !s.paused, `sona gelince başa sarıp oynamayı sürdürür (t ${s.t.toFixed(2)} sn)`);
+  ok(s.label === 'Videoyu duraklat', `düğme «${s.label}»`);
+  // başa dönüş laciverde geçişli: son ve ilk kare koyu, arada görüntü parlak
+  const end = await lumaAt(page, s.d - 0.02);
+  const before = await lumaAt(page, s.d - 0.9);
+  const start = await lumaAt(page, 0.02);
+  const mid = await lumaAt(page, 2.0);
+  ok(end < 0.4 * before && start < 0.5 * mid, `son ve ilk kare lacivert (parlaklık: son ${end.toFixed(0)} · ${(s.d - 0.9).toFixed(1)} sn ${before.toFixed(0)} · ilk ${start.toFixed(0)} · 2 sn ${mid.toFixed(0)})`);
+  // ölçüm için duraklatılan video yeniden oynatılır (düğme)
+  const ctl = page.locator('[data-film-ctl]');
+  const press = () => (vp.m ? ctl.tap() : ctl.click());
+  await press();
+  await page.waitForFunction(() => !document.querySelector('.hero__video').paused, null, { timeout: 6000 }).catch(() => {});
+  // ziyaretçi duraklatır: kaydırma, sekme ve katman değişimi yeniden başlatmaz
+  await press();
+  await page.waitForFunction(() => document.querySelector('.hero__video').paused, null, { timeout: 4000 }).catch(() => {});
   await page.evaluate(() => scrollTo(0, innerHeight * 2));
   await page.waitForTimeout(700);
   await page.evaluate(() => scrollTo(0, 0));
@@ -77,32 +118,15 @@ for (const vp of [{ k: 'masaüstü', w: 1440, h: 900, m: false, file: 'boraden-g
     document.dispatchEvent(new Event('visibilitychange'));
   });
   await page.waitForTimeout(600);
-  const fxBtn = page.locator('[data-fx-set="lite"]').first();
-  if (await fxBtn.count()) {
+  if (await page.locator('[data-fx-set="lite"]').count()) {
     await page.evaluate(() => document.querySelector('[data-fx-set="lite"]').click());
     await page.waitForTimeout(600);
   }
   s = await state(page);
-  ok(s.paused && s.ended && s.t >= s.d - 0.05, `kaydırma, sekme ve katman değişimi yeniden başlatmaz (t ${s.t.toFixed(3)})`);
-  // düğme: baştan oynar
-  const ctl = page.locator('[data-film-ctl]');
-  if (vp.m) await ctl.tap();
-  else await ctl.click();
-  await page.waitForFunction(() => !document.querySelector('.hero__video').paused, null, { timeout: 6000 }).catch(() => {});
-  s = await state(page);
-  // düğme etiketi «playing» olayıyla güncellenir (oynatma başlayınca)
-  await page.waitForFunction(() => document.querySelector('[data-film-ctl]').getAttribute('aria-label') === 'Videoyu duraklat', null, { timeout: 4000 }).catch(() => {});
-  s.label = (await state(page)).label;
-  ok(!s.paused && s.t < 2.5, `düğmeye basınca baştan oynar (t ${s.t.toFixed(3)} sn)`);
-  ok(s.label === 'Videoyu duraklat', `düğme «${s.label}»`);
-  // bir daha sona gelince yine durur
-  await page.evaluate(() => {
-    const v = document.querySelector('.hero__video');
-    v.currentTime = Math.max(0, v.duration - 0.4);
-  });
-  const again = await page.waitForFunction(() => document.querySelector('.hero__video').ended, null, { timeout: 8000 }).then(() => true, () => false);
-  s = await state(page);
-  ok(again && s.paused, 'ikinci kez de sonunda durur');
+  ok(s.paused, 'ziyaretçi duraklattıysa kaydırma, sekme ve katman değişimi yeniden başlatmaz');
+  await press();
+  const resumed = await page.waitForFunction(() => !document.querySelector('.hero__video').paused, null, { timeout: 6000 }).then(() => true, () => false);
+  ok(resumed, 'düğmeyle yeniden oynar');
   ok(logs.length === 0, `konsol temiz${logs.length ? ': ' + logs.slice(0, 3).join(' | ') : ''}`);
   await ctx.close();
 }

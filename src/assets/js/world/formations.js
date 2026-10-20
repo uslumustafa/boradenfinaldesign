@@ -373,6 +373,10 @@ function strata(p, rnd, Nf) {
 // Yeni şekiller (x ∈ ±6,5, y ∈ ±4,2) için ortak başlangıç pozu; şekle göre dx (sağa kaydırma), dy (kamera yüksekliği), dz (uzaklık), ly (bakış yüksekliği).
 // Kahramanda başlık solda durduğu için şekil sağ yarının ortasına (≈ %72) yerleşir; uzun başlıklı sayfalarda dx ile biraz daha sağa alınır.
 const POSE = ({ dx = 0, dy = 0, dz = 0, ly = 0, bright = 1.55 } = {}) => ({ pos: [-6.6 - dx, 2.0 + dy, 21.4 + dz], look: [-6.6 - dx, 0.2 + ly, 0], fov: 44, bright });
+// Solda yerleşim (data-world-side="-1"; world.js › pose): lx sola kaydırma kazancı, ls uzaklık çarpanı (küçülür), ll ek yukarı kayma
+// (görüntü yüksekliğinin oranı; eksi → aşağı). Sektör şekilleri ana sayfa Sektörler bandında solda, tanım yazısının altında görünür
+// (üzerine gelinen sektörün şekli — behaviors.js › sectors); sağda yerleşimleri (sektör sayfası kahramanı) değişmez.
+const SECTOR_LEFT = { lx: 1.64, ls: 1.4, ll: -0.14 };
 
 // spin: sürekli dönüş çarpanı (0 = dönmez). sway: >0 ise dönmek yerine ±sway rad salınır (düzlemsel şekiller yandan ince görünmesin).
 // view: mürekkep alanı (2B) için başlangıç bakışı — pitch: öne eğim (rad), yaw: sağa dönüş (rad), zoom: boyut çarpanı.
@@ -391,16 +395,16 @@ export const FORMATIONS = [
   // sektörlerde solda: lx = sol kaydırma kazancı, ls = sol uzaklık çarpanı
   { id: 'katman', build: strata, spin: 1, pose: { pos: [-6.4, 1.5, 23.5], look: [-6.4, -1.9, 0], fov: 44, bright: 1.6, lx: 1.5, ls: 1.12 }, figure: 'Veri katmanları — sistem ve raporlama', view: { pitch: 0.3, yaw: -0.35 } },
   // ── sektörler (src/data/sectors.json › her sektörün ilk konu başlığı)
-  { id: 'kayip', build: kayip, spin: 0, sway: 0.5, pose: POSE({ dy: 0.4 }), figure: 'Kayıp dağılımı — beklenen kredi zararı ve kuyruk riski', view: { pitch: 0.1, yaw: -0.25 } },
-  { id: 'maliyet', build: maliyet, spin: 0, sway: 0.5, pose: POSE(), figure: 'Maliyet akışı — hammadde, işçilik ve genel üretim gideri', view: { pitch: 0.1, yaw: 0.2 } },
-  { id: 'varlik', build: varlik, spin: 0, sway: 0.5, pose: POSE(), figure: 'Varlık ömrü — aktifleştirme, amortisman ve değer düşüklüğü', view: { pitch: 0.12, yaw: -0.2 } },
-  { id: 'sube', build: sube, spin: 1, pose: POSE({ dy: 3.2, dz: -1.5, ly: -1.0 }), figure: 'Şube ağı — merkez kayda bağlanan çok noktalı yapı', view: { pitch: 0.55, yaw: 0 } },
-  { id: 'edim', build: edim, spin: 0, sway: 0.45, pose: POSE({ ly: 0.4 }), figure: 'Edimler — sözleşmenin zamana yayılan gelir dilimleri', view: { pitch: 0.05, yaw: -0.25 } },
-  { id: 'alacak', build: alacak, spin: 0, sway: 0.5, pose: POSE(), figure: 'Alacak akışı — hasta, özel sigorta ve kurum gelirleri', view: { pitch: 0.1, yaw: 0.2 } },
-  { id: 'hakedis', build: hakedis, spin: 0, sway: 0.5, pose: POSE(), figure: 'Hakediş eğrisi — yıllara yaygın işte ilerleme', view: { pitch: 0.1, yaw: -0.25 } },
-  { id: 'sezon', build: sezon, spin: 0, sway: 0.5, pose: POSE(), figure: 'Sezon eğrisi — aylık gelir ve sabit gider', view: { pitch: 0.1, yaw: 0.2 } },
-  { id: 'uc-halka', build: ucHalka, spin: 0, sway: 0.5, pose: POSE({ dy: -0.2 }), figure: 'Üç halka — aile, mülkiyet ve işletme', view: { pitch: 0, yaw: 0 } },
-  { id: 'savunma', build: savunma, spin: 1, pose: POSE({ dy: 1.0 }), figure: 'Üç savunma hattı — yönetim, risk ve uyum, iç denetim', view: { pitch: 0.25, yaw: 0.1 } },
+  { id: 'kayip', build: kayip, spin: 0, sway: 0.5, pose: { ...POSE({ dy: 0.4 }), ...SECTOR_LEFT }, figure: 'Kayıp dağılımı — beklenen kredi zararı ve kuyruk riski', view: { pitch: 0.1, yaw: -0.25 } },
+  { id: 'maliyet', build: maliyet, spin: 0, sway: 0.5, pose: { ...POSE(), ...SECTOR_LEFT }, figure: 'Maliyet akışı — hammadde, işçilik ve genel üretim gideri', view: { pitch: 0.1, yaw: 0.2 } },
+  { id: 'varlik', build: varlik, spin: 0, sway: 0.5, pose: { ...POSE(), ...SECTOR_LEFT }, figure: 'Varlık ömrü — aktifleştirme, amortisman ve değer düşüklüğü', view: { pitch: 0.12, yaw: -0.2 } },
+  { id: 'sube', build: sube, spin: 1, pose: { ...POSE({ dy: 3.2, dz: -1.5, ly: -1.0 }), ...SECTOR_LEFT }, figure: 'Şube ağı — merkez kayda bağlanan çok noktalı yapı', view: { pitch: 0.55, yaw: 0 } },
+  { id: 'edim', build: edim, spin: 0, sway: 0.45, pose: { ...POSE({ ly: 0.4 }), ...SECTOR_LEFT }, figure: 'Edimler — sözleşmenin zamana yayılan gelir dilimleri', view: { pitch: 0.05, yaw: -0.25 } },
+  { id: 'alacak', build: alacak, spin: 0, sway: 0.5, pose: { ...POSE(), ...SECTOR_LEFT }, figure: 'Alacak akışı — hasta, özel sigorta ve kurum gelirleri', view: { pitch: 0.1, yaw: 0.2 } },
+  { id: 'hakedis', build: hakedis, spin: 0, sway: 0.5, pose: { ...POSE(), ...SECTOR_LEFT }, figure: 'Hakediş eğrisi — yıllara yaygın işte ilerleme', view: { pitch: 0.1, yaw: -0.25 } },
+  { id: 'sezon', build: sezon, spin: 0, sway: 0.5, pose: { ...POSE(), ...SECTOR_LEFT }, figure: 'Sezon eğrisi — aylık gelir ve sabit gider', view: { pitch: 0.1, yaw: 0.2 } },
+  { id: 'uc-halka', build: ucHalka, spin: 0, sway: 0.5, pose: { ...POSE({ dy: -0.2 }), ...SECTOR_LEFT }, figure: 'Üç halka — aile, mülkiyet ve işletme', view: { pitch: 0, yaw: 0 } },
+  { id: 'savunma', build: savunma, spin: 1, pose: { ...POSE({ dy: 1.0 }), ...SECTOR_LEFT }, figure: 'Üç savunma hattı — yönetim, risk ve uyum, iç denetim', view: { pitch: 0.25, yaw: 0.1 } },
   // ── hizmet kavramları (src/data/content.json › hizmet adları ve açıklamaları)
   { id: 'terazi', build: terazi, spin: 0, sway: 0.5, pose: POSE({ dy: 0.2 }), figure: 'Terazi — bağımsızlık ve denge', view: { pitch: 0.08, yaw: 0 } },
   { id: 'bilanco', build: bilanco, spin: 0, sway: 0.5, pose: POSE(), figure: 'Bilanço — aktif ile pasifin dengesi', view: { pitch: 0.1, yaw: -0.2 } },
@@ -416,8 +420,9 @@ export const FORMATIONS = [
   { id: 'pay', build: pay, spin: 1, pose: POSE({ dy: 1.4, ly: -0.3 }), figure: 'Pay dağılımı — ortaklık ve sermaye yapısı', view: { pitch: 0.5, yaw: 0 } },
   // ── sayfa türleri (hizmetler, sektörler, ekip, bilgi merkezi, araçlar, takvim, kariyer, iletişim, arama, arşiv, sözlük, yasal)
   { id: 'petek', build: petek, spin: 1, pose: POSE({ dy: 2.6, dz: 0.8, ly: -0.9 }), figure: 'Hizmet alanları — sekiz alan, altmış hizmet başlığı', view: { pitch: 0.85, yaw: 0 } },
-  // matris ana sayfanın Sektörler bandında solda da durur (lx/ls: katman ile aynı sol yerleşim)
-  { id: 'matris', build: matris, spin: 0, sway: 0.5, pose: { ...POSE({ dy: 1.8, ly: -0.6 }), lx: 1.5, ls: 1.12 }, figure: 'Sektör ve hizmet alanı — her sektörde öne çıkan hizmetler', view: { pitch: 0.8, yaw: 0.12 } },
+  // matris ana sayfanın Sektörler bandında solda da durur (lx/ls: sol yerleşim; 20 Ekim 2026: bant bağlamalı yerleşimde — data-world-anchor —
+  // kaydırırken listenin sol kenarına değmesin diye biraz daha solda ve küçük)
+  { id: 'matris', build: matris, spin: 0, sway: 0.5, pose: { ...POSE({ dy: 1.8, ly: -0.6 }), lx: 1.64, ls: 1.16 }, figure: 'Sektör ve hizmet alanı — her sektörde öne çıkan hizmetler', view: { pitch: 0.8, yaw: 0.12 } },
   { id: 'ag', build: ag, spin: 0, sway: 0.45, pose: POSE({ dz: 1.0 }), figure: 'Uzmanlık ağı — kişiler ve çalıştıkları alanlar', view: { pitch: 0.05, yaw: 0 } },
   { id: 'yayin', build: yayin, spin: 0, sway: 0.45, pose: POSE(), figure: 'Yayınlar — sirküler, duyuru, blog ve haber', view: { pitch: 0.08, yaw: -0.15 } },
   { id: 'kitap', build: kitap, spin: 0, sway: 0.4, pose: POSE({ dy: 0.6 }), figure: 'Okuma notları — kitaplardan alınan notlar', view: { pitch: 0.3, yaw: 0 } },

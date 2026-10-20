@@ -207,6 +207,7 @@ const lerpPose = (PA, PB, e) => {
     bright: L(PA.bright, PB.bright),
     lx: L(PA.lx ?? 1, PB.lx ?? 1),
     ls: L(PA.ls ?? 1, PB.ls ?? 1),
+    ll: L(PA.ll ?? 0, PB.ll ?? 0),
   };
 };
 
@@ -438,14 +439,23 @@ export async function createWorld({ fx, canvas, intro = false }) {
     const k = k0 * (side < 0 ? side * (PA.lx ?? 1) * (1 - e) + side * (PB.lx ?? 1) * e : side); // side<0 → solda (lx: sol yerleşim kazancı)
     const L = (u, v) => u + (v - u) * e;
     const fovNow = L(PA.fov, PB.fov) + (aspect < 1 ? 8 : 0);
-    const viewH = 2 * 19 * Math.tan((fovNow * Math.PI) / 360); // formasyon düzleminde görüntü yüksekliği (dünya birimi)
-    const dy = -lift * viewH;
     // ls: solda yerleşimde kamera uzaklığı çarpanı (formasyon biraz küçülür; metin sütununa taşmaz)
     // dm: iki sütunda ekran en-boy oranı 1,6'dan darsa (ör. 1100×800) formasyon sütununa sığsın diye biraz uzaklaşılır (merkez oranı korunur)
     const dm = twoCol ? clamp(1.6 / aspect, 1, 1.25) : 1;
-    const zs = dm * (1 + Math.max(0, -side) * (L(PA.ls ?? 1, PB.ls ?? 1) - 1));
+    const left = Math.max(0, -side);
+    const zs = dm * (1 + left * (L(PA.ls ?? 1, PB.ls ?? 1) - 1));
     const ly = L(PA.look[1], PB.look[1]);
     const lz = L(PA.look[2], PB.look[2]);
+    // formasyon düzleminde görüntü yüksekliği (dünya birimi): sağda yerleşimde sabit 19 birim uzaklıkla (tarihsel; kahraman ve bant
+    // ayarları buna göre), solda yerleşimde kameranın gerçek uzaklığıyla — şekil, bant bağlamalı bölümde (data-world-anchor) kaydırırken
+    // bandın yazısıyla aynı ölçüde kayar (uzak kamerada sabit 19 birim, şeklin yazının gerisinde kalmasına yol açıyordu)
+    const dist = 19 + left * ((L(PA.pos[2], PB.pos[2]) - lz) * zs - 19);
+    const viewH = 2 * dist * Math.tan((fovNow * Math.PI) / 360);
+    // ll: solda yerleşimde ek yukarı kayma (görüntü yüksekliğinin oranı; eksi → aşağı), yalnızca iki sütunda. Ana sayfa Sektörler
+    // bandında sol üstte tanım yazısı durur; sektör şekilleri onun altına iner (sağda yerleşimi — sektör sayfası kahramanı — ve tek
+    // sütunlu dar düzeni — şekil görünen bandın ortasında, yazının arkasında söner — değiştirmez)
+    const ll = twoCol ? left * L(PA.ll ?? 0, PB.ll ?? 0) : 0;
+    const dy = -(lift + ll) * viewH;
     camPos.set(L(PA.pos[0], PB.pos[0]) * k * dm + pointer.x * 0.9, ly + (L(PA.pos[1], PB.pos[1]) - ly) * zs + pointer.y * 0.5 + dy, lz + (L(PA.pos[2], PB.pos[2]) - lz) * zs + (aspect < 1 ? 4 : 0));
     camLook.set(L(PA.look[0], PB.look[0]) * k * dm, ly + dy, lz);
     camera.position.copy(camPos);

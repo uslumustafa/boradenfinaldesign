@@ -232,7 +232,17 @@ export function createBehaviors({ fx, scroll, world }) {
     });
   }
 
-  /* ── Sektörler: üzerine gelinen/odaklanılan sektörün kısa tanımı sol alttaki yazıda görünür (yalnızca süs; liste zaten bağlantıdır) */
+  /* ── Sektörler: üzerine gelinen/odaklanılan sektörün kısa tanımı sol üstteki yazıda görünür (liste zaten bağlantıdır) ve 3B şekil o
+     sektörün şekline döner — sektör sayfasının kahramanındaki şekil (scenes.mjs › SECTOR_SHAPE; satırda data-world-shape). Müşteri
+     (20 Ekim 2026): «sektörlerde tek bir 3B şekil var; öbür sayfalardaki gibi fareyle üzerine gelince o sektörün şekli olmalı».
+     Yönetmen (director) bandın data-world-force değerini okur; kaydırma olmadan da okusun diye scroll.refresh() çağrılır.
+     • Satırdan satıra geçerken şekil, imleç satırda SECTOR_INTENT ms kalınca değişir: hızlı geçişte aradaki sektörlerin şekli görünmez.
+     • İmleç liste içinde kaldıkça son sektörün şekli kalır; listeden çıkınca SECTOR_LEAVE ms sonra bandın şekline (matris) döner
+       (kısa süreli çıkışta şekil gidip gelmez).
+     • Dokunmatik ekranda (fare/kalem yok) şekil değişmez; klavyeyle odaklanınca (görünür odak) hemen değişir.
+     • «Kapalı» katmanda 3B dünya yoktur: yalnızca tanım yazısı değişir. */
+  const SECTOR_INTENT = 120;
+  const SECTOR_LEAVE = 220;
   function sectors(root) {
     qsa('[data-sectors]', root).forEach((sec) => {
       const cap = qs('[data-sectors-cap]', sec);
@@ -243,20 +253,65 @@ export function createBehaviors({ fx, scroll, world }) {
       const show = (t) => {
         if (cap.textContent !== t) cap.textContent = t;
       };
+      // 3B şekil: istenen sahne (null → bandın kendi şekli); bekleyen istek zamanlayıcıyla uygulanır
+      let pending;
+      let timer = 0;
+      const apply = (v) => {
+        clearTimeout(timer);
+        timer = 0;
+        pending = undefined;
+        const next = v == null ? undefined : String(v);
+        if (sec.dataset.worldForce === next) return;
+        if (next === undefined) delete sec.dataset.worldForce;
+        else sec.dataset.worldForce = next;
+        scroll.refresh(); // yönetmen bu karede yeni hedefi okusun (kaydırma beklenmez)
+      };
+      const want = (v, ms) => {
+        if (fx.tier === 'off') return;
+        if (pending === v && timer) return; // aynı satırın içinde gezinme zamanlayıcıyı yeniden başlatmaz
+        clearTimeout(timer);
+        pending = v;
+        if (ms <= 0) apply(v);
+        else timer = setTimeout(() => apply(v), ms);
+      };
+      const shapeOf = (a) => (a && a.dataset.worldShape !== undefined ? Number(a.dataset.worldShape) : null);
       const over = (e) => {
         const a = e.target.closest?.('.sector');
-        if (a && a.dataset.short) show(dropSentencePeriods(a.dataset.short));
+        if (!a) return;
+        if (a.dataset.short) show(dropSentencePeriods(a.dataset.short));
+        if (e.pointerType === 'touch') return; // dokunmatik: yalnızca tanım (şekil değişmez)
+        const v = shapeOf(a);
+        if (v !== null) want(v, SECTOR_INTENT);
       };
-      const out = () => show(def);
+      const leave = (e) => {
+        show(def);
+        if (e.pointerType === 'touch') return;
+        want(null, SECTOR_LEAVE);
+      };
+      const focusIn = (e) => {
+        const a = e.target.closest?.('.sector');
+        if (!a) return;
+        if (a.dataset.short) show(dropSentencePeriods(a.dataset.short));
+        // yalnızca görünür odak (klavye): dokunuşla gelen odakta şekil değişmez (sayfa zaten sektöre gider)
+        const v = shapeOf(a);
+        if (v !== null && a.matches(':focus-visible')) want(v, 0);
+      };
+      const focusOut = (e) => {
+        if (list.contains(e.relatedTarget)) return; // odak listede kaldı (başka satıra geçti)
+        show(def);
+        if (pending !== undefined || sec.dataset.worldForce !== undefined) want(null, 0);
+      };
       list.addEventListener('pointerover', over);
-      list.addEventListener('focusin', over);
-      list.addEventListener('pointerleave', out);
-      list.addEventListener('focusout', out);
+      list.addEventListener('pointerleave', leave);
+      list.addEventListener('focusin', focusIn);
+      list.addEventListener('focusout', focusOut);
       on(() => {
         list.removeEventListener('pointerover', over);
-        list.removeEventListener('focusin', over);
-        list.removeEventListener('pointerleave', out);
-        list.removeEventListener('focusout', out);
+        list.removeEventListener('pointerleave', leave);
+        list.removeEventListener('focusin', focusIn);
+        list.removeEventListener('focusout', focusOut);
+        clearTimeout(timer);
+        delete sec.dataset.worldForce;
       });
     });
   }
@@ -622,11 +677,15 @@ export function createBehaviors({ fx, scroll, world }) {
     }
     const cfg = els.map((el) => {
       const side = el.dataset.worldSide === '-1' ? -1 : 1; // formasyonun ekrandaki tarafı (varsayılan sağ)
+      // data-world-anchor="band": şekil bandın görünen kısmının değil, bandın kendi ortasına hizalanır — bandın yazısıyla birlikte kayar,
+      // yazıya göre yeri değişmez (ana sayfa Sektörler: şekil sol üstteki tanım yazısının altında durur; kaydırma sırasında yazıya
+      // binmez). Yalnızca iki sütunlu masaüstü düzeninde (> 900 px; daha dar ekranda bant tek sütundur, şekil görünen kısmın ortasında kalır).
+      const anchor = el.dataset.worldAnchor === 'band';
       if (el.dataset.worldRange) {
         const [a, b] = el.dataset.worldRange.split(',').map(Number);
-        return { el, range: [a, b], side };
+        return { el, range: [a, b], side, anchor };
       }
-      return { el, value: Number(el.dataset.world), side };
+      return { el, value: Number(el.dataset.world), side, anchor };
     });
     // Aralıklı bölümde (ana sayfa alanları) sahne tam sayı adımlarla değişir; eşik, alan listesindeki vurguyla aynı
     // (areas › setActive: floor(p·n + 0,18)) — vurgulanan alan ile şekil hep aynıdır; her adımda şekil bir öncekinden belirgin
@@ -656,8 +715,9 @@ export function createBehaviors({ fx, scroll, world }) {
       }
       world.setVisible(true);
       const { c, r } = best;
-      // formasyon, bölümün ekranda görünen kısmının ortasına hizalanır (kısa alt sayfa kahramanlarında yukarı kayar)
-      const cy = (Math.max(r.top, 0) + Math.min(r.bottom, vh)) / 2;
+      // formasyon, bölümün ekranda görünen kısmının ortasına hizalanır (kısa alt sayfa kahramanlarında yukarı kayar); bant bağlamalı
+      // bölümde (data-world-anchor) bandın kendi ortasına
+      const cy = c.anchor && innerWidth > 900 ? r.top + r.height / 2 : (Math.max(r.top, 0) + Math.min(r.bottom, vh)) / 2;
       const lift = clamp((vh / 2 - cy) / vh, -0.45, 0.45);
       // görünen kısım / min(ekran, bölüm): ekrana giren bölümün şekli, bölüm yeterince görününce toplanır (world.js › FORM_COVER)
       const cover = bestVis / Math.max(1, Math.min(vh, r.height));

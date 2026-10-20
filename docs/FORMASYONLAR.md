@@ -23,7 +23,7 @@ Her şekil, bağlı olduğu sayfanın metninde geçen bir şeyi anlatır: *Cari 
 | `pv` | Hizmetler ve Hesaplayıcılar dizininde sağda, alan sayfasında hizmet kartlarının solunda | Yapışkan önizleme: bölüme göre alanın/grubun şekli, satırın üzerine gelince o hizmetin/hesaplayıcının şekli |
 | `lead` | Bölüm içinde metnin yanında (Hakkımızda › Kuruluş, Kariyer girişi, İletişim kanalları) | Sabit; görünür olunca toplanır, yavaşça salınır |
 
-Sektörler dizininde önizleme panelinin üstündeki kutu üzerine gelinen sektörün şeklini gösterir.
+Sektörler dizininde önizleme panelinin üstündeki kutu üzerine gelinen sektörün şeklini gösterir. Ana sayfanın koyu «Sektörler» bandında kutu yoktur: bandın kendi 3B şekli (matris) bir sektörün üzerine gelince o sektörün şekline döner (aşağıda, «Koyu bantlar»).
 
 **Şekil dizisi:** kutunun `data-shapes` değeri → yoksa `main[data-shapes]` (rotadan) → yoksa `main[data-scene]`.
 
@@ -52,6 +52,8 @@ Wagtail karşılığı: `Page.scene` ve `Page.fig` (formasyon seçici, kimliğe 
 
 **Koyu bantlar** (sayfa içindeki `sec--dark` bölümleri) sahneyi şablonda kimlikle seçer: `data-world="{{ 'matris' | scene }}"` (`scene` süzgeci = `scenes.mjs › sceneOf`; bilinmeyen kimlik derlemeyi durdurur). Sabit sıra numarası yazılmaz (yalnızca `ufuk` için `0`); Ekim 2026'da kalan sayılar da kimliğe çevrildi.
 Kural: sık metin/sayı ızgarası taşıyan bantta şekil yazının arkasına düşmemeli; o zaman sakin `ufuk` arazisi kullanılır (Bilgi Merkezi «Koleksiyonlar», Sektörler «İlgi matrisi»). Ana sayfa «Sektörler» bandı `matris`tir (önceden `katman` idi; «Sistemler» alanıyla aynı şekil tekrarlanıyordu).
+
+**Ana sayfa «Sektörler» bandında üzerine gelme (20 Ekim 2026, müşteri: «Sektörlerde tek bir 3B şekil var; öbür sayfalarda olduğu gibi mouse ile üzerine geldiğinde o sektörün şekli olması gerekiyor»):** listedeki her satır sektörün şeklini taşır (`data-world-shape="{{ s.shape | scene }}"`; şekil `scenes.mjs › SECTOR_SHAPE` — sektör sayfasının kahramanındaki şekil). Satırın üzerine gelince (ya da klavyeyle odaklanınca) bant `data-world-force` ile hedefi o şekle çevirir ve `scroll.refresh()` yönetmeni kaydırma beklemeden çalıştırır (`behaviors.js › sectors`); dönüşüm, kaydırmadaki gibi ekrandaki hâlden doğrudan yeni şekle akar. Satırdan satıra geçişte şekil imleç satırda 120 ms kalınca değişir (hızlı geçişte aradakiler görünmez); listeden çıkınca 220 ms sonra matrise döner; dokunmatikte şekil değişmez (yalnızca tanım yazısı), «Kapalı» katmanda dünya yoktur. Yerleşim: şekiller solda (`data-world-side="-1"`), sol üstteki tanım yazısının altında — `formations.js › SECTOR_LEFT` (`lx` 1,64 sol kaydırma kazancı, `ls` 1,4 uzaklık çarpanı, `ll` −0,14 ek aşağı kayma; `ll` yalnızca iki sütunda, `world.js › pose`), sektör sayfasındaki sağ yerleşimleri değişmez. Bant bağlama `data-world-anchor="band"` (> 900 px): şekil bandın görünen kısmının değil kendi ortasının hizasında durur, kaydırırken yazıyla birlikte kayar; soldaki yerleşimde kaydırma payı kameranın gerçek uzaklığıyla hesaplanır (`pose` › `dist`). Ölçüm: `tests/sectors-hover.e2e.mjs`.
 
 ## Kayıt defteri
 
@@ -155,4 +157,5 @@ Performans: şekiller ilk kullanıldıklarında üretilir (`lazyFormations`); 26
 - `tests/services.test.mjs` — hizmet ve alan sayfalarında «Çalışma biçimimiz» bandının alan sahnesi
 - `tests/hero-overlap.e2e.mjs` — Vergi hizmet sayfalarında 3B şeklin noktaları dünyanın kendi kamerasıyla izdüşürülür: iki sütunlu düzende (1920×1080 … 667×375) sayfa yolu, üst etiket, başlık ve öze düşen nokta ≤ %0,2; dar düzende (dikey telefon/tablet) ekran dışında kalan ≤ %2
 - `tests/figure-hover.e2e.mjs` — şekil kutusunda üzerine gelme: yalnızca gelinen satırın şekli, araya sayfanın/önceki satırın şekli girmez
+- `tests/sectors-hover.e2e.mjs` (`npm run test:sectors`) — ana sayfa Sektörler bandı: matris ve 8 sektörün şekli solda bandın yazısına (tanım, başlık, liste, «Tüm sektörler») düşmez — 12 ekran (iki sütun ve yatay) × 4 kaydırma konumu × salınım uçları, ≤ %0,2; fareyle üzerine gelince o sektörün şekli (kaydırmadan), hızlı geçiş, listeden çıkış, klavye, dokunma, «Kapalı» katman
 - `npm run test:e2e` — gezinme, kahraman, metin büyütme, efekt katmanları
