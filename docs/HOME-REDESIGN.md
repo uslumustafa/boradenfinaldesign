@@ -25,7 +25,7 @@ tek vurgu (marka üç rengi yalnızca ince çizgi/nokta); parçacık alanı «an
 | Araçlar | `#araclar` | — (açık zemin) | 4 hesaplayıcı çipi + mini KDV |
 | Bilgi | `#bilgi` | — | öne çıkan + son 3 yayın + arşiv satırı |
 | Kariyer | `#kariyer` | — | alan çipleri → `/kariyer/?alan=…` (açık pozisyon iddiası yok) |
-| Kapanış çağrısı | `#iletisim-cagri` | 7 «Kapı» | `partials/cta.njk` — tüm sayfalarda ortak |
+| Kapanış çağrısı | `#iletisim-cagri` | `diyalog` = 9 (iki kabarık konuşma balonu; 2026-10-20'ye dek «Kapı» `kapi`) | `partials/cta.njk` — tüm sayfalarda ortak |
 
 ## 3. Açılış sekansı (`opening.js`)
 
@@ -39,10 +39,10 @@ Elle denemek için yeni sekmede adresi yazıp açın (yönlendiren yok); site i�
 
 ## 4. Kahraman videosu (`modules/hero-film.js`) ve video varlığı
 
-`src/assets/video/boraden-giris-1080.mp4` (3,6 MB) / `boraden-giris-720.mp4` (1,5 MB) — 10,6 sn, sessiz, döngü, başta 0,35 sn ve sonda 0,42 sn laciverde (#08132a) geçiş; poster `boraden-giris-poster-768/1280/1920.webp` (≈ 19 / 36 / 60 KB; videonun 0,9 sn karesi). Kurgu `scripts/tools/hero-film.py`: müşterinin Ekim 2026 çekimi (4K HEVC HLG → SDR, mobius ton eşleme), ilk 5 sn tam kare (tabela eksiksiz), 5,0–8,6 sn arası sola yaslı yavaş itme (1,0× → 1,52×; alt piksel kırpma). Renk: hafif soğuk, az doygun.
+`src/assets/video/boraden-giris-v2-1080.mp4` (2,3 MB) / `boraden-giris-v2-720.mp4` (1,0 MB) — 7,67 sn (230 kare), sessiz, **döngü yok**: bir kez oynar ve son karede (ofis alanının geçişi, kimse görünmeden) durur; başta 0,35 sn lacivertten (#08132a) açılır (20 Ekim 2026, müşteri: «insan yüzü görünmesin, tam kapıdan giriş anında dursun»; önceden 10,6 sn döngü, sonunda masalarda çalışanlar görünüyordu); poster `boraden-giris-poster-768/1280/1920.webp` (≈ 19 / 36 / 60 KB; videonun 0,9 sn karesi). Kurgu `scripts/tools/hero-film.py`: müşterinin Ekim 2026 çekimi (4K HEVC HLG → SDR, mobius ton eşleme), ilk 5 sn tam kare (tabela eksiksiz), 5,0 sn'den sonra sola yaslı yavaş itme (alt piksel kırpma; video 7,67 sn'de, itme ≈ 1,46×'dayken biter — `END = 229`). Renk: hafif soğuk, az doygun.
 Yerleşim: masaüstünde tam genişlik zemin; koyulaşma başlık sütununu izler (`--l` = içerik sütununun sol kenarı) ve videonun en parlak karelerinde metin karşıtlığını korur. Dikey ekranda da (telefon, dikey tablet) video başlığın arkasında tam ekran zemindir (müşteri: «webdeki gibi görünmeli»): 16:9 kareden logodaki üç tikin ve çıtalı duvarın üstüne denk gelen dikey bir dilim görünür (`object-position: 31%`), koyulaşma yukarıdan aşağı artar. Kahraman ekrandan uzunsa (telefon, yan çevrilmiş telefon) yapışma alt kenarı ekrana değince başlar (`.hero › top`, `--hero-h`, `behaviors.js › stack`): metin, düğmeler ve video düğmesi beyaz sayfa binmeden görünür. Beyaz sayfa binerken zemin çok az yaklaşır ve kararır (`--hp`).
-Oynatma: kendiliğinden «Tam»/«Hafif» katmanda ve veri tasarrufu kapalıyken (telefon ve tablet dahil); video alanı ekrandan çıkınca, beyaz sayfa kahramanı örtünce ve sekme gizlenince durur; «Duraklat/Videoyu oynat» düğmesi her zaman vardır (sağ üst). Safari açılışta erken gelen play()'i reddedebilir: kısa aralıklarla yeniden denenir, olmazsa (ör. Düşük Güç Modu) ilk dokunuşta açılır. Kapalı/hareket azaltma/veri tasarrufu → yalnızca poster (video indirilmez). İlk oynatma poster karesinden başlar (`POSTER_T`). Dosya: cihaz pikseli genişliği > 1400 → 1080p, değilse 720p.
-**Hukuki not:** müşteri isteği (Ekim 2026) gereği eski çalışanlar görünmez — yalnızca kadrajla (görüntüde rötuş ya da yüz değişikliği yok). Klibin sonunda oturan üç çalışan görünür; yayın öncesi rıza/KVKK aydınlatması netleşmeli.
+Oynatma: kendiliğinden «Tam»/«Hafif» katmanda ve veri tasarrufu kapalıyken (telefon ve tablet dahil); video alanı ekrandan çıkınca, beyaz sayfa kahramanı örtünce ve sekme gizlenince durur; sona gelince son karede kalır ve kendiliğinden yeniden başlamaz (düğme baştan oynatır); «Duraklat/Videoyu oynat» düğmesi her zaman vardır (sağ üst). Safari açılışta erken gelen play()'i reddedebilir: kısa aralıklarla yeniden denenir, olmazsa (ör. Düşük Güç Modu) ilk dokunuşta açılır. Kapalı/hareket azaltma/veri tasarrufu → yalnızca poster (video indirilmez). İlk oynatma poster karesinden başlar (`POSTER_T`). Dosya: cihaz pikseli genişliği > 1400 → 1080p, değilse 720p.
+**Hukuki not:** müşteri isteği (Ekim 2026) gereği eski çalışanlar görünmez — yalnızca kadrajla (görüntüde rötuş ya da yüz değişikliği yok). 20 Ekim 2026'dan beri video çalışanların göründüğü ofis alanına girmeden biter: videoda kimsenin yüzü görünmez.
 
 ## 5. Parçacık dünyası — ayar rehberi (`src/assets/js/world/`)
 
@@ -51,7 +51,7 @@ Oynatma: kendiliğinden «Tam»/«Hafif» katmanda ve veri tasarrufu kapalıyken
 - Shader: `uIntro` (açılışta dağınıktan toplanma), `uWave` (kahraman arazisi dalgası + alt sis), `uAspect`/`uPtr` (imleç merceği), `gl_PointSize` en az 1,9 px. Tam: 26 000 nokta (`fx.js`), Hafif: 9 000; uyarlanabilir düşürme 34 ms'de.
 - Yerleşim kuralı (1440×900): sol metin sütunu ≈ 600 px'te biter → şekil 620–1360 px aralığında (merkez ≈ 985 px). Bir pozu değiştirince 1440×900, 1920×1080 ve 1280×720'de bakın:
   `node tests/shot.mjs --path=/ --scroll=#alanlar --name=home` (veya `--scroll` ile piksel değerleri).
-- CSS okunurluk katmanları: `.areas::before` (sol/mobilde dikey), `.sectors::before` (sağ), `.cta::before` (yalnızca ≤ 900 px). Şekil metinle çakışırsa önce pozu, sonra bu katmanları ayarlayın.
+- CSS okunurluk katmanları: `.areas::before` (sol/mobilde dikey), `.sectors::before` (sağ), `.cta::before` (yalnızca ≤ 900 px; yan çevrilmiş telefonda yalnızca yazı tarafı — şekil yanda kalır). Şekil metinle çakışırsa önce pozu, sonra bu katmanları ayarlayın.
 - «Kapalı» katmanda (ve hareket azaltmada) Hizmet alanları sabit sahne olmaz: iki sütun, tüm alanlar açık (`html[data-fx='off'] .areas…`).
 
 ## 6. Doğrulama kaydı (2026-10-02)

@@ -827,9 +827,11 @@ html .phero.phero--wide {
 }
 .cta h2 {
   /* --lw: en uzun kelimenin harf sayısı (şablondan). Yazı, o kelime sütuna sığacak kadar küçülür (geniş harfli kelimelerde ≈0,62em/harf; pay: 0,66);
-     «Kiminle görüşeceğinizden …» gibi başlıklar harf ortasından bölünmez. Kısa başlıklar fs-6'da kalır. */
-  font-size: min(var(--fs-6), calc(100cqi / (max(var(--lw, 1), 1) * 0.66)));
-  max-width: max(14ch, calc(var(--lw, 1) * 0.66em));
+     uzun kelimeli başlıklar harf ortasından bölünmez. Üst sınır fs-6 ile fs-5 arası (1440'ta ≈ 76 px), satır 20ch: kurumsal cümle başlık
+     («Size nasıl yardımcı olabiliriz?» — 20 Ekim 2026, müşteri: «Görüşelim yazısını beğenmediler, daha kurumsal bir şey») masaüstünde iki
+     satıra dengelenir (fs-6'da üç satıra bölünüp bandı ekrandan uzun yapıyordu). */
+  font-size: min(clamp(2.6rem, 1.5rem + 3.6vw, 5.4rem), calc(100cqi / (max(var(--lw, 1), 1) * 0.66)));
+  max-width: max(20ch, calc(var(--lw, 1) * 0.66em));
   text-wrap: balance;
 }
 .cta__row {
@@ -910,5 +912,16 @@ html .phero.phero--wide {
   .cta__row {
     grid-template-columns: 1fr;
     grid-template-areas: 'main' 'side';
+  }
+}
+/* Yan çevrilmiş telefonda (şekil yazının yanında; yukarıdaki iki sütun koşulu, world.js › twoCol) bant bütünüyle koyulaşmaz, yalnızca
+   yazı tarafı koyulaşır: önceden tüm bant koyulaşıyor, sağdaki şekil sönük görünüyordu. Yazı sütunu biraz daha dar (50vw): 667×375'te
+   öz, balonların sol kenarına değiyordu (tests/cta-overlap.e2e.mjs). */
+@media (max-width: 900px) and (min-width: 601px) and (min-aspect-ratio: 3/2) {
+  html:not(.hero-wide) .cta::before {
+    background: linear-gradient(90deg, rgba(8, 19, 42, 0.62) 0%, rgba(8, 19, 42, 0.38) 40%, transparent 58%);
+  }
+  html:not(.hero-wide) .cta > .container {
+    padding-right: max(var(--gutter), 50vw);
   }
 }

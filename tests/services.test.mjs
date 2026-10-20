@@ -229,8 +229,10 @@ test('ana sayfa: kahramanın zemini ofis videosu — poster ilk boyamada, video 
   assert.doesNotMatch(hero.slice(0, hero.indexOf('>')), /data-world/, 'kahramanda 3B dünya sahnesi yok (zemin video)');
   assert.doesNotMatch(h, /swipe-word/, '«BORADEN» anı modülü bağlı değil');
   const vid = (hero.match(/<video[^>]*>/) || [''])[0];
-  for (const a of ['muted', 'loop', 'playsinline', 'preload="none"', 'aria-hidden="true"', 'data-src="/assets/video/boraden-giris-1080.mp4"', 'data-src-sm="/assets/video/boraden-giris-720.mp4"'])
+  for (const a of ['muted', 'playsinline', 'preload="none"', 'aria-hidden="true"', 'data-src="/assets/video/boraden-giris-v2-1080.mp4"', 'data-src-sm="/assets/video/boraden-giris-v2-720.mp4"'])
     assert.ok(vid.includes(a), `video: ${a} yok`);
+  // 20 Ekim 2026 (müşteri: «insan yüzü görünmesin, kapıdan giriş anında dursun»): video bir kez oynar, son karede durur
+  assert.doesNotMatch(vid, /\sloop[\s>=]/, 'video döngülü olmamalı (son karede durur)');
   assert.doesNotMatch(vid, /\ssrc=/, 'video dosyası ilk boyamada istenmez (data-src)');
   const img = (hero.match(/<img class="hero__poster"[^>]*>/) || [''])[0];
   for (const w of [768, 1280, 1920]) assert.ok(img.includes(`/assets/video/boraden-giris-poster-${w}.webp ${w}w`), `poster ${w}w`);
@@ -238,6 +240,6 @@ test('ana sayfa: kahramanın zemini ofis videosu — poster ilk boyamada, video 
   assert.ok(hero.indexOf('hero__media') > hero.indexOf('</h1>'), 'zemin içerikten sonra gelir (ekran okuyucu önce başlığı okur)');
   assert.match(hero, /<button class="hero__ctl" type="button" data-film-ctl aria-label="Videoyu oynat" hidden>/, 'oynat/duraklat düğmesi');
   assert.match(h, /<link rel="preload" as="image" href="\/assets\/video\/boraden-giris-poster-1280\.webp" imagesrcset="[^"]+" imagesizes="100vw"/, 'poster ön yüklemesi');
-  for (const f of ['boraden-giris-1080.mp4', 'boraden-giris-720.mp4', 'boraden-giris-poster-768.webp', 'boraden-giris-poster-1280.webp', 'boraden-giris-poster-1920.webp'])
+  for (const f of ['boraden-giris-v2-1080.mp4', 'boraden-giris-v2-720.mp4', 'boraden-giris-poster-768.webp', 'boraden-giris-poster-1280.webp', 'boraden-giris-poster-1920.webp'])
     assert.ok(fs.existsSync(path.join(dist, 'assets/video', f)), `derlemede ${f} yok`);
 });

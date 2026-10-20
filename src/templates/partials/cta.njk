@@ -1,12 +1,15 @@
-{# Kapanış çağrı bandı — koyu, dünya görünür; kapı formasyonu sağda, metin solda; iletişim bilgileri alt satırda #}
-<section class="cta sec--dark" data-world="{{ 'kapi' | scene }}" data-chapter="İletişim" id="iletisim-cagri">
+{# Kapanış çağrı bandı — koyu, dünya görünür; solda metin, sağda iki konuşma balonu (`diyalog`: sizin mesajınız ve yanıtımız; Ekim 2026,
+   müşteri «Görüşelim kısmını beğenmediler» — önceki kemer ve yol `kapi` soyut kalıyordu); iletişim bilgileri alt satırda.
+   Varsayılan başlık kurumsal (20 Ekim 2026, müşteri: «Görüşelim yazısını beğenmediler, daha kurumsal bir şey»): «Size nasıl yardımcı
+   olabiliriz?»; sayfaya özel başlıklar (cta_title / cta_text) aynı dilde. #}
+<section class="cta sec--dark" data-world="{{ 'diyalog' | scene }}" data-chapter="İletişim" id="iletisim-cagri">
   <div class="container">
     <div class="cta__row">
       <div class="cta__main">
         <p class="eyebrow" data-reveal>İletişim</p>
-        {% set cta_h = cta_title | default('Görüşelim.') %}
+        {% set cta_h = cta_title | default('Size nasıl yardımcı olabiliriz?') %}
         <h2 style="--lw:{{ cta_h | longest_word }}" data-reveal data-reveal-delay="1">{{ cta_h }}</h2>
-        <p class="lead" style="margin-top:1.6rem;max-width:34ch" data-reveal data-reveal-delay="2">{{ cta_text | default('İhtiyacınızı ve kapsamı birlikte netleştirelim. İlk görüşmede nasıl ilerleyeceğimizi konuşalım.') }}</p>
+        <p class="lead" style="margin-top:1.6rem;max-width:34ch" data-reveal data-reveal-delay="2">{{ cta_text | default('İhtiyacınızı ve çalışmanın kapsamını birlikte netleştirelim; ilk görüşmede nasıl ilerleyeceğimizi belirleyelim.') }}</p>
         <div class="cta__btns" data-reveal data-reveal-delay="3">
           {# U-23: bağlamlı (hizmet/sektör/kişi) → «Görüşme talep edin»; genel → «Bize yazın» #}
           <a class="btn" href="{{ cta_href | default('/iletisim/') }}">{{ 'Görüşme talep edin' if cta_href else 'Bize yazın' }} <span class="arr" aria-hidden="true">→</span></a>

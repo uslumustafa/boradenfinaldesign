@@ -64,10 +64,12 @@
         <a class="hero__scroll" href="#hakkimizda" data-hero-in="7"><span class="hero__scroll-line" aria-hidden="true"></span>Kaydırın</a>
       </div>
     </div>
-    {# zemin: içerikten sonra gelir (ekran okuyucu önce başlığı okur); her ekranda başlığın arkasında tam ekran (dikeyde dilim, 50-home.css) #}
+    {# zemin: içerikten sonra gelir (ekran okuyucu önce başlığı okur); her ekranda başlığın arkasında tam ekran (dikeyde dilim, 50-home.css).
+       Video bir kez oynar, ofis alanının geçişinde son karede durur (döngü yok — 20 Ekim 2026, müşteri: «insan yüzü görünmesin»).
+       Dosya adı her yeni kurguda değişir (-v2): /assets/video/ bir gün önbellekte kalır. #}
     <div class="hero__media">
       <img class="hero__poster" src="/assets/video/boraden-giris-poster-1280.webp" srcset="/assets/video/boraden-giris-poster-768.webp 768w, /assets/video/boraden-giris-poster-1280.webp 1280w, /assets/video/boraden-giris-poster-1920.webp 1920w" sizes="100vw" width="1920" height="1080" alt="Boraden ofisinin girişi: ahşap çıtalı duvarda BORADEN tabelası" fetchpriority="high" decoding="async">
-      <video class="hero__video" muted loop playsinline disablepictureinpicture preload="none" tabindex="-1" aria-hidden="true" data-src="/assets/video/boraden-giris-1080.mp4" data-src-sm="/assets/video/boraden-giris-720.mp4"></video>
+      <video class="hero__video" muted playsinline disablepictureinpicture preload="none" tabindex="-1" aria-hidden="true" data-src="/assets/video/boraden-giris-v2-1080.mp4" data-src-sm="/assets/video/boraden-giris-v2-720.mp4"></video>
     </div>
     <button class="hero__ctl" type="button" data-film-ctl aria-label="Videoyu oynat" hidden>
       <span class="hero__ico" aria-hidden="true"></span>

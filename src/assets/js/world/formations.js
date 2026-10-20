@@ -16,7 +16,7 @@
 //   6 Hukuk         — paragraf işareti ve tokmak                     (Hukuk)
 //   7 Dijital       — kâğıt faturadan ekrandaki e-faturaya, verinin buluta akışı (Dijital Dönüşüm)
 //   8 Okul binası   — kaide, sütunlar, kiriş, alınlık                (Akademi)
-//   9 Kapı          — kemer ve ona uzanan yol                        (Kapanış)
+//   9 Diyalog       — iki kabarık konuşma balonu: mesajınız ve yanıtımız (Kapanış «Görüşelim»; Ekim 2026'ya kadar kemer ve yol `kapi`)
 //   10… bordro halkası, sektörler, hizmet kavramları, sayfa türleri; sonda Hukuk ve Teşvik hizmet şekilleri (bkz. FORMATIONS)
 import { Draw, v3, X, Y } from './draw.js';
 import { kayip, maliyet, varlik, sube, edim, alacak, hakedis, sezon, ucHalka, savunma } from './shapes-sector.js';
@@ -25,6 +25,7 @@ import { petek, matris, ag, yayin, kitap, abakus, takvim, basvuru, yonlendirme, 
 import { rakamlar, agac, tesvik, hukuk, dijital, okul } from './shapes-area.js';
 import { sozlesme, sicil, arabulucu, uyusmazlik, kvkk, icra, kurulus, belge, proje, arge, hibe, istihdam, ihracat } from './shapes-legal.js';
 import { tasdik, kdvIade, kurumlar, transfer, dolayli, otv, bireysel } from './shapes-vergi.js';
+import { diyalog } from './shapes-cta.js';
 
 const TAU = Math.PI * 2;
 const clamp01 = (v) => Math.min(1, Math.max(0, v));
@@ -367,34 +368,6 @@ function strata(p, rnd, Nf) {
   while (p.n < Nf) p.add((rnd() - 0.5) * gx * sp, -4, (rnd() - 0.5) * gz * sp, 0.6, 0);
 }
 
-function gate(p, rnd, Nf) {
-  const Ro = 5.4;
-  const Ri = 4.0;
-  const nArch = Math.floor(Nf * 0.62);
-  for (let i = 0; i < nArch; i++) {
-    const f = rnd();
-    const z = (rnd() - 0.5) * 1.1;
-    if (f < 0.62) {
-      const a = rnd() * Math.PI;
-      const r = rnd() < 0.5 ? Ro : Ri + rnd() * (Ro - Ri);
-      p.add(Math.cos(a) * r, 0.6 + Math.sin(a) * r, rnd() < 0.5 ? z : rnd() < 0.5 ? -0.55 : 0.55, 0.9 + rnd() * 0.5, 0);
-    } else {
-      const side = rnd() < 0.5 ? -1 : 1;
-      const x = side * (Ri + rnd() * (Ro - Ri));
-      p.add(x, -4.2 + rnd() * 4.8, rnd() < 0.5 ? z : rnd() < 0.5 ? -0.55 : 0.55, 0.9 + rnd() * 0.4, rnd() < 0.015 ? 1 + Math.floor(rnd() * 3) : 0);
-    }
-  }
-  // kemere uzanan yol: yan çizgiler ve kısa çizgiler
-  while (p.n < Nf) {
-    const f = rnd();
-    const z = 0.8 + rnd() * 17;
-    const half = 0.9 + z * 0.16;
-    if (f < 0.55) p.add((rnd() < 0.5 ? -1 : 1) * half, -4.2, z, 1.0, 0);
-    else if (Math.floor(z * 1.2) % 2 === 0) p.add((rnd() - 0.5) * 0.18, -4.2, z, 0.9, rnd() < 0.1 ? 2 : 0);
-    else p.add((rnd() < 0.5 ? -1 : 1) * (half * 0.5), -4.2, z, 0.7, 0);
-  }
-}
-
 /* ───────────────────────── kayıt defteri ───────────────────────── */
 // Kamera pozu: formasyon sahnenin ortasındadır (x=0). Kamera sola kayar (düz çeviri, açı yok) → formasyon ekranın sağ yarısında görünür.
 // Yeni şekiller (x ∈ ±6,5, y ∈ ±4,2) için ortak başlangıç pozu; şekle göre dx (sağa kaydırma), dy (kamera yüksekliği), dz (uzaklık), ly (bakış yüksekliği).
@@ -413,7 +386,7 @@ export const FORMATIONS = [
   { id: 'hukuk', build: hukuk, spin: 0, sway: 0.45, pose: POSE({ dz: 0.4 }), figure: 'Hukuki çerçeve — kanun maddesi ve karar', view: { pitch: 0.06, yaw: 0.2 } },
   { id: 'dijital', build: dijital, spin: 0, sway: 0.25, pose: POSE({ dx: 0.9, dz: -1.6, ly: 0.7 }), figure: 'Dijital dönüşüm — kâğıt faturadan ekrandaki e-faturaya, verinin buluta akışı', view: { pitch: 0.06, yaw: -0.2 } },
   { id: 'sutunlar', build: okul, spin: 0, sway: 0.5, pose: POSE({ dy: 0.6, dz: 1.4, ly: 0.2 }), figure: 'Akademi — antik okul binası: sütunlar, kiriş ve alınlık', view: { pitch: 0.12, yaw: -0.3 } },
-  { id: 'kapi', build: gate, spin: 0, sway: 0.2, pose: { pos: [-8.0, -0.2, 19.5], look: [-8.0, -1.0, 0], fov: 48, bright: 1.45 }, figure: 'Kapı — görüşmeye açılan yol', view: { pitch: 0.12, yaw: -0.2 } },
+  { id: 'diyalog', build: diyalog, spin: 0, sway: 0.25, pose: POSE({ dx: 0.4, dz: 0.2 }), figure: 'Diyalog — iki konuşma balonu: sizin mesajınız ve yanıtımız', view: { pitch: 0.05, yaw: -0.2 } },
   { id: 'halka', build: ring, spin: 1, pose: { pos: [-5.1, 6.4, 17.9], look: [-5.1, -1.4, 0], fov: 44, bright: 1.55 }, figure: 'Yıl halkası — on iki aylık bordro döngüsü', view: { pitch: 0.45, yaw: 0 } },
   // sektörlerde solda: lx = sol kaydırma kazancı, ls = sol uzaklık çarpanı
   { id: 'katman', build: strata, spin: 1, pose: { pos: [-6.4, 1.5, 23.5], look: [-6.4, -1.9, 0], fov: 44, bright: 1.6, lx: 1.5, ls: 1.12 }, figure: 'Veri katmanları — sistem ve raporlama', view: { pitch: 0.3, yaw: -0.35 } },

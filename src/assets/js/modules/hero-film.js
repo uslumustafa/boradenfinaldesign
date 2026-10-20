@@ -1,17 +1,20 @@
-// Kahraman videosu (ana sayfa, «Tam doğru zamanında»): ofis girişinden açık ofise uzanan kısa, sessiz döngü.
-// Müşteri isteği (Ekim 2026): eski «Ofisimiz» filmi kaldırıldı, video kahramanın zemini oldu. Kurgu: scripts/tools/hero-film.py.
+// Kahraman videosu (ana sayfa, «Tam doğru zamanında»): giriş tabelasından cam kapıya, resepsiyondan ofis alanının geçişine uzanan kısa,
+// sessiz video. Müşteri isteği (Ekim 2026): eski «Ofisimiz» filmi kaldırıldı, video kahramanın zemini oldu. 20 Ekim 2026 (müşteri: «insan
+// yüzü görünmesin, tam kapıdan giriş anında dursun»): video ofis alanına geçerken, kimse görünmeden biter ve SON KAREDE DURUR — döngü
+// yok; yalnızca ziyaretçi «Videoyu oynat» ile baştan yeniden oynatabilir. Kurgu: scripts/tools/hero-film.py.
 //
 // Oynatma kuralları (bütçe + erişilebilirlik):
 //   • Kendiliğinden oynatma: «Tam» ya da «Hafif» katman ve veri tasarrufu kapalı (telefon ve tablet dahil; video her ekranda başlığın
-//     arkasında tam ekran zemin). Video sessiz ve döngülüdür; video alanı ekrandan çıkınca, beyaz sayfa kahramanın üstünü tamamen
-//     örtünce ve sekme gizlenince DURUR (pil/CPU), yeniden görününce sürer. Tarayıcı kendiliğinden oynatmayı engellerse (ör. iPhone
-//     Düşük Güç Modu) poster ve «Videoyu oynat» düğmesi kalır.
+//     arkasında tam ekran zemin). Video sessizdir ve bir kez oynar; video alanı ekrandan çıkınca, beyaz sayfa kahramanın üstünü tamamen
+//     örtünce ve sekme gizlenince DURUR (pil/CPU), yeniden görününce sürer. Sona geldiyse kaydırma, sekme ya da katman değişimi onu
+//     yeniden başlatmaz (son kare kalır). Tarayıcı kendiliğinden oynatmayı engellerse (ör. iPhone Düşük Güç Modu) poster ve «Videoyu
+//     oynat» düğmesi kalır.
 //   • «Kapalı» katman (hareket azaltma tercihi dahil) ve veri tasarrufu: yalnızca poster (video dosyası hiç indirilmez);
 //     «Videoyu oynat» düğmesi oynatmayı ziyaretçiye bırakır.
 //   • «Duraklat / Videoyu oynat» düğmesi her zaman vardır (WCAG 2.2.2). Ziyaretçi duraklattıysa kaydırma ya da katman değişimi
 //     videoyu kendiliğinden yeniden başlatmaz.
 //   • İlk oynatma posterin karesinden başlar (POSTER_T): poster ile videonun ilk görünen karesi aynıdır, video posterin üstüne
-//     yumuşakça açılır (sıçrama yok). Döngünün sonu ve başı laciverde geçişlidir (kesik görünmez).
+//     yumuşakça açılır (sıçrama yok). Sona gelince son karede durur; düğmeyle yeniden oynatma baştan, lacivert açılışla başlar.
 //   • Dosya ekran genişliğine göre seçilir: cihaz pikseli genişliği (CSS px × DPR, DPR en çok 2) 1400'ü aşarsa 1080p, değilse 720p.
 //     Dosya ilk oynatmada yüklenir (preload="none" + data-src).
 // Depolama yok; sunucuya istek yok (yalnızca video dosyası).
@@ -34,6 +37,7 @@ export function mount(el, { fx, scroll, on }) {
   let inView = true;
   let loaded = false;
   let started = false;
+  let ended = false; // video sona geldi: son karede durur, yalnızca ziyaretçi yeniden başlatır
 
   function ui(playing) {
     ctl.classList.toggle('is-playing', playing);
@@ -73,7 +77,7 @@ export function mount(el, { fx, scroll, on }) {
     }
   }
   let retries = 0;
-  const canRun = () => wantPlay && !userPaused && !covered && inView && !document.hidden;
+  const canRun = () => wantPlay && !userPaused && !ended && !covered && inView && !document.hidden;
   // ilk dokunuş (tıklama) / tuş: tarayıcı kendiliğinden oynatmayı engellediyse ziyaretçinin etkileşimiyle açılır. Dinleyici pencerede
   // ve kabarcık aşamasında: oynat/duraklat düğmesinin kendi işleyicisi önce çalışır (duraklattıysa canRun yanlış, oynattıysa video
   // zaten oynuyor). «touchend» kullanılmaz: dokunuşta önce o gelir, düğmeye dokunuş videoyu başlatıp ardından gelen tıklama durdururdu.
@@ -90,12 +94,18 @@ export function mount(el, { fx, scroll, on }) {
     dropUnlock(); // bir kez oynadı: tarayıcı izni var
   };
   const onPause = () => ui(false);
+  // sona gelince (döngü yok) son kare kalır; düğme «Videoyu oynat» der (sonraki basış baştan oynatır)
+  const onEnded = () => {
+    ended = true;
+    ui(false);
+  };
   const onError = () => {
     el.classList.remove('has-video');
     ctl.hidden = true;
   };
   video.addEventListener('playing', onPlaying);
   video.addEventListener('pause', onPause);
+  video.addEventListener('ended', onEnded);
   video.addEventListener('error', onError);
 
   // örtülme: beyaz sayfa kahramanın tamamını kapatınca dur, açılınca (izin varsa) sür
@@ -125,6 +135,15 @@ export function mount(el, { fx, scroll, on }) {
     if (video.paused) {
       userPaused = false;
       wantPlay = true;
+      if (ended) {
+        // yeniden oynatma: baştan (lacivert açılış), son kareden değil
+        ended = false;
+        try {
+          video.currentTime = 0;
+        } catch (e) {
+          /* yoksay: tarayıcı sondan baştan başlatır */
+        }
+      }
       play();
     } else {
       userPaused = true;
@@ -152,6 +171,7 @@ export function mount(el, { fx, scroll, on }) {
     ctl.removeEventListener('click', onClick);
     video.removeEventListener('playing', onPlaying);
     video.removeEventListener('pause', onPause);
+    video.removeEventListener('ended', onEnded);
     video.removeEventListener('error', onError);
     video.pause();
     el.classList.remove('has-video');

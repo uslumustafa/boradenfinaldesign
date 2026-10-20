@@ -13,9 +13,9 @@ import { makeFilters } from '../scripts/filters.mjs';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const data = JSON.parse(fs.readFileSync(path.join(ROOT, 'src/data/scene-reach.json'), 'utf8'));
 const REGEN = 'şekiller ya da yerleşim değişmiş: node scripts/scene-reach.mjs ile yeniden üretin';
-// İki katsayılı modelin gevşek kaldığı sahne: kapı kemeri ekranın büyük kısmına yayılır, yakın plandadır (sayfa kahramanında
-// kullanılmıyor; iletişim sayfasının alt bandında). Veri güvenli yönde (çizgi şeklin solunda); yalnızca sıkılık denetlenmez.
-const LOOSE = new Set(['kapi']);
+// İki katsayılı modelin gevşek kaldığı sahneler (veri güvenli yönde, çizgi şeklin solunda; yalnızca sıkılık denetlenmez). Ekim 2026'ya
+// kadar kapı kemeri (`kapi`) buradaydı; yerini alan `diyalog` balonları sahne ölçüsündedir, gevşek sahne kalmadı.
+const LOOSE = new Set([]);
 
 test('her sahnenin (sağda şekli olan) verisi var, fazlası yok', () => {
   const want = FORMATIONS.map((f) => f.id).filter((id) => !SKIP.has(id)).sort();
