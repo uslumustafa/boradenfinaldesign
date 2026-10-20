@@ -6,8 +6,9 @@
   margin-top: 1.6rem;
   max-width: 38ch;
 }
+/* başlığın ikinci satırı (<em>) ilk satırla birebir aynı: yazı, kalınlık, renk (müşteri, 20 Ekim 2026: «tek tip») */
 .sechead h2 em {
-  font-weight: 300;
+  font-weight: inherit;
   color: inherit;
 }
 

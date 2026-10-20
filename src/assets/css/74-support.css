@@ -1504,7 +1504,6 @@
 .rn-row__xin {
   min-height: 0;
   overflow: hidden;
-  font-style: italic;
   font-size: var(--fs-2);
   line-height: 1.4;
   color: var(--ink);

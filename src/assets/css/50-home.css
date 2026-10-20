@@ -629,9 +629,6 @@ html.is-opening .hud {
   font-size: min(clamp(1.9rem, 1rem + 2.5vw, 3.6rem), 6svh); /* kısa ekranda yüksekliğe göre küçülür; 8 alan + başlık tek ekrana sığar */
   line-height: 1;
 }
-.areas__head h2 em {
-  color: var(--on-dark-2);
-}
 .areas__list {
   grid-area: list;
   border-top: 1px solid var(--line-dark-2);
@@ -1014,9 +1011,6 @@ html[data-fx='off'] .units__p {
   font-size: clamp(2rem, 1.2rem + 3vw, 4rem);
   line-height: 1;
 }
-.sectors__head h2 em {
-  color: var(--on-dark-2);
-}
 .sectorlist {
   grid-area: list;
   border-top: 1px solid var(--line-dark-2);
@@ -1251,9 +1245,6 @@ html[data-fx='off'] .units__p {
   margin-top: 1rem;
   font-size: var(--fs-5);
   line-height: 1;
-}
-.join__head h2 em {
-  color: var(--ink-3);
 }
 .join__body {
   display: grid;

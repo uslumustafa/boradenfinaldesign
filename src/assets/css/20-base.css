@@ -114,10 +114,22 @@ h3 {
 h4 {
   font-size: var(--fs-3);
 }
-/* italik vurgu («Sektörün dilini / bilen bir bakış»): aynı ailenin italiği; ikinci bir yazı tipi kullanılmaz */
+/* Tek yazı tipi, tek biçim — müşteri (20 Ekim 2026): «tüm yazılar tek font olsun; italik, eğik olmasın; düz — Deloitte'nin düz
+   yazısı (Open Sans)». Sitede italik yoktur: tarayıcının varsayılan italikleri (em, i, cite, dfn, var, address) düz, italik yazı
+   dosyası yüklenmez (00-fonts.css) ve tarayıcı eğik taklidi de üretmez (font-synthesis-style). Başlıklardaki <em> yalnızca ikinci
+   satırı ayırır («Sektörün dilini / bilen bir bakış»); yazısı, kalınlığı ve rengi ilk satırla aynıdır (proje sahibi: «alttaki yazı
+   ile üstteki yazı aynı olacak, eğik vs. istemiyorlar, tek tip»). Denetim: tests/headings.e2e.mjs. */
+html {
+  font-synthesis-style: none;
+}
 em,
+i,
+cite,
+dfn,
+var,
+address,
 .it {
-  font-style: italic;
+  font-style: normal;
 }
 strong,
 b {

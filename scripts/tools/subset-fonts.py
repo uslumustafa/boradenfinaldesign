@@ -30,10 +30,10 @@ NM = os.path.join(ROOT, 'node_modules', '@fontsource')
 OUT_FONTS = os.path.join(ROOT, 'src', 'assets', 'fonts')
 OUT_CSS = os.path.join(ROOT, 'src', 'assets', 'css', '00-fonts.css')
 
-# Yazı tipi: Open Sans, her yerde (müşteri isteği, Ekim 2026: Deloitte sitesindeki aile; «bir cümlede iki yazı tipi olmasın» —
-# vurgu italiği de Open Sans'tır, ikinci aile yok). SIL Open Font License.
+# Yazı tipi: Open Sans, her yerde (müşteri isteği, Ekim 2026: Deloitte sitesindeki aile; «bir cümlede iki yazı tipi olmasın»;
+# 20 Ekim: «tüm yazılar tek font, italik/eğik olmasın» — yalnızca düz yüzler, italik yok). SIL Open Font License.
 FAMILIES = [
-    ('Open Sans', 'open-sans', ['300', '300-italic', '400', '400-italic', '500', '600', '600-italic', '700']),
+    ('Open Sans', 'open-sans', ['300', '400', '500', '600', '700']),
 ]
 
 # unicode-range ile aynı kapsam (tarayıcı bu aralık dışındaki karakter için yedek yazı tipine geçer)

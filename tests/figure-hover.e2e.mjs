@@ -174,14 +174,34 @@ for (const P of PAGES) {
     await page.waitForTimeout(SETTLE);
     await check(`${R2.id} → ${R3.id} → (yarıda) ${R1.id}`, [R1.id, R2.id, R3.id, 'ara'], R1.id);
 
-    // 4) hızla birkaç satırın üzerinden geçip sonuncuda durma: aradaki satırların şekli gelmez
+    // 4) hızla birkaç satırın üzerinden geçip sonuncuda durma: aradaki satırların şekli gelmez.
+    //    Kural: satırda 90 ms (figure.js) durulmadıkça o satırın şekli gelmez. Satırlarda kalış süresi sayfa içinde ölçülür — yazılımla
+    //    çizen yavaş makinede (ör. GitHub'ın ekran kartsız sunucusu) tek bir fare adımı ~100 ms sürebilir; 90 ms'yi aşan satırın şekli
+    //    kurala uygundur, izin verilenlere eklenir.
     const far = [...info.rows].reverse().find((r) => r.id !== R1.id && !base.includes(r.id) && Math.abs(r.y - R1.y) > 150);
     if (far) {
       const farId = far.id;
+      await page.evaluate(() => {
+        window.__rowDwell = [];
+        for (const el of document.querySelectorAll('[data-shape-hover]')) {
+          if (el.__dwell) continue;
+          el.__dwell = true;
+          el.addEventListener('pointerenter', () => window.__rowDwell.push({ id: el.dataset.shapeHover, t0: performance.now() }));
+          el.addEventListener('pointerleave', () => {
+            const d = window.__rowDwell.filter((x) => x.id === el.dataset.shapeHover).pop();
+            if (d && d.t1 === undefined) d.t1 = performance.now();
+          });
+        }
+      });
       await rec();
       await page.mouse.move(far.x, far.y, { steps: 4 });
       await page.waitForTimeout(SETTLE);
-      await check(`hızlı geçiş ${R1.id} ⇒ ${farId}`, [R1.id, farId, 'ara'], farId);
+      const lingered = await page.evaluate(
+        (skip) => [...new Set(window.__rowDwell.filter((d) => d.t1 !== undefined && d.t1 - d.t0 >= 85 && !skip.includes(d.id)).map((d) => `${d.id}:${Math.round(d.t1 - d.t0)}`))],
+        [R1.id, farId]
+      );
+      const extra = lingered.map((x) => x.split(':')[0]);
+      await check(`hızlı geçiş ${R1.id} ⇒ ${farId}${lingered.length ? ` (yavaş adımda ≥ 90 ms kalınan satır: ${lingered.join(', ')} ms)` : ''}`, [R1.id, farId, 'ara', ...extra], farId);
       await hover(R1);
       await page.waitForTimeout(SETTLE);
     }
