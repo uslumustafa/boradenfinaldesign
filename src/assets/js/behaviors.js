@@ -166,10 +166,19 @@ export function createBehaviors({ fx, scroll, world }) {
   }
 
   /* ── Hizmet alanları: sabit sahne. Kaydırma alanı değiştirir; alan adına tıklamak (ya da klavyeyle odaklanmak) yalnızca o alanı seçer ve
-     sahneyi o alanın konumuna kaydırır (3B şekil de değişir). Alan sayfasına gitmek için gövdedeki «İncele» bağlantısı kullanılır. */
+     sahneyi o alanın konumuna kaydırır (3B şekil de değişir). Alan sayfasına gitmek için gövdedeki «İncele» bağlantısı kullanılır.
+     Fareyle üzerine gelme (21 Ekim 2026, müşteri: «mouse ile hizmetin üzerine gelindiğinde de şekil değişmeli; illa basınca ya da kaydırınca
+     değil, ikisiyle de»): imleç bir alanın satırında AREA_INTENT ms kalınca 3B şekil doğrudan o alanın şekline döner (data-world-force;
+     yönetmen kaydırma beklemeden okur). Seçili (açık) alan değişmez: satırların yeri oynamaz, imlecin altındaki satır kaymaz. Listeden
+     çıkınca AREA_LEAVE ms sonra şekil kaydırmanın gösterdiği alana döner. Kaydırma seçili alanı değiştirince önizleme bırakılır — şekil
+     kaydırmayı izler; imleç yeniden kıpırdayınca (gerçek hareket; kaydırmanın ardından gelen yapay olay sayılmaz) önizleme yeniden başlar.
+     Klavyede görünür odak aynı önizlemeyi yapar. Dokunmatikte ve dar (sabitlenmeyen) düzende önizleme yok. */
+  const AREA_INTENT = 120;
+  const AREA_LEAVE = 220;
   function areas(root) {
     qsa('[data-areas]', root).forEach((sec) => {
       const items = qsa('.area', sec);
+      const list = qs('.areas__list', sec) || sec;
       const n = items.length;
       let active = -1;
       let holdUntil = 0; // tıklamayla başlayan kaydırma sürerken kaydırma seçimi devralmasın
@@ -185,9 +194,52 @@ export function createBehaviors({ fx, scroll, world }) {
           qs('.area__link', it)?.setAttribute('aria-expanded', open || k === i ? 'true' : 'false');
         });
       };
+      // 3B şekil hedefi: tıklamayla başlayan kaydırmanın hedefi (clickI) ya da üzerine gelinen alan (hoverI); ikisi de yoksa kaydırma
+      const [a0] = String(sec.dataset.worldRange || '').split(',').map(Number);
+      let clickI = null;
+      let hoverI = null;
+      const sync = () => {
+        const v = clickI ?? hoverI;
+        const next = v == null || !Number.isFinite(a0) ? undefined : String(a0 + v);
+        if (sec.dataset.worldForce === next) return;
+        if (next === undefined) delete sec.dataset.worldForce;
+        else sec.dataset.worldForce = next;
+        scroll.refresh(); // yönetmen bu karede yeni hedefi okusun (kaydırma beklenmez)
+      };
+      let pend;
+      let hoverT = 0;
+      const wantHover = (v, ms) => {
+        if (pend === v && hoverT) return; // aynı satırın içinde gezinme zamanlayıcıyı yeniden başlatmaz
+        clearTimeout(hoverT);
+        hoverT = 0;
+        pend = undefined;
+        if (hoverI === v) return;
+        const go = () => {
+          hoverT = 0;
+          pend = undefined;
+          hoverI = v;
+          sync();
+        };
+        if (ms <= 0) go();
+        else {
+          pend = v;
+          hoverT = setTimeout(go, ms);
+        }
+      };
+      const dropHover = () => {
+        clearTimeout(hoverT);
+        hoverT = 0;
+        pend = undefined;
+        if (hoverI !== null) {
+          hoverI = null;
+          sync();
+        }
+      };
       const off = scroll.add(sec, 'pin', (p) => {
         if (!pinned() || performance.now() < holdUntil) return;
-        setActive(Math.min(n - 1, Math.floor(p * n + 0.18)));
+        const i = Math.min(n - 1, Math.floor(p * n + 0.18));
+        if (i !== active && active >= 0) dropHover(); // kaydırma alanı değiştirdi: şekil kaydırmayı izler
+        setActive(i);
       });
       on(off);
       // seçilen alanın kaydırma konumu: ilerleme (i + 0,35) / n → sahne tam o alanın şeklinde durur
@@ -198,12 +250,13 @@ export function createBehaviors({ fx, scroll, world }) {
         const top = scrollY + r.top + ((i + 0.35) / n) * span;
         holdUntil = performance.now() + 1200;
         // kaydırma sürerken şekil doğrudan hedef alanınki olsun (director › data-world-force); aradaki alanların şekli görünmez
-        const [a] = String(sec.dataset.worldRange || '').split(',').map(Number);
-        if (Number.isFinite(a)) {
-          sec.dataset.worldForce = String(a + i);
-          clearTimeout(forceT);
-          forceT = setTimeout(() => delete sec.dataset.worldForce, 1200);
-        }
+        clickI = i;
+        sync();
+        clearTimeout(forceT);
+        forceT = setTimeout(() => {
+          clickI = null;
+          sync();
+        }, 1200);
         scrollTo({ top, behavior: fx.tier === 'off' ? 'auto' : 'smooth' });
       };
       items.forEach((it, i) => {
@@ -213,7 +266,11 @@ export function createBehaviors({ fx, scroll, world }) {
           setActive(i);
           if (pinned()) goTo(i);
         };
-        const focus = () => pinned() && setActive(i);
+        const focus = () => {
+          if (!pinned()) return;
+          setActive(i);
+          if (btn.matches(':focus-visible')) wantHover(i, 0); // klavye: şekil o alanınki
+        };
         btn.addEventListener('click', click);
         btn.addEventListener('focus', focus);
         on(() => {
@@ -221,11 +278,43 @@ export function createBehaviors({ fx, scroll, world }) {
           btn.removeEventListener('focus', focus);
         });
       });
-      const mqChange = () => setActive(Math.max(0, active), true);
+      // fare/kalem: yalnızca gerçek imleç hareketi (kaydırmanın ardından tarayıcının gönderdiği yapay olay aynı konumdadır)
+      let lastX = NaN;
+      let lastY = NaN;
+      const move = (e) => {
+        if (e.pointerType === 'touch' || !pinned()) return;
+        if (e.clientX === lastX && e.clientY === lastY) return;
+        lastX = e.clientX;
+        lastY = e.clientY;
+        const it = e.target.closest?.('.area');
+        const i = it ? items.indexOf(it) : -1;
+        if (i >= 0) wantHover(i, AREA_INTENT);
+      };
+      const leave = (e) => {
+        if (e.pointerType === 'touch') return;
+        lastX = NaN;
+        lastY = NaN;
+        wantHover(null, AREA_LEAVE);
+      };
+      const focusOut = (e) => {
+        if (list.contains(e.relatedTarget)) return; // odak listede kaldı
+        if (!list.matches(':hover')) wantHover(null, 0);
+      };
+      list.addEventListener('pointermove', move);
+      list.addEventListener('pointerleave', leave);
+      list.addEventListener('focusout', focusOut);
+      const mqChange = () => {
+        dropHover();
+        setActive(Math.max(0, active), true);
+      };
       mq.addEventListener('change', mqChange);
       on(() => {
         mq.removeEventListener('change', mqChange);
+        list.removeEventListener('pointermove', move);
+        list.removeEventListener('pointerleave', leave);
+        list.removeEventListener('focusout', focusOut);
         clearTimeout(forceT);
+        clearTimeout(hoverT);
         delete sec.dataset.worldForce;
       });
       setActive(0, true);
