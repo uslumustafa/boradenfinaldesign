@@ -48,13 +48,20 @@
   --lit-dim: 0.16;
 
   /* Tipografi */
-  /* Tek aile (müşteri isteği, Ekim 2026): her yerde Open Sans (Deloitte sitesindeki yazı tipi); italik vurgu da Open Sans —
-     bir cümlede iki yazı tipi görünmez. Belirteç adları korunur (Wagtail şablonları aynı adları kullanır): display = başlık,
-     action = düğme, mono = etiket ve numaralar (eşit genişlikli rakamlar font-variant-numeric ile; ad tarihseldir). */
-  --f-display: 'Open Sans', 'Segoe UI', Arial, sans-serif;
+  /* boraden.com.tr'deki yazı tipleri (müşteri, 22 Ekim 2026: «fontları bizim web sitesindeki gibi yapacağız»; «Tam, doğru,
+     zamanında» «Google yazı karakteri gibi kalın olsun» — eski sitede Montserrat 700): başlıklar, menü, slogan, büyük sayılar ve öne
+     çıkan cümleler Montserrat; metin, düğme, etiket ve form Open Sans. Proje sahibi: «aynı yazı üstünde çift font olmayacak» — bir
+     başlığın, cümlenin ya da düğmenin içi tek yazı tipidir (italik yok; denetim: tests/headings.e2e.mjs). Belirteç adları korunur
+     (Wagtail şablonları aynı adları kullanır): display = başlık, action = düğme, mono = etiket ve numaralar (ad tarihseldir). */
+  --f-display: 'Montserrat', 'Segoe UI', Arial, sans-serif;
   --f-sans: 'Open Sans', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
   --f-action: 'Open Sans', 'Segoe UI', Arial, sans-serif;
   --f-mono: 'Open Sans', 'Segoe UI', Arial, sans-serif;
+  /* Montserrat kalınlıkları (eski sitedeki gibi: sayfa ve bölüm başlıkları 600, slogan 700, öne çıkan cümleler 400) */
+  --fw-hero: 700; /* ana sayfa sloganı «Tam, doğru, zamanında» */
+  --fw-title: 600; /* başlıklar, adlar, menü */
+  --fw-figure: 500; /* büyük sayılar, tarihler */
+  --fw-display-text: 400; /* öne çıkan cümleler, giriş paragrafları, alıntılar */
 
   --fs-0: clamp(0.78rem, 0.76rem + 0.1vw, 0.84rem);
   --fs-1: clamp(0.94rem, 0.92rem + 0.15vw, 1.02rem);

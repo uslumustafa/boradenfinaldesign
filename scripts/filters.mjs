@@ -79,31 +79,49 @@ export function longestWord(s) {
   return max;
 }
 
-// Kahraman başlığı yazı tipinde (Open Sans 300, harf aralığı −0,018em) harf başına ilerleme genişliği (em; tarayıcıda ölçüldü,
-// kerning hariç). Tabloda olmayan karakter 0,70em sayılır. Yazı tipi değişirse yeniden ölçülür (Ekim 2026: Montserrat → Open Sans).
+// Sayfa kahramanı başlığı yazı tipinde (Montserrat 600) harf başına ilerleme genişliği (em; tarayıcıda ölçüldü, kerning ve harf aralığı
+// hariç — başlığın eksi harf aralığı genişliği yalnızca azaltır). Tabloda olmayan karakter 0,70em sayılır. Yazı tipi değişirse yeniden
+// ölçülür (14 Ekim 2026: Montserrat → Open Sans 300; 22 Ekim 2026: boraden.com.tr'deki gibi Montserrat 600).
 const HERO_ADV = {
-  a: 0.5118, b: 0.5772, c: 0.4571, ç: 0.4571, d: 0.5772, e: 0.5313, f: 0.2823, g: 0.5015, ğ: 0.5015, h: 0.5723, ı: 0.2081, i: 0.2081,
-  j: 0.2081, k: 0.4659, l: 0.2081, m: 0.8653, n: 0.5723, o: 0.5684, ö: 0.5684, p: 0.5772, q: 0.5772, r: 0.3712, s: 0.4478, ş: 0.4478,
-  t: 0.3165, u: 0.5723, ü: 0.5723, v: 0.4415, w: 0.7047, x: 0.4796, y: 0.441, z: 0.4434, â: 0.5118, î: 0.2081, û: 0.5723,
-  A: 0.5826, B: 0.609, C: 0.6026, Ç: 0.6026, D: 0.6881, E: 0.5342, F: 0.4844, G: 0.7051, Ğ: 0.7051, H: 0.7012, I: 0.234, İ: 0.234,
-  J: 0.2286, K: 0.5631, L: 0.4947, M: 0.8453, N: 0.7032, O: 0.7462, Ö: 0.7462, P: 0.567, Q: 0.7462, R: 0.5762, S: 0.5274, Ş: 0.5274,
-  T: 0.5064, U: 0.7012, Ü: 0.7012, V: 0.5591, W: 0.8741, X: 0.5196, Y: 0.5098, Z: 0.5577, Â: 0.5826, Î: 0.234, Û: 0.7012,
-  0: 0.5528, 1: 0.5528, 2: 0.5528, 3: 0.5528, 4: 0.5528, 5: 0.5528, 6: 0.5528, 7: 0.5528, 8: 0.5528, 9: 0.5528,
-  '.': 0.2203, ',': 0.1968, ':': 0.2203, ';': 0.2203, '!': 0.2222, '?': 0.4029, '(': 0.254, ')': 0.254, '’': 0.127, "'": 0.1739,
-  '"': 0.335, '«': 0.4161, '»': 0.4161, '&': 0.6954, '%': 0.7891, '+': 0.5528,
+  0: 0.673, 1: 0.381, 2: 0.582, 3: 0.582, 4: 0.679, 5: 0.584, 6: 0.627, 7: 0.608, 8: 0.652, 9: 0.627, a: 0.607, b: 0.686, c: 0.581,
+  ç: 0.581, d: 0.687, e: 0.622, f: 0.369, g: 0.694, ğ: 0.694, h: 0.685, ı: 0.289, i: 0.289, j: 0.295, k: 0.635, l: 0.289, m: 1.053,
+  n: 0.685, o: 0.645, ö: 0.645, p: 0.686, q: 0.686, r: 0.42, s: 0.515, ş: 0.515, t: 0.424, u: 0.681, ü: 0.681, v: 0.578, w: 0.919,
+  x: 0.573, y: 0.578, z: 0.532, â: 0.607, î: 0.289, û: 0.681, A: 0.749, B: 0.761, C: 0.718, Ç: 0.718, D: 0.826, E: 0.67, F: 0.637,
+  G: 0.772, Ğ: 0.772, H: 0.81, I: 0.319, İ: 0.319, J: 0.527, K: 0.729, L: 0.599, M: 0.955, N: 0.81, O: 0.842, Ö: 0.842, P: 0.726,
+  Q: 0.842, R: 0.731, S: 0.629, Ş: 0.629, T: 0.602, U: 0.789, Ü: 0.789, V: 0.729, W: 1.144, X: 0.693, Y: 0.661, Z: 0.663, Â: 0.749,
+  Î: 0.319, Û: 0.789, '.': 0.244, ',': 0.244, ':': 0.244, ';': 0.244, '!': 0.278, '?': 0.581, '(': 0.347, ')': 0.348, '’': 0.244,
+  "'": 0.22, '"': 0.413, '«': 0.535, '»': 0.535, '&': 0.706, '%': 0.86, '+': 0.59, '-': 0.385, '–': 0.5, '—': 1, '/': 0.371,
+};
+// Ana sayfa sloganı yazı tipinde (Montserrat 700, «Tam, doğru, zamanında» — müşteri: «Google yazı karakteri gibi kalın») aynı ölçüm.
+const TAGLINE_ADV = {
+  0: 0.679, 1: 0.392, 2: 0.59, 3: 0.592, 4: 0.689, 5: 0.595, 6: 0.637, 7: 0.62, 8: 0.66, 9: 0.637, a: 0.617, b: 0.69, c: 0.591,
+  ç: 0.591, d: 0.692, e: 0.631, f: 0.387, g: 0.7, ğ: 0.7, h: 0.691, ı: 0.301, i: 0.301, j: 0.307, k: 0.655, l: 0.301, m: 1.049,
+  n: 0.691, o: 0.655, ö: 0.655, p: 0.69, q: 0.69, r: 0.431, s: 0.531, ş: 0.531, t: 0.435, u: 0.687, ü: 0.687, v: 0.598, w: 0.937,
+  x: 0.595, y: 0.598, z: 0.543, â: 0.617, î: 0.301, û: 0.687, A: 0.766, B: 0.765, C: 0.724, Ç: 0.724, D: 0.826, E: 0.671, F: 0.639,
+  G: 0.771, Ğ: 0.771, H: 0.808, I: 0.328, İ: 0.328, J: 0.541, K: 0.74, L: 0.604, M: 0.955, N: 0.808, O: 0.844, Ö: 0.844, P: 0.732,
+  Q: 0.844, R: 0.735, S: 0.638, Ş: 0.638, T: 0.618, U: 0.788, Ü: 0.788, V: 0.746, W: 1.163, X: 0.714, Y: 0.676, Z: 0.671, Â: 0.766,
+  Î: 0.328, Û: 0.788, '.': 0.262, ',': 0.262, ':': 0.262, ';': 0.262, '!': 0.289, '?': 0.589, '(': 0.357, ')': 0.358, '’': 0.262,
+  "'": 0.23, '"': 0.437, '«': 0.568, '»': 0.568, '&': 0.728, '%': 0.877, '+': 0.599, '-': 0.386, '–': 0.5, '—': 1, '/': 0.392,
 };
 // En uzun kelimenin kahraman başlığı yazı tipindeki genişliği (em, iki ondalık). Kelimeler longestWord ile aynı kuralla ayrılır;
 // kelimeye bitişik noktalama (virgül, nokta, parantez…) genişliğe katılır.
 // .phero h1 yazı boyunu buna göre sınırlar (style="--lwe: …"): sütuna sığmayan uzun kelime harf ortasından bölünmez, başlık
 // yalnızca gerektiği kadar küçülür (harf sayısı × sabit katsayı tahmininden daha az). Wagtail karşılığı: boraden_tags › longest_word_em.
-export function longestWordEm(s) {
+export function longestWordEm(s, adv = HERO_ADV) {
   let max = 0;
   for (const w of plainInline(String(s ?? '')).split(/[\s‐-―/-]+/)) {
     let em = 0;
-    for (const ch of w) em += HERO_ADV[ch] ?? 0.7; // noktalama da sayılır: tarayıcı «Perakende,» kelimesini virgülüyle birlikte taşır
+    for (const ch of w) em += adv[ch] ?? 0.7; // noktalama da sayılır: tarayıcı «Perakende,» kelimesini virgülüyle birlikte taşır
     if (em > max) max = em;
   }
   return Math.round(max * 100) / 100;
+}
+
+// Ana sayfa sloganının en geniş satırı (em; Montserrat 700): satırlar taglineWords ile aynı kuralla ayrılır, satır içindeki en uzun
+// kelime ölçülür. .hero__title yazı boyunu buna göre sınırlar (style="--twe: …"): «zamanında» ve tiki dar telefonda (320 px) aynı
+// satırda kalır, tik alt satıra düşmez. Wagtail karşılığı: boraden_tags › tagline_em.
+export function taglineEm(s) {
+  return Math.max(0, ...taglineWords(s).map((w) => longestWordEm(w, TAGLINE_ADV)));
 }
 
 // Telefon numarası: rakam grupları arasında bölünmez boşluk (U+00A0); satır yalnızca alan kodundan sonra kırılabilir.
@@ -198,6 +216,7 @@ export function makeFilters() {
     },
     strip_tags: (s) => String(s || '').replace(/<[^>]*>/g, ''),
     tagline_words: (s, max) => taglineWords(s, max),
+    tagline_em: (s) => taglineEm(s),
     phone: (s) => phoneNbsp(s),
     // dizi verilirse en uzunu (key: öğe alanı) — ör. kart ızgarasında ortak yazı boyu: {{ items | longest_word('title') }}
     // formasyon kimliği → 3B dünya sahne numarası (koyu bantlarda): data-world="{{ 'matris' | scene }}"; bilinmeyen kimlik derlemeyi durdurur

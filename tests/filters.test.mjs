@@ -2,7 +2,7 @@
 //   node --test tests/filters.test.mjs
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { taglineWords, longestWord, makeFilters, phoneNbsp } from '../scripts/filters.mjs';
+import { taglineWords, taglineEm, longestWord, longestWordEm, makeFilters, phoneNbsp } from '../scripts/filters.mjs';
 import { loadData } from '../scripts/build.mjs';
 
 test('slogan ana sayfa başlığının satırlarına ayrılır (virgülle), sondaki noktalama atılır', () => {
@@ -53,4 +53,15 @@ test('telefon numarası yalnızca alan kodundan sonra kırılabilir (gruplar bö
   assert.equal(phoneNbsp('  0212  483 26 11 '), `0212${NB}483${NB}26${NB}11`);
   assert.equal(phoneNbsp(''), '');
   assert.equal(makeFilters().phone('+90 (532) 000 00 00').split(' ').length, 2);
+});
+
+// 22 Ekim 2026: slogan Montserrat 700 (boraden.com.tr'deki gibi); ana sayfa başlığının yazı boyu en geniş satıra göre sınırlanır
+// (--twe). Ölçü satır içindeki en uzun kelimenin Montserrat 700 genişliğidir; sayfa kahramanı başlıkları Montserrat 600 ölçüsüyle.
+test('tagline_em: sloganın en geniş satırı (Montserrat 700, em); longest_word_em Montserrat 600', () => {
+  assert.equal(taglineEm('Tam, doğru, zamanında.'), 5.82);
+  assert.equal(taglineEm(''), 0);
+  assert.ok(taglineEm('Tam, doğru, zamanında.') > longestWordEm('zamanında'), '700 kalınlık 600\'den geniş');
+  assert.ok(taglineEm('Güvenilir danışmanlık ortağınız') > taglineEm('Tam, doğru, zamanında.'), 'uzun kelimeli slogan daha geniş');
+  const f = makeFilters();
+  assert.equal(f.tagline_em('Tam, doğru, zamanında.'), 5.82);
 });

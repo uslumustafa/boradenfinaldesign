@@ -237,7 +237,7 @@
 .mini__out .is-main dd {
   font-family: var(--f-display);
   font-size: 2rem;
-  font-weight: 400;
+  font-weight: var(--fw-figure);
   letter-spacing: -0.02em;
 }
 .mini__note {
@@ -385,7 +385,7 @@ span.chip {
   list-style: none;
   font-family: var(--f-display);
   font-size: var(--fs-3);
-  font-weight: 400;
+  font-weight: var(--fw-title);
   line-height: 1.2;
   letter-spacing: -0.01em;
 }

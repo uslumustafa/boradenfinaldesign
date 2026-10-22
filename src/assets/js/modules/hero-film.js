@@ -1,7 +1,8 @@
-// Kahraman videosu (ana sayfa, «Tam doğru zamanında»): giriş tabelasından cam kapıya, resepsiyondan ofis alanının geçişine uzanan kısa,
-// sessiz döngü. Müşteri isteği (Ekim 2026): eski «Ofisimiz» filmi kaldırıldı, video kahramanın zemini oldu. 20 Ekim 2026 (müşteri: «insan
-// yüzü görünmesin, tam kapıdan giriş anında dursun»): video ofis alanına geçerken, kimse görünmeden biter; aynı gün (proje sahibi: «video
-// bitince eskisi gibi başa sarıyordu, tekrar öyle»): bitince laciverde geçip başa sarar (döngü). Kurgu: scripts/tools/hero-film.py.
+// Kahraman videosu (ana sayfa, «Tam doğru zamanında»): giriş tabelasından cam kapıya, resepsiyondan ofis alanının geçişine uzanan çekim
+// yarı hızda, ardından ofisin içi arşiv fotoğraflarıyla (açık ofis, cam bölmeli odalar, toplantı odası, karşılama alanı) — ≈ 33 sn,
+// sessiz döngü. Müşteri isteği (Ekim 2026): eski «Ofisimiz» filmi kaldırıldı, video kahramanın zemini oldu; 20 Ekim: «insan yüzü
+// görünmesin» (çekim kimse görünmeden ofis alanının geçişinde biter); 22 Ekim: «videoyu yavaşlat, içeriyi gösteren bir video olsun,
+// fotoğraflarla birleştir» (yüz yok, bulanıklık yok). Bitince laciverde geçip başa sarar (döngü). Kurgu: scripts/tools/hero-film.py.
 //
 // Oynatma kuralları (bütçe + erişilebilirlik):
 //   • Kendiliğinden oynatma: «Tam» ya da «Hafif» katman ve veri tasarrufu kapalı (telefon ve tablet dahil; video her ekranda başlığın
@@ -17,7 +18,7 @@
 //   • Dosya ekran genişliğine göre seçilir: cihaz pikseli genişliği (CSS px × DPR, DPR en çok 2) 1400'ü aşarsa 1080p, değilse 720p.
 //     Dosya ilk oynatmada yüklenir (preload="none" + data-src).
 // Depolama yok; sunucuya istek yok (yalnızca video dosyası).
-const POSTER_T = 0.9; // sn — poster karesi (hero-film.py › POSTER_AT: 27. kare)
+const POSTER_T = 1.8; // sn — poster karesi (hero-film.py › POSTER_SRC: kaynağın 27. karesi = yarı hızlı çıktının 54. karesi)
 
 export function mount(el, { fx, scroll, on }) {
   const video = el.querySelector('.hero__video');

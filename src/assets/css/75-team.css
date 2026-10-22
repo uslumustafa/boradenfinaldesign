@@ -53,7 +53,7 @@
   display: grid;
   place-items: center;
   font-family: var(--f-display);
-  font-weight: 300;
+  font-weight: var(--fw-title);
   line-height: 1;
   letter-spacing: -0.02em;
   font-size: calc(var(--av) * 0.42);
@@ -116,7 +116,7 @@
 .tm-head__t {
   max-width: 60ch;
   font-family: var(--f-display);
-  font-weight: 300;
+  font-weight: var(--fw-title);
   font-size: var(--fs-3);
   line-height: 1.4;
   color: var(--ink-2);
@@ -160,7 +160,7 @@
 }
 .tm-dept__t {
   font-family: var(--f-display);
-  font-weight: 400;
+  font-weight: var(--fw-title);
   font-size: var(--fs-3);
   line-height: 1.15;
   letter-spacing: -0.015em;
@@ -233,7 +233,7 @@
 }
 .prow__name {
   font-family: var(--f-display);
-  font-weight: 400;
+  font-weight: var(--fw-title);
   font-size: 1.28rem;
   line-height: 1.15;
   letter-spacing: -0.012em;
@@ -340,7 +340,7 @@
 }
 .who__t {
   font-family: var(--f-display);
-  font-weight: 400;
+  font-weight: var(--fw-title);
   font-size: clamp(1.2rem, 1rem + 0.5vw, 1.45rem);
   line-height: 1.2;
   letter-spacing: -0.012em;
@@ -435,7 +435,7 @@
 .tm-join__t {
   max-width: 21em;
   font-family: var(--f-display);
-  font-weight: 300;
+  font-weight: var(--fw-title);
   font-size: var(--fs-5);
   line-height: 1.12;
   letter-spacing: -0.022em;
@@ -469,7 +469,7 @@ html[data-fx='off'] .tm-join__t .w {
 .pband__t {
   max-width: 18em;
   font-family: var(--f-display);
-  font-weight: 300;
+  font-weight: var(--fw-title);
   font-size: var(--fs-5);
   line-height: 1.1;
   letter-spacing: -0.022em;
@@ -535,7 +535,7 @@ html[data-fx='off'] .tm-join__t .w {
 .pp__name {
   margin-top: 0.35rem;
   font-family: var(--f-display);
-  font-weight: 400;
+  font-weight: var(--fw-title);
   font-size: var(--fs-3);
   line-height: 1.12;
   letter-spacing: -0.015em;
@@ -776,7 +776,7 @@ html[data-fx='off'] .tm-join__t .w {
   padding-bottom: 0.75rem;
   border-bottom: 1px solid var(--ink);
   font-family: var(--f-display);
-  font-weight: 400;
+  font-weight: var(--fw-title);
   font-size: var(--fs-3);
   line-height: 1.15;
   letter-spacing: -0.012em;
@@ -844,7 +844,7 @@ html[data-fx='off'] .tm-join__t .w {
 .ab-team__t {
   max-width: 34ch;
   font-family: var(--f-display);
-  font-weight: 300;
+  font-weight: var(--fw-title);
   font-size: var(--fs-4);
   line-height: 1.2;
   letter-spacing: -0.018em;

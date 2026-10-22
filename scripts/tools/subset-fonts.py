@@ -3,7 +3,7 @@
 içeriğin gerektirdiği karakterlere indirilir. Önceden her yüz iki dosyaydı (Türkçe metinde ğ, ş, ı, İ latin-ext'ten gelir):
 sayfa başına 13–16 dosya ≈ 240–310 KB. Şimdi yüz başına bir dosya.
 
-Aile: Open Sans (FAMILIES). Kapsam: Temel Latin + Latin-1 (Ç Ö Ü Â Î Û…), Latin Genişletilmiş-A (Ğ ğ İ ı Ş ş ve Avrupa dilleri), genel noktalama
+Aileler: Montserrat ve Open Sans (FAMILIES). Kapsam: Temel Latin + Latin-1 (Ç Ö Ü Â Î Û…), Latin Genişletilmiş-A (Ğ ğ İ ı Ş ş ve Avrupa dilleri), genel noktalama
 (– — ‘ ’ “ ” … ‐ ‑), para birimleri (₺ €), ™, ok ve eksi işaretleri, birleşik işaretler. Glif biçimleri değişmez (aynı
 yazı tipinden alt küme); harf aralığı (kerning) ve OpenType özellikleri korunur.
 
@@ -30,10 +30,13 @@ NM = os.path.join(ROOT, 'node_modules', '@fontsource')
 OUT_FONTS = os.path.join(ROOT, 'src', 'assets', 'fonts')
 OUT_CSS = os.path.join(ROOT, 'src', 'assets', 'css', '00-fonts.css')
 
-# Yazı tipi: Open Sans, her yerde (müşteri isteği, Ekim 2026: Deloitte sitesindeki aile; «bir cümlede iki yazı tipi olmasın»;
-# 20 Ekim: «tüm yazılar tek font, italik/eğik olmasın» — yalnızca düz yüzler, italik yok). SIL Open Font License.
+# Yazı tipleri: boraden.com.tr'deki aileler (müşteri, 22 Ekim 2026: «fontları bizim web sitesindeki gibi yapacağız»; slogan
+# «Google yazı karakteri gibi kalın»): başlık, menü, slogan, büyük sayılar ve öne çıkan cümleler Montserrat; metin, düğme, etiket ve
+# form Open Sans. Bir yazının içi tek yazı tipidir (proje sahibi: «aynı yazı üstünde çift font olmayacak»). Yalnızca düz yüzler
+# (20 Ekim: «italik/eğik olmasın»). İkisi de SIL Open Font License.
 FAMILIES = [
-    ('Open Sans', 'open-sans', ['300', '400', '500', '600', '700']),
+    ('Montserrat', 'montserrat', ['400', '500', '600', '700']),
+    ('Open Sans', 'open-sans', ['400', '500', '600', '700']),
 ]
 
 # unicode-range ile aynı kapsam (tarayıcı bu aralık dışındaki karakter için yedek yazı tipine geçer)
@@ -90,9 +93,9 @@ def main():
     os.makedirs(OUT_FONTS, exist_ok=True)
     # eski çıktılar (bu betiğin ya da eski vendor-fonts.mjs'in) kaldırılır: yalnızca .woff2 ve fonts.json
     old = [f for f in os.listdir(OUT_FONTS) if f.endswith('.woff2') or f == 'fonts.json']
-    css = ['/* Otomatik üretildi: scripts/tools/subset-fonts.py (npm run fonts) — Open Sans (SIL OFL),',
-           '   Deloitte sitesindeki yazı tipi aileleri. Yüz başına tek dosya: latin + latin-ext birleşik, Türkçe için alt küme;',
-           '   dosya adında içerik özeti var (süresiz önbellek). */']
+    css = ['/* Otomatik üretildi: scripts/tools/subset-fonts.py (npm run fonts) — Montserrat ve Open Sans (SIL OFL),',
+           '   boraden.com.tr yazı tipi aileleri; yalnızca düz yüzler. Yüz başına tek dosya: latin + latin-ext birleşik, Türkçe için',
+           '   alt küme; dosya adında içerik özeti var (süresiz önbellek). */']
     manifest = {}
     total = 0
     new = set()

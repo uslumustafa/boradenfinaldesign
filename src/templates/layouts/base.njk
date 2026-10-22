@@ -22,7 +22,8 @@
   {# geniş kart yalnızca paylaşım görseli en az 1200 px genişse (şimdilik logo yer tutucu: küçük kart) #}
   <meta name="twitter:card" content="{{ 'summary_large_image' if share_image.width >= 1200 else 'summary' }}">
   <link rel="icon" href="data:,">
-  <link rel="preload" href="{{ font_url('open-sans-300-normal') }}" as="font" type="font/woff2" crossorigin>
+  {# ilk boyamanın yazı tipleri: başlıklar (Montserrat 600) ve metin (Open Sans 400); ana sayfa sloganı (Montserrat 700) home.njk'de #}
+  <link rel="preload" href="{{ font_url('montserrat-600-normal') }}" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="{{ font_url('open-sans-400-normal') }}" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/css/site.css?v={{ asset_v.css }}">
   {% block head_extra %}{% endblock %}

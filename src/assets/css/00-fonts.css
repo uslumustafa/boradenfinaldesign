@@ -1,13 +1,40 @@
-/* Otomatik üretildi: scripts/tools/subset-fonts.py (npm run fonts) — Open Sans (SIL OFL),
-   Deloitte sitesindeki yazı tipi ailesi; yalnızca düz yazı (Ekim 2026, müşteri: italik yok). Yüz başına tek dosya:
-   latin + latin-ext birleşik, Türkçe için alt küme; dosya adında içerik özeti var (süresiz önbellek). */
+/* Otomatik üretildi: scripts/tools/subset-fonts.py (npm run fonts) — Montserrat ve Open Sans (SIL OFL),
+   boraden.com.tr yazı tipi aileleri; yalnızca düz yüzler. Yüz başına tek dosya: latin + latin-ext birleşik, Türkçe için
+   alt küme; dosya adında içerik özeti var (süresiz önbellek). */
 
 @font-face {
-  font-family: 'Open Sans';
+  font-family: 'Montserrat';
   font-style: normal;
   font-display: swap;
-  font-weight: 300;
-  src: url(/assets/fonts/open-sans-300-normal.f0f2d565.woff2) format('woff2');
+  font-weight: 400;
+  src: url(/assets/fonts/montserrat-400-normal.1bdfbe97.woff2) format('woff2');
+  unicode-range: U+0000-00FF,U+0100-017F,U+0192,U+0218-021B,U+02BB-02BC,U+02C6-02C7,U+02D8-02DD,U+0300-0308,U+030A-030C,U+0327-0329,U+2000-206F,U+20A0-20C0,U+2113,U+2116,U+2122,U+2190-2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(/assets/fonts/montserrat-500-normal.79537425.woff2) format('woff2');
+  unicode-range: U+0000-00FF,U+0100-017F,U+0192,U+0218-021B,U+02BB-02BC,U+02C6-02C7,U+02D8-02DD,U+0300-0308,U+030A-030C,U+0327-0329,U+2000-206F,U+20A0-20C0,U+2113,U+2116,U+2122,U+2190-2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(/assets/fonts/montserrat-600-normal.2d784061.woff2) format('woff2');
+  unicode-range: U+0000-00FF,U+0100-017F,U+0192,U+0218-021B,U+02BB-02BC,U+02C6-02C7,U+02D8-02DD,U+0300-0308,U+030A-030C,U+0327-0329,U+2000-206F,U+20A0-20C0,U+2113,U+2116,U+2122,U+2190-2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(/assets/fonts/montserrat-700-normal.f5de5190.woff2) format('woff2');
   unicode-range: U+0000-00FF,U+0100-017F,U+0192,U+0218-021B,U+02BB-02BC,U+02C6-02C7,U+02D8-02DD,U+0300-0308,U+030A-030C,U+0327-0329,U+2000-206F,U+20A0-20C0,U+2113,U+2116,U+2122,U+2190-2193,U+2212,U+2215,U+FEFF,U+FFFD;
 }
 

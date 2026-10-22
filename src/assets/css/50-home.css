@@ -41,7 +41,7 @@ html.is-opening .open.is-out {
 }
 .open__year {
   font-family: var(--f-display);
-  font-weight: 300;
+  font-weight: var(--fw-figure);
   font-size: clamp(4.2rem, 2rem + 10vw, 10rem);
   line-height: 1;
   letter-spacing: -0.04em;
@@ -109,8 +109,10 @@ html.is-opening .hud {
 }
 /* Zemin: ofis videosu (modules/hero-film.js). Poster ilk boyamada görünür; video posterin karesinden başlayıp üstüne açılır.
    Okunurluk: başlık sütunu soldan, alt satır (metin + düğmeler) alttan, üst bilginin altı yukarıdan lacivertle koyulaşır; tabela ve
-   ofis sağda açık kalır. Koyulaşma videonun en parlak karelerine göre ayarlıdır (kameranın beyaz duvarı geçtiği ≈3–4. sn): başlık
-   ≥ 8:1, alt metin ve üst etiket ≥ 4,5:1, çerçeveli düğme ≥ 4,5:1 (1024–2560 px genişlik; zeminin %95'lik en parlak noktasına göre).
+   ofis sağda açık kalır. Koyulaşma videonun en parlak karelerine göre ayarlıdır (yarı hızlı girişte kameranın beyaz duvarı geçtiği
+   ≈ 6–8. sn; iç mekân fotoğrafları betikte biraz koyulaştırılır — hero-film.py › PHOTO_GAMMA): başlık ≥ 7:1, alt metin, üst etiket
+   ve çerçeveli düğme ≥ 4,5:1 — her ekranda ve videonun her anında, zeminin %95'lik en parlak noktasına göre (tests/hero-contrast.e2e.mjs).
+   Kalın slogan (Montserrat 700, 22 Ekim 2026) daha geniş olduğundan soldaki koyulaşma biraz daha sağa uzanır.
    Beyaz sayfa üstüne binerken (--hp) zemin çok az yaklaşır ve kararır. */
 .hero__media {
   position: absolute;
@@ -150,9 +152,9 @@ html.is-opening .hud {
     linear-gradient(
       90deg,
       rgba(var(--n), 0.88) var(--l),
-      rgba(var(--n), 0.78) calc(var(--l) + min(26%, 380px)),
-      rgba(var(--n), 0.44) calc(var(--l) + min(52%, 780px)),
-      rgba(var(--n), 0.12) calc(var(--l) + min(74%, 1100px)),
+      rgba(var(--n), 0.8) calc(var(--l) + min(32%, 460px)),
+      rgba(var(--n), 0.5) calc(var(--l) + min(58%, 860px)),
+      rgba(var(--n), 0.14) calc(var(--l) + min(78%, 1160px)),
       rgba(var(--n), 0) 100%
     );
   pointer-events: none;
@@ -244,6 +246,7 @@ html.is-opening .hud {
 }
 .hero__inner {
   position: relative;
+  container-type: inline-size; /* başlık boyu içerik genişliğine göre (cqi): en geniş satır tikiyle birlikte sığar */
   display: flex;
   flex-direction: column;
   /* içerik dikeyde ortalanır: dar/kısa pencerede ve mobilde başlığın üstünde boş alan kalmaz */
@@ -256,13 +259,22 @@ html.is-opening .hud {
   transform-origin: 50% 100%;
   will-change: transform, opacity;
 }
+/* Dar ve kısa ekranlarda (dikey telefon, yan çevrilmiş telefon) içerik ekranın tepesine yaslanır: üst etiket sağ üstteki video
+   düğmesinin altında kalıyordu (320–360 px dikey, 568–844 px yatay). İçerik düğmenin altından başlar (düğmenin üst payı + yüksekliği
+   + boşluk); geniş ekranda içerik dikeyde ortalı ve düğmeden uzak, değişmez. */
+@media (max-width: 600px), (orientation: landscape) and (max-height: 520px) {
+  .hero__inner {
+    padding-top: calc(clamp(0.9rem, 2.4vh, 1.6rem) + 2.6rem + 0.9rem);
+  }
+}
 .hero__title {
   margin-top: 0.4rem;
-  /* genişlik ve yüksekliğe orantılı (eskisi --fs-7, en çok 10,4rem): kısa ekranda da üç satır ekrana rahat sığar */
-  font-size: min(clamp(2.8rem, 1rem + 6vw, 7.4rem), 12.5svh);
-  font-weight: 300;
+  /* genişlik ve yüksekliğe orantılı (eskisi --fs-7, en çok 10,4rem): kısa ekranda da üç satır ekrana rahat sığar.
+     Montserrat 700 (müşteri, 22 Ekim 2026: «Google yazı karakteri gibi kalın olsun» — boraden.com.tr'deki slogan) */
+  font-size: min(clamp(2.8rem, 1rem + 6vw, 7.4rem), 12.5svh, calc(100cqi / ((var(--twe, 5.82) + 0.7) * 1.02)));
+  font-weight: var(--fw-hero);
   line-height: 0.9;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.02em;
   overflow-wrap: anywhere;
 }
 .hero__title .line {
@@ -274,18 +286,20 @@ html.is-opening .hud {
 .hero__title .line > span {
   display: inline-block;
 }
-/* Başlıktaki üç noktalama yerine denetçi tiki: «Tam ✓ doğru ✓ zamanında ✓».
+/* Başlıktaki üç noktalama yerine denetçi tiki: «Tam ✓ doğru ✓ zamanında ✓». Kalın slogan yazısıyla dengeli olsun diye çizgisi
+   kalın (--tick-b; genişlik 0,54em: --twe hesabındaki 0,7em payı tik ve boşluğudur).
    Denetim çalışma kâğıtlarına atılan kontrol işareti = logodaki üç çizginin dili; marka üçlüsü (mavi · kırmızı · yeşil)
    sırayla «çizilir». Başlığın okunan metni h1[aria-label] içindedir (tik süstür). Efekt «Kapalı»/JS yokken tik hazır durur. */
 .hero__title .p {
+  --tick-b: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 19'%3E%3Cpath d='M2.6 9.2 8.6 15 21.4 2.6' fill='none' stroke='%23000' stroke-width='4.6' stroke-linecap='butt' stroke-linejoin='miter'/%3E%3C/svg%3E");
   display: inline-block;
-  width: 0.5em;
-  height: 0.375em;
+  width: 0.54em;
+  height: 0.43em;
   margin-left: 0.14em;
-  vertical-align: 0.06em;
+  vertical-align: 0.05em;
   background: currentColor;
-  -webkit-mask: var(--tick) center / contain no-repeat;
-  mask: var(--tick) center / contain no-repeat;
+  -webkit-mask: var(--tick-b) center / contain no-repeat;
+  mask: var(--tick-b) center / contain no-repeat;
 }
 .js-anim .hero__title .p {
   clip-path: inset(0 100% 0 0);
@@ -333,6 +347,12 @@ html.is-opening .hud {
   font-weight: 400;
   line-height: 1.34;
   color: var(--on-dark-2);
+}
+/* çerçeveli düğme videonun üstünde: hafif lacivert zemin (video düğmesi gibi) — yazısı videonun en parlak anında da okunur */
+.hero__btns .btn--ghost {
+  --bg: rgba(8, 19, 42, 0.5);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
 }
 .hero__btns {
   display: flex;
@@ -435,7 +455,7 @@ html.is-opening .hud {
 }
 .statement {
   font-family: var(--f-display);
-  font-weight: 300;
+  font-weight: var(--fw-display-text);
   font-size: clamp(1.9rem, 1.3rem + 2.3vw, 3.4rem);
   line-height: 1.1;
   letter-spacing: -0.022em;
@@ -482,7 +502,7 @@ html.is-opening .hud {
   order: 1;
   margin: 0;
   font-family: var(--f-display);
-  font-weight: 300;
+  font-weight: var(--fw-figure);
   font-size: clamp(2.4rem, 1.4rem + 4vw, 5.2rem);
   line-height: 1;
   letter-spacing: -0.035em;
@@ -545,7 +565,9 @@ html.is-opening .hud {
     margin-top: 1.4rem;
     border-top: 1px solid var(--line);
   }
-  .flow {
+  /* .intro ile: 60-pages.css'teki genel .flow (dört sütun) sonra geldiği için bu kural 721–900 px'te uygulanmıyordu; Montserrat'ta
+     «Raporlama» dört dar sütuna sığmıyordu (768 px) */
+  .intro .flow {
     grid-template-columns: 1fr 1fr;
   }
   .flow__step:nth-child(odd) {
@@ -558,7 +580,7 @@ html.is-opening .hud {
   }
 }
 @media (max-width: 560px) {
-  .flow {
+  .intro .flow {
     grid-template-columns: 1fr;
   }
   .flow__step,
@@ -669,7 +691,7 @@ html.is-opening .hud {
 .area__name {
   flex: 1;
   font-family: var(--f-display);
-  font-weight: 300;
+  font-weight: var(--fw-title);
   font-size: min(clamp(1.15rem, 0.8rem + 1.05vw, 1.9rem), 3svh); /* 8 alan tek ekrana sığsın */
   line-height: 1.1;
   letter-spacing: -0.015em;
@@ -896,7 +918,7 @@ html.is-opening .hud {
   gap: 0.7rem;
   padding-block: 0.3rem;
   font-family: var(--f-display);
-  font-weight: 300;
+  font-weight: var(--fw-title);
   font-size: clamp(1.5rem, 0.9rem + 2.1vw, 3.1rem);
   line-height: 1.1;
   letter-spacing: -0.02em;
@@ -1041,7 +1063,7 @@ html[data-fx='off'] .units__p {
 }
 .sector__name {
   font-family: var(--f-display);
-  font-weight: 300;
+  font-weight: var(--fw-title);
   font-size: clamp(1.3rem, 0.85rem + 1.3vw, 2.15rem);
   line-height: 1.1;
   letter-spacing: -0.018em;
@@ -1215,6 +1237,7 @@ html[data-fx='off'] .units__p {
 }
 .news__t {
   font-family: var(--f-display);
+  font-weight: var(--fw-title);
   font-size: var(--fs-3);
   line-height: 1.15;
   letter-spacing: -0.01em;

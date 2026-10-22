@@ -3,6 +3,8 @@
 
 {% block head_extra %}
 <script type="application/ld+json">{{ ld | json_script }}</script>
+{# kahraman sloganı «Tam, doğru, zamanında» Montserrat 700: ilk boyamada gerekir #}
+<link rel="preload" href="{{ font_url('montserrat-700-normal') }}" as="font" type="font/woff2" crossorigin>
 {# kahraman posteri ilk boyamanın en büyük görseli: erken istenir (aynı srcset/sizes, tarayıcı tek dosya indirir) #}
 <link rel="preload" as="image" href="/assets/video/boraden-giris-poster-1280.webp" imagesrcset="/assets/video/boraden-giris-poster-768.webp 768w, /assets/video/boraden-giris-poster-1280.webp 1280w, /assets/video/boraden-giris-poster-1920.webp 1920w" imagesizes="100vw" fetchpriority="high">
 {% endblock %}
@@ -36,7 +38,8 @@
 
 {# ───────── 1 · Kahraman + 2 · Giriş: koyu sahne üstüne beyaz sayfa biner ─────────
    Kahramanın zemini ofis videosudur (müşteri isteği, Ekim 2026: eski «Ofisimiz» filmi kaldırıldı, video buraya taşındı). Kurgu:
-   scripts/tools/hero-film.py — giriş tabelası, resepsiyon ve açık ofis; eski çalışanlar kadraj dışında, süre kısaltılmadı.
+   scripts/tools/hero-film.py — giriş tabelası, cam kapı ve resepsiyon yarı hızda, ardından ofisin içi arşiv fotoğraflarıyla (açık ofis,
+   cam bölmeli odalar, toplantı odası, karşılama alanı); kimsenin yüzü görünmez, bulanıklık yok (22 Ekim 2026).
    Poster ilk boyamada görünür; video «Tam»/«Hafif» katmanda ve veri tasarrufu kapalıyken (telefon ve tablet dahil) kendiliğinden
    oynar, «Kapalı» katmanda ve veri tasarrufunda «Videoyu oynat» düğmesi ziyaretçiye bırakır (modules/hero-film.js).
    Kahraman ekrandan uzunsa (telefon, yan çevrilmiş telefon) yapışma alt kenarı ekrana değince başlar (behaviors.js › stack). 3B dünya bu bölümde çizilmez
@@ -48,7 +51,7 @@
 
       {# Başlık satırları sloganın (site.tagline) virgülle ayrılmış öbeklerinden gelir; her satırın sonundaki denetçi tiki otomatiktir
          (renk ve çizilme sırası satır sırasına göre: mavi → kırmızı → yeşil). Okunan metin h1[aria-label]; satırlar ve tikler süstür. #}
-      <h1 class="hero__title" aria-label="{{ site.tagline }}">
+      <h1 class="hero__title" aria-label="{{ site.tagline }}" style="--twe:{{ site.tagline | tagline_em }}">
         {% for w in site.tagline | tagline_words %}
         <span class="line" aria-hidden="true"><span data-hero-in="{{ loop.index + 1 }}">{{ w }}<i class="p" aria-hidden="true"></i></span></span>
         {% endfor %}
@@ -65,11 +68,12 @@
       </div>
     </div>
     {# zemin: içerikten sonra gelir (ekran okuyucu önce başlığı okur); her ekranda başlığın arkasında tam ekran (dikeyde dilim, 50-home.css).
-       Video kimse görünmeden ofis alanının geçişinde biter (20 Ekim 2026, müşteri: «insan yüzü görünmesin») ve laciverde geçip başa sarar
-       (döngü). Dosya adı her yeni kurguda değişir (-v3): /assets/video/ bir gün önbellekte kalır. #}
+       Video (≈ 33 sn): giriş yarı hızda, ofis alanının geçişinde kimse görünmeden laciverde kararır; ardından ofisin içi fotoğraflarla
+       (müşteri, 22 Ekim 2026: «videoyu yavaşlat, içeriyi gösteren bir video olsun, fotoğraflarla birleştir»; yüz yok, bulanıklık yok);
+       sonunda laciverde geçip başa sarar (döngü). Dosya adı her yeni kurguda değişir (-v4): /assets/video/ bir gün önbellekte kalır. #}
     <div class="hero__media">
       <img class="hero__poster" src="/assets/video/boraden-giris-poster-1280.webp" srcset="/assets/video/boraden-giris-poster-768.webp 768w, /assets/video/boraden-giris-poster-1280.webp 1280w, /assets/video/boraden-giris-poster-1920.webp 1920w" sizes="100vw" width="1920" height="1080" alt="Boraden ofisinin girişi: ahşap çıtalı duvarda BORADEN tabelası" fetchpriority="high" decoding="async">
-      <video class="hero__video" muted loop playsinline disablepictureinpicture preload="none" tabindex="-1" aria-hidden="true" data-src="/assets/video/boraden-giris-v3-1080.mp4" data-src-sm="/assets/video/boraden-giris-v3-720.mp4"></video>
+      <video class="hero__video" muted loop playsinline disablepictureinpicture preload="none" tabindex="-1" aria-hidden="true" data-src="/assets/video/boraden-giris-v4-1080.mp4" data-src-sm="/assets/video/boraden-giris-v4-720.mp4"></video>
     </div>
     <button class="hero__ctl" type="button" data-film-ctl aria-label="Videoyu oynat" hidden>
       <span class="hero__ico" aria-hidden="true"></span>

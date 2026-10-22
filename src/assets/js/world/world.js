@@ -749,7 +749,7 @@ export async function createWorld({ fx, canvas, intro = false }) {
   // Kelimeyi site yazı tipiyle (resmî logo görseli/harfleri KULLANILMAZ) 2B tuvale çizip piksellerinden hedef noktalar üretir.
   // Koordinat: yükseklik birimi (y ∈ [-1,1], x ∈ [-aspect, aspect]); genişlik ekranın ≈ %62'si.
   async function buildWord(text) {
-    const family = getComputedStyle(html).getPropertyValue('--f-display').trim() || "'Open Sans', 'Segoe UI', Arial, sans-serif";
+    const family = getComputedStyle(html).getPropertyValue('--f-display').trim() || "'Montserrat', 'Segoe UI', Arial, sans-serif";
     try {
       await document.fonts?.load?.(`400 220px ${family}`);
     } catch (e) {

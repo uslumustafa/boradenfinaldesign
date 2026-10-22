@@ -16,7 +16,7 @@
     "test:text": "node tests/text-clip.e2e.mjs",
     "test:words": "node tests/text-clip.e2e.mjs --words",
     "test:landscape": "node tests/landscape.e2e.mjs",
-    "test:video": "node tests/hero-film.e2e.mjs",
+    "test:video": "node tests/hero-film.e2e.mjs && node tests/hero-contrast.e2e.mjs",
     "test:sectors": "node tests/sectors-hover.e2e.mjs && node tests/hero-overlap.e2e.mjs --set=sektorler",
     "test:areas": "node tests/areas-hover.e2e.mjs",
     "links": "node tests/links.mjs",

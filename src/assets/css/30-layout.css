@@ -180,7 +180,7 @@ html.hdr-hidden .hdr {
   font-size: 1.12rem; /* Ekim 2026 (müşteri): bir kademe büyük ve kalın (önce 1,04rem / 600) */
   white-space: nowrap; /* menü adı hiçbir genişlikte harf ortasından kırılmaz (sığmazsa ≤1200 px'te mobil menü) */
   font-family: var(--f-display);
-  font-weight: 700;
+  font-weight: var(--fw-title);
   color: var(--on-dark-2);
   transition: color var(--t-fast);
 }
@@ -466,7 +466,7 @@ html.hdr-hidden .prog {
   padding: 1.05rem 0;
   font-family: var(--f-display);
   font-size: 1.9rem;
-  font-weight: 300;
+  font-weight: var(--fw-title);
   letter-spacing: -0.01em;
   list-style: none;
   cursor: pointer;
@@ -573,7 +573,8 @@ html.hdr-hidden .prog {
    ortalanır: --maxw) bu çizgiye kadar, 1,25rem pay bırakarak.
    Efektler kapalıyken şekil çizilmez: sütun daralmaz (html.hero-wide). Sınıfı ilk boyamada base.njk, sonra yalnızca kullanıcı
    seçimi ve sayfa değişimi ayarlar (fx.js › syncLayout): efekt kendiliğinden kapanınca açık sayfanın başlığı yeniden dizilmez.
-   Çok dar/dik pencerede sütun 20rem'den daralmaz: şekil yazının arkasına biraz girebilir, soldaki degrade okunurluğu korur.
+   Çok dar/dik pencerede sütun 20rem'den (yan çevrilmiş telefonda 15rem'den) daralmaz: şekil yazının arkasına biraz girebilir, soldaki
+   degrade okunurluğu korur.
    Varsayılan değerler (sahnesi verisiz sayfa) .phero bloğunda.
    Yan çevrilmiş telefon (601–900 px genişlik, en-boy ≥ 1,5; ör. 667×375, 844×390): sayfa tek sütunlu kalır ama sahne şekli
    sağda durur (world.js › twoCol aynı koşulu kullanır); başlık sütunu da iki sütunlu düzendeki gibi daralır, yoksa başlık şeklin
@@ -582,6 +583,19 @@ html.hdr-hidden .prog {
   html:not(.hero-wide) .phero {
     --phero-col: max(
       20rem,
+      calc(
+        max(var(--sa) * 1vw - var(--sb) * 1vh, min(var(--sa) * 1vw - var(--sb) / 1.6 * 1vw, var(--sa) * 1vw - var(--sb) / 1.25 * 1vh)) -
+          max(var(--gutter), (100vw - var(--maxw)) / 2) - 1.25rem
+      )
+    );
+  }
+}
+/* Yan çevrilmiş telefonda sütunun alt sınırı 15rem: Montserrat başlıklar (22 Ekim 2026) 20rem'lik sütunu kenarına dek doldurduğu
+   için 667×375'te «Teknoloji, Medya ve» satırı iletişim kulesinin noktalarına değiyordu; sütun şeklin ulaştığı çizgide kalır */
+@media (max-width: 900px) and (min-width: 601px) and (min-aspect-ratio: 3/2) {
+  html:not(.hero-wide) .phero {
+    --phero-col: max(
+      15rem,
       calc(
         max(var(--sa) * 1vw - var(--sb) * 1vh, min(var(--sa) * 1vw - var(--sb) / 1.6 * 1vw, var(--sa) * 1vw - var(--sb) / 1.25 * 1vh)) -
           max(var(--gutter), (100vw - var(--maxw)) / 2) - 1.25rem

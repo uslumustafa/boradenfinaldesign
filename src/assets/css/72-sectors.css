@@ -140,7 +140,7 @@
 }
 .sx-row__name {
   font-family: var(--f-display);
-  font-weight: 300;
+  font-weight: var(--fw-title);
   font-size: var(--fs-4);
   line-height: 1.06;
   letter-spacing: -0.02em;
@@ -283,7 +283,7 @@
 .sx-pv__name {
   margin-top: 0.9rem;
   font-family: var(--f-display);
-  font-weight: 300;
+  font-weight: var(--fw-title);
   font-size: var(--fs-4);
   line-height: 1.06;
   letter-spacing: -0.02em;
@@ -447,6 +447,7 @@
   gap: 0.6rem;
   align-items: baseline;
   font-family: var(--f-display);
+  font-weight: var(--fw-title);
   font-size: var(--fs-2);
   line-height: 1.2;
   color: #fff;
@@ -621,7 +622,7 @@
 .sx-ov__lead {
   max-width: 36em;
   font-family: var(--f-display);
-  font-weight: 300;
+  font-weight: var(--fw-display-text);
   font-size: var(--fs-3);
   line-height: 1.38;
   letter-spacing: -0.01em;
@@ -720,7 +721,7 @@ html[data-fx='off'] .sx-ov__lead .w {
 .sx-topic__n {
   display: block;
   font-family: var(--f-display);
-  font-weight: 300;
+  font-weight: var(--fw-figure);
   font-size: var(--fs-6);
   line-height: 0.9;
   letter-spacing: -0.04em;
@@ -813,6 +814,7 @@ html[data-fx='off'] .sx-ov__lead .w {
 .sx-svc__t {
   grid-column: 1;
   font-family: var(--f-display);
+  font-weight: var(--fw-title);
   font-size: var(--fs-3);
   line-height: 1.15;
   letter-spacing: -0.012em;
@@ -890,6 +892,7 @@ html[data-fx='off'] .sx-ov__lead .w {
 .sx-calc__t {
   grid-column: 1;
   font-family: var(--f-display);
+  font-weight: var(--fw-title);
   font-size: 1.32rem;
   line-height: 1.15;
 }
@@ -942,6 +945,7 @@ html[data-fx='off'] .sx-ov__lead .w {
   align-items: baseline;
   gap: 0.6rem;
   font-family: var(--f-display);
+  font-weight: var(--fw-title);
   font-size: 1.32rem;
   line-height: 1.2;
   background: linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat;
@@ -999,6 +1003,7 @@ html[data-fx='off'] .sx-ov__lead .w {
 }
 .sx-mini__t {
   font-family: var(--f-display);
+  font-weight: var(--fw-title);
   font-size: 1.18rem;
   line-height: 1.2;
 }
@@ -1033,6 +1038,22 @@ a.sx-mini__a:focus-visible {
   }
   .sx-mini__tag {
     grid-column: 2;
+  }
+}
+/* iki sütunlu dizin dar bir kutudaysa (yan çevrilmiş büyük telefon 932×430, 1024 px'e kadar) etiket yine adın altına iner: Montserrat'ta
+   «Telekomünikasyon» etiketli satırın daralan ad sütununa sığmıyordu (22 Ekim 2026; tests/text-clip.e2e.mjs --words) */
+.sx-mini {
+  container-type: inline-size;
+}
+@media (min-width: 721px) {
+  @container (max-width: 720px) {
+    .sx-mini__a {
+      grid-template-columns: 2.4rem minmax(0, 1fr);
+      row-gap: 0.25rem;
+    }
+    .sx-mini__tag {
+      grid-column: 2;
+    }
   }
 }
 
@@ -1076,7 +1097,7 @@ a.sx-mini__a:focus-visible {
 }
 .gl-stats dd {
   font-family: var(--f-display);
-  font-weight: 300;
+  font-weight: var(--fw-figure);
   font-size: var(--fs-5);
   line-height: 1;
   letter-spacing: -0.02em;
@@ -1140,6 +1161,7 @@ a.sx-mini__a:focus-visible {
   border-right: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   font-family: var(--f-display);
+  font-weight: var(--fw-title);
   font-size: 1.3rem;
   line-height: 1;
   color: var(--ink-2);
@@ -1603,7 +1625,7 @@ a.sx-mini__a:focus-visible {
 }
 .qa-x__n {
   font-family: var(--f-display);
-  font-weight: 300;
+  font-weight: var(--fw-figure);
   font-size: var(--fs-4);
   line-height: 1;
   letter-spacing: -0.02em;
@@ -1613,6 +1635,7 @@ a.sx-mini__a:focus-visible {
   display: grid;
   gap: 0.2rem;
   font-family: var(--f-display);
+  font-weight: var(--fw-title);
   font-size: var(--fs-3);
   line-height: 1.15;
 }
