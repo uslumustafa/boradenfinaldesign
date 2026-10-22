@@ -442,12 +442,14 @@ async function fx() {
       synced: [...document.querySelectorAll('.fxswitch')].every((g) => [...g.querySelectorAll('[aria-pressed="true"]')].map((b) => b.dataset.fxSet).join() === document.documentElement.dataset.fx),
       anim: document.documentElement.classList.contains('js-anim'),
     }));
-  // ekran kartı olmayan makinede (CI) otomatik seçim «Kapalı» olmalı; gerçek cihazda «Tam» ya da «Hafif». Yazılım çizicide
-  // «Kapalı» kararı 3B dünya kurulurken verilir (sayfa yüklenip tarayıcı boşalınca: main.js › bootWorld, world.js › webgl2Ok)
+  // ekran kartı olmayan makinede (CI) otomatik seçim «Kapalı» olmalı; ekran kartlı cihazda önizleme adreslerinde (yerel, Render,
+  // Vercel) «Tam», canlı alan adında cihaza göre «Tam» ya da «Hafif» (fx.js › LIVE). Yazılım çizicide «Kapalı» kararı 3B dünya
+  // kurulurken verilir (sayfa yüklenip tarayıcı boşalınca: main.js › bootWorld, world.js › webgl2Ok)
   const soft = await softwareGL(page);
+  const live = /(^|\.)boraden\.com\.tr$/i.test(new URL(BASE).hostname);
   if (soft) await page.waitForFunction(() => document.documentElement.dataset.fx === 'off', null, { timeout: 8000 }).catch(() => {});
   let x = await st();
-  ok((soft ? ['off'] : ['full', 'lite']).includes(x.tier) && x.stored === null && x.pressed.length === 1 && x.synced, `otomatik algılama: ${x.tier}${soft ? ' (yazılım WebGL: ekran kartı yok)' : ''} (kullanıcı seçimi yok, depolama boş)`);
+  ok((soft ? ['off'] : live ? ['full', 'lite'] : ['full']).includes(x.tier) && x.stored === null && x.pressed.length === 1 && x.synced, `otomatik algılama: ${x.tier}${soft ? ' (yazılım WebGL: ekran kartı yok)' : live ? '' : ' (önizleme adresi: Tam)'} (kullanıcı seçimi yok, depolama boş)`);
   await page.locator('[data-fx-set="lite"]:visible').click();
   x = await st();
   ok(x.tier === 'lite' && x.stored === 'lite' && JSON.stringify(x.pressed) === '["lite"]' && x.synced, 'Hafif seçildi: data-fx, depolama ve aria-pressed uyumlu (iki anahtar)');

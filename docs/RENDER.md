@@ -35,6 +35,7 @@ Statik ön yüz müşteriye **tasarım onayı için** Render üzerinden gösteri
 ## Göndermeden önce kontrol (2 dakika)
 
 - Adres yeni bir pencerede açılıyor; ana sayfa videosu oynuyor; telefonda da bir kez bakın.
+- Efektler kendiliğinden «Tam» (alt bilgideki efekt anahtarında «Tam» seçili görünür; önizleme adreslerinde cihaza bakılmaz — `fx.js › LIVE`). Hareket azaltma tercihi açık olan ya da WebGL'i yazılımla çizen (ekran kartı olmayan, uzak masaüstü) bilgisayarda «Kapalı» başlar; anahtardan «Tam» seçilebilir.
 - Tarayıcının geliştirici araçları → Network → sayfa isteği → yanıt başlıklarında `x-robots-tag: noindex, nofollow` ve `content-security-policy` görünmeli; Console'da «Refused to …» satırı olmamalı.
 - Eski bir adres (`/bordrolama`) yeni hizmet sayfasına gitmeli; `/olmayan-sayfa/` Boraden'in 404 sayfasını açmalı.
 

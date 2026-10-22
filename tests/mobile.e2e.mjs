@@ -33,7 +33,7 @@ const browser = await chromium.launch({ channel: 'chrome', headless: true });
 for (const d of DEVICES) {
   console.log(`${d.name} (${d.w}×${d.h})`);
   const ctx = await guardContext(await browser.newContext({ viewport: { width: d.w, height: d.h }, isMobile: d.w < 700 || d.h < 500, hasTouch: true, deviceScaleFactor: 2 }));
-  await ctx.addInitScript(() => localStorage.setItem('boraden-fx', 'lite')); // telefonun kendiliğinden seçtiği katman
+  await ctx.addInitScript(() => localStorage.setItem('boraden-fx', 'lite')); // canlıda telefonun kendiliğinden seçtiği katman (önizlemede «Tam»)
   const page = await ctx.newPage();
   const logs = [];
   page.on('console', (m) => ['error', 'warning'].includes(m.type()) && !driverNoise(m.text()) && logs.push(`[${m.type()}] ${m.text()}`));

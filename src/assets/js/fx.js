@@ -2,6 +2,11 @@
 import { store, prefersReduced } from './util.js';
 
 const KEY = 'boraden-fx';
+// Canlı alan adı. Dışındaki adresler (müşteri önizlemesi: Render, Vercel; yerel) önizlemedir: otomatik seçim cihaza bakmadan
+// «Tam» — müşteri tasarımı efektleriyle tam görsün (proje sahibi, 22 Ekim 2026: «efektleri müşterim tam görmesi gerekmekte»).
+// Hareket azaltma tercihi, çok zayıf cihaz ve yazılımla çizim (world.js › webgl2Ok) yine «Kapalı»; yavaş karelerde uyarlanabilir
+// düşürme sürer. Canlıda seçim cihaza göre (dokunmatik, küçük ekran, ≤ 4 çekirdek ya da ≤ 4 GB bellek → «Hafif»).
+const LIVE = /(^|\.)boraden\.com\.tr$/i;
 
 export function initFx() {
   const html = document.documentElement;
@@ -16,6 +21,7 @@ export function initFx() {
     const coarse = matchMedia('(pointer: coarse)').matches;
     const small = Math.min(screen.width, screen.height) < 700;
     if (mem <= 1 || cores <= 2) return 'off'; // base.njk'deki erken betik de aynı eşikle ilk boyamadan kapatır
+    if (!LIVE.test(location.hostname)) return 'full';
     if (coarse || small || mem <= 4 || cores <= 4) return 'lite';
     return 'full';
   }
