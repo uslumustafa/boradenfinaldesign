@@ -39,6 +39,7 @@ npm run audit        # tüm sayfaları tarayıcıda tarar (taşma, konsol, eriş
 - `docs/HANDOFF.md` — durum, doğrulama araçları, değişmeyen kurallar, müşteriden beklenenler
 - `docs/HOME-REDESIGN.md` — ana sayfa tasarımı ve ayar rehberi
 - `docs/FORMASYONLAR.md` — parçacık şekilleri (formasyonlar) kataloğu ve sahne eşlemesi
+- `docs/RENDER.md` — müşteri önizlemesi Render'da (Türkiye'den *.vercel.app açılmıyor): kurulum, sınırlar, güncelleme
 - `docs/VERCEL.md` — müşteri önizlemesi için Vercel yayını (kurulum, erişim, güncelleme)
 - `docs/UX-DENETIMI-2026-10.md` — sayfa tipleri için UX denetimi ve uygulama durumu
 - `docs/CALCULATORS-bordro.md`, `docs/CALCULATORS-vergi.md` — hesaplayıcı kuralları ve yıllık güncelleme listesi

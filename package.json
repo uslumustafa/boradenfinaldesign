@@ -20,6 +20,7 @@
     "test:sectors": "node tests/sectors-hover.e2e.mjs && node tests/hero-overlap.e2e.mjs --set=sektorler",
     "test:areas": "node tests/areas-hover.e2e.mjs",
     "links": "node tests/links.mjs",
+    "render-config": "node scripts/render-config.mjs",
     "audit": "node tests/audit.mjs"
   },
   "engines": {

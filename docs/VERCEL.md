@@ -3,6 +3,8 @@
 Bu belge, statik ön yüzün müşteriye **tasarım onayı için** Vercel üzerinden gösterilmesini anlatır.
 Nihai site Wagtail ile ayrı bir sunucuda çalışacak; buradaki yayın yalnızca önizlemedir.
 
+> **22 Ekim 2026:** Türkiye'deki servis sağlayıcılar `*.vercel.app` adreslerinin tümünü engelliyor; müşteri `boraden-onizleme.vercel.app`'i açamıyor. Müşteriye Render önizlemesi gönderilir (`docs/RENDER.md`, `render.yaml`). Vercel yayını sürer (yurt dışından ve VPN ile açılır).
+
 ## Depoda hazır olanlar
 
 | Dosya | Ne yapar |

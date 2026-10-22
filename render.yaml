@@ -1,0 +1,504 @@
+# Bu dosya üretilir — elle değiştirmeyin: node scripts/render-config.mjs (kaynak: vercel.json).
+# Müşteri önizlemesi (Render, statik site): Türkiye'den *.vercel.app açılmıyor, *.onrender.com açılıyor. Ayrıntı: docs/RENDER.md
+services:
+  - type: web
+    runtime: static
+    name: boraden-onizleme
+    branch: main
+    autoDeployTrigger: commit
+    buildCommand: "npm ci --ignore-scripts --no-audit --no-fund && npm run build:prod"
+    staticPublishPath: "./dist"
+    buildFilter:
+      ignoredPaths:
+        - "docs/**"
+        - "tests/**"
+        - ".github/**"
+        - "README.md"
+        - "WAGTAIL_MAP.md"
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: SKIP_INSTALL_DEPS
+        value: "true"
+    headers:
+      - path: "/*"
+        name: "X-Content-Type-Options"
+        value: "nosniff"
+      - path: "/*"
+        name: "Referrer-Policy"
+        value: "strict-origin-when-cross-origin"
+      - path: "/*"
+        name: "X-Frame-Options"
+        value: "SAMEORIGIN"
+      - path: "/*"
+        name: "Cross-Origin-Opener-Policy"
+        value: "same-origin"
+      - path: "/*"
+        name: "Permissions-Policy"
+        value: "camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()"
+      - path: "/*"
+        name: "Content-Security-Policy"
+        value: "default-src 'self'; script-src 'self' 'sha256-DCxI4h1M8IK7Oc1ZtMdFRL4dmvpa0L6sabORd2TvzZE='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; media-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:; frame-ancestors 'self'; upgrade-insecure-requests"
+      - path: "/*"
+        name: "X-Robots-Tag"
+        value: "noindex, nofollow"
+      - path: "/assets/js/chunks/*"
+        name: "Cache-Control"
+        value: "public, max-age=31536000, immutable"
+      - path: "/assets/fonts/*.woff2"
+        name: "Cache-Control"
+        value: "public, max-age=31536000, immutable"
+      - path: "/assets/img/*"
+        name: "Cache-Control"
+        value: "public, max-age=86400"
+      - path: "/assets/video/*"
+        name: "Cache-Control"
+        value: "public, max-age=86400"
+      - path: "/assets/documents/*"
+        name: "Cache-Control"
+        value: "public, max-age=86400"
+    routes:
+      - type: redirect
+        source: "/hizmetler/danismanlik/"
+        destination: "/hizmetler/kurumsal-finansman/"
+      - type: redirect
+        source: "/hizmetler/danismanlik"
+        destination: "/hizmetler/kurumsal-finansman/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/"
+        destination: "/hizmetler/muhasebe/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari"
+        destination: "/hizmetler/muhasebe/"
+      - type: redirect
+        source: "/hizmetler/sistemler/"
+        destination: "/hizmetler/dijital-donusum/"
+      - type: redirect
+        source: "/hizmetler/sistemler"
+        destination: "/hizmetler/dijital-donusum/"
+      - type: redirect
+        source: "/hizmetler/vergi/mali-musavirlik-ve-muhasebe/"
+        destination: "/hizmetler/muhasebe/mali-musavirlik-ve-muhasebe/"
+      - type: redirect
+        source: "/hizmetler/vergi/mali-musavirlik-ve-muhasebe"
+        destination: "/hizmetler/muhasebe/mali-musavirlik-ve-muhasebe/"
+      - type: redirect
+        source: "/hizmetler/vergi/cari-hesap-mutabakatlarinin-yapilmasi/"
+        destination: "/hizmetler/muhasebe/cari-hesap-mutabakatlarinin-yapilmasi/"
+      - type: redirect
+        source: "/hizmetler/vergi/cari-hesap-mutabakatlarinin-yapilmasi"
+        destination: "/hizmetler/muhasebe/cari-hesap-mutabakatlarinin-yapilmasi/"
+      - type: redirect
+        source: "/hizmetler/denetim/kurumsal-raporlama/"
+        destination: "/hizmetler/muhasebe/kurumsal-raporlama/"
+      - type: redirect
+        source: "/hizmetler/denetim/kurumsal-raporlama"
+        destination: "/hizmetler/muhasebe/kurumsal-raporlama/"
+      - type: redirect
+        source: "/hizmetler/denetim/ufrs-tfrs-raporlama/"
+        destination: "/hizmetler/muhasebe/ufrs-tfrs-raporlama/"
+      - type: redirect
+        source: "/hizmetler/denetim/ufrs-tfrs-raporlama"
+        destination: "/hizmetler/muhasebe/ufrs-tfrs-raporlama/"
+      - type: redirect
+        source: "/hizmetler/danismanlik/raporlama/"
+        destination: "/hizmetler/muhasebe/raporlama/"
+      - type: redirect
+        source: "/hizmetler/danismanlik/raporlama"
+        destination: "/hizmetler/muhasebe/raporlama/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/insan-kaynaklari-ve-bordro/"
+        destination: "/hizmetler/muhasebe/insan-kaynaklari-ve-bordro/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/insan-kaynaklari-ve-bordro"
+        destination: "/hizmetler/muhasebe/insan-kaynaklari-ve-bordro/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/bordrolama/"
+        destination: "/hizmetler/muhasebe/bordrolama/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/bordrolama"
+        destination: "/hizmetler/muhasebe/bordrolama/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/sgk-dosya-acilisi/"
+        destination: "/hizmetler/muhasebe/sgk-dosya-acilisi/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/sgk-dosya-acilisi"
+        destination: "/hizmetler/muhasebe/sgk-dosya-acilisi/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/ev-hizmetlisi-sgk-dosya-acilisi/"
+        destination: "/hizmetler/muhasebe/ev-hizmetlisi-sgk-dosya-acilisi/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/ev-hizmetlisi-sgk-dosya-acilisi"
+        destination: "/hizmetler/muhasebe/ev-hizmetlisi-sgk-dosya-acilisi/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/sgk-protokolu/"
+        destination: "/hizmetler/muhasebe/sgk-protokolu/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/sgk-protokolu"
+        destination: "/hizmetler/muhasebe/sgk-protokolu/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/asgari-iscilik-ve-ilisiksizlik-belgesi/"
+        destination: "/hizmetler/muhasebe/asgari-iscilik-ve-ilisiksizlik-belgesi/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/asgari-iscilik-ve-ilisiksizlik-belgesi"
+        destination: "/hizmetler/muhasebe/asgari-iscilik-ve-ilisiksizlik-belgesi/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/borclanma-islemleri/"
+        destination: "/hizmetler/muhasebe/borclanma-islemleri/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/borclanma-islemleri"
+        destination: "/hizmetler/muhasebe/borclanma-islemleri/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/emeklilik-danismanligi/"
+        destination: "/hizmetler/muhasebe/emeklilik-danismanligi/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/emeklilik-danismanligi"
+        destination: "/hizmetler/muhasebe/emeklilik-danismanligi/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/insan-kiymetleri-surec-yonetimi/"
+        destination: "/hizmetler/muhasebe/insan-kiymetleri-surec-yonetimi/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/insan-kiymetleri-surec-yonetimi"
+        destination: "/hizmetler/muhasebe/insan-kiymetleri-surec-yonetimi/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/yabanci-uyruklu-ikamet-izini/"
+        destination: "/hizmetler/muhasebe/yabanci-uyruklu-ikamet-izini/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/yabanci-uyruklu-ikamet-izini"
+        destination: "/hizmetler/muhasebe/yabanci-uyruklu-ikamet-izini/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/calisma-izni-alma-ve-iptali/"
+        destination: "/hizmetler/muhasebe/calisma-izni-alma-ve-iptali/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/calisma-izni-alma-ve-iptali"
+        destination: "/hizmetler/muhasebe/calisma-izni-alma-ve-iptali/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/yurtdisina-isci-gonderimi/"
+        destination: "/hizmetler/muhasebe/yurtdisina-isci-gonderimi/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/yurtdisina-isci-gonderimi"
+        destination: "/hizmetler/muhasebe/yurtdisina-isci-gonderimi/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/isveren-denetimi-ve-raporlamasi/"
+        destination: "/hizmetler/muhasebe/isveren-denetimi-ve-raporlamasi/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/isveren-denetimi-ve-raporlamasi"
+        destination: "/hizmetler/muhasebe/isveren-denetimi-ve-raporlamasi/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/sgk-dosya-kapanisi/"
+        destination: "/hizmetler/muhasebe/sgk-dosya-kapanisi/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/sgk-dosya-kapanisi"
+        destination: "/hizmetler/muhasebe/sgk-dosya-kapanisi/"
+      - type: redirect
+        source: "/hizmetler/danismanlik/sirket-degerlemesi/"
+        destination: "/hizmetler/kurumsal-finansman/sirket-degerlemesi/"
+      - type: redirect
+        source: "/hizmetler/danismanlik/sirket-degerlemesi"
+        destination: "/hizmetler/kurumsal-finansman/sirket-degerlemesi/"
+      - type: redirect
+        source: "/hizmetler/danismanlik/mali-danismanlik/"
+        destination: "/hizmetler/kurumsal-finansman/mali-danismanlik/"
+      - type: redirect
+        source: "/hizmetler/danismanlik/mali-danismanlik"
+        destination: "/hizmetler/kurumsal-finansman/mali-danismanlik/"
+      - type: redirect
+        source: "/hizmetler/danismanlik/yonetim-danismanligi/"
+        destination: "/hizmetler/kurumsal-finansman/yonetim-danismanligi/"
+      - type: redirect
+        source: "/hizmetler/danismanlik/yonetim-danismanligi"
+        destination: "/hizmetler/kurumsal-finansman/yonetim-danismanligi/"
+      - type: redirect
+        source: "/hizmetler/vergi/ar-ge-hizmetleri/"
+        destination: "/hizmetler/tesvik/ar-ge-hizmetleri/"
+      - type: redirect
+        source: "/hizmetler/vergi/ar-ge-hizmetleri"
+        destination: "/hizmetler/tesvik/ar-ge-hizmetleri/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/istihdam-tesvik/"
+        destination: "/hizmetler/tesvik/istihdam-tesvik/"
+      - type: redirect
+        source: "/hizmetler/insan-kaynaklari/istihdam-tesvik"
+        destination: "/hizmetler/tesvik/istihdam-tesvik/"
+      - type: redirect
+        source: "/hizmetler/danismanlik/sirket-kurulus-danismanligi/"
+        destination: "/hizmetler/hukuk/sirket-kurulus-danismanligi/"
+      - type: redirect
+        source: "/hizmetler/danismanlik/sirket-kurulus-danismanligi"
+        destination: "/hizmetler/hukuk/sirket-kurulus-danismanligi/"
+      - type: redirect
+        source: "/hizmetler/danismanlik/ticaret-sicil-islemleri/"
+        destination: "/hizmetler/hukuk/ticaret-sicil-islemleri/"
+      - type: redirect
+        source: "/hizmetler/danismanlik/ticaret-sicil-islemleri"
+        destination: "/hizmetler/hukuk/ticaret-sicil-islemleri/"
+      - type: redirect
+        source: "/hizmetler/sistemler/muhasebe-sistemleri/"
+        destination: "/hizmetler/dijital-donusum/muhasebe-sistemleri/"
+      - type: redirect
+        source: "/hizmetler/sistemler/muhasebe-sistemleri"
+        destination: "/hizmetler/dijital-donusum/muhasebe-sistemleri/"
+      - type: redirect
+        source: "/hizmetler/sistemler/veri-analiz-sistemleri/"
+        destination: "/hizmetler/dijital-donusum/veri-analiz-sistemleri/"
+      - type: redirect
+        source: "/hizmetler/sistemler/veri-analiz-sistemleri"
+        destination: "/hizmetler/dijital-donusum/veri-analiz-sistemleri/"
+      - type: redirect
+        source: "/hizmetler/sistemler/cozum-prosedurleri/"
+        destination: "/hizmetler/dijital-donusum/cozum-prosedurleri/"
+      - type: redirect
+        source: "/hizmetler/sistemler/cozum-prosedurleri"
+        destination: "/hizmetler/dijital-donusum/cozum-prosedurleri/"
+      - type: redirect
+        source: "/ar-ge-hizmetleri/"
+        destination: "/hizmetler/tesvik/ar-ge-hizmetleri/"
+      - type: redirect
+        source: "/ar-ge-hizmetleri"
+        destination: "/hizmetler/tesvik/ar-ge-hizmetleri/"
+      - type: redirect
+        source: "/asgari-iscilik-ve-ilisiksizlik-belgesi/"
+        destination: "/hizmetler/muhasebe/asgari-iscilik-ve-ilisiksizlik-belgesi/"
+      - type: redirect
+        source: "/asgari-iscilik-ve-ilisiksizlik-belgesi"
+        destination: "/hizmetler/muhasebe/asgari-iscilik-ve-ilisiksizlik-belgesi/"
+      - type: redirect
+        source: "/bagimsiz-denetim/"
+        destination: "/hizmetler/denetim/bagimsiz-denetim/"
+      - type: redirect
+        source: "/bagimsiz-denetim"
+        destination: "/hizmetler/denetim/bagimsiz-denetim/"
+      - type: redirect
+        source: "/bireysel-danismanlik-hizmetleri/"
+        destination: "/hizmetler/vergi/bireysel-danismanlik-hizmetleri/"
+      - type: redirect
+        source: "/bireysel-danismanlik-hizmetleri"
+        destination: "/hizmetler/vergi/bireysel-danismanlik-hizmetleri/"
+      - type: redirect
+        source: "/borclanma-islemleri/"
+        destination: "/hizmetler/muhasebe/borclanma-islemleri/"
+      - type: redirect
+        source: "/borclanma-islemleri"
+        destination: "/hizmetler/muhasebe/borclanma-islemleri/"
+      - type: redirect
+        source: "/bordrolama/"
+        destination: "/hizmetler/muhasebe/bordrolama/"
+      - type: redirect
+        source: "/bordrolama"
+        destination: "/hizmetler/muhasebe/bordrolama/"
+      - type: redirect
+        source: "/calisma-izni-alma-ve-iptali/"
+        destination: "/hizmetler/muhasebe/calisma-izni-alma-ve-iptali/"
+      - type: redirect
+        source: "/calisma-izni-alma-ve-iptali"
+        destination: "/hizmetler/muhasebe/calisma-izni-alma-ve-iptali/"
+      - type: redirect
+        source: "/cari-hesap-mutabakatlarinin-yapilmasi/"
+        destination: "/hizmetler/muhasebe/cari-hesap-mutabakatlarinin-yapilmasi/"
+      - type: redirect
+        source: "/cari-hesap-mutabakatlarinin-yapilmasi"
+        destination: "/hizmetler/muhasebe/cari-hesap-mutabakatlarinin-yapilmasi/"
+      - type: redirect
+        source: "/diger-dolayli-vergiler/"
+        destination: "/hizmetler/vergi/diger-dolayli-vergiler/"
+      - type: redirect
+        source: "/diger-dolayli-vergiler"
+        destination: "/hizmetler/vergi/diger-dolayli-vergiler/"
+      - type: redirect
+        source: "/emeklilik-danismanligi/"
+        destination: "/hizmetler/muhasebe/emeklilik-danismanligi/"
+      - type: redirect
+        source: "/emeklilik-danismanligi"
+        destination: "/hizmetler/muhasebe/emeklilik-danismanligi/"
+      - type: redirect
+        source: "/ev-hizmetlisi-sgk-dosya-acilisi/"
+        destination: "/hizmetler/muhasebe/ev-hizmetlisi-sgk-dosya-acilisi/"
+      - type: redirect
+        source: "/ev-hizmetlisi-sgk-dosya-acilisi"
+        destination: "/hizmetler/muhasebe/ev-hizmetlisi-sgk-dosya-acilisi/"
+      - type: redirect
+        source: "/finansal-analiz/"
+        destination: "/hizmetler/akademi/finansal-analiz/"
+      - type: redirect
+        source: "/finansal-analiz"
+        destination: "/hizmetler/akademi/finansal-analiz/"
+      - type: redirect
+        source: "/finansal-tablo-denetimi/"
+        destination: "/hizmetler/denetim/finansal-tablo-denetimi/"
+      - type: redirect
+        source: "/finansal-tablo-denetimi"
+        destination: "/hizmetler/denetim/finansal-tablo-denetimi/"
+      - type: redirect
+        source: "/ic-denetim/"
+        destination: "/hizmetler/akademi/ic-denetim/"
+      - type: redirect
+        source: "/ic-denetim"
+        destination: "/hizmetler/akademi/ic-denetim/"
+      - type: redirect
+        source: "/ic-denetim-ve-ic-kontrol/"
+        destination: "/hizmetler/denetim/ic-denetim-ve-ic-kontrol/"
+      - type: redirect
+        source: "/ic-denetim-ve-ic-kontrol"
+        destination: "/hizmetler/denetim/ic-denetim-ve-ic-kontrol/"
+      - type: redirect
+        source: "/insan-kiymetleri-egitimi/"
+        destination: "/hizmetler/akademi/insan-kiymetleri-egitimi/"
+      - type: redirect
+        source: "/insan-kiymetleri-egitimi"
+        destination: "/hizmetler/akademi/insan-kiymetleri-egitimi/"
+      - type: redirect
+        source: "/insan-kiymetleri-surec-yonetimi/"
+        destination: "/hizmetler/muhasebe/insan-kiymetleri-surec-yonetimi/"
+      - type: redirect
+        source: "/insan-kiymetleri-surec-yonetimi"
+        destination: "/hizmetler/muhasebe/insan-kiymetleri-surec-yonetimi/"
+      - type: redirect
+        source: "/istihdam-tesvik/"
+        destination: "/hizmetler/tesvik/istihdam-tesvik/"
+      - type: redirect
+        source: "/istihdam-tesvik"
+        destination: "/hizmetler/tesvik/istihdam-tesvik/"
+      - type: redirect
+        source: "/isveren-denetimi-ve-raporlamasi/"
+        destination: "/hizmetler/muhasebe/isveren-denetimi-ve-raporlamasi/"
+      - type: redirect
+        source: "/isveren-denetimi-ve-raporlamasi"
+        destination: "/hizmetler/muhasebe/isveren-denetimi-ve-raporlamasi/"
+      - type: redirect
+        source: "/kdv-iade-islemleri/"
+        destination: "/hizmetler/vergi/kdv-iade-islemleri/"
+      - type: redirect
+        source: "/kdv-iade-islemleri"
+        destination: "/hizmetler/vergi/kdv-iade-islemleri/"
+      - type: redirect
+        source: "/kurumlar-vergisi-denetim-ve-tasdik/"
+        destination: "/hizmetler/vergi/kurumlar-vergisi-denetim-ve-tasdik/"
+      - type: redirect
+        source: "/kurumlar-vergisi-denetim-ve-tasdik"
+        destination: "/hizmetler/vergi/kurumlar-vergisi-denetim-ve-tasdik/"
+      - type: redirect
+        source: "/kurumsal-raporlama/"
+        destination: "/hizmetler/muhasebe/kurumsal-raporlama/"
+      - type: redirect
+        source: "/kurumsal-raporlama"
+        destination: "/hizmetler/muhasebe/kurumsal-raporlama/"
+      - type: redirect
+        source: "/mali-musavirlik-ve-muhasebe/"
+        destination: "/hizmetler/muhasebe/mali-musavirlik-ve-muhasebe/"
+      - type: redirect
+        source: "/mali-musavirlik-ve-muhasebe"
+        destination: "/hizmetler/muhasebe/mali-musavirlik-ve-muhasebe/"
+      - type: redirect
+        source: "/mali-tablolarin-denetimi/"
+        destination: "/hizmetler/denetim/mali-tablolarin-denetimi/"
+      - type: redirect
+        source: "/mali-tablolarin-denetimi"
+        destination: "/hizmetler/denetim/mali-tablolarin-denetimi/"
+      - type: redirect
+        source: "/muhasebe-ve-vergi/"
+        destination: "/hizmetler/akademi/muhasebe-ve-vergi/"
+      - type: redirect
+        source: "/muhasebe-ve-vergi"
+        destination: "/hizmetler/akademi/muhasebe-ve-vergi/"
+      - type: redirect
+        source: "/otv-hizmetleri/"
+        destination: "/hizmetler/vergi/otv-hizmetleri/"
+      - type: redirect
+        source: "/otv-hizmetleri"
+        destination: "/hizmetler/vergi/otv-hizmetleri/"
+      - type: redirect
+        source: "/raporlama/"
+        destination: "/hizmetler/muhasebe/raporlama/"
+      - type: redirect
+        source: "/raporlama"
+        destination: "/hizmetler/muhasebe/raporlama/"
+      - type: redirect
+        source: "/sgk-dosya-acilisi/"
+        destination: "/hizmetler/muhasebe/sgk-dosya-acilisi/"
+      - type: redirect
+        source: "/sgk-dosya-acilisi"
+        destination: "/hizmetler/muhasebe/sgk-dosya-acilisi/"
+      - type: redirect
+        source: "/sgk-dosya-kapanisi/"
+        destination: "/hizmetler/muhasebe/sgk-dosya-kapanisi/"
+      - type: redirect
+        source: "/sgk-dosya-kapanisi"
+        destination: "/hizmetler/muhasebe/sgk-dosya-kapanisi/"
+      - type: redirect
+        source: "/sgk-protokolu/"
+        destination: "/hizmetler/muhasebe/sgk-protokolu/"
+      - type: redirect
+        source: "/sgk-protokolu"
+        destination: "/hizmetler/muhasebe/sgk-protokolu/"
+      - type: redirect
+        source: "/suistimal-inceleme-ve-onleme/"
+        destination: "/hizmetler/denetim/suistimal-inceleme-ve-onleme/"
+      - type: redirect
+        source: "/suistimal-inceleme-ve-onleme"
+        destination: "/hizmetler/denetim/suistimal-inceleme-ve-onleme/"
+      - type: redirect
+        source: "/tam-tasdik-islemleri/"
+        destination: "/hizmetler/vergi/tam-tasdik-islemleri/"
+      - type: redirect
+        source: "/tam-tasdik-islemleri"
+        destination: "/hizmetler/vergi/tam-tasdik-islemleri/"
+      - type: redirect
+        source: "/ticaret-sicil-islemleri/"
+        destination: "/hizmetler/hukuk/ticaret-sicil-islemleri/"
+      - type: redirect
+        source: "/ticaret-sicil-islemleri"
+        destination: "/hizmetler/hukuk/ticaret-sicil-islemleri/"
+      - type: redirect
+        source: "/transfer-fiyatlandirma/"
+        destination: "/hizmetler/vergi/transfer-fiyatlandirma/"
+      - type: redirect
+        source: "/transfer-fiyatlandirma"
+        destination: "/hizmetler/vergi/transfer-fiyatlandirma/"
+      - type: redirect
+        source: "/ufrs/"
+        destination: "/hizmetler/akademi/ufrs/"
+      - type: redirect
+        source: "/ufrs"
+        destination: "/hizmetler/akademi/ufrs/"
+      - type: redirect
+        source: "/ufrs-tfrs-raporlama/"
+        destination: "/hizmetler/muhasebe/ufrs-tfrs-raporlama/"
+      - type: redirect
+        source: "/ufrs-tfrs-raporlama"
+        destination: "/hizmetler/muhasebe/ufrs-tfrs-raporlama/"
+      - type: redirect
+        source: "/usulsuzluk-ve-hile-denetimi/"
+        destination: "/hizmetler/denetim/usulsuzluk-ve-hile-denetimi/"
+      - type: redirect
+        source: "/usulsuzluk-ve-hile-denetimi"
+        destination: "/hizmetler/denetim/usulsuzluk-ve-hile-denetimi/"
+      - type: redirect
+        source: "/yabanci-uyruklu-ikamet-izini/"
+        destination: "/hizmetler/muhasebe/yabanci-uyruklu-ikamet-izini/"
+      - type: redirect
+        source: "/yabanci-uyruklu-ikamet-izini"
+        destination: "/hizmetler/muhasebe/yabanci-uyruklu-ikamet-izini/"
+      - type: redirect
+        source: "/yonetim-danismanligi/"
+        destination: "/hizmetler/kurumsal-finansman/yonetim-danismanligi/"
+      - type: redirect
+        source: "/yonetim-danismanligi"
+        destination: "/hizmetler/kurumsal-finansman/yonetim-danismanligi/"
+      - type: redirect
+        source: "/yurtdisina-isci-gonderimi/"
+        destination: "/hizmetler/muhasebe/yurtdisina-isci-gonderimi/"
+      - type: redirect
+        source: "/yurtdisina-isci-gonderimi"
+        destination: "/hizmetler/muhasebe/yurtdisina-isci-gonderimi/"
+      - type: redirect
+        source: "/danismanlik/"
+        destination: "/hizmetler/kurumsal-finansman/"
+      - type: redirect
+        source: "/danismanlik"
+        destination: "/hizmetler/kurumsal-finansman/"
+      - type: redirect
+        source: "/en/*"
+        destination: "/"
+      - type: redirect
+        source: "/en"
+        destination: "/"
