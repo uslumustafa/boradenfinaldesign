@@ -1,5 +1,5 @@
 // Kahraman videosu (ana sayfa, «Tam doğru zamanında»): giriş tabelasından cam kapıya, resepsiyondan ofis alanının geçişine uzanan çekim
-// yarı hızda, ardından ofisin içi arşiv fotoğraflarıyla (açık ofis, cam bölmeli odalar, toplantı odası, karşılama alanı) — ≈ 33 sn,
+// yavaşlatılmış (2/3 hız), ardından ofisin içi arşiv fotoğraflarıyla (açık ofis, cam bölmeli odalar, toplantı odası, karşılama alanı) — ≈ 29,5 sn,
 // sessiz döngü. Müşteri isteği (Ekim 2026): eski «Ofisimiz» filmi kaldırıldı, video kahramanın zemini oldu; 20 Ekim: «insan yüzü
 // görünmesin» (çekim kimse görünmeden ofis alanının geçişinde biter); 22 Ekim: «videoyu yavaşlat, içeriyi gösteren bir video olsun,
 // fotoğraflarla birleştir» (yüz yok, bulanıklık yok). Bitince laciverde geçip başa sarar (döngü). Kurgu: scripts/tools/hero-film.py.
@@ -18,7 +18,8 @@
 //   • Dosya ekran genişliğine göre seçilir: cihaz pikseli genişliği (CSS px × DPR, DPR en çok 2) 1400'ü aşarsa 1080p, değilse 720p.
 //     Dosya ilk oynatmada yüklenir (preload="none" + data-src).
 // Depolama yok; sunucuya istek yok (yalnızca video dosyası).
-const POSTER_T = 1.8; // sn — poster karesi (hero-film.py › POSTER_SRC: kaynağın 27. karesi = yarı hızlı çıktının 54. karesi)
+const POSTER_T = 1.418; // sn — poster karesi (hero-film.py › POSTER_SRC: kaynağın 28. karesi = çıktının 42. karesi; karenin ortası:
+// 42,5 × 1001/30000 — konumlama karenin başına düşüp bir önceki kareyi göstermesin)
 
 export function mount(el, { fx, scroll, on }) {
   const video = el.querySelector('.hero__video');

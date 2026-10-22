@@ -3,9 +3,10 @@
 //   node tests/hero-film.e2e.mjs [--base=http://127.0.0.1:4181]
 // Müşteri (2026-10-20): «insan yüzü görünmesin; tam ofise girdiğimizde, kapıdan giriş anında dursun» — çekim ofis alanına geçerken,
 // kimse görünmeden biter (scripts/tools/hero-film.py › END). 22 Ekim: «videoyu yavaşlat, içeriyi gösteren bir video olsun,
-// fotoğraflarla birleştir» — giriş yarı hızda, ardından ofisin içi fotoğraflarla. Video döngüdür (proje sahibi: «video bitince eskisi
-// gibi başa sarıyordu, tekrar öyle»); sonu ve başı laciverde geçişlidir (başa dönüş kesik görünmez). Denetlenenler:
-//   • videoda döngü var; süre ≈ 33,3 sn (999 kare: giriş 459 + iç mekân); ekrana göre doğru dosya (1080p / 720p)
+// fotoğraflarla birleştir» — giriş yavaşlatılmış (aynı gün: «başlangıcı bir tık daha hızlandırabilirsin» → 2/3 hız), ardından ofisin
+// içi fotoğraflarla. Video döngüdür (proje sahibi: «video bitince eskisi gibi başa sarıyordu, tekrar öyle»); sonu ve başı laciverde
+// geçişlidir (başa dönüş kesik görünmez). Denetlenenler:
+//   • videoda döngü var; süre ≈ 29,5 sn (884 kare: giriş 344 + iç mekân); ekrana göre doğru dosya (1080p / 720p)
 //   • kendiliğinden oynar; sona gelince durmaz, başa sarıp oynamayı sürdürür
 //   • son ve ilk kareler lacivert (geçiş), arada parlak (görüntü): başa dönüşte sert kesme yok
 //   • ziyaretçi duraklatınca kaydırma, sekme ve efekt katmanı değişimi videoyu yeniden başlatmaz; düğme yeniden oynatır
@@ -59,7 +60,7 @@ const lumaAt = (page, t) =>
   }, t);
 
 const browser = await chromium.launch({ channel: 'chrome', headless: true, args: ['--autoplay-policy=no-user-gesture-required'] });
-for (const vp of [{ k: 'masaüstü', w: 1440, h: 900, m: false, file: 'boraden-giris-v4-1080.mp4' }, { k: 'telefon', w: 390, h: 844, m: true, file: 'boraden-giris-v4-720.mp4' }]) {
+for (const vp of [{ k: 'masaüstü', w: 1440, h: 900, m: false, file: 'boraden-giris-v5-1080.mp4' }, { k: 'telefon', w: 390, h: 844, m: true, file: 'boraden-giris-v5-720.mp4' }]) {
   console.log(`\n${vp.k} ${vp.w}×${vp.h}`);
   const ctx = await guardContext(await browser.newContext({ viewport: { width: vp.w, height: vp.h }, isMobile: vp.m, hasTouch: vp.m, deviceScaleFactor: vp.m ? 2 : 1 }));
   await ctx.addInitScript(() => localStorage.setItem('boraden-fx', 'full'));
@@ -79,7 +80,7 @@ for (const vp of [{ k: 'masaüstü', w: 1440, h: 900, m: false, file: 'boraden-g
   let s = await state(page);
   ok(s.loop, 'videoda döngü var');
   ok(s.src === vp.file, `ekran için doğru dosya (${s.src})`);
-  ok(Math.abs(s.d - 33.333) < 0.08, `süre ≈ 33,3 sn (${s.d.toFixed(3)} sn)`);
+  ok(Math.abs(s.d - 29.496) < 0.08, `süre ≈ 29,5 sn (${s.d.toFixed(3)} sn)`);
   // sona yakın bir konuma git: gerçek oynatmayla sona varınca durmaz, başa sarıp sürer
   await page.evaluate(() => {
     const v = document.querySelector('.hero__video');

@@ -2,12 +2,14 @@
 """Boraden ana sayfa kahraman videosu («Tam doğru zamanında» alanı) — yeniden üretim betiği (Ekim 2026).
 
 Kurgu — 22 Ekim 2026 (müşteri: «videoyu yavaşlat ve içeriyi gösteren bir video olsun, fotoğraflarla birleştir; içeriyi görelim»;
-proje sahibi: «içeride yüzler görünsün istenmedi, bulanıklık istenmedi; video nasıl olacak sana bırakıyorum»):
-  1) Giriş (yarı hızda): müşterinin çekimi (boradenkirpilmis.mp4 — 4K HEVC 10 bit HLG, 10,6 sn, 180° döndürülmüş kayıt; depoda
+proje sahibi: «içeride yüzler görünsün istenmedi, bulanıklık istenmedi; video nasıl olacak sana bırakıyorum»; aynı gün ilk sürümden
+sonra: «cızırtılar var, başlangıcı bir tık daha hızlandırabilirsin»):
+  1) Giriş (2/3 hızda; ilk sürümde yarı hızdı): müşterinin çekimi (boradenkirpilmis.mp4 — 4K HEVC 10 bit HLG, 10,6 sn, 180° döndürülmüş kayıt; depoda
      tutulmaz), 0.–229. kareler: giriş tabelası → cam kapı → resepsiyondaki logo ekranı → ofis alanının geçişi. İlk kişi 235. karede
      belirir (bölmenin üstünde bir baş), o yüzden çekimin devamı kullanılmaz (20 Ekim kararı: «tam kapıdan giriş anında dursun»).
-     Yavaşlatma kare tekrarı ya da harmanlama değildir: her iki kaynak karesinin arasına optik akışla bir ara kare üretilir (OpenCV DIS,
-     iki yönlü akış, doğrusal hareket yaklaşımı, örtülme ağırlıklı karışım) — 230 + 229 = 459 kare ≈ 15,3 sn, hareket akıcı.
+     Yavaşlatma kare tekrarı ya da harmanlama değildir: çıktının her karesi kaynağın 2/3 kare ilerisidir; kaynak karesine denk
+     gelmeyenler iki komşu kareden optik akışla üretilir (OpenCV DIS, iki yönlü akış, doğrusal hareket yaklaşımı, örtülme ağırlıklı
+     karışım) — 344 kare ≈ 11,5 sn, hareket akıcı.
   2) İç mekân (fotoğraflar): arşivdeki insansız mimari çekimler (FOTOĞRAF_ 01.01.2019/Karma — sitedeki «open-office-…»,
      «meeting-room-…», «reception-lounge» görsellerinin özgün kareleri): açık ofis, açık ofisin karşı açısı, cam bölmeli odalar,
      toplantı odası, karşılama alanı. Her biri ≈ 4,4 sn, yavaş kamera hareketiyle (itme ya da yatay kaydırma; alt piksel hassas,
@@ -16,10 +18,21 @@ proje sahibi: «içeride yüzler görünsün istenmedi, bulanıklık istenmedi; 
      ileri yürüyüşü itmeyle sürer. Fotoğraflar videoya göre çok aydınlık olduğundan pozları biraz kısılır (PHOTO_GAMMA/PHOTO_GAIN):
      kahramandaki yazılar en aydınlık karede de okunur kalır.
   Yüz yok: videonun kullanılan kısmında kimse görünmez, fotoğraflar insansızdır (Apple Vision yüz ve insan taraması + gözle denetim;
-  ekranlarda ya da camda yansıyan kişi yok). Görüntüde rötuş ya da bulanıklık yoktur; fotoğraflara yalnızca 0,5 px yumuşatma
-  uygulanır (ince tavan ışıkları kaydırmada titremesin, dosya küçük kalsın).
+  ekranlarda ya da camda yansıyan kişi yok). Görüntüde rötuş ya da bulanıklık yoktur (küçültmedeki süzme yalnızca örtüşmeyi önler).
   Döngü: video başa sarar (20 Ekim, proje sahibi: «video bitince eskisi gibi başa sarıyordu, tekrar öyle»); başı 0,5 sn lacivertten
   açılır, sonu 0,6 sn laciverde kararır — başa dönüş kesik görünmez.
+  Titreşim («cızırtı», ilk sürümde): ahşap çıtalar, storlar, taş duvar ve tavan ışıkları gibi ince desenler kare kare kaynıyordu.
+  Ölçülen nedenler ve çözümler:
+   • Küçültmede örtüşme: giriş iki adımda (alan ortalaması + doğrusal kaydırma), fotoğraflar kübik ara değerlemeyle alınıyordu;
+     ölçek ve alt piksel konumu her karede değiştiği için desen titriyordu. Artık her kare tek adımda, küçültme oranına göre
+     süzülüp (Gauss σ = AA / ölçek) Lanczos ile alınır. Süzme payı AA = 0,6 çıktı pikseli: 0,45'te kodlayıcı en ince dokuyu her
+     karede farklı siliyordu — bit artırmak (crf 21) bunu çözmüyor, süzme payı çözüyor; keskinlik ilk sürümle aynı düzeyde.
+   • Kodlayıcı: psy-rd 0,6 (x264'ün ince dokuyu «canlı tutmak» için her karede yeniden ürettiği doku azalır), crf 23 / 24.
+     Anahtar kareler (I) çekimin ortasında keskinlik sıçraması yapıyordu: anahtar kareler yalnızca lacivert geçişte ve fotoğraflar
+     arası çapraz geçişlerin ortasında (KEYS; otomatik sahne kesmesi kapalı).
+   • Ara kareler gerçek karelerden yumuşaktı (between: Lanczos örnekleme, karesel yakınlık ağırlığı).
+  Ölçü (fotoğraf bölümlerinde kamera hareketi bilindiği için aynı içerik izlenir; 8 ardışık kare hizalanıp piksel başına zamansal
+  sapma, 0–255): ilk sürüm 0,96 → 0,67 (kodlamadan önce 0,48).
 
   Önceki kararlar (aynen sürer): SDR'ye çevirme (HLG → doğrusal → BT.709 ana renkler, mobius ton eşleme; 8 bit'e hata yayınımlı
   titreme), kadraj (ilk 5 sn tam kare — giriş tabelası «BORADEN · Bağımsız Denetim ve Danışmanlık A.Ş.» eksiksiz; 150. kareden sonra
@@ -27,14 +40,14 @@ proje sahibi: «içeride yüzler görünsün istenmedi, bulanıklık istenmedi; 
   fotoğraflar aynı ayarla). Kırpma alt piksel hassastır (OpenCV warpAffine): ffmpeg'in crop/zoompan süzgeçleri tam piksele yuvarladığı
   için itme ve kaydırma sırasında görüntü titrer.
 
-Çıktı (src/assets/video/): boraden-giris-v4-1080.mp4 ve boraden-giris-v4-720.mp4 (H.264 High, sessiz, BT.709 etiketli, faststart;
+Çıktı (src/assets/video/): boraden-giris-v5-1080.mp4 ve boraden-giris-v5-720.mp4 (H.264 High, sessiz, BT.709 etiketli, faststart;
   adı her yeni kurguda değişir: /assets/video/ bir gün önbellekte kalır — vercel.json); boraden-giris-poster-1920/1280/768.webp
-  (kaynağın 27. karesi = çıktının 54. karesi ≈ 1,8 sn — ilk oynatma bu kareden başlar: hero-film.js › POSTER_T; poster dosyaları
-  önceki kurguyla birebir aynı).
+  (kaynağın 28. karesi = çıktının 42. karesi ≈ 1,4 sn — ilk oynatma bu kareden başlar: hero-film.js › POSTER_T).
 Gereken: ffmpeg (zscale + tonemap süzgeçleri; Homebrew: /opt/homebrew/bin/ffmpeg), python3 + numpy + opencv-python (DIS optik akış).
-Kullanım: python3 scripts/tools/hero-film.py [kaynak.mp4] [--out=klasör] [--archive=fotoğraf-arşivi] [--frames=klasör]
+Kullanım: python3 scripts/tools/hero-film.py [kaynak.mp4] [--out=klasör] [--archive=fotoğraf-arşivi] [--frames=klasör] [--master=dosya.mp4]
           (varsayılan kaynak ~/Downloads/boradenkirpilmis.mp4, arşiv ~/Downloads/boradenphoto; --frames=klasör: denetim için her 6.
-          çıktı karesini 960 px JPEG olarak da yazar — yüz taraması ve gözle kontrol; ffmpeg yolu FFMPEG ortam değişkeniyle)
+          çıktı karesini 960 px JPEG olarak da yazar — yüz taraması ve gözle kontrol; --master: kodlamadan önceki 1080p kareleri
+          kayıpsız da yazar (x264 qp 0, ≈ 0,6 GB) — kodlayıcı ayarı denemeleri bu kopyadan yapılır; ffmpeg yolu FFMPEG ortam değişkeniyle)
 """
 import os
 import subprocess
@@ -53,15 +66,19 @@ SRC = args[0] if args else os.path.expanduser('~/Downloads/boradenkirpilmis.mp4'
 OUT = opt.get('out', os.path.join(REPO, 'src', 'assets', 'video'))
 ARCHIVE = os.path.expanduser(opt.get('archive', os.environ.get('BORADEN_ARCHIVE', '~/Downloads/boradenphoto')))
 FRAMES = opt.get('frames')
+MASTER = opt.get('master')
 
 W4, H4 = 3840, 2160          # kaynak (döndürme düzeltildikten sonra)
 OW, OH = 1920, 1080          # çıktı
 ZA, ZB = 150, 258            # itmenin başladığı / bittiği kaynak karesi (itme eğrisi önceki kurgularla aynı kalsın diye 258)
 END = 229                    # son kaynak karesi (dahil): ofis alanına geçiş, kimse görünmeden (ilk kişi 235. karede belirmeye başlar)
 Z0, ZMAX = 1.0, 1.52         # yakınlık: başta (tam kare) / itmeden sonra
-NV = 2 * END + 1             # giriş bölümünün çıktı kare sayısı (yarı hız: kaynak kareleri + aralarındaki ara kareler)
-POSTER_SRC = 27              # poster: kaynağın 27. karesi (önceki kurgulardaki 0,9 sn karesi) = çıktının 54. karesi
-FPS = '30000/1001'           # çıktı kare hızı (29,97 sabit; kaynak 29,934 — yarı hızda fark ≈ % 0,1)
+SPEED = 2 / 3                # giriş hızı (kaynağa göre; çıktının her karesi kaynağın SPEED kare ilerisi). İlk sürüm 1/2 idi
+NV = int(END / SPEED + 1e-9) + 1  # giriş bölümünün çıktı kare sayısı (344)
+POSTER_SRC = 28              # poster: kaynağın 28. karesi = çıktının 42. karesi (SPEED ile tam denk gelir, ara kare değil)
+POSTER_OUT = round(POSTER_SRC / SPEED)
+AA = 0.6                     # küçültmede örtüşme süzgeci: Gauss σ = AA / ölçek (kaynak pikseli; ölçek = çıktı/kaynak) — «Titreşim»
+FPS = '30000/1001'           # çıktı kare hızı (29,97 sabit; kaynak 29,934 — fark ≈ % 0,1)
 NAVY = '0x08132a'            # --navy-950
 TONEMAP = ('zscale=tin=arib-std-b67:min=bt2020nc:pin=bt2020:rin=tv:t=linear:npl=250,format=gbrpf32le,'
            'zscale=p=bt709,tonemap=mobius:param=0.5:desat=0,'
@@ -82,7 +99,6 @@ PHOTOS = [
 SHOT = 132                   # her fotoğrafın ekranda kaldığı süre (kare; ≈ 4,4 sn, geçişler dahil)
 XF = 30                      # fotoğraflar arası çapraz geçiş (kare; ≈ 1 sn)
 DIP = 12                     # videodan ilk fotoğrafa lacivert üzerinden geçiş: video 12 karede kararır, fotoğraf 12 karede açılır
-BLUR = 0.5                   # fotoğraflarda çok hafif yumuşatma (px; titreme ve dosya boyu)
 # Fotoğrafların pozu: arşivdeki mimari çekimler (HDR, beyaz tavan ve pencereler) videodan çok daha aydınlık; kahramandaki yazılar
 # (üst etiket, başlık) zeminin en parlak anına göre okunur olmalı (tests/hero-contrast.e2e.mjs). Orta tonlar ve parlak alanlar
 # biraz koyulaşır (gama + kazanç), renk değişmez.
@@ -95,8 +111,14 @@ FADES = f'fade=t=in:st=0:d={FADE_IN}:color={NAVY},fade=t=out:st={DUR - FADE_OUT:
 TO_YUV = ('scale=out_color_matrix=bt709:out_range=tv,format=yuv420p,'
           'setparams=range=tv:color_primaries=bt709:color_trc=bt709:colorspace=bt709')  # VUI: üçü de BT.709
 TAGS = ['-colorspace', 'bt709', '-color_primaries', 'bt709', '-color_trc', 'bt709', '-color_range', 'tv']
+# Kodlayıcı («Titreşim»): anahtar kareler yalnızca KEYS'te — başta, lacivert geçişte ve fotoğraflar arası çapraz geçişlerin ortasında
+# (geçişte keskinlik değişimi görünmez; en uzun GOP ≈ 11,5 sn, başa sarma ve ilk oynatmadaki konumlama hızlı kalır).
+KEYS = [0, NV] + [s + XF // 2 for s in STARTS[1:]]
+X264_TUNE = 'psy-rd=0.6,0:keyint=900:scenecut=0'
+CRF_1080, CRF_720 = 23, 24
 X264 = ['-c:v', 'libx264', '-preset', 'veryslow', '-profile:v', 'high', '-pix_fmt', 'yuv420p', *TAGS,
-        '-movflags', '+faststart', '-map_metadata', '-1', '-an', '-r', FPS]
+        '-movflags', '+faststart', '-map_metadata', '-1', '-an', '-r', FPS,
+        '-force_key_frames', 'expr:' + '+'.join(f'eq(n,{k})' for k in KEYS), '-x264-params', X264_TUNE]
 
 
 def ease(x):
@@ -112,26 +134,25 @@ def glide(x):
 
 
 def reframe(big, f):
-    """4K kareden sola yaslı, alt piksel hassas 1080p kadraj."""
+    """4K kareden sola yaslı, alt piksel hassas 1080p kadraj: tek adımda, küçültme oranına göre süzülmüş (örtüşme yok) Lanczos.
+    Önceden iki adımdı (alan ortalamasıyla küçültme + doğrusal kaydırma): ölçek kare kare biraz değiştiği için ince çıta deseni
+    örtüşüp titriyordu."""
     e = ease((f - ZA) / (ZB - ZA)) if f >= ZA else 0.0
     z = Z0 + (ZMAX - Z0) * e
     cw, ch = W4 / z, H4 / z
     x0, y0 = 0.0, (H4 - ch) * (0.5 + 0.05 * e)  # itmede kadraj çok az aşağı iner (masalar kadrajda kalsın)
-    s = OW / cw
-    sw, sh = int(np.ceil(W4 * s)) + 2, int(np.ceil(H4 * s)) + 2
-    small = cv2.resize(big, (sw, sh), interpolation=cv2.INTER_AREA)
-    rx, ry = sw / W4, sh / H4
-    m = np.float32([[s / rx, 0, -x0 * s], [0, s / ry, -y0 * s]])
-    return cv2.warpAffine(small, m, (OW, OH), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT)
+    s = OW / cw                                   # 0,5 (tam kare) … ≈ 0,73 (itme sonu)
+    src = cv2.GaussianBlur(big, (0, 0), AA / s)
+    m = np.float32([[s, 0, -x0 * s], [0, s, -y0 * s]])
+    return cv2.warpAffine(src, m, (OW, OH), flags=cv2.INTER_LANCZOS4, borderMode=cv2.BORDER_REFLECT)
 
 
 _dis = None
 _grid = None
 
 
-def midframe(a, b):
-    """a ile b'nin tam ortasındaki kare (t = 0,5): iki yönlü optik akış (DIS, yarım çözünürlükte), doğrusal hareket yaklaşımıyla
-    ara kareden iki kaynağa geri akış, ileri-geri akış tutarlılığından örtülme ağırlığı."""
+def flows(a, b):
+    """a ile b arasındaki iki yönlü optik akış (DIS, yarım çözünürlükte) ve ileri-geri tutarlılığından görünürlük ağırlıkları."""
     global _dis, _grid
     if _dis is None:
         _dis = cv2.DISOpticalFlow_create(cv2.DISOPTICAL_FLOW_PRESET_MEDIUM)
@@ -151,42 +172,70 @@ def midframe(a, b):
         err = np.sum((f1 + back) ** 2, axis=2)
         return np.exp(-err / (2 * 1.5 ** 2)).astype(np.float32)
 
-    va, vb = visible(fab, fba), visible(fba, fab)
-    ft = 0.25 * (fba - fab)           # ara kareden a'ya geri akış; b'ye olanı bunun tersi (t = 0,5)
-    mxa, mya = xs + ft[..., 0], ys + ft[..., 1]
-    mxb, myb = xs - ft[..., 0], ys - ft[..., 1]
-    wa = cv2.remap(a, mxa, mya, cv2.INTER_CUBIC, borderMode=cv2.BORDER_REFLECT).astype(np.float32)
-    wb = cv2.remap(b, mxb, myb, cv2.INTER_CUBIC, borderMode=cv2.BORDER_REFLECT).astype(np.float32)
-    ka = cv2.remap(va, mxa, mya, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE) + 1e-3
-    kb = cv2.remap(vb, mxb, myb, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE) + 1e-3
+    return fab, fba, visible(fab, fba), visible(fba, fab)
+
+
+def between(a, b, t, fl):
+    """a (t = 0) ile b (t = 1) arasında t anındaki kare: doğrusal hareket yaklaşımıyla ara kareden iki kaynağa geri akış
+    (Ft→0 = −(1−t)·t·F01 + t²·F10; Ft→1 = (1−t)²·F01 − t·(1−t)·F10), görünürlük ve yakınlık ağırlıklı karışım.
+    Örnekleme Lanczos, yakınlık ağırlığı karesel (t = 1/3'te 0,8 / 0,2): iki kaynağın üst üste binmesi ara kareyi yumuşatıyordu —
+    ara kareler gerçek karelerden belirgin yumuşak olunca doku saniyede 10 kez «nabız» atıyordu (ince ayrıntı, gerçek karelere
+    göre: kübik + doğrusal ağırlıkta % 8,7 az, şimdi % 6,1 az — 22 Ekim ölçümü)."""
+    fab, fba, va, vb = fl
+    xs, ys = _grid
+    f0 = -(1 - t) * t * fab + t * t * fba
+    f1 = (1 - t) * (1 - t) * fab - t * (1 - t) * fba
+    m0x, m0y = xs + f0[..., 0], ys + f0[..., 1]
+    m1x, m1y = xs + f1[..., 0], ys + f1[..., 1]
+    wa = cv2.remap(a, m0x, m0y, cv2.INTER_LANCZOS4, borderMode=cv2.BORDER_REFLECT).astype(np.float32)
+    wb = cv2.remap(b, m1x, m1y, cv2.INTER_LANCZOS4, borderMode=cv2.BORDER_REFLECT).astype(np.float32)
+    ka = (1 - t) ** 2 * cv2.remap(va, m0x, m0y, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE) + 1e-3
+    kb = t ** 2 * cv2.remap(vb, m1x, m1y, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE) + 1e-3
     out = (wa * ka[..., None] + wb * kb[..., None]) / (ka + kb)[..., None]
     return np.clip(out + 0.5, 0, 255).astype(np.uint8)
 
 
 def entrance(poster_png):
-    """Giriş bölümü: kaynak kareleri ve aralarındaki ara kareler, sırayla (NV kare)."""
+    """Giriş bölümü (NV kare): çıktının k. karesi kaynağın k·SPEED anıdır; tam kaynak karesine düşen kare olduğu gibi, arada kalan
+    komşu iki kareden optik akışla."""
     dec = subprocess.Popen([FF, '-v', 'error', '-i', SRC, '-an', '-vf', TONEMAP, '-frames:v', str(END + 1),
                             '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-'], stdout=subprocess.PIPE, bufsize=W4 * H4 * 3)
     size = W4 * H4 * 3
-    prev = None
-    for f in range(END + 1):
-        buf = dec.stdout.read(size)
-        if not buf or len(buf) < size:
-            sys.exit('kaynak beklenenden kısa: kadraj ve bitiş kareleri bu kaynağa göre yeniden seçilmeli')
-        cur = reframe(np.frombuffer(buf, np.uint8).reshape(H4, W4, 3), f)
-        if f == POSTER_SRC:
-            cv2.imwrite(poster_png, cv2.cvtColor(cur, cv2.COLOR_RGB2BGR))
-        if prev is not None:
-            yield midframe(prev, cur)
-        yield cur
-        prev = cur
+    cache = {}  # kaynak karesi → 1080p kadraj (yalnızca son iki kare tutulur)
+    fl = {}     # (i, i+1) → akışlar
+
+    def src(i):
+        while i not in cache:
+            f = max(cache) + 1 if cache else 0
+            buf = dec.stdout.read(size)
+            if not buf or len(buf) < size:
+                sys.exit('kaynak beklenenden kısa: kadraj ve bitiş kareleri bu kaynağa göre yeniden seçilmeli')
+            cache[f] = reframe(np.frombuffer(buf, np.uint8).reshape(H4, W4, 3), f)
+            for old in [k for k in cache if k < f - 1]:
+                del cache[old]
+        return cache[i]
+
+    for k in range(NV):
+        tau = k * SPEED
+        i = int(tau + 1e-9)
+        t = tau - i
+        if t < 1e-6 or i >= END:
+            im = src(min(i, END))
+        else:
+            a, b = src(i), src(i + 1)
+            if (i, i + 1) not in fl:
+                fl.clear()
+                fl[(i, i + 1)] = flows(a, b)
+            im = between(a, b, t, fl[(i, i + 1)])
+        if k == POSTER_OUT:
+            cv2.imwrite(poster_png, cv2.cvtColor(im, cv2.COLOR_RGB2BGR))
+        yield im
     dec.stdout.close()
-    if dec.wait() != 0:
-        sys.exit('ffmpeg (çözücü) hata verdi')
+    dec.wait()
 
 
 def load_photo(name, a, b):
-    """Fotoğrafı, en dar kadraj çıktıya 1:1 düşecek boya indirir (alan ortalamasıyla) ve çok hafif yumuşatır."""
+    """Fotoğrafı, en dar kadraj çıktıya 1:1 düşecek boya indirir (alan ortalamasıyla); pozu biraz kısar."""
     path = os.path.join(ARCHIVE, PHOTO_DIR, name)
     im = cv2.imread(path, cv2.IMREAD_COLOR)
     if im is None:
@@ -196,11 +245,12 @@ def load_photo(name, a, b):
     s = OW / (min(a[2], b[2]) * w)
     im = cv2.resize(im, (round(w * s), round(h * s)), interpolation=cv2.INTER_AREA)
     lut = np.clip(255 * PHOTO_GAIN * (np.arange(256) / 255) ** PHOTO_GAMMA + 0.5, 0, 255).astype(np.uint8)
-    return cv2.GaussianBlur(cv2.LUT(im, lut), (0, 0), BLUR)
+    return cv2.LUT(im, lut)
 
 
 def photo_frame(im, a, b, u):
-    """u ∈ [0, 1] anındaki kadraj (alt piksel hassas)."""
+    """u ∈ [0, 1] anındaki kadraj (alt piksel hassas): küçültme oranına göre süzülür (σ = AA / ölçek), Lanczos ile alınır —
+    storlar, tavan ışıkları ve taş doku kaydırmada titremez."""
     e = glide(u)
     cx, cy, cwf = (a[i] + (b[i] - a[i]) * e for i in range(3))
     ph, pw = im.shape[:2]
@@ -210,7 +260,7 @@ def photo_frame(im, a, b, u):
     y0 = min(max(cy * ph - ch / 2, 0.0), ph - ch)
     s = OW / cw
     m = np.float32([[s, 0, -x0 * s], [0, s, -y0 * s]])
-    return cv2.warpAffine(im, m, (OW, OH), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REFLECT)
+    return cv2.warpAffine(cv2.GaussianBlur(im, (0, 0), AA / s), m, (OW, OH), flags=cv2.INTER_LANCZOS4, borderMode=cv2.BORDER_REFLECT)
 
 
 def navy_before_grade():
@@ -239,18 +289,22 @@ def main():
     if FRAMES:
         os.makedirs(FRAMES, exist_ok=True)
     work = tempfile.mkdtemp(prefix='boraden-hero-')
-    v1080 = os.path.join(OUT, 'boraden-giris-v4-1080.mp4')
-    v720 = os.path.join(OUT, 'boraden-giris-v4-720.mp4')
+    v1080 = os.path.join(OUT, 'boraden-giris-v5-1080.mp4')
+    v720 = os.path.join(OUT, 'boraden-giris-v5-720.mp4')
     poster_png = os.path.join(work, 'poster.png')
     photos = [load_photo(n, a, b) for n, a, b in PHOTOS]
     navy = navy_before_grade()
 
+    graph = [f'[0:v]{GRADE},split={3 if MASTER else 2}[a][b]{"[m]" if MASTER else ""}',
+             f'[a]{FADES},{TO_YUV}[o1]', f'[b]scale=1280:720:flags=lanczos,{FADES},{TO_YUV}[o2]']
+    outs = ['-map', '[o1]', *X264, '-crf', str(CRF_1080), '-level', '4.1', v1080,
+            '-map', '[o2]', *X264, '-crf', str(CRF_720), '-level', '4.0', v720]
+    if MASTER:  # kayıpsız ana kopya (1080p, kodlayıcı denemeleri ve ölçüm için; depoya girmez)
+        graph.append(f'[m]{FADES},{TO_YUV}[om]')
+        outs += ['-map', '[om]', '-c:v', 'libx264', '-preset', 'ultrafast', '-qp', '0', '-pix_fmt', 'yuv420p', *TAGS,
+                 '-an', '-r', FPS, MASTER]
     enc = subprocess.Popen([FF, '-v', 'error', '-y', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-s', f'{OW}x{OH}',
-                            '-framerate', FPS, '-i', '-',
-                            '-filter_complex', f'[0:v]{GRADE},split=2[a][b];[a]{FADES},{TO_YUV}[o1];'
-                                               f'[b]scale=1280:720:flags=lanczos,{FADES},{TO_YUV}[o2]',
-                            '-map', '[o1]', *X264, '-crf', '27', '-level', '4.1', v1080,
-                            '-map', '[o2]', *X264, '-crf', '28', '-level', '4.0', v720],
+                            '-framerate', FPS, '-i', '-', '-filter_complex', ';'.join(graph), *outs],
                            stdin=subprocess.PIPE)
     vid = entrance(poster_png)
     for n in range(N):
