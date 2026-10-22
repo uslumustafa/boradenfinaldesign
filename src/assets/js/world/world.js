@@ -213,12 +213,19 @@ const lerpPose = (PA, PB, e) => {
 
 // WebGL 2 desteği önce küçük, atılan bir tuvalde sınanır (T-35): yoksa three.js çiziciyi kurmaya çalışıp konsola hata yazmaz;
 // dünya kurulmaz ve efektler «Kapalı»ya düşer (main.js › bootWorld). Sınama bağlamı hemen bırakılır.
+// Ekran kartı yoksa (ya da sürücü engelliyse) tarayıcı WebGL'i işlemciyle çizer (SwiftShader, llvmpipe, Windows'un temel görüntü
+// sürücüsü): 3B dünya o makinede çok ağır kalır — tarayıcının «büyük başarım kaybı» işareti ya da çizicinin adı yazılımı
+// gösteriyorsa dünya kurulmaz, efektler kendiliğinden «Kapalı» (22 Ekim 2026: GitHub'ın ekran kartı olmayan sunucusunda Chrome
+// WebGL 2'yi yazılımla açınca dünya kurulup yalnızca yavaşlık ölçüsüyle, saniyeler sonra düşüyordu).
+const SOFT_GL = /swiftshader|llvmpipe|softpipe|software|basic render/i;
 function webgl2Ok() {
   try {
-    const gl = document.createElement('canvas').getContext('webgl2');
+    const gl = document.createElement('canvas').getContext('webgl2', { failIfMajorPerformanceCaveat: true });
     if (!gl) return false;
+    const info = gl.getExtension('WEBGL_debug_renderer_info');
+    const name = String(gl.getParameter(info ? info.UNMASKED_RENDERER_WEBGL : gl.RENDERER) || '');
     gl.getExtension('WEBGL_lose_context')?.loseContext();
-    return true;
+    return !SOFT_GL.test(name);
   } catch (e) {
     return false;
   }

@@ -442,9 +442,11 @@ async function fx() {
       synced: [...document.querySelectorAll('.fxswitch')].every((g) => [...g.querySelectorAll('[aria-pressed="true"]')].map((b) => b.dataset.fxSet).join() === document.documentElement.dataset.fx),
       anim: document.documentElement.classList.contains('js-anim'),
     }));
-  let x = await st();
-  // ekran kartı olmayan makinede (CI) otomatik seçim «Kapalı» olmalı; gerçek cihazda «Tam» ya da «Hafif»
+  // ekran kartı olmayan makinede (CI) otomatik seçim «Kapalı» olmalı; gerçek cihazda «Tam» ya da «Hafif». Yazılım çizicide
+  // «Kapalı» kararı 3B dünya kurulurken verilir (sayfa yüklenip tarayıcı boşalınca: main.js › bootWorld, world.js › webgl2Ok)
   const soft = await softwareGL(page);
+  if (soft) await page.waitForFunction(() => document.documentElement.dataset.fx === 'off', null, { timeout: 8000 }).catch(() => {});
+  let x = await st();
   ok((soft ? ['off'] : ['full', 'lite']).includes(x.tier) && x.stored === null && x.pressed.length === 1 && x.synced, `otomatik algılama: ${x.tier}${soft ? ' (yazılım WebGL: ekran kartı yok)' : ''} (kullanıcı seçimi yok, depolama boş)`);
   await page.locator('[data-fx-set="lite"]:visible').click();
   x = await st();
